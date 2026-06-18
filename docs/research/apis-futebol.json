@@ -1,0 +1,404 @@
+[
+  {
+    "name": "API-Football (API-Sports)",
+    "url": "https://www.api-football.com",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano gratuito com 100 requisicoes/dia, acesso a TODOS os endpoints (fixtures, livescore, standings, lineups, events, players, statistics, predictions, odds), sem cartao de credito. Limitacao: temporadas disponiveis sao restritas no free (geralmente apenas a temporada de 2021/2023 dependendo do periodo) — dados ao vivo da temporada corrente podem exigir plano pago.",
+    "rate_limit": "100 requisicoes/dia e 10 requisicoes/minuto no plano gratuito. Quota diaria reseta as 00:00 UTC; requisicoes nao usadas sao perdidas.",
+    "preco": "Pro USD 19/mes (7.500 req/dia, 300 req/min); Ultra USD 29/mes (75.000 req/dia, 450 req/min); Mega USD 39/mes (150.000 req/dia, 900 req/min); Custom sob consulta (ate ~1,5M req/dia, 1200 req/min). Disponivel tambem via RapidAPI.",
+    "cobertura_brasil": "completa",
+    "cobertura_brasil_detalhe": "Cobre Brasileirao Serie A e Serie B, Copa do Brasil, principais estaduais (Paulista, Carioca, Mineiro, Gaucho, etc.), alem de Libertadores, Sudamericana e selecao. Disponivel em todos os planos incluindo o gratuito (limitado a temporadas antigas no free). 1200+ competicoes no total. Cobertura de Serie C/D nao confirmada explicitamente — verificar na pagina /coverage por league_id.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "predictions",
+      "transfers",
+      "historico"
+    ],
+    "observacao": "Otima opcao custo-beneficio para produto de dicas/stats BR: predictions com modelo ML (probabilidades 1X2, ambas marcam, over/under, placar exato, handicap, escanteios, cartoes) ja prontas, atualizadas diariamente ate 21 dias antes do jogo — ideal para um produto de palpites. Lineups disponiveis 20-40 min antes do jogo. PONTO DE ATENCAO: NAO oferece xG (expected goals) nativamente — fornece estatisticas de partida (chutes, posse, etc.) mas nao metricas avancadas de xG; se xG for requisito, precisa de outra fonte (Sportmonks/Opta). Free tier de 100 req/dia e bom para prototipagem, mas o limite de temporadas no free obriga upgrade para dados da temporada corrente em producao — o Pro (USD 19) ja libera tudo."
+  },
+  {
+    "name": "Sportmonks Football API",
+    "url": "https://www.sportmonks.com/football-api/",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano Free permanente, sem expiracao e sem custo, mas limitado a 2 ligas: Danish Superliga e Scottish Premiership (incluindo play-offs). Da acesso a livescore, eventos com coordenadas de bola, fixtures, standings, squads, player stats, coach e estatisticas avancadas (H2H) — porem somente para essas duas ligas. NAO inclui futebol brasileiro. Alem disso, qualquer plano pago tem trial de 14 dias.",
+    "rate_limit": "Free tier: 3.000 chamadas por entidade por hora (limite por entidade Fixture/Team/Player/League/Season, janela de 60 min a partir da 1a request). Planos pagos: Starter 2.000, Growth 2.500, Pro 3.000, Enterprise 5.000 por entidade/hora. Cada resposta traz objeto rate_limit com remaining/reset.",
+    "preco": "Starter EUR 29/mes (EUR 24/mes anual), Growth EUR 99/mes (EUR 79 anual), Pro EUR 249/mes (EUR 199 anual), Enterprise sob consulta. Add-ons: Odds & Predictions EUR 15/mes, xG & Pressure Index EUR 24/mes, ligas extras EUR 4/mes cada, dados historicos EUR 29 (one-time), News EUR 99/mes, Transfer Rumours EUR 99/mes, Premium Odds EUR 129/mes.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Sportmonks cobre o Brasileirao Serie A (foco de marketing), Serie B, Copa do Brasil, Copa Libertadores, Copa Sudamericana, estaduais (Paulista, Carioca, Mineiro, Gaucho) e a Selecao Brasileira. NAO ha confirmacao publica de Serie C/D nem de todos os estaduais. Acesso depende do plano por contagem de ligas: Starter (5 ligas) provavelmente nao cobre o pacote BR completo; Growth (30 ligas), Pro (120 ligas) e Enterprise (2.300+ ligas) ampliam a cobertura. Ligas brasileiras NAO estao no Free tier; so via trial de 14 dias ou plano pago. A escolha de quais ligas entram nos planos Starter/Growth/Pro e feita pelo cliente dentro da cota, entao \"tem BR\" depende de selecionar a liga na cota ou comprar ligas extras (EUR 4/mes).",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "xg",
+      "odds",
+      "predictions",
+      "transfers",
+      "historico"
+    ],
+    "observacao": "Boa opcao para produto de dicas/stats BR: oferece xG (add-on), predictions em 20+ mercados de aposta e odds pre-jogo e in-play (add-ons), lineups, eventos ao vivo com coordenadas de bola e player stats — todo o stack para tips. Atencao: xG e Odds/Predictions sao ADD-ONS pagos a parte (xG EUR 24, Odds&Predictions EUR 15/mes), nao vem no preco base. Cobertura BR exige plano Growth+ ou comprar ligas extras; Serie A/B confirmadas mas Serie C/D nao verificadas. Rate limit por-entidade-por-hora e generoso (3k no free). Custo total realista para um produto BR com xG+predictions: Growth EUR 99 + add-ons, ou Pro EUR 249 + add-ons."
+  },
+  {
+    "name": "football-data.org",
+    "url": "https://www.football-data.org/",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano gratuito com 12 competicoes (inclui Brasileirao Serie A - codigo BSA), placares ATRASADOS (nao ao vivo), jogos/fixtures, calendarios e tabelas de classificacao. Rate limit de 10 chamadas/minuto. Nao inclui line-ups, eventos detalhados, odds nem estatisticas avancadas.",
+    "rate_limit": "10 requisicoes por minuto no plano gratuito",
+    "preco": "Planos mensais: Free+Livescores 12 EUR; ML Pack Light 29 EUR; Free+Deep Data 29 EUR; Standard 49 EUR (30 competicoes); Advanced 99 EUR (50 competicoes); Pro 199 EUR (100 competicoes). Add-ons opcionais de 15 EUR/mes cada: Odds (40 competicoes, odds pre-jogo) e Statistics (escanteios, faltas, posse, chutes etc.). Sem precos anuais publicados.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Cobre Campeonato Brasileiro Serie A (free tier, placar atrasado; ao vivo a partir dos planos pagos), Serie B e Copa do Brasil (somente planos pagos / nao no free). NAO cobre Serie C, Serie D nem campeonatos estaduais. Estatisticas detalhadas e odds do Brasileirao dependem dos add-ons pagos.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "odds",
+      "historico"
+    ],
+    "observacao": "Boa opcao de baixo custo para produto de dicas/stats BR: o Brasileirao Serie A esta no free tier, mas com placar ATRASADO e rate limit de 10 req/min, inviavel para livescore em tempo real sem plano pago. NAO oferece xG nem predictions (predicoes) - isso e limitante para um produto de dicas que dependa de modelos preditivos prontos. Eventos (gols, cartoes), escalacoes e artilheiros so a partir dos planos Deep Data/Standard. Odds e estatisticas (escanteios, posse, chutes) sao add-ons pagos de 15 EUR/mes. Sem cobertura de estaduais nem Serie C/D. Codigo da Serie A: BSA."
+  },
+  {
+    "name": "TheSportsDB",
+    "url": "https://www.thesportsdb.com/free_sports_api",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano gratuito ($0) com test key publica \"123\": busca de jogadores/eventos, lookup de ligas/times/jogadores/eventos, listagem de temporadas, fixtures (next/previous), tabelas, lineups, timeline e resultados historicos via API V1. NAO inclui livescores (livescore exige plano pago/V2). Dados limitados por query no free.",
+    "rate_limit": "30 requisicoes/minuto no free tier (excedeu = HTTP 429, espera 1 min). Premium: 100/min; Business: 120/min.",
+    "preco": "Single Developer (Premium) $9/mes; Small Business $20/mes. Tambem ha opcoes anual/lifetime (valores nao detalhados publicamente). Chave premium V2 via Patreon.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Brasileirao Serie A coberto (league id 4351) com fixtures, resultados, tabelas, artwork e lineups, acessivel no free tier. Profundidade de Serie B/C/D, estaduais e Copa do Brasil nao confirmada na documentacao verificada (provavelmente parcial e dependente de crowdsourcing). Livescore ao vivo (2 min) so em planos pagos.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "transfers",
+      "historico"
+    ],
+    "observacao": "Banco crowdsourced multi-esporte com foco forte em metadados e artwork (logos, fanart). Para um produto de dicas/stats BR e fraco: NAO oferece xG, NAO oferece odds e NAO oferece predictions - tudo precisaria vir de outra fonte. Livescore de qualidade (atualizacao 2 min) so a partir de $9/mes via V2. Player-stats e lineups existem mas com profundidade/frescor variavel por serem comunitarios. Bom como fonte barata de fixtures, tabelas, identidade visual de times e historico; insuficiente como motor analitico/preditivo sozinho."
+  },
+  {
+    "name": "Goalserve",
+    "url": "https://www.goalserve.com/en/soccer-data-feeds",
+    "acesso": "b2b-contrato",
+    "free_tier": "Nao ha free tier permanente. Oferece trial de 30 dias com acesso total (full access, sem limite de uso declarado), solicitado via formulario de contato/email (support@goalserve.com). Apos o trial e necessario assinar um plano pago.",
+    "rate_limit": "desconhecido (a pagina nao publica limite de requisicoes; o modelo e baseado em feeds com frequencia de atualizacao definida: livescore a cada 2-4s, player stats a cada 20s, odds pre-jogo a cada 30s, odds live <1s. Nao ha cota de chamadas/dia publicada para o trial)",
+    "preco": "Por feed/pacote, assinatura mensal/semestral/anual (USD). Ex.: Soccer Live Score US$150/mes (US$1.000/ano), Live Game Stats US$200/mes (US$1.500/ano), Fixtures/Results US$150/mes, Pregame Odds US$250/mes (US$1.500/ano), Live Odds in-play US$500/mes (US$3.000/ano), Full Stats Package (sem odds) US$300/mes (US$2.500/ano), Full Soccer Package US$550/mes (US$3.100/ano), Full Package todos esportes US$800/mes (US$4.000/ano). Faixa: ~US$150 a US$800/mes.",
+    "cobertura_brasil": "completa",
+    "cobertura_brasil_detalhe": "Pagina de coverage confirma Brasil entre os mercados mais documentados: Serie A, B, C e D, Copa do Brasil, e estaduais (Paulista, Carioca, Mineiro, Catarinense, Gaucho, Paranaense e outros), alem de competicoes de base (Copa Sao Paulo de Juniores). Cobertura nao segmentada por plano por liga; a profundidade do dado (livescore vs lineups/stats vs odds) e que depende do pacote assinado.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "historico"
+    ],
+    "observacao": "Provedor B2B classico (XML e JSON), 400+ ligas, dados desde 2010, odds pre-jogo (20+ casas, 50+ mercados) e in-play com latencia <1s + PUSH/WebSockets. Forte para um produto de dicas/stats BR por cobrir Serie A-D, estaduais e Copa do Brasil com livescore, lineups, eventos, player stats e odds. PONTO FRACO: nao oferece xG nem predictions/probabilidades proprias (ausentes em toda a documentacao) - se o produto depender de xG ou previsoes prontas, precisaria calcular internamente ou usar outra fonte. Profundidade depende do pacote: livescore basico e barato (US$150/mes), mas lineups/player-stats e odds exigem pacotes mais caros (US$200-550/mes). Acesso so apos contato comercial/trial; sem self-service API key publica de free tier."
+  },
+  {
+    "name": "SportsDataIO Soccer API",
+    "url": "https://sportsdata.io/soccer-api",
+    "acesso": "b2b-contrato",
+    "free_tier": "Existe um \"API Free Trial\" que, segundo a propria documentacao, nao expira. Porem para futebol o trial libera APENAS a UEFA Champions League (Competition ID 3) — nenhuma liga brasileira esta disponivel no trial. Acesso a Brasileirao/estaduais exige plano pago/contrato.",
+    "rate_limit": "desconhecido (nao publicado oficialmente; planos pagos sao anunciados como \"unlimited API calls\", mas os limites/caps do free trial nao sao divulgados)",
+    "preco": "sob consulta (modelo sales-led, \"Get In Touch\"). Estimativas de terceiros (nao confirmadas no site oficial) citam um tier self-serve ~US$99-149/mes e producao a partir de ~US$500-1000+/mes — tratar como nao verificado.",
+    "cobertura_brasil": "apenas-pago",
+    "cobertura_brasil_detalhe": "Cobertura listada como ampla no site: Brasileirao Serie A, B, C e D; varios estaduais (Paulista, Carioca, Gaucho, Mineiro, Paranaense, Goiano, Potiguar, Brasiliense, Alagoano, Pernambucano); Copa do Brasil, Copa do Nordeste, Copa Paulista e Supercopa do Brasil. Mas tudo isso esta atras de plano pago/contrato — o free trial de futebol so da UEFA Champions League. Profundidade real dos dados por liga (lineups/eventos/odds) precisa ser confirmada via PDF de coverage / sales.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "predictions"
+    ],
+    "observacao": "Provedor B2B sales-led (mesma casa de NFL/NBA/MLB). Forte em odds (pre-jogo e in-play de 10+ casas, incluindo Asian Handicap) e em \"projections\" via modelos ML proprios — mas as projecoes sao orientadas a fantasy/stats de jogador, NAO a previsao de resultado de partida (1X2). xG e transfers NAO foram confirmados na documentacao. Para um produto de dicas do futebol BR o bloqueio critico e que o free trial nao cobre nenhuma liga brasileira: avaliacao real do Brasileirao exige contrato pago, sem preco publico. Adequado para quem ja tem orcamento e quer odds/live; menos atrativo para prototipagem barata de stats BR comparado a APIs com free tier que cobrem o Brasileirao."
+  },
+  {
+    "name": "Highlightly",
+    "url": "https://highlightly.net/",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano BASIC gratuito com 100 requisicoes/dia, sem cartao de credito. Inclui live scores, dados de paises/ligas/times, lista completa de partidas, highlights ilimitados, odds, bookmakers, standings, lineups, eventos ao vivo, estatisticas de partida e dados de jogadores. Restricoes em odds e highlights no free tier sao removidas a partir do plano PRO.",
+    "rate_limit": "100 requisicoes/dia no BASIC (sem limite explicito de req/seg). Quota verificavel via headers x-ratelimit-requests-limit e x-ratelimit-requests-remaining (reset diario).",
+    "preco": "PRO US$9,49/mes (7.500 req/dia, 12 req/s); ULTRA US$20,99/mes (25.000 req/dia, 20 req/s); MEGA US$45,99/mes (65.000 req/dia, 100 req/s). Descontos anuais de ate ~40%. Tambem disponivel via RapidAPI.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "O Brasileirao (Serie A) e explicitamente listado entre as ligas suportadas. Nao ha confirmacao oficial nas paginas de pricing/docs de cobertura de Serie B/C/D, estaduais ou Copa do Brasil - apenas a primeira divisao foi confirmada. Cobertura total de 950+ ligas em 170+ paises.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "predictions",
+      "transfers",
+      "highlights-video",
+      "historico"
+    ],
+    "observacao": "Forte para um produto de dicas/stats: oferece odds de 100+ bookmakers (1X2, over/under, BTTS, handicap asiatico, correct score), predictions com modelo proprio, estatisticas de partida e lineups confirmados ~30min antes. NAO oferece xG (expected goals) - omissao relevante para modelos analiticos. Diferencial: video highlights com checador de geo-restricao. O free tier de 100 req/dia e limitado para producao; PRO a US$9,49 ja remove restricoes de odds/highlights. Verificar manualmente cobertura de Serie B/Copa do Brasil/estaduais antes de adotar, pois nao foi confirmada."
+  },
+  {
+    "name": "isportsAPI",
+    "url": "https://www.isportsapi.com",
+    "acesso": "rest-publica",
+    "free_tier": "Nao ha free tier permanente. Oferece trial gratuito de 15 dias com acesso completo a todas as features (full access) para avaliacao; depois e pago por pacote/esporte.",
+    "rate_limit": "Nao ha quota classica de free tier. A documentacao define cadencia por endpoint: cada interface limitada a ~1 chamada a cada 10 segundos (uso recomendado de 1 chamada/minuto). Sem numero publico de requests/dia.",
+    "preco": "Futebol, por pacote: Stats US$299/mes (US$2.699/ano); Live Data US$449/mes (US$3.999/ano); Odds US$449/mes (US$3.999/ano); Odds Pro US$599/mes (US$5.399/ano); Live Animation US$1.299/mes (US$10.999/ano). Database historico/Language Packs sob consulta. Pacotes sao por esporte e por modulo (somam).",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "A pagina do produto de futebol lista explicitamente \"Brazil Serie A\" entre as 2.000+ ligas/copas cobertas. Nao ha confirmacao publica de cobertura de Serie B/C/D, campeonatos estaduais ou Copa do Brasil; provavelmente parcial nas divisoes inferiores e regionais. Confirmar via trial antes de produzir conteudo BR alem da Serie A.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "xg",
+      "odds",
+      "historico"
+    ],
+    "observacao": "Forte em odds (pre-match + in-play, 18 casas principais e 200+ europeias) e em xG/stats detalhadas (endpoint /sport/football/stats com 61 metricas, incluindo xG open play, set piece e non-penalty xG) — bom para um produto de stats. Pontos negativos para dicas BR: nao tem predictions/tips/recomendacoes nativas (so dados brutos, voce gera as dicas), precos altos e em USD (entrada US$299/mes), sem free tier continuo (so trial de 15 dias), e a granularidade da cobertura do futebol brasileiro abaixo da Serie A nao e confirmada publicamente. Modelo por pacote: para stats+odds completos somam-se assinaturas."
+  },
+  {
+    "name": "AllSportsAPI",
+    "url": "https://allsportsapi.com/soccer-football-api-documentation",
+    "acesso": "rest-publica",
+    "free_tier": "Sim, plano Free a $0/mes, mas com limitacao critica: da acesso a apenas 2 ligas aleatorias por ano (selecionadas pela AllSportsAPI, nao escolhidas pelo usuario). Inclui os mesmos tipos de dado dos planos pagos (Leagues, Fixtures, H2H, Livescore, Standings, Topscorers, Teams, Players), mas SEM Odds/Live Odds. Na pratica, inutil para um produto focado em futebol brasileiro porque nao se pode garantir que o Brasileirao esteja entre as 2 ligas. Ha tambem trial de 14 dias dos planos pagos.",
+    "rate_limit": "Plano Free: 260 chamadas por hora. Planos pagos: 2.000 chamadas/hora (European e Worldwide) ate 100.000-1.000.000 chamadas/hora (Ultimate). Limite expresso por hora, nao por minuto.",
+    "preco": "European ~$99/mes (~$948/ano, 42 ligas, so Europa), Worldwide ~$149/mes (~$1.428/ano, 800+ ligas), Ultimate ~$199/mes (~$1.908/ano, 800+ ligas + Odds/Live Odds/WebSocket). Valores variam entre fontes (uma cita European a $74); confirmar na pagina oficial de pricing (estava 404/403 no acesso direto).",
+    "cobertura_brasil": "apenas-pago",
+    "cobertura_brasil_detalhe": "A AllSportsAPI lista o \"Brasileirao\" (Serie A) na pagina de cobertura e tem pagina dedicada (allsportsapi.com/football/brazil/serie_a-99). Porem o Brasil NAO esta no plano European (42 ligas, so Europa) nem garantido no Free (2 ligas aleatorias/ano). O futebol brasileiro so e acessivel de forma confiavel nos planos Worldwide/Ultimate (\"800+ ligas\"). A pagina publica de cobertura destaca apenas a Serie A; Serie B/C/D, Copa do Brasil e estaduais (Paulista, Carioca etc.) NAO foram confirmados explicitamente na documentacao publica — provavelmente presentes dentro das 800+ ligas mas nao verificavel sem chave. Classifico como cobertura parcial e exclusivamente paga.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "predictions",
+      "historico"
+    ],
+    "observacao": "Para um produto de dicas/stats de futebol BR, o ponto critico e que o free tier nao serve (2 ligas aleatorias por ano, sem garantia de Brasileirao), entao o uso real exige o plano Worldwide ($149/mes) ou Ultimate. A doc confirma livescore, fixtures, standings, lineups, eventos (gols/cartoes/subs), topscorers, players, H2H, probabilidades/predictions e historico via standings/H2H. Odds e Live Odds (com WebSocket) SO no Ultimate. NAO oferece xG (expected goals) nem dados de transferencias — lacuna importante se o produto depende de modelos baseados em xG. Cobertura de Serie B/C/D, Copa do Brasil e estaduais nao confirmada na doc publica; precisa validar com a chave de API antes de decidir. Limites de taxa sao por hora (260/h no free), modelo diferente de concorrentes que usam req/min."
+  },
+  {
+    "name": "Entity Sport Soccer API",
+    "url": "https://www.entitysport.com/soccer-api/",
+    "acesso": "rest-publica",
+    "free_tier": "Sim, mas limitado a desenvolvimento/teste. Oferece (a) free dev token que da acesso a todos os endpoints da Football API (exceto Team list/info/matches, Player list e Profile) restrito a 3 competicoes historicas concluidas (Allsvenskan 2018, Eliteserien 2018, Chinese Super League 2018), e (b) trial de 7 dias com dados de partidas reais, sem cartao de credito. Nenhum tier gratuito permanente com ligas atuais.",
+    "rate_limit": "desconhecido (nao publicam limite de requisicoes/min ou /seg; os planos pagos sao definidos por cota mensal de chamadas: 1M no Starter ate 6M+ no Gold). O free dev token nao tem limite de req/min divulgado.",
+    "preco": "Planos mensais: Starter ~US$250/mes (1M chamadas, 10 ligas), Pro ~US$450/mes (2M, 35 ligas), Elite ~US$750/mes (3M, 65 ligas), Gold ~US$1.600/mes (6M, 100+ ligas), Enterprise sob consulta. Anual com 2 meses gratis (paga 10, leva 12). Promocao de 40% off as vezes anunciada. (Faixas regionais alternativas tambem aparecem em algumas paginas: US$200-800/mes.)",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Campeonato Brasileiro Serie A confirmado e classificado como Level 1 (estatisticas completas de jogadores, lineups, formacoes, play-by-play, eventos), disponivel a partir do plano Pro (e Elite/Gold). Copa do Brasil coberta nos planos Pro e Elite. NAO ha mencao de cobertura de Serie B, Serie C, Serie D nem de campeonatos estaduais (Paulista, Carioca, etc) na documentacao publica/paginas de cobertura verificadas.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "predictions",
+      "historico"
+    ],
+    "observacao": "REST/JSON com tiers de cobertura por competicao (Level 1-4): L1 = stats completas de jogador + lineups + formacoes + play-by-play + eventos; L4 = apenas live scores e tabela. Oferece odds de pre-jogo e predicoes/match projection (diferencial vs concorrentes que so dao stats). NAO foi confirmada oferta de xG (expected goals). Para um produto BR de dicas/stats, o problema e cobertura: apenas Serie A + Copa do Brasil garantidas, sem Serie B/C/D nem estaduais (que sao centrais no calendario brasileiro). Preco de entrada alto (~US$250/mes) e ausencia de free tier permanente com ligas atuais. Rate limit por req/min nao divulgado — controle e por cota mensal de chamadas. Verificar via trial/contato comercial (sales@entitysport.com) antes de comprometer."
+  },
+  {
+    "name": "SoccersAPI",
+    "url": "https://soccersapi.com",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano gratuito de testes: 3 ligas (incluindo Bundesliga da Austria), ~100 requisicoes (fontes divergem entre 100/hora e 100/dia), acesso a todos os endpoints e suporte 24/7. Alem disso ha trial de 7 dias e 50% de desconto no primeiro mes nos planos pagos.",
+    "rate_limit": "100 requisicoes no free tier (fontes divergem: terceiros citam \"100 req/hora\", a propria doc cita \"100 daily\"). Faixa indefinida entre 100/hora e 100/dia — tratar como ~100 req e confirmar no painel.",
+    "preco": "Soccer 20: US$39/mes (US$396/ano), 20 ligas. Soccer 100: US$79/mes (US$792/ano), 100 ligas. Tiers superiores/enterprise com 9k-36k req/hora (preco sob consulta). Modelo \"plan based\": paga-se por pacote de ligas + faixa de requisicoes.",
+    "cobertura_brasil": "desconhecido",
+    "cobertura_brasil_detalhe": "Nao foi possivel confirmar diretamente. A pagina de coverage (soccersapi.com/coverage) carrega o catalogo de ligas dinamicamente (mostrava \"Loading...\") e nao expoe o conteudo via fetch estatico; a doc tambem nao lista as ligas BR. O provedor afirma \"1000+ ligas\" e cobertura plan-based, entao Brasileirao provavelmente existe em algum pacote pago, mas o plano exato, profundidade de dados (lineups/events/stats/odds) e presenca de Serie B/C/D, estaduais e Copa do Brasil precisam ser verificados logando no painel (admin.soccersapi.com) e filtrando por Brazil. NAO confirmado.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "odds",
+      "transfers",
+      "historico"
+    ],
+    "observacao": "Para um produto de dicas/stats BR: oferece livescore em tempo real (gols, cartoes, substituicoes), escalacoes confirmadas pre-jogo, estatisticas de time/jogador, standings e odds prematch+inplay de multiplos bookmakers (util para value/EV). NAO foram confirmados xG nem predictions (ausentes na doc e no material publico) — se o produto depende de xG ou modelo de previsao, esta API provavelmente nao atende sem fonte complementar. Risco principal: cobertura do futebol brasileiro NAO verificada; precisa validar no painel antes de adotar, pois e justamente o nucleo de um produto BR. Pacote inicial (Soccer 20, 20 ligas) pode nao incluir Brasileirao + estaduais + Copa do Brasil simultaneamente; pode exigir Soccer 100 ou superior."
+  },
+  {
+    "name": "Live-Score API",
+    "url": "https://live-score-api.com/",
+    "acesso": "rest-publica",
+    "free_tier": "Trial gratuito de 14 dias (uso unico), com 1.500 requests/dia e acesso a todos os recursos (livescores, fixtures, events, standings, odds, lineups, statistics). Nao e um free tier permanente - apos 14 dias exige plano pago. Suporte por email por 7 dias durante o trial.",
+    "rate_limit": "1.500 requests/dia no trial (limite diario, nao por hora). Sem free tier permanente apos os 14 dias.",
+    "preco": "Starter EUR 11/mes (14.500 req/dia); Professional EUR 26/mes (50.000 req/dia); Premium EUR 69/mes (75.000 req/dia, + dados historicos); Commentary EUR 190/mes (100.000 req/dia, 92 anos de historico); Custom sob consulta. Requests extras cobrados a EUR 0,001-0,002 cada.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Cobre Brasil com ~24 competicoes (pagina /leagues/league/16/Brazil). Confirmados: Brasileirao Serie A (ID 24), Serie B (ID 95), Serie C (ID 253), Copa do Brasil (ID 256) e Campeonato Paulista A1 (ID 255). Nao foi confirmada cobertura de Serie D nem da maioria dos estaduais (so o Paulista aparece explicitamente). Toda a cobertura esta disponivel ja no trial e em qualquer plano pago - nao ha gating de ligas por plano; o que muda entre planos e o volume de requests e o acesso a dados historicos (Premium/Commentary).",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "historico"
+    ],
+    "observacao": "API barata e simples (REST, GET, autenticacao por key+secret), boa para um produto de dicas/stats BR no quesito tempo real e basico: livescore, fixtures, standings, lineups, eventos (gols, cartoes), match facts, match statistics e commentary ao vivo. Limitacoes importantes para stats avancadas: NAO oferece xG, NAO oferece predictions e NAO tem player-stats detalhadas nem transfers (apenas top goalscorers e estatisticas de partida agregadas). Odds estao incluidas em todos os planos. Para um produto de tips que dependa de xG/probabilidades, faltaria dado - precisaria complementar com outra fonte. O diferencial e preco baixo e dados historicos profundos (ate 92 anos no plano Commentary). Sem free tier permanente: so trial de 14 dias."
+  },
+  {
+    "name": "API Futebol (BR)",
+    "url": "https://www.api-futebol.com.br/planos",
+    "acesso": "rest-publica",
+    "free_tier": "Existe conta gratuita / \"teste antes de pagar\" — a pagina de planos atual (2026) anuncia \"Do gratuito ao enterprise\", \"Criar conta grátis\" e \"Experimente a API com acesso completo antes de escolher um plano\", mas NAO ha um card de plano gratuito com numeros publicados (cobertura/req/dia do free nao confirmados na pagina atual; historicamente havia um plano de desenvolvimento gratuito limitado a 1 campeonato/Brasileirao Serie A com poucas requisicoes, porem isso nao esta numericamente confirmado na pagina 2026). Cadastro necessario para obter API key.",
+    "rate_limit": "desconhecido (o free/trial nao publica numero de requisicoes na pagina atual; planos pagos: Startup 2.000 req/dia, Profissional 5.000 req/dia, Enterprise ilimitado). Reset diario a meia-noite UTC-3.",
+    "preco": "Flexível a partir de R$ 99,00/mes por campeonato; Startup R$ 599,00/mes (10 campeonatos, 2.000 req/dia); Profissional R$ 999,00/mes (20 campeonatos, 5.000 req/dia, estatisticas avancadas); Enterprise sob consulta (todos os campeonatos, req ilimitadas, SLA). Anual com -20% (ex: Flexível R$84,15, Startup R$509,15, Profissional R$849,15). Pagamento via PIX, cartao ou PayPal.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Cobre Brasileirao Serie A, B, C, D, Copa do Brasil, Libertadores, Sul-Americana, estaduais e ate Copa do Mundo 2026. POReM o acesso e gateado por campeonato: nos planos pagos voce escolhe quantos campeonatos quer (Flexível paga por campeonato; Startup 10; Profissional 20); somente o Enterprise inclui \"todos os campeonatos\". Logo, cobrir simultaneamente Serie A+B+C+D + estaduais + Copa do Brasil exige plano de volume alto ou Enterprise — nao vem tudo junto num plano basico.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "historico"
+    ],
+    "observacao": "API REST brasileira (Bearer token) com bom encaixe para produto de dicas/stats do futebol BR: livescore (endpoint /ao-vivo, polling recomendado a cada 30s), classificacao/tabela, artilharia, escalacoes, gols, cartoes (amarelo/vermelho), substituicoes e estatisticas de partida (posse de bola, finalizacoes, escanteios, impedimentos, passes, desarmes). NAO oferece xG (expected goals), NAO oferece odds e NAO oferece predictions — para um produto de \"dicas/tips\" isso e uma limitacao importante (precisaria de outra fonte para xG/odds/probabilidades). Estatisticas avancadas so a partir do plano Profissional. Plano gratuito atual sem numeros publicos: validar req/dia e campeonatos do free criando uma conta antes de comprometer arquitetura."
+  },
+  {
+    "name": "The Odds API",
+    "url": "https://the-odds-api.com",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano Starter gratuito com 500 creditos/mes, dando acesso a todos os esportes, todos os mercados, maioria das casas e odds historicas. Sem cartao para o tier gratuito.",
+    "rate_limit": "Nao usa rate limit por tempo, e sim cota mensal de creditos (500 no free). Custo por chamada = nº de mercados x nº de regioes; odds historicas custam 10x. Headers de resposta informam creditos usados/restantes e custo da ultima chamada. 429 quando a cota acaba.",
+    "preco": "Pago: 20K creditos $30/mes, 100K $59/mes, 5M $119/mes, 15M $249/mes (cobranca mensal recorrente). Todos os planos incluem todos os esportes/mercados/casas e odds historicas.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Cobre Brasileirao Serie A (soccer_brazil_campeonato) e Serie B (soccer_brazil_serie_b), ambos com odds e scores/resultados, disponiveis em todos os planos incluindo o free. NAO cobre Serie C/D, estaduais, nem Copa do Brasil (nao constam na lista de esportes).",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "odds",
+      "historico"
+    ],
+    "observacao": "API focada exclusivamente em ODDS de casas de apostas (h2h/moneyline, spreads, totals, outrights e player props) agregando 40+ bookmakers, mais live scores (~30s de atualizacao) e odds historicas desde jun/2020. NAO oferece dados estatisticos de futebol que um produto de dicas costuma usar: sem lineups, eventos detalhados (gols/cartoes), estatisticas de jogadores, xG ou predictions proprias. Para BR, util apenas como fonte de odds/linhas de mercado de Serie A e B; precisaria de outra API (ex: API-Football) para stats, escalacoes e xG."
+  },
+  {
+    "name": "Odds-API.io",
+    "url": "https://odds-api.io/",
+    "acesso": "rest-publica",
+    "free_tier": "Sim. Plano Free (£0, sem cartao, permanente): acesso REST, mas limitado a 2 bookmakers por vez, 100 requisicoes/hora e sem WebSocket. Destinado a dev/teste; uso comercial em producao exige plano pago.",
+    "rate_limit": "100 requisicoes/hora no free tier. Planos pagos partem de 5.000 req/hora, com capacidade adicional contratavel (10K/hr +£139, 20K/hr +£229, 30K/hr +£309).",
+    "preco": "Starter £99/mes, Growth £179/mes, Pro £229/mes, Enterprise sob consulta. Add-on WebSocket: +100% do custo do plano.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "A pagina de futebol lista explicitamente \"Brazilian Serie A & B\" (odds). Estaduais (Paulista, Carioca, Mineiro) e Copa do Brasil NAO foram confirmados na documentacao/site - o catalogo cita \"12.000+ ligas\" genericamente, mas sem detalhar essas competicoes brasileiras. Cobertura e de ODDS dessas ligas, nao de estatisticas/escalacoes. Serie C/D nao mencionadas.",
+    "dados": [
+      "odds",
+      "livescore",
+      "historico"
+    ],
+    "observacao": "Produto e um AGREGADOR DE ODDS (pre-match e live de 265+ bookmakers: Bet365, Betfair, Pinnacle, 1xBet etc.), nao um provedor de dados esportivos completo. Oferece odds de varios mercados (1X2, Asian Handicap, Over/Under, BTTS, Correct Score, HT/FT, goalscorer), player props, period scores, value bets e dados historicos. NAO fornece fixtures detalhados, standings, lineups/escalacoes, eventos play-by-play, estatisticas de jogador agregadas, xG nem predictions. Para um produto de dicas/stats de futebol BR serve apenas como fonte de ODDS/linhas de mercado (util para deteccao de valor/arbitragem), precisando ser complementado por uma API de stats (ex: API-Football, SportMonks). Precos em libras (£). WebSocket disponivel so como add-on pago dobrando o custo do plano. SDKs oficiais: Python, Node/TS e MCP Server. Docs em https://docs.odds-api.io"
+  },
+  {
+    "name": "StatsBomb Open Data",
+    "url": "https://github.com/statsbomb/open-data",
+    "acesso": "open-data",
+    "free_tier": "Totalmente gratuito. Conjunto fixo de partidas selecionadas distribuido como arquivos JSON estaticos no repositorio GitHub (data/competitions.json, /matches, /events, /lineups e /three-sixty para 360). Sem chave de API, sem cadastro. Uso livre desde que se credite a StatsBomb (citar fonte + logo). Nao e um feed ao vivo nem um catalogo completo: e uma amostra para pesquisa/analytics.",
+    "rate_limit": "desconhecido",
+    "preco": "Open Data e gratuito. O produto comercial completo (Hudl StatsBomb Data API / feeds B2B) e sob consulta, contrato enterprise — preco nao publicado.",
+    "cobertura_brasil": "nao",
+    "cobertura_brasil_detalhe": "Nenhuma competicao de clubes ou estaduais do Brasil no Open Data. O competitions.json nao tem o pais \"Brazil\" nem Brasileirao Serie A/B/C/D, estaduais ou Copa do Brasil. As ligas presentes sao europeias/americanas (Premier League, La Liga, Bundesliga, Serie A italiana, Ligue 1, MLS, NWSL, Liga Profesional argentina, etc.) e torneios de selecoes (FIFA World Cup, Copa America, UEFA Euro, Women's World Cup). O Brasil so aparece indiretamente como selecao em torneios como Copa America/World Cup — nao ha cobertura de futebol de clubes brasileiro. O produto comercial pago da StatsBomb cobre o Brasileirao, mas isso esta fora do Open Data e e B2B sob contrato.",
+    "dados": [
+      "fixtures",
+      "lineups",
+      "events",
+      "player-stats"
+    ],
+    "observacao": "Inadequado como fonte principal para um produto de dicas/stats do futebol BR: zero cobertura de Brasileirao/estaduais/Copa do Brasil, e sao dados estaticos historicos (nao ha livescore, odds nem predictions). Forte apenas em event data granular e StatsBomb 360 (freeze frames de posicionamento) para clubes europeus e torneios de selecao — util como dataset de treino/modelagem de xG ou benchmark, nao como feed de produto. xG nao e um endpoint separado, mas e derivavel a partir do event data (cada chute tem shot_statsbomb_xg). Para BR seria necessario o produto comercial Hudl StatsBomb (B2B, sob consulta)."
+  },
+  {
+    "name": "openfootball / football.db",
+    "url": "https://openfootball.github.io/ (dados em https://github.com/openfootball)",
+    "acesso": "open-data",
+    "free_tier": "Tudo gratuito e em dominio publico (CC0). Nao ha API nem chave: baixa-se arquivos de texto (formato Football.TXT) e JSON auto-gerado diretamente dos repositorios GitHub (ex.: openfootball/south-america, openfootball/football.json). Uso irrestrito, inclusive comercial.",
+    "rate_limit": "Nao se aplica (sem API). O unico limite e o rate limit padrao do GitHub para baixar arquivos/raw (60 req/h sem token, 5000 req/h com token), nao do projeto em si.",
+    "preco": "Gratuito (dominio publico, CC0). Sem planos pagos.",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "Em openfootball/south-america/brazil ha Brasileirao Serie A (_br1.txt) e Serie B (_br2.txt) cobrindo aproximadamente 2018-2026, e Copa do Brasil (_brcup.txt) a partir de 2025. NAO cobre Serie C/D nem campeonatos estaduais. Conteudo limitado a tabela de jogos, resultados (com gols/marcadores) e classificacao. Cobertura depende de commits de voluntarios, entao recencia e completude variam.",
+    "dados": [
+      "fixtures",
+      "standings",
+      "historico"
+    ],
+    "observacao": "Inadequado como fonte primaria para um produto de dicas/stats em tempo real: NAO oferece livescore, escalacoes, eventos minuto-a-minuto, estatisticas de jogador, xG, odds ou predictions. E um dataset estatico mantido pela comunidade (atualizado por commits manuais), util apenas como base historica de calendario/resultados/classificacao do Brasileirao Serie A e B, e gratuito/sem licenca. Para livescore/xG/odds e necessario combinar com outra fonte (ex.: API-Football, Sportmonks, etc.)."
+  },
+  {
+    "name": "Club Elo",
+    "url": "http://clubelo.com/API",
+    "acesso": "rest-publica",
+    "free_tier": "Sim — API totalmente gratuita e aberta. Sem cadastro, sem API key. Endpoint CSV em http://api.clubelo.com. Tres consultas: por data (ranking/Elo de todos os clubes naquela data: http://api.clubelo.com/YYYY-MM-DD), por clube (historico completo de Elo: http://api.clubelo.com/<Clube>) e Fixtures (proximos jogos com probabilidades: http://api.clubelo.com/Fixtures).",
+    "rate_limit": "desconhecido (nenhum limite documentado ou exigido; resposta CSV simples, sem autenticacao)",
+    "preco": "Gratuito (nao ha planos pagos)",
+    "cobertura_brasil": "nao",
+    "cobertura_brasil_detalhe": "Cobertura exclusivamente europeia/UEFA. Verificado na propria API (endpoint de ranking de 2026-06-18, 618 clubes): apenas codigos de pais europeus (ENG, ESP, ITA, GER, FRA, POR, NED, RUS, TUR, etc.). ZERO clubes com codigo BRA e nenhum clube brasileiro. Nao cobre Brasileirao Serie A/B/C/D, estaduais nem Copa do Brasil. O proprio site descreve o escopo como ratings de clubes desde as primeiras Copas Europeias ate hoje.",
+    "dados": [
+      "standings",
+      "historico",
+      "predictions",
+      "fixtures"
+    ],
+    "observacao": "Inutilizavel para um produto de dicas/stats de futebol BRASILEIRO: a base cobre apenas clubes europeus/UEFA e nao inclui nenhum time do Brasil. Nao oferece livescore, escalacoes, eventos de jogo, estatisticas de jogador, xG nem odds. O dado central e o rating Elo (campos do CSV: Rank, Club, Country, Level, Elo, From, To) e o endpoint Fixtures traz probabilidades de resultado por diferenca de gols e por placar exato (GD<-5 ... GD>5 e R:0-0, R:1-0, ...), util como motor de predicao — mas so para o futebol europeu. Util eventualmente como referencia de forca de clubes europeus ou para conteudo sobre competicoes da UEFA, nao para o core BR."
+  },
+  {
+    "name": "OpenLigaDB",
+    "url": "https://www.openligadb.de/",
+    "acesso": "rest-publica",
+    "free_tier": "Totalmente gratuito e aberto (ODbL). Toda a API REST e publica e nao requer autenticacao nem API key. Nao ha planos pagos nem tier separado: todo o conteudo disponivel e gratis.",
+    "rate_limit": "desconhecido (nenhum limite de requisicoes documentado oficialmente)",
+    "preco": "Gratis (nao ha planos pagos)",
+    "cobertura_brasil": "nao",
+    "cobertura_brasil_detalhe": "Nao cobre o futebol brasileiro. O foco e o esporte alemao (Bundesliga, 2. Bundesliga, DFB-Pokal, Champions League, etc.) e algumas competicoes internacionais (ex: Copa do Mundo FIFA 2026, Swiss Super League). Como e crowdsourced, ligas dependem de contribuicoes da comunidade; Brasileirao Serie A/B/C/D, estaduais e Copa do Brasil nao tem cobertura confiavel/inexistente.",
+    "dados": [
+      "livescore",
+      "fixtures",
+      "standings"
+    ],
+    "observacao": "Inadequado para um produto de dicas/stats de futebol brasileiro: nao cobre o Brasil. Mesmo onde cobre (Alemanha), os dados sao basicos (resultados/placar, jogos/calendario, tabela e artilheiros) — sem lineups, eventos detalhados (cartoes/substituicoes confiaveis), estatisticas de jogador, xG, odds ou predictions. Por ser comunitario, ha risco de atraso/inconsistencia. Vantagem: 100% gratis e sem auth. Para o Brasil, alternativas como football-data.org (Serie A no free tier) ou API-Football sao mais adequadas."
+  },
+  {
+    "name": "soccerdata (probberechts)",
+    "url": "https://github.com/probberechts/soccerdata",
+    "acesso": "scraping-nao-oficial",
+    "free_tier": "Totalmente gratis e open-source (licenca Apache 2.0). Biblioteca Python no PyPI (`pip install soccerdata`); nao ha API hospedada, conta, chave nem plano pago. O custo real eh manter os scrapers funcionando e respeitar os ToS de cada site raspado.",
+    "rate_limit": "Sem limite imposto pela biblioteca em si, mas como faz scraping ela aplica delays/backoff e caching local agressivo (dados so sao baixados quando necessario e ficam em cache em SOCCERDATA_DIR) para nao sobrecarregar os sites. O limite efetivo eh o de cada fonte (FBref, Sofascore, WhoScored etc.), que podem bloquear/captcha sob carga.",
+    "preco": "gratis (open-source, sem planos pagos)",
+    "cobertura_brasil": "parcial",
+    "cobertura_brasil_detalhe": "O Brasil NAO vem nas ligas default (a biblioteca traz por padrao top-5 ligas europeias + torneios internacionais: ENG-Premier League, ESP-La Liga, FRA-Ligue 1, GER-Bundesliga, ITA-Serie A). Para Brasileirao/estaduais/Copa do Brasil eh preciso adicionar uma liga customizada editando SOCCERDATA_DIR/config/league_dict.json com os identificadores internos de cada fonte. As fontes subjacentes (FBref via comp 24 = Serie A Brasil; Sofascore tournament 325 = Brasileirao Serie A; ESPN bra.1) indexam o Brasileirao Serie A, entao eh viavel — porem sem garantia oficial: a doc avisa que ligas customizadas podem ter estrutura diferente e quebrar o scraping. Cobertura de Serie B/C/D, estaduais e Copa do Brasil depende de cada fonte (FBref/Sofascore cobrem Serie B e Copa do Brasil; estaduais sao irregulares) e nada disso eh testado/suportado oficialmente pela lib.",
+    "dados": [
+      "fixtures",
+      "standings",
+      "lineups",
+      "events",
+      "player-stats",
+      "xg",
+      "odds",
+      "predictions",
+      "historico"
+    ],
+    "observacao": "Nao serve para livescore/tempo real — eh uma ferramenta de coleta em batch/historico via scraping, com caching local, voltada a analise (pandas). Para um produto de dicas/stats de futebol BR funciona como pipeline de ETL gratuito, NAO como backend de tempo real. Cada tipo de dado vem de uma fonte distinta: xG (Understat e FBref), estatisticas detalhadas de jogador/time (FBref), eventos/lineups por minuto (WhoScored e Sofascore), odds historicas (Football-Data.co.uk), ratings FIFA (SoFIFA), Elo (ClubElo). Predictions vinham do FiveThirtyEight, que foi descontinuado — esse reader esta efetivamente obsoleto. Riscos para producao: fragilidade (qualquer mudanca de layout nos sites quebra a coleta), possivel violacao de ToS dos sites, risco de bloqueio/captcha por IP e ausencia de SLA. Recomendado para prototipagem/backfill historico, combinado com uma API oficial para o ao vivo."
+  }
+]
