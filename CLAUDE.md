@@ -47,7 +47,7 @@ A folha de estilos do Tailwind v4 fica em `packages/ui/src/styles/globals.css` e
 
 ### SocratiCode MCP (OBRIGATÓRIO)
 
-O **`socraticode` MCP server** é o ponto de entrada **obrigatório** para exploração da base de código neste repo. O projeto já está indexado (`codebase_2c7823a553f2`, 57 arquivos, grafo de dependências construído). **Não** comece com `Glob`/`Grep`/`Read` para perguntas exploratórias — busque primeiro, leia depois de afunilar.
+O **`socraticode` MCP server** é o ponto de entrada **obrigatório** para exploração da base de código neste repo. O projeto está indexado (rode `codebase_status` para conferir; o grafo de dependências é construído automaticamente após o index). **Não** comece com `Glob`/`Grep`/`Read` para perguntas exploratórias — busque primeiro, leia depois de afunilar.
 
 **Regras rígidas:**
 
