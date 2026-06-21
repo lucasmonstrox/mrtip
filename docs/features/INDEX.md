@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-19 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+21 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -27,6 +27,8 @@
 | SIN-011 | Sinal de lesões e desfalques | sinais | investigado | P2 | dados:investigado ia:investigado | nao | — |
 | SIN-012 | Camada de mercado e movimento de odds (validação de valor) | sinais | investigado | P1 | dados:investigado ia:investigado | nao | — |
 | SIN-013 | Sinal de escanteios (corners) como mercado/edge | sinais | investigado | P2 | dados:investigado ia:investigado | nao | DOS-001 |
+| SIN-014 | Sinal — formação tática (matchup de formações) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | DOS-001 |
+| SIN-015 | Sinal — perfil tático (transições, contra-ataque, linhas e zonas) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | DOS-001, MOD-001 |
 
 ## Índice de âncoras
 
@@ -73,9 +75,11 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/regulacao-br-apostas-produto.md](../../docs/investigacoes/regulacao-br-apostas-produto.md) → COMP-001
 - [docs/investigacoes/sinal-conflitos-entre-jogadores.md](../../docs/investigacoes/sinal-conflitos-entre-jogadores.md) → SIN-001
 - [docs/investigacoes/sinal-escanteios.md](../../docs/investigacoes/sinal-escanteios.md) → SIN-013
+- [docs/investigacoes/sinal-formacao-tatica.md](../../docs/investigacoes/sinal-formacao-tatica.md) → SIN-014
 - [docs/investigacoes/sinal-interesses-patrocinadores-jogador.md](../../docs/investigacoes/sinal-interesses-patrocinadores-jogador.md) → SIN-002
 - [docs/investigacoes/sinal-mood-jogador.md](../../docs/investigacoes/sinal-mood-jogador.md) → SIN-003
 - [docs/investigacoes/sinal-ocasioes-especiais-jogador.md](../../docs/investigacoes/sinal-ocasioes-especiais-jogador.md) → SIN-005
+- [docs/investigacoes/sinal-perfil-tatico-transicoes.md](../../docs/investigacoes/sinal-perfil-tatico-transicoes.md) → SIN-015
 - [docs/investigacoes/sinal-relacao-jogador-treinador.md](../../docs/investigacoes/sinal-relacao-jogador-treinador.md) → SIN-004
 - [docs/planos/DOS-001-dossie-por-partida.md](../../docs/planos/DOS-001-dossie-por-partida.md) → DOS-001
 - [docs/regras/arbitragem.md](../../docs/regras/arbitragem.md) → SIN-009

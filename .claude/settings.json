@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "neon-postgres@neon": true,
+    "socraticode@socraticode": true
+  }
+}
