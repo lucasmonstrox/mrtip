@@ -4,6 +4,7 @@
 
 - **Status:** rascunho inicial (v0)
 - **Última atualização:** 2026-06-18
+- **Estratégia / onde está o valor:** ver [tese-produto.md](tese-produto.md) — síntese (destilada das investigações) de onde mora o EV+, por que honestidade auditável é fosso + conformidade, e por onde começar.
 - **Itens marcados `[A confirmar]`** dependem de decisão sua e estão listados em [Decisões em aberto](#11-decisões-em-aberto).
 
 ---
@@ -219,6 +220,7 @@ Componentes previstos (a detalhar em doc próprio de arquitetura):
 6. **Tiers e preços** da assinatura; existe camada grátis?
 7. **Nome/branding** — "mrtip" é definitivo?
 8. **Enquadramento jurídico** e requisitos de jogo responsável.
+9. **Tensão "onde está o valor" (nicho/BR) × "onde começar" (1X2/PL).** A investigação das regras de prognóstico (`docs/regras/`, features `SIN-00X`) convergiu: o EV+ real mora em **mercados de nicho** (cartões, escanteios, team-totals) e em **ligas de baixa liquidez** (Brasileirão/Conmebol) — porque nos mercados principais de ligas grandes a *closing line* sharp já comeu o valor (ver [mercado-odds.md](regras/mercado-odds.md)). Isso conflita com a sugestão atual de iniciar por **1X2 + over/under 2.5 na Premier League** (§7), que é justamente o cenário **mais eficiente**. Decidir: o MVP começa pelo mercado mais *fácil de cobrir* (PL/1X2) ou pelo mais *lucrativo* (cartões e/ou Brasileirão/Conmebol)? `[A confirmar]`
 
 ---
 
