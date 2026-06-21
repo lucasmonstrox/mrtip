@@ -17,6 +17,12 @@ coverage
 .next/
 out/
 
+# cloudflare / opennext
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
+.dev.vars
+
 # production
 build
 dist
