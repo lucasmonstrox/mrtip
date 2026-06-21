@@ -1,15 +1,21 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "@workspace/ui/globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "@workspace/ui/lib/utils"
+import { Providers } from "@/shared/providers"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: "mrtip",
+  description: "Seu copiloto de apostas esportivas: o porquê de cada pick, com fontes.",
+}
 
 export default function RootLayout({
   children,
@@ -18,12 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       suppressHydrationWarning
       className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
