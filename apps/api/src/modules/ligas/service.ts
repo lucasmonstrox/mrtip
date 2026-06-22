@@ -1,7 +1,7 @@
 import rawPL from "../../data/openfootball/en.1.2025-26.json"
 
 import { CATALOGO, type LigaCode } from "./consts"
-import { TemporadaBruta, type Liga, type LinhaClassificacao, type Partida, type Round } from "./model"
+import type { Liga, LinhaClassificacao, Partida, Round, TemporadaBruta } from "./model"
 
 /** JSON bruto por arquivo do catálogo (import estático → entra no bundle). */
 const BRUTOS: Record<string, unknown> = {
@@ -22,11 +22,12 @@ function rodadaDeNome(nome: string): number {
 
 function normalizarPlacar(score: TemporadaBruta["matches"][number]["score"]): Partida["placar"] {
   if (!score) return null
-  if (Array.isArray(score)) return { ft: [score[0], score[1]], ht: null }
+  if (Array.isArray(score)) return { ft: score, ht: null }
   return { ft: score.ft, ht: score.ht ?? null }
 }
 
-/** Lê + valida (zod) + normaliza a temporada de uma liga. Cacheado por code. */
+/** Lê + normaliza a temporada de uma liga. Cacheado por code. O JSON é estático e
+ *  versionado (bundle), com shape garantido pelo schema TemporadaBruta. */
 export function carregarTemporada(code: LigaCode): Temporada {
   const hit = cache.get(code)
   if (hit) return hit
@@ -34,7 +35,7 @@ export function carregarTemporada(code: LigaCode): Temporada {
   const meta = CATALOGO.find((l) => l.code === code)
   if (!meta) throw new Error(`Liga não catalogada: ${code}`)
 
-  const dados = TemporadaBruta.parse(BRUTOS[meta.arquivo])
+  const dados = BRUTOS[meta.arquivo] as TemporadaBruta
   const partidas: Partida[] = dados.matches.map((m) => ({
     rodada: rodadaDeNome(m.round),
     nome: m.round,

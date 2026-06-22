@@ -10,6 +10,8 @@
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
     "build": "bun build ./src/index.ts --target bun --outdir ./dist",
+    "deploy": "wrangler deploy",
+    "cf-dev": "wrangler dev",
     "lint": "eslint",
     "format": "prettier --write \"**/*.ts\"",
     "typecheck": "tsc --noEmit"

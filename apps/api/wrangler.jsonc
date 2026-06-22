@@ -1,0 +1,18 @@
+// API do mrtip (Elysia) no Cloudflare Workers. Rodar local: bunx wrangler dev.
+// Padrão espelhado de menupiloto/apps/api.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mrtip-api",
+  // Conta do João (joao.galiano.silva@gmail.com) — fixada pra nunca deployar
+  // na conta errada (mesma do mrtip-web).
+  "account_id": "162bc07e4cb66f1b14ec76e52f8f2f21",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-06-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "dev": {
+    "port": 8787
+  }
+}

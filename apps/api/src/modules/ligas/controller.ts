@@ -1,16 +1,19 @@
-import { Elysia } from "elysia"
-import { z } from "zod"
+import { Elysia, t } from "elysia"
 
 import { CATALOGO } from "./consts"
-import { ErroNaoEncontrado, Liga, LigaResumo, LinhaClassificacao, Round } from "./model"
 import { agruparPorRound, calcularClassificacao, carregarTemporada } from "./service"
 
-const ParamCode = z.object({ code: z.string() })
+const ParamCode = t.Object({ code: t.String() })
 
-/** Rotas de ligas. Method chaining é obrigatório p/ o type-inference do Eden. */
+/**
+ * Rotas de ligas. Method chaining é obrigatório p/ o type-inference do Eden — que
+ * infere os tipos de resposta direto do RETORNO de cada handler (sem `response`
+ * schema). Validar a saída seria redundante (dados estáticos do openfootball) e
+ * encarece o compile da 1ª request no workerd (cold start). Inputs (params/query)
+ * seguem validados.
+ */
 export const ligas = new Elysia({ prefix: "/v1/ligas" })
   .get("/", () => CATALOGO.map(({ code, nome, pais, temporada }) => ({ code, nome, pais, temporada })), {
-    response: z.array(Liga),
     detail: { summary: "Lista as ligas disponíveis" },
   })
   .get(
@@ -21,11 +24,7 @@ export const ligas = new Elysia({ prefix: "/v1/ligas" })
       const { liga, partidas } = carregarTemporada(meta.code)
       return { ...liga, rounds: agruparPorRound(partidas).length, partidas: partidas.length }
     },
-    {
-      params: ParamCode,
-      response: { 200: LigaResumo, 404: ErroNaoEncontrado },
-      detail: { summary: "Resumo de uma liga" },
-    },
+    { params: ParamCode, detail: { summary: "Resumo de uma liga" } },
   )
   .get(
     "/:code/rounds",
@@ -37,8 +36,7 @@ export const ligas = new Elysia({ prefix: "/v1/ligas" })
     },
     {
       params: ParamCode,
-      query: z.object({ round: z.coerce.number().int().positive().optional() }),
-      response: { 200: z.array(Round), 404: ErroNaoEncontrado },
+      query: t.Object({ round: t.Optional(t.Integer({ minimum: 1 })) }),
       detail: { summary: "Rounds (rodadas) com os jogos; ?round=N filtra um" },
     },
   )
@@ -54,8 +52,7 @@ export const ligas = new Elysia({ prefix: "/v1/ligas" })
     },
     {
       params: ParamCode,
-      query: z.object({ ate: z.coerce.number().int().positive().optional() }),
-      response: { 200: z.array(LinhaClassificacao), 404: ErroNaoEncontrado },
+      query: t.Object({ ate: t.Optional(t.Integer({ minimum: 1 })) }),
       detail: { summary: "Tabela de classificação calculada; ?ate=N corta na rodada N" },
     },
   )
