@@ -1,6 +1,7 @@
 import {
   FileSearchIcon,
   LineChartIcon,
+  ListOrderedIcon,
   type LucideIcon,
   SettingsIcon,
   ShieldCheckIcon,
@@ -40,6 +41,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: "Análise",
     items: [
       { title: "Dossiê do Jogo", href: "/jogo", icon: FileSearchIcon },
+      { title: "Ligas", href: "/ligas", icon: ListOrderedIcon },
       { title: "Histórico · CLV", href: "/historico", icon: LineChartIcon },
     ],
   },
