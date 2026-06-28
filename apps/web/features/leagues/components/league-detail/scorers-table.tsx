@@ -1,5 +1,6 @@
 "use client"
 
+import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import Link from "next/link"
 import { useCallback, useState } from "react"
 import { Virtuoso } from "react-virtuoso"
@@ -58,28 +59,33 @@ export function ScorersTable({ code }: { code: string }) {
     scrollParent != null ? { customScrollParent: scrollParent } : { useWindowScroll: true as const }
 
   return (
-    <div ref={setRootRef} className="flex flex-col">
-      <div className={`${COLS} border-b px-2 py-2 text-sm font-medium text-muted-foreground`}>
-        <span>#</span>
-        <span aria-hidden="true" />
-        <span>Jogador</span>
-        <span className="text-center">G</span>
-        <span className="text-center">A</span>
-      </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Marcadores</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div ref={setRootRef} className="flex flex-col">
+          <div className={`${COLS} border-y px-4 py-2 text-sm font-medium text-muted-foreground`}>
+            <span>#</span>
+            <span aria-hidden="true" />
+            <span>Jogador</span>
+            <span className="text-center">G</span>
+            <span className="text-center">A</span>
+          </div>
 
-      {scrollParent !== undefined ? (
-        <Virtuoso
-          {...scrollProps}
-          data={visible}
-          context={{ hasMore }}
-          endReached={() => setCount((c) => Math.min(c + PAGE, scorers.length))}
-          increaseViewportBy={300}
-          components={VIRTUOSO_COMPONENTS}
-          itemContent={(index, s) => (
-            <Link
-              href={`/players/${s.id}`}
-              className={`${COLS} border-b px-2 py-2 text-sm transition-colors hover:bg-muted/50`}
-            >
+          {scrollParent !== undefined ? (
+            <Virtuoso
+              {...scrollProps}
+              data={visible}
+              context={{ hasMore }}
+              endReached={() => setCount((c) => Math.min(c + PAGE, scorers.length))}
+              increaseViewportBy={300}
+              components={VIRTUOSO_COMPONENTS}
+              itemContent={(index, s) => (
+                <Link
+                  href={`/players/${s.id}`}
+                  className={`${COLS} border-b px-4 py-2 text-sm transition-colors hover:bg-muted/50`}
+                >
               <span className="tabular-nums text-muted-foreground">{index + 1}</span>
               <span className="flex items-center justify-center">
                 {s.team?.logoUrl ? (
@@ -105,10 +111,12 @@ export function ScorersTable({ code }: { code: string }) {
               </span>
               <span className="text-center font-semibold tabular-nums">{s.goals}</span>
               <span className="text-center tabular-nums">{s.assists}</span>
-            </Link>
-          )}
-        />
-      ) : null}
-    </div>
+                </Link>
+              )}
+            />
+          ) : null}
+        </div>
+      </CardContent>
+    </Card>
   )
 }

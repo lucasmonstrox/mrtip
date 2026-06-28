@@ -3,13 +3,7 @@ import Link from "next/link"
 
 import { useMatchLineupQuery } from "../../hooks/data/queries/use-match-lineup-query"
 import type { LineupPlayer, TeamLineup } from "../../types"
-
-// Rating → text color (green good, amber average, red poor).
-function ratingColor(r: number): string {
-  if (r >= 7.5) return "text-emerald-600 dark:text-emerald-400"
-  if (r >= 6.5) return "text-foreground"
-  return "text-red-600 dark:text-red-400"
-}
+import { ratingColor } from "../../utils/format"
 
 function LineupRow({ p }: { p: LineupPlayer }) {
   return (

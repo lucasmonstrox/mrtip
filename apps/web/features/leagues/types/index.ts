@@ -13,8 +13,13 @@ export type {
   PlayerDetail,
   PlayerGoal,
   Round,
+  Proportion,
   StandingRow,
   TeamAbsences,
   TeamLineup,
   TeamRef,
+  TeamStanding,
+  TeamTrends,
+  TeamTrendSplit,
+  VenueRecord,
 } from "@workspace/api"

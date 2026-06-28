@@ -51,7 +51,7 @@ export function MatchDetail({ id }: { id: string }) {
                   <img src={match.home.logoUrl} alt="" className="size-8 shrink-0 object-contain" />
                 ) : null}
               </Link>
-              {form ? <FormChips recent={form.home.recent} size="sm" /> : null}
+              {form ? <FormChips recent={form.home.recent} team={form.home.team} size="sm" /> : null}
             </div>
             <div className="text-center">
               {score ? (
@@ -77,7 +77,7 @@ export function MatchDetail({ id }: { id: string }) {
                 ) : null}
                 {match.away.name}
               </Link>
-              {form ? <FormChips recent={form.away.recent} size="sm" /> : null}
+              {form ? <FormChips recent={form.away.recent} team={form.away.team} size="sm" /> : null}
             </div>
           </div>
           <MatchEvents goals={match.goals} cards={match.cards} homeTeamId={match.home.id} />

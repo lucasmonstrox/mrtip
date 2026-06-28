@@ -1,5 +1,6 @@
 "use client"
 
+import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import {
   Table,
   TableBody,
@@ -33,9 +34,13 @@ export function StandingsTable({ code }: { code: string }) {
   const present = [...new Set(table.map((r) => r.zone).filter((z): z is string => !!z && z in ZONES))]
 
   return (
-    <div className="flex flex-col gap-3">
-      <Table>
-        <TableHeader>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Classificação</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table className="[&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4">
+          <TableHeader>
           <TableRow>
             <TableHead className="w-10">#</TableHead>
             <TableHead>Time</TableHead>
@@ -88,25 +93,26 @@ export function StandingsTable({ code }: { code: string }) {
                 <TableCell className="text-center font-semibold">{row.points}</TableCell>
                 <TableCell>
                   <div className="flex justify-center">
-                    <FormChips recent={row.form} size="sm" />
+                    <FormChips recent={row.form} team={row.team} size="sm" />
                   </div>
                 </TableCell>
               </TableRow>
             )
           })}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
 
-      {present.length ? (
-        <div className="flex flex-wrap gap-x-4 gap-y-1 px-2 text-xs text-muted-foreground">
-          {present.map((z) => (
-            <span key={z} className="flex items-center gap-1.5">
-              <span className={`size-2 rounded-full ${ZONES[z]!.dot}`} />
-              {ZONES[z]!.label}
-            </span>
-          ))}
-        </div>
-      ) : null}
-    </div>
+        {present.length ? (
+          <div className="flex flex-wrap gap-x-4 gap-y-1 border-t px-4 py-3 text-xs text-muted-foreground">
+            {present.map((z) => (
+              <span key={z} className="flex items-center gap-1.5">
+                <span className={`size-2 rounded-full ${ZONES[z]!.dot}`} />
+                {ZONES[z]!.label}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </CardContent>
+    </Card>
   )
 }

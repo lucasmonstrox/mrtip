@@ -6,7 +6,17 @@ import Link from "next/link"
 
 import { useTeamQuery } from "../../hooks/data/queries/use-team-query"
 import { formatDate } from "../../utils/format"
-import { FormChips } from "../match-detail/form-guide"
+import { FormGuide } from "../match-detail/form-guide"
+import { TeamStanding } from "./team-standing"
+import { TeamTrends } from "./team-trends"
+
+// Result chip in the match log, from the team's perspective: win/draw/loss → color + PT letter.
+const RESULT_COLOR: Record<"W" | "D" | "L", string> = {
+  W: "bg-emerald-500",
+  D: "bg-zinc-400",
+  L: "bg-red-500",
+}
+const RESULT_LABEL: Record<"W" | "D" | "L", string> = { W: "V", D: "E", L: "D" }
 
 export function TeamDetail({ slug }: { slug: string }) {
   const { data: team, isPending, isError } = useTeamQuery(slug)
@@ -17,13 +27,28 @@ export function TeamDetail({ slug }: { slug: string }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <header className="flex flex-col gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">{team.name}</h1>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground">Forma</span>
-          <FormChips recent={team.form.recent} />
+      <header className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          {team.logoUrl ? (
+            <img src={team.logoUrl} alt={team.name} className="size-14 object-contain" />
+          ) : (
+            <div className="size-14 rounded bg-muted" />
+          )}
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-semibold tracking-tight">{team.name}</h1>
+            {team.shortCode && (
+              <span className="font-mono text-xs tracking-wider text-muted-foreground">
+                {team.shortCode}
+              </span>
+            )}
+          </div>
         </div>
+        <FormGuide form={team.form} />
       </header>
+
+      {team.standing && <TeamStanding standing={team.standing} />}
+
+      <TeamTrends trends={team.trends} />
 
       <Card>
         <CardHeader>
@@ -31,25 +56,42 @@ export function TeamDetail({ slug }: { slug: string }) {
         </CardHeader>
         <CardContent className="p-0">
           <ul className="divide-y">
-            {team.matches.map((m) => (
-              <li key={m.id}>
-                <Link
-                  href={`/matches/${m.id}`}
-                  className="grid grid-cols-[6rem_1fr_auto_1fr] items-center gap-3 px-4 py-2 text-sm transition-colors hover:bg-muted/50"
-                >
-                  <span className="text-xs text-muted-foreground">{formatDate(m.date, null)}</span>
-                  <span className={cn("text-right", m.home.id === team.id && "font-semibold")}>
-                    {m.home.name}
-                  </span>
-                  <span className="rounded bg-muted px-2 py-0.5 font-mono tabular-nums">
-                    {m.score ? `${m.score.ft[0]} - ${m.score.ft[1]}` : "vs"}
-                  </span>
-                  <span className={cn(m.away.id === team.id && "font-semibold")}>
-                    {m.away.name}
-                  </span>
-                </Link>
-              </li>
-            ))}
+            {team.matches.map((m) => {
+              const isHome = m.home.id === team.id
+              let result: "W" | "D" | "L" | null = null
+              if (m.score) {
+                const gf = isHome ? m.score.ft[0] : m.score.ft[1]
+                const ga = isHome ? m.score.ft[1] : m.score.ft[0]
+                result = gf > ga ? "W" : gf < ga ? "L" : "D"
+              }
+              return (
+                <li key={m.id}>
+                  <Link
+                    href={`/matches/${m.id}`}
+                    className="grid grid-cols-[1.5rem_5rem_1fr_auto_1fr] items-center gap-3 px-4 py-2 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    {result ? (
+                      <span
+                        className={cn(
+                          "flex size-5 items-center justify-center rounded text-[10px] font-semibold text-white",
+                          RESULT_COLOR[result],
+                        )}
+                      >
+                        {RESULT_LABEL[result]}
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    <span className="text-xs text-muted-foreground">{formatDate(m.date, null)}</span>
+                    <span className={cn("text-right", isHome && "font-semibold")}>{m.home.name}</span>
+                    <span className="rounded bg-muted px-2 py-0.5 font-mono tabular-nums">
+                      {m.score ? `${m.score.ft[0]} - ${m.score.ft[1]}` : "vs"}
+                    </span>
+                    <span className={cn(!isHome && "font-semibold")}>{m.away.name}</span>
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </CardContent>
       </Card>

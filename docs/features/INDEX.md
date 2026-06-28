@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-27 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+31 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -13,6 +13,9 @@
 | COMP-001 | Conformidade e jogo responsável (Lei 14.790 / Portaria SPA 1.231) | conformidade | investigado | P1 | ui:investigado api:investigado ia:investigado | nao | — |
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
+| LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
+| LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
+| LIG-003 | Stats de volume por partida (chutes, passes, desarmes, faltas) | ligas | ideia | P2 | dados:ideia api:ideia ui:ideia | nao | LIG-001 |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -35,6 +38,7 @@
 | SIN-017 | Sinal — game-state e timing de gols | sinais | investigado | P2 | dados:investigado ia:investigado | nao | DOS-001, MOD-001 |
 | SIN-018 | Sinal — viés favorito-azarão e dinheiro recreativo | sinais | investigado | P2 | dados:investigado ia:investigado | nao | SIN-012 |
 | SIN-019 | Sinal — steam moves e origem da linha (sharp vs square) | sinais | investigado | P2 | dados:investigado ia:investigado | nao | SIN-012, DOS-001 |
+| SIN-020 | Sinal — janelas sazonais de fadiga (festas, pré-temporada, reta final, parões) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | — |
 
 ## Índice de âncoras
 
@@ -49,10 +53,16 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 - `arbitros` → SIN-009
 - `backtest_clv` → MOD-001
+- `card` → LIG-001, LIG-002 ⚠️ compartilhada
+- `coach` → LIG-002
 - `dossier_snapshot` → DOS-001, MOD-002 ⚠️ compartilhada
 - `entity_xref` → DOS-001
 - `estadios` → SIN-006, SIN-007, SIN-008, SIN-016 ⚠️ compartilhada
-- `match` → DOS-001, MOD-001 ⚠️ compartilhada
+- `goal` → LIG-001, LIG-002 ⚠️ compartilhada
+- `injury` → LIG-001, LIG-002, SIN-020 ⚠️ compartilhada
+- `lineup` → LIG-002
+- `lineup_player` → LIG-001, LIG-003, SIN-020 ⚠️ compartilhada
+- `match` → DOS-001, LIG-001, LIG-002, MOD-001, SIN-020 ⚠️ compartilhada
 - `match_event` → SIN-017
 - `match_features` → MOD-001, MOD-002, SIN-016 ⚠️ compartilhada
 - `match_odds` → DOS-001, SIN-012, SIN-018, SIN-019 ⚠️ compartilhada
@@ -61,6 +71,9 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `odds_snapshots` → MOD-001
 - `operadores_licenciados` → COMP-001
 - `pick` → DOS-001
+- `player` → LIG-001
+- `standing` → LIG-002
+- `team` → LIG-002
 - `team_ratings` → MOD-001, MOD-003, SIN-016 ⚠️ compartilhada
 
 ### funcoes
@@ -68,8 +81,19 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `buildDossierSnapshot` → DOS-001
 - `centsParaReais` → CORE-001
 - `centsParaReaisStr` → CORE-001
+- `computeForm` → LIG-002
+- `computeStandings` → LIG-002
 - `formatBRL` → CORE-001
+- `getPlayerDetail` → LIG-001
+- `getTeam` → LIG-002
+- `getTeamBySlug` → LIG-002
+- `loadTeamMatches` → LIG-002
 - `reaisParaCents` → CORE-001
+
+### rotas
+
+- `/players/:id` → LIG-001
+- `/teams/:slug` → LIG-002
 
 ## Índice doc → features
 
@@ -78,8 +102,11 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/dossie-por-partida-fontes-de-dados.md](../../docs/investigacoes/dossie-por-partida-fontes-de-dados.md) → DOS-001
 - [docs/investigacoes/forca-entre-ligas-promovidos.md](../../docs/investigacoes/forca-entre-ligas-promovidos.md) → MOD-003
 - [docs/investigacoes/game-state-timing-de-gols.md](../../docs/investigacoes/game-state-timing-de-gols.md) → SIN-017
+- [docs/investigacoes/janelas-sazonais-fadiga.md](../../docs/investigacoes/janelas-sazonais-fadiga.md) → SIN-020
 - [docs/investigacoes/leitura-de-jogo-profundidade-dominio.md](../../docs/investigacoes/leitura-de-jogo-profundidade-dominio.md) → AGT-001
 - [docs/investigacoes/mando-de-campo.md](../../docs/investigacoes/mando-de-campo.md) → SIN-016
+- [docs/investigacoes/pagina-do-jogador.md](../../docs/investigacoes/pagina-do-jogador.md) → LIG-001, LIG-003
+- [docs/investigacoes/pagina-do-time.md](../../docs/investigacoes/pagina-do-time.md) → LIG-002
 - [docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md](../../docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md) → CORE-001
 - [docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md](../../docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md) → MOD-001
 - [docs/investigacoes/regulacao-br-apostas-produto.md](../../docs/investigacoes/regulacao-br-apostas-produto.md) → COMP-001
@@ -95,6 +122,8 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/vies-favorito-azarao.md](../../docs/investigacoes/vies-favorito-azarao.md) → SIN-018
 - [docs/investigacoes/xg-qualidade-de-chute.md](../../docs/investigacoes/xg-qualidade-de-chute.md) → MOD-002
 - [docs/planos/DOS-001-dossie-por-partida.md](../../docs/planos/DOS-001-dossie-por-partida.md) → DOS-001
+- [docs/planos/LIG-001-pagina-do-jogador.md](../../docs/planos/LIG-001-pagina-do-jogador.md) → LIG-001
+- [docs/planos/LIG-002-pagina-do-time.md](../../docs/planos/LIG-002-pagina-do-time.md) → LIG-002
 - [docs/regras/arbitragem.md](../../docs/regras/arbitragem.md) → SIN-009
 - [docs/regras/calendario-fadiga.md](../../docs/regras/calendario-fadiga.md) → SIN-008
 - [docs/regras/clima.md](../../docs/regras/clima.md) → SIN-006

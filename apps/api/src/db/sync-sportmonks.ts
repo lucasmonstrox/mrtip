@@ -38,7 +38,8 @@ const CARD_TYPE: Record<string, "yellow" | "red" | "yellowred"> = {
   YELLOWREDCARD: "yellowred",
 }
 
-// Standing detail type_ids (discovered on the real API — see standings/seasons/:id).
+// Standing detail type_ids (discovered on the real API — see standings/seasons/:id). 129-134/179 are
+// the season totals; 135-146 are the official HOME/AWAY split (confirmed against the live response).
 const DET = {
   played: 129,
   won: 130,
@@ -47,6 +48,18 @@ const DET = {
   goalsFor: 133,
   goalsAgainst: 134,
   goalDifference: 179,
+  homePlayed: 135,
+  homeWon: 136,
+  homeDrawn: 137,
+  homeLost: 138,
+  homeGoalsFor: 139,
+  homeGoalsAgainst: 140,
+  awayPlayed: 141,
+  awayWon: 142,
+  awayDrawn: 143,
+  awayLost: 144,
+  awayGoalsFor: 145,
+  awayGoalsAgainst: 146,
 } as const
 
 type SmLeague = { id: number; name: string; image_path: string; country?: { name: string } }
@@ -66,6 +79,7 @@ type SmPlayer = {
   name?: string
   date_of_birth?: string
   height?: number
+  weight?: number
   image_path?: string
   nationality_id?: number
 }
@@ -240,6 +254,18 @@ async function main() {
       goalsFor: detVal(row.details, DET.goalsFor),
       goalsAgainst: detVal(row.details, DET.goalsAgainst),
       goalDifference: detVal(row.details, DET.goalDifference),
+      homePlayed: detVal(row.details, DET.homePlayed),
+      homeWon: detVal(row.details, DET.homeWon),
+      homeDrawn: detVal(row.details, DET.homeDrawn),
+      homeLost: detVal(row.details, DET.homeLost),
+      homeGoalsFor: detVal(row.details, DET.homeGoalsFor),
+      homeGoalsAgainst: detVal(row.details, DET.homeGoalsAgainst),
+      awayPlayed: detVal(row.details, DET.awayPlayed),
+      awayWon: detVal(row.details, DET.awayWon),
+      awayDrawn: detVal(row.details, DET.awayDrawn),
+      awayLost: detVal(row.details, DET.awayLost),
+      awayGoalsFor: detVal(row.details, DET.awayGoalsFor),
+      awayGoalsAgainst: detVal(row.details, DET.awayGoalsAgainst),
       zone: normalizeZone(row.rule?.type?.developer_name),
     }
     await db
@@ -356,6 +382,7 @@ async function main() {
       name: playerName(pl),
       dateOfBirth: pl.date_of_birth ?? null,
       height: pl.height ?? null,
+      weight: pl.weight ?? null,
       imageUrl: photoByPlayer.get(pl.id) ?? null,
       nationalityId: pl.nationality_id && countries.has(pl.nationality_id) ? pl.nationality_id : null,
     }

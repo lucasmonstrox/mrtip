@@ -84,6 +84,21 @@ export const standing = pgTable(
     goalsFor: integer("goals_for").notNull(),
     goalsAgainst: integer("goals_against").notNull(),
     goalDifference: integer("goal_difference").notNull(),
+    // Official HOME/AWAY split of the season record (SportMonks standing detail type_ids 135-146).
+    // Nullable: only populated on re-sync after this column was added; older rows stay null.
+    // @feature LIG-002
+    homePlayed: integer("home_played"),
+    homeWon: integer("home_won"),
+    homeDrawn: integer("home_drawn"),
+    homeLost: integer("home_lost"),
+    homeGoalsFor: integer("home_goals_for"),
+    homeGoalsAgainst: integer("home_goals_against"),
+    awayPlayed: integer("away_played"),
+    awayWon: integer("away_won"),
+    awayDrawn: integer("away_drawn"),
+    awayLost: integer("away_lost"),
+    awayGoalsFor: integer("away_goals_for"),
+    awayGoalsAgainst: integer("away_goals_against"),
     // Qualification/relegation zone of the position (from SportMonks `rule.type`), normalized:
     // "champions" | "europa" | "conference" | "relegation" | null (mid-table).
     zone: text("zone"),
@@ -113,7 +128,8 @@ export const player = pgTable("player", {
   sportmonksPlayerId: integer("sportmonks_player_id").notNull().unique(),
   name: text("name").notNull(),
   dateOfBirth: date("date_of_birth", { mode: "string" }),
-  height: integer("height"),
+  height: integer("height"), // cm
+  weight: integer("weight"), // kg
   imageUrl: text("image_url"),
   nationalityId: integer("nationality_id").references(() => nationality.id),
 })

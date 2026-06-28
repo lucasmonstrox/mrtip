@@ -11,7 +11,9 @@ import {
   lineup,
   lineupPlayer,
   match,
+  nationality,
   player,
+  standing,
   team,
   type Match as MatchRow,
 } from "../../../db/schema"
@@ -33,6 +35,60 @@ export type TeamRef = {
   name: string
   slug: string
   logoUrl: string | null
+}
+
+// W-D-L + goals for one venue (home or away). null on the standing when the official split hasn't
+// been ingested for that row yet.
+export type VenueRecord = {
+  played: number
+  won: number
+  drawn: number
+  lost: number
+  goalsFor: number
+  goalsAgainst: number
+}
+
+// Official season standing of a team (the `standing` row minus the storage keys) — what the team
+// page header shows: position, points, W-D-L, goals, zone and the official home/away split.
+export type TeamStanding = {
+  position: number
+  points: number
+  played: number
+  won: number
+  drawn: number
+  lost: number
+  goalsFor: number
+  goalsAgainst: number
+  goalDifference: number
+  zone: string | null
+  home: VenueRecord | null
+  away: VenueRecord | null
+}
+
+// A proportion with its sample size and a Wilson 95% confidence band (fractions [0,1]). `lowSample`
+// flags an n too small to trust the point estimate — the UI shows the band, never a bare %.
+export type Proportion = {
+  pct: number
+  n: number
+  lo: number
+  hi: number
+  lowSample: boolean
+}
+
+// Betting trends of a team for one venue split (all / home / away).
+export type TeamTrendSplit = {
+  n: number
+  over25: Proportion
+  btts: Proportion
+  cleanSheet: Proportion
+  goalsForAvg: number
+  goalsAgainstAvg: number
+}
+
+export type TeamTrends = {
+  all: TeamTrendSplit
+  home: TeamTrendSplit
+  away: TeamTrendSplit
 }
 
 export type Score = {
@@ -165,15 +221,66 @@ export type PlayerGoal = {
   score: [number, number] | null
 }
 
-// Player page: data + totals (derived from goal/injury) + the list of goals.
+// One match the player appeared in (their lineup row): rating/minutes/role + their goals/assists/
+// cards in that match. The spine of the player page — season aggregates, form and per-90 derive from
+// this list (no extra queries). `home` = the player's team was the home side; `score` is [home, away].
+export type PlayerAppearance = {
+  matchId: string
+  date: string
+  round: number
+  opponent: string
+  opponentLogo: string | null
+  home: boolean
+  score: [number, number] | null
+  rating: number | null
+  minutes: number | null
+  starter: boolean
+  motm: boolean
+  goals: number
+  penaltyGoals: number
+  assists: number
+  yellow: number
+  red: number // straight red OR second yellow (sent off)
+}
+
+// Player page: bio (photo/birth/height/nationality/position) + totals (derived from goal/injury) +
+// the list of goals + per-match appearances. `position` is the most-played one (G/D/M/F).
 export type PlayerDetail = {
   id: string
   name: string
+  imageUrl: string | null
+  dateOfBirth: string | null
+  height: number | null
+  weight: number | null
+  position: string | null
+  currentTeam: { name: string; slug: string; logoUrl: string | null } | null
+  nationality: { name: string; flagUrl: string | null } | null
   goals: number
   assists: number
   matchesOut: number
+  // Season aggregates derived from the appearances spine (no extra queries).
+  season: {
+    appearances: number
+    starts: number
+    minutes: number
+    avgRating: number | null
+    goals: number
+    penaltyGoals: number
+    assists: number
+    yellow: number
+    red: number
+    motm: number
+  }
+  // Per-90 production. `sufficient` gates display on a minutes floor (small-sample guard).
+  per90: { sufficient: boolean; goals: number; assists: number; ga: number }
+  // Goal breakdowns: by venue (home/away) and by half (from goal minutes).
+  goalSplits: { home: number; away: number; firstHalf: number; secondHalf: number }
   goalsList: PlayerGoal[]
+  appearances: PlayerAppearance[]
 }
+
+// Minutes floor before per-90 rates are shown (≈6 full matches) — below this the rate is noise.
+const PER90_MIN_MINUTES = 540
 
 // A match managed by a coach (for their page).
 export type CoachMatch = {
@@ -274,7 +381,21 @@ export async function getLeagueOrThrow(code: string): Promise<League> {
 // `goal`/`injury` (not a snapshot). 404 if the id doesn't exist. Goals/assists depend on the goal
 // backfill.
 export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
-  const [p] = await db.select({ id: player.id, name: player.name }).from(player).where(eq(player.id, id)).limit(1)
+  const [p] = await db
+    .select({
+      id: player.id,
+      name: player.name,
+      imageUrl: player.imageUrl,
+      dateOfBirth: player.dateOfBirth,
+      height: player.height,
+      weight: player.weight,
+      nationalityName: nationality.name,
+      nationalityFlag: nationality.flagUrl,
+    })
+    .from(player)
+    .leftJoin(nationality, eq(nationality.id, player.nationalityId))
+    .where(eq(player.id, id))
+    .limit(1)
   if (!p) throw notFound("player_not_found")
 
   const [g] = await db.select({ n: count() }).from(goal).where(and(eq(goal.playerId, id), ne(goal.type, "own")))
@@ -302,12 +423,155 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
     .where(and(eq(goal.playerId, id), ne(goal.type, "own")))
     .orderBy(asc(match.date))
 
+  // Per-match appearances (the player's lineup rows): rating/minutes/role + opponent/score. The spine
+  // the page aggregates over. starter/minutes/motm come straight from lineup_player.
+  const appRows = await db
+    .select({
+      matchId: match.id,
+      date: match.date,
+      round: match.round,
+      homeTeamId: match.homeTeamId,
+      lineupTeamId: lineup.teamId,
+      homeName: teamHome.name,
+      homeSlug: teamHome.slug,
+      homeLogo: teamHome.logoUrl,
+      awayName: teamAway.name,
+      awaySlug: teamAway.slug,
+      awayLogo: teamAway.logoUrl,
+      ftH: match.ftHome,
+      ftA: match.ftAway,
+      rating: lineupPlayer.rating,
+      minutes: lineupPlayer.minutesPlayed,
+      starter: lineupPlayer.starter,
+      motm: lineupPlayer.manOfMatch,
+      position: lineupPlayer.position,
+    })
+    .from(lineupPlayer)
+    .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+    .innerJoin(match, eq(match.id, lineup.matchId))
+    .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
+    .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
+    .where(eq(lineupPlayer.playerId, id))
+    .orderBy(asc(match.date))
+
+  // The player's goals (reusing goalRows: own goals already excluded) + assists + cards, keyed by
+  // matchId to fold into each appearance.
+  const goalsByMatch = new Map<string, { goals: number; penaltyGoals: number }>()
+  for (const r of goalRows) {
+    const e = goalsByMatch.get(r.matchId) ?? { goals: 0, penaltyGoals: 0 }
+    e.goals += 1
+    if (r.type === "penalty") e.penaltyGoals += 1
+    goalsByMatch.set(r.matchId, e)
+  }
+
+  const assistRows = await db
+    .select({ matchId: goal.matchId, n: count() })
+    .from(goal)
+    .where(eq(goal.assistId, id))
+    .groupBy(goal.matchId)
+  const assistsByMatch = new Map(assistRows.map((r) => [r.matchId, Number(r.n)]))
+
+  const cardRows = await db
+    .select({ matchId: card.matchId, type: card.type })
+    .from(card)
+    .where(eq(card.playerId, id))
+  const cardsByMatch = new Map<string, { yellow: number; red: number }>()
+  for (const r of cardRows) {
+    const e = cardsByMatch.get(r.matchId) ?? { yellow: 0, red: 0 }
+    if (r.type === "yellow") e.yellow += 1
+    else e.red += 1 // red | yellowred → sent off
+    cardsByMatch.set(r.matchId, e)
+  }
+
+  const appearances: PlayerAppearance[] = appRows.map((r) => {
+    const home = r.lineupTeamId === r.homeTeamId
+    const gm = goalsByMatch.get(r.matchId) ?? { goals: 0, penaltyGoals: 0 }
+    const cm = cardsByMatch.get(r.matchId) ?? { yellow: 0, red: 0 }
+    return {
+      matchId: r.matchId,
+      date: r.date,
+      round: r.round,
+      opponent: home ? r.awayName : r.homeName,
+      opponentLogo: home ? r.awayLogo : r.homeLogo,
+      home,
+      score: r.ftH != null && r.ftA != null ? [r.ftH, r.ftA] : null,
+      rating: r.rating,
+      minutes: r.minutes,
+      starter: r.starter,
+      motm: r.motm,
+      goals: gm.goals,
+      penaltyGoals: gm.penaltyGoals,
+      assists: assistsByMatch.get(r.matchId) ?? 0,
+      yellow: cm.yellow,
+      red: cm.red,
+    }
+  })
+
+  // Most-played position (G/D/M/F) across the appearances — the player's primary role.
+  const posCounts = new Map<string, number>()
+  for (const r of appRows) if (r.position) posCounts.set(r.position, (posCounts.get(r.position) ?? 0) + 1)
+  const position = [...posCounts.entries()].sort((x, y) => y[1] - x[1])[0]?.[0] ?? null
+
+  // Season aggregates over the appearances spine.
+  const ratedValues = appearances.filter((x) => x.rating != null).map((x) => x.rating as number)
+  const minutesTotal = appearances.reduce((s, x) => s + (x.minutes ?? 0), 0)
+  const totalGoals = Number(g!.n)
+  const totalAssists = Number(a!.n)
+  const season = {
+    appearances: appearances.length,
+    starts: appearances.filter((x) => x.starter).length,
+    minutes: minutesTotal,
+    avgRating: ratedValues.length ? ratedValues.reduce((s, v) => s + v, 0) / ratedValues.length : null,
+    goals: totalGoals,
+    penaltyGoals: appearances.reduce((s, x) => s + x.penaltyGoals, 0),
+    assists: totalAssists,
+    yellow: appearances.reduce((s, x) => s + x.yellow, 0),
+    red: appearances.reduce((s, x) => s + x.red, 0),
+    motm: appearances.filter((x) => x.motm).length,
+  }
+
+  // Per-90 rates (denominator = total minutes, not games); gated on a minutes floor.
+  const den = minutesTotal > 0 ? minutesTotal / 90 : 0
+  const per90 = {
+    sufficient: minutesTotal >= PER90_MIN_MINUTES,
+    goals: den ? totalGoals / den : 0,
+    assists: den ? totalAssists / den : 0,
+    ga: den ? (totalGoals + totalAssists) / den : 0,
+  }
+
+  // Goal breakdowns: venue from each appearance's `home`, half from each goal's minute.
+  const goalSplits = { home: 0, away: 0, firstHalf: 0, secondHalf: 0 }
+  for (const x of appearances) goalSplits[x.home ? "home" : "away"] += x.goals
+  for (const gr of goalRows) {
+    if (gr.minute == null) continue
+    if (gr.minute <= 45) goalSplits.firstHalf += 1
+    else goalSplits.secondHalf += 1
+  }
+
+  // Current club = the team of the most recent appearance (appRows is ascending by date).
+  const last = appRows[appRows.length - 1]
+  const currentTeam = last
+    ? last.lineupTeamId === last.homeTeamId
+      ? { name: last.homeName, slug: last.homeSlug, logoUrl: last.homeLogo }
+      : { name: last.awayName, slug: last.awaySlug, logoUrl: last.awayLogo }
+    : null
+
   return {
     id: p.id,
     name: p.name,
-    goals: Number(g!.n),
-    assists: Number(a!.n),
+    imageUrl: p.imageUrl,
+    dateOfBirth: p.dateOfBirth,
+    height: p.height,
+    weight: p.weight,
+    position,
+    currentTeam,
+    nationality: p.nationalityName ? { name: p.nationalityName, flagUrl: p.nationalityFlag } : null,
+    goals: totalGoals,
+    assists: totalAssists,
     matchesOut: Number(out!.n),
+    season,
+    per90,
+    goalSplits,
     goalsList: goalRows.map((r) => ({
       matchId: r.matchId,
       date: r.date,
@@ -317,18 +581,69 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
       away: r.away,
       score: r.ftH != null && r.ftA != null ? [r.ftH, r.ftA] : null,
     })),
+    appearances,
   }
 }
 
 // Team by SLUG (key of the /teams/:slug URLs) or domain 404.
-export async function getTeamBySlug(slug: string): Promise<TeamRef> {
+export async function getTeamBySlug(slug: string): Promise<TeamRef & { shortCode: string | null }> {
   const [row] = await db
-    .select({ id: team.id, name: team.name, slug: team.slug, logoUrl: team.logoUrl })
+    .select({
+      id: team.id,
+      name: team.name,
+      slug: team.slug,
+      logoUrl: team.logoUrl,
+      shortCode: team.shortCode,
+    })
     .from(team)
     .where(eq(team.slug, slug))
     .limit(1)
   if (!row) throw notFound("team_not_found")
   return row
+}
+
+// Official SportMonks standing row of a team (position/points/W-D-L/goals/zone) — the authoritative
+// season aggregate, already ingested in `standing`. null when the team has no standing row yet.
+export async function loadTeamStanding(teamId: string): Promise<TeamStanding | null> {
+  const [row] = await db.select().from(standing).where(eq(standing.teamId, teamId)).limit(1)
+  if (!row) return null
+  // The 12 home/away columns are populated together on re-sync; gate on one being present.
+  const home: VenueRecord | null =
+    row.homePlayed == null
+      ? null
+      : {
+          played: row.homePlayed,
+          won: row.homeWon ?? 0,
+          drawn: row.homeDrawn ?? 0,
+          lost: row.homeLost ?? 0,
+          goalsFor: row.homeGoalsFor ?? 0,
+          goalsAgainst: row.homeGoalsAgainst ?? 0,
+        }
+  const away: VenueRecord | null =
+    row.awayPlayed == null
+      ? null
+      : {
+          played: row.awayPlayed,
+          won: row.awayWon ?? 0,
+          drawn: row.awayDrawn ?? 0,
+          lost: row.awayLost ?? 0,
+          goalsFor: row.awayGoalsFor ?? 0,
+          goalsAgainst: row.awayGoalsAgainst ?? 0,
+        }
+  return {
+    position: row.position,
+    points: row.points,
+    played: row.played,
+    won: row.won,
+    drawn: row.drawn,
+    lost: row.lost,
+    goalsFor: row.goalsFor,
+    goalsAgainst: row.goalsAgainst,
+    goalDifference: row.goalDifference,
+    zone: row.zone,
+    home,
+    away,
+  }
 }
 
 // All matches of a team (as home OR away), most recent first — base of the team page. Serialized
@@ -741,4 +1056,57 @@ export function computeForm(
     l: recent.filter((r) => r.result === "L").length,
   }
   return { team: t, recent, summary }
+}
+
+// Minimum played matches for a trend to be shown without a low-sample warning.
+const TREND_MIN_SAMPLE = 10
+
+/** Wilson score interval (95%, z=1.96) for k successes in n trials — an honest band for small
+ *  samples (n≈19 per venue here). Point + lower/upper bounds, all fractions [0,1]. */
+function wilson(k: number, n: number): { pct: number; lo: number; hi: number } {
+  if (n === 0) return { pct: 0, lo: 0, hi: 0 }
+  const z = 1.96
+  const p = k / n
+  const z2 = z * z
+  const denom = 1 + z2 / n
+  const center = (p + z2 / (2 * n)) / denom
+  const margin = (z / denom) * Math.sqrt((p * (1 - p)) / n + z2 / (4 * n * n))
+  return { pct: p, lo: Math.max(0, center - margin), hi: Math.min(1, center + margin) }
+}
+
+function proportion(k: number, n: number): Proportion {
+  return { ...wilson(k, n), n, lowSample: n < TREND_MIN_SAMPLE }
+}
+
+function trendSplit(games: { gf: number; ga: number; total: number }[]): TeamTrendSplit {
+  const n = games.length
+  return {
+    n,
+    over25: proportion(games.filter((g) => g.total >= 3).length, n),
+    btts: proportion(games.filter((g) => g.gf > 0 && g.ga > 0).length, n),
+    cleanSheet: proportion(games.filter((g) => g.ga === 0).length, n),
+    goalsForAvg: n ? games.reduce((s, g) => s + g.gf, 0) / n : 0,
+    goalsAgainstAvg: n ? games.reduce((s, g) => s + g.ga, 0) / n : 0,
+  }
+}
+
+/**
+ * Betting trends of a team derived ONLY from played match results: over 2.5, both-teams-to-score
+ * and clean-sheet rates (each a proportion with a Wilson 95% band + low-sample flag) plus goals
+ * for/against per game, split into all / home / away. No external stats — just `match.score`.
+ */
+export function computeTeamTrends(matches: Match[], teamId: string): TeamTrends {
+  const games = matches
+    .filter((m) => m.score != null)
+    .filter((m) => m.home.id === teamId || m.away.id === teamId)
+    .map((m) => {
+      const [h, a] = m.score!.ft
+      const isHome = m.home.id === teamId
+      return { gf: isHome ? h : a, ga: isHome ? a : h, total: h + a, isHome }
+    })
+  return {
+    all: trendSplit(games),
+    home: trendSplit(games.filter((g) => g.isHome)),
+    away: trendSplit(games.filter((g) => !g.isHome)),
+  }
 }

@@ -19,12 +19,21 @@ export function LeagueDetail({ code }: { code: string }) {
           ← Ligas
         </Link>
         <div className="flex items-center gap-3">
+          {league?.logoUrl ? (
+            <img
+              src={league.logoUrl}
+              alt=""
+              className="size-8 shrink-0 object-contain"
+              loading="lazy"
+            />
+          ) : null}
           <h1 className="text-2xl font-semibold tracking-tight">{league?.name ?? code}</h1>
           <Badge variant="outline">{code}</Badge>
+          {league ? <Badge variant="secondary">{league.season}</Badge> : null}
         </div>
         {league ? (
           <p className="text-sm text-muted-foreground">
-            {league.country} · {league.season} · {league.rounds} rodadas · {league.matches} jogos
+            {league.rounds} rodadas · {league.matches} jogos
           </p>
         ) : null}
       </header>
