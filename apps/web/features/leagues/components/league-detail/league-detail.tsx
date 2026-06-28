@@ -6,6 +6,7 @@ import Link from "next/link"
 
 import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
 import { RoundsList } from "./rounds-list"
+import { ScorersTable } from "./scorers-table"
 import { StandingsTable } from "./standings-table"
 
 export function LeagueDetail({ code }: { code: string }) {
@@ -32,12 +33,16 @@ export function LeagueDetail({ code }: { code: string }) {
         <TabsList>
           <TabsTrigger value="standings">Classificação</TabsTrigger>
           <TabsTrigger value="rounds">Rounds</TabsTrigger>
+          <TabsTrigger value="scorers">Marcadores</TabsTrigger>
         </TabsList>
         <TabsContent value="standings" className="pt-2">
           <StandingsTable code={code} />
         </TabsContent>
         <TabsContent value="rounds" className="pt-2">
           <RoundsList code={code} />
+        </TabsContent>
+        <TabsContent value="scorers" className="pt-2">
+          <ScorersTable code={code} />
         </TabsContent>
       </Tabs>
     </section>

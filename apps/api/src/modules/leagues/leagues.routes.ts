@@ -4,6 +4,7 @@ import { getLeague } from "./get-league/get-league.service"
 import { listLeagues } from "./list-leagues/list-leagues.service"
 import { listRoundsQuery } from "./list-rounds/list-rounds.schema"
 import { listRounds } from "./list-rounds/list-rounds.service"
+import { scorers } from "./scorers/scorers.service"
 import { standingsQuery } from "./standings/standings.schema"
 import { standings } from "./standings/standings.service"
 
@@ -26,4 +27,8 @@ export const leaguesRoutes = new Elysia({ prefix: "/v1/leagues" })
     params: paramCode,
     query: standingsQuery,
     detail: { summary: "Computed standings table; ?upTo=N cuts at round N" },
+  })
+  .get("/:code/scorers", ({ params }) => scorers(params.code), {
+    params: paramCode,
+    detail: { summary: "Top scorers (marcadores): goals + assists per player, ranked by goals" },
   })
