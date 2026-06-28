@@ -2,17 +2,18 @@ import { openapi } from "@elysiajs/openapi"
 import { Elysia } from "elysia"
 
 import { AppError } from "./lib/errors"
-import { jogadoresRoutes } from "./modules/ligas/jogadores.routes"
-import { ligasRoutes } from "./modules/ligas/ligas.routes"
-import { partidasRoutes } from "./modules/ligas/partidas.routes"
-import { tecnicosRoutes } from "./modules/ligas/tecnicos.routes"
-import { timesRoutes } from "./modules/ligas/times.routes"
+import { coachesRoutes } from "./modules/leagues/coaches.routes"
+import { leaguesRoutes } from "./modules/leagues/leagues.routes"
+import { matchesRoutes } from "./modules/leagues/matches.routes"
+import { playersRoutes } from "./modules/leagues/players.routes"
+import { teamsRoutes } from "./modules/leagues/teams.routes"
 import { corsPlugin } from "./shared/plugins/cors"
 
 /**
- * Root app da API do mrtip — dados de futebol (fonte: openfootball, CC0), persistidos em
- * Postgres. Este arquivo é só MONTAGEM: plugins → onError → /health → módulos. Sem lógica.
- * O onError global traduz AppError no contrato { error: code } (erro de domínio nunca vira 500).
+ * Root app of the mrtip API — football data (source: openfootball, CC0), persisted in
+ * Postgres. This file is just ASSEMBLY: plugins → onError → /health → modules. No logic.
+ * The global onError translates AppError into the contract { error: code } (a domain error
+ * never becomes a 500).
  */
 export const app = new Elysia()
   .use(corsPlugin)
@@ -24,10 +25,10 @@ export const app = new Elysia()
     }
   })
   .get("/health", () => ({ status: "ok" as const }), { detail: { summary: "Healthcheck" } })
-  .use(ligasRoutes)
-  .use(partidasRoutes)
-  .use(timesRoutes)
-  .use(jogadoresRoutes)
-  .use(tecnicosRoutes)
+  .use(leaguesRoutes)
+  .use(matchesRoutes)
+  .use(teamsRoutes)
+  .use(playersRoutes)
+  .use(coachesRoutes)
 
 export type App = typeof app

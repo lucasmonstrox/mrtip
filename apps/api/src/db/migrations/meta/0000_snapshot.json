@@ -1,11 +1,11 @@
 {
-  "id": "fe3422c2-fd37-417c-8ad7-ed71db2e74c7",
+  "id": "fc28068d-01b5-437d-b233-dfc5a3de9514",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.escalacao": {
-      "name": "escalacao",
+    "public.coach": {
+      "name": "coach",
       "schema": "",
       "columns": {
         "id": {
@@ -15,39 +15,117 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "partida_id": {
-          "name": "partida_id",
+        "sportmonks_coach_id": {
+          "name": "sportmonks_coach_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "coach_sportmonks_coach_id_unique": {
+          "name": "coach_sportmonks_coach_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sportmonks_coach_id"
+          ]
+        },
+        "coach_name_unique": {
+          "name": "coach_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.goal": {
+      "name": "goal",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sportmonks_event_id": {
+          "name": "sportmonks_event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "match_id": {
+          "name": "match_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "time_id": {
-          "name": "time_id",
+        "team_id": {
+          "name": "team_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "formacao": {
-          "name": "formacao",
-          "type": "text",
+        "player_id": {
+          "name": "player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assist_id": {
+          "name": "assist_id",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
-        "tecnico": {
-          "name": "tecnico",
-          "type": "text",
+        "minute": {
+          "name": "minute",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "escalacao_partida_id_partida_id_fk": {
-          "name": "escalacao_partida_id_partida_id_fk",
-          "tableFrom": "escalacao",
-          "tableTo": "partida",
+        "goal_match_id_match_id_fk": {
+          "name": "goal_match_id_match_id_fk",
+          "tableFrom": "goal",
+          "tableTo": "match",
           "columnsFrom": [
-            "partida_id"
+            "match_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "goal_team_id_team_id_fk": {
+          "name": "goal_team_id_team_id_fk",
+          "tableFrom": "goal",
+          "tableTo": "team",
+          "columnsFrom": [
+            "team_id"
           ],
           "columnsTo": [
             "id"
@@ -55,12 +133,25 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "escalacao_time_id_time_id_fk": {
-          "name": "escalacao_time_id_time_id_fk",
-          "tableFrom": "escalacao",
-          "tableTo": "time",
+        "goal_player_id_player_id_fk": {
+          "name": "goal_player_id_player_id_fk",
+          "tableFrom": "goal",
+          "tableTo": "player",
           "columnsFrom": [
-            "time_id"
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "goal_assist_id_player_id_fk": {
+          "name": "goal_assist_id_player_id_fk",
+          "tableFrom": "goal",
+          "tableTo": "player",
+          "columnsFrom": [
+            "assist_id"
           ],
           "columnsTo": [
             "id"
@@ -71,12 +162,11 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "escalacao_partida_id_time_id_unique": {
-          "name": "escalacao_partida_id_time_id_unique",
+        "goal_sportmonks_event_id_unique": {
+          "name": "goal_sportmonks_event_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "partida_id",
-            "time_id"
+            "sportmonks_event_id"
           ]
         }
       },
@@ -84,8 +174,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.escalacao_jogador": {
-      "name": "escalacao_jogador",
+    "public.injury": {
+      "name": "injury",
       "schema": "",
       "columns": {
         "id": {
@@ -95,32 +185,285 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "escalacao_id": {
-          "name": "escalacao_id",
+        "match_id": {
+          "name": "match_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "jogador_id": {
-          "name": "jogador_id",
+        "team_id": {
+          "name": "team_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "numero": {
-          "name": "numero",
-          "type": "integer",
+        "player_id": {
+          "name": "player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "injury_match_id_match_id_fk": {
+          "name": "injury_match_id_match_id_fk",
+          "tableFrom": "injury",
+          "tableTo": "match",
+          "columnsFrom": [
+            "match_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
-        "posicao": {
-          "name": "posicao",
+        "injury_team_id_team_id_fk": {
+          "name": "injury_team_id_team_id_fk",
+          "tableFrom": "injury",
+          "tableTo": "team",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "injury_player_id_player_id_fk": {
+          "name": "injury_player_id_player_id_fk",
+          "tableFrom": "injury",
+          "tableTo": "player",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "injury_match_id_player_id_unique": {
+          "name": "injury_match_id_player_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "match_id",
+            "player_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.league": {
+      "name": "league",
+      "schema": "",
+      "columns": {
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "sportmonks_league_id": {
+          "name": "sportmonks_league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sportmonks_season_id": {
+          "name": "sportmonks_season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "country": {
+          "name": "country",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "name": "season",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logo_url": {
+          "name": "logo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lineup": {
+      "name": "lineup",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "match_id": {
+          "name": "match_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_id": {
+          "name": "team_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "formation": {
+          "name": "formation",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "titular": {
-          "name": "titular",
+        "coach_name": {
+          "name": "coach_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coach_id": {
+          "name": "coach_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lineup_match_id_match_id_fk": {
+          "name": "lineup_match_id_match_id_fk",
+          "tableFrom": "lineup",
+          "tableTo": "match",
+          "columnsFrom": [
+            "match_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lineup_team_id_team_id_fk": {
+          "name": "lineup_team_id_team_id_fk",
+          "tableFrom": "lineup",
+          "tableTo": "team",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lineup_coach_id_coach_id_fk": {
+          "name": "lineup_coach_id_coach_id_fk",
+          "tableFrom": "lineup",
+          "tableTo": "coach",
+          "columnsFrom": [
+            "coach_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "lineup_match_id_team_id_unique": {
+          "name": "lineup_match_id_team_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "match_id",
+            "team_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lineup_player": {
+      "name": "lineup_player",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "lineup_id": {
+          "name": "lineup_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "position": {
+          "name": "position",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "starter": {
+          "name": "starter",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true
@@ -134,12 +477,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "escalacao_jogador_escalacao_id_escalacao_id_fk": {
-          "name": "escalacao_jogador_escalacao_id_escalacao_id_fk",
-          "tableFrom": "escalacao_jogador",
-          "tableTo": "escalacao",
+        "lineup_player_lineup_id_lineup_id_fk": {
+          "name": "lineup_player_lineup_id_lineup_id_fk",
+          "tableFrom": "lineup_player",
+          "tableTo": "lineup",
           "columnsFrom": [
-            "escalacao_id"
+            "lineup_id"
           ],
           "columnsTo": [
             "id"
@@ -147,12 +490,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "escalacao_jogador_jogador_id_jogador_id_fk": {
-          "name": "escalacao_jogador_jogador_id_jogador_id_fk",
-          "tableFrom": "escalacao_jogador",
-          "tableTo": "jogador",
+        "lineup_player_player_id_player_id_fk": {
+          "name": "lineup_player_player_id_player_id_fk",
+          "tableFrom": "lineup_player",
+          "tableTo": "player",
           "columnsFrom": [
-            "jogador_id"
+            "player_id"
           ],
           "columnsTo": [
             "id"
@@ -163,12 +506,12 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "escalacao_jogador_escalacao_id_jogador_id_unique": {
-          "name": "escalacao_jogador_escalacao_id_jogador_id_unique",
+        "lineup_player_lineup_id_player_id_unique": {
+          "name": "lineup_player_lineup_id_player_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "escalacao_id",
-            "jogador_id"
+            "lineup_id",
+            "player_id"
           ]
         }
       },
@@ -176,8 +519,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.jogador": {
-      "name": "jogador",
+    "public.match": {
+      "name": "match",
       "schema": "",
       "columns": {
         "id": {
@@ -187,28 +530,141 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "api_football_player_id": {
-          "name": "api_football_player_id",
+        "sportmonks_fixture_id": {
+          "name": "sportmonks_fixture_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "nome": {
-          "name": "nome",
+        "league_code": {
+          "name": "league_code",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "round": {
+          "name": "round",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time": {
+          "name": "time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "home_team_id": {
+          "name": "home_team_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "away_team_id": {
+          "name": "away_team_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ft_home": {
+          "name": "ft_home",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ft_away": {
+          "name": "ft_away",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ht_home": {
+          "name": "ht_home",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ht_away": {
+          "name": "ht_away",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "match_league_code_league_code_fk": {
+          "name": "match_league_code_league_code_fk",
+          "tableFrom": "match",
+          "tableTo": "league",
+          "columnsFrom": [
+            "league_code"
+          ],
+          "columnsTo": [
+            "code"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "match_home_team_id_team_id_fk": {
+          "name": "match_home_team_id_team_id_fk",
+          "tableFrom": "match",
+          "tableTo": "team",
+          "columnsFrom": [
+            "home_team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "match_away_team_id_team_id_fk": {
+          "name": "match_away_team_id_team_id_fk",
+          "tableFrom": "match",
+          "tableTo": "team",
+          "columnsFrom": [
+            "away_team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "jogador_api_football_player_id_unique": {
-          "name": "jogador_api_football_player_id_unique",
+        "match_sportmonks_fixture_id_unique": {
+          "name": "match_sportmonks_fixture_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "api_football_player_id"
+            "sportmonks_fixture_id"
           ]
         }
       },
@@ -216,39 +672,39 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.liga": {
-      "name": "liga",
+    "public.nationality": {
+      "name": "nationality",
       "schema": "",
       "columns": {
-        "code": {
-          "name": "code",
-          "type": "text",
+        "id": {
+          "name": "id",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true
         },
-        "api_football_league_id": {
-          "name": "api_football_league_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nome": {
-          "name": "nome",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "pais": {
-          "name": "pais",
+        "fifa_name": {
+          "name": "fifa_name",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "temporada": {
-          "name": "temporada",
+        "iso2": {
+          "name": "iso2",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "flag_url": {
+          "name": "flag_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -259,8 +715,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.partida": {
-      "name": "partida",
+    "public.player": {
+      "name": "player",
       "schema": "",
       "columns": {
         "id": {
@@ -270,120 +726,51 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "api_football_fixture_id": {
-          "name": "api_football_fixture_id",
+        "sportmonks_player_id": {
+          "name": "sportmonks_player_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "liga_code": {
-          "name": "liga_code",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "rodada": {
-          "name": "rodada",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nome": {
-          "name": "nome",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "data": {
-          "name": "data",
+        "date_of_birth": {
+          "name": "date_of_birth",
           "type": "date",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "hora": {
-          "name": "hora",
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "mandante_id": {
-          "name": "mandante_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "visitante_id": {
-          "name": "visitante_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "placar_ft_mandante": {
-          "name": "placar_ft_mandante",
+        "nationality_id": {
+          "name": "nationality_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
-        },
-        "placar_ft_visitante": {
-          "name": "placar_ft_visitante",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "placar_ht_mandante": {
-          "name": "placar_ht_mandante",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "placar_ht_visitante": {
-          "name": "placar_ht_visitante",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "criado_em": {
-          "name": "criado_em",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "partida_liga_code_liga_code_fk": {
-          "name": "partida_liga_code_liga_code_fk",
-          "tableFrom": "partida",
-          "tableTo": "liga",
+        "player_nationality_id_nationality_id_fk": {
+          "name": "player_nationality_id_nationality_id_fk",
+          "tableFrom": "player",
+          "tableTo": "nationality",
           "columnsFrom": [
-            "liga_code"
-          ],
-          "columnsTo": [
-            "code"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "partida_mandante_id_time_id_fk": {
-          "name": "partida_mandante_id_time_id_fk",
-          "tableFrom": "partida",
-          "tableTo": "time",
-          "columnsFrom": [
-            "mandante_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "partida_visitante_id_time_id_fk": {
-          "name": "partida_visitante_id_time_id_fk",
-          "tableFrom": "partida",
-          "tableTo": "time",
-          "columnsFrom": [
-            "visitante_id"
+            "nationality_id"
           ],
           "columnsTo": [
             "id"
@@ -394,11 +781,11 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "partida_api_football_fixture_id_unique": {
-          "name": "partida_api_football_fixture_id_unique",
+        "player_sportmonks_player_id_unique": {
+          "name": "player_sportmonks_player_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "api_football_fixture_id"
+            "sportmonks_player_id"
           ]
         }
       },
@@ -406,8 +793,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.time": {
-      "name": "time",
+    "public.standing": {
+      "name": "standing",
       "schema": "",
       "columns": {
         "id": {
@@ -417,14 +804,142 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "api_football_team_id": {
-          "name": "api_football_team_id",
+        "league_code": {
+          "name": "league_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_id": {
+          "name": "team_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "nome": {
-          "name": "nome",
+        "points": {
+          "name": "points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "played": {
+          "name": "played",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "won": {
+          "name": "won",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "drawn": {
+          "name": "drawn",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lost": {
+          "name": "lost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "goals_for": {
+          "name": "goals_for",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "goals_against": {
+          "name": "goals_against",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "goal_difference": {
+          "name": "goal_difference",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zone": {
+          "name": "zone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "standing_league_code_league_code_fk": {
+          "name": "standing_league_code_league_code_fk",
+          "tableFrom": "standing",
+          "tableTo": "league",
+          "columnsFrom": [
+            "league_code"
+          ],
+          "columnsTo": [
+            "code"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "standing_team_id_team_id_fk": {
+          "name": "standing_team_id_team_id_fk",
+          "tableFrom": "standing",
+          "tableTo": "team",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "standing_league_code_team_id_unique": {
+          "name": "standing_league_code_team_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "league_code",
+            "team_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.team": {
+      "name": "team",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sportmonks_team_id": {
+          "name": "sportmonks_team_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -435,8 +950,20 @@
           "primaryKey": false,
           "notNull": true
         },
-        "criado_em": {
-          "name": "criado_em",
+        "short_code": {
+          "name": "short_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logo_url": {
+          "name": "logo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
@@ -447,15 +974,15 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "time_api_football_team_id_unique": {
-          "name": "time_api_football_team_id_unique",
+        "team_sportmonks_team_id_unique": {
+          "name": "team_sportmonks_team_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "api_football_team_id"
+            "sportmonks_team_id"
           ]
         },
-        "time_slug_unique": {
-          "name": "time_slug_unique",
+        "team_slug_unique": {
+          "name": "team_slug_unique",
           "nullsNotDistinct": false,
           "columns": [
             "slug"

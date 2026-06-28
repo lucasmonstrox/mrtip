@@ -3,28 +3,28 @@ import { env } from "./env"
 
 app.listen(env.port)
 
-console.log(`🦊 mrtip API em http://localhost:${app.server?.port} — doc em /openapi`)
+console.log(`🦊 mrtip API at http://localhost:${app.server?.port} — docs at /openapi`)
 
-// Ponto de import único pro Eden Treaty (o apps/web importa o tipo `App` daqui — type-only,
-// não executa este módulo). A composição vive em app.ts.
+// Single import point for Eden Treaty (apps/web imports the `App` type from here — type-only,
+// does not execute this module). The composition lives in app.ts.
 export type { App } from "./app"
 
-// Tipos de domínio reaproveitados pelo apps/web (contrato único, sem duplicação).
+// Domain types reused by apps/web (single contract, no duplication).
 export type {
-  Desfalque,
-  DesfalquesTime,
-  EscalacaoTime,
-  Forma,
-  GolItem,
-  JogadorDetalhe,
-  JogadorEscalado,
-  JogadorGol,
-  Liga,
-  LinhaClassificacao,
-  Partida,
-  ResultadoForma,
+  Absence,
+  CoachDetail,
+  CoachMatch,
+  Form,
+  FormResult,
+  GoalItem,
+  League,
+  LineupPlayer,
+  Match,
+  PlayerDetail,
+  PlayerGoal,
   Round,
-  TecnicoDetalhe,
-  TecnicoJogo,
-  TimeRef,
-} from "./modules/ligas/shared/shared"
+  StandingRow,
+  TeamAbsences,
+  TeamLineup,
+  TeamRef,
+} from "./modules/leagues/shared/shared"

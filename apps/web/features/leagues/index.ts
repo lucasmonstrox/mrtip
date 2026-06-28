@@ -1,0 +1,6 @@
+export { LeaguesPage } from "./components/leagues-page"
+export { LeagueDetail } from "./components/league-detail/league-detail"
+export { MatchDetail } from "./components/match-detail/match-detail"
+export { TeamDetail } from "./components/team-detail/team-detail"
+export { PlayerDetail } from "./components/player-detail/player-detail"
+export { CoachDetail } from "./components/coach-detail/coach-detail"

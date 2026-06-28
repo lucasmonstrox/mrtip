@@ -19,12 +19,8 @@
     "db:down": "docker compose down",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "bun run src/db/migrate.ts",
-    "db:seed": "bun run src/db/seed.ts",
-    "db:lineups": "bun run src/db/seed-lineups.ts",
-    "db:injuries": "bun run src/db/seed-injuries.ts",
-    "db:gols": "bun run src/db/seed-gols.ts",
-    "db:coaches": "bun run src/db/seed-coaches.ts",
-    "db:reset": "docker compose down -v && docker compose up -d --wait && bun run src/db/migrate.ts && bun run src/db/seed.ts"
+    "db:sync": "bun run src/db/sync-sportmonks.ts",
+    "db:reset": "docker compose down -v && docker compose up -d --wait && bun run src/db/migrate.ts && bun run src/db/sync-sportmonks.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.3.14",

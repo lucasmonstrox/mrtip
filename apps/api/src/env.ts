@@ -15,6 +15,6 @@ export const env = {
   // em prod, pinar na URL pública. Dados são públicos (openfootball), sem auth.
   webOrigin: process.env.WEB_ORIGIN,
   databaseUrl: required("DATABASE_URL"),
-  // Usada só pelos scripts de seed (fetch da API-Football). A API HTTP não precisa.
-  apiFootballKey: process.env.API_FOOTBALL_KEY,
+  // Usada só pelo sync da SportMonks (fonte de dados). A API HTTP não precisa.
+  sportmonksApiKey: process.env.SPORTMONKS_API_KEY,
 }

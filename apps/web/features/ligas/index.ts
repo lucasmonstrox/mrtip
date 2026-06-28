@@ -1,6 +1,0 @@
-export { LigasPage } from "./components/ligas-page"
-export { LigaDetalhe } from "./components/liga-detalhe/liga-detalhe"
-export { PartidaDetalhe } from "./components/partida-detalhe/partida-detalhe"
-export { TimeDetalhe } from "./components/time-detalhe/time-detalhe"
-export { JogadorDetalhe } from "./components/jogador-detalhe/jogador-detalhe"
-export { TecnicoDetalhe } from "./components/tecnico-detalhe/tecnico-detalhe"
