@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import { Skeleton } from "@workspace/ui/components/skeleton"
 import {
   Table,
   TableBody,
@@ -26,7 +27,7 @@ const ZONES: Record<string, { border: string; dot: string; label: string }> = {
 export function StandingsTable({ code }: { code: string }) {
   const { data: table, isPending, isError } = useStandingsQuery(code)
 
-  if (isPending) return <p className="text-sm text-muted-foreground">Carregando classificação…</p>
+  if (isPending) return <StandingsSkeleton />
   if (isError || !table)
     return <p className="text-sm text-destructive">Não foi possível carregar a classificação.</p>
 
@@ -112,6 +113,64 @@ export function StandingsTable({ code }: { code: string }) {
             ))}
           </div>
         ) : null}
+      </CardContent>
+    </Card>
+  )
+}
+
+// Loading placeholder mirroring the standings table layout (position, team crest + name, stats,
+// form) so the page doesn't jump when the real data arrives.
+function StandingsSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Classificação</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table className="[&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-10">#</TableHead>
+              <TableHead>Time</TableHead>
+              <TableHead className="text-center">J</TableHead>
+              <TableHead className="text-center">V</TableHead>
+              <TableHead className="text-center">E</TableHead>
+              <TableHead className="text-center">D</TableHead>
+              <TableHead className="text-center">GP</TableHead>
+              <TableHead className="text-center">GC</TableHead>
+              <TableHead className="text-center">SG</TableHead>
+              <TableHead className="text-center font-semibold">Pts</TableHead>
+              <TableHead className="text-center">Forma</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Array.from({ length: 20 }).map((_, i) => (
+              <TableRow key={i}>
+                <TableCell className="border-l-2 border-l-transparent">
+                  <Skeleton className="h-4 w-4" />
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="size-5 shrink-0 rounded-full" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                </TableCell>
+                {Array.from({ length: 8 }).map((_, j) => (
+                  <TableCell key={j}>
+                    <Skeleton className="mx-auto h-4 w-5" />
+                  </TableCell>
+                ))}
+                <TableCell>
+                  <div className="flex justify-center gap-1">
+                    {Array.from({ length: 5 }).map((_, k) => (
+                      <Skeleton key={k} className="size-5 rounded-sm" />
+                    ))}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   )

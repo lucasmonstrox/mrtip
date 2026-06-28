@@ -177,9 +177,53 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** definir os limiares (estilo Sofascore: ~≥8 verde forte · 7–8 verde · 6.5–7 neutro · <6.5 laranja/vermelho) — confirmar a escala com o João. Promover como pequeno enriquecimento do LIG-001 (ou fazer junto da P5, que já mexe em forma/sparkline de nota). **Assumi ✨ — me fala se é 🔥.**
 
+### W-017 · Alertas de rumores de transferência de jogadores · ✨ · esforço G · `dados` `api` `ui`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** deixar o usuário **criar um alerta** (por jogador, por time ou por liga) e ser avisado quando surgir um novo **rumor de transferência** sobre o alvo — quem está sendo cotado, pra onde, com qual nível de confiança da fonte. É um inbox de "fica de olho nesse cara" alimentado pelo feed de rumores.
+
+**Por quê:** rumor de transferência mexe com mercado de aposta (jogador de saída perde minutos/motivação, clube que reforça muda o teto de gols) e é o tipo de informação que o apostador quer **na hora que sai**, não quando vai conferir o app. É também a primeira peça de uma infra de **alertas em tempo real**, que a `docs/visao-geral.md:143` já coloca como diferencial de Fase 2/3 (junto de movimento de odds, escalação confirmada, lesão de última hora).
+
+**Inspiração:** ecossistema de rumores é gigante no UK (NewsNow, Sky Sports Transfer Centre, TEAMtalk… ver `docs/research/sites-futebol-masculino.md`) — alerta personalizado é a forma de domar esse ruído num feed só do que interessa ao usuário.
+
+**Depende de / esbarra em:** **a fonte de dados já existe** — SportMonks tem `transfer-rumours` (+ `transfers`/`pendingTransfers`), dentro da assinatura atual, mapeado na investigação do `SIN-002` (`docs/investigacoes/sinal-interesses-patrocinadores-jogador.md:66`). O que **não existe** é a infra de alerta: persistência das preferências do usuário (quem segue o quê), um job que varre o feed e casa com os alertas, e um canal de entrega. **Guardrail de compliance (OBRIGATÓRIO):** `docs/ui/design-system/conformidade-jogo-responsavel.md:230` **proíbe** notificação push de urgência no estilo "aposte agora" — o alerta tem que ser informativo (rumor saiu), nunca um gatilho de aposta. Esbarra também na futura **página do jogador/time** como lugar natural de exibir os rumores e o botão "criar alerta".
+
+**Notas:** **primeira ideia de alerta/notificação da wishlist** — abre a família "alertas em tempo real" da Fase 2/3 (a mesma infra serve odds/escalação/lesão depois, então vale o `/rs` desenhar a infra genérica, não só pra rumor). **Confiabilidade do rumor é o calcanhar:** rumor "frequentemente é falso/inflado" (`docs/investigacoes/sinal-conflitos-entre-jogadores.md:88`) — herdar o padrão `severidade: rumor|confirmado` + sempre carregar `fonte_url`/`data`, e jamais apresentar rumor como fato. Pré-requisito de produto que ainda não está resolvido: **autenticação/conta de usuário** (alerta é por-usuário) e o **canal** (in-app inbox? e-mail? push?). Esforço G assumido pela infra nova, não pelo dado. **Assumi ✨** porque você disse "seria legal" — me fala se quer 🔥.
+
+### W-018 · Alertas sobre evidências extraídas de notícia · ✨ · esforço G · `dados` `api` `ia` `ui`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** o caso **geral** da W-017 — deixar o usuário criar um alerta e ser avisado quando uma **nova evidência extraída de notícia** aparecer sobre um alvo que ele segue (jogador, time, partida): lesão/desfalque, suspensão na bica do gancho, conflito de elenco, interesse de patrocinador, rumor de transferência… Cada evidência carrega **fonte, data e nível de confiança**, e o alerta dispara quando algo novo casa com o que o usuário segue.
+
+**Por quê:** é a notícia que move o número de aposta (desfalque derruba o over, racha no elenco muda a postura) chegando **na hora que sai**, filtrada só pro que interessa ao usuário. É a forma de transformar o ruído de centenas de portais (NewsNow, Sky, TEAMtalk… `docs/research/sites-futebol-masculino.md`) num feed acionável. Conversa direto com a tese (transparência: cada evidência é auditável pela fonte/data) e com a visão de **alertas em tempo real** de Fase 2/3 (`docs/visao-geral.md:143`).
+
+**Depende de / esbarra em:** **mais pesada que a W-017** em duas frentes. (1) **Infra de alerta** — mesma da W-017: preferências por-usuário, job de matching, canal de entrega; pré-requisito de **conta/auth** ainda inexistente. (2) **Camada de evidência a partir de notícia** — extrair sinal estruturado de texto livre é trabalho de **`ia`**, e os sinais já investigados dão o molde: lesões (`docs/regras/lesoes.md` — inclusive o alerta de "na bica do gancho" já cogitado em `lesoes.md:86`), conflito de elenco (`SIN-...`, com o padrão `{ tipo, time, severidade: "rumor|confirmado", fonte_url, data, resumo }` em `docs/investigacoes/sinal-conflitos-entre-jogadores.md:77`), interesse de patrocinador (`SIN-002`). **Guardrail de compliance (OBRIGATÓRIO):** alerta informativo, nunca gatilho de aposta — `docs/ui/design-system/conformidade-jogo-responsavel.md:230` proíbe push de urgência.
+
+**Notas:** **W-018 é o guarda-chuva; W-017 (rumor de transferência) é um caso particular dele.** Vale promover pensando na infra genérica: *uma* máquina de alertas + *vários* produtores de evidência (rumor, lesão, conflito…), não um alerta por tipo. **Calcanhar conhecido:** evidência de notícia "frequentemente é falsa/inflada" (`docs/investigacoes/sinal-conflitos-entre-jogadores.md:88`) — daí `severidade` + `fonte_url`/`data` obrigatórios e nunca apresentar como fato. O `/rs` aqui é mais sobre **arquitetura do pipeline notícia→evidência→alerta** do que sobre uma fonte só. **Assumi ✨** ("seria legal") — me fala se é 🔥.
+
+### W-019 · Dias de descanso de cada equipe na página da partida · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** na página da partida, mostrar há quantos dias cada equipe jogou pela última vez — os **dias de descanso** (rest days) de mandante e visitante antes deste jogo. Lê na hora "o time vem de 3 dias x 7 dias de folga" — assimetria de carga entre os dois lados.
+
+**Por quê:** dias de descanso é o insumo cru de **fadiga/carga**, que pesa sobre over/under e resultado (time com pernas cansadas rende menos, jogo trava). É a fatia **visível e auditável** da intuição da "ressaca de meio de semana" — o usuário vê o número que justifica o sinal, no lugar onde decide a aposta. Paridade com qualquer preview sério de jogo (rest days é coluna padrão).
+
+**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** É a diferença em dias entre `match.date` deste jogo e a `match.date` do **jogo anterior de cada time** (mais recente antes desta data). Todas as partidas já estão no banco; o cálculo é uma busca do "último match do time antes de X" + `differenceInCalendarDays` (`date-fns`, regra do projeto). A página da partida é o domínio `match-detail` (`apps/web/features/leagues/components/league-detail/.../match-detail`, irmão de `lineup.tsx`/`match-events.tsx`); provavelmente um campo a mais no service que monta a partida (`get-match`/`shared.ts`). **Par analítico do `SIN-008`** (calendário e fadiga, *investigado*) — este display é a perna de UI do mesmo conceito.
+
+**Notas:** **a fatia derivável e barata do `SIN-008`** — display hoje, o sinal modelado vem depois e reaproveita o mesmo cálculo. **Gotcha honesto pro `/pl`:** só temos a **PL 25/26** ingerida — jogo de **copa/seleção no meio de semana não aparece**, então o "descanso" calculado pode estar **superestimado** (o time pode ter jogado um jogo que não enxergamos). É exatamente o caso que mais distorce a leitura de fadiga; mostrar com ressalva ou só dentro da liga. Casa com a memória do João sobre [[teoria-ressaca-meio-de-semana]] (jogo importante no meio de semana → under). **Assumi ✨** — me fala se é 🔥.
+
 ## 💤 Anotando
 
-_(vazio)_
+### W-020 · Alerta de movimento de odds (por time + por mercado) · 💤 · esforço G · `dados` `api` `ui`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** deixar o usuário criar um alerta de **movimento de odds** parametrizado por **time** e por **tipo de mercado** (1X2, over/under, handicap…) — ser avisado quando a linha daquele time/mercado se mexer além de um limiar (caiu/subiu X% numa janela). É o terceiro irmão da família de alertas (W-017 rumores, W-018 evidências de notícia), agora sobre o **mercado**.
+
+**Por quê:** movimento de odds é o exemplo **canônico** de alerta em tempo real do produto — a `docs/visao-geral.md:143` lista "movimento de odds" como o primeiro item da fase de alertas. Linha caindo/subindo é onde o dinheiro esperto aparece (validação de valor, steam move), e o apostador quer pegar isso **enquanto a janela está aberta**.
+
+**Depende de / esbarra em:** **a mais cara do trio de alertas** — depende de uma stack de odds que **ainda não existe**. As âncoras `match_odds` e `odds_snapshots` estão **planejadas mas não implementadas** (grep no schema `apps/api/src/db/schemas` não acha odds; âncoras mapeadas em DOS-001/SIN-012/MOD-001). Detectar *movimento* exige **série temporal** de odds (snapshots ao longo do tempo), não um valor único — então o pré-requisito é todo o pipeline de captura+armazenamento de snapshots, **além** da infra de alerta da W-017/W-018 e da **conta/auth** por-usuário. **Primos analíticos:** `SIN-012` (camada de mercado e movimento de odds — *investigado*, P1) e `SIN-019` (steam moves, sharp vs square) — o alerta é o gatilho-pro-usuário em cima da mesma deteção de movimento.
+
+**Notas:** **família de alertas (W-017 · W-018 · W-020)** — mesma máquina de alerta, produtores diferentes; W-020 puxa o produtor mais pesado (odds snapshots). **Guardrail de compliance é mais sensível aqui que nos outros dois:** "odd caindo" é exatamente o gatilho de FOMO que a `docs/ui/design-system/conformidade-jogo-responsavel.md:230` proíbe ("aposte de novo" / urgência) — desenhar como informação de mercado, jamais como chamariz pra apostar. **Pro `/rs`:** definir o que conta como "movimento" (delta absoluto vs %, qual janela, qual book de referência) — o `docs/investigacoes/steam-moves-sharp-vs-square.md` já tem o critério (direção igual + janela curta + origem em casa respeitada) pra distinguir steam real de ruído. **Assumi 💤** porque você disse "um possível alerta" (tom de só-anotando) — me fala se é ✨/🔥.
 
 ---
 

@@ -1,41 +1,57 @@
 "use client"
 
 import { Badge } from "@workspace/ui/components/badge"
+import { Skeleton } from "@workspace/ui/components/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
-import Link from "next/link"
 
 import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
+import { useStandingsQuery } from "../../hooks/data/queries/use-standings-query"
 import { RoundsList } from "./rounds-list"
 import { ScorersTable } from "./scorers-table"
 import { StandingsTable } from "./standings-table"
 
 export function LeagueDetail({ code }: { code: string }) {
-  const { data: league } = useLeagueQuery(code)
+  const { data: league, isPending } = useLeagueQuery(code)
+  // Hold the header skeleton until the main content (standings) is also ready, so the
+  // above-the-fold reveals as one piece instead of the header popping in over a loading table.
+  const { isPending: standingsPending } = useStandingsQuery(code)
+  const headerLoading = isPending || standingsPending
 
   return (
     <section className="flex flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <Link href="/leagues" className="text-sm text-muted-foreground hover:text-foreground">
-          ← Ligas
-        </Link>
-        <div className="flex items-center gap-3">
-          {league?.logoUrl ? (
-            <img
-              src={league.logoUrl}
-              alt=""
-              className="size-8 shrink-0 object-contain"
-              loading="lazy"
-            />
-          ) : null}
-          <h1 className="text-2xl font-semibold tracking-tight">{league?.name ?? code}</h1>
-          <Badge variant="outline">{code}</Badge>
-          {league ? <Badge variant="secondary">{league.season}</Badge> : null}
-        </div>
-        {league ? (
-          <p className="text-sm text-muted-foreground">
-            {league.rounds} rodadas · {league.matches} jogos
-          </p>
-        ) : null}
+        {headerLoading ? (
+          <>
+            <div className="flex items-center gap-3">
+              <Skeleton className="size-8 rounded-md" />
+              <Skeleton className="h-7 w-48" />
+              <Skeleton className="h-5 w-10 rounded-4xl" />
+              <Skeleton className="h-5 w-20 rounded-4xl" />
+            </div>
+            <Skeleton className="h-4 w-40" />
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-3">
+              {league?.logoUrl ? (
+                <img
+                  src={league.logoUrl}
+                  alt=""
+                  className="size-8 shrink-0 object-contain"
+                  loading="lazy"
+                />
+              ) : null}
+              <h1 className="text-2xl font-semibold tracking-tight">{league?.name ?? code}</h1>
+              <Badge variant="outline">{code}</Badge>
+              {league ? <Badge variant="secondary">{league.season}</Badge> : null}
+            </div>
+            {league ? (
+              <p className="text-sm text-muted-foreground">
+                {league.rounds} rodadas · {league.matches} jogos
+              </p>
+            ) : null}
+          </>
+        )}
       </header>
 
       <Tabs defaultValue="standings">

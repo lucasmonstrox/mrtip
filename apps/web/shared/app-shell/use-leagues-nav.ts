@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query"
 
 import { api } from "@/shared/api/eden"
 
-/** Lists the catalog of available leagues. */
-export function useLeaguesQuery() {
+// Catálogo de ligas para o rail dinâmico da sidebar (uma liga por item, com logo). Mesma
+// query key da listagem (`/leagues`) pra compartilhar cache e não refazer o fetch.
+export function useLeaguesNav() {
   return useQuery({
     queryKey: ["leagues"],
     queryFn: async () => {

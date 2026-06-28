@@ -1,13 +1,10 @@
 import {
+  BellIcon,
   FileSearchIcon,
   LineChartIcon,
-  ListOrderedIcon,
   type LucideIcon,
-  SettingsIcon,
   ShieldCheckIcon,
-  SparklesIcon,
   TrophyIcon,
-  UserCircleIcon,
 } from "lucide-react"
 
 export interface NavItem {
@@ -41,20 +38,14 @@ export const NAV_SECTIONS: NavSection[] = [
     label: "Análise",
     items: [
       { title: "Dossiê do Jogo", href: "/jogo", icon: FileSearchIcon },
-      { title: "Ligas", href: "/leagues", icon: ListOrderedIcon },
       { title: "Histórico · CLV", href: "/historico", icon: LineChartIcon },
     ],
   },
   {
-    label: "Assistente",
-    items: [{ title: "Assistente", href: "/assistente", icon: SparklesIcon }],
-  },
-  {
     label: "Sistema",
     items: [
+      { title: "Alertas", href: "/alertas", icon: BellIcon },
       { title: "Jogo Responsável", href: "/jogo-responsavel", icon: ShieldCheckIcon },
-      { title: "Conta", href: "/conta", icon: UserCircleIcon },
-      { title: "Configurações", href: "/configuracoes", icon: SettingsIcon },
     ],
   },
   // TODO(admin): shell separado — operadores licenciados, conformidade, ingestão.
@@ -69,5 +60,8 @@ export function titleForPath(pathname: string): string {
   const prefix = items.find(
     (item) => item.href !== "/" && pathname.startsWith(`${item.href}/`)
   )
-  return prefix?.title ?? "mrtip"
+  if (prefix) return prefix.title
+  // Ligas vivem numa seção dinâmica fora do NAV_SECTIONS (uma liga por item).
+  if (pathname.startsWith("/leagues/")) return "Ligas"
+  return "mrtip"
 }
