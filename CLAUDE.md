@@ -90,6 +90,16 @@ O **`socraticode` MCP server** é o ponto de entrada **obrigatório** para explo
 
 Se uma ferramenta do SocratiCode falhar, rode `codebase_health` e exponha o erro ao usuário — não recorra silenciosamente a uma exploração só com grep.
 
+### Comentários de código para busca (SocratiCode)
+
+O `codebase_search` é **híbrido (semântico/embeddings + BM25/keyword)** — o comentário acima de cada função alimenta os dois canais e decide o quão achável ela fica. Padrão verificado por experimento controlado neste repo:
+
+- **Escreva 1–2 frases em linguagem natural que dizem o que a função faz E embutem os termos de domínio** (ex.: `over/under`, `xG`, `λ`, `desfalque`). Alvo: **~15–40 palavras, ≤3 linhas**. Esse formato (médio) venceu nos dois canais.
+- **Não** use bag-of-keywords (`// poisson, over 2.5, gols`): ganha o BM25, mas fica **invisível** na busca conceitual (o jeito que mais se busca).
+- **Não** escreva parágrafo longo: o embedding dilui e, pior, costuma **divagar para conceitos vizinhos** que poluem o vetor do conceito-alvo. Uma função, um assunto.
+- **Sem comentário é o pior** — só achável pelos identificadores. O **nome** da função carrega o `codebase_symbols` e parte do BM25: nome descritivo + comentário médio é o combo.
+- Docstring longa pra humano é ok, mas **ponha a frase densa de 1 linha primeiro** — ela ancora o embedding.
+
 ## Estrutura de pastas por feature
 
 A estrutura abaixo é **base de referência**, não exaustiva. Extenda quando a feature pedir: `hooks/` pode ter outras categorias além de `data/` e `ui/` (ex: `hooks/integrations/` pra WebSocket/SSE, `hooks/analytics/` pra tracking), `services/` pode ter múltiplos arquivos por contexto, `schemas/` cresce conforme novos inputs aparecem. Mantenha os princípios e adapta o resto.

@@ -1,13 +1,15 @@
 /**
- * Catálogo de ligas disponíveis. Adicionar uma liga/temporada = só acrescentar
- * uma entrada aqui e colocar o JSON correspondente em `data/openfootball/`.
+ * Catálogo de ligas disponíveis. Fonte = API-Football (api-sports.io).
+ * Adicionar uma liga/temporada = acrescentar uma entrada aqui (leagueId + season) e rodar o seed.
+ * `season` é o ano de início (2024 = 2024/25). Plano Free cobre 2022–2024.
  */
-export interface LigaCatalogo {
+export type LigaCatalogo = {
   code: string
   nome: string
   pais: string
   temporada: string
-  arquivo: string
+  leagueId: number // id da competição na API-Football (PL = 39)
+  season: number // ano de início (2024 = 2024/25)
 }
 
 export const CATALOGO = [
@@ -15,8 +17,9 @@ export const CATALOGO = [
     code: "PL",
     nome: "Premier League",
     pais: "Inglaterra",
-    temporada: "2025/26",
-    arquivo: "en.1.2025-26.json",
+    temporada: "2024/25",
+    leagueId: 39,
+    season: 2024,
   },
 ] as const satisfies readonly LigaCatalogo[]
 

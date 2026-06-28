@@ -1,0 +1,762 @@
+{
+  "id": "2062f78c-4ba3-486c-b8aa-6763f5b06aae",
+  "prevId": "1f74abcb-2482-4780-a3b8-b850446877b0",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.escalacao": {
+      "name": "escalacao",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "partida_id": {
+          "name": "partida_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_id": {
+          "name": "time_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "formacao": {
+          "name": "formacao",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tecnico": {
+          "name": "tecnico",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tecnico_id": {
+          "name": "tecnico_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "escalacao_partida_id_partida_id_fk": {
+          "name": "escalacao_partida_id_partida_id_fk",
+          "tableFrom": "escalacao",
+          "tableTo": "partida",
+          "columnsFrom": [
+            "partida_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "escalacao_time_id_time_id_fk": {
+          "name": "escalacao_time_id_time_id_fk",
+          "tableFrom": "escalacao",
+          "tableTo": "time",
+          "columnsFrom": [
+            "time_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "escalacao_tecnico_id_tecnico_id_fk": {
+          "name": "escalacao_tecnico_id_tecnico_id_fk",
+          "tableFrom": "escalacao",
+          "tableTo": "tecnico",
+          "columnsFrom": [
+            "tecnico_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "escalacao_partida_id_time_id_unique": {
+          "name": "escalacao_partida_id_time_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "partida_id",
+            "time_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.escalacao_jogador": {
+      "name": "escalacao_jogador",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "escalacao_id": {
+          "name": "escalacao_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jogador_id": {
+          "name": "jogador_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numero": {
+          "name": "numero",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "posicao": {
+          "name": "posicao",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "titular": {
+          "name": "titular",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grid": {
+          "name": "grid",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "escalacao_jogador_escalacao_id_escalacao_id_fk": {
+          "name": "escalacao_jogador_escalacao_id_escalacao_id_fk",
+          "tableFrom": "escalacao_jogador",
+          "tableTo": "escalacao",
+          "columnsFrom": [
+            "escalacao_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "escalacao_jogador_jogador_id_jogador_id_fk": {
+          "name": "escalacao_jogador_jogador_id_jogador_id_fk",
+          "tableFrom": "escalacao_jogador",
+          "tableTo": "jogador",
+          "columnsFrom": [
+            "jogador_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "escalacao_jogador_escalacao_id_jogador_id_unique": {
+          "name": "escalacao_jogador_escalacao_id_jogador_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "escalacao_id",
+            "jogador_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.gol": {
+      "name": "gol",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "partida_id": {
+          "name": "partida_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_id": {
+          "name": "time_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jogador_id": {
+          "name": "jogador_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assistente_id": {
+          "name": "assistente_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "minuto": {
+          "name": "minuto",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "gol_partida_id_partida_id_fk": {
+          "name": "gol_partida_id_partida_id_fk",
+          "tableFrom": "gol",
+          "tableTo": "partida",
+          "columnsFrom": [
+            "partida_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "gol_time_id_time_id_fk": {
+          "name": "gol_time_id_time_id_fk",
+          "tableFrom": "gol",
+          "tableTo": "time",
+          "columnsFrom": [
+            "time_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "gol_jogador_id_jogador_id_fk": {
+          "name": "gol_jogador_id_jogador_id_fk",
+          "tableFrom": "gol",
+          "tableTo": "jogador",
+          "columnsFrom": [
+            "jogador_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "gol_assistente_id_jogador_id_fk": {
+          "name": "gol_assistente_id_jogador_id_fk",
+          "tableFrom": "gol",
+          "tableTo": "jogador",
+          "columnsFrom": [
+            "assistente_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.jogador": {
+      "name": "jogador",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "api_football_player_id": {
+          "name": "api_football_player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "jogador_api_football_player_id_unique": {
+          "name": "jogador_api_football_player_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_football_player_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lesao": {
+      "name": "lesao",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "partida_id": {
+          "name": "partida_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_id": {
+          "name": "time_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jogador_id": {
+          "name": "jogador_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "motivo": {
+          "name": "motivo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lesao_partida_id_partida_id_fk": {
+          "name": "lesao_partida_id_partida_id_fk",
+          "tableFrom": "lesao",
+          "tableTo": "partida",
+          "columnsFrom": [
+            "partida_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "lesao_time_id_time_id_fk": {
+          "name": "lesao_time_id_time_id_fk",
+          "tableFrom": "lesao",
+          "tableTo": "time",
+          "columnsFrom": [
+            "time_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lesao_jogador_id_jogador_id_fk": {
+          "name": "lesao_jogador_id_jogador_id_fk",
+          "tableFrom": "lesao",
+          "tableTo": "jogador",
+          "columnsFrom": [
+            "jogador_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "lesao_partida_id_jogador_id_unique": {
+          "name": "lesao_partida_id_jogador_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "partida_id",
+            "jogador_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.liga": {
+      "name": "liga",
+      "schema": "",
+      "columns": {
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "api_football_league_id": {
+          "name": "api_football_league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pais": {
+          "name": "pais",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "temporada": {
+          "name": "temporada",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.partida": {
+      "name": "partida",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "api_football_fixture_id": {
+          "name": "api_football_fixture_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liga_code": {
+          "name": "liga_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rodada": {
+          "name": "rodada",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hora": {
+          "name": "hora",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mandante_id": {
+          "name": "mandante_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "visitante_id": {
+          "name": "visitante_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "placar_ft_mandante": {
+          "name": "placar_ft_mandante",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "placar_ft_visitante": {
+          "name": "placar_ft_visitante",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "placar_ht_mandante": {
+          "name": "placar_ht_mandante",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "placar_ht_visitante": {
+          "name": "placar_ht_visitante",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gols_importados": {
+          "name": "gols_importados",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "criado_em": {
+          "name": "criado_em",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "partida_liga_code_liga_code_fk": {
+          "name": "partida_liga_code_liga_code_fk",
+          "tableFrom": "partida",
+          "tableTo": "liga",
+          "columnsFrom": [
+            "liga_code"
+          ],
+          "columnsTo": [
+            "code"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "partida_mandante_id_time_id_fk": {
+          "name": "partida_mandante_id_time_id_fk",
+          "tableFrom": "partida",
+          "tableTo": "time",
+          "columnsFrom": [
+            "mandante_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "partida_visitante_id_time_id_fk": {
+          "name": "partida_visitante_id_time_id_fk",
+          "tableFrom": "partida",
+          "tableTo": "time",
+          "columnsFrom": [
+            "visitante_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "partida_api_football_fixture_id_unique": {
+          "name": "partida_api_football_fixture_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_football_fixture_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tecnico": {
+      "name": "tecnico",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "api_football_coach_id": {
+          "name": "api_football_coach_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tecnico_api_football_coach_id_unique": {
+          "name": "tecnico_api_football_coach_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_football_coach_id"
+          ]
+        },
+        "tecnico_nome_unique": {
+          "name": "tecnico_nome_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nome"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.time": {
+      "name": "time",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "api_football_team_id": {
+          "name": "api_football_team_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "criado_em": {
+          "name": "criado_em",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "time_api_football_team_id_unique": {
+          "name": "time_api_football_team_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_football_team_id"
+          ]
+        },
+        "time_slug_unique": {
+          "name": "time_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

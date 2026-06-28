@@ -9,7 +9,10 @@ import {
   TableRow,
 } from "@workspace/ui/components/table"
 
+import Link from "next/link"
+
 import { useClassificacaoQuery } from "../../hooks/data/queries/use-classificacao-query"
+import { FormaChips } from "../partida-detalhe/forma-guia"
 
 export function ClassificacaoTable({ code }: { code: string }) {
   const { data: tabela, isPending, isError } = useClassificacaoQuery(code)
@@ -32,13 +35,18 @@ export function ClassificacaoTable({ code }: { code: string }) {
           <TableHead className="text-center">GC</TableHead>
           <TableHead className="text-center">SG</TableHead>
           <TableHead className="text-center font-semibold">Pts</TableHead>
+          <TableHead className="text-center">Forma</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {tabela.map((l) => (
-          <TableRow key={l.time}>
+          <TableRow key={l.time.id}>
             <TableCell className="text-muted-foreground">{l.posicao}</TableCell>
-            <TableCell className="font-medium">{l.time}</TableCell>
+            <TableCell className="font-medium">
+              <Link href={`/times/${l.time.slug}`} className="hover:underline">
+                {l.time.nome}
+              </Link>
+            </TableCell>
             <TableCell className="text-center">{l.jogos}</TableCell>
             <TableCell className="text-center">{l.vitorias}</TableCell>
             <TableCell className="text-center">{l.empates}</TableCell>
@@ -47,6 +55,11 @@ export function ClassificacaoTable({ code }: { code: string }) {
             <TableCell className="text-center">{l.golsContra}</TableCell>
             <TableCell className="text-center">{l.saldo > 0 ? `+${l.saldo}` : l.saldo}</TableCell>
             <TableCell className="text-center font-semibold">{l.pontos}</TableCell>
+            <TableCell>
+              <div className="flex justify-center">
+                <FormaChips ultimos={l.forma} size="sm" />
+              </div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

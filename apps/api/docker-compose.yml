@@ -1,0 +1,27 @@
+# Nome de projeto explícito: sem isto o Compose usa o nome da pasta ("api"), que COLIDE com
+# grupoceralis/apps/api — um `up`/`down` aqui mexeria nos containers do outro repo.
+name: mrtip
+
+services:
+  db:
+    # pgvector (superset do Postgres 17): deixa o terreno pronto pra embeddings do
+    # motor de prognóstico (MOD-001) sem trocar de imagem depois.
+    image: pgvector/pgvector:pg17
+    container_name: mrtip_db
+    environment:
+      POSTGRES_USER: mrtip
+      POSTGRES_PASSWORD: mrtip
+      POSTGRES_DB: mrtip_dev
+    # 5434 no host pra NÃO colidir com Postgres local (5432) nem com o ceralis_db (5433).
+    ports:
+      - "5434:5432"
+    volumes:
+      - mrtip_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mrtip -d mrtip_dev"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  mrtip_pg: {}

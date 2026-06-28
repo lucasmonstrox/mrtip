@@ -1,7 +1,9 @@
 /**
- * Entry de Cloudflare Workers. O Elysia expõe um handler `fetch` compatível com
- * o workerd — este arquivo é só o adaptador. O servidor Bun continua em index.ts
- * (guard `import.meta.main`); este arquivo nunca roda sob Bun.
+ * Entry de Cloudflare Workers. O Elysia expõe um handler `fetch` compatível com o workerd —
+ * este arquivo é só o adaptador. O servidor Bun vive em index.ts; este nunca roda sob Bun.
+ *
+ * ⚠️ DEPLOY PARADO: o app passou a usar Postgres via Bun.SQL (db/client), que NÃO roda na edge
+ * do workerd. Reativar `wrangler deploy` exige migrar o acesso a dados pra D1/Hyperdrive antes.
  */
 
 /** Env do workerd: vars (strings) definidas no wrangler.jsonc. */
@@ -18,7 +20,7 @@ export default {
     }
     // Import preguiçoso: avaliar os schemas no top-level estoura o limite de CPU
     // de startup do deploy (workerd). Carrega o app na 1ª request, cacheado por isolate.
-    application ??= (await import("./index")).app
+    application ??= (await import("./app")).app
     return application.fetch(request)
   },
 }
