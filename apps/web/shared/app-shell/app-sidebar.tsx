@@ -127,9 +127,10 @@ function LeaguesNavGroup({ pathname }: { pathname: string }) {
                       <img
                         src={league.logoUrl}
                         alt=""
-                        // Active row tem bg roxo (sidebar-primary) e muitos escudos são escuros →
-                        // somem. Backing branco arredondado faz o logo saltar quando ativo.
-                        className={`size-4 shrink-0 object-contain ${active ? "rounded-[3px] bg-white p-px" : ""}`}
+                        // Escudos escuros somem tanto no bg escuro da sidebar (inativo) quanto no
+                        // roxo do active. Backing branco arredondado sempre presente faz o logo
+                        // saltar em qualquer fundo, virando um tile tipo ícone de app.
+                        className="size-4 shrink-0 rounded-[3px] bg-white object-contain p-px"
                         loading="lazy"
                       />
                     ) : (
