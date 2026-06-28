@@ -3,7 +3,6 @@ import {
   FileSearchIcon,
   LineChartIcon,
   type LucideIcon,
-  ShieldCheckIcon,
   TrophyIcon,
 } from "lucide-react"
 
@@ -26,7 +25,7 @@ export interface NavSection {
  * ┌─ DECISÃO DE NAVEGAÇÃO — ajuste aqui ──────────────────────────────────────
  * │ Versão "rica" (7 itens) abaixo, com os 3 canônicos no topo. Para o rail
  * │ ENXUTO do design system, mantenha só a 1ª seção (Hub · Dossiê · Histórico)
- * │ e mova Assistente/Jogo Responsável/Conta/Configurações para a topbar.
+ * │ e mova Assistente/Conta/Configurações para a topbar.
  * │ Admin é um shell separado (§2.4) — fora do rail por ora.
  * └───────────────────────────────────────────────────────────────────────────
  */
@@ -43,10 +42,7 @@ export const NAV_SECTIONS: NavSection[] = [
   },
   {
     label: "Sistema",
-    items: [
-      { title: "Alertas", href: "/alertas", icon: BellIcon },
-      { title: "Jogo Responsável", href: "/jogo-responsavel", icon: ShieldCheckIcon },
-    ],
+    items: [{ title: "Alertas", href: "/alertas", icon: BellIcon }],
   },
   // TODO(admin): shell separado — operadores licenciados, conformidade, ingestão.
   // TODO(fase 2/3): perfil público de tipster, feed/seguir, marketplace, alertas.

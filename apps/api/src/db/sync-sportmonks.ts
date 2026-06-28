@@ -1,5 +1,5 @@
 import { db } from "./client"
-import { card, goal, league, lineup, lineupPlayer, match, nationality, player, standing, team } from "./schema"
+import { card, goal, injury, league, lineup, lineupPlayer, match, nationality, player, standing, team } from "./schema"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
@@ -115,6 +115,15 @@ type SmFixture = {
   lineups?: SmLineup[]
   formations?: SmFormation[]
   events?: SmEvent[]
+  sidelined?: SmSidelined[]
+}
+// SportMonks `sidelined` item on a fixture: a player unavailable (or a doubt) for THAT match.
+// `type.developer_name` is the cause/category (HAMSTRING_INJURY, RED_CARD_SUSPENSION, DOUBTFUL).
+type SmSidelined = {
+  participant_id: number
+  player_id: number
+  player?: { id: number; name?: string; common_name?: string }
+  type?: { name: string; developer_name: string }
 }
 type SmCountry = { id: number; name: string; fifa_name?: string; iso2?: string; image_path?: string }
 
@@ -289,7 +298,7 @@ async function main() {
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
       `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type&per_page=50`,
+        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -494,6 +503,33 @@ async function main() {
     }
   }
   console.log(`goals: ${nGoals} | cards: ${nCards}`)
+
+  // 3f) Injuries/absences (desfalques): SportMonks `sidelined` per fixture → who missed (or was a
+  // doubt for) that match and why. `type` = "Missing Fixture" (didn't play) or "Questionable"
+  // (doubt, from developer_name DOUBTFUL); `reason` keeps the cause ("Hamstring Injury",
+  // "Red Card Suspension"). Sidelined players aren't in lineups → ensurePlayer makes a stub.
+  let nInjuries = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    if (!matchId) continue
+    for (const s of f.sidelined ?? []) {
+      if (!s.player_id) continue
+      const teamId = teamIdBySm.get(s.participant_id)
+      if (!teamId) continue
+      const playerId = await ensurePlayer(
+        s.player_id,
+        s.player?.common_name ?? s.player?.name ?? `player ${s.player_id}`,
+      )
+      const type = s.type?.developer_name === "DOUBTFUL" ? "Questionable" : "Missing Fixture"
+      const v = { matchId, teamId, playerId, type, reason: s.type?.name ?? null }
+      await db
+        .insert(injury)
+        .values(v)
+        .onConflictDoUpdate({ target: [injury.matchId, injury.playerId], set: v })
+      nInjuries += 1
+    }
+  }
+  console.log(`injuries: ${nInjuries}`)
   console.log("✓ sync done")
 }
 

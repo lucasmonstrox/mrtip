@@ -22,13 +22,19 @@ export function LeagueDetail({ code }: { code: string }) {
       <header className="flex flex-col gap-2">
         {headerLoading ? (
           <>
+            {/* bg-foreground/10: o header fica direto sobre bg-background, onde o
+                bg-muted padrão do Skeleton é quase invisível (mesma luminância). */}
             <div className="flex items-center gap-3">
-              <Skeleton className="size-8 rounded-md" />
-              <Skeleton className="h-7 w-48" />
-              <Skeleton className="h-5 w-10 rounded-4xl" />
-              <Skeleton className="h-5 w-20 rounded-4xl" />
+              <Skeleton className="size-8 rounded-md bg-foreground/10" />
+              <Skeleton className="h-7 w-48 bg-foreground/10" />
+              <Skeleton className="h-5 w-10 rounded-4xl bg-foreground/10" />
+              <Skeleton className="h-5 w-20 rounded-4xl bg-foreground/10" />
             </div>
-            <Skeleton className="h-4 w-40" />
+            {/* Reserva o line-box de 20px do <p text-sm> abaixo — sem isso a
+                tabela desce 4px quando o subtítulo real entra (CLS). */}
+            <div className="flex h-5 items-center">
+              <Skeleton className="h-4 w-40 bg-foreground/10" />
+            </div>
           </>
         ) : (
           <>
