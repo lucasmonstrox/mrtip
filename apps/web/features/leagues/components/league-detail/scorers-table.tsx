@@ -9,8 +9,8 @@ import { useScorersQuery } from "../../hooks/data/queries/use-scorers-query"
 // Reveal 20 scorers at a time; each time the user scrolls to the bottom, 20 more are shown.
 const PAGE = 20
 
-// Shared grid so the header and every row line up: rank · player · goals · assists.
-const COLS = "grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center gap-2"
+// Shared grid so the header and every row line up: rank · team logo · player · goals · assists.
+const COLS = "grid grid-cols-[2.5rem_1.75rem_1fr_3.5rem_3.5rem] items-center gap-2"
 
 // Module-level (stable identity) footer so Virtuoso doesn't remount it on every render; reads
 // `hasMore` from the list context to show the loading hint until the whole ranking is revealed.
@@ -61,6 +61,7 @@ export function ScorersTable({ code }: { code: string }) {
     <div ref={setRootRef} className="flex flex-col">
       <div className={`${COLS} border-b px-2 py-2 text-sm font-medium text-muted-foreground`}>
         <span>#</span>
+        <span aria-hidden="true" />
         <span>Jogador</span>
         <span className="text-center">G</span>
         <span className="text-center">A</span>
@@ -80,6 +81,17 @@ export function ScorersTable({ code }: { code: string }) {
               className={`${COLS} border-b px-2 py-2 text-sm transition-colors hover:bg-muted/50`}
             >
               <span className="tabular-nums text-muted-foreground">{index + 1}</span>
+              <span className="flex items-center justify-center">
+                {s.team?.logoUrl ? (
+                  <img
+                    src={s.team.logoUrl}
+                    alt=""
+                    title={s.team.name}
+                    className="size-5 shrink-0 object-contain"
+                    loading="lazy"
+                  />
+                ) : null}
+              </span>
               <span className="flex min-w-0 items-center gap-2 font-medium">
                 {s.imageUrl ? (
                   <img
