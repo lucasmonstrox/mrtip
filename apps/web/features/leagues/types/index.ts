@@ -1,6 +1,7 @@
 // Domain types come from the API contract (@workspace/api) — single source of truth.
 export type {
   Absence,
+  CardItem,
   CoachDetail,
   CoachMatch,
   Form,

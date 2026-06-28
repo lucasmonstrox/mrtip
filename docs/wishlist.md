@@ -84,6 +84,28 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **par com W-005 — micro-família "recortes de gol derivados" (casa/fora + tempo), ambas quick wins `api`+`ui` sem tocar schema.** Valem ser promovidas juntas numa feature só ("breakdowns de gol do jogador"). **Gotcha pro `/pl`:** acréscimos — como a SportMonks codifica o minuto de um gol aos 45+2 / 90+3? Se `goal.minute` guarda 45 ou 90 (sem o extra) o corte por `≤45` funciona; se guarda 47/93, ainda funciona; confirmar a convenção antes de cravar o limiar.
 
+### W-007 · Estádio de cada partida · 🔥 · esforço M · `dados` `ui`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** registrar e exibir em qual estádio cada partida foi disputada — o venue do jogo, na página da partida (e disponível pra cruzamentos).
+
+**Por quê:** estádio é dimensão de contexto (mando real, fator casa, viagem do visitante) e base pra sinais de carga/viagem e rivalidade territorial. Insumo, não enfeite — alimenta análise, não só mostra.
+
+**Depende de / esbarra em:** **não está no schema** — a tabela `match` tem score/data/times, sem `venue`/`stadium` (busca SocratiCode 2026-06-28, nada em `apps/api/src/db/schemas/leagues.ts`). A SportMonks entrega venue por fixture (e venue como estádio-casa do time), então é ingestão + coluna/tabela `venue` + sync. Esbarra no `SIN-007` (rivalidade) e em sinais de **viagem/carga**, que já pediam **geocoding de estádios** — `docs/regras/rivalidade.md` cita estádio/whitelist/geocoding.
+
+**Notas:** primeira ideia **fora da página do jogador** — domínio de partida. **Sinergia de dados:** venue + coordenadas destrava (a) este display, (b) distância de viagem do visitante (sinal de fadiga), (c) rivalidade territorial do `SIN-007`. **Decisão de modelagem RESOLVIDA por W-008 (2026-06-28):** como o João pediu lat/lon por estádio, vence a **tabela `venue` própria** (nome + cidade + lat/long) em vez de coluna solta em `match` — `match` referencia `venue`. Promover W-007 e W-008 como uma feature só de venue.
+
+### W-008 · Coordenadas (lat/lon) de cada estádio · 🔥 · esforço M · `dados`
+<adicionada: 2026-06-28 · status: ideia>
+
+**O quê:** ter latitude/longitude de cada estádio, pra geolocalizar partidas — habilita distância de viagem, mapas e proximidade entre clubes.
+
+**Por quê:** lat/lon é o que transforma "nome do estádio" em **dado calculável**: distância de viagem do visitante (sinal de fadiga/carga sobre over/under), rivalidade territorial (proximidade geográfica), e qualquer visualização em mapa. É insumo de modelo, não enfeite.
+
+**Depende de / esbarra em:** **acoplada à W-007** — é a coordenada da mesma tabela `venue` (W-008 = colunas `latitude`/`longitude` na tabela que a W-007 cria). Mesmo domínio do `SIN-007` (rivalidade/viagem), que já listava **geocoding de estádios** como necessidade em `docs/regras/rivalidade.md`.
+
+**Notas:** **W-007 + W-008 = uma feature só ("venue com geo"); não promover separado.** W-008 é a razão de a W-007 virar tabela própria em vez de coluna. **Aberto pro `/rs`:** a SportMonks já devolve lat/long no objeto de venue? Se sim, vem de brinde na ingestão da W-007; se não, precisa de uma fonte de geocoding (geocodificar o nome/cidade do estádio 1x e cachear). Coordenada só destrava valor com a fórmula de distância (haversine) — anotar que o consumidor real é o **sinal de viagem**, não o display.
+
 ## ✨ Seria legal
 
 _(vazio)_

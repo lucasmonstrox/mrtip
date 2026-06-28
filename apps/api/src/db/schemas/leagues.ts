@@ -223,3 +223,23 @@ export const goal = pgTable("goal", {
 })
 
 export type Goal = typeof goal.$inferSelect
+
+// Card of a match. `type` = "yellow" | "red" (straight red) | "yellowred" (second yellow → off).
+// `playerId` = booked player; `minute` in match minutes. Dedup by SportMonks event id.
+export const card = pgTable("card", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksEventId: integer("sportmonks_event_id").notNull().unique(),
+  matchId: uuid("match_id")
+    .notNull()
+    .references(() => match.id, { onDelete: "cascade" }),
+  teamId: uuid("team_id")
+    .notNull()
+    .references(() => team.id),
+  playerId: uuid("player_id")
+    .notNull()
+    .references(() => player.id),
+  minute: integer("minute"),
+  type: text("type").notNull(),
+})
+
+export type Card = typeof card.$inferSelect

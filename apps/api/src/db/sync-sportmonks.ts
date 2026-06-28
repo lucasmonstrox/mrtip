@@ -1,5 +1,5 @@
 import { db } from "./client"
-import { goal, league, lineup, lineupPlayer, match, nationality, player, standing, team } from "./schema"
+import { card, goal, league, lineup, lineupPlayer, match, nationality, player, standing, team } from "./schema"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
@@ -29,6 +29,13 @@ const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = {
   GOAL: "normal",
   PENALTY: "normal",
   OWNGOAL: "own",
+}
+
+// SportMonks card-event developer_names → our card.type. VAR_CARD (review) is ignored.
+const CARD_TYPE: Record<string, "yellow" | "red" | "yellowred"> = {
+  YELLOWCARD: "yellow",
+  REDCARD: "red",
+  YELLOWREDCARD: "yellowred",
 }
 
 // Standing detail type_ids (discovered on the real API — see standings/seasons/:id).
@@ -410,9 +417,9 @@ async function main() {
   }
   console.log(`lineups: ${nLineups} | players (starters + bench): ${nPlayers}`)
 
-  // 3f) Goals (scorers) of every match, from events. Most scorers/assisters are already in
-  // playerIdBySm (lineups); for any that aren't, upsert a minimal player (id + name). Upsert by
-  // sportmonksEventId so re-sync is idempotent.
+  // 3f) Goals + cards of every match, from events. Most players are already in playerIdBySm
+  // (lineups); for any that aren't, upsert a minimal player (id + name). Upsert by sportmonksEventId
+  // so re-sync is idempotent.
   const ensurePlayer = async (smId: number, name: string): Promise<string> => {
     const known = playerIdBySm.get(smId)
     if (known) return known
@@ -426,25 +433,40 @@ async function main() {
   }
 
   let nGoals = 0
+  let nCards = 0
   for (const f of fixtures) {
     const matchId = matchIdByFixture.get(f.id)
     if (!matchId) continue
     for (const ev of f.events ?? []) {
-      const type = GOAL_TYPE[ev.type?.developer_name ?? ""]
-      if (!type || !ev.player_id) continue // not a goal (cards/subs/VAR/missed penalty) or no scorer
+      if (!ev.player_id) continue
       const teamId = teamIdBySm.get(ev.participant_id)
       if (!teamId) continue
-      const playerId = await ensurePlayer(ev.player_id, ev.player_name ?? `player ${ev.player_id}`)
-      const assistId =
-        ev.related_player_id && type !== "own"
-          ? await ensurePlayer(ev.related_player_id, ev.related_player_name ?? `player ${ev.related_player_id}`)
-          : null
-      const g = { sportmonksEventId: ev.id, matchId, teamId, playerId, assistId, minute: ev.minute ?? null, type }
-      await db.insert(goal).values(g).onConflictDoUpdate({ target: goal.sportmonksEventId, set: g })
-      nGoals += 1
+      const dev = ev.type?.developer_name ?? ""
+      const minute = ev.minute ?? null
+
+      const goalType = GOAL_TYPE[dev]
+      if (goalType) {
+        const playerId = await ensurePlayer(ev.player_id, ev.player_name ?? `player ${ev.player_id}`)
+        const assistId =
+          ev.related_player_id && goalType !== "own"
+            ? await ensurePlayer(ev.related_player_id, ev.related_player_name ?? `player ${ev.related_player_id}`)
+            : null
+        const g = { sportmonksEventId: ev.id, matchId, teamId, playerId, assistId, minute, type: goalType }
+        await db.insert(goal).values(g).onConflictDoUpdate({ target: goal.sportmonksEventId, set: g })
+        nGoals += 1
+        continue
+      }
+
+      const cardType = CARD_TYPE[dev]
+      if (cardType) {
+        const playerId = await ensurePlayer(ev.player_id, ev.player_name ?? `player ${ev.player_id}`)
+        const c = { sportmonksEventId: ev.id, matchId, teamId, playerId, minute, type: cardType }
+        await db.insert(card).values(c).onConflictDoUpdate({ target: card.sportmonksEventId, set: c })
+        nCards += 1
+      }
     }
   }
-  console.log(`goals: ${nGoals}`)
+  console.log(`goals: ${nGoals} | cards: ${nCards}`)
   console.log("✓ sync done")
 }
 

@@ -10,8 +10,8 @@ import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
 import { formatDate } from "../../utils/format"
 import { Absences } from "./absences"
 import { FormGuide } from "./form-guide"
-import { GoalsList } from "./goals-list"
 import { Lineup } from "./lineup"
+import { MatchEvents } from "./match-events"
 
 export function MatchDetail({ id }: { id: string }) {
   const { data: match, isPending, isError } = useMatchQuery(id)
@@ -75,7 +75,7 @@ export function MatchDetail({ id }: { id: string }) {
             {match.away.name}
           </Link>
           </div>
-          <GoalsList goals={match.goals} homeTeamId={match.home.id} />
+          <MatchEvents goals={match.goals} cards={match.cards} homeTeamId={match.home.id} />
         </CardContent>
       </Card>
 

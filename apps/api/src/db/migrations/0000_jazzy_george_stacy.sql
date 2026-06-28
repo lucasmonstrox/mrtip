@@ -1,3 +1,14 @@
+CREATE TABLE "card" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"sportmonks_event_id" integer NOT NULL,
+	"match_id" uuid NOT NULL,
+	"team_id" uuid NOT NULL,
+	"player_id" uuid NOT NULL,
+	"minute" integer,
+	"type" text NOT NULL,
+	CONSTRAINT "card_sportmonks_event_id_unique" UNIQUE("sportmonks_event_id")
+);
+--> statement-breakpoint
 CREATE TABLE "coach" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"sportmonks_coach_id" integer,
@@ -129,6 +140,9 @@ CREATE TABLE "team" (
 	CONSTRAINT "team_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
+ALTER TABLE "card" ADD CONSTRAINT "card_match_id_match_id_fk" FOREIGN KEY ("match_id") REFERENCES "public"."match"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "card" ADD CONSTRAINT "card_team_id_team_id_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "card" ADD CONSTRAINT "card_player_id_player_id_fk" FOREIGN KEY ("player_id") REFERENCES "public"."player"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "goal" ADD CONSTRAINT "goal_match_id_match_id_fk" FOREIGN KEY ("match_id") REFERENCES "public"."match"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "goal" ADD CONSTRAINT "goal_team_id_team_id_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "goal" ADD CONSTRAINT "goal_player_id_player_id_fk" FOREIGN KEY ("player_id") REFERENCES "public"."player"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

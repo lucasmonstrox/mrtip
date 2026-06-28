@@ -12,6 +12,7 @@ export type { App } from "./app"
 // Domain types reused by apps/web (single contract, no duplication).
 export type {
   Absence,
+  CardItem,
   CoachDetail,
   CoachMatch,
   Form,

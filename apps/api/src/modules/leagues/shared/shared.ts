@@ -3,6 +3,7 @@ import { alias } from "drizzle-orm/pg-core"
 
 import { db } from "../../../db/client"
 import {
+  card,
   coach,
   goal,
   injury,
@@ -144,6 +145,13 @@ export type GoalItem = {
   team: TeamRef
   scorer: { id: string; name: string }
   assist: { id: string; name: string } | null
+}
+
+export type CardItem = {
+  minute: number | null
+  type: "yellow" | "red" | "yellowred" // yellowred = second yellow → sent off
+  team: TeamRef
+  player: { id: string; name: string }
 }
 
 // A goal from the player's perspective (for their page): the match + minute + type.
@@ -468,6 +476,33 @@ export async function loadMatchGoals(matchId: string): Promise<GoalItem[]> {
     team: { id: r.teamId, name: r.teamName, slug: r.teamSlug, logoUrl: r.teamLogo },
     scorer: { id: r.scorerId, name: r.scorerName },
     assist: r.assistId && r.assistName ? { id: r.assistId, name: r.assistName } : null,
+  }))
+}
+
+// Cards of a match, in chronological order (minute). Empty when no cards / events not imported.
+export async function loadMatchCards(matchId: string): Promise<CardItem[]> {
+  const rows = await db
+    .select({
+      minute: card.minute,
+      type: card.type,
+      teamId: team.id,
+      teamName: team.name,
+      teamSlug: team.slug,
+      teamLogo: team.logoUrl,
+      playerId: player.id,
+      playerName: player.name,
+    })
+    .from(card)
+    .innerJoin(team, eq(team.id, card.teamId))
+    .innerJoin(player, eq(player.id, card.playerId))
+    .where(eq(card.matchId, matchId))
+    .orderBy(asc(card.minute))
+
+  return rows.map((r) => ({
+    minute: r.minute,
+    type: r.type as CardItem["type"],
+    team: { id: r.teamId, name: r.teamName, slug: r.teamSlug, logoUrl: r.teamLogo },
+    player: { id: r.playerId, name: r.playerName },
   }))
 }
 
