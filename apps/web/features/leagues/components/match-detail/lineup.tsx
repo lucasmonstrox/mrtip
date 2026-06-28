@@ -4,6 +4,13 @@ import Link from "next/link"
 import { useMatchLineupQuery } from "../../hooks/data/queries/use-match-lineup-query"
 import type { LineupPlayer, TeamLineup } from "../../types"
 
+// Rating → text color (green good, amber average, red poor).
+function ratingColor(r: number): string {
+  if (r >= 7.5) return "text-emerald-600 dark:text-emerald-400"
+  if (r >= 6.5) return "text-foreground"
+  return "text-red-600 dark:text-red-400"
+}
+
 function LineupRow({ p }: { p: LineupPlayer }) {
   return (
     <li className="flex items-center gap-2 py-0.5 text-sm">
@@ -18,10 +25,23 @@ function LineupRow({ p }: { p: LineupPlayer }) {
       ) : (
         <span className="size-6 shrink-0 rounded-full bg-muted" />
       )}
-      <Link href={`/players/${p.id}`} className="flex-1 hover:underline">
+      <Link href={`/players/${p.id}`} className="flex-1 truncate hover:underline">
         {p.name}
       </Link>
-      {p.position ? <span className="text-xs text-muted-foreground">{p.position}</span> : null}
+      {p.manOfMatch ? <span title="Man of the Match">⭐</span> : null}
+      {p.minutesPlayed != null ? (
+        <span className="font-mono text-xs tabular-nums text-muted-foreground">{p.minutesPlayed}&apos;</span>
+      ) : null}
+      {p.position ? <span className="w-4 text-center text-xs text-muted-foreground">{p.position}</span> : null}
+      {p.rating != null ? (
+        <span
+          className={`w-9 rounded bg-muted px-1 text-center font-mono text-xs font-semibold tabular-nums ${ratingColor(p.rating)}`}
+        >
+          {p.rating.toFixed(1)}
+        </span>
+      ) : (
+        <span className="w-9" />
+      )}
     </li>
   )
 }

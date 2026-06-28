@@ -1,5 +1,5 @@
 {
-  "id": "fc28068d-01b5-437d-b233-dfc5a3de9514",
+  "id": "24d4256d-7767-467e-830a-a08fca0f9d0e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -473,6 +473,25 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "rating": {
+          "name": "rating",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "minutes_played": {
+          "name": "minutes_played",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "man_of_match": {
+          "name": "man_of_match",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},

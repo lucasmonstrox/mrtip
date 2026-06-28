@@ -102,6 +102,9 @@ export type LineupPlayer = {
   position: string | null
   starter: boolean
   grid: string | null
+  rating: number | null
+  minutesPlayed: number | null
+  manOfMatch: boolean
 }
 
 // Lineup of a team in a match: formation + coach + starters/bench.
@@ -355,6 +358,9 @@ export async function loadMatchLineups(matchId: string): Promise<TeamLineup[]> {
       position: lineupPlayer.position,
       starter: lineupPlayer.starter,
       grid: lineupPlayer.grid,
+      rating: lineupPlayer.rating,
+      minutesPlayed: lineupPlayer.minutesPlayed,
+      manOfMatch: lineupPlayer.manOfMatch,
       playerId: player.id,
       playerName: player.name,
       playerImage: player.imageUrl,
@@ -375,6 +381,9 @@ export async function loadMatchLineups(matchId: string): Promise<TeamLineup[]> {
         position: p.position,
         starter: p.starter,
         grid: p.grid,
+        rating: p.rating,
+        minutesPlayed: p.minutesPlayed,
+        manOfMatch: p.manOfMatch,
       }))
     return {
       team: { id: e.teamId, name: e.teamName, slug: e.teamSlug, logoUrl: e.teamLogo },

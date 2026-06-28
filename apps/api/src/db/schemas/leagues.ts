@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { boolean, date, integer, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
 
 // League + season (one row per league/season). `code` is the domain key (e.g. "PL"), used in the
 // URL and as the match FK. `sportmonksLeagueId` is the SportMonks league id (Premier League = 8);
@@ -167,6 +167,10 @@ export const lineupPlayer = pgTable(
     position: text("position"), // G/D/M/F
     starter: boolean("starter").notNull(),
     grid: text("grid"), // pitch position, e.g. "1:1"
+    // Per-player match stats from SportMonks Match Facts (lineups.details).
+    rating: real("rating"), // type 118, e.g. 6.59; null when not rated
+    minutesPlayed: integer("minutes_played"), // type 119
+    manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
   (t) => [unique().on(t.lineupId, t.playerId)],
 )

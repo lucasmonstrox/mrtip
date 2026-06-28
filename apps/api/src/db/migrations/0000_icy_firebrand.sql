@@ -56,6 +56,9 @@ CREATE TABLE "lineup_player" (
 	"position" text,
 	"starter" boolean NOT NULL,
 	"grid" text,
+	"rating" real,
+	"minutes_played" integer,
+	"man_of_match" boolean DEFAULT false NOT NULL,
 	CONSTRAINT "lineup_player_lineup_id_player_id_unique" UNIQUE("lineup_id","player_id")
 );
 --> statement-breakpoint

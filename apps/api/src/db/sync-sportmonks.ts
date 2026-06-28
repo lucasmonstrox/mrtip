@@ -20,6 +20,9 @@ const CODE = "PL" // domain key (URL)
 const LINEUP_STARTER = 11
 const LINEUP_BENCH = 12
 
+// SportMonks lineups.details stat type_ids (Match Facts) — per player per match.
+const STAT = { rating: 118, minutes: 119, motm: 1490 } as const
+
 // SportMonks goal-event developer_names → our goal.type. Por agora só goal vs owngoal: o pênalti
 // convertido conta como gol normal (mantém o placar consistente). MISSED_PENALTY não é gol (fora).
 const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = {
@@ -66,6 +69,7 @@ type SmLineup = {
   formation_field?: string // grid "row:col"
   player?: SmPlayer
   position?: { developer_name?: string }
+  details?: { type_id: number; data?: { value?: number } }[] // filtered to Rating (118) only
 }
 type SmFormation = { participant_id: number; formation: string }
 type SmEvent = {
@@ -251,8 +255,8 @@ async function main() {
   const byId = new Map<number, SmFixture>()
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;formations;events.type&per_page=50`,
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm}` +
+        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -384,6 +388,7 @@ async function main() {
       for (const l of players2) {
         const playerId = playerIdBySm.get(l.player!.id)
         if (!playerId) continue
+        const stat = (typeId: number) => l.details?.find((d) => d.type_id === typeId)?.data?.value
         const lp = {
           lineupId: lu!.id,
           playerId,
@@ -391,6 +396,9 @@ async function main() {
           position: shortPosition(l.position?.developer_name),
           starter: l.type_id === LINEUP_STARTER,
           grid: l.formation_field ?? null,
+          rating: stat(STAT.rating) ?? null,
+          minutesPlayed: stat(STAT.minutes) ?? null,
+          manOfMatch: stat(STAT.motm) === 1,
         }
         await db
           .insert(lineupPlayer)
