@@ -46,20 +46,30 @@ type TeamXg = { xg: number; xg_1t: number; xg_2t: number; xg_bands: Bands }
 type OneXTwo = { home: number; draw: number; away: number }
 // Prognóstico POR TIME (xG + leitura própria) + um bloco GERAL (agregados do jogo). Estrutura pensada
 // pra virar abas na UI: card do mandante, card do visitante, card geral.
-type TeamPrognosis = TeamXg & { resumo: string } // resumo = leitura curta do time (motivação, desfalque, etc.)
+type TeamPrognosis = TeamXg & { summary: string } // summary = leitura curta do time (motivação, desfalque, etc.)
 type GeneralPrognosis = {
   total: number; total_1t: number; total_2t: number
   over25_prob: number; btts_prob: number
   one_x_two: OneXTwo // resultado do JOGO (90 min)
   one_x_two_1t: OneXTwo // quem vence o 1º TEMPO (placar 0-45)
   one_x_two_2t: OneXTwo // quem vence o 2º TEMPO isolado (gols do intervalo ao fim)
-  confianca: "baixa" | "media" | "alta"
-  resumo: string // parágrafo geral do jogo + maior incerteza
+  confidence: "low" | "medium" | "high"
+  summary: string // parágrafo geral do jogo + maior incerteza
+}
+// Leitura de apostador (sharp): a DECISÃO estruturada, separada dos números. SEMPRE crava um mercado (sem "passar").
+type BestBet = {
+  market: "1x2" | "over_under" | "btts"
+  selection: "home" | "draw" | "away" | "over" | "under" | "yes" | "no"
+  line: number | null // 2.5 etc. quando market = over_under; null nos outros
+  confidence: "low" | "medium" | "high"
+  probability: number
+  analysis: string // análise completa e profissional da recomendação (PT — texto de UI)
 }
 type Prognosis = {
   home: TeamPrognosis
   away: TeamPrognosis
-  geral: GeneralPrognosis
+  general: GeneralPrognosis
+  best_bet: BestBet
   drivers: string[]
 }
 const num = { type: "number" as const }
@@ -76,22 +86,36 @@ const bandsSchema = {
   required: [...BANDS] as string[],
   additionalProperties: false,
 }
+const conf = { type: "string" as const, enum: ["low", "medium", "high"] }
 const teamSchema = {
   type: "object" as const,
-  properties: { xg: num, xg_1t: num, xg_2t: num, xg_bands: bandsSchema, resumo: str },
-  required: ["xg", "xg_1t", "xg_2t", "xg_bands", "resumo"],
+  properties: { xg: num, xg_1t: num, xg_2t: num, xg_bands: bandsSchema, summary: str },
+  required: ["xg", "xg_1t", "xg_2t", "xg_bands", "summary"],
   additionalProperties: false,
 }
-const geralSchema = {
+const generalSchema = {
   type: "object" as const,
   properties: {
     total: num, total_1t: num, total_2t: num,
     over25_prob: num, btts_prob: num,
     one_x_two: oxt, one_x_two_1t: oxt, one_x_two_2t: oxt,
-    confianca: { type: "string" as const, enum: ["baixa", "media", "alta"] },
-    resumo: str,
+    confidence: conf,
+    summary: str,
   },
-  required: ["total", "total_1t", "total_2t", "over25_prob", "btts_prob", "one_x_two", "one_x_two_1t", "one_x_two_2t", "confianca", "resumo"],
+  required: ["total", "total_1t", "total_2t", "over25_prob", "btts_prob", "one_x_two", "one_x_two_1t", "one_x_two_2t", "confidence", "summary"],
+  additionalProperties: false,
+}
+const bestBetSchema = {
+  type: "object" as const,
+  properties: {
+    market: { type: "string" as const, enum: ["1x2", "over_under", "btts"] },
+    selection: { type: "string" as const, enum: ["home", "draw", "away", "over", "under", "yes", "no"] },
+    line: { type: ["number", "null"] as ("number" | "null")[] },
+    confidence: conf,
+    probability: num,
+    analysis: str,
+  },
+  required: ["market", "selection", "line", "confidence", "probability", "analysis"],
   additionalProperties: false,
 }
 const prognosisSchema = jsonSchema<Prognosis>({
@@ -99,10 +123,11 @@ const prognosisSchema = jsonSchema<Prognosis>({
   properties: {
     home: teamSchema,
     away: teamSchema,
-    geral: geralSchema,
+    general: generalSchema,
+    best_bet: bestBetSchema,
     drivers: { type: "array", items: str },
   },
-  required: ["home", "away", "geral", "drivers"],
+  required: ["home", "away", "general", "best_bet", "drivers"],
   additionalProperties: false,
 })
 
@@ -165,17 +190,17 @@ function bandsTable(o: Prognosis | null): string {
     return `<tr><td>${b}</td><td>${h.toFixed(2)}</td><td>${a.toFixed(2)}</td><td>${(h + a).toFixed(2)}</td></tr>`
   }).join("")
   return `<table><thead><tr><th>Faixa</th><th>${esc(home?.name)} xG</th><th>${esc(away?.name)} xG</th><th>total</th></tr></thead><tbody>${rows}</tbody>
-  <tfoot><tr><td><b>xG jogo</b></td><td><b>${o.home.xg.toFixed(2)}</b></td><td><b>${o.away.xg.toFixed(2)}</b></td><td><b>${o.geral.total.toFixed(2)}</b></td></tr></tfoot></table>`
+  <tfoot><tr><td><b>xG jogo</b></td><td><b>${o.home.xg.toFixed(2)}</b></td><td><b>${o.away.xg.toFixed(2)}</b></td><td><b>${o.general.total.toFixed(2)}</b></td></tr></tfoot></table>`
 }
 
 // Tabela de 1x2 (probabilidades home/empate/away) geral + por tempo.
 function oxtTable(o: Prognosis | null): string {
-  if (!o?.geral?.one_x_two) return "<p>(sem 1x2 na resposta)</p>"
+  if (!o?.general?.one_x_two) return "<p>(sem 1x2 na resposta)</p>"
   const pct = (x: number) => `${(x * 100).toFixed(0)}%`
   const row = (label: string, t?: OneXTwo) =>
     t ? `<tr><td>${label}</td><td>${pct(t.home)}</td><td>${pct(t.draw)}</td><td>${pct(t.away)}</td></tr>` : ""
   return `<table><thead><tr><th>Período</th><th>${esc(home?.name)}</th><th>Empate</th><th>${esc(away?.name)}</th></tr></thead><tbody>
-    ${row("Jogo (90min)", o.geral.one_x_two)}${row("1º tempo", o.geral.one_x_two_1t)}${row("2º tempo", o.geral.one_x_two_2t)}</tbody></table>`
+    ${row("Jogo (90min)", o.general.one_x_two)}${row("1º tempo", o.general.one_x_two_1t)}${row("2º tempo", o.general.one_x_two_2t)}</tbody></table>`
 }
 
 // Cards "por time" + "geral" — o coração da aba Prognóstico da UI.
@@ -184,12 +209,12 @@ function teamCard(side: "home" | "away", o: Prognosis | null): string {
   const nm = side === "home" ? home?.name : away?.name
   if (!t) return ""
   return `<details open><summary>${esc(nm)} <span class="hint">xG ${t.xg.toFixed(2)} · 1ºT ${t.xg_1t.toFixed(2)} · 2ºT ${t.xg_2t.toFixed(2)}</span></summary>
-  <div class="body"><p style="margin:6px 0 12px">${esc(t.resumo)}</p>
+  <div class="body"><p style="margin:6px 0 12px">${esc(t.summary)}</p>
   <table><thead><tr><th>Faixa</th>${BANDS.map((b) => `<th>${b}</th>`).join("")}</tr></thead>
   <tbody><tr><td>xG</td>${BANDS.map((b) => `<td>${(t.xg_bands[b] ?? 0).toFixed(2)}</td>`).join("")}</tr></tbody></table></div></details>`
 }
 function geralCard(o: Prognosis | null): string {
-  const g = o?.geral
+  const g = o?.general
   if (!g) return ""
   const pct = (x: number) => `${(x * 100).toFixed(0)}%`
   return `<div class="body">
@@ -197,9 +222,29 @@ function geralCard(o: Prognosis | null): string {
     <div class="kpi"><b>${g.total.toFixed(2)}</b><span>total xG</span></div>
     <div class="kpi"><b>${pct(g.over25_prob)}</b><span>over 2.5</span></div>
     <div class="kpi"><b>${pct(g.btts_prob)}</b><span>BTTS</span></div>
-    <div class="kpi"><b>${g.confianca}</b><span>confiança</span></div>
+    <div class="kpi"><b>${g.confidence}</b><span>confiança</span></div>
   </div>
-  <p style="margin:12px 0 4px">${esc(g.resumo)}</p></div>`
+  <p style="margin:12px 0 4px">${esc(g.summary)}</p></div>`
+}
+// Monta o rótulo legível da aposta a partir dos campos estruturados (o time sai de selection + match).
+function bestBetLabel(m: BestBet): string {
+  const team = m.selection === "home" ? home?.name : m.selection === "away" ? away?.name : null
+  if (m.market === "1x2") return m.selection === "draw" ? "Empate" : `Vitória${team ? " do " + team : ""}`
+  if (m.market === "over_under") return `${m.selection === "over" ? "Over" : "Under"} ${m.line ?? ""} gols`.trim()
+  if (m.market === "btts") return `Ambos marcam: ${m.selection === "yes" ? "Sim" : "Não"}`
+  return "Nenhuma aposta (passar)"
+}
+function mercadoCard(o: Prognosis | null): string {
+  const m = o?.best_bet
+  if (!m) return ""
+  const cor = m.confidence === "high" ? "#34d399" : m.confidence === "medium" ? "#fbbf24" : "#9ca3af"
+  return `<div class="body">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:4px 0 10px">
+    <span style="font-size:20px;font-weight:700;color:${cor}">${esc(bestBetLabel(m))}</span>
+    <span class="badge">confiança <b>${esc(m.confidence)}</b></span>
+    <span class="badge">prob <b>${(m.probability * 100).toFixed(0)}%</b></span>
+  </div>
+  <p style="margin:0">${esc(m.analysis)}</p></div>`
 }
 
 const html = `<!doctype html><html lang="pt-br"><head><meta charset="utf-8">
@@ -248,6 +293,9 @@ tfoot td { color:#7dd3fc; border-top:2px solid #232a3a; }
 </div>
 
 <section class="actual"><div style="padding:14px 18px"><b style="color:#fbbf24">Resultado real:</b> ${esc(actual)}</div></section>
+
+<h2 style="font-size:16px;margin:24px 0 8px;color:#aeb6c8">🎯 Melhor mercado (leitura de apostador)</h2>
+<details open><summary>Aposta recomendada <span class="hint">a decisão — separada dos números</span></summary>${mercadoCard(output)}</details>
 
 <h2 style="font-size:16px;margin:24px 0 8px;color:#aeb6c8">📊 Prognóstico geral</h2>
 <details open><summary>Jogo <span class="hint">agregados + resumo</span></summary>${geralCard(output)}</details>

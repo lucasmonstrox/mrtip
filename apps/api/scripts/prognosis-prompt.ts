@@ -34,17 +34,27 @@ function haversineKm(aLat: number, aLng: number, bLat: number, bLng: number): nu
 const m = await db.query.match.findFirst({ where: eq(match.id, MATCH_ID) })
 if (!m) throw new Error(`match ${MATCH_ID} not found`)
 const CUTOFF = m.date // tudo estritamente antes disto entra no modelo
+// Escopo de SEASON (LIG-008): o banco tem várias temporadas da mesma liga; sem este filtro o cutoff só
+// por data varre 24/25 + 25/26 e a tabela/médias/forma saem somadas de 2 anos. Tudo abaixo deriva de
+// `played` (ou das queries de zona/fixtures), então scopar por seasonId aqui conserta a cadeia inteira.
+const seasonId = m.seasonId
+if (!seasonId) throw new Error(`match ${MATCH_ID} sem seasonId — rode o backfill de season (LIG-008) antes`)
 
 const [home] = await db.select().from(team).where(eq(team.id, m.homeTeamId))
 const [away] = await db.select().from(team).where(eq(team.id, m.awayTeamId))
 if (!home || !away) throw new Error("team not found")
 const [matchVenue] = m.venueId ? await db.select().from(venue).where(eq(venue.id, m.venueId)) : []
 
+// Nome de QUALQUER time da liga (não só os 2 do jogo) — pra nomear os rivais que disputam a vaga.
+const allTeams = await db.select({ id: team.id, name: team.name }).from(team)
+const teamNameById = new Map(allTeams.map((t) => [t.id, t.name]))
+const nameOf = (id: string) => teamNameById.get(id) ?? "?"
+
 // Todos os jogos COM resultado da liga, antes do cutoff (sem o próprio jogo → sem vazamento).
 const playedAll = await db
   .select()
   .from(match)
-  .where(and(eq(match.leagueCode, m.leagueCode), isNotNull(match.ftHome)))
+  .where(and(eq(match.leagueCode, m.leagueCode), eq(match.seasonId, seasonId), isNotNull(match.ftHome)))
 const played = playedAll.filter((p) => p.date < CUTOFF)
 
 type Row = (typeof played)[number]
@@ -176,7 +186,8 @@ type AbsenceLine = {
   name: string; reason: string | null
   goals: number; assists: number // contribuição direta (G+A) na liga até a data
   pctGoals: number // % dos gols do time que ESTE jogador marcou (o que o ataque perde)
-  pctInvolve: number // % dos gols do time em que ele participou (gol OU assistência)
+  pctInvolve: number // % dos gols do time em que ele participou (gol OU assistência) — season inteira
+  recentN: number; recentGA: number; recentTeamGoals: number; recentPctInvolve: number // forma recente: últimos N jogos que ELE jogou
   withN: number; withGf: number; withoutN: number; withoutGf: number; dropPct: number
   sotPerGame: number | null // SoT/jogo do próprio jogador (o volume direto que sai com ele)
   withSot: number; withoutSot: number // SoT/jogo do TIME com ele vs sem ele
@@ -216,11 +227,21 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
       : null
     const wS = sotAvg(withRows, teamId)
     const woS = sotAvg(withoutRows, teamId)
+    // Forma recente: nos últimos 5 jogos do TIME, % dos gols que tiveram participação dele (G+A) —
+    // "o quanto o time dependeu dele agora", em vez da média da season inteira.
+    const recentPlayed = ms.slice(-5)
+    const recentIds = new Set(recentPlayed.map((x) => x.id))
+    const recentTeamGoals = recentPlayed.reduce((s, x) => s + goalsFor(x, teamId), 0)
+    const recentGA =
+      playerGoals.filter((g) => recentIds.has(g.matchId) && g.type !== "own").length +
+      playerAssists.filter((g) => recentIds.has(g.matchId)).length
+    const recentPctInvolve = recentTeamGoals ? Math.round((recentGA / recentTeamGoals) * 100) : 0
     out.push({
       name: (p?.name ?? "?").trim(), reason: i.reason,
       goals, assists,
       pctGoals: teamTotalGoals ? Math.round((goals / teamTotalGoals) * 100) : 0,
       pctInvolve: teamTotalGoals ? Math.round(((goals + assists) / teamTotalGoals) * 100) : 0,
+      recentN: recentPlayed.length, recentGA, recentTeamGoals, recentPctInvolve,
       withN: w.n, withGf: w.gf, withoutN: wo.n, withoutGf: wo.gf, dropPct,
       sotPerGame, withSot: wS.sf, withoutSot: woS.sf,
       // Confound guard: zero contribuição direta (Traoré) OU amostra "sem" pequena (Stach 8j) → não confiar no with/without.
@@ -400,17 +421,31 @@ const lineOf = (id: string) => table.find((l) => l.teamId === id) ?? null
 
 // Nº de vagas por zona, lido da tabela oficial (só a CONTAGEM — é regra, não resultado).
 const zoneRows = await db
-  .select({ zone: standing.zone })
+  .select({ position: standing.position, zone: standing.zone })
   .from(standing)
-  .where(eq(standing.leagueCode, m.leagueCode))
+  .where(and(eq(standing.leagueCode, m.leagueCode), eq(standing.seasonId, seasonId)))
 const totalTeams = zoneRows.length
-const relegationCount = zoneRows.filter((z) => z.zone === "relegation").length
-const championsCount = zoneRows.filter((z) => z.zone === "champions").length
-// Vagas europeias = Champions + Europa + Conference (qualquer competição continental).
-const europeanCount =
-  championsCount +
-  zoneRows.filter((z) => z.zone === "europa").length +
-  zoneRows.filter((z) => z.zone === "conference").length
+// CONTAGEM CONTÍGUA a partir da borda da tabela (não soma cega): a SportMonks cola a zona na posição do
+// time E inclui vaga por TÍTULO (ex.: Crystal Palace 15º marcado UEFA_EUROPA_LEAGUE por ganhar a
+// Conference), o que inflava a contagem. As vagas POR POSIÇÃO são as zonas coladas do topo (Europa) /
+// do fundo (Z) até o primeiro buraco. Ordena por posição e conta até a sequência quebrar.
+const byPos = [...zoneRows].sort((a, b) => a.position - b.position)
+const isEuro = (z: string | null) => z === "champions" || z === "europa" || z === "conference"
+let championsCount = 0
+for (const r of byPos) {
+  if (r.zone === "champions") championsCount += 1
+  else break
+}
+let europeanCount = 0
+for (const r of byPos) {
+  if (isEuro(r.zone)) europeanCount += 1
+  else break
+}
+let relegationCount = 0
+for (let i = byPos.length - 1; i >= 0; i--) {
+  if (byPos[i]?.zone === "relegation") relegationCount += 1
+  else break
+}
 // Pontos das linhas na foto pré-jogo: 1ª vaga segura, última de Champions, última europeia.
 const safetyLinePts = totalTeams && relegationCount ? (table[totalTeams - relegationCount - 1]?.points ?? null) : null
 const championsLinePts = championsCount ? (table[championsCount - 1]?.points ?? null) : null
@@ -421,7 +456,7 @@ const europeanLinePts = europeanCount ? (table[europeanCount - 1]?.points ?? nul
 const allFixtures = await db
   .select({ h: match.homeTeamId, a: match.awayTeamId, date: match.date })
   .from(match)
-  .where(eq(match.leagueCode, m.leagueCode))
+  .where(and(eq(match.leagueCode, m.leagueCode), eq(match.seasonId, seasonId)))
 const gamesRemaining = (id: string) => allFixtures.filter((f) => (f.h === id || f.a === id) && f.date >= CUTOFF).length
 
 // Limites finais de pontos de cada time: mínimo (perde tudo que falta = pontos atuais) e máximo (vence tudo).
@@ -439,6 +474,35 @@ const guaranteedAbove = (id: string) => {
   return b ? bounds.filter((o) => o.teamId !== id && o.pts > b.maxPts).length : totalTeams
 }
 
+// Quem ainda pode ROUBAR a vaga do time (lado DEFENSIVO, o que faltava): os times ABAIXO na tabela cujo
+// máximo de pontos alcança os pontos atuais do time. Pra cada ameaça, diz o que precisa — passar em
+// pontos, ou (quando só EMPATA em pontos) virar o saldo, que é o cenário "você perde por muito + ele
+// vence por muito". É o anti-binário do "já garantida": a vaga pode estar 99% travada, mas o prompt
+// nomeia o concorrente real (ex.: Bournemouth) e o tamanho exato do milagre que ele precisa.
+function contestersFor(teamId: string): string[] {
+  const myPos = posOf(teamId)
+  const myLine = lineOf(teamId)
+  if (myPos == null || !myLine) return []
+  const sg = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
+  const out: string[] = []
+  for (let i = myPos; i < table.length; i++) {
+    const r = table[i] // posição (i+1) — estritamente abaixo do time
+    if (!r) continue
+    const rb = boundOf(r.teamId)
+    if (!rb || rb.maxPts < myLine.points) continue // nem empatando alcança → não é ameaça
+    const head = `${nameOf(r.teamId)} (${i + 1}º, ${r.points} pts, máx ${rb.maxPts})`
+    if (rb.maxPts > myLine.points)
+      out.push(`${head} pode **passar em pontos** — vencendo, se o ${nameOf(teamId)} tropeçar`)
+    else {
+      const swing = myLine.gd - r.gd // lead de saldo do time sobre o rival (≥1 ⇒ rival precisa virar)
+      out.push(
+        `${head} empata em pontos mas está **${sg(-swing)} de saldo** (${sg(r.gd)} vs ${sg(myLine.gd)}) — só passa se o ${nameOf(teamId)} perder por muito E ele vencer por muito (virar ${swing})`,
+      )
+    }
+  }
+  return out
+}
+
 // Motivação de tabela com ALCANCE MATEMÁTICO. Garantido top-K ⇔ canFinishAbove < K; eliminado do top-K
 // ⇔ guaranteedAbove ≥ K. Daí saem: seguro/ameaçado de rebaixamento, ainda-pode/já-era p/ campeão,
 // Champions e vaga europeia. A `intensity` orienta a direção do xG: "alta" = precisa de pontos (ataca),
@@ -451,6 +515,10 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   const N = totalTeams, R = relegationCount, C = championsCount, Q = europeanCount
   const above = canFinishAbove(teamId) // podem passar
   const lost = guaranteedAbove(teamId) // já não alcança
+  // Rivais que ainda alcançam os pontos do time (só quando ele DEFENDE uma vaga continental). Usado pra
+  // qualificar "garantida" → "praticamente garantida" e pra nomear quem pode roubar (responde "e os de baixo?").
+  const contesters = europeanCount && pos <= europeanCount ? contestersFor(teamId) : []
+  const lockWord = contesters.length ? "praticamente" : "já"
 
   const relegationSafe = R ? above < N - R : true // garante terminar fora do Z
   const relegationDoomed = R ? lost >= N - R : false // já no fundo, matematicamente caído
@@ -467,33 +535,69 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   else lines.push("já SEGURO do rebaixamento.")
   if (titleClinched) lines.push("título já garantido.")
   else if (titlePossible) lines.push("ainda pode ser CAMPEÃO — precisa vencer.")
-  if (championsClinched) lines.push("vaga de Champions já garantida.")
-  else if (canChampions) lines.push("pode ENTRAR no G-Champions — motivado a vencer.")
-  else if (europeanClinched) lines.push("vaga europeia já garantida.")
-  else if (canEuropean) lines.push("ainda briga por vaga europeia — motivado.")
+  if (championsClinched) lines.push(`vaga de Champions ${lockWord} garantida.`)
+  else if (canChampions) lines.push("Champions ainda matematicamente possível.")
+  else if (europeanClinched) lines.push(`vaga europeia ${lockWord} garantida.`)
+  else if (canEuropean) lines.push("vaga europeia ainda matematicamente possível.")
   else if (relegationSafe && !titlePossible) lines.push("sem alvo continental alcançável.")
 
   const fightingDown = !relegationSafe && !relegationDoomed
-  const chasingUp = titlePossible || (canChampions && !championsClinched) || (canEuropean && !europeanClinched)
+  const chasingUpRaw = titlePossible || (canChampions && !championsClinched) || (canEuropean && !europeanClinched)
+
+  // Distância de SALDO até a linha da zona perseguida. Quando o time só alcança a vaga EMPATANDO em
+  // pontos, é o saldo que desempata (regra PL: pts → saldo → gols pró) — e virar muito saldo em poucos
+  // jogos (goleada própria + tropeço alheio) é fantasia. "Vivo nos pontos, morto no saldo" ⇒ não se esforça.
+  let chaseViable = chasingUpRaw
+  if (chasingUpRaw) {
+    const targetPos = titlePossible ? 1 : canChampions && !championsClinched ? C : Q
+    const occ = table[targetPos - 1] // ocupante da última vaga da zona perseguida
+    const mine = lineOf(teamId)
+    if (occ && mine && occ.teamId !== teamId && b.maxPts === occ.points) {
+      const swing = occ.gd - mine.gd + 1 // saldo a SUPERAR (empate em pontos → desempate por saldo)
+      if (swing > 0) {
+        chaseViable = swing <= 2 * gr // ~2 de saldo por jogo é o teto plausível; acima é goleada improvável
+        const sg = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
+        lines.push(
+          `distância de saldo p/ a vaga: empata em pontos com o ${posOf(occ.teamId)}º e precisa **virar ${swing} de saldo** (${sg(mine.gd)} vs ${sg(occ.gd)}) em ${gr} jogo(s) — ${chaseViable ? "viável" : "**exigiria goleada; porta praticamente fechada → não deve se matar**"}`,
+        )
+      }
+    }
+  }
+  const chasingUp = chasingUpRaw && chaseViable
   const intensity: "alta" | "media" | "baixa" =
-    relegationDoomed ? "baixa" : fightingDown || chasingUp ? "alta" : relegationSafe ? "baixa" : "media"
+    relegationDoomed ? "baixa" : fightingDown || chasingUp ? "alta" : relegationSafe || chasingUpRaw ? "baixa" : "media"
 
   // Motivo dominante (o que ele luta / por que não luta) → vira o veredito explícito.
   const reason =
     fightingDown ? "luta contra o rebaixamento"
-    : titlePossible ? "briga pelo título"
-    : canChampions && !championsClinched ? "briga por vaga de Champions"
-    : canEuropean && !europeanClinched ? "briga por vaga europeia"
+    : chasingUp && titlePossible ? "briga pelo título"
+    : chasingUp && canChampions && !championsClinched ? "briga por vaga de Champions"
+    : chasingUp && canEuropean && !europeanClinched ? "briga por vaga europeia"
+    : chasingUpRaw && !chaseViable ? "alvo continental matematicamente vivo mas REMOTO (saldo) — quase nada a jogar"
     : relegationDoomed ? "já rebaixado"
     : titleClinched ? "título já garantido"
-    : championsClinched ? "Champions já garantida"
-    : europeanClinched ? "vaga europeia já garantida"
+    : championsClinched ? `Champions ${lockWord} garantida`
+    : europeanClinched ? `vaga europeia ${lockWord} garantida`
     : "já seguro e sem alvo alcançável"
   const verdict =
     intensity === "alta" ? `PRECISA LUTAR — ${reason}`
     : intensity === "baixa" ? `NÃO precisa lutar — ${reason}`
     : reason
   lines.push(`→ motivação: **${intensity}** — ${verdict}`)
+  // Concorrência pela vaga (defesa de zona continental): a condição do próprio time (empate basta?) +
+  // os rivais nomeados que ainda ultrapassam (passam em pontos) ou encostam (empatam → saldo decide).
+  if (europeanCount && pos <= europeanCount) {
+    if (!contesters.length) lines.push(`disputa pela vaga (${pos}º): ninguém abaixo alcança ${b.pts} pts → já travado.`)
+    else {
+      const drawPts = b.pts + gr // se o time empatar tudo que falta
+      const stillAfterDraw = table.slice(pos).filter((r) => (boundOf(r.teamId)?.maxPts ?? 0) >= drawPts).length
+      const lock =
+        stillAfterDraw === 0
+          ? `pro ${nameOf(teamId)} **um empate basta** (vai a ${drawPts}, fora do alcance) — só perde a vaga se PERDER`
+          : `o ${nameOf(teamId)} **precisa vencer** pra travar (empate ainda deixa ${stillAfterDraw} rival vivo)`
+      lines.push(`disputa pela vaga (${pos}º): ${lock}. Quem ainda ameaça → ${contesters.join("; ")}`)
+    }
+  }
   return { intensity, verdict, lines }
 }
 
@@ -526,11 +630,13 @@ function absBlock(label: string, list: AbsenceLine[]): string {
   if (!list.length) return `### ${label}\nSem desfalques registrados.\n`
   const lines = list.map((a) => {
     const ga = `${a.goals} gols + ${a.assists} assists`
-    const share = `representa **${a.pctGoals}% dos gols** do time (${a.pctInvolve}% com assists) → o ataque perde isso se ele não jogar`
+    const share = `season: **${a.pctGoals}% dos gols** do time (${a.pctInvolve}% com assists)`
+    const trend = a.recentPctInvolve > a.pctInvolve + 5 ? "↑ mais decisivo AGORA" : a.recentPctInvolve < a.pctInvolve - 5 ? "↓ menos decisivo / time se adaptou" : "≈ estável"
+    const recent = `**últimos ${a.recentN} jogos do time**: participou de ${a.recentGA}/${a.recentTeamGoals} gols = **${a.recentPctInvolve}%** (${trend})`
     const wow = `with/without: com ele ${a.withGf} g/j (${a.withN}j) vs sem ele ${a.withoutGf} g/j (${a.withoutN}j) = ${a.dropPct >= 0 ? "−" : "+"}${Math.abs(a.dropPct)}%`
     const sot = a.sotPerGame != null ? `; finaliza **${a.sotPerGame} SoT/jogo** (time: ${a.withSot} SoT/j com ele vs ${a.withoutSot} sem — volume mais estável que gols)` : ""
     const flag = a.confound ? "  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT" : ""
-    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${wow}${sot}${flag}`
+    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${recent}; ${wow}${sot}${flag}`
   })
   return `### ${label}\n${lines.join("\n")}\n`
 }
@@ -550,12 +656,16 @@ const prompt = `# Prognóstico de expected goals — ${home.name} x ${away.name}
 
 **IMPORTANTE: raciocine (pense/chain-of-thought) E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno, deve ser em português do Brasil.
 
-Você é um analista quantitativo de futebol. Produza um prognóstico de **expected goals (xG)** para esta partida.
-Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de gols puro E λ_SoT × conversão) e
-**AJUSTE multiplicativamente** por fator (desfalques, fadiga, contexto), justificando cada ajuste. Regras:
-- **ANCORE nas probabilidades Poisson fornecidas** (seção "Probabilidades de mercado"): seu \`over25_prob\`, \`btts_prob\`
-  e \`one_x_two\` PARTEM delas (Rota B como principal). Só desvie com fator nomeado e quantificado. **NÃO** devolva tudo
-  comprimido perto de ~40% — é exatamente o erro que estamos corrigindo.
+Você é o melhor apostador de futebol do mundo — um **sharp**, não um palpiteiro. Seu edge vem de método e
+disciplina: decide com modelos quantitativos (Poisson, xG, volume de SoT), busca **valor** e não certeza, dimensiona o
+risco com frieza e **sempre crava o melhor mercado** — aquele onde o cenário mais o favorece. Mesmo sem edge enorme, ele
+aponta a aposta de maior valor relativo e calibra a **confiança** ao tamanho da margem (nunca "passa"). Produza um prognóstico de
+**expected goals (xG)** desta partida E a sua leitura de apostador.
+Método: **PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já
+calculadas**, e **AJUSTE** por fator (desfalques, fadiga, mando, contexto), justificando cada ajuste e o tamanho. Regras:
+- **ANCORE nas probabilidades Poisson fornecidas**: seu \`over25_prob\`, \`btts_prob\` e \`one_x_two\` PARTEM delas (Rota B
+  como principal). **Comprometa-se com a âncora** — só desvie com um fator nomeado e quantificado (direção e tamanho). Se
+  não há fator concreto pra mover, devolva a âncora; não regrida as probabilidades pro centro por cautela.
 - **SoT (chutes no alvo) é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a
   CONVERSÃO (gols/SoT) e como checagem. Onde as duas rotas de base rate divergem, confie mais no SoT e trate a
   diferença como finalização acima/abaixo da média (tende a regredir à conversão do time).
@@ -569,6 +679,7 @@ Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de g
 - Local: ${matchVenue ? `${matchVenue.name}${matchVenue.cityName ? `, ${matchVenue.cityName}` : ""}` : "—"}${matchVenue?.surface ? ` (${matchVenue.surface})` : ""}
 - Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias · ${away.name} ${restDays(away.id) ?? "?"} dias${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
 - Média da liga (pré-jogo, ${played.length} jogos): mandante ${leagueHomeAvg} gols/jogo · visitante ${leagueAwayAvg} gols/jogo
+- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +${+(leagueHomeAvg - leagueAwayAvg).toFixed(2)} gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.
 
 ## Tabela e motivação (pré-jogo — recomputada só com jogos antes de ${CUTOFF})
 - ${home.name}: ${posOf(home.id) ?? "?"}º, ${lineOf(home.id)?.points ?? 0} pts · ${away.name}: ${posOf(away.id) ?? "?"}º, ${lineOf(away.id)?.points ?? 0} pts
@@ -623,19 +734,27 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 | Over 2.5 | ${probsGoals.over25}% | ${probsSot.over25}% |
 | Over 3.5 | ${probsGoals.over35}% | ${probsSot.over35}% |
 | BTTS | ${probsGoals.btts}% | ${probsSot.btts}% |
-São as probabilidades que o volume IMPLICA. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` devem **partir destes números** (use a Rota B como principal); só desvie com um **fator nomeado** (motivação, desfalque, fadiga) dizendo a direção e o tamanho. **NÃO comprima tudo pra ~40%** — se a âncora diz over 2.5 = 55%, justifique explicitamente para baixá-la.
+São as probabilidades que o volume IMPLICA. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` devem **partir destes números** (use a Rota B como principal). **Comprometa-se com elas**: só desvie com um **fator nomeado** (motivação, desfalque, fadiga, mando) dizendo a direção e o tamanho. Se não há fator concreto pra mover, devolva a âncora — não regrida pro centro por cautela.
 
-## Saída exigida (objeto tipado — validado pelo runtime). Estrutura: PROGNÓSTICO POR TIME + GERAL.
+## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (\`summary\`, \`analysis\`) em português.
 **Por time** — \`home\` (= ${home.name}) e \`away\` (= ${away.name}), cada um com:
 - \`xg\` (total), \`xg_1t\`, \`xg_2t\` e **\`xg_bands\`** = o xG nas 6 faixas de 15 min (\`"0-15"\`,\`"16-30"\`,\`"31-45"\`,\`"46-60"\`,\`"61-75"\`,\`"76-90"\`). Soma das 6 = \`xg\`; 0-15+16-30+31-45 = \`xg_1t\`. Use o cruzamento ataque×defesa por faixa.
-- \`resumo\` = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.
+- \`summary\` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.
 
-**Geral** (\`geral\`) — agregados do jogo:
+**Geral** (\`general\`) — agregados do jogo:
 - \`total\`, \`total_1t\`, \`total_2t\`, \`over25_prob\`, \`btts_prob\`.
 - **1x2 (home/draw/away)** em 3 recortes: \`one_x_two\` (jogo 90min), \`one_x_two_1t\` (placar do 1º tempo), \`one_x_two_2t\` (2º tempo isolado). Derive do Poisson com os λ do respectivo tempo.
-- \`confianca\` ∈ {baixa, media, alta} e \`resumo\` = 1 parágrafo do jogo + a maior incerteza.
+- \`confidence\` ∈ {low, medium, high} e \`summary\` (PT) = 1 parágrafo do jogo + a maior incerteza.
 
-No topo: \`drivers\` = os 3 fatores que mais moveram o número.
+No topo: \`drivers\` = os 3 fatores (frases em PT) que mais moveram o número.
+
+**\`best_bet\`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de \`selection\`):
+- \`market\`: \`"1x2"\` | \`"over_under"\` | \`"btts"\` — escolha SEMPRE um (o de maior valor); não há opção de passar.
+- \`selection\`: conforme o market — 1x2: \`"home"\`/\`"draw"\`/\`"away"\` · over_under: \`"over"\`/\`"under"\` · btts: \`"yes"\`/\`"no"\`.
+- \`line\`: a linha quando \`market="over_under"\` (ex.: 2.5); \`null\` nos outros.
+- \`confidence\`: \`"low"\` | \`"medium"\` | \`"high"\`.
+- \`probability\`: a sua probabilidade (0-1) do evento escolhido (coerente com \`general\`).
+- \`analysis\` (PT): análise COMPLETA e profissional — não um resumo. Junte tudo que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão), o cenário esperado e o que pode virar contra (o risco). **Sempre recomende o melhor mercado** — aquele onde o cenário mais te favorece; se o edge for fino, escolha mesmo assim e marque \`confidence\` baixa, explicando o tamanho da margem.
 
 ---
 ⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (chain-of-thought / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como "Vou analisar...". Não pense em inglês em nenhum momento. A resposta final também 100% em português.

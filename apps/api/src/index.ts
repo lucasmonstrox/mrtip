@@ -19,6 +19,8 @@ export type {
   CardItem,
   CoachDetail,
   CoachMatch,
+  CommentaryItem,
+  CommentaryRef,
   Form,
   FormResult,
   GoalItem,

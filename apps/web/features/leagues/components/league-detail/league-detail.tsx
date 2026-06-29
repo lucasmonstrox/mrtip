@@ -5,13 +5,16 @@ import { Skeleton } from "@workspace/ui/components/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 
 import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
+import { useSeasonsQuery } from "../../hooks/data/queries/use-seasons-query"
 import { useStandingsQuery } from "../../hooks/data/queries/use-standings-query"
+import { SeasonSwitcher } from "../season-switcher/season-switcher"
 import { RoundsList } from "./rounds-list"
 import { ScorersTable } from "./scorers-table"
 import { StandingsTable } from "./standings-table"
 
 export function LeagueDetail({ code }: { code: string }) {
   const { data: league, isPending } = useLeagueQuery(code)
+  const { data: seasons } = useSeasonsQuery(code)
   // Hold the header skeleton until the main content (standings) is also ready, so the
   // above-the-fold reveals as one piece instead of the header popping in over a loading table.
   const { isPending: standingsPending } = useStandingsQuery(code)
@@ -28,7 +31,8 @@ export function LeagueDetail({ code }: { code: string }) {
               <Skeleton className="size-8 rounded-md bg-foreground/10" />
               <Skeleton className="h-7 w-48 bg-foreground/10" />
               <Skeleton className="h-5 w-10 rounded-4xl bg-foreground/10" />
-              <Skeleton className="h-5 w-20 rounded-4xl bg-foreground/10" />
+              {/* season switcher (ml-auto) reveals once seasons load; no skeleton placeholder for it */}
+              <Skeleton className="ml-auto h-8 w-[140px] rounded-md bg-foreground/10" />
             </div>
             {/* Reserva o line-box de 20px do <p text-sm> abaixo — sem isso a
                 tabela desce 4px quando o subtítulo real entra (CLS). */}
@@ -49,7 +53,10 @@ export function LeagueDetail({ code }: { code: string }) {
               ) : null}
               <h1 className="text-2xl font-semibold tracking-tight">{league?.name ?? code}</h1>
               <Badge variant="outline">{code}</Badge>
-              {league ? <Badge variant="secondary">{league.season}</Badge> : null}
+              {/* Season badge removed — the season switcher now shows the current season. @feature LIG-008 */}
+              <div className="ml-auto">
+                <SeasonSwitcher seasons={seasons ?? []} />
+              </div>
             </div>
             {league ? (
               <p className="text-sm text-muted-foreground">

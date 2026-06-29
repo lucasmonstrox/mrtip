@@ -15,11 +15,14 @@ import { matchPrognosis } from "../src/db/schema"
 type Dump = {
   meta: { matchId: string; model: string; reasoningEffort?: string; elapsedMs?: number; at: string }
   output: {
-    home: { xg: number; xg_1t: number; xg_2t: number; xg_bands: Record<string, number>; resumo: string }
-    away: { xg: number; xg_1t: number; xg_2t: number; xg_bands: Record<string, number>; resumo: string }
-    geral: {
+    home: { xg: number; xg_1t: number; xg_2t: number; xg_bands: Record<string, number>; summary: string }
+    away: { xg: number; xg_1t: number; xg_2t: number; xg_bands: Record<string, number>; summary: string }
+    general: {
       total: number; total_1t: number; total_2t: number; over25_prob: number; btts_prob: number
-      one_x_two: unknown; one_x_two_1t: unknown; one_x_two_2t: unknown; confianca: string; resumo: string
+      one_x_two: unknown; one_x_two_1t: unknown; one_x_two_2t: unknown; confidence: string; summary: string
+    }
+    best_bet?: {
+      market: string; selection: string; line: number | null; confidence: string; probability: number; analysis: string
     }
     drivers: string[]
   } | null
@@ -32,20 +35,23 @@ type Dump = {
 export async function persistPrognosis(dump: Dump, promptText?: string): Promise<string | undefined> {
   const o = dump.output
   if (!o) throw new Error("dump sem output tipado — nada a persistir")
-  const g = o.geral
+  const g = o.general
+  const b = o.best_bet
   const row = {
     matchId: dump.meta.matchId,
     model: dump.meta.model,
     reasoningEffort: dump.meta.reasoningEffort ?? null,
     runAt: new Date(dump.meta.at),
     xgHome: o.home.xg, xgHome1t: o.home.xg_1t, xgHome2t: o.home.xg_2t,
-    xgHomeBands: o.home.xg_bands as never, resumoHome: o.home.resumo,
+    xgHomeBands: o.home.xg_bands as never, resumoHome: o.home.summary,
     xgAway: o.away.xg, xgAway1t: o.away.xg_1t, xgAway2t: o.away.xg_2t,
-    xgAwayBands: o.away.xg_bands as never, resumoAway: o.away.resumo,
+    xgAwayBands: o.away.xg_bands as never, resumoAway: o.away.summary,
     total: g.total, total1t: g.total_1t, total2t: g.total_2t,
     over25Prob: g.over25_prob, bttsProb: g.btts_prob,
     oneXTwo: g.one_x_two as never, oneXTwo1t: g.one_x_two_1t as never, oneXTwo2t: g.one_x_two_2t as never,
-    confianca: g.confianca, resumoGeral: g.resumo,
+    confianca: g.confidence, resumoGeral: g.summary,
+    bestBetMarket: b?.market ?? null, bestBetSelection: b?.selection ?? null, bestBetLine: b?.line ?? null,
+    bestBetConfidence: b?.confidence ?? null, bestBetProbability: b?.probability ?? null, bestBetAnalysis: b?.analysis ?? null,
     drivers: o.drivers,
     reasoning: dump.reasoningText ?? null,
     promptText: promptText ?? null,

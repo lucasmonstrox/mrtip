@@ -1,0 +1,2 @@
+ALTER TABLE "standing" DROP CONSTRAINT "standing_league_code_team_id_unique";--> statement-breakpoint
+ALTER TABLE "standing" ADD CONSTRAINT "standing_season_id_team_id_unique" UNIQUE("season_id","team_id");

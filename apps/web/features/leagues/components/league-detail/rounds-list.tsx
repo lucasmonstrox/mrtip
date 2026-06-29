@@ -66,7 +66,7 @@ export function RoundsList({ code }: { code: string }) {
                 ) : null}
               </Link>
               <Link
-                href={`/matches/${m.id}`}
+                href={`/matches/${m.slug}`}
                 className="rounded bg-muted px-2 py-0.5 font-mono tabular-nums transition-colors hover:bg-foreground hover:text-background"
               >
                 {m.score ? `${m.score.ft[0]} - ${m.score.ft[1]}` : "vs"}

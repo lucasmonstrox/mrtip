@@ -6,6 +6,7 @@ import Link from "next/link"
 
 import { usePlayerQuery } from "../../hooks/data/queries/use-player-query"
 import { age, formatDate, ratingColor } from "../../utils/format"
+import { SeasonSwitcher } from "../season-switcher/season-switcher"
 import { MinutesChart } from "./minutes-chart"
 import { RatingChart } from "./rating-chart"
 
@@ -100,6 +101,9 @@ export function PlayerDetail({ id }: { id: string }) {
                 </span>
               ) : null}
             </div>
+          </div>
+          <div className="ml-auto self-start">
+            <SeasonSwitcher seasons={player.seasons} />
           </div>
         </div>
       </header>
@@ -206,7 +210,7 @@ export function PlayerDetail({ id }: { id: string }) {
                   return (
                     <li key={m.matchId}>
                       <Link
-                        href={`/matches/${m.matchId}`}
+                        href={`/matches/${m.slug}`}
                         className={`${ROW} px-4 py-2 text-sm transition-colors hover:bg-muted/50`}
                       >
                         <span className="text-xs text-muted-foreground">{formatDate(m.date, null)}</span>

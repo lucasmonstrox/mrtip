@@ -13,15 +13,16 @@ type MatchRest = { home: TeamRest; away: TeamRest }
 // Inferred payload of the prognosis endpoint (null = none generated yet).
 type Prognosis = NonNullable<ReturnType<typeof useMatchPrognosisQuery>["data"]>
 type TeamBlock = Prognosis["home"]
-type OneXTwo = Prognosis["geral"]["oneXTwo"]
+type OneXTwo = Prognosis["general"]["oneXTwo"]
+type BestBet = NonNullable<Prognosis["bestBet"]>
 
 const BANDS = ["0-15", "16-30", "31-45", "46-60", "61-75", "76-90"] as const
 const pct = (x: number) => `${Math.round(x * 100)}%`
 
 const CONF: Record<string, { label: string; cls: string }> = {
-  baixa: { label: "confiança baixa", cls: "bg-amber-500/15 text-amber-600 dark:text-amber-400" },
-  media: { label: "confiança média", cls: "bg-blue-500/15 text-blue-600 dark:text-blue-400" },
-  alta: { label: "confiança alta", cls: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400" },
+  low: { label: "confiança baixa", cls: "bg-amber-500/15 text-amber-600 dark:text-amber-400" },
+  medium: { label: "confiança média", cls: "bg-blue-500/15 text-blue-600 dark:text-blue-400" },
+  high: { label: "confiança alta", cls: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400" },
 }
 
 // One labelled probability row as a stacked bar with the % printed inside each segment:
@@ -104,7 +105,7 @@ function TeamCard({ team, block }: { team: TeamRef; block: TeamBlock }) {
           )
         })}
       </ul>
-      <p className="text-sm text-muted-foreground">{block.resumo}</p>
+      <p className="text-sm text-muted-foreground">{block.summary}</p>
     </div>
   )
 }
@@ -180,6 +181,49 @@ function RestPanel({ home, away, rest }: { home: TeamRef; away: TeamRef; rest: M
   )
 }
 
+// Rótulo legível da aposta a partir dos campos estruturados — o time sai de `selection` + o match (não
+// vem do modelo). Mantém o conteúdo (PT) na borda de exibição; market/selection são código (inglês).
+function betLabel(b: BestBet, home: TeamRef, away: TeamRef): { title: string; team: TeamRef | null } {
+  if (b.market === "1x2") {
+    if (b.selection === "draw") return { title: "Empate", team: null }
+    return { title: "Vitória", team: b.selection === "home" ? home : away }
+  }
+  if (b.market === "over_under") return { title: `${b.selection === "over" ? "Over" : "Under"} ${b.line ?? ""} gols`.trim(), team: null }
+  if (b.market === "btts") return { title: `Ambos marcam: ${b.selection === "yes" ? "Sim" : "Não"}`, team: null }
+  return { title: "Sem aposta — passar", team: null }
+}
+
+// "Aposta recomendada" — a leitura de sharp: a decisão estruturada (mercado + seleção + prob) e a
+// análise completa. O destaque da aba; "Sem aposta" quando o modelo passou (disciplina).
+function BestBetCard({ bet, home, away }: { bet: BestBet; home: TeamRef; away: TeamRef }) {
+  const { title, team } = betLabel(bet, home, away)
+  const conf = CONF[bet.confidence] ?? CONF.medium!
+  const isNone = bet.market === "none"
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between gap-2 text-base">
+          🎯 Aposta recomendada
+          <span className={cn("rounded-full px-2 py-0.5 text-xs font-medium", conf.cls)}>{conf.label}</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          {team?.logoUrl ? <img src={team.logoUrl} alt="" className="size-7 shrink-0 object-contain" /> : null}
+          <span className={cn("text-lg font-semibold", isNone && "text-muted-foreground")}>
+            {title}
+            {team ? <span className="text-muted-foreground"> · {team.name}</span> : null}
+          </span>
+          {!isNone ? (
+            <span className="ml-auto font-mono text-xl font-bold tabular-nums text-primary">{pct(bet.probability)}</span>
+          ) : null}
+        </div>
+        <p className="text-sm text-muted-foreground">{bet.analysis}</p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // "Prognóstico" tab: a per-team + overall expected-goals read produced by the LLM, served from
 // match_prognosis. Empty state when no run exists for the match yet.
 export function Prognosis({
@@ -204,10 +248,13 @@ export function Prognosis({
       </div>
     )
 
-  const g = data.geral
-  const conf = CONF[data.confianca] ?? CONF.media!
+  const g = data.general
+  const conf = CONF[data.confidence] ?? CONF.medium!
   return (
     <div className="flex flex-col gap-6">
+      {/* Aposta recomendada (leitura de sharp) — o destaque, no topo da aba */}
+      {data.bestBet ? <BestBetCard bet={data.bestBet} home={home} away={away} /> : null}
+
       {/* Geral */}
       <Card>
         <CardHeader>
@@ -234,7 +281,7 @@ export function Prognosis({
             <OneXTwoRow label="1º tempo" p={g.oneXTwo1t} />
             <OneXTwoRow label="2º tempo" p={g.oneXTwo2t} />
           </div>
-          <p className="text-sm text-muted-foreground">{g.resumo}</p>
+          <p className="text-sm text-muted-foreground">{g.summary}</p>
           {data.drivers.length ? (
             <div className="flex flex-wrap gap-1.5">
               {data.drivers.map((d) => (

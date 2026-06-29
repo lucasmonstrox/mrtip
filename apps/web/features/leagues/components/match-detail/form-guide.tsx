@@ -47,7 +47,7 @@ function Chip({ r, team, size }: { r: FormResult; team: TeamRef; size: "sm" | "m
     <HoverCard openDelay={100} closeDelay={50}>
       <HoverCardTrigger asChild>
         <Link
-          href={`/matches/${r.matchId}`}
+          href={`/matches/${r.slug}`}
           className={cn(
             "flex cursor-pointer items-center justify-center rounded font-semibold text-white transition-colors",
             size === "md" ? "h-7 w-7 text-xs" : "h-5 w-5 text-[10px]",

@@ -1,5 +1,8 @@
+import { and, eq, ne } from "drizzle-orm"
+
 import { db } from "./client"
-import { card, goal, injury, league, lineup, lineupPlayer, match, nationality, player, standing, team, venue } from "./schema"
+import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, nationality, player, season, standing, team, venue } from "./schema"
+import { matchSlug, slugify } from "./slug"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
@@ -141,14 +144,19 @@ type SmSidelined = {
   type?: { name: string; developer_name: string }
 }
 type SmCountry = { id: number; name: string; fifa_name?: string; iso2?: string; image_path?: string }
-
-function slugify(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+// SportMonks commentary line (GET /commentaries/fixtures/:id). With include=player;relatedPlayer the
+// JSON key comes back as `relatedplayer` (lowercase) — map it literally. `order` is a large increasing
+// int (the chronological key, NOT 1,2,3). `player`/`relatedplayer` reuse the SmPlayer shape.
+type SmCommentary = {
+  id: number
+  comment: string
+  minute?: number | null
+  extra_minute?: number | null
+  is_goal: boolean
+  is_important: boolean
+  order: number
+  player?: SmPlayer | null
+  relatedplayer?: SmPlayer | null
 }
 
 function detVal(details: SmDetail[], typeId: number): number {
@@ -238,14 +246,38 @@ async function main() {
     .values(leagueValues)
     .onConflictDoUpdate({ target: league.code, set: leagueValues })
 
+  // 1b) Season row (the current season) — match/standing are tagged with its id so reads scope by
+  // season (LIG-008). startYear from the name ("2025/2026" → 2025). Marked isCurrent. @feature LIG-008
+  const seasonValues = {
+    sportmonksSeasonId: SEASON_ID,
+    leagueCode: CODE,
+    name: apiSeason.name,
+    startYear: Number(apiSeason.name.slice(0, 4)),
+    isCurrent: true,
+  }
+  const [seasonRow] = await db
+    .insert(season)
+    .values(seasonValues)
+    .onConflictDoUpdate({ target: season.sportmonksSeasonId, set: seasonValues })
+    .returning({ id: season.id })
+  const seasonId = seasonRow!.id
+  // Exactly one current season per league: demote any other PL season so `currentSeasonId` is
+  // unambiguous once old seasons are ingested. @feature LIG-008
+  await db
+    .update(season)
+    .set({ isCurrent: false })
+    .where(and(eq(season.leagueCode, CODE), ne(season.sportmonksSeasonId, SEASON_ID)))
+
   // 2) Standings → teams + logos + official table -------------------------------
   const standings = await sm<SmStanding[]>(
     `/standings/seasons/${SEASON_ID}?include=participant;details;rule.type`,
   )
   const teamIdBySm = new Map<number, string>() // sportmonksTeamId → team.id (uuid)
+  const teamNameBySm = new Map<number, string>() // sportmonksTeamId → team name (for the match slug)
 
   for (const row of standings) {
     const t = row.participant
+    teamNameBySm.set(t.id, t.name)
     const logo = await uploadImagem(t.image_path, imgKey("teams", t.name, t.image_path))
     const [r] = await db
       .insert(team)
@@ -269,6 +301,7 @@ async function main() {
     const values = {
       leagueCode: CODE,
       teamId,
+      seasonId, // @feature LIG-008
       position: row.position,
       points: row.points,
       played: detVal(row.details, DET.played),
@@ -295,7 +328,7 @@ async function main() {
     await db
       .insert(standing)
       .values(values)
-      .onConflictDoUpdate({ target: [standing.leagueCode, standing.teamId], set: values })
+      .onConflictDoUpdate({ target: [standing.seasonId, standing.teamId], set: values })
   }
   console.log(`teams + standings: ${standings.length} rows`)
 
@@ -367,16 +400,21 @@ async function main() {
     }
 
     const score = extractScore(f.scores)
+    // Pretty URL key: league-season-home-vs-away, from the same team names that feed team.slug. The
+    // away fixture gets the reversed slug, so the pair is unique within the season. @feature LIG-009
+    const slug = matchSlug(apiLeague.name, apiSeason.name, teamNameBySm.get(home.id) ?? f.name, teamNameBySm.get(away.id) ?? "")
     const values = {
       sportmonksFixtureId: f.id,
       leagueCode: CODE,
       round: Number(f.round?.name ?? 0),
       name: f.name,
+      slug,
       date: f.starting_at.slice(0, 10),
       time: f.starting_at.slice(11, 16),
       homeTeamId,
       awayTeamId,
       venueId: f.venue ? venueIdBySm.get(f.venue.id) ?? null : null,
+      seasonId, // @feature LIG-008
       ...score,
       status: f.state?.developer_name ?? null,
     }
@@ -583,6 +621,50 @@ async function main() {
     }
   }
   console.log(`injuries: ${nInjuries}`)
+
+  // 3h) Commentaries (narração lance-a-lance): SportMonks `/commentaries/fixtures/:id` per FINISHED
+  // fixture (state FT). We store the FULL feed (~96 lines/match on the PL); isGoal/isImportant flag
+  // the highlights. player/relatedplayer reuse ensurePlayer — most lines reference players already in
+  // playerIdBySm (lineups); commentary-only players get a stub. The include key comes back as
+  // `relatedplayer` (lowercase). Idempotent: bulk upsert that does nothing on the unique commentary id
+  // (post-match lines are immutable). Coverage is partial — fixtures without commentary are skipped.
+  // @feature LIG-010
+  let nCommentaries = 0
+  let nFixturesWithComm = 0
+  const finished = fixtures.filter((f) => f.state?.developer_name === "FT" && matchIdByFixture.has(f.id))
+  for (const f of finished) {
+    const matchId = matchIdByFixture.get(f.id)!
+    let items: SmCommentary[]
+    try {
+      items = await sm<SmCommentary[]>(`/commentaries/fixtures/${f.id}?include=player;relatedPlayer`)
+    } catch (e) {
+      console.log(`  commentary fixture ${f.id}: ${(e as Error).message} — skip`)
+      continue
+    }
+    if (!items.length) continue
+    nFixturesWithComm += 1
+    const rows = []
+    for (const c of items) {
+      const playerId = c.player ? await ensurePlayer(c.player.id, playerName(c.player)) : null
+      const relatedPlayerId = c.relatedplayer ? await ensurePlayer(c.relatedplayer.id, playerName(c.relatedplayer)) : null
+      rows.push({
+        sportmonksCommentaryId: c.id,
+        matchId,
+        playerId,
+        relatedPlayerId,
+        comment: c.comment,
+        minute: c.minute ?? null,
+        extraMinute: c.extra_minute ?? null,
+        isGoal: c.is_goal ?? false,
+        isImportant: c.is_important ?? false,
+        sortOrder: c.order,
+      })
+    }
+    await db.insert(commentary).values(rows).onConflictDoNothing({ target: commentary.sportmonksCommentaryId })
+    nCommentaries += rows.length
+  }
+  console.log(`commentaries: ${nCommentaries} (${nFixturesWithComm}/${finished.length} fixtures)`)
+
   console.log("✓ sync done")
 }
 

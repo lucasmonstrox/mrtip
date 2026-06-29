@@ -5,6 +5,9 @@
 Você é um analista quantitativo de futebol. Produza um prognóstico de **expected goals (xG)** para esta partida.
 Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de gols puro E λ_SoT × conversão) e
 **AJUSTE multiplicativamente** por fator (desfalques, fadiga, contexto), justificando cada ajuste. Regras:
+- **ANCORE nas probabilidades Poisson fornecidas** (seção "Probabilidades de mercado"): seu `over25_prob`, `btts_prob`
+  e `one_x_two` PARTEM delas (Rota B como principal). Só desvie com fator nomeado e quantificado. **NÃO** devolva tudo
+  comprimido perto de ~40% — é exatamente o erro que estamos corrigindo.
 - **SoT (chutes no alvo) é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a
   CONVERSÃO (gols/SoT) e como checagem. Onde as duas rotas de base rate divergem, confie mais no SoT e trate a
   diferença como finalização acima/abaixo da média (tende a regredir à conversão do time).
@@ -39,6 +42,7 @@ Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de g
 - Por tempo (casa+fora): 1ºT marca 0.51 sofre 0.81 · 2ºT marca 0.76 sofre 0.73
 - **Finalização: 145 SoT total (3.92/jogo · em casa 4/jogo) · conversão 32%** (gols ÷ SoT)
 - Sofre 4.08 SoT/jogo (adversário converte 38%) · cria 8.43 key passes/jogo
+- **Forma (momento) — últimos 5: DEVVE** (8pts) · marca 1.4= / sofre 1.2↓ g/j · SoT 3.8 feito / 2.8 sofrido · últimos 10: DEVVEDDEDD (9pts · 1/1.6 g/j · SoT 4.1/3.5)
 - Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.14 · 31-45: 0.27 · 46-60: 0.22 · 61-75: 0.19 · 76-90: 0.35
 - Sofre por faixa (/j): 0-15: 0.19 · 16-30: 0.11 · 31-45: 0.51 · 46-60: 0.14 · 61-75: 0.22 · 76-90: 0.38
 - 1ºT: marca 19 / sofre 30 (totais na temporada)
@@ -57,6 +61,7 @@ Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de g
 - Por tempo (casa+fora): 1ºT marca 0.51 sofre 0.54 · 2ºT marca 0.76 sofre 0.78
 - **Finalização: 142 SoT total (3.84/jogo · fora 3.33/jogo) · conversão 33%** (gols ÷ SoT)
 - Sofre 4.24 SoT/jogo (adversário converte 31%) · cria 8.38 key passes/jogo
+- **Forma (momento) — últimos 5: DEEDD** (2pts) · marca 1.6↑ / sofre 2.4↑ g/j · SoT 4.6 feito / 4.8 sofrido · últimos 10: DEEDDEVDVV (12pts · 1.8/1.8 g/j · SoT 5.2/4.8)
 - Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.19 · 31-45: 0.22 · 46-60: 0.19 · 61-75: 0.16 · 76-90: 0.41
 - Sofre por faixa (/j): 0-15: 0.11 · 16-30: 0.24 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.19 · 76-90: 0.41
 - 1ºT: marca 19 / sofre 20 (totais na temporada)
@@ -96,7 +101,18 @@ Onde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o go
 - Tottenham Hotspur: λ_SoT 3.81 × conv 32% → **1.22 gols**
 - Everton: λ_SoT 3.48 × conv 33% → **1.15 gols**
 - total via SoT = 2.37
+- **Índice de volume do jogo**: λ_SoT total 7.3 vs média da liga 8.5 SoT → **ABAIXO** (jogo travado → pressão de UNDER)
 - **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.
+
+## Probabilidades de mercado (Poisson sobre os λ — ÂNCORA: ajuste A PARTIR daqui, não invente)
+| Mercado | Rota A (gols) | Rota B (SoT×conv) |
+|---|---|---|
+| 1x2 casa/E/fora | 21/25/54% | 38/28/34% |
+| Over 1.5 | 73% | 68% |
+| Over 2.5 | 47% | 42% |
+| Over 3.5 | 26% | 22% |
+| BTTS | 49% | 48% |
+São as probabilidades que o volume IMPLICA. Seus `over25_prob`, `btts_prob` e `one_x_two` devem **partir destes números** (use a Rota B como principal); só desvie com um **fator nomeado** (motivação, desfalque, fadiga) dizendo a direção e o tamanho. **NÃO comprima tudo pra ~40%** — se a âncora diz over 2.5 = 55%, justifique explicitamente para baixá-la.
 
 ## Saída exigida (objeto tipado — validado pelo runtime). Estrutura: PROGNÓSTICO POR TIME + GERAL.
 **Por time** — `home` (= Tottenham Hotspur) e `away` (= Everton), cada um com:

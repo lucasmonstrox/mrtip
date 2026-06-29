@@ -13,7 +13,8 @@ export async function form(id: string, query: FormQuery) {
   const row = await getMatchRow(id)
   if (!row) throw notFound("match_not_found")
 
-  const matches = await loadMatches(row.m.leagueCode)
+  // Form is anchored to THIS match's season (LIG-008) — a match always has one post-backfill.
+  const matches = await loadMatches(row.m.leagueCode, row.m.seasonId ?? undefined)
   const home: TeamRef = { id: row.m.homeTeamId, name: row.homeName, slug: row.homeSlug, logoUrl: row.homeLogo }
   const away: TeamRef = { id: row.m.awayTeamId, name: row.awayName, slug: row.awaySlug, logoUrl: row.awayLogo }
   const opts = { before: row.m.date, n: query.n, side: query.side }

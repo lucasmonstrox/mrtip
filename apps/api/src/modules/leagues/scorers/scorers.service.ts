@@ -2,7 +2,7 @@ import { and, asc, count, desc, eq, ne } from "drizzle-orm"
 
 import { db } from "../../../db/client"
 import { goal, match, player, team } from "../../../db/schema"
-import { getLeagueOrThrow } from "../shared/shared"
+import { getLeagueOrThrow, resolveSeason } from "../shared/shared"
 
 // The scorer's club (escudo/logo do time), shown on the left of each row in the marcadores table.
 type ScorerTeam = { id: string; name: string; slug: string; logoUrl: string | null }
@@ -20,8 +20,9 @@ export type Scorer = {
 // League top scorers (marcadores): goals + assists per player for the league's season, ranked by
 // goals. Own goals are excluded from the goal tally. Derived live from goal⋈match (no snapshot
 // table); 404 when the league doesn't exist.
-export async function scorers(code: string): Promise<Scorer[]> {
+export async function scorers(code: string, seasonParam?: number): Promise<Scorer[]> {
   await getLeagueOrThrow(code)
+  const seasonId = await resolveSeason(code, seasonParam)
 
   // Goals per scorer (own goals excluded), most goals first; name breaks ties for a stable order.
   const goalRows = await db
@@ -34,17 +35,17 @@ export async function scorers(code: string): Promise<Scorer[]> {
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(player, eq(player.id, goal.playerId))
-    .where(and(eq(match.leagueCode, code), ne(goal.type, "own")))
+    .where(and(eq(match.seasonId, seasonId), ne(goal.type, "own")))
     .groupBy(player.id, player.name, player.imageUrl)
     .orderBy(desc(count()), asc(player.name))
 
-  // Assists per player in the same league (innerJoin on assistId drops goals with no assist).
+  // Assists per player in the same season (innerJoin on assistId drops goals with no assist).
   const assistRows = await db
     .select({ id: player.id, assists: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(player, eq(player.id, goal.assistId))
-    .where(eq(match.leagueCode, code))
+    .where(eq(match.seasonId, seasonId))
     .groupBy(player.id)
 
   const assistsByPlayer = new Map(assistRows.map((r) => [r.id, Number(r.assists)]))
@@ -63,7 +64,7 @@ export async function scorers(code: string): Promise<Scorer[]> {
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(team, eq(team.id, goal.teamId))
-    .where(and(eq(match.leagueCode, code), ne(goal.type, "own")))
+    .where(and(eq(match.seasonId, seasonId), ne(goal.type, "own")))
     .orderBy(desc(match.date))
 
   const teamByPlayer = new Map<string, ScorerTeam>()

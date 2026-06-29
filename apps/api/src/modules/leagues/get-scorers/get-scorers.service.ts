@@ -1,5 +1,5 @@
 import { notFound } from "../../../lib/errors"
-import { getMatchRow, loadTeamScorers, type TeamRef } from "../shared/shared"
+import { currentSeasonId, getMatchRow, loadTeamScorers, type TeamRef } from "../shared/shared"
 
 // How many scorers to show per team — short on purpose: with 1 season the list is curta, this is a
 // preview ("quem pode marcar"), not the full ranking.
@@ -14,9 +14,11 @@ export async function matchScorers(id: string) {
   const { m } = row
   const home: TeamRef = { id: m.homeTeamId, name: row.homeName, slug: row.homeSlug, logoUrl: row.homeLogo }
   const away: TeamRef = { id: m.awayTeamId, name: row.awayName, slug: row.awaySlug, logoUrl: row.awayLogo }
+  // Window the scorers to THIS match's season (LIG-008); fall back to current if somehow unset.
+  const seasonId = m.seasonId ?? (await currentSeasonId(m.leagueCode))
   const [homeScorers, awayScorers] = await Promise.all([
-    loadTeamScorers(home, m.leagueCode, TOP_N),
-    loadTeamScorers(away, m.leagueCode, TOP_N),
+    loadTeamScorers(home, seasonId, TOP_N),
+    loadTeamScorers(away, seasonId, TOP_N),
   ])
   return { home: homeScorers, away: awayScorers }
 }

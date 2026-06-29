@@ -26,7 +26,7 @@ export function CoachDetail({ id }: { id: string }) {
             {coach.matches.map((m) => (
               <li key={m.matchId}>
                 <Link
-                  href={`/matches/${m.matchId}`}
+                  href={`/matches/${m.slug}`}
                   className="flex items-center gap-3 px-4 py-2 text-sm transition-colors hover:bg-muted/50"
                 >
                   <span className="w-28 text-xs text-muted-foreground">{formatDate(m.date, null)}</span>

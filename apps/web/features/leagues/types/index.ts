@@ -4,6 +4,7 @@ export type {
   AbsencePlayerImpact,
   CardItem,
   CoachDetail,
+  CommentaryItem,
   CoachMatch,
   Form,
   FormResult,

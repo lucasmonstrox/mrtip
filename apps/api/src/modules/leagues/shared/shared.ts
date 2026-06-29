@@ -5,6 +5,7 @@ import { db } from "../../../db/client"
 import {
   card,
   coach,
+  commentary,
   goal,
   injury,
   league,
@@ -13,6 +14,7 @@ import {
   match,
   nationality,
   player,
+  season,
   standing,
   team,
   venue,
@@ -28,6 +30,16 @@ export type League = {
   country: string
   season: string
   logoUrl: string | null
+}
+
+// One season of a league for the switcher: the public id (`sportmonksSeasonId`, stable across
+// re-seeds, unlike the uuid), label, ordering year and whether it's the current (default) one.
+// @feature LIG-008
+export type SeasonSummary = {
+  sportmonksSeasonId: number
+  name: string
+  startYear: number
+  isCurrent: boolean
 }
 
 // Reference to a team: stable id + name + slug (the latter for /teams/:slug URLs) + logo.
@@ -111,6 +123,7 @@ export type MatchVenue = {
 
 export type Match = {
   id: string
+  slug: string // pretty URL key, e.g. "premier-league-2025-2026-chelsea-vs-everton" (LIG-009)
   round: number
   name: string // "Matchday 12"
   date: string // yyyy-MM-dd
@@ -156,6 +169,7 @@ export type Result = "W" | "D" | "L"
 export type FormResult = {
   result: Result
   matchId: string
+  slug: string // pretty URL key of the match, for the link (LIG-009)
   date: string // yyyy-MM-dd of the match — for the popover's date + "há N dias"
   opponent: TeamRef
   goalsFor: number
@@ -277,6 +291,20 @@ export type CardItem = {
   player: { id: string; name: string }
 }
 
+// One line of the play-by-play narration of a match (SportMonks commentary). `isGoal`/`isImportant`
+// flag the highlights; `player`/`relatedPlayer` are the involved players (null on framing lines).
+// `minute` is null on pre-kickoff lines. @feature LIG-010
+export type CommentaryRef = { id: string; name: string; imageUrl: string | null }
+export type CommentaryItem = {
+  minute: number | null
+  extraMinute: number | null
+  comment: string
+  isGoal: boolean
+  isImportant: boolean
+  player: CommentaryRef | null
+  relatedPlayer: CommentaryRef | null
+}
+
 // One 15-minute band of a team's goal-timing profile: goals scored and conceded within the band, each
 // as a share of that team's (minute-known) scored / conceded totals.
 export type GoalTimingBucket = {
@@ -341,6 +369,7 @@ export type PlayerGoal = {
 // this list (no extra queries). `home` = the player's team was the home side; `score` is [home, away].
 export type PlayerAppearance = {
   matchId: string
+  slug: string // pretty URL key of the match, for the link (LIG-009)
   date: string
   round: number
   opponent: string
@@ -392,6 +421,8 @@ export type PlayerDetail = {
   goalSplits: { home: number; away: number; firstHalf: number; secondHalf: number }
   goalsList: PlayerGoal[]
   appearances: PlayerAppearance[]
+  // Seasons the player has data in (for the page's season switcher). @feature LIG-008
+  seasons: SeasonSummary[]
 }
 
 // Minutes floor before per-90 rates are shown (≈6 full matches) — below this the rate is noise.
@@ -400,6 +431,7 @@ const PER90_MIN_MINUTES = 540
 // A match managed by a coach (for their page).
 export type CoachMatch = {
   matchId: string
+  slug: string // pretty URL key of the match, for the link (LIG-009)
   date: string
   team: string // team he managed in this match
   home: string
@@ -464,6 +496,7 @@ export function serializeMatch(row: MatchJoin): Match {
   const v = row.v
   return {
     id: m.id,
+    slug: m.slug,
     round: m.round,
     name: m.name,
     date: m.date,
@@ -485,11 +518,54 @@ export function serializeMatch(row: MatchJoin): Match {
   }
 }
 
-// All matches of a league, ordered by round and date — base of rounds, standings and form.
-// Returns already serialized (domain contract), never the raw row.
-export async function loadMatches(code: string): Promise<Match[]> {
+// The current (live) season id of a league — the default scope of every league/team/player read.
+// 404 when the league has no current season. @feature LIG-008
+export async function currentSeasonId(code: string): Promise<string> {
+  const [row] = await db
+    .select({ id: season.id })
+    .from(season)
+    .where(and(eq(season.leagueCode, code), eq(season.isCurrent, true)))
+    // Deterministic guard: if more than one row is ever flagged current, the most recent wins.
+    .orderBy(desc(season.startYear))
+    .limit(1)
+  if (!row) throw notFound("season_not_found")
+  return row.id
+}
+
+// Resolves the season uuid to scope a read by: the one matching `sportmonksSeasonId` (the public
+// `?season=` value) or, when omitted, the current season. 404 when the requested season doesn't
+// exist in this league. @feature LIG-008
+export async function resolveSeason(code: string, sportmonksSeasonId?: number): Promise<string> {
+  if (sportmonksSeasonId == null) return currentSeasonId(code)
+  const [row] = await db
+    .select({ id: season.id })
+    .from(season)
+    .where(and(eq(season.leagueCode, code), eq(season.sportmonksSeasonId, sportmonksSeasonId)))
+    .limit(1)
+  if (!row) throw notFound("season_not_found")
+  return row.id
+}
+
+// All seasons of a league for the switcher, most recent first. @feature LIG-008
+export async function seasonsOf(code: string): Promise<SeasonSummary[]> {
+  return db
+    .select({
+      sportmonksSeasonId: season.sportmonksSeasonId,
+      name: season.name,
+      startYear: season.startYear,
+      isCurrent: season.isCurrent,
+    })
+    .from(season)
+    .where(eq(season.leagueCode, code))
+    .orderBy(desc(season.startYear))
+}
+
+// All matches of a league IN ONE SEASON (default: the current one), ordered by round and date —
+// base of rounds, standings and form. Returns already serialized (domain contract). @feature LIG-008
+export async function loadMatches(code: string, seasonId?: string): Promise<Match[]> {
+  const sid = seasonId ?? (await currentSeasonId(code))
   const rows = await baseQuery()
-    .where(eq(match.leagueCode, code))
+    .where(and(eq(match.leagueCode, code), eq(match.seasonId, sid)))
     .orderBy(asc(match.round), asc(match.date))
   return rows.map(serializeMatch)
 }
@@ -502,6 +578,13 @@ export async function getMatchRow(id: string): Promise<MatchJoin | null> {
   return row ?? null
 }
 
+// Row of a match by its pretty slug (key of /matches/:slug) — null when it doesn't exist. The route
+// passes either a uuid or a slug; the service picks this when the key isn't a uuid. @feature LIG-009
+export async function getMatchRowBySlug(slug: string): Promise<MatchJoin | null> {
+  const [row] = await baseQuery().where(eq(match.slug, slug)).limit(1)
+  return row ?? null
+}
+
 // League by code or domain 404 (mapped by the global onError).
 export async function getLeagueOrThrow(code: string): Promise<League> {
   const [row] = await db.select().from(league).where(eq(league.code, code)).limit(1)
@@ -509,10 +592,10 @@ export async function getLeagueOrThrow(code: string): Promise<League> {
   return row
 }
 
-// Player page: totals (real goals, assists, matches out) + list of goals. All derived from
-// `goal`/`injury` (not a snapshot). 404 if the id doesn't exist. Goals/assists depend on the goal
-// backfill.
-export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
+// Player page for ONE season: totals (real goals, assists, matches out) + list of goals, all scoped
+// to `seasonId` via `match.seasonId` (so the page is the chosen season, not the player's career).
+// Derived from `goal`/`injury` (not a snapshot). 404 if the id doesn't exist. @feature LIG-008
+export async function getPlayerDetail(id: string, seasonId: string): Promise<PlayerDetail> {
   const [p] = await db
     .select({
       id: player.id,
@@ -530,12 +613,22 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
     .limit(1)
   if (!p) throw notFound("player_not_found")
 
-  const [g] = await db.select({ n: count() }).from(goal).where(and(eq(goal.playerId, id), ne(goal.type, "own")))
-  const [a] = await db.select({ n: count() }).from(goal).where(eq(goal.assistId, id))
+  // Season-scoped totals: each aggregate joins `match` to filter by `match.seasonId`. @feature LIG-008
+  const [g] = await db
+    .select({ n: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), eq(match.seasonId, seasonId)))
+  const [a] = await db
+    .select({ n: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(goal.assistId, id), eq(match.seasonId, seasonId)))
   const [out] = await db
     .select({ n: count() })
     .from(injury)
-    .where(and(eq(injury.playerId, id), eq(injury.type, "Missing Fixture")))
+    .innerJoin(match, eq(match.id, injury.matchId))
+    .where(and(eq(injury.playerId, id), eq(injury.type, "Missing Fixture"), eq(match.seasonId, seasonId)))
 
   const goalRows = await db
     .select({
@@ -552,7 +645,7 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
-    .where(and(eq(goal.playerId, id), ne(goal.type, "own")))
+    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), eq(match.seasonId, seasonId)))
     .orderBy(asc(match.date))
 
   // Per-match appearances (the player's lineup rows): rating/minutes/role + opponent/score. The spine
@@ -560,6 +653,7 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
   const appRows = await db
     .select({
       matchId: match.id,
+      slug: match.slug,
       date: match.date,
       round: match.round,
       homeTeamId: match.homeTeamId,
@@ -583,7 +677,7 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
     .innerJoin(match, eq(match.id, lineup.matchId))
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
-    .where(eq(lineupPlayer.playerId, id))
+    .where(and(eq(lineupPlayer.playerId, id), eq(match.seasonId, seasonId)))
     .orderBy(asc(match.date))
 
   // The player's goals (reusing goalRows: own goals already excluded) + assists + cards, keyed by
@@ -599,14 +693,16 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
   const assistRows = await db
     .select({ matchId: goal.matchId, n: count() })
     .from(goal)
-    .where(eq(goal.assistId, id))
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(goal.assistId, id), eq(match.seasonId, seasonId)))
     .groupBy(goal.matchId)
   const assistsByMatch = new Map(assistRows.map((r) => [r.matchId, Number(r.n)]))
 
   const cardRows = await db
     .select({ matchId: card.matchId, type: card.type })
     .from(card)
-    .where(eq(card.playerId, id))
+    .innerJoin(match, eq(match.id, card.matchId))
+    .where(and(eq(card.playerId, id), eq(match.seasonId, seasonId)))
   const cardsByMatch = new Map<string, { yellow: number; red: number }>()
   for (const r of cardRows) {
     const e = cardsByMatch.get(r.matchId) ?? { yellow: 0, red: 0 }
@@ -621,6 +717,7 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
     const cm = cardsByMatch.get(r.matchId) ?? { yellow: 0, red: 0 }
     return {
       matchId: r.matchId,
+      slug: r.slug,
       date: r.date,
       round: r.round,
       opponent: home ? r.awayName : r.homeName,
@@ -688,6 +785,9 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
       : { name: last.awayName, slug: last.awaySlug, logoUrl: last.awayLogo }
     : null
 
+  // Seasons the player has appearances in (for the switcher). @feature LIG-008
+  const seasons = await seasonsOfPlayer(id)
+
   return {
     id: p.id,
     name: p.name,
@@ -714,7 +814,25 @@ export async function getPlayerDetail(id: string): Promise<PlayerDetail> {
       score: r.ftH != null && r.ftA != null ? [r.ftH, r.ftA] : null,
     })),
     appearances,
+    seasons,
   }
+}
+
+// Seasons a player has appearances (lineup rows) in, most recent first — for the player-page
+// switcher. @feature LIG-008
+export async function seasonsOfPlayer(playerId: string): Promise<SeasonSummary[]> {
+  return db
+    .selectDistinct({
+      sportmonksSeasonId: season.sportmonksSeasonId,
+      name: season.name,
+      startYear: season.startYear,
+      isCurrent: season.isCurrent,
+    })
+    .from(season)
+    .innerJoin(match, eq(match.seasonId, season.id))
+    .innerJoin(lineup, eq(lineup.matchId, match.id))
+    .innerJoin(lineupPlayer, and(eq(lineupPlayer.lineupId, lineup.id), eq(lineupPlayer.playerId, playerId)))
+    .orderBy(desc(season.startYear))
 }
 
 // Team by SLUG (key of the /teams/:slug URLs) or domain 404.
@@ -734,10 +852,16 @@ export async function getTeamBySlug(slug: string): Promise<TeamRef & { shortCode
   return row
 }
 
-// Official SportMonks standing row of a team (position/points/W-D-L/goals/zone) — the authoritative
-// season aggregate, already ingested in `standing`. null when the team has no standing row yet.
-export async function loadTeamStanding(teamId: string): Promise<TeamStanding | null> {
-  const [row] = await db.select().from(standing).where(eq(standing.teamId, teamId)).limit(1)
+// Official SportMonks standing row of a team IN ONE SEASON (position/points/W-D-L/goals/zone) — the
+// authoritative season aggregate from `standing`. null when the team has no standing in that season
+// (or no season). Scoped by seasonId so multi-season data doesn't return an arbitrary row. @feature LIG-008
+export async function loadTeamStanding(teamId: string, seasonId: string | null): Promise<TeamStanding | null> {
+  if (!seasonId) return null
+  const [row] = await db
+    .select()
+    .from(standing)
+    .where(and(eq(standing.teamId, teamId), eq(standing.seasonId, seasonId)))
+    .limit(1)
   if (!row) return null
   // The 12 home/away columns are populated together on re-sync; gate on one being present.
   const home: VenueRecord | null =
@@ -778,13 +902,30 @@ export async function loadTeamStanding(teamId: string): Promise<TeamStanding | n
   }
 }
 
-// All matches of a team (as home OR away), most recent first — base of the team page. Serialized
-// in the domain contract (with the names of both sides).
-export async function loadTeamMatches(id: string): Promise<Match[]> {
+// All matches of a team (as home OR away) IN ONE SEASON, most recent first — base of the team page.
+// Serialized in the domain contract. Empty when no season. @feature LIG-008
+export async function loadTeamMatches(id: string, seasonId: string | null): Promise<Match[]> {
+  if (!seasonId) return []
   const rows = await baseQuery()
-    .where(or(eq(match.homeTeamId, id), eq(match.awayTeamId, id)))
+    .where(and(or(eq(match.homeTeamId, id), eq(match.awayTeamId, id)), eq(match.seasonId, seasonId)))
     .orderBy(desc(match.date))
   return rows.map(serializeMatch)
+}
+
+// Seasons a team has an official standing in (for the team-page switcher), most recent first. One
+// standing row per (season, team) → one row per season. @feature LIG-008
+export async function seasonsOfTeam(teamId: string): Promise<SeasonSummary[]> {
+  return db
+    .selectDistinct({
+      sportmonksSeasonId: season.sportmonksSeasonId,
+      name: season.name,
+      startYear: season.startYear,
+      isCurrent: season.isCurrent,
+    })
+    .from(season)
+    .innerJoin(standing, eq(standing.seasonId, season.id))
+    .where(eq(standing.teamId, teamId))
+    .orderBy(desc(season.startYear))
 }
 
 // Lineups of a match (one item per team that has a lineup). Empty when there's no lineup yet (the
@@ -858,6 +999,9 @@ export async function loadMatchLineups(matchId: string): Promise<TeamLineup[]> {
 // `player` enters the goals join 2x (scorer and assist) → alias for each.
 const playerScorer = alias(player, "player_scorer")
 const playerAssist = alias(player, "player_assist")
+// `player` enters the commentary join 2x (author + related) → its own aliases. @feature LIG-010
+const playerCommentator = alias(player, "player_commentator")
+const playerCommentaryRelated = alias(player, "player_commentary_related")
 // `team` managed by the coach in the match (3rd alias, besides home/away).
 const teamManaged = alias(team, "team_managed")
 
@@ -869,6 +1013,7 @@ export async function getCoachDetail(id: string): Promise<CoachDetail> {
   const matches = await db
     .select({
       matchId: match.id,
+      slug: match.slug,
       date: match.date,
       team: teamManaged.name,
       home: teamHome.name,
@@ -889,6 +1034,7 @@ export async function getCoachDetail(id: string): Promise<CoachDetail> {
     name: c.name,
     matches: matches.map((m) => ({
       matchId: m.matchId,
+      slug: m.slug,
       date: m.date,
       team: m.team,
       home: m.home,
@@ -930,6 +1076,41 @@ export async function loadMatchGoals(matchId: string): Promise<GoalItem[]> {
   }))
 }
 
+// Play-by-play narration of a match, ordered chronologically by SportMonks' `sortOrder` (the canonical
+// key — minute can be null on framing lines). Joins the author + related player (both left, both
+// nullable). Returns the FULL feed; the UI filters highlights by isGoal/isImportant. @feature LIG-010
+export async function loadMatchCommentaries(matchId: string): Promise<CommentaryItem[]> {
+  const rows = await db
+    .select({
+      minute: commentary.minute,
+      extraMinute: commentary.extraMinute,
+      comment: commentary.comment,
+      isGoal: commentary.isGoal,
+      isImportant: commentary.isImportant,
+      playerId: playerCommentator.id,
+      playerName: playerCommentator.name,
+      playerImage: playerCommentator.imageUrl,
+      relatedId: playerCommentaryRelated.id,
+      relatedName: playerCommentaryRelated.name,
+      relatedImage: playerCommentaryRelated.imageUrl,
+    })
+    .from(commentary)
+    .leftJoin(playerCommentator, eq(playerCommentator.id, commentary.playerId))
+    .leftJoin(playerCommentaryRelated, eq(playerCommentaryRelated.id, commentary.relatedPlayerId))
+    .where(eq(commentary.matchId, matchId))
+    .orderBy(asc(commentary.sortOrder))
+
+  return rows.map((r) => ({
+    minute: r.minute,
+    extraMinute: r.extraMinute,
+    comment: r.comment,
+    isGoal: r.isGoal,
+    isImportant: r.isImportant,
+    player: r.playerId && r.playerName ? { id: r.playerId, name: r.playerName, imageUrl: r.playerImage } : null,
+    relatedPlayer: r.relatedId && r.relatedName ? { id: r.relatedId, name: r.relatedName, imageUrl: r.relatedImage } : null,
+  }))
+}
+
 // The six 15-min bands (fixed labels) and the games floor below which the distribution is too noisy.
 const TIMING_BUCKETS = ["0-15", "16-30", "31-45", "46-60", "61-75", "76-90"] as const
 const TIMING_MIN_MATCHES = 10
@@ -952,7 +1133,7 @@ function timingBucket(minute: number): number {
 export async function loadGoalTiming(
   home: TeamRef,
   away: TeamRef,
-  leagueCode: string,
+  seasonId: string, // window = THIS match's season (LIG-008), not the whole league
   side: "all" | "home" | "away" = "all",
 ): Promise<MatchGoalTiming> {
   const ids = [home.id, away.id]
@@ -969,7 +1150,7 @@ export async function loadGoalTiming(
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .where(
-      and(eq(match.leagueCode, leagueCode), or(inArray(match.homeTeamId, ids), inArray(match.awayTeamId, ids))),
+      and(eq(match.seasonId, seasonId), or(inArray(match.homeTeamId, ids), inArray(match.awayTeamId, ids))),
     )
 
   // Each team's PLAYED matches (with a result) — the honest denominator and the low-sample gate.
@@ -978,7 +1159,7 @@ export async function loadGoalTiming(
     .from(match)
     .where(
       and(
-        eq(match.leagueCode, leagueCode),
+        eq(match.seasonId, seasonId),
         isNotNull(match.ftHome),
         or(inArray(match.homeTeamId, ids), inArray(match.awayTeamId, ids)),
       ),
@@ -1043,7 +1224,7 @@ export async function loadGoalTiming(
 // team page squad table. Derived live from goal⋈match — no snapshot.
 export async function loadTeamScorers(
   team: TeamRef,
-  leagueCode: string,
+  seasonId: string, // window = THIS match's season (LIG-008)
   limit: number,
 ): Promise<TeamScorers> {
   // Goals per player scored FOR this team (own goals out), most first; name breaks ties.
@@ -1052,7 +1233,7 @@ export async function loadTeamScorers(
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(player, eq(player.id, goal.playerId))
-    .where(and(eq(match.leagueCode, leagueCode), eq(goal.teamId, team.id), ne(goal.type, "own")))
+    .where(and(eq(match.seasonId, seasonId), eq(goal.teamId, team.id), ne(goal.type, "own")))
     .groupBy(player.id, player.name, player.imageUrl)
     .orderBy(desc(count()), asc(player.name))
     .limit(limit)
@@ -1063,7 +1244,7 @@ export async function loadTeamScorers(
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(player, eq(player.id, goal.assistId))
-    .where(and(eq(match.leagueCode, leagueCode), eq(goal.teamId, team.id)))
+    .where(and(eq(match.seasonId, seasonId), eq(goal.teamId, team.id)))
     .groupBy(player.id)
   const assistsByPlayer = new Map(assistRows.map((r) => [r.id, Number(r.assists)]))
 
@@ -1120,7 +1301,7 @@ export async function loadMatchAbsences(matchId: string): Promise<TeamAbsences[]
       playerId: player.id,
       playerName: player.name,
       date: match.date,
-      leagueCode: match.leagueCode,
+      seasonId: match.seasonId,
     })
     .from(injury)
     .innerJoin(team, eq(team.id, injury.teamId))
@@ -1129,22 +1310,23 @@ export async function loadMatchAbsences(matchId: string): Promise<TeamAbsences[]
     .where(eq(injury.matchId, matchId))
   if (!rows.length) return []
 
-  // Weight of the absentee: goals (real, no own goals) and assists in the SAME league UP TO the
+  // Weight of the absentee: goals (real, no own goals) and assists in the SAME season UP TO the
   // date of the match. Derived from `goal` (not a snapshot) — depends on the goal backfill to be
-  // complete.
-  const { date: before, leagueCode } = rows[0]!
+  // complete. @feature LIG-008
+  const { date: before, seasonId } = rows[0]!
+  if (!seasonId) return [] // match always has a season post-backfill; null → no scoped data
   const pids = [...new Set(rows.map((r) => r.playerId))]
   const goalsUpTo = await db
     .select({ pid: goal.playerId, n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, before), ne(goal.type, "own"), inArray(goal.playerId, pids)))
+    .where(and(eq(match.seasonId, seasonId), lt(match.date, before), ne(goal.type, "own"), inArray(goal.playerId, pids)))
     .groupBy(goal.playerId)
   const assistsUpTo = await db
     .select({ pid: goal.assistId, n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, before), inArray(goal.assistId, pids)))
+    .where(and(eq(match.seasonId, seasonId), lt(match.date, before), inArray(goal.assistId, pids)))
     .groupBy(goal.assistId)
   const goalsOf = new Map(goalsUpTo.map((r) => [r.pid, Number(r.n)]))
   const assistsOf = new Map(assistsUpTo.filter((r) => r.pid).map((r) => [r.pid!, Number(r.n)]))
@@ -1159,7 +1341,7 @@ export async function loadMatchAbsences(matchId: string): Promise<TeamAbsences[]
       .from(match)
       .where(
         and(
-          eq(match.leagueCode, leagueCode),
+          eq(match.seasonId, seasonId),
           lte(match.date, before),
           or(eq(match.homeTeamId, tId), eq(match.awayTeamId, tId)),
         ),
@@ -1225,7 +1407,8 @@ const ABSENCE_LOW_SAMPLE = 6
 export async function loadAbsenceImpact(matchId: string): Promise<MatchAbsenceImpact> {
   const [m] = await db.select().from(match).where(eq(match.id, matchId)).limit(1)
   if (!m) return { home: null, away: null }
-  const { date: cutoff, leagueCode } = m
+  const { date: cutoff, seasonId } = m
+  if (!seasonId) return { home: null, away: null } // match always has a season post-backfill
 
   const inj = await db
     .select({ playerId: injury.playerId, teamId: injury.teamId, type: injury.type, reason: injury.reason, name: player.name })
@@ -1238,7 +1421,7 @@ export async function loadAbsenceImpact(matchId: string): Promise<MatchAbsenceIm
   const playedAll = await db
     .select()
     .from(match)
-    .where(and(eq(match.leagueCode, leagueCode), isNotNull(match.ftHome), lt(match.date, cutoff)))
+    .where(and(eq(match.seasonId, seasonId), isNotNull(match.ftHome), lt(match.date, cutoff)))
   const teamMatches = (id: string) => playedAll.filter((p) => p.homeTeamId === id || p.awayTeamId === id)
   const goalsFor = (p: MatchRow, id: string) => (p.homeTeamId === id ? p.ftHome : p.ftAway) ?? 0
   const avgGf = (rows: MatchRow[], id: string) =>
@@ -1252,7 +1435,7 @@ export async function loadAbsenceImpact(matchId: string): Promise<MatchAbsenceIm
     .select({ teamId: goal.teamId, n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.teamId, teamIds)))
+    .where(and(eq(match.seasonId, seasonId), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.teamId, teamIds)))
     .groupBy(goal.teamId)
   const teamTotalGoals = new Map(teamGoalsRows.map((r) => [r.teamId, Number(r.n)]))
 
@@ -1261,13 +1444,13 @@ export async function loadAbsenceImpact(matchId: string): Promise<MatchAbsenceIm
     .select({ pid: goal.playerId, n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.playerId, pids)))
+    .where(and(eq(match.seasonId, seasonId), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.playerId, pids)))
     .groupBy(goal.playerId)
   const assistsUpTo = await db
     .select({ pid: goal.assistId, n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), inArray(goal.assistId, pids)))
+    .where(and(eq(match.seasonId, seasonId), lt(match.date, cutoff), inArray(goal.assistId, pids)))
     .groupBy(goal.assistId)
   const goalsOf = new Map(goalsUpTo.map((r) => [r.pid, Number(r.n)]))
   const assistsOf = new Map(assistsUpTo.filter((r) => r.pid).map((r) => [r.pid!, Number(r.n)]))
@@ -1443,6 +1626,7 @@ function formResult(m: Match, teamId: string): FormResult {
   return {
     result: goalsFor > goalsAgainst ? "W" : goalsFor < goalsAgainst ? "L" : "D",
     matchId: m.id,
+    slug: m.slug,
     date: m.date,
     opponent: isHome ? m.away : m.home,
     goalsFor,

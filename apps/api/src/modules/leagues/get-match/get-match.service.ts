@@ -2,6 +2,7 @@ import { notFound } from "../../../lib/errors"
 import {
   getLeagueOrThrow,
   getMatchRow,
+  getMatchRowBySlug,
   lastMatchBefore,
   loadMatchCards,
   loadMatchGoals,
@@ -11,6 +12,10 @@ import {
   type Match,
   type TeamRest,
 } from "../shared/shared"
+
+// A uuid looks like 8-4-4-4-12 hex; anything else coming on /matches/:key is treated as a slug. Lets
+// old uuid URLs keep resolving while new links use the pretty slug. @feature LIG-009
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 // Rest of a side: days between this match's date and the team's previous PLAYED match in-league.
 // Both are pure yyyy-MM-dd dates (UTC midnight), so the diff is exact in CALENDAR days — no
@@ -23,16 +28,18 @@ function restFor(matches: Match[], teamId: string, date: string): TeamRest {
   return { lastMatchDate: last.date, restDays: Math.round((Date.parse(date) - Date.parse(last.date)) / 86_400_000) }
 }
 
-// GET /v1/matches/:id — detail of a match: match data + league summary + goals
+// GET /v1/matches/:key — detail of a match: match data + league summary + goals
 // (scorer/assist/own goal/minute) + cards (yellow/red/second yellow) + rest days + official season
-// standing of both teams. 404 (match_not_found).
-export async function getMatch(id: string) {
-  const row = await getMatchRow(id)
+// standing of both teams. `key` is a slug (pretty URL) or a uuid (legacy). 404 (match_not_found).
+export async function getMatch(key: string) {
+  const row = UUID_RE.test(key) ? await getMatchRow(key) : await getMatchRowBySlug(key)
   if (!row) throw notFound("match_not_found")
+  const id = row.m.id
   const league = await getLeagueOrThrow(row.m.leagueCode)
   const goals = await loadMatchGoals(id)
   const cards = await loadMatchCards(id)
-  const matches = await loadMatches(row.m.leagueCode)
+  // Scope rest/standing to THIS match's season (LIG-008) — a match always has a season post-backfill.
+  const matches = await loadMatches(row.m.leagueCode, row.m.seasonId ?? undefined)
   const rest = {
     home: restFor(matches, row.m.homeTeamId, row.m.date),
     away: restFor(matches, row.m.awayTeamId, row.m.date),
@@ -40,8 +47,8 @@ export async function getMatch(id: string) {
   // Official season standing of each side (position/points/W-D-L/goals/zone) for the Fatos snapshot;
   // null when the team has no standing row yet. @feature LIG-006
   const [homeStanding, awayStanding] = await Promise.all([
-    loadTeamStanding(row.m.homeTeamId),
-    loadTeamStanding(row.m.awayTeamId),
+    loadTeamStanding(row.m.homeTeamId, row.m.seasonId),
+    loadTeamStanding(row.m.awayTeamId, row.m.seasonId),
   ])
   return {
     ...serializeMatch(row),

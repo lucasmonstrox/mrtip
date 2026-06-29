@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useTeamQuery } from "../../hooks/data/queries/use-team-query"
 import { formatDate } from "../../utils/format"
 import { FormGuide } from "../match-detail/form-guide"
+import { SeasonSwitcher } from "../season-switcher/season-switcher"
 import { TeamStanding } from "./team-standing"
 import { TeamTrends } from "./team-trends"
 
@@ -42,6 +43,9 @@ export function TeamDetail({ slug }: { slug: string }) {
               </span>
             )}
           </div>
+          <div className="ml-auto">
+            <SeasonSwitcher seasons={team.seasons} />
+          </div>
         </div>
         <FormGuide form={team.form} />
       </header>
@@ -67,7 +71,7 @@ export function TeamDetail({ slug }: { slug: string }) {
               return (
                 <li key={m.id}>
                   <Link
-                    href={`/matches/${m.id}`}
+                    href={`/matches/${m.slug}`}
                     className="grid grid-cols-[1.5rem_5rem_1fr_auto_1fr] items-center gap-3 px-4 py-2 text-sm transition-colors hover:bg-muted/50"
                   >
                     {result ? (

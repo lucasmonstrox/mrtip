@@ -8,6 +8,7 @@ import { useMatchFormQuery } from "../../hooks/data/queries/use-match-form-query
 import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
 import { formatDate } from "../../utils/format"
 import { Absences } from "./absences"
+import { Commentary } from "./commentary"
 import { FormChips } from "./form-guide"
 import { GoalTiming } from "./goal-timing"
 import { Lineup } from "./lineup"
@@ -75,14 +76,17 @@ function StandingSide({ name, standing: s }: { name: string; standing: TeamStand
   )
 }
 
-export function MatchDetail({ id }: { id: string }) {
-  const { data: match, isPending, isError } = useMatchQuery(id)
-  const { data: form } = useMatchFormQuery(id)
+export function MatchDetail({ slug }: { slug: string }) {
+  const { data: match, isPending, isError } = useMatchQuery(slug)
+  // Sub-resources (form/lineup/scorers/goal-timing/…) are keyed by the match UUID, not the slug —
+  // so they wait for the detail to resolve the id from the pretty URL. @feature LIG-009
+  const { data: form } = useMatchFormQuery(match?.id ?? "")
 
   if (isPending) return <p className="text-sm text-muted-foreground">Carregando partida…</p>
   if (isError || !match)
     return <p className="text-sm text-destructive">Não foi possível carregar a partida.</p>
 
+  const id = match.id // uuid for the sub-resource tabs below (slug → id resolved by the detail)
   const score = match.score
   // Venue subtitle: city · capacity (omitting whichever is missing). @feature LIG-004
   const venue = match.venue
@@ -150,12 +154,13 @@ export function MatchDetail({ id }: { id: string }) {
       <Tabs defaultValue="fatos">
         <TabsList>
           <TabsTrigger value="fatos">Fatos</TabsTrigger>
-          <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
-          <TabsTrigger value="eventos">Eventos</TabsTrigger>
           <TabsTrigger value="escalacao">Escalação</TabsTrigger>
           <TabsTrigger value="h2h">H2H</TabsTrigger>
           <TabsTrigger value="gols">Gols (xG)</TabsTrigger>
           <TabsTrigger value="noticias">Notícias</TabsTrigger>
+          <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
+          <TabsTrigger value="eventos">Eventos</TabsTrigger>
+          <TabsTrigger value="narracao">Narração</TabsTrigger>
         </TabsList>
 
         <TabsContent value="prognostico" className="pt-2">
@@ -190,7 +195,7 @@ export function MatchDetail({ id }: { id: string }) {
               difference, position tinted by zone. Hidden when the API hasn't sent standings yet
               (stale pre-LIG-006 payload — `?.` guards the runtime). @feature LIG-006 */}
           {match.standings?.home || match.standings?.away ? (
-            <div className="rounded-lg border p-4">
+            <div className="rounded-lg border bg-card p-4">
               <span className="text-xs uppercase tracking-wide text-muted-foreground">Classificação</span>
               <div className="mt-2 grid grid-cols-2 gap-4">
                 <StandingSide name={match.home.name} standing={match.standings?.home ?? null} />
@@ -202,7 +207,7 @@ export function MatchDetail({ id }: { id: string }) {
           {/* Venue (stadium): name + city + capacity (+ photo). lat/long are NOT shown — they feed
               the travel/fatigue signal, not the UI. @feature LIG-004 */}
           {venue ? (
-            <div className="flex items-center gap-4 rounded-lg border p-4">
+            <div className="flex items-center gap-4 rounded-lg border bg-card p-4">
               {venue.imageUrl ? (
                 <img src={venue.imageUrl} alt="" className="h-16 w-24 shrink-0 rounded object-cover" />
               ) : null}
@@ -220,7 +225,7 @@ export function MatchDetail({ id }: { id: string }) {
 
           {/* Rest days: days since each team's previous match IN THIS LEAGUE. Midweek cup/national-team
               games aren't ingested, so this can overestimate rest — hence the "na liga" caveat. @feature LIG-005 */}
-          <div className="rounded-lg border p-4">
+          <div className="rounded-lg border bg-card p-4">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-wide text-muted-foreground">Descanso</span>
               <span
@@ -241,6 +246,10 @@ export function MatchDetail({ id }: { id: string }) {
 
         <TabsContent value="noticias" className="pt-2">
           <TabEmpty>Sem notícias para esta partida.</TabEmpty>
+        </TabsContent>
+
+        <TabsContent value="narracao" className="pt-2">
+          <Commentary id={id} />
         </TabsContent>
       </Tabs>
     </section>

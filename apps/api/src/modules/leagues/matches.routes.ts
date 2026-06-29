@@ -1,6 +1,7 @@
 import { Elysia, t } from "elysia"
 
 import { getAbsenceImpact } from "./get-absence-impact/get-absence-impact.service"
+import { matchCommentaries } from "./get-commentaries/get-commentaries.service"
 import { formQuery } from "./form/form.schema"
 import { form } from "./form/form.service"
 import { goalTimingQuery } from "./get-goal-timing/get-goal-timing.schema"
@@ -16,12 +17,19 @@ import { matchScorers } from "./get-scorers/get-scorers.service"
 // valid but non-existent uuid passes here and the service resolves it as 404 (row not found).
 const paramId = t.Object({ id: t.String({ format: "uuid", error: "invalid_id" }) })
 
+// Canonical detail key: a slug (pretty URL) or a legacy uuid — so NO uuid format gate here (the
+// service branches by shape and 404s an unknown key). The param must keep the name `id` because the
+// router (memoirist) requires the same param name at the same path position as the sub-routes below.
+// @feature LIG-009
+const paramKey = t.Object({ id: t.String() })
+
 // Match routes (same feature/data as leagues, own URL namespace for the match page).
-// Thin routes: 1 route → 1 service.
+// Thin routes: 1 route → 1 service. Sub-routes still take the uuid (the page resolves it from the
+// detail payload), only the canonical detail route is keyed by slug.
 export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id", ({ params }) => getMatch(params.id), {
-    params: paramId,
-    detail: { summary: "Detail of a match (base of the match page)" },
+    params: paramKey,
+    detail: { summary: "Detail of a match by slug or uuid (base of the match page)" },
   })
   .get("/:id/form", ({ params, query }) => form(params.id, query), {
     params: paramId,
@@ -52,4 +60,8 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/prognosis", ({ params }) => getPrognosis(params.id), {
     params: paramId,
     detail: { summary: "Latest LLM xG prognosis (per-team + overall); null when none yet" },
+  })
+  .get("/:id/commentaries", ({ params }) => matchCommentaries(params.id), {
+    params: paramId,
+    detail: { summary: "Full play-by-play commentary of the match, chronological (empty when none)" },
   })

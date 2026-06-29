@@ -16,6 +16,24 @@ export const league = pgTable("league", {
 
 export type League = typeof league.$inferSelect
 
+// Season of a league (one row per league/season). `sportmonksSeasonId` is the natural key from the
+// source; `name` is the display label ("2024/2025"); `startYear` orders seasons (2024 for 2024/25);
+// `isCurrent` marks the single live season per league (default view). Reads are scoped by season via
+// `match.seasonId`/`standing.seasonId`; the league stays one row per `code` ("PL"). @feature LIG-008
+export const season = pgTable("season", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksSeasonId: integer("sportmonks_season_id").notNull().unique(),
+  leagueCode: text("league_code")
+    .notNull()
+    .references(() => league.code),
+  name: text("name").notNull(),
+  startYear: integer("start_year").notNull(),
+  isCurrent: boolean("is_current").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
+export type Season = typeof season.$inferSelect
+
 // Team/club — own entity with a stable id. `sportmonksTeamId` (SportMonks team id) is the natural
 // dedup key across matches/seasons. `slug` (kebab of the name) is what goes in URLs.
 export const team = pgTable("team", {
@@ -63,6 +81,9 @@ export const match = pgTable("match", {
     .references(() => league.code),
   round: integer("round").notNull(),
   name: text("name").notNull(),
+  // Pretty, collision-free URL key (kebab of league-season-home-vs-away, e.g.
+  // "premier-league-2025-2026-chelsea-vs-everton") — what goes in /matches/:slug. @feature LIG-009
+  slug: text("slug").notNull().unique(),
   date: date("date", { mode: "string" }).notNull(),
   time: text("time"),
   homeTeamId: uuid("home_team_id")
@@ -73,6 +94,9 @@ export const match = pgTable("match", {
     .references(() => team.id),
   // Actual venue of this match (FK → venue.id); nullable until re-synced. @feature LIG-004
   venueId: uuid("venue_id").references(() => venue.id),
+  // Season this match belongs to (FK → season.id); nullable until backfilled. Reads scope by it so
+  // multiple seasons of the same league don't mix. @feature LIG-008
+  seasonId: uuid("season_id").references(() => season.id),
   ftHome: integer("ft_home"),
   ftAway: integer("ft_away"),
   htHome: integer("ht_home"),
@@ -97,6 +121,9 @@ export const standing = pgTable(
     teamId: uuid("team_id")
       .notNull()
       .references(() => team.id),
+    // Season of this standing row (FK → season.id); nullable until backfilled. The dedup key becomes
+    // (seasonId, teamId) so the same team has one row per season. @feature LIG-008
+    seasonId: uuid("season_id").references(() => season.id),
     position: integer("position").notNull(),
     points: integer("points").notNull(),
     played: integer("played").notNull(),
@@ -125,7 +152,8 @@ export const standing = pgTable(
     // "champions" | "europa" | "conference" | "relegation" | null (mid-table).
     zone: text("zone"),
   },
-  (t) => [unique().on(t.leagueCode, t.teamId)],
+  // Dedup by (seasonId, teamId): one standing per team per season. @feature LIG-008
+  (t) => [unique().on(t.seasonId, t.teamId)],
 )
 
 export type Standing = typeof standing.$inferSelect
@@ -284,6 +312,31 @@ export const card = pgTable("card", {
 
 export type Card = typeof card.$inferSelect
 
+// Play-by-play commentary of a match (SportMonks `GET /commentaries/fixtures/:id`): the textual
+// narration of every action — corners, fouls, shots, goals, cards. We store the FULL feed (~96
+// lines/match on the PL); `isGoal`/`isImportant` flag the highlights for display/consumption.
+// `playerId`/`relatedPlayerId` link the line to the player(s) involved (nullable — framing lines like
+// "First Half starts" have none). `sortOrder` is SportMonks' `order` (a large, increasing int — the
+// canonical chronological key, NOT 1,2,3). Dedup by `sportmonksCommentaryId` so re-sync is idempotent.
+// @feature LIG-010
+export const commentary = pgTable("commentary", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksCommentaryId: integer("sportmonks_commentary_id").notNull().unique(),
+  matchId: uuid("match_id")
+    .notNull()
+    .references(() => match.id, { onDelete: "cascade" }),
+  playerId: uuid("player_id").references(() => player.id),
+  relatedPlayerId: uuid("related_player_id").references(() => player.id),
+  comment: text("comment").notNull(),
+  minute: integer("minute"),
+  extraMinute: integer("extra_minute"),
+  isGoal: boolean("is_goal").notNull().default(false),
+  isImportant: boolean("is_important").notNull().default(false),
+  sortOrder: integer("sort_order").notNull(),
+})
+
+export type Commentary = typeof commentary.$inferSelect
+
 // Prognóstico de expected goals de uma partida gerado por um LLM (deepseek-v4-pro, reasoning xhigh).
 // Uma linha por RUN (matchId+model+runAt único) — guarda métricas E textos E auditoria do raciocínio,
 // pra alimentar a aba "Prognóstico" na UI e auditar depois. xG/probabilidades em `real`; os objetos
@@ -328,6 +381,14 @@ export const matchPrognosis = pgTable(
     confianca: text("confianca").notNull(), // "baixa" | "media" | "alta"
     resumoGeral: text("resumo_geral").notNull(), // parágrafo do jogo + maior incerteza
     drivers: jsonb("drivers").$type<string[]>().notNull(), // 3 fatores
+
+    // --- BEST BET (leitura de apostador: a decisão + análise). Nullable: runs antigas não têm. ---
+    bestBetMarket: text("best_bet_market"), // "1x2" | "over_under" | "btts" | "none"
+    bestBetSelection: text("best_bet_selection"), // "home"|"draw"|"away"|"over"|"under"|"yes"|"no"|"none"
+    bestBetLine: real("best_bet_line"), // 2.5 etc. pra over_under; null nos outros
+    bestBetConfidence: text("best_bet_confidence"), // "low" | "medium" | "high"
+    bestBetProbability: real("best_bet_probability"), // 0-1
+    bestBetAnalysis: text("best_bet_analysis"), // análise completa (PT — texto visível de UI)
 
     // --- Auditoria ---
     reasoning: text("reasoning"), // cadeia de raciocínio (reasoning_content) em PT

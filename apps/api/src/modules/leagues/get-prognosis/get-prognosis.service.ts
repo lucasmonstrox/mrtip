@@ -29,10 +29,10 @@ export async function getPrognosis(id: string) {
     model: p.model,
     reasoningEffort: p.reasoningEffort,
     runAt: p.runAt,
-    confianca: p.confianca,
-    home: { xg: r2(p.xgHome), xg1t: r2(p.xgHome1t), xg2t: r2(p.xgHome2t), bands: p.xgHomeBands, resumo: p.resumoHome },
-    away: { xg: r2(p.xgAway), xg1t: r2(p.xgAway1t), xg2t: r2(p.xgAway2t), bands: p.xgAwayBands, resumo: p.resumoAway },
-    geral: {
+    confidence: p.confianca, // coluna física `confianca` → campo `confidence` (valor já é low/medium/high)
+    home: { xg: r2(p.xgHome), xg1t: r2(p.xgHome1t), xg2t: r2(p.xgHome2t), bands: p.xgHomeBands, summary: p.resumoHome },
+    away: { xg: r2(p.xgAway), xg1t: r2(p.xgAway1t), xg2t: r2(p.xgAway2t), bands: p.xgAwayBands, summary: p.resumoAway },
+    general: {
       total: r2(p.total),
       total1t: r2(p.total1t),
       total2t: r2(p.total2t),
@@ -41,8 +41,19 @@ export async function getPrognosis(id: string) {
       oneXTwo: p.oneXTwo,
       oneXTwo1t: p.oneXTwo1t,
       oneXTwo2t: p.oneXTwo2t,
-      resumo: p.resumoGeral,
+      summary: p.resumoGeral,
     },
+    // Aposta recomendada (estruturada). null quando a run é antiga (pré-best_bet) ou o modelo passou.
+    bestBet: p.bestBetMarket
+      ? {
+          market: p.bestBetMarket,
+          selection: p.bestBetSelection,
+          line: p.bestBetLine,
+          confidence: p.bestBetConfidence,
+          probability: p.bestBetProbability,
+          analysis: p.bestBetAnalysis,
+        }
+      : null,
     drivers: p.drivers,
     tokens: { reasoning: p.reasoningTokens, total: p.totalTokens },
     latencyMs: p.latencyMs,

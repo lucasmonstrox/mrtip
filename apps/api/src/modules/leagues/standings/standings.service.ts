@@ -1,17 +1,18 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 import { db } from "../../../db/client"
 import { standing } from "../../../db/schema"
-import { computeStandings, getLeagueOrThrow, loadMatches } from "../shared/shared"
+import { computeStandings, getLeagueOrThrow, loadMatches, resolveSeason } from "../shared/shared"
 import type { StandingsQuery } from "./standings.schema"
 
-// GET /v1/leagues/:code/standings — computed table; ?upTo=N considers only up to round N
-// (useful for "standings at the time of the match"). 404 when the league doesn't exist.
-// The qualification/relegation zone comes from the OFFICIAL SportMonks table (the `standing` table)
-// and is merged onto the full table only — a ?upTo snapshot has no zone.
+// GET /v1/leagues/:code/standings — computed table for ONE season (?season=<sportmonksSeasonId>,
+// default current); ?upTo=N considers only up to round N (useful for "standings at the time of the
+// match"). 404 when the league/season doesn't exist. The qualification/relegation zone comes from
+// the OFFICIAL SportMonks table (`standing`), scoped to the same season, merged onto the full table.
 export async function standings(code: string, query: StandingsQuery) {
   await getLeagueOrThrow(code)
-  const matches = await loadMatches(code)
+  const seasonId = await resolveSeason(code, query.season)
+  const matches = await loadMatches(code, seasonId)
 
   if (query.upTo != null) {
     return computeStandings(matches.filter((m) => m.round <= query.upTo!))
@@ -21,7 +22,7 @@ export async function standings(code: string, query: StandingsQuery) {
   const rows = await db
     .select({ teamId: standing.teamId, zone: standing.zone })
     .from(standing)
-    .where(eq(standing.leagueCode, code))
+    .where(and(eq(standing.leagueCode, code), eq(standing.seasonId, seasonId)))
   const zoneByTeam = new Map(rows.map((r) => [r.teamId, r.zone]))
   return table.map((r) => ({ ...r, zone: zoneByTeam.get(r.team.id) ?? null }))
 }
