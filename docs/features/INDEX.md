@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-32 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+33 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -13,6 +13,7 @@
 | COMP-001 | Conformidade e jogo responsável (Lei 14.790 / Portaria SPA 1.231) | conformidade | investigado | P1 | ui:investigado api:investigado ia:investigado | nao | — |
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
 | CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | ui:feito | sim | — |
+| CORE-003 | Autenticação com Clerk (web) | core | investigado | P1 | ui:investigado api:ideia dados:ideia | nao | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
@@ -47,6 +48,9 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 ### settings
 
+- `clerk_jwt_key` → CORE-003
+- `clerk_publishable_key` → CORE-003
+- `clerk_secret_key` → CORE-003
 - `jogo_responsavel` → COMP-001
 - `limites_prudenciais` → COMP-001
 
@@ -94,13 +98,16 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 ### rotas
 
+- `/conta` → CORE-003
 - `/players/:id` → LIG-001
 - `/teams/:slug` → LIG-002
+- `middleware.ts` → CORE-003
 
 ## Índice doc → features
 
 - [docs/arquitetura/taxonomia-sinais.md](../../docs/arquitetura/taxonomia-sinais.md) → AGT-001, DOS-001, SIN-005, SIN-007
 - [docs/investigacoes/agente-selecao-melhor-mercado.md](../../docs/investigacoes/agente-selecao-melhor-mercado.md) → AGT-001, MOD-001
+- [docs/investigacoes/autenticacao-clerk.md](../../docs/investigacoes/autenticacao-clerk.md) → CORE-003
 - [docs/investigacoes/derby-por-formato-de-competicao.md](../../docs/investigacoes/derby-por-formato-de-competicao.md) → SIN-007
 - [docs/investigacoes/desfalques-sportmonks-estudo.md](../../docs/investigacoes/desfalques-sportmonks-estudo.md) → SIN-011
 - [docs/investigacoes/dossie-por-partida-fontes-de-dados.md](../../docs/investigacoes/dossie-por-partida-fontes-de-dados.md) → DOS-001
