@@ -3,9 +3,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { cn } from "@workspace/ui/lib/utils"
 
+import type { TeamRest } from "../../types"
 import { useMatchPrognosisQuery } from "../../hooks/data/queries/use-match-prognosis-query"
 
 type TeamRef = { name: string; logoUrl: string | null }
+// Days each side rested before this match, as the prognosis prompt itself sees them (fatigue factor).
+type MatchRest = { home: TeamRest; away: TeamRest }
 // Inferred payload of the prognosis endpoint (null = none generated yet).
 type Prognosis = NonNullable<ReturnType<typeof useMatchPrognosisQuery>["data"]>
 type TeamBlock = Prognosis["home"]
@@ -67,7 +70,7 @@ function Kpi({ value, label }: { value: string; label: string }) {
 function TeamCard({ team, block }: { team: TeamRef; block: TeamBlock }) {
   const peak = Math.max(0.01, ...BANDS.map((b) => block.bands[b] ?? 0))
   return (
-    <div className="flex flex-col gap-3 rounded-lg border p-4">
+    <div className="flex flex-col gap-3 rounded-lg border bg-card p-4">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           {team.logoUrl ? <img src={team.logoUrl} alt="" className="size-6 shrink-0 object-contain" /> : null}
@@ -105,9 +108,90 @@ function TeamCard({ team, block }: { team: TeamRef; block: TeamBlock }) {
   )
 }
 
+// One side's rest as a tile: club logo + the days-since-last-match number (big), or "estreia" when
+// the team has no earlier in-league match. @feature LIG-005
+function RestTile({ team, rest }: { team: TeamRef; rest: TeamRest }) {
+  return (
+    <div className="flex flex-col items-center gap-1.5 rounded-lg border bg-card px-2 py-4 text-center">
+      <div className="flex items-center gap-2">
+        {team.logoUrl ? <img src={team.logoUrl} alt="" className="size-5 shrink-0 object-contain" /> : null}
+        <span className="truncate text-sm font-medium">{team.name}</span>
+      </div>
+      {rest ? (
+        <span className="text-3xl font-bold tabular-nums text-primary">
+          {rest.restDays}{" "}
+          <span className="text-sm font-normal text-muted-foreground">{rest.restDays === 1 ? "dia" : "dias"}</span>
+        </span>
+      ) : (
+        <span className="py-1.5 text-sm text-muted-foreground">estreia</span>
+      )}
+    </div>
+  )
+}
+
+// Explicit rest/fatigue panel for the prognosis tab: each side's days since its last in-league match
+// plus the ASYMMETRY (the gap is what moves a bet — a side coming off 3 days vs 7). This is the same
+// fatigue factor the prognosis prompt is fed, surfaced so the read is auditable. @feature LIG-005
+function RestPanel({ home, away, rest }: { home: TeamRef; away: TeamRef; rest: MatchRest }) {
+  const gap = rest.home && rest.away ? Math.abs(rest.home.restDays - rest.away.restDays) : null
+  const fresher =
+    rest.home && rest.away && rest.home.restDays !== rest.away.restDays
+      ? rest.home.restDays > rest.away.restDays
+        ? home.name
+        : away.name
+      : null
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between gap-2 text-base">
+          Descanso
+          <span
+            className="cursor-help rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground underline decoration-dotted"
+            title="Dias desde o último jogo de cada time nesta liga. Jogos de meio de semana fora da liga (copa, seleção) não entram, então o descanso pode estar superestimado."
+          >
+            na liga
+          </span>
+        </CardTitle>
+        <CardDescription className="text-xs">
+          Dias desde o último jogo — o fator de fadiga que o modelo já considerou
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <div className="grid grid-cols-2 gap-3">
+          <RestTile team={home} rest={rest.home} />
+          <RestTile team={away} rest={rest.away} />
+        </div>
+        {gap != null ? (
+          gap === 0 ? (
+            <p className="text-sm text-muted-foreground">Descanso parelho — sem vantagem de calendário.</p>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">{fresher}</span> chega com{" "}
+              <span className="font-medium text-foreground">
+                {gap} {gap === 1 ? "dia" : "dias"}
+              </span>{" "}
+              a mais de descanso.
+            </p>
+          )
+        ) : null}
+      </CardContent>
+    </Card>
+  )
+}
+
 // "Prognóstico" tab: a per-team + overall expected-goals read produced by the LLM, served from
 // match_prognosis. Empty state when no run exists for the match yet.
-export function Prognosis({ id, home, away }: { id: string; home: TeamRef; away: TeamRef }) {
+export function Prognosis({
+  id,
+  home,
+  away,
+  rest,
+}: {
+  id: string
+  home: TeamRef
+  away: TeamRef
+  rest?: MatchRest
+}) {
   const { data, isPending, isError } = useMatchPrognosisQuery(id)
 
   if (isPending) return <p className="text-sm text-muted-foreground">Carregando prognóstico…</p>
@@ -161,6 +245,9 @@ export function Prognosis({ id, home, away }: { id: string; home: TeamRef; away:
           ) : null}
         </CardContent>
       </Card>
+
+      {/* Descanso (fadiga): mesmo sinal que entra no prompt, agora explícito na aba. @feature LIG-005 */}
+      {rest ? <RestPanel home={home} away={away} rest={rest} /> : null}
 
       {/* Por time */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

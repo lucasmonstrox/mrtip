@@ -6,7 +6,7 @@ status: verificado # ideia | investigado | planejado | em-andamento | feito | ve
 prioridade: P2 # P1 | P2 | P3
 facetas: # zero-schema: derivado de match.date + último jogo antes desta data
   api: verificado # helper lastMatchBefore + campo rest no getMatch (curl + cross-check manual)
-  ui: verificado # linha de descanso na aba Fatos do match-detail (E2E Chrome 2 casos, console limpo)
+  ui: verificado # descanso em DUAS superfícies do match-detail: aba Fatos (E2E Chrome 2 casos, console limpo) + aba Prognóstico (card dedicado c/ assimetria; typecheck ok, prova visual pendente)
 testada: sim
 testes:
   - "P1 api curl /v1/matches/:id → rest.home/.away {lastMatchDate, restDays}; round 12 (Brighton×Brentford 2025-11-22) = 13d/13d batendo com cross-check manual; round 1 (estreia) = null/null (2026-06-29)"
@@ -14,6 +14,7 @@ testes:
   - "P2 E2E Chrome — aba Fatos: round 12 'DESCANSO · na liga · Brighton 13 dias · Brentford 13 dias'; estreia 'Liverpool/Bournemouth estreia'; console limpo nos 2 (2026-06-29)"
   - "typecheck 3/3 + lint match-detail 0 erros (só warnings <img> pré-existentes) (2026-06-29)"
   - "revisor (contexto fresco) A1–A6 PASS; 1 hardening aplicado (optional-chaining em match.rest contra payload stale) (2026-06-29)"
+  - "ui Prognóstico — card 'Descanso (na liga)' dedicado na aba Prognóstico (tiles grandes + frase de assimetria 'X chega com N dias a mais'); reusa match.rest, sem rede nova; bun typecheck (apps/web) exit 0; PROVA VISUAL CHROME PENDENTE (chrome-devtools bloqueado c/ Chrome do João aberto) (2026-06-29)"
 depende_de: []
 impacta: [SIN-008] # o sinal de calendário/fadiga consome o mesmo cálculo de descanso
 ancoras:
@@ -48,6 +49,7 @@ então jogo de meio de semana (copa/seleção) é invisível e o descanso pode e
 
 - [x] P1 api — helper `lastMatchBefore` + tipo `TeamRest` no `shared.ts`; `getMatch` anexa `rest: { home, away }`
 - [x] P2 ui — linha de descanso na aba **Fatos** do `match-detail`, com ressalva "na liga"; `null` → "estreia"/"—"
+- [x] P2 ui — card **"Descanso"** dedicado na aba **Prognóstico** (`prognosis.tsx`): tiles grandes por time + frase de assimetria (quem chega com mais descanso e por quantos dias); reusa `match.rest`. *Prova visual Chrome pendente.*
 
 ## Plano
 
@@ -107,3 +109,17 @@ Provado por superfície (2026-06-29, commit base `dc71e0e`):
   aditivo, render/copy, zero-schema, comparação lexicográfica de data). 2 achados LOW: (1) `match.rest` sem
   guard contra payload stale → **hardening aplicado** (`match.rest?.home ?? null`); (2) `loadMatches` full-scan
   → já documentado como podável no dossiê §C5 (consistente com form/standings, reusado pela W-021).
+
+### Extensão de UI — descanso na aba Prognóstico (2026-06-29)
+
+Pedido do dono: o descanso (que já alimenta o prompt do prognóstico como fator de fadiga —
+`apps/api/scripts/prognosis-prompt.ts:405`, `restDays`) ficou **invisível na UI da aba Prognóstico**.
+Promovido a **card dedicado** entre o "Prognóstico geral" e os cards por time, em
+`apps/web/features/leagues/components/match-detail/prognosis.tsx` (`RestPanel` + `RestTile`): dois tiles
+com logo + número grande (`{N} dias` / "estreia") e uma **frase de assimetria** (`{Time} chega com N dias
+a mais de descanso` | "Descanso parelho"). Mesma ressalva "na liga" (tooltip). **Zero rede nova:**
+reusa `match.rest` já no payload (`getMatch`), passado via prop `rest` de `match-detail.tsx`. No mesmo
+commit: card por time ganhou `bg-card` (estava transparente → cinza herdado do fundo). **Prova:**
+`bun run typecheck` (apps/web) exit 0. **Prova visual Chrome PENDENTE** — chrome-devtools MCP não atacha
+com o Chrome do João aberto; rodar quando liberar (golden path: aba Prognóstico de partida com prognóstico
+gerado → card de descanso + assimetria + cards brancos + console limpo).

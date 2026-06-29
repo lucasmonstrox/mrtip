@@ -183,6 +183,8 @@ export type LineupPlayer = {
   grid: string | null
   rating: number | null
   minutesPlayed: number | null
+  keyPasses: number | null
+  shotsOnTarget: number | null
   manOfMatch: boolean
 }
 
@@ -770,6 +772,8 @@ export async function loadMatchLineups(matchId: string): Promise<TeamLineup[]> {
       grid: lineupPlayer.grid,
       rating: lineupPlayer.rating,
       minutesPlayed: lineupPlayer.minutesPlayed,
+      keyPasses: lineupPlayer.keyPasses,
+      shotsOnTarget: lineupPlayer.shotsOnTarget,
       manOfMatch: lineupPlayer.manOfMatch,
       playerId: player.id,
       playerName: player.name,
@@ -793,6 +797,8 @@ export async function loadMatchLineups(matchId: string): Promise<TeamLineup[]> {
         grid: p.grid,
         rating: p.rating,
         minutesPlayed: p.minutesPlayed,
+        keyPasses: p.keyPasses,
+        shotsOnTarget: p.shotsOnTarget,
         manOfMatch: p.manOfMatch,
       }))
     return {

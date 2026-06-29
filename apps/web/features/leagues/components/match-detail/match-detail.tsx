@@ -159,7 +159,7 @@ export function MatchDetail({ id }: { id: string }) {
         </TabsList>
 
         <TabsContent value="prognostico" className="pt-2">
-          <Prognosis id={id} home={match.home} away={match.away} />
+          <Prognosis id={id} home={match.home} away={match.away} rest={match.rest} />
         </TabsContent>
 
         <TabsContent value="eventos" className="pt-2">
