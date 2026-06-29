@@ -848,6 +848,7 @@ export async function loadGoalTiming(
   home: TeamRef,
   away: TeamRef,
   leagueCode: string,
+  side: "all" | "home" | "away" = "all",
 ): Promise<MatchGoalTiming> {
   const ids = [home.id, away.id]
 
@@ -879,6 +880,14 @@ export async function loadGoalTiming(
     )
 
   const build = (team: TeamRef): TeamGoalTiming => {
+    // Venue cut: "home"/"away" keep only the matches where THIS team played at home / away (the cut is
+    // applied to each side independently); "all" keeps the full season.
+    const inCut = (homeId: string, awayId: string) =>
+      side === "home"
+        ? homeId === team.id
+        : side === "away"
+          ? awayId === team.id
+          : homeId === team.id || awayId === team.id
     const scored = [0, 0, 0, 0, 0, 0]
     const conceded = [0, 0, 0, 0, 0, 0]
     let totalScored = 0
@@ -886,7 +895,7 @@ export async function loadGoalTiming(
     let scoredWithMinute = 0
     let concededWithMinute = 0
     for (const r of goalRows) {
-      if (r.homeId !== team.id && r.awayId !== team.id) continue // not this team's match
+      if (!inCut(r.homeId, r.awayId)) continue // not this team's match (within the venue cut)
       const mine = r.scoringTeamId === team.id
       if (mine) totalScored++
       else totalConceded++
@@ -900,7 +909,7 @@ export async function loadGoalTiming(
         conceded[idx] = (conceded[idx] ?? 0) + 1
       }
     }
-    const matches = playedRows.filter((m) => m.homeId === team.id || m.awayId === team.id).length
+    const matches = playedRows.filter((m) => inCut(m.homeId, m.awayId)).length
     const buckets = TIMING_BUCKETS.map((label, i) => ({
       label,
       scored: scored[i] ?? 0,

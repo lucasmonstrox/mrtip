@@ -1,7 +1,50 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
+"use client"
+
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card"
+import { cn } from "@workspace/ui/lib/utils"
+import { useState } from "react"
 
 import { useMatchGoalTimingQuery } from "../../hooks/data/queries/use-match-goal-timing-query"
 import type { TeamGoalTiming } from "../../types"
+
+// Venue cut for the timing profile, applied to BOTH teams equally: "all" = full season,
+// "home"/"away" = only each team's home / away matches.
+const SPLITS = [
+  { key: "all", label: "Todos" },
+  { key: "home", label: "Casa" },
+  { key: "away", label: "Fora" },
+] as const
+type Side = (typeof SPLITS)[number]["key"]
+
+// Top-right segmented toggle that picks the venue cut (Todos / Casa / Fora).
+function SideToggle({ side, onChange }: { side: Side; onChange: (s: Side) => void }) {
+  return (
+    <div className="flex gap-1">
+      {SPLITS.map((o) => (
+        <button
+          key={o.key}
+          type="button"
+          onClick={() => onChange(o.key)}
+          className={cn(
+            "rounded px-2 py-1 text-xs transition-colors",
+            side === o.key
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-muted",
+          )}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 // One metric's bar within a band: a proportional bar + fixed-width count and % columns, so the counts
 // and percentages line up across every row no matter how many digits each one has.
@@ -60,32 +103,37 @@ function TimingSide({ t }: { t: TeamGoalTiming }) {
 // "Gols (xG)" tab widget (W-024 + offensive mirror): WHEN each side scores and gets breached, in
 // 15-min bands over the season — a timing profile that feeds the over/under-by-half read.
 export function GoalTiming({ id }: { id: string }) {
-  const { data, isPending } = useMatchGoalTimingQuery(id)
+  const [side, setSide] = useState<Side>("all")
+  const { data, isPending } = useMatchGoalTimingQuery(id, side)
   if (isPending) return <p className="text-sm text-muted-foreground">Carregando perfil de gols…</p>
   if (!data) return null
   const empty =
     data.home.totalScored + data.home.totalConceded === 0 &&
     data.away.totalScored + data.away.totalConceded === 0
-  if (empty) {
-    return (
-      <div className="rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">
-        Sem gols registrados para montar o perfil de timing.
-      </div>
-    )
-  }
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-base">Gols por faixa de 15&apos;</CardTitle>
-        <p className="text-xs text-muted-foreground">
+        <CardDescription className="text-xs">
           Quando cada time <span className="text-emerald-600">marca</span> e{" "}
           <span className="text-rose-600">sofre</span> ao longo da temporada — perfil de timing pro
           over/under por tempo.
-        </p>
+        </CardDescription>
+        <CardAction>
+          <SideToggle side={side} onChange={setSide} />
+        </CardAction>
       </CardHeader>
       <CardContent className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-        <TimingSide t={data.home} />
-        <TimingSide t={data.away} />
+        {empty ? (
+          <p className="py-8 text-center text-sm text-muted-foreground sm:col-span-2">
+            Sem gols registrados para este recorte.
+          </p>
+        ) : (
+          <>
+            <TimingSide t={data.home} />
+            <TimingSide t={data.away} />
+          </>
+        )}
       </CardContent>
     </Card>
   )
