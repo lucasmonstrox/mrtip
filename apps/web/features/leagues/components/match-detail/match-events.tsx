@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import type { CardItem, GoalItem } from "../../types"
+import { PlayerHoverCard } from "../player-hover-card/player-hover-card"
 
 type MatchEvent = ({ kind: "goal" } & GoalItem) | ({ kind: "card" } & CardItem)
 
@@ -21,14 +22,18 @@ function EventContent({ e }: { e: MatchEvent }) {
       <span className="inline-flex flex-wrap items-baseline gap-x-1">
         {minute}
         <span>⚽</span>
-        <Link href={`/players/${e.scorer.id}`} className="font-medium hover:underline">
-          {e.scorer.name}
-          {extra}
-        </Link>
-        {e.assist ? (
-          <Link href={`/players/${e.assist.id}`} className="text-xs text-muted-foreground hover:underline">
-            ({e.assist.name})
+        <PlayerHoverCard id={e.scorer.id}>
+          <Link href={`/players/${e.scorer.id}`} className="font-medium hover:underline">
+            {e.scorer.name}
+            {extra}
           </Link>
+        </PlayerHoverCard>
+        {e.assist ? (
+          <PlayerHoverCard id={e.assist.id}>
+            <Link href={`/players/${e.assist.id}`} className="text-xs text-muted-foreground hover:underline">
+              ({e.assist.name})
+            </Link>
+          </PlayerHoverCard>
         ) : null}
       </span>
     )
@@ -38,9 +43,11 @@ function EventContent({ e }: { e: MatchEvent }) {
     <span className="inline-flex flex-wrap items-baseline gap-x-1">
       {minute}
       <span>{cardIcon(e.type)}</span>
-      <Link href={`/players/${e.player.id}`} className="font-medium hover:underline">
-        {e.player.name}
-      </Link>
+      <PlayerHoverCard id={e.player.id}>
+        <Link href={`/players/${e.player.id}`} className="font-medium hover:underline">
+          {e.player.name}
+        </Link>
+      </PlayerHoverCard>
     </span>
   )
 }
@@ -62,7 +69,7 @@ export function MatchEvents({
 
   if (!events.length) return null
   return (
-    <ul className="flex flex-col gap-1.5 border-t pt-4 text-sm">
+    <ul className="flex flex-col gap-1.5 text-sm">
       {events.map((e, i) => {
         const isHome = e.team.id === homeTeamId
         return (

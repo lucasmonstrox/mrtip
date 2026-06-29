@@ -2,6 +2,7 @@ import { Elysia, t } from "elysia"
 
 import { formQuery } from "./form/form.schema"
 import { form } from "./form/form.service"
+import { matchGoalTiming } from "./get-goal-timing/get-goal-timing.service"
 import { matchInjuries } from "./get-injuries/get-injuries.service"
 import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
@@ -30,4 +31,8 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/injuries", ({ params }) => matchInjuries(params.id), {
     params: paramId,
     detail: { summary: "Absences (injuries/suspensions) of both teams" },
+  })
+  .get("/:id/goal-timing", ({ params }) => matchGoalTiming(params.id), {
+    params: paramId,
+    detail: { summary: "Conceded-goal timing (15-min bands) of both teams over the season" },
   })

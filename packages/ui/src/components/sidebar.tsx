@@ -608,6 +608,10 @@ function SidebarMenuSkeleton({
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"
+        // Largura é aleatória por design (Math.random no mount) → o valor do SSR
+        // nunca bate com o do cliente. Como a diferença é puramente estética,
+        // suprimimos o aviso de hydration só neste nó.
+        suppressHydrationWarning
         style={
           {
             "--skeleton-width": width,

@@ -18,17 +18,6 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 ## 🔥 Quero muito
 
-### W-001 · Tooltip de jogador no hover (stats da season) · 🔥 · esforço M · `ui` `dados`
-<adicionada: 2026-06-28 · status: ideia>
-
-**O quê:** ao passar o mouse sobre o nome de um jogador (escalação, dossiê, lista), abrir uma tooltip com um resumo da season dele: gols, assists e um mini-gráfico de performance (sparkline) baseado nas notas por partida.
-
-**Por quê:** dá contexto na hora sem tirar o usuário da tela — quem lê o dossiê entende rápido "esse cara tá em forma?" pelas notas recentes. Polimento de UX que conversa com a tese de transparência (o número aparece junto do nome, auditável).
-
-**Depende de / esbarra em:** gols/assists por jogador **já existem** (derivados da tabela `goal`, `getPlayerDetail` em `apps/api/src/modules/leagues/shared/shared.ts:264`, já no front via `use-player-query.ts`). **CORREÇÃO (2026-06-28, `/rs` LIG-001):** a série de notas por partida **JÁ ESTÁ INGERIDA** — `lineup_player.rating` (type 118) em `apps/api/src/db/schemas/leagues.ts:171`. A premissa antiga ("rating não ingerido") está **refutada**; o sparkline é UI/agregação pura, sem migração.
-
-**Notas:** decidir o componente de tooltip (Radix/shadcn já no `@workspace/ui`) e a lib do sparkline (SVG manual + `d3-scale` é o recomendado pra sparkline pequena — ver `docs/investigacoes/pagina-do-jogador.md`). **Coberta pela investigação LIG-001** (a tooltip é uma destilação da seção "forma recente" da página do jogador). Tanto (1) gols/assists quanto (2) sparkline de notas são entregáveis HOJE — o dado já está no banco.
-
 ### W-002 · Histórico de clubes por season na página do jogador · 🔥 · esforço M · `dados` `ui`
 <adicionada: 2026-06-28 · status: ideia>
 
@@ -212,6 +201,39 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **a fatia derivável e barata do `SIN-008`** — display hoje, o sinal modelado vem depois e reaproveita o mesmo cálculo. **Gotcha honesto pro `/pl`:** só temos a **PL 25/26** ingerida — jogo de **copa/seleção no meio de semana não aparece**, então o "descanso" calculado pode estar **superestimado** (o time pode ter jogado um jogo que não enxergamos). É exatamente o caso que mais distorce a leitura de fadiga; mostrar com ressalva ou só dentro da liga. Casa com a memória do João sobre [[teoria-ressaca-meio-de-semana]] (jogo importante no meio de semana → under). **Assumi ✨** — me fala se é 🔥.
 
+### W-021 · Quem marcou no jogo anterior de cada time na página da partida · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-29 · status: ideia>
+
+**O quê:** na página da partida, mostrar os marcadores do **último jogo de cada equipe** antes desta — quem fez os gols (e em que minuto) na partida anterior de mandante e visitante. Lê como "o City vem de 3x0, gols de Haaland (2) e Foden" ao lado de "o rival vem de 0x2" — contexto de quem está fazendo gol chegando neste jogo.
+
+**Por quê:** quem balançou a rede no último jogo é leitura imediata de **forma ofensiva e momento** — complementa a `form-guide` (que hoje dá só V/E/D) com o *autor* do gol, insumo direto pra props de marcador e pra over/under (ataque engrenado x seco). Conversa com a tese (o número/nome aparece auditável no lugar onde se decide a aposta).
+
+**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** É o mesmo "último match do time antes de X" que a [[W-019]] (dias de descanso) precisa calcular, agora puxando também os `goal` daquela partida (`goal.playerId`, `goal.minute`, `goal.teamId`, excluindo gol contra com `type != "own"`) — join `goal⋈match` que o `scorers.service.ts` já faz. API: `apps/api/src/modules/leagues/get-match/get-match.service.ts`. UI: novo bloco no domínio `match-detail` (`apps/web/features/leagues/components/match-detail/`, irmão de `form-guide.tsx`/`match-events.tsx`).
+
+**Notas:** **par de cálculo com a W-019** — "último jogo do time antes desta data" é a mesma busca; vale o `/pl` planejar junto (uma query, dois consumos: dias de descanso + marcadores). **Ambiguidade de escopo (resolver no `/rs`/`/pl`):** "jogo anterior" = (a) o último jogo de **cada time** (forma/momento, assumido aqui) ou (b) o **último confronto direto** entre os dois (H2H) — são UIs diferentes; assumi (a) pela sinergia com a W-019, mas (b) é leitura válida e pode coexistir. **Mesmo gotcha da W-019:** só temos a **PL 25/26** ingerida — jogo de copa/seleção no meio de semana some, então "jogo anterior" pode pular um jogo que não enxergamos; mostrar com ressalva ou só dentro da liga. **Assumi ✨** pelo seu "seria legal".
+
+### W-022 · Card de artilheiros das equipes na página da partida · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-29 · status: ideia>
+
+**O quê:** na página da partida, um **card de marcadores** com os principais goleadores de cada equipe na season — gols (e assists) por jogador dos dois elencos, lado a lado, como uma prévia de "quem pode marcar neste jogo". Estatística de gols dos jogadores trazida pro contexto da partida específica, não só na aba de marcadores da liga.
+
+**Por quê:** antes do jogo, o apostador quer saber **quem são as ameaças de gol** de cada lado sem sair pra tabela da liga — é o insumo de props de marcador (anytime/first scorer) e leitura de over/under (ataque concentrado num cara x distribuído). Paridade com qualquer preview sério de jogo (top scorers das duas equipes é seção padrão).
+
+**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** É a mesma agregação `goal⋈match` do `scorers.service.ts` (gols excluindo `type = "own"`, assists via `goal.assistId`), só que **escopada aos dois times da partida** — exatamente o recorte por-time que a [[W-015]] (participação ofensiva na página do time) já desenha (`loadTeamScorers(teamId)`). API: `get-match.service.ts` reusa esse loader pros dois `teamId`. UI: novo card no `match-detail/` (`apps/web/features/leagues/components/match-detail/`).
+
+**Notas:** **forte sinergia — reusa o `loadTeamScorers(teamId)` da W-015**; promover pensando num único agregador "marcadores por time" consumido em 3 superfícies (liga = W-009, página do time = W-015, página da partida = W-022). **Par com a W-021 na mesma página:** W-021 é *retrospectiva* (quem marcou no último jogo), W-022 é *prospectiva* (quem mais marca na season) — juntas dão o contexto de gol completo do `match-detail`; vale promover as duas como uma feature só ("contexto de gol na página da partida"). **Gotcha pro `/pl`:** com 1 season a lista por time é curta — definir quantos exibir (top 3-5 por equipe) e mostrar contagem sempre. **Assumi ✨** pelo seu "seria legal".
+
+### W-023 · Gols do jogador contra um adversário específico (casa/fora) · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-29 · status: ideia>
+
+**O quê:** mostrar quantos gols um jogador já fez **contra um time específico** ("fazer gol *no* adversário"), com recorte **casa/fora** — o padrão de **freguês** ("o Salah adora pegar o United: 7 gols, 4 em casa, 3 fora"). É o split de gols da [[W-005]] com uma dimensão a mais: o adversário.
+
+**Por quê:** desempenho contra um oponente fixo é insumo clássico de **props de marcador** (anytime/first scorer) — alguns jogadores têm "presa" recorrente, e isso não aparece no número agregado de gols. Some o mando (casa/fora) e fica leitura direta pra over/under de jogador. Conversa com a tese (perfil auditável que justifica a aposta).
+
+**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** Mesmo join `goal⋈match` do `getPlayerDetail` (`apps/api/src/modules/leagues/shared/shared.ts:264`) que a W-005/W-006 já usam: o **adversário** é o outro time da partida (`match.homeTeamId`/`awayTeamId` vs o `goal.teamId` do jogador) e o **mando** sai da mesma comparação. Só falta agrupar os gols por adversário e fatiar por casa/fora. Tangencia o `SIN-007` (rivalidade/ex-clube) mas é outro conceito — aqui é *freguês* (oponente preferido), não clássico/lei-do-ex.
+
+**Notas:** **Família "recortes de gol derivados" com W-005 (casa/fora) e W-006 (1º/2º tempo)** — mesma fonte `goal`, mesma regra de excluir gol contra (`type != "own"`), zero schema; vale promover no mesmo balaio. **Gotcha grande (o motivo de ter sido cortado antes):** o `/rs` LIG-001 cortou o *split por adversário* como **ruído com 1 season** — com só a **PL 25/26** ingerida, um jogador pega cada adversário **no máx. 2x** (casa + fora), então "gols contra o time X" é amostra minúscula (0–2 jogos). Só vira sinal de verdade com **multi-season** (a mesma ingestão histórica que destrava a W-002/W-003/W-004). Mostrar sempre a contagem bruta + nº de confrontos; **não** transformar em taxa/% com 1 season. **Assumi ✨** pelo seu "seria legal".
+
 ## 💤 Anotando
 
 ### W-020 · Alerta de movimento de odds (por time + por mercado) · 💤 · esforço G · `dados` `api` `ui`
@@ -225,9 +247,45 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **família de alertas (W-017 · W-018 · W-020)** — mesma máquina de alerta, produtores diferentes; W-020 puxa o produtor mais pesado (odds snapshots). **Guardrail de compliance é mais sensível aqui que nos outros dois:** "odd caindo" é exatamente o gatilho de FOMO que a `docs/ui/design-system/conformidade-jogo-responsavel.md:230` proíbe ("aposte de novo" / urgência) — desenhar como informação de mercado, jamais como chamariz pra apostar. **Pro `/rs`:** definir o que conta como "movimento" (delta absoluto vs %, qual janela, qual book de referência) — o `docs/investigacoes/steam-moves-sharp-vs-square.md` já tem o critério (direção igual + janela curta + origem em casa respeitada) pra distinguir steam real de ruído. **Assumi 💤** porque você disse "um possível alerta" (tom de só-anotando) — me fala se é ✨/🔥.
 
+### W-024 · Widget de gols concedidos por faixa de 15min na página da partida · 💤 · esforço M · `api` `ui`
+<adicionada: 2026-06-29 · status: ideia>
+
+**O quê:** na página da partida, um widget com a **distribuição temporal dos gols concedidos** por cada equipe na season, em faixas de 15 minutos (0–15, 16–30, 31–45, 46–60, 61–75, 76–90). Lê como perfil defensivo de timing: "esse time toma 40% dos gols nos últimos 15min" — onde cada lado costuma ser furado.
+
+**Por quê:** *quando* um time concede gol é insumo direto pra **over/under por tempo** e pra leitura de jogo (defesa que despenca no fim → over no 2º tempo; time que sofre cedo → handicap). Casa com a tese (padrão auditável no lugar onde se decide a aposta) e enriquece o `match-detail`, que hoje tem forma/escalação/eventos mas nenhuma leitura de *padrão* defensivo.
+
+**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** `goal.minute` (já usado pelos splits de tempo da [[W-006]]) + `goal.teamId` vs os times da partida: gol **concedido** por um time = gol marcado pelo adversário nas partidas desse time; bucketizar `minute` em faixas de 15. Join `goal⋈match` que o `scorers.service.ts`/`getPlayerDetail` já fazem, agora escopado e agregado por time. API: `apps/api/src/modules/leagues/get-match/get-match.service.ts`. UI: novo componente no `match-detail/` (`apps/web/features/leagues/components/match-detail/`, irmão de `form-guide.tsx`/`match-events.tsx`). **Perna de UI do `SIN-017`** (game-state e timing de gols, *investigado*).
+
+**Notas:** **par natural com a [[W-022]]** (card de artilheiros na partida) — as duas dão o contexto de gol prospectivo do `match-detail`: W-022 = *quem* marca, W-024 = *quando* se toma. **Extensão óbvia:** o espelho ofensivo (gols **marcados** por faixa) sai do mesmo agregado de graça — anotar pro `/pl` se vale mostrar os dois lados (concedidos + marcados) no mesmo widget. **Gotchas pro `/pl`:** (1) acréscimos — como a SportMonks codifica o minuto aos 45+2 / 90+3? (mesma dúvida da W-006) define em qual bucket cai; (2) só temos a **PL 25/26** ingerida — ~38 jogos por time dá amostra ok pra distribuição, mas ainda ruidosa por bucket, mostrar contagem além de %; (3) decidir gráfico (barras por faixa) e se normaliza por nº de jogos. **Assumi 💤** — você só descreveu o widget, sem dizer o quanto quer; me fala se é ✨/🔥.
+
 ---
 
 ## 🗄️ Arquivadas (promovidas ou descartadas)
+
+### W-001 · Tooltip de jogador no hover (stats da season) · 🔥 · esforço M · `ui` `dados`
+<adicionada: 2026-06-28 · status: feito · feito: 2026-06-29>
+
+**Feito (2026-06-29):** `PlayerHoverCard` (`apps/web/features/leagues/components/player-hover-card/`) — HoverCard (Radix/shadcn do `@workspace/ui`) que, no **primeiro hover**, faz lazy-fetch do jogador (reusa `GET /v1/players/:id` via `usePlayerQuery(id, enabled)` — o 2º arg defere o fetch ao hover; **zero backend, zero migração**) e mostra foto, clube, posição, os totais da season (jogos/gols/assists + nota média colorida por `ratingColor`) e um **sparkline SVG** das notas das últimas 10 partidas (escala ≥7.5 verde · ≥6.5 neutro · <6.5 vermelho, igual ao `RatingChart`; último ponto destacado). SVG manual em vez de ECharts de propósito — numa tooltip que abre/fecha, init+dispose de canvas a cada hover é caro. Cache do React Query compartilhado por id entre todas as menções. Plugado nas **5 superfícies** que mencionam jogador: gols + assistências + cartões (`match-events`), escalação (`lineup`), desfalques (`absences`) e marcadores da liga (`scorers-table`, dentro do Virtuoso). Verificado no Chrome nas 5 (Eze, Dan Burn, Saliba, Mikel Merino, Haaland), layout intacto, console sem erros novos, typecheck + lint 0 erros. Implementado direto da wishlist, **sem ID de feature** (precedente W-009/W-013/W-014). O "dossiê" citado abaixo ainda não tem nomes de jogador linkáveis — quando tiver, é só envolver o link com `<PlayerHoverCard id>`.
+
+**O quê:** ao passar o mouse sobre o nome de um jogador (escalação, dossiê, lista), abrir uma tooltip com um resumo da season dele: gols, assists e um mini-gráfico de performance (sparkline) baseado nas notas por partida.
+
+**Por quê:** dá contexto na hora sem tirar o usuário da tela — quem lê o dossiê entende rápido "esse cara tá em forma?" pelas notas recentes. Polimento de UX que conversa com a tese de transparência (o número aparece junto do nome, auditável).
+
+**Depende de / esbarra em:** gols/assists por jogador **já existem** (derivados da tabela `goal`, `getPlayerDetail` em `apps/api/src/modules/leagues/shared/shared.ts:264`, já no front via `use-player-query.ts`). **CORREÇÃO (2026-06-28, `/rs` LIG-001):** a série de notas por partida **JÁ ESTÁ INGERIDA** — `lineup_player.rating` (type 118) em `apps/api/src/db/schemas/leagues.ts:171`. A premissa antiga ("rating não ingerido") está **refutada**; o sparkline é UI/agregação pura, sem migração.
+
+**Notas:** decidir o componente de tooltip (Radix/shadcn já no `@workspace/ui`) e a lib do sparkline (SVG manual + `d3-scale` é o recomendado pra sparkline pequena — ver `docs/investigacoes/pagina-do-jogador.md`). **Coberta pela investigação LIG-001** (a tooltip é uma destilação da seção "forma recente" da página do jogador). Tanto (1) gols/assists quanto (2) sparkline de notas são entregáveis HOJE — o dado já está no banco.
+
+### W-025 · Data e placar por tempo no popover da forma · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-29 · status: feito · feito: 2026-06-29>
+
+**Feito (2026-06-29):** **sem migração de schema.** Descoberta-chave: o **half-time já existia no contrato** (`Score.ht`, populado por `serializeMatch` a partir das colunas `htHome/htAway` do `match`) — não precisou derivar de `goal.minute`. API: o `FormResult` (`apps/api/src/modules/leagues/shared/shared.ts`) ganhou `date` + `htGoalsFor`/`htGoalsAgainst` (perspectiva do time, null quando a fonte não tem HT), preenchidos no `formResult()`. Web: o popover (`form-guide.tsx` `Chip`/`HoverCardContent`) virou coluna — **linha 1** placar final, **linha 2** "1º tempo X-Y", **linha 3** "2º tempo X-Y" (2º tempo = FT − HT), **linha 4** data + "há N dias". Helper `daysAgo()` novo em `utils/format.ts` (`differenceInCalendarDays` + parse local pra evitar off-by-one de fuso; "hoje"/"ontem"/"há N dias"). Tipos fluíram do `@workspace/api` pro web sem duplicação. `typecheck` 3/3. Verificação visual feita **pelo João ao vivo** (chrome-devtools não anexou — Chrome dele segurava o profile do MCP); iterou layout (colunas→linhas empilhadas) e formato.
+
+**Bug latente pego de brinde:** a data no popover revelou que os chips de forma estavam em ordem **antigo→recente** (mais recente à direita). O João quis **mais recente à esquerda** → removido o `[...recent].reverse()` do `FormChips` (a API já devolve `recent` most-recent-first, confirmado batendo no endpoint `/v1/matches/:id/form`). **Toca 3 superfícies** que compartilham `FormChips`: página da partida, classificação (`standings-table.tsx`) e página do time (`team-detail.tsx` via `FormGuide`).
+
+**O quê (original):** enriquecer o popover (HoverCard) do chip de forma (V/E/D) na página da partida com a data do jogo, o "há X dias" e o placar por tempo (1º/2º tempo).
+
+**Notas:** **enriquecimento direto do `form-guide.tsx`** — mesma família "contexto da partida" da [[W-021]]/[[W-022]]/[[W-024]]. Implementado direto da wishlist, **sem ID de feature** (precedente W-009/W-013). Gotcha resolvido: o "2º tempo" sai por subtração (FT − HT) já que o FT é o placar grande; quando a fonte não tem HT, as linhas de tempo simplesmente não aparecem.
+
 
 ### W-009 · Artilheiros da liga (marcadores) · 🔥 · esforço P · `api` `ui`
 <adicionada: 2026-06-28 · status: feito · feito: 2026-06-28>

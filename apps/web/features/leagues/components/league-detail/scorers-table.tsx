@@ -6,6 +6,7 @@ import { useCallback, useState } from "react"
 import { Virtuoso } from "react-virtuoso"
 
 import { useScorersQuery } from "../../hooks/data/queries/use-scorers-query"
+import { PlayerHoverCard } from "../player-hover-card/player-hover-card"
 
 // Reveal 20 scorers at a time; each time the user scrolls to the bottom, 20 more are shown.
 const PAGE = 20
@@ -82,36 +83,38 @@ export function ScorersTable({ code }: { code: string }) {
               increaseViewportBy={300}
               components={VIRTUOSO_COMPONENTS}
               itemContent={(index, s) => (
-                <Link
-                  href={`/players/${s.id}`}
-                  className={`${COLS} border-b px-4 py-2 text-sm transition-colors hover:bg-muted/50`}
-                >
-              <span className="tabular-nums text-muted-foreground">{index + 1}</span>
-              <span className="flex items-center justify-center">
-                {s.team?.logoUrl ? (
-                  <img
-                    src={s.team.logoUrl}
-                    alt=""
-                    title={s.team.name}
-                    className="size-5 shrink-0 object-contain"
-                    loading="lazy"
-                  />
-                ) : null}
-              </span>
-              <span className="flex min-w-0 items-center gap-2 font-medium">
-                {s.imageUrl ? (
-                  <img
-                    src={s.imageUrl}
-                    alt=""
-                    className="size-5 shrink-0 rounded-full object-cover"
-                    loading="lazy"
-                  />
-                ) : null}
-                <span className="truncate">{s.name}</span>
-              </span>
-              <span className="text-center font-semibold tabular-nums">{s.goals}</span>
-              <span className="text-center tabular-nums">{s.assists}</span>
-                </Link>
+                <PlayerHoverCard id={s.id}>
+                  <Link
+                    href={`/players/${s.id}`}
+                    className={`${COLS} border-b px-4 py-2 text-sm transition-colors hover:bg-muted/50`}
+                  >
+                    <span className="tabular-nums text-muted-foreground">{index + 1}</span>
+                    <span className="flex items-center justify-center">
+                      {s.team?.logoUrl ? (
+                        <img
+                          src={s.team.logoUrl}
+                          alt=""
+                          title={s.team.name}
+                          className="size-5 shrink-0 object-contain"
+                          loading="lazy"
+                        />
+                      ) : null}
+                    </span>
+                    <span className="flex min-w-0 items-center gap-2 font-medium">
+                      {s.imageUrl ? (
+                        <img
+                          src={s.imageUrl}
+                          alt=""
+                          className="size-5 shrink-0 rounded-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <span className="truncate">{s.name}</span>
+                    </span>
+                    <span className="text-center font-semibold tabular-nums">{s.goals}</span>
+                    <span className="text-center tabular-nums">{s.assists}</span>
+                  </Link>
+                </PlayerHoverCard>
               )}
             />
           ) : null}

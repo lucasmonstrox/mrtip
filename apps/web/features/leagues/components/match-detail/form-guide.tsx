@@ -7,6 +7,7 @@ import { cn } from "@workspace/ui/lib/utils"
 import Link from "next/link"
 
 import type { Form, FormResult, TeamRef } from "../../types"
+import { daysAgo, formatDate } from "../../utils/format"
 
 // Color per result: win (green), draw (gray), loss (red).
 const COLOR: Record<FormResult["result"], string> = {
@@ -35,6 +36,13 @@ function Chip({ r, team, size }: { r: FormResult; team: TeamRef; size: "sm" | "m
   const [home, away] = r.side === "home" ? [team, r.opponent] : [r.opponent, team]
   const [homeGoals, awayGoals] =
     r.side === "home" ? [r.goalsFor, r.goalsAgainst] : [r.goalsAgainst, r.goalsFor]
+  // Half-time score in home×away order (null when the source has no HT); 2nd half = full − half.
+  const ht =
+    r.htGoalsFor == null || r.htGoalsAgainst == null
+      ? null
+      : r.side === "home"
+        ? ([r.htGoalsFor, r.htGoalsAgainst] as const)
+        : ([r.htGoalsAgainst, r.htGoalsFor] as const)
   return (
     <HoverCard openDelay={100} closeDelay={50}>
       <HoverCardTrigger asChild>
@@ -50,14 +58,31 @@ function Chip({ r, team, size }: { r: FormResult; team: TeamRef; size: "sm" | "m
         </Link>
       </HoverCardTrigger>
       <HoverCardContent side="top" className="w-auto px-3 py-2.5">
-        <div className="flex items-center gap-3">
-          <Crest team={home} />
-          <span className="text-lg font-bold tabular-nums">
-            {homeGoals}
-            <span className="mx-1 text-muted-foreground">-</span>
-            {awayGoals}
-          </span>
-          <Crest team={away} />
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="flex items-center gap-3">
+            <Crest team={home} />
+            <div className="flex flex-col items-center gap-0.5">
+              <span className="text-lg font-bold tabular-nums">
+                {homeGoals}
+                <span className="mx-1 text-muted-foreground">-</span>
+                {awayGoals}
+              </span>
+              {ht && (
+                <>
+                  <span className="rounded bg-sky-500/10 px-1.5 text-[11px] font-medium text-sky-600 tabular-nums dark:text-sky-400">
+                    {ht[0]}-{ht[1]}
+                  </span>
+                  <span className="rounded bg-sky-500/10 px-1.5 text-[11px] font-medium text-sky-600 tabular-nums dark:text-sky-400">
+                    {homeGoals - ht[0]}-{awayGoals - ht[1]}
+                  </span>
+                </>
+              )}
+            </div>
+            <Crest team={away} />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {formatDate(r.date, null)} · {daysAgo(r.date)}
+          </p>
         </div>
       </HoverCardContent>
     </HoverCard>
@@ -66,8 +91,8 @@ function Chip({ r, team, size }: { r: FormResult; team: TeamRef; size: "sm" | "m
 
 /**
  * Row of form chips — clickable (link to the match) with a score popover (logo X-Y logo). The API
- * returns `recent` from most recent to oldest; we display oldest → recent (left → right). `team` is
- * the side this form belongs to, needed to render the score in home×away order.
+ * returns `recent` most-recent-first; we display in that order (left → right = most recent → oldest).
+ * `team` is the side this form belongs to, needed to render the score in home×away order.
  */
 export function FormChips({
   recent,
@@ -81,7 +106,7 @@ export function FormChips({
   if (!recent.length) return <span className="text-xs text-muted-foreground">—</span>
   return (
     <div className="flex items-center gap-1">
-      {[...recent].reverse().map((r) => (
+      {recent.map((r) => (
         <Chip key={r.matchId} r={r} team={team} size={size} />
       ))}
     </div>

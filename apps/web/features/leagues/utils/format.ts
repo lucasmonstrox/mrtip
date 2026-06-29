@@ -1,4 +1,4 @@
-import { differenceInYears, format, parse } from "date-fns"
+import { differenceInCalendarDays, differenceInYears, format, parse } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
 /**
@@ -12,6 +12,16 @@ export function formatDate(date: string | Date, time: string | null): string {
   const day = (typeof date === "string" ? date : date.toISOString()).slice(0, 10)
   const label = format(parse(day, "yyyy-MM-dd", new Date()), "dd 'de' MMM, yyyy", { locale: ptBR })
   return time ? `${label} · ${time}` : label
+}
+
+/** Relative recency of a match date (yyyy-MM-dd or Eden-revived Date) up to today: "hoje" /
+ * "ontem" / "há N dias". Parses as a LOCAL date (same reason as formatDate) to avoid off-by-one. */
+export function daysAgo(date: string | Date): string {
+  const day = (typeof date === "string" ? date : date.toISOString()).slice(0, 10)
+  const n = differenceInCalendarDays(new Date(), parse(day, "yyyy-MM-dd", new Date()))
+  if (n <= 0) return "hoje"
+  if (n === 1) return "ontem"
+  return `há ${n} dias`
 }
 
 /** Current age in whole years from a date of birth (yyyy-MM-dd or an Eden-revived Date). */

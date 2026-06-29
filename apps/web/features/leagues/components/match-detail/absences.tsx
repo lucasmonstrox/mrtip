@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { useMatchInjuriesQuery } from "../../hooks/data/queries/use-match-injuries-query"
 import type { TeamAbsences } from "../../types"
+import { PlayerHoverCard } from "../player-hover-card/player-hover-card"
 
 function AbsencesSide({ a }: { a: TeamAbsences | null }) {
   if (!a || !a.absences.length)
@@ -14,12 +15,14 @@ function AbsencesSide({ a }: { a: TeamAbsences | null }) {
       <ul className="flex flex-col gap-1">
         {a.absences.map((x) => (
           <li key={x.player.id} className="flex items-baseline gap-2 text-sm">
-            <Link
-              href={`/players/${x.player.id}`}
-              className={cn("hover:underline", !x.didNotPlay && "text-muted-foreground")}
-            >
-              {x.player.name}
-            </Link>
+            <PlayerHoverCard id={x.player.id}>
+              <Link
+                href={`/players/${x.player.id}`}
+                className={cn("hover:underline", !x.didNotPlay && "text-muted-foreground")}
+              >
+                {x.player.name}
+              </Link>
+            </PlayerHoverCard>
             {x.goals > 0 ? (
               <span
                 className="rounded bg-emerald-500/15 px-1 text-[10px] font-semibold text-emerald-600"

@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-31 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+32 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -12,6 +12,7 @@
 | AGT-002 | Agente — raciocínio de seleção do melhor mercado | agente | ideia | P1 | ia:ideia api:ideia | nao | DOS-001, MOD-001, SIN-012 |
 | COMP-001 | Conformidade e jogo responsável (Lei 14.790 / Portaria SPA 1.231) | conformidade | investigado | P1 | ui:investigado api:investigado ia:investigado | nao | — |
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
+| CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | ui:feito | sim | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
@@ -29,7 +30,7 @@
 | SIN-008 | Sinal de calendário e fadiga (ressaca de meio de semana + altitude) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | — |
 | SIN-009 | Sinal de arbitragem (árbitro escalado) | sinais | investigado | P1 | dados:investigado ia:investigado | nao | — |
 | SIN-010 | Sinal de motivação e peso do jogo (stakes) | sinais | investigado | P2 | dados:investigado ia:investigado | nao | — |
-| SIN-011 | Sinal de lesões e desfalques | sinais | planejado | P2 | dados:planejado ia:investigado | nao | — |
+| SIN-011 | Sinal de lesões e desfalques | sinais | em-andamento | P2 | dados:feito ia:investigado | parcial | — |
 | SIN-012 | Camada de mercado e movimento de odds (validação de valor) | sinais | investigado | P1 | dados:investigado ia:investigado | nao | — |
 | SIN-013 | Sinal de escanteios (corners) como mercado/edge | sinais | investigado | P2 | dados:investigado ia:investigado | nao | DOS-001 |
 | SIN-014 | Sinal — formação tática (matchup de formações) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | DOS-001 |
@@ -89,6 +90,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `getTeamBySlug` → LIG-002
 - `loadTeamMatches` → LIG-002
 - `reaisParaCents` → CORE-001
+- `SidebarSearch` → CORE-002
 
 ### rotas
 

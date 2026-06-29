@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, inArray, lt, lte, ne, or } from "drizzle-orm"
+import { and, asc, count, desc, eq, inArray, isNotNull, lt, lte, ne, or } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 
 import { db } from "../../../db/client"
@@ -138,9 +138,13 @@ export type Result = "W" | "D" | "L"
 export type FormResult = {
   result: Result
   matchId: string
+  date: string // yyyy-MM-dd of the match — for the popover's date + "há N dias"
   opponent: TeamRef
   goalsFor: number
   goalsAgainst: number
+  // Half-time goals from the team's perspective; null when the source has no HT for this match.
+  htGoalsFor: number | null
+  htGoalsAgainst: number | null
   side: "home" | "away"
 }
 
@@ -209,6 +213,33 @@ export type CardItem = {
   team: TeamRef
   player: { id: string; name: string }
 }
+
+// One 15-minute band of a team's goal-timing profile: goals scored and conceded within the band, each
+// as a share of that team's (minute-known) scored / conceded totals.
+export type GoalTimingBucket = {
+  label: string // "0-15" … "76-90"
+  scored: number
+  conceded: number
+  scoredPct: number // fraction [0,1] of scored goals with a known minute
+  concededPct: number // fraction [0,1] of conceded goals with a known minute
+}
+
+// A team's goal-timing profile over the season: WHEN it scores and WHEN it gets breached, in 15-min
+// bands. `matches` is the honest denominator (and low-sample gate); totals count imported goal events
+// (may trail the official tallies if some matches' events aren't backfilled yet).
+export type TeamGoalTiming = {
+  team: TeamRef
+  matches: number
+  totalScored: number
+  totalConceded: number
+  scoredWithMinute: number // scored goals with a known minute — base of the scored bands
+  concededWithMinute: number // conceded goals with a known minute — base of the conceded bands
+  buckets: GoalTimingBucket[] // the 6 bands, in order
+  lowSample: boolean
+}
+
+// Both sides of the match. Payload of GET /:id/goal-timing.
+export type MatchGoalTiming = { home: TeamGoalTiming; away: TeamGoalTiming }
 
 // A goal from the player's perspective (for their page): the match + minute + type.
 export type PlayerGoal = {
@@ -794,6 +825,104 @@ export async function loadMatchGoals(matchId: string): Promise<GoalItem[]> {
   }))
 }
 
+// The six 15-min bands (fixed labels) and the games floor below which the distribution is too noisy.
+const TIMING_BUCKETS = ["0-15", "16-30", "31-45", "46-60", "61-75", "76-90"] as const
+const TIMING_MIN_MATCHES = 10
+
+// 15-min band of a match minute. Second-half stoppage (90+x) falls in the last band; with no
+// `extra_minute` column, a 45+x goal stored as 46/47 lands in "46-60" (accepted imprecision).
+function timingBucket(minute: number): number {
+  if (minute <= 15) return 0
+  if (minute <= 30) return 1
+  if (minute <= 45) return 2
+  if (minute <= 60) return 3
+  if (minute <= 75) return 4
+  return 5
+}
+
+// Goal-timing profile of both teams of a match: distribution of goals SCORED and CONCEDED per 15-min
+// band over the league season. In one of a team's matches, a goal whose `goal.teamId` is the team is
+// scored, otherwise conceded — so an own goal by the team counts as conceded and one in its favour as
+// scored (the teamId rule handles both, matching the scoreline). Derived live from goal⋈match.
+export async function loadGoalTiming(
+  home: TeamRef,
+  away: TeamRef,
+  leagueCode: string,
+): Promise<MatchGoalTiming> {
+  const ids = [home.id, away.id]
+
+  // Every goal in either team's matches, with the scoring team + both sides, to attribute each goal
+  // to whoever scored and whoever conceded it.
+  const goalRows = await db
+    .select({
+      minute: goal.minute,
+      scoringTeamId: goal.teamId,
+      homeId: match.homeTeamId,
+      awayId: match.awayTeamId,
+    })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(
+      and(eq(match.leagueCode, leagueCode), or(inArray(match.homeTeamId, ids), inArray(match.awayTeamId, ids))),
+    )
+
+  // Each team's PLAYED matches (with a result) — the honest denominator and the low-sample gate.
+  const playedRows = await db
+    .select({ homeId: match.homeTeamId, awayId: match.awayTeamId })
+    .from(match)
+    .where(
+      and(
+        eq(match.leagueCode, leagueCode),
+        isNotNull(match.ftHome),
+        or(inArray(match.homeTeamId, ids), inArray(match.awayTeamId, ids)),
+      ),
+    )
+
+  const build = (team: TeamRef): TeamGoalTiming => {
+    const scored = [0, 0, 0, 0, 0, 0]
+    const conceded = [0, 0, 0, 0, 0, 0]
+    let totalScored = 0
+    let totalConceded = 0
+    let scoredWithMinute = 0
+    let concededWithMinute = 0
+    for (const r of goalRows) {
+      if (r.homeId !== team.id && r.awayId !== team.id) continue // not this team's match
+      const mine = r.scoringTeamId === team.id
+      if (mine) totalScored++
+      else totalConceded++
+      if (r.minute == null) continue
+      const idx = timingBucket(r.minute)
+      if (mine) {
+        scoredWithMinute++
+        scored[idx] = (scored[idx] ?? 0) + 1
+      } else {
+        concededWithMinute++
+        conceded[idx] = (conceded[idx] ?? 0) + 1
+      }
+    }
+    const matches = playedRows.filter((m) => m.homeId === team.id || m.awayId === team.id).length
+    const buckets = TIMING_BUCKETS.map((label, i) => ({
+      label,
+      scored: scored[i] ?? 0,
+      conceded: conceded[i] ?? 0,
+      scoredPct: scoredWithMinute ? (scored[i] ?? 0) / scoredWithMinute : 0,
+      concededPct: concededWithMinute ? (conceded[i] ?? 0) / concededWithMinute : 0,
+    }))
+    return {
+      team,
+      matches,
+      totalScored,
+      totalConceded,
+      scoredWithMinute,
+      concededWithMinute,
+      buckets,
+      lowSample: matches < TIMING_MIN_MATCHES,
+    }
+  }
+
+  return { home: build(home), away: build(away) }
+}
+
 // Cards of a match, in chronological order (minute). Empty when no cards / events not imported.
 export async function loadMatchCards(matchId: string): Promise<CardItem[]> {
   const rows = await db
@@ -1013,12 +1142,16 @@ function formResult(m: Match, teamId: string): FormResult {
   const isHome = m.home.id === teamId
   const goalsFor = isHome ? h : a
   const goalsAgainst = isHome ? a : h
+  const ht = m.score!.ht
   return {
     result: goalsFor > goalsAgainst ? "W" : goalsFor < goalsAgainst ? "L" : "D",
     matchId: m.id,
+    date: m.date,
     opponent: isHome ? m.away : m.home,
     goalsFor,
     goalsAgainst,
+    htGoalsFor: ht ? (isHome ? ht[0] : ht[1]) : null,
+    htGoalsAgainst: ht ? (isHome ? ht[1] : ht[0]) : null,
     side: isHome ? "home" : "away",
   }
 }

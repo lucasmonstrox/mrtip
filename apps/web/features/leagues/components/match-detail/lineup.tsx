@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useMatchLineupQuery } from "../../hooks/data/queries/use-match-lineup-query"
 import type { LineupPlayer, TeamLineup } from "../../types"
 import { ratingColor } from "../../utils/format"
+import { PlayerHoverCard } from "../player-hover-card/player-hover-card"
 
 function LineupRow({ p }: { p: LineupPlayer }) {
   return (
@@ -19,9 +20,11 @@ function LineupRow({ p }: { p: LineupPlayer }) {
       ) : (
         <span className="size-6 shrink-0 rounded-full bg-muted" />
       )}
-      <Link href={`/players/${p.id}`} className="flex-1 truncate hover:underline">
-        {p.name}
-      </Link>
+      <PlayerHoverCard id={p.id}>
+        <Link href={`/players/${p.id}`} className="flex-1 truncate hover:underline">
+          {p.name}
+        </Link>
+      </PlayerHoverCard>
       {p.manOfMatch ? <span title="Man of the Match">⭐</span> : null}
       {p.minutesPlayed != null ? (
         <span className="font-mono text-xs tabular-nums text-muted-foreground">{p.minutesPlayed}&apos;</span>
