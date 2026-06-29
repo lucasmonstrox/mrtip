@@ -15,7 +15,7 @@
 | CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | ui:feito | sim | — |
 | CORE-003 | Autenticação com Clerk (web + API) | core | em-andamento | P1 | ui:em-andamento api:em-andamento dados:ideia | parcial | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
-| DOS-002 | Estatísticas de partida por time (fixture statistics) | dossie | investigado | P2 | dados:investigado ia:ideia | nao | DOS-001 |
+| DOS-002 | Estatísticas de partida por time (fixture statistics) | dossie | feito | P2 | dados:feito ia:feito | sim | DOS-001 |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
 | LIG-003 | Stats de volume por partida (chutes, passes, desarmes, faltas) | ligas | ideia | P2 | dados:ideia api:ideia ui:ideia | nao | LIG-001 |
@@ -186,6 +186,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/vies-favorito-azarao.md](../../docs/investigacoes/vies-favorito-azarao.md) → SIN-018
 - [docs/investigacoes/xg-qualidade-de-chute.md](../../docs/investigacoes/xg-qualidade-de-chute.md) → MOD-002
 - [docs/planos/DOS-001-dossie-por-partida.md](../../docs/planos/DOS-001-dossie-por-partida.md) → DOS-001
+- [docs/planos/DOS-002-estatisticas-partida-time.md](../../docs/planos/DOS-002-estatisticas-partida-time.md) → DOS-002
 - [docs/planos/LIG-001-pagina-do-jogador.md](../../docs/planos/LIG-001-pagina-do-jogador.md) → LIG-001
 - [docs/planos/LIG-002-pagina-do-time.md](../../docs/planos/LIG-002-pagina-do-time.md) → LIG-002
 - [docs/planos/LIG-004-venue-estadio-geo.md](../../docs/planos/LIG-004-venue-estadio-geo.md) → LIG-004

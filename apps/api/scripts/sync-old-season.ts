@@ -27,7 +27,7 @@ const WINDOWS: [string, string][] = [
 const LINEUP_STARTER = 11
 const LINEUP_BENCH = 12
 const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86 } as const
-const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = { GOAL: "normal", PENALTY: "normal", OWNGOAL: "own" }
+const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = { GOAL: "normal", PENALTY: "penalty", OWNGOAL: "own" } // @feature DOS-002 (fix do pênalti; 24/25 precisa re-sync)
 const CARD_TYPE: Record<string, "yellow" | "red" | "yellowred"> = { YELLOWCARD: "yellow", REDCARD: "red", YELLOWREDCARD: "yellowred" }
 const DET = {
   played: 129, won: 130, drawn: 131, lost: 132, goalsFor: 133, goalsAgainst: 134, goalDifference: 179,

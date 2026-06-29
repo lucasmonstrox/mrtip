@@ -245,6 +245,36 @@ export const lineupPlayer = pgTable(
 
 export type LineupPlayer = typeof lineupPlayer.$inferSelect
 
+// Per-team match statistics from the SportMonks fixture `statistics` include (team-level, one row per
+// team per match). Volume/quality inputs for the prognosis dossier that DON'T exist per-player in our
+// feed: ball possession, total/inside-box shots, big chances created. `shotsOnTarget` here is the
+// OFFICIAL team total (cross-check vs SUM of lineup_player). `xg` is reserved (nullable) for the
+// SportMonks xG add-on (type 5304), not yet purchased. @feature DOS-002
+export const matchTeamStats = pgTable(
+  "match_team_stats",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => match.id, { onDelete: "cascade" }),
+    teamId: uuid("team_id")
+      .notNull()
+      .references(() => team.id),
+    possession: integer("possession"), // type 45 BALL_POSSESSION (%)
+    shotsTotal: integer("shots_total"), // type 42
+    shotsInsidebox: integer("shots_insidebox"), // type 49
+    shotsOutsidebox: integer("shots_outsidebox"), // type 50
+    shotsOnTarget: integer("shots_on_target"), // type 86 — official team total
+    bigChancesCreated: integer("big_chances_created"), // type 580
+    dangerousAttacks: integer("dangerous_attacks"), // type 44
+    corners: integer("corners"), // type 34
+    xg: real("xg"), // type 5304 — NULL até o add-on de xG (DOS-002 fase 2)
+  },
+  (t) => [unique().on(t.matchId, t.teamId)],
+)
+
+export type MatchTeamStats = typeof matchTeamStats.$inferSelect
+
 // Injury/absence: a player who missed (or was doubtful for) ONE match. `type` = "Missing Fixture"
 // (didn't play) or "Questionable" (doubt); `reason` = cause (e.g. "Muscle Injury", "Suspended").
 // unique(matchId, playerId).

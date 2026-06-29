@@ -14,7 +14,7 @@
 import { and, eq, inArray, isNotNull, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
-import { goal, injury, lineup, lineupPlayer, match, player, standing, team, venue } from "../src/db/schema"
+import { goal, injury, lineup, lineupPlayer, match, matchTeamStats, player, standing, team, venue } from "../src/db/schema"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
 
@@ -90,6 +90,37 @@ const sotFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.sot ?
 const sotAgainst = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(oppOf(p, id))?.sot ?? 0
 const kpFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.kp ?? 0
 const hasSot = (p: Row, id: string) => statByMatchTeam.get(p.id)?.has(id) ?? false
+
+// Estatística de TIME por partida (DOS-002): posse, chutes totais/na-área, big chances criadas — do
+// include `statistics` da SportMonks (match_team_stats), o que não existe per-jogador no nosso feed.
+const teamStatRows = await db.select().from(matchTeamStats)
+const teamStatsByMatch = new Map<string, Map<string, (typeof teamStatRows)[number]>>()
+for (const r of teamStatRows) {
+  let mm = teamStatsByMatch.get(r.matchId)
+  if (!mm) {
+    mm = new Map()
+    teamStatsByMatch.set(r.matchId, mm)
+  }
+  mm.set(r.teamId, r)
+}
+type TeamStatField = "shotsTotal" | "shotsInsidebox" | "bigChancesCreated" | "possession"
+// Média de um campo de match_team_stats sobre os jogos do time que têm a linha (null-safe).
+function teamStatAvg(rows: Row[], id: string, field: TeamStatField): number | null {
+  const vals = rows.map((p) => teamStatsByMatch.get(p.id)?.get(id)?.[field]).filter((v): v is number => v != null)
+  return vals.length ? +(vals.reduce((s, v) => s + v, 0) / vals.length).toFixed(1) : null
+}
+
+// Pênaltis convertidos (DOS-002 fix): com o relabel, pênalti tem goal.type="penalty". Tira-se da
+// conversão (gols/SoT) — pênalti (~76%) não é finalização de jogada aberta e inflaria a eficiência.
+const penaltyGoalRows = await db.query.goal.findMany({ where: (g, { eq }) => eq(g.type, "penalty") })
+const penaltiesFor = (rows: Row[], id: string): number => {
+  const ids = new Set(rows.map((p) => p.id))
+  return penaltyGoalRows.filter((g) => ids.has(g.matchId) && g.teamId === id).length
+}
+const penaltiesAgainst = (rows: Row[], id: string): number => {
+  const ids = new Set(rows.map((p) => p.id))
+  return penaltyGoalRows.filter((g) => ids.has(g.matchId) && g.teamId !== id).length
+}
 
 // Gols marcados/sofridos por jogo num recorte (all/home/away) + os totais absolutos.
 function avg(rows: Row[], id: string) {
@@ -341,10 +372,14 @@ const awayAll = avg(teamMatches(away.id), away.id)
 // convDef = % dos SoT SOFRIDOS que viram gol (qualidade das chances concedidas / solidez defensiva).
 const homeSotAll = sotAvg(teamMatches(home.id), home.id)
 const awaySotAll = sotAvg(teamMatches(away.id), away.id)
-const homeConv = convPct(homeAll.totalGf, homeSotAll.totalSf)
-const awayConv = convPct(awayAll.totalGf, awaySotAll.totalSf)
-const homeConvDef = convPct(homeAll.totalGa, homeSotAll.totalSa)
-const awayConvDef = convPct(awayAll.totalGa, awaySotAll.totalSa)
+// Conversão de JOGADA ABERTA (DOS-002): exclui pênaltis pra não inflar a finalização real.
+const homePens = penaltiesFor(teamMatches(home.id), home.id)
+const awayPens = penaltiesFor(teamMatches(away.id), away.id)
+// Math.max(0, …): a subtração cruza fontes (placar vs linhas goal type=penalty) — clamp contra gap de ingestão.
+const homeConv = convPct(Math.max(0, homeAll.totalGf - homePens), homeSotAll.totalSf)
+const awayConv = convPct(Math.max(0, awayAll.totalGf - awayPens), awaySotAll.totalSf)
+const homeConvDef = convPct(Math.max(0, homeAll.totalGa - penaltiesAgainst(teamMatches(home.id), home.id)), homeSotAll.totalSa)
+const awayConvDef = convPct(Math.max(0, awayAll.totalGa - penaltiesAgainst(teamMatches(away.id), away.id)), awaySotAll.totalSa)
 // Gols esperados pela rota SoT: λ_SoT × conversão do time (compara com o λ de gols puro acima).
 const xgViaSotHome = homeConv != null ? +(lambdaSotHome * (homeConv / 100)).toFixed(2) : null
 const xgViaSotAway = awayConv != null ? +(lambdaSotAway * (awayConv / 100)).toFixed(2) : null
@@ -693,8 +728,9 @@ ${awayStakes.lines.map((s) => `  - ${s}`).join("\n")}
 - Média geral: marca ${homeAll.gf} / sofre ${homeAll.ga} por jogo
 - **Em casa (${homeHome.n}j): marca ${homeHome.gf} / sofre ${homeHome.ga}** (total ${homeHome.totalGf} gols em casa)
 - Por tempo (casa+fora): 1ºT marca ${homeHalf.scored1} sofre ${homeHalf.conceded1} · 2ºT marca ${homeHalf.scored2} sofre ${homeHalf.conceded2}
-- **Finalização: ${homeSotAll.totalSf} SoT total (${homeSotAll.sf}/jogo · em casa ${homeHomeSot.sf}/jogo) · conversão ${homeConv ?? "?"}%** (gols ÷ SoT)
+- **Finalização: ${homeSotAll.totalSf} SoT total (${homeSotAll.sf}/jogo · em casa ${homeHomeSot.sf}/jogo) · conversão ${homeConv ?? "?"}%** (jogada aberta ÷ SoT; exclui ${homePens} pênaltis)
 - Sofre ${homeSotAll.sa} SoT/jogo (adversário converte ${homeConvDef ?? "?"}%) · cria ${homeKpPg} key passes/jogo
+- **Volume (chutes): ${teamStatAvg(teamMatches(home.id), home.id, "shotsTotal") ?? "?"}/jogo (${teamStatAvg(teamMatches(home.id), home.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesCreated") ?? "?"} big chances criadas/jogo** · posse ${teamStatAvg(teamMatches(home.id), home.id, "possession") ?? "?"}% (contexto — posse sozinha NÃO prevê gol)
 ${formLines(homeF5, homeF10, homeAll.gf, homeAll.ga)}
 ${timingLines(homeTiming)}
 ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
@@ -703,8 +739,9 @@ ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 - Média geral: marca ${awayAll.gf} / sofre ${awayAll.ga} por jogo
 - **Fora (${awayAway.n}j): marca ${awayAway.gf} / sofre ${awayAway.ga}** (total ${awayAway.totalGf} gols fora)
 - Por tempo (casa+fora): 1ºT marca ${awayHalf.scored1} sofre ${awayHalf.conceded1} · 2ºT marca ${awayHalf.scored2} sofre ${awayHalf.conceded2}
-- **Finalização: ${awaySotAll.totalSf} SoT total (${awaySotAll.sf}/jogo · fora ${awayAwaySot.sf}/jogo) · conversão ${awayConv ?? "?"}%** (gols ÷ SoT)
+- **Finalização: ${awaySotAll.totalSf} SoT total (${awaySotAll.sf}/jogo · fora ${awayAwaySot.sf}/jogo) · conversão ${awayConv ?? "?"}%** (jogada aberta ÷ SoT; exclui ${awayPens} pênaltis)
 - Sofre ${awaySotAll.sa} SoT/jogo (adversário converte ${awayConvDef ?? "?"}%) · cria ${awayKpPg} key passes/jogo
+- **Volume (chutes): ${teamStatAvg(teamMatches(away.id), away.id, "shotsTotal") ?? "?"}/jogo (${teamStatAvg(teamMatches(away.id), away.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesCreated") ?? "?"} big chances criadas/jogo** · posse ${teamStatAvg(teamMatches(away.id), away.id, "possession") ?? "?"}% (contexto — posse sozinha NÃO prevê gol)
 ${formLines(awayF5, awayF10, awayAll.gf, awayAll.ga)}
 ${timingLines(awayTiming)}
 ${absBlock(`Desfalques de ${away.name} neste jogo`, awayAbs)}

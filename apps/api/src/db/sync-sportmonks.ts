@@ -1,7 +1,7 @@
 import { and, eq, ne } from "drizzle-orm"
 
 import { db } from "./client"
-import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, nationality, player, season, standing, team, venue } from "./schema"
+import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, nationality, player, season, standing, team, venue } from "./schema"
 import { matchSlug, slugify } from "./slug"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
@@ -27,12 +27,15 @@ const LINEUP_BENCH = 12
 // keyPasses (117): last pass before a teammate's shot — chance creation; omitted by the API when 0.
 // shotsOnTarget (86): per-player shots on target; SUM per team rebuilds the team's SoT for the match.
 const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86 } as const
+// SportMonks fixture-statistics type_ids ingeridos por time por partida (include=statistics). @feature DOS-002
+const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34 } as const
+const TEAM_STAT_IDS = Object.values(TEAM_STAT).join(",")
 
 // SportMonks goal-event developer_names → our goal.type. Por agora só goal vs owngoal: o pênalti
 // convertido conta como gol normal (mantém o placar consistente). MISSED_PENALTY não é gol (fora).
 const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = {
   GOAL: "normal",
-  PENALTY: "normal",
+  PENALTY: "penalty", // @feature DOS-002 — era "normal" (bug): zerava penaltyGoals e poluía a conversão
   OWNGOAL: "own",
 }
 
@@ -134,7 +137,11 @@ type SmFixture = {
   events?: SmEvent[]
   sidelined?: SmSidelined[]
   venue?: SmVenue | null
+  statistics?: SmStatistic[]
 }
+// SportMonks fixture statistic (include=statistics): one row per (team, type) per match. `type_id`
+// decodes the metric (45=possession, 42=shots total, 49=shots inside box, 580=big chances created).
+type SmStatistic = { type_id: number; participant_id: number; location?: "home" | "away"; data?: { value?: number } }
 // SportMonks `sidelined` item on a fixture: a player unavailable (or a doubt) for THAT match.
 // `type.developer_name` is the cause/category (HAMSTRING_INJURY, RED_CARD_SUSPENSION, DOUBTFUL).
 type SmSidelined = {
@@ -345,8 +352,8 @@ async function main() {
   const byId = new Map<number, SmFixture>()
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses},${STAT.shotsOnTarget}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue&per_page=50`,
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses},${STAT.shotsOnTarget};fixtureStatisticTypes:${TEAM_STAT_IDS}` +
+        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -543,6 +550,49 @@ async function main() {
     }
   }
   console.log(`lineups: ${nLineups} | players (starters + bench): ${nPlayers}`)
+
+  // 3e-bis) Team-level match statistics (SportMonks fixture `statistics` include): one row per team per
+  // match — possession, total/inside-box shots, big chances created, etc. Volume/quality that the
+  // prognosis dossier can't get per-player. Upsert by (matchId, teamId). @feature DOS-002
+  let nTeamStats = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    if (!matchId || !f.statistics?.length) continue
+    const byTeam = new Map<number, Map<number, number>>() // teamSmId → (type_id → value)
+    for (const s of f.statistics) {
+      const v = s.data?.value
+      if (v == null) continue
+      let row = byTeam.get(s.participant_id)
+      if (!row) {
+        row = new Map()
+        byTeam.set(s.participant_id, row)
+      }
+      row.set(s.type_id, v)
+    }
+    for (const [teamSmId, vals] of byTeam) {
+      const teamId = teamIdBySm.get(teamSmId)
+      if (!teamId) continue
+      const g = (id: number) => vals.get(id) ?? null
+      const ts = {
+        matchId,
+        teamId,
+        possession: g(TEAM_STAT.possession),
+        shotsTotal: g(TEAM_STAT.shotsTotal),
+        shotsInsidebox: g(TEAM_STAT.shotsInsidebox),
+        shotsOutsidebox: g(TEAM_STAT.shotsOutsidebox),
+        shotsOnTarget: g(TEAM_STAT.shotsOnTarget),
+        bigChancesCreated: g(TEAM_STAT.bigChancesCreated),
+        dangerousAttacks: g(TEAM_STAT.dangerousAttacks),
+        corners: g(TEAM_STAT.corners),
+      }
+      await db
+        .insert(matchTeamStats)
+        .values(ts)
+        .onConflictDoUpdate({ target: [matchTeamStats.matchId, matchTeamStats.teamId], set: ts })
+      nTeamStats += 1
+    }
+  }
+  console.log(`team stats: ${nTeamStats}`)
 
   // 3f) Goals + cards of every match, from events. Most players are already in playerIdBySm
   // (lineups); for any that aren't, upsert a minimal player (id + name). Upsert by sportmonksEventId
