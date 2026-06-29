@@ -22,7 +22,8 @@ const LINEUP_BENCH = 12
 
 // SportMonks lineups.details stat type_ids (Match Facts) — per player per match.
 // keyPasses (117): last pass before a teammate's shot — chance creation; omitted by the API when 0.
-const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117 } as const
+// shotsOnTarget (86): per-player shots on target; SUM per team rebuilds the team's SoT for the match.
+const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86 } as const
 
 // SportMonks goal-event developer_names → our goal.type. Por agora só goal vs owngoal: o pênalti
 // convertido conta como gol normal (mantém o placar consistente). MISSED_PENALTY não é gol (fora).
@@ -311,7 +312,7 @@ async function main() {
   const byId = new Map<number, SmFixture>()
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses}` +
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses},${STAT.shotsOnTarget}` +
         `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
@@ -492,6 +493,7 @@ async function main() {
           rating: stat(STAT.rating) ?? null,
           minutesPlayed: stat(STAT.minutes) ?? null,
           keyPasses: stat(STAT.keyPasses) ?? null,
+          shotsOnTarget: stat(STAT.shotsOnTarget) ?? null,
           manOfMatch: stat(STAT.motm) === 1,
         }
         await db

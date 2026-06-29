@@ -12,6 +12,7 @@ import { FormChips } from "./form-guide"
 import { GoalTiming } from "./goal-timing"
 import { Lineup } from "./lineup"
 import { MatchEvents } from "./match-events"
+import { Prognosis } from "./prognosis"
 import { Scorers } from "./scorers"
 
 // Empty-state for tabs whose data isn't wired up yet (or has no record for this match).
@@ -149,12 +150,17 @@ export function MatchDetail({ id }: { id: string }) {
       <Tabs defaultValue="fatos">
         <TabsList>
           <TabsTrigger value="fatos">Fatos</TabsTrigger>
+          <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
           <TabsTrigger value="eventos">Eventos</TabsTrigger>
           <TabsTrigger value="escalacao">Escalação</TabsTrigger>
           <TabsTrigger value="h2h">H2H</TabsTrigger>
           <TabsTrigger value="gols">Gols (xG)</TabsTrigger>
           <TabsTrigger value="noticias">Notícias</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="prognostico" className="pt-2">
+          <Prognosis id={id} home={match.home} away={match.away} />
+        </TabsContent>
 
         <TabsContent value="eventos" className="pt-2">
           {match.goals.length || match.cards.length ? (

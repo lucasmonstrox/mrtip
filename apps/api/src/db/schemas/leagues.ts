@@ -209,6 +209,7 @@ export const lineupPlayer = pgTable(
     rating: real("rating"), // type 118, e.g. 6.59; null when not rated
     minutesPlayed: integer("minutes_played"), // type 119
     keyPasses: integer("key_passes"), // type 117 — last pass leading to a teammate's shot; null = 0 or didn't play
+    shotsOnTarget: integer("shots_on_target"), // type 86 — null = 0 or didn't play; SUM per team = team SoT that match
     manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
   (t) => [unique().on(t.lineupId, t.playerId)],
