@@ -31,8 +31,11 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^3.0.1",
+    "@clerk/backend": "^3.8.4",
     "@elysiajs/cors": "^1.4.2",
     "@elysiajs/openapi": "^1.4.15",
+    "ai": "^7.0.4",
     "drizzle-orm": "^0.45.2",
     "elysia": "^1.4.29",
     "http-status-codes": "^2.3.0"

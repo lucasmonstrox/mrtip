@@ -7,6 +7,7 @@ import { matchGoalTiming } from "./get-goal-timing/get-goal-timing.service"
 import { matchInjuries } from "./get-injuries/get-injuries.service"
 import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
+import { getPrognosis } from "./get-prognosis/get-prognosis.service"
 import { matchScorers } from "./get-scorers/get-scorers.service"
 
 // `id` is validated as a uuid AT THE EDGE: a malformed id becomes 422 before reaching the service —
@@ -42,4 +43,8 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/scorers", ({ params }) => matchScorers(params.id), {
     params: paramId,
     detail: { summary: "Top scorers (goals + assists) of each team over the season" },
+  })
+  .get("/:id/prognosis", ({ params }) => getPrognosis(params.id), {
+    params: paramId,
+    detail: { summary: "Latest LLM xG prognosis (per-team + overall); null when none yet" },
   })

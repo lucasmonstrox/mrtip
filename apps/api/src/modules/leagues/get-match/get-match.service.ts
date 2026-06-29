@@ -6,6 +6,7 @@ import {
   loadMatchCards,
   loadMatchGoals,
   loadMatches,
+  loadTeamStanding,
   serializeMatch,
   type Match,
   type TeamRest,
@@ -23,8 +24,8 @@ function restFor(matches: Match[], teamId: string, date: string): TeamRest {
 }
 
 // GET /v1/matches/:id — detail of a match: match data + league summary + goals
-// (scorer/assist/own goal/minute) + cards (yellow/red/second yellow) + rest days of both teams.
-// 404 (match_not_found).
+// (scorer/assist/own goal/minute) + cards (yellow/red/second yellow) + rest days + official season
+// standing of both teams. 404 (match_not_found).
 export async function getMatch(id: string) {
   const row = await getMatchRow(id)
   if (!row) throw notFound("match_not_found")
@@ -36,5 +37,18 @@ export async function getMatch(id: string) {
     home: restFor(matches, row.m.homeTeamId, row.m.date),
     away: restFor(matches, row.m.awayTeamId, row.m.date),
   }
-  return { ...serializeMatch(row), league, goals, cards, rest }
+  // Official season standing of each side (position/points/W-D-L/goals/zone) for the Fatos snapshot;
+  // null when the team has no standing row yet. @feature LIG-006
+  const [homeStanding, awayStanding] = await Promise.all([
+    loadTeamStanding(row.m.homeTeamId),
+    loadTeamStanding(row.m.awayTeamId),
+  ])
+  return {
+    ...serializeMatch(row),
+    league,
+    goals,
+    cards,
+    rest,
+    standings: { home: homeStanding, away: awayStanding },
+  }
 }

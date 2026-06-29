@@ -1,0 +1,1 @@
+ALTER TABLE "lineup_player" ADD COLUMN "key_passes" integer;

@@ -23,7 +23,7 @@ const POSITION_LABEL: Record<string, string> = {
 }
 
 // How many recent rated appearances feed the sparkline — enough to read a trend without crowding.
-const FORM_GAMES = 10
+const FORM_GAMES = 5
 
 // The per-game output strip covers this many recent games; each goal is a football icon and each
 // assist a boot icon, so a game reads as goal involvements at a glance.

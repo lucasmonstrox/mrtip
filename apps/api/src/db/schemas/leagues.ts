@@ -1,4 +1,4 @@
-import { boolean, date, integer, numeric, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { boolean, date, integer, jsonb, numeric, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
 
 // League + season (one row per league/season). `code` is the domain key (e.g. "PL"), used in the
 // URL and as the match FK. `sportmonksLeagueId` is the SportMonks league id (Premier League = 8);
@@ -208,6 +208,7 @@ export const lineupPlayer = pgTable(
     // Per-player match stats from SportMonks Match Facts (lineups.details).
     rating: real("rating"), // type 118, e.g. 6.59; null when not rated
     minutesPlayed: integer("minutes_played"), // type 119
+    keyPasses: integer("key_passes"), // type 117 — last pass leading to a teammate's shot; null = 0 or didn't play
     manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
   (t) => [unique().on(t.lineupId, t.playerId)],
@@ -281,3 +282,62 @@ export const card = pgTable("card", {
 })
 
 export type Card = typeof card.$inferSelect
+
+// Prognóstico de expected goals de uma partida gerado por um LLM (deepseek-v4-pro, reasoning xhigh).
+// Uma linha por RUN (matchId+model+runAt único) — guarda métricas E textos E auditoria do raciocínio,
+// pra alimentar a aba "Prognóstico" na UI e auditar depois. xG/probabilidades em `real`; os objetos
+// aninhados (faixas de 15min, 1x2 nos 3 recortes, drivers, saída crua) em `jsonb` tipado.
+type XgBands = Record<"0-15" | "16-30" | "31-45" | "46-60" | "61-75" | "76-90", number>
+type OneXTwo = { home: number; draw: number; away: number }
+export const matchPrognosis = pgTable(
+  "match_prognosis",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => match.id, { onDelete: "cascade" }),
+    // Proveniência do run.
+    model: text("model").notNull(), // "deepseek-v4-pro"
+    reasoningEffort: text("reasoning_effort"), // "xhigh"
+    runAt: timestamp("run_at", { withTimezone: true }).notNull(),
+
+    // --- Métricas POR TIME (mandante) ---
+    xgHome: real("xg_home").notNull(),
+    xgHome1t: real("xg_home_1t").notNull(),
+    xgHome2t: real("xg_home_2t").notNull(),
+    xgHomeBands: jsonb("xg_home_bands").$type<XgBands>().notNull(),
+    resumoHome: text("resumo_home").notNull(), // leitura do mandante
+
+    // --- Métricas POR TIME (visitante) ---
+    xgAway: real("xg_away").notNull(),
+    xgAway1t: real("xg_away_1t").notNull(),
+    xgAway2t: real("xg_away_2t").notNull(),
+    xgAwayBands: jsonb("xg_away_bands").$type<XgBands>().notNull(),
+    resumoAway: text("resumo_away").notNull(), // leitura do visitante
+
+    // --- GERAL (agregados do jogo) ---
+    total: real("total").notNull(),
+    total1t: real("total_1t").notNull(),
+    total2t: real("total_2t").notNull(),
+    over25Prob: real("over25_prob").notNull(),
+    bttsProb: real("btts_prob").notNull(),
+    oneXTwo: jsonb("one_x_two").$type<OneXTwo>().notNull(), // resultado do jogo (90min)
+    oneXTwo1t: jsonb("one_x_two_1t").$type<OneXTwo>().notNull(), // placar do 1º tempo
+    oneXTwo2t: jsonb("one_x_two_2t").$type<OneXTwo>().notNull(), // 2º tempo isolado
+    confianca: text("confianca").notNull(), // "baixa" | "media" | "alta"
+    resumoGeral: text("resumo_geral").notNull(), // parágrafo do jogo + maior incerteza
+    drivers: jsonb("drivers").$type<string[]>().notNull(), // 3 fatores
+
+    // --- Auditoria ---
+    reasoning: text("reasoning"), // cadeia de raciocínio (reasoning_content) em PT
+    promptText: text("prompt_text"), // o dossiê exato enviado
+    rawOutput: jsonb("raw_output"), // objeto tipado cru, pra não perder nada
+    reasoningTokens: integer("reasoning_tokens"),
+    totalTokens: integer("total_tokens"),
+    latencyMs: integer("latency_ms"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [unique().on(t.matchId, t.model, t.runAt)],
+)
+
+export type MatchPrognosis = typeof matchPrognosis.$inferSelect

@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-35 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+36 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -13,13 +13,14 @@
 | COMP-001 | Conformidade e jogo responsável (Lei 14.790 / Portaria SPA 1.231) | conformidade | investigado | P1 | ui:investigado api:investigado ia:investigado | nao | — |
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
 | CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | ui:feito | sim | — |
-| CORE-003 | Autenticação com Clerk (web) | core | investigado | P1 | ui:investigado api:ideia dados:ideia | nao | — |
+| CORE-003 | Autenticação com Clerk (web + API) | core | em-andamento | P1 | ui:em-andamento api:em-andamento dados:ideia | parcial | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
 | LIG-003 | Stats de volume por partida (chutes, passes, desarmes, faltas) | ligas | ideia | P2 | dados:ideia api:ideia ui:ideia | nao | LIG-001 |
 | LIG-004 | Estádio (venue) com geo na página da partida | ligas | verificado | P2 | dados:verificado api:verificado ui:verificado | sim | — |
 | LIG-005 | Dias de descanso (rest days) na página da partida | ligas | verificado | P2 | api:verificado ui:verificado | sim | — |
+| LIG-006 | Snapshot da classificação na página da partida | ligas | em-andamento | P2 | api:feito ui:em-andamento | parcial | — |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -50,6 +51,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 ### settings
 
+- `clerk_authorized_parties` → CORE-003
 - `clerk_jwt_key` → CORE-003
 - `clerk_publishable_key` → CORE-003
 - `clerk_secret_key` → CORE-003
@@ -79,36 +81,43 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `operadores_licenciados` → COMP-001
 - `pick` → DOS-001
 - `player` → LIG-001
-- `standing` → LIG-002
+- `standing` → LIG-002, LIG-006 ⚠️ compartilhada
 - `team` → LIG-002
 - `team_ratings` → MOD-001, MOD-003, SIN-016 ⚠️ compartilhada
 - `venue` → LIG-004
 
 ### funcoes
 
+- `authGuard` → CORE-003
 - `buildDossierSnapshot` → DOS-001
 - `centsParaReais` → CORE-001
 - `centsParaReaisStr` → CORE-001
 - `computeForm` → LIG-002
 - `computeStandings` → LIG-002
 - `formatBRL` → CORE-001
-- `getMatch` → LIG-005
+- `getMatch` → LIG-005, LIG-006 ⚠️ compartilhada
 - `getPlayerDetail` → LIG-001
 - `getTeam` → LIG-002
 - `getTeamBySlug` → LIG-002
 - `lastMatchBefore` → LIG-005
 - `loadTeamMatches` → LIG-002
+- `loadTeamStanding` → LIG-006
 - `reaisParaCents` → CORE-001
 - `serializeMatch` → LIG-004
+- `setApiAuthTokenGetter` → CORE-003
 - `SidebarSearch` → CORE-002
+- `verifier` → CORE-003
 
 ### rotas
 
 - `/conta` → CORE-003
 - `/matches/:id` → LIG-004, LIG-005 ⚠️ compartilhada
 - `/players/:id` → LIG-001
+- `/sign-in` → CORE-003
+- `/sign-up` → CORE-003
 - `/teams/:slug` → LIG-002
-- `middleware.ts` → CORE-003
+- `GET /v1/matches/:id` → LIG-006
+- `proxy.ts` → CORE-003
 
 ## Índice doc → features
 

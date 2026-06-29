@@ -4,6 +4,9 @@ import { env } from "./env"
 app.listen(env.port)
 
 console.log(`🦊 mrtip API at http://localhost:${app.server?.port} — docs at /openapi`)
+if (!env.clerk.secretKey) {
+  console.warn("⚠️  CLERK_SECRET_KEY ausente — auth DESLIGADA (todas as rotas abertas). Defina-a para proteger a API.")
+}
 
 // Single import point for Eden Treaty (apps/web imports the `App` type from here — type-only,
 // does not execute this module). The composition lives in app.ts.

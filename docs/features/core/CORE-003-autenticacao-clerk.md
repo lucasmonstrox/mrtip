@@ -1,24 +1,24 @@
 ---
 id: CORE-003
-titulo: Autenticação com Clerk (web)
+titulo: Autenticação com Clerk (web + API)
 modulo: core
-status: investigado
+status: em-andamento
 prioridade: P1
 facetas:
-  ui: investigado # ClerkProvider, middleware, route group protegido, /conta, gate +18
-  api: ideia # verificação de sessão na API Elysia (workerd) — adiada até API ter rota protegida
+  ui: em-andamento # ClerkProvider, proxy.ts, route group protegido, /sign-in, /sign-up, /conta
+  api: em-andamento # guard global Clerk na API Elysia (@clerk/backend) — /health e /openapi públicos
   dados: ideia # sync de usuário Clerk → tabela local (webhook) quando houver persistência por usuário
 docs: [docs/investigacoes/autenticacao-clerk.md]
-testada: nao
-testes: []
+testada: parcial
+testes: ["Web gate (proxy.ts) em dev: curl /, /conta, /jogo → 307 /sign-in?redirect_url=…; /sign-in → 200 (2026-06-29)", "API guard: curl 401 sem token / 200 /health (2026-06-29)", "typecheck verde web+api (2026-06-29)", "Playwright+@clerk/testing scaffold (test:e2e --list 2/2; login precisa de chaves)"]
 depende_de: []
 impacta: [COMP-001]
 ancoras:
-  settings: [clerk_publishable_key, clerk_secret_key, clerk_jwt_key]
+  settings: [clerk_publishable_key, clerk_secret_key, clerk_jwt_key, clerk_authorized_parties]
   tabelas: []
   tools: []
-  funcoes: []
-  rotas: [middleware.ts, /conta]
+  funcoes: [authGuard, verifier, setApiAuthTokenGetter]
+  rotas: [proxy.ts, /sign-in, /sign-up, /conta]
 verificado_em: null
 atualizado: 2026-06-29
 ---
@@ -27,19 +27,30 @@ atualizado: 2026-06-29
 
 ## Descrição
 
-Adicionar autenticação de usuário (apostador) via **Clerk** no `apps/web` (Next.js 16, App Router),
-deployado por OpenNext na Cloudflare. Cobre login/cadastro, proteção do route group `(app)`,
-página `/conta` (perfil) e o ponto de ancoragem do **gate +18** (COMP-001). **Billing fica de fora**
-desta feature: Clerk Billing **não suporta o Brasil** (só USD) — assinatura BRL vai por gateway
-externo, em feature separada. Auth da **API Elysia** (workerd) e sync de usuário ficam adiados até
-existir endpoint protegido / persistência por usuário.
+Autenticação de usuário (apostador) via **Clerk** no `apps/web` (Next.js 16, App Router) **e**
+proteção da **API Elysia**. Web: login/cadastro (`/sign-in`, `/sign-up`), `proxy.ts` gateando tudo
+exceto as telas de auth, `/conta` (perfil) e ancoragem do **gate +18** (COMP-001). API: **guard
+global** (`auth/guard.ts` + `@clerk/backend`) exige token de sessão em toda rota menos `/health` e
+`/openapi`; o token é injetado por request pelo `ApiAuthBridge` → fetcher do Eden. **Billing fica de
+fora**: Clerk Billing **não suporta o Brasil** (só USD) — assinatura BRL vai por gateway externo, em
+feature separada. Sync de usuário Clerk → tabela local (webhook) fica adiado até haver persistência
+por usuário.
+
+> Implementação espelhada do padrão Clerk do `grupoceralis/apps/crm` (mesmo stack: Next 16.2.6 +
+> `proxy.ts`) e do `grupoceralis/apps/api` (verifier/guard `@clerk/backend`), adaptada pro B2C do
+> mrtip: **sem** tabela de operador, papéis, escopo ou fluxo de convite; a API é gateada
+> **uniformemente** (guard global) em vez do macro por-rota do CRM.
 
 ## Tarefas
 
-- [ ] ui — `@clerk/nextjs`: `<ClerkProvider>` no root layout, `middleware.ts` com `clerkMiddleware()`, env vars; proteger `(app)`; `/conta` com `<UserButton>`/`<UserProfile>`.
-- [ ] ui — **spike de deploy** (OpenNext 1.19.11 + Next 16.2.6 + clerk 7.5.9) pra de-riscar a detecção do middleware em produção na Cloudflare (issue #524).
-- [ ] ui — testing: adotar Playwright + `@clerk/testing` (primeiro runner de teste do repo); token de teste + usuários `+clerk_test`.
-- [ ] api — (adiada) verificar sessão com `@clerk/backend` direto quando a API tiver rota protegida.
+- [x] ui — `@clerk/nextjs`: `<ClerkProvider localization={ptBR}>` no root layout, `proxy.ts` com `clerkMiddleware()`; telas `/sign-in` e `/sign-up`; `/conta` com `<UserProfile>`; `user-menu` ligado ao `useUser`/`signOut`.
+- [x] api — guard global Clerk (`auth/guard.ts` + `auth/verifier.ts` via `@clerk/backend`, networkless com `jwtKey`); `env.clerk`; `/health` e `/openapi` públicos. Verificado: 401 sem token, 200 no `/health`.
+- [x] ui — `ApiAuthBridge` + fetcher do Eden injetam `Authorization: Bearer` em cada request.
+- [x] ui — testing: Playwright + `@clerk/testing` (config, `global.setup.ts`, `support/clerk-auth.ts`, `auth.spec.ts`, `e2e/README.md`) — primeiro runner do repo.
+- [ ] ui — **spike de deploy** (OpenNext 1.19.11 + Next 16.2.6 + clerk 7.5.9) pra confirmar a detecção do `proxy`/middleware em produção na Cloudflare (issue #524, reportado em versões antigas).
+- [ ] ui — **gate +18** (COMP-001): coletar data de nascimento e checar na borda (ainda não feito).
+- [ ] ops — criar instância Clerk e setar env: web (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`), API (`CLERK_SECRET_KEY`, `CLERK_JWT_KEY`, `CLERK_AUTHORIZED_PARTIES`).
+- [ ] dados — (adiada) tabela `users` + webhook de sync quando houver persistência por usuário.
 
 ## Recomendação (investigado, 2026-06-29)
 

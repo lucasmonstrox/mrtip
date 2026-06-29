@@ -1,8 +1,11 @@
 import type { Metadata } from "next"
+import { ClerkProvider } from "@clerk/nextjs"
+import { ptBR } from "@clerk/localizations"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { cn } from "@workspace/ui/lib/utils"
+import { ApiAuthBridge } from "@/components/api-auth-bridge"
 import { Providers } from "@/shared/providers"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
@@ -29,7 +32,16 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
       <body>
-        <Providers>{children}</Providers>
+        <ClerkProvider
+          localization={ptBR}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          signInFallbackRedirectUrl="/"
+          signUpFallbackRedirectUrl="/"
+        >
+          <ApiAuthBridge />
+          <Providers>{children}</Providers>
+        </ClerkProvider>
       </body>
     </html>
   )

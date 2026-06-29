@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 import Link from "next/link"
 
-import type { TeamRest } from "../../types"
+import type { TeamRest, TeamStanding } from "../../types"
 import { useMatchFormQuery } from "../../hooks/data/queries/use-match-form-query"
 import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
 import { formatDate } from "../../utils/format"
@@ -38,6 +38,37 @@ function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
         </span>
       ) : (
         <span className="text-sm text-muted-foreground">estreia</span>
+      )}
+    </div>
+  )
+}
+
+// Qualification/relegation zone → text color for the position number (mirrors team-standing.tsx's ZONE).
+const ZONE_COLOR: Record<string, string> = {
+  champions: "text-emerald-600 dark:text-emerald-400",
+  europa: "text-blue-600 dark:text-blue-400",
+  conference: "text-cyan-600 dark:text-cyan-400",
+  relegation: "text-red-600 dark:text-red-400",
+}
+
+// One side of the standings snapshot: the team's official current-season position (tinted by zone),
+// points, W-D-L and goal difference. null → "—" (no standing row yet). @feature LIG-006
+function StandingSide({ name, standing: s }: { name: string; standing: TeamStanding | null }) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      <span className="truncate text-sm font-medium">{name}</span>
+      {s ? (
+        <>
+          <span className="text-lg font-semibold tabular-nums">
+            <span className={s.zone ? ZONE_COLOR[s.zone] : undefined}>{s.position}º</span>
+            <span className="ml-1.5 text-sm font-normal text-muted-foreground">{s.points} pts</span>
+          </span>
+          <span className="text-xs text-muted-foreground tabular-nums">
+            {s.won}V · {s.drawn}E · {s.lost}D · SG {s.goalDifference > 0 ? `+${s.goalDifference}` : s.goalDifference}
+          </span>
+        </>
+      ) : (
+        <span className="text-sm text-muted-foreground">—</span>
       )}
     </div>
   )
@@ -139,7 +170,9 @@ export function MatchDetail({ id }: { id: string }) {
           <Absences id={id} />
         </TabsContent>
 
-        <TabsContent value="h2h" className="pt-2" />
+        <TabsContent value="h2h" className="pt-2">
+          <TabEmpty>Confrontos diretos em breve.</TabEmpty>
+        </TabsContent>
 
         <TabsContent value="gols" className="flex flex-col gap-6 pt-2">
           <Scorers id={id} />
@@ -147,6 +180,19 @@ export function MatchDetail({ id }: { id: string }) {
         </TabsContent>
 
         <TabsContent value="fatos" className="flex flex-col gap-4 pt-2">
+          {/* Standings snapshot: each team's official current-season position/points/W-D-L/goal
+              difference, position tinted by zone. Hidden when the API hasn't sent standings yet
+              (stale pre-LIG-006 payload — `?.` guards the runtime). @feature LIG-006 */}
+          {match.standings?.home || match.standings?.away ? (
+            <div className="rounded-lg border p-4">
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">Classificação</span>
+              <div className="mt-2 grid grid-cols-2 gap-4">
+                <StandingSide name={match.home.name} standing={match.standings?.home ?? null} />
+                <StandingSide name={match.away.name} standing={match.standings?.away ?? null} />
+              </div>
+            </div>
+          ) : null}
+
           {/* Venue (stadium): name + city + capacity (+ photo). lat/long are NOT shown — they feed
               the travel/fatigue signal, not the UI. @feature LIG-004 */}
           {venue ? (
