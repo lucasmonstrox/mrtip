@@ -15,6 +15,7 @@ import {
   player,
   standing,
   team,
+  venue,
   type Match as MatchRow,
 } from "../../../db/schema"
 import { notFound } from "../../../lib/errors"
@@ -96,6 +97,18 @@ export type Score = {
   ht: [number, number] | null // half time (null when the source doesn't provide it)
 }
 
+// Venue of a match (null when not synced). lat/long are strings (numeric column) and feed the
+// travel/fatigue signal — not displayed; the UI shows name/cityName/capacity (+ photo).
+export type MatchVenue = {
+  name: string
+  cityName: string | null
+  capacity: number | null
+  surface: string | null
+  latitude: string | null
+  longitude: string | null
+  imageUrl: string | null
+}
+
 export type Match = {
   id: string
   round: number
@@ -105,7 +118,12 @@ export type Match = {
   home: TeamRef
   away: TeamRef
   score: Score | null // null = match without a result yet
+  venue: MatchVenue | null
 }
+
+// Rest of one side before a match: its previous PLAYED match in-league + days until this one.
+// null when the team has no earlier match in the dataset (season debut). @feature LIG-005
+export type TeamRest = { lastMatchDate: string; restDays: number } | null
 
 export type Round = {
   round: number
@@ -241,6 +259,27 @@ export type TeamGoalTiming = {
 // Both sides of the match. Payload of GET /:id/goal-timing.
 export type MatchGoalTiming = { home: TeamGoalTiming; away: TeamGoalTiming }
 
+// One scorer in a team's top-scorers list on the match page: season goals + assists (own goals
+// excluded from the goal tally). Leaner than the league `Scorer` — no per-row club, since the list
+// is already grouped under its team.
+export type MatchScorer = {
+  id: string
+  name: string
+  imageUrl: string | null
+  goals: number
+  assists: number
+}
+
+// One team's top scorers (marcadores) for the match-page "who can score" preview: the team + its
+// top-N goleadores by goals.
+export type TeamScorers = {
+  team: TeamRef
+  scorers: MatchScorer[]
+}
+
+// Both sides of the match. Payload of GET /:id/scorers.
+export type MatchScorers = { home: TeamScorers; away: TeamScorers }
+
 // A goal from the player's perspective (for their page): the match + minute + type.
 export type PlayerGoal = {
   matchId: string
@@ -336,7 +375,8 @@ export type CoachDetail = {
 const teamHome = alias(team, "team_home")
 const teamAway = alias(team, "team_away")
 
-// Row the read-model produces: the raw match + denormalized name/slug of both teams.
+// Row the read-model produces: the raw match + denormalized name/slug of both teams + venue (null
+// via the left join when the match has no venue).
 type MatchJoin = {
   m: MatchRow
   homeName: string
@@ -345,10 +385,12 @@ type MatchJoin = {
   awayName: string
   awaySlug: string
   awayLogo: string | null
+  v: typeof venue.$inferSelect | null
 }
 
 // BASE read-model: match + name/slug of both teams via join (inner — the ids are notNull with FK,
-// so they always match). Factory (`() =>`) because each caller chains its own where/orderBy.
+// so they always match) + venue (LEFT join — venueId is nullable, so a match without venue is kept).
+// Factory (`() =>`) because each caller chains its own where/orderBy.
 const baseQuery = () =>
   db
     .select({
@@ -359,10 +401,12 @@ const baseQuery = () =>
       awayName: teamAway.name,
       awaySlug: teamAway.slug,
       awayLogo: teamAway.logoUrl,
+      v: venue,
     })
     .from(match)
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
+    .leftJoin(venue, eq(venue.id, match.venueId))
 
 // Flattens the join row (score in 4 columns + names from the join) into the output contract (score
 // and teams nested). The ONLY place that defines the shape of a match — list/rounds/detail all go
@@ -372,6 +416,7 @@ export function serializeMatch(row: MatchJoin): Match {
   const { ftHome: fh, ftAway: fa, htHome: hh, htAway: ha } = m
   const score: Score | null =
     fh == null || fa == null ? null : { ft: [fh, fa], ht: hh != null && ha != null ? [hh, ha] : null }
+  const v = row.v
   return {
     id: m.id,
     round: m.round,
@@ -381,6 +426,17 @@ export function serializeMatch(row: MatchJoin): Match {
     home: { id: m.homeTeamId, name: row.homeName, slug: row.homeSlug, logoUrl: row.homeLogo },
     away: { id: m.awayTeamId, name: row.awayName, slug: row.awaySlug, logoUrl: row.awayLogo },
     score,
+    venue: v
+      ? {
+          name: v.name,
+          cityName: v.cityName,
+          capacity: v.capacity,
+          surface: v.surface,
+          latitude: v.latitude,
+          longitude: v.longitude,
+          imageUrl: v.imageUrl,
+        }
+      : null,
   }
 }
 
@@ -932,6 +988,48 @@ export async function loadGoalTiming(
   return { home: build(home), away: build(away) }
 }
 
+// Top scorers (marcadores) of ONE team over the league season: goals + assists per player, ranked by
+// goals, capped at `limit`. Own goals are excluded from the tally; scoped by `goal.teamId` (the team
+// the goal was scored for). The reusable unit behind the match-page "who can score" preview and the
+// team page squad table. Derived live from goal⋈match — no snapshot.
+export async function loadTeamScorers(
+  team: TeamRef,
+  leagueCode: string,
+  limit: number,
+): Promise<TeamScorers> {
+  // Goals per player scored FOR this team (own goals out), most first; name breaks ties.
+  const goalRows = await db
+    .select({ id: player.id, name: player.name, imageUrl: player.imageUrl, goals: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .innerJoin(player, eq(player.id, goal.playerId))
+    .where(and(eq(match.leagueCode, leagueCode), eq(goal.teamId, team.id), ne(goal.type, "own")))
+    .groupBy(player.id, player.name, player.imageUrl)
+    .orderBy(desc(count()), asc(player.name))
+    .limit(limit)
+
+  // Assists by this team's players on this team's goals (innerJoin on assistId drops the unassisted).
+  const assistRows = await db
+    .select({ id: player.id, assists: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .innerJoin(player, eq(player.id, goal.assistId))
+    .where(and(eq(match.leagueCode, leagueCode), eq(goal.teamId, team.id)))
+    .groupBy(player.id)
+  const assistsByPlayer = new Map(assistRows.map((r) => [r.id, Number(r.assists)]))
+
+  return {
+    team,
+    scorers: goalRows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      imageUrl: r.imageUrl,
+      goals: Number(r.goals),
+      assists: assistsByPlayer.get(r.id) ?? 0,
+    })),
+  }
+}
+
 // Cards of a match, in chronological order (minute). Empty when no cards / events not imported.
 export async function loadMatchCards(matchId: string): Promise<CardItem[]> {
   const rows = await db
@@ -1198,6 +1296,20 @@ export function computeForm(
     l: recent.filter((r) => r.result === "L").length,
   }
   return { team: t, recent, summary }
+}
+
+// The team's most recent PLAYED match before `before` (any venue) — the "last game" anchor.
+// Same selection as computeForm but returns the Match; shared by LIG-005 (rest days) and the
+// future W-021 (last-match scorers). null when the team has no earlier match in the dataset.
+// @feature LIG-005
+export function lastMatchBefore(matches: Match[], teamId: string, before: string): Match | null {
+  return (
+    matches
+      .filter((m) => m.score != null)
+      .filter((m) => m.home.id === teamId || m.away.id === teamId)
+      .filter((m) => m.date < before)
+      .sort((a, b) => b.date.localeCompare(a.date))[0] ?? null
+  )
 }
 
 // Minimum played matches for a trend to be shown without a low-sample warning.

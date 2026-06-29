@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { boolean, date, integer, numeric, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
 
 // League + season (one row per league/season). `code` is the domain key (e.g. "PL"), used in the
 // URL and as the match FK. `sportmonksLeagueId` is the SportMonks league id (Premier League = 8);
@@ -32,6 +32,26 @@ export const team = pgTable("team", {
 
 export type Team = typeof team.$inferSelect
 
+// Venue (stadium) — own entity, deduped by `sportmonksVenueId`. The match's actual venue (handles
+// neutral grounds). `latitude`/`longitude` come from SportMonks as strings (numeric here; Number()
+// at the edge) and feed the travel/fatigue signal (SIN-008) + territorial proximity (SIN-007) —
+// they are NOT displayed. `cityName` denormalized for display; `imageUrl` is the photo in R2.
+// @feature LIG-004
+export const venue = pgTable("venue", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksVenueId: integer("sportmonks_venue_id").notNull().unique(),
+  name: text("name").notNull(),
+  cityName: text("city_name"),
+  capacity: integer("capacity"),
+  surface: text("surface"), // "grass" | "artificial" | null
+  latitude: numeric("latitude", { precision: 9, scale: 6 }),
+  longitude: numeric("longitude", { precision: 9, scale: 6 }),
+  imageUrl: text("image_url"), // stadium photo in R2 (bucket mrtip); origin SportMonks image_path
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
+export type Venue = typeof venue.$inferSelect
+
 // Match of a season. `sportmonksFixtureId` ties the match to the source — it's what the lineup is
 // matched by. Teams normalized (FK → team.id). Score flattened into 4 nullable columns
 // (null = no result). `date` (yyyy-MM-dd) + `time` (HH:mm) kept separate.
@@ -51,6 +71,8 @@ export const match = pgTable("match", {
   awayTeamId: uuid("away_team_id")
     .notNull()
     .references(() => team.id),
+  // Actual venue of this match (FK → venue.id); nullable until re-synced. @feature LIG-004
+  venueId: uuid("venue_id").references(() => venue.id),
   ftHome: integer("ft_home"),
   ftAway: integer("ft_away"),
   htHome: integer("ht_home"),

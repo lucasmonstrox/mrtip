@@ -3,6 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 import Link from "next/link"
 
+import type { TeamRest } from "../../types"
 import { useMatchFormQuery } from "../../hooks/data/queries/use-match-form-query"
 import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
 import { formatDate } from "../../utils/format"
@@ -11,12 +12,33 @@ import { FormChips } from "./form-guide"
 import { GoalTiming } from "./goal-timing"
 import { Lineup } from "./lineup"
 import { MatchEvents } from "./match-events"
+import { Scorers } from "./scorers"
 
 // Empty-state for tabs whose data isn't wired up yet (or has no record for this match).
 function TabEmpty({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">
       {children}
+    </div>
+  )
+}
+
+// Rest of one side: days since its previous in-league match, or "estreia" when the team has no
+// earlier match in the dataset. The number comes ready from the API. @feature LIG-005
+function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      <span className="truncate text-sm font-medium">{name}</span>
+      {rest ? (
+        <span className="text-lg font-semibold tabular-nums">
+          {rest.restDays}{" "}
+          <span className="text-sm font-normal text-muted-foreground">
+            {rest.restDays === 1 ? "dia" : "dias"}
+          </span>
+        </span>
+      ) : (
+        <span className="text-sm text-muted-foreground">estreia</span>
+      )}
     </div>
   )
 }
@@ -30,6 +52,13 @@ export function MatchDetail({ id }: { id: string }) {
     return <p className="text-sm text-destructive">Não foi possível carregar a partida.</p>
 
   const score = match.score
+  // Venue subtitle: city · capacity (omitting whichever is missing). @feature LIG-004
+  const venue = match.venue
+  const venueSubtitle = venue
+    ? [venue.cityName, venue.capacity ? `${venue.capacity.toLocaleString("pt-BR")} lugares` : null]
+        .filter(Boolean)
+        .join(" · ")
+    : ""
 
   return (
     <section className="flex flex-col gap-6">
@@ -112,12 +141,50 @@ export function MatchDetail({ id }: { id: string }) {
 
         <TabsContent value="h2h" className="pt-2" />
 
-        <TabsContent value="gols" className="pt-2">
+        <TabsContent value="gols" className="flex flex-col gap-6 pt-2">
+          <Scorers id={id} />
           <GoalTiming id={id} />
         </TabsContent>
 
-        <TabsContent value="fatos" className="pt-2">
-          <TabEmpty>Fatos da partida em breve.</TabEmpty>
+        <TabsContent value="fatos" className="flex flex-col gap-4 pt-2">
+          {/* Venue (stadium): name + city + capacity (+ photo). lat/long are NOT shown — they feed
+              the travel/fatigue signal, not the UI. @feature LIG-004 */}
+          {venue ? (
+            <div className="flex items-center gap-4 rounded-lg border p-4">
+              {venue.imageUrl ? (
+                <img src={venue.imageUrl} alt="" className="h-16 w-24 shrink-0 rounded object-cover" />
+              ) : null}
+              <div className="flex flex-col gap-0.5">
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">Estádio</span>
+                <span className="text-base font-semibold">{venue.name}</span>
+                {venueSubtitle ? (
+                  <span className="text-sm text-muted-foreground">{venueSubtitle}</span>
+                ) : null}
+              </div>
+            </div>
+          ) : (
+            <TabEmpty>Estádio não informado.</TabEmpty>
+          )}
+
+          {/* Rest days: days since each team's previous match IN THIS LEAGUE. Midweek cup/national-team
+              games aren't ingested, so this can overestimate rest — hence the "na liga" caveat. @feature LIG-005 */}
+          <div className="rounded-lg border p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">Descanso</span>
+              <span
+                className="cursor-help text-xs text-muted-foreground underline decoration-dotted"
+                title="Dias desde o último jogo de cada time nesta liga. Jogos de meio de semana fora da liga (copa, seleção) não entram, então o descanso pode estar superestimado."
+              >
+                na liga
+              </span>
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-4">
+              {/* `rest` is always present in the contract; `?? null` only hardens against a stale
+                  pre-LIG-005 API payload (renders "estreia" instead of crashing). */}
+              <RestSide name={match.home.name} rest={match.rest?.home ?? null} />
+              <RestSide name={match.away.name} rest={match.rest?.away ?? null} />
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="noticias" className="pt-2">

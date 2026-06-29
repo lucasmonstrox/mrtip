@@ -1,5 +1,5 @@
 import { db } from "./client"
-import { card, goal, injury, league, lineup, lineupPlayer, match, nationality, player, standing, team } from "./schema"
+import { card, goal, injury, league, lineup, lineupPlayer, match, nationality, player, standing, team, venue } from "./schema"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
@@ -104,6 +104,18 @@ type SmEvent = {
   related_player_name?: string
   minute?: number
 }
+// SportMonks `venue` on a fixture (include=venue): the actual ground of the match. lat/long come
+// as strings (or null); image_path is the stadium photo. city_name is the denormalized city.
+type SmVenue = {
+  id: number
+  name: string
+  city_name?: string | null
+  capacity?: number | null
+  surface?: string | null
+  latitude?: string | null
+  longitude?: string | null
+  image_path?: string | null
+}
 type SmFixture = {
   id: number
   name: string
@@ -116,6 +128,7 @@ type SmFixture = {
   formations?: SmFormation[]
   events?: SmEvent[]
   sidelined?: SmSidelined[]
+  venue?: SmVenue | null
 }
 // SportMonks `sidelined` item on a fixture: a player unavailable (or a doubt) for THAT match.
 // `type.developer_name` is the cause/category (HAMSTRING_INJURY, RED_CARD_SUSPENSION, DOUBTFUL).
@@ -298,11 +311,46 @@ async function main() {
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
       `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type&per_page=50`,
+        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
   const fixtures = [...byId.values()]
+
+  // 3a-pre) Venues (estádios): distinct venues across fixtures → photo to R2 (parallel) + upsert by
+  // sportmonksVenueId. Must run BEFORE matches so `venueId` exists when the match is inserted.
+  // lat/long arrive as strings (or null) and are stored as-is (numeric column); they feed the
+  // travel/fatigue signal, not the display.
+  const venuesById = new Map<number, SmVenue>()
+  for (const f of fixtures) if (f.venue) venuesById.set(f.venue.id, f.venue)
+  const venues = [...venuesById.values()]
+  const venueImgById = new Map<number, string | null>()
+  await pool(venues, 8, async (v) => {
+    const img = v.image_path
+      ? await uploadImagem(v.image_path, imgKey("venues", v.name, v.image_path, v.id))
+      : null
+    venueImgById.set(v.id, img)
+  })
+  const venueIdBySm = new Map<number, string>() // sportmonksVenueId → venue.id (uuid)
+  for (const v of venues) {
+    const vv = {
+      sportmonksVenueId: v.id,
+      name: v.name,
+      cityName: v.city_name ?? null,
+      capacity: v.capacity ?? null,
+      surface: v.surface ?? null,
+      latitude: v.latitude ?? null,
+      longitude: v.longitude ?? null,
+      imageUrl: venueImgById.get(v.id) ?? null,
+    }
+    const [r] = await db
+      .insert(venue)
+      .values(vv)
+      .onConflictDoUpdate({ target: venue.sportmonksVenueId, set: vv })
+      .returning({ id: venue.id })
+    venueIdBySm.set(v.id, r!.id)
+  }
+  console.log(`venues: ${venues.length}`)
 
   // 3a) Matches (result). Keeps the match uuid by fixture to link the lineup later.
   const matchIdByFixture = new Map<number, string>()
@@ -326,6 +374,7 @@ async function main() {
       time: f.starting_at.slice(11, 16),
       homeTeamId,
       awayTeamId,
+      venueId: f.venue ? venueIdBySm.get(f.venue.id) ?? null : null,
       ...score,
       status: f.state?.developer_name ?? null,
     }

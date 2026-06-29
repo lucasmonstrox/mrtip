@@ -25,11 +25,90 @@ const POSITION_LABEL: Record<string, string> = {
 // How many recent rated appearances feed the sparkline — enough to read a trend without crowding.
 const FORM_GAMES = 10
 
+// The per-game output strip covers this many recent games; each goal is a football icon and each
+// assist a boot icon, so a game reads as goal involvements at a glance.
+const GOAL_GAMES = 5
+
+type Appearance = PlayerDetail["appearances"][number]
+
+// Shared line-icon wrapper so the goal ball and assist shoe read as one set (same stroke + size props).
+function StripIcon({ className, children }: { className?: string; children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {children}
+    </svg>
+  )
+}
+
+// Goal marker — Tabler's "ball-football" (MIT): a clean soccer ball (ring + pentagon + spokes).
+function GoalIcon({ className }: { className?: string }) {
+  return (
+    <StripIcon className={className}>
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+      <path d="M12 7l4.76 3.45l-1.76 5.55h-6l-1.76 -5.55l4.76 -3.45" />
+      <path d="M12 7v-4m3 13l2.5 3m-.74 -8.55l3.74 -1.45m-11.44 7.05l-2.56 2.95m.74 -8.55l-3.74 -1.45" />
+    </StripIcon>
+  )
+}
+
+// Assist marker — lucide's "sport-shoe" (ISC): a cleat, same stroke style as the goal ball.
+function AssistIcon({ className }: { className?: string }) {
+  return (
+    <StripIcon className={className}>
+      <path d="m15 10.42 4.8-5.07" />
+      <path d="M19 18h3" />
+      <path d="M9.5 22 21.414 9.415A2 2 0 0 0 21.2 6.4l-5.61-4.208A1 1 0 0 0 14 3v2a2 2 0 0 1-1.394 1.906L8.677 8.053A1 1 0 0 0 8 9c-.155 6.393-2.082 9-4 9a2 2 0 0 0 0 4h14" />
+    </StripIcon>
+  )
+}
+
 function Stat({ value, label, className }: { value: string | number; label: string; className?: string }) {
   return (
     <div className="flex flex-col items-center">
       <span className={`text-base font-bold tabular-nums ${className ?? ""}`}>{value}</span>
       <span className="text-[10px] text-muted-foreground">{label}</span>
+    </div>
+  )
+}
+
+// One recent game in the output strip: a football per goal + a boot per assist, wrapped and centred,
+// with the opponent crest below and a dash for a blank game. Exact counts live in the title tooltip.
+function GameInvolvement({ a }: { a: Appearance }) {
+  const hasOutput = a.goals > 0 || a.assists > 0
+  return (
+    <div
+      className="flex flex-1 flex-col items-center gap-1.5 rounded-md bg-muted/50 py-1.5"
+      title={`${a.goals}G ${a.assists}A · ${a.home ? "vs" : "@"} ${a.opponent}`}
+    >
+      <div className="flex h-9 flex-wrap content-center items-center justify-center gap-0.5 overflow-hidden">
+        {hasOutput ? (
+          <>
+            {Array.from({ length: a.goals }).map((_, i) => (
+              <GoalIcon key={`g${a.matchId}-${i}`} className="size-3 text-foreground" />
+            ))}
+            {Array.from({ length: a.assists }).map((_, i) => (
+              <AssistIcon key={`b${a.matchId}-${i}`} className="size-3 text-muted-foreground" />
+            ))}
+          </>
+        ) : (
+          <span className="text-sm leading-none text-muted-foreground/50">–</span>
+        )}
+      </div>
+      {a.opponentLogo ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={a.opponentLogo} alt={a.opponent} title={a.opponent} className="size-3.5 object-contain" />
+      ) : (
+        <span className="text-[8px] font-bold text-muted-foreground">{a.opponent.slice(0, 3).toUpperCase()}</span>
+      )}
     </div>
   )
 }
@@ -55,6 +134,14 @@ function PlayerHoverBody({ data }: { data: PlayerDetail }) {
     .filter((a) => a.rating != null)
     .map((a) => a.rating as number)
     .slice(-FORM_GAMES)
+
+  // Per-game output strip: the player's goals + assists in each of the last few games. Same appearances
+  // spine as the sparkline (oldest → newest), so it reads left → right in the same direction. Shown for
+  // anyone with offensive output this season — a keeper's all-dash strip would be noise.
+  const recentGames = data.appearances.slice(-GOAL_GAMES)
+  const goalsInWindow = recentGames.reduce((sum, a) => sum + a.goals, 0)
+  const assistsInWindow = recentGames.reduce((sum, a) => sum + a.assists, 0)
+  const showOutput = (data.season.goals > 0 || data.season.assists > 0) && recentGames.length > 0
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -97,6 +184,29 @@ function PlayerHoverBody({ data }: { data: PlayerDetail }) {
         <div className="flex items-center justify-between gap-2 border-t pt-2">
           <span className="text-[10px] text-muted-foreground">Forma · últimos {ratings.length}</span>
           <Sparkline values={ratings} />
+        </div>
+      ) : null}
+
+      {showOutput ? (
+        <div className="flex flex-col gap-1.5 border-t pt-2">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] text-muted-foreground">Gols e assists · últimos {recentGames.length}</span>
+            <span className="flex items-center gap-2 text-[10px] tabular-nums text-muted-foreground">
+              <span className="flex items-center gap-0.5" title="gols">
+                <GoalIcon className="size-3.5 text-foreground" />
+                <span className="font-semibold text-foreground">{goalsInWindow}</span>
+              </span>
+              <span className="flex items-center gap-0.5" title="assistências">
+                <AssistIcon className="size-3.5" />
+                <span className="font-semibold text-foreground">{assistsInWindow}</span>
+              </span>
+            </span>
+          </div>
+          <div className="flex gap-1">
+            {recentGames.map((a) => (
+              <GameInvolvement key={a.matchId} a={a} />
+            ))}
+          </div>
         </div>
       ) : null}
     </div>

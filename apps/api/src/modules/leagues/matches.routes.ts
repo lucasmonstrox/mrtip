@@ -7,6 +7,7 @@ import { matchGoalTiming } from "./get-goal-timing/get-goal-timing.service"
 import { matchInjuries } from "./get-injuries/get-injuries.service"
 import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
+import { matchScorers } from "./get-scorers/get-scorers.service"
 
 // `id` is validated as a uuid AT THE EDGE: a malformed id becomes 422 before reaching the service —
 // without it, the Postgres `uuid` column would blow up with "invalid input syntax" (→ 500). A
@@ -37,4 +38,8 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
     params: paramId,
     query: goalTimingQuery,
     detail: { summary: "Goal timing (15-min bands) of both teams over the season, by venue cut" },
+  })
+  .get("/:id/scorers", ({ params }) => matchScorers(params.id), {
+    params: paramId,
+    detail: { summary: "Top scorers (goals + assists) of each team over the season" },
   })

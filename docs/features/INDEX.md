@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-33 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+35 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -18,6 +18,8 @@
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
 | LIG-003 | Stats de volume por partida (chutes, passes, desarmes, faltas) | ligas | ideia | P2 | dados:ideia api:ideia ui:ideia | nao | LIG-001 |
+| LIG-004 | Estádio (venue) com geo na página da partida | ligas | verificado | P2 | dados:verificado api:verificado ui:verificado | sim | — |
+| LIG-005 | Dias de descanso (rest days) na página da partida | ligas | verificado | P2 | api:verificado ui:verificado | sim | — |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -67,7 +69,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `injury` → LIG-001, LIG-002, SIN-011, SIN-020 ⚠️ compartilhada
 - `lineup` → LIG-002
 - `lineup_player` → LIG-001, LIG-003, SIN-020 ⚠️ compartilhada
-- `match` → DOS-001, LIG-001, LIG-002, MOD-001, SIN-007, SIN-020 ⚠️ compartilhada
+- `match` → DOS-001, LIG-001, LIG-002, LIG-004, LIG-005, MOD-001, SIN-007, SIN-020 ⚠️ compartilhada
 - `match_event` → SIN-017
 - `match_features` → MOD-001, MOD-002, SIN-016 ⚠️ compartilhada
 - `match_odds` → DOS-001, SIN-012, SIN-018, SIN-019 ⚠️ compartilhada
@@ -80,6 +82,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `standing` → LIG-002
 - `team` → LIG-002
 - `team_ratings` → MOD-001, MOD-003, SIN-016 ⚠️ compartilhada
+- `venue` → LIG-004
 
 ### funcoes
 
@@ -89,22 +92,27 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `computeForm` → LIG-002
 - `computeStandings` → LIG-002
 - `formatBRL` → CORE-001
+- `getMatch` → LIG-005
 - `getPlayerDetail` → LIG-001
 - `getTeam` → LIG-002
 - `getTeamBySlug` → LIG-002
+- `lastMatchBefore` → LIG-005
 - `loadTeamMatches` → LIG-002
 - `reaisParaCents` → CORE-001
+- `serializeMatch` → LIG-004
 - `SidebarSearch` → CORE-002
 
 ### rotas
 
 - `/conta` → CORE-003
+- `/matches/:id` → LIG-004, LIG-005 ⚠️ compartilhada
 - `/players/:id` → LIG-001
 - `/teams/:slug` → LIG-002
 - `middleware.ts` → CORE-003
 
 ## Índice doc → features
 
+- [docs/arquitetura/modelagem.md](../../docs/arquitetura/modelagem.md) → LIG-004
 - [docs/arquitetura/taxonomia-sinais.md](../../docs/arquitetura/taxonomia-sinais.md) → AGT-001, DOS-001, SIN-005, SIN-007
 - [docs/investigacoes/agente-selecao-melhor-mercado.md](../../docs/investigacoes/agente-selecao-melhor-mercado.md) → AGT-001, MOD-001
 - [docs/investigacoes/autenticacao-clerk.md](../../docs/investigacoes/autenticacao-clerk.md) → CORE-003
@@ -121,6 +129,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md](../../docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md) → CORE-001
 - [docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md](../../docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md) → MOD-001
 - [docs/investigacoes/regulacao-br-apostas-produto.md](../../docs/investigacoes/regulacao-br-apostas-produto.md) → COMP-001
+- [docs/investigacoes/rest-days-descanso-na-partida.md](../../docs/investigacoes/rest-days-descanso-na-partida.md) → LIG-005
 - [docs/investigacoes/sinal-conflitos-entre-jogadores.md](../../docs/investigacoes/sinal-conflitos-entre-jogadores.md) → SIN-001
 - [docs/investigacoes/sinal-escanteios.md](../../docs/investigacoes/sinal-escanteios.md) → SIN-013
 - [docs/investigacoes/sinal-formacao-tatica.md](../../docs/investigacoes/sinal-formacao-tatica.md) → SIN-014
@@ -130,14 +139,17 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/sinal-perfil-tatico-transicoes.md](../../docs/investigacoes/sinal-perfil-tatico-transicoes.md) → SIN-015
 - [docs/investigacoes/sinal-relacao-jogador-treinador.md](../../docs/investigacoes/sinal-relacao-jogador-treinador.md) → SIN-004
 - [docs/investigacoes/steam-moves-sharp-vs-square.md](../../docs/investigacoes/steam-moves-sharp-vs-square.md) → SIN-019
+- [docs/investigacoes/venue-estadio-geo.md](../../docs/investigacoes/venue-estadio-geo.md) → LIG-004
 - [docs/investigacoes/vies-favorito-azarao.md](../../docs/investigacoes/vies-favorito-azarao.md) → SIN-018
 - [docs/investigacoes/xg-qualidade-de-chute.md](../../docs/investigacoes/xg-qualidade-de-chute.md) → MOD-002
 - [docs/planos/DOS-001-dossie-por-partida.md](../../docs/planos/DOS-001-dossie-por-partida.md) → DOS-001
 - [docs/planos/LIG-001-pagina-do-jogador.md](../../docs/planos/LIG-001-pagina-do-jogador.md) → LIG-001
 - [docs/planos/LIG-002-pagina-do-time.md](../../docs/planos/LIG-002-pagina-do-time.md) → LIG-002
+- [docs/planos/LIG-004-venue-estadio-geo.md](../../docs/planos/LIG-004-venue-estadio-geo.md) → LIG-004
+- [docs/planos/LIG-005-rest-days-descanso.md](../../docs/planos/LIG-005-rest-days-descanso.md) → LIG-005
 - [docs/planos/SIN-011-lesoes.md](../../docs/planos/SIN-011-lesoes.md) → SIN-011
 - [docs/regras/arbitragem.md](../../docs/regras/arbitragem.md) → SIN-009
-- [docs/regras/calendario-fadiga.md](../../docs/regras/calendario-fadiga.md) → SIN-008
+- [docs/regras/calendario-fadiga.md](../../docs/regras/calendario-fadiga.md) → LIG-005, SIN-008
 - [docs/regras/clima.md](../../docs/regras/clima.md) → SIN-006
 - [docs/regras/lesoes.md](../../docs/regras/lesoes.md) → SIN-011
 - [docs/regras/mercado-odds.md](../../docs/regras/mercado-odds.md) → SIN-012, SIN-013

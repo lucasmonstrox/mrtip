@@ -73,28 +73,6 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **par com W-005 — micro-família "recortes de gol derivados" (casa/fora + tempo), ambas quick wins `api`+`ui` sem tocar schema.** Valem ser promovidas juntas numa feature só ("breakdowns de gol do jogador"). **Coberta pela investigação LIG-001** (seção "produção ofensiva" / distribuição de gol por minuto — o `/rs` recomenda strip/pontos, não histograma suavizado, por causa da amostra pequena). **Gotcha pro `/pl`:** acréscimos — como a SportMonks codifica o minuto de um gol aos 45+2 / 90+3? Confirmar a convenção antes de cravar o limiar `≤45`.
 
-### W-007 · Estádio de cada partida · 🔥 · esforço M · `dados` `ui`
-<adicionada: 2026-06-28 · status: ideia>
-
-**O quê:** registrar e exibir em qual estádio cada partida foi disputada — o venue do jogo, na página da partida (e disponível pra cruzamentos).
-
-**Por quê:** estádio é dimensão de contexto (mando real, fator casa, viagem do visitante) e base pra sinais de carga/viagem e rivalidade territorial. Insumo, não enfeite — alimenta análise, não só mostra.
-
-**Depende de / esbarra em:** **não está no schema** — a tabela `match` tem score/data/times, sem `venue`/`stadium` (busca SocratiCode 2026-06-28, nada em `apps/api/src/db/schemas/leagues.ts`). A SportMonks entrega venue por fixture (e venue como estádio-casa do time), então é ingestão + coluna/tabela `venue` + sync. Esbarra no `SIN-007` (rivalidade) e em sinais de **viagem/carga**, que já pediam **geocoding de estádios** — `docs/regras/rivalidade.md` cita estádio/whitelist/geocoding.
-
-**Notas:** primeira ideia **fora da página do jogador** — domínio de partida. **Sinergia de dados:** venue + coordenadas destrava (a) este display, (b) distância de viagem do visitante (sinal de fadiga), (c) rivalidade territorial do `SIN-007`. **Decisão de modelagem RESOLVIDA por W-008 (2026-06-28):** como o João pediu lat/lon por estádio, vence a **tabela `venue` própria** (nome + cidade + lat/long) em vez de coluna solta em `match` — `match` referencia `venue`. Promover W-007 e W-008 como uma feature só de venue.
-
-### W-008 · Coordenadas (lat/lon) de cada estádio · 🔥 · esforço M · `dados`
-<adicionada: 2026-06-28 · status: ideia>
-
-**O quê:** ter latitude/longitude de cada estádio, pra geolocalizar partidas — habilita distância de viagem, mapas e proximidade entre clubes.
-
-**Por quê:** lat/lon é o que transforma "nome do estádio" em **dado calculável**: distância de viagem do visitante (sinal de fadiga/carga sobre over/under), rivalidade territorial (proximidade geográfica), e qualquer visualização em mapa. É insumo de modelo, não enfeite.
-
-**Depende de / esbarra em:** **acoplada à W-007** — é a coordenada da mesma tabela `venue` (W-008 = colunas `latitude`/`longitude` na tabela que a W-007 cria). Mesmo domínio do `SIN-007` (rivalidade/viagem), que já listava **geocoding de estádios** como necessidade em `docs/regras/rivalidade.md`.
-
-**Notas:** **W-007 + W-008 = uma feature só ("venue com geo"); não promover separado.** W-008 é a razão de a W-007 virar tabela própria em vez de coluna. **Aberto pro `/rs`:** a SportMonks já devolve lat/long no objeto de venue? Se sim, vem de brinde na ingestão da W-007; se não, precisa de uma fonte de geocoding (geocodificar o nome/cidade do estádio 1x e cachear). Coordenada só destrava valor com a fórmula de distância (haversine) — anotar que o consumidor real é o **sinal de viagem**, não o display.
-
 ### W-015 · Participação ofensiva por jogador na página do time · 🔥 · esforço P · `api` `ui`
 <adicionada: 2026-06-28 · status: ideia>
 
@@ -212,17 +190,6 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **par de cálculo com a W-019** — "último jogo do time antes desta data" é a mesma busca; vale o `/pl` planejar junto (uma query, dois consumos: dias de descanso + marcadores). **Ambiguidade de escopo (resolver no `/rs`/`/pl`):** "jogo anterior" = (a) o último jogo de **cada time** (forma/momento, assumido aqui) ou (b) o **último confronto direto** entre os dois (H2H) — são UIs diferentes; assumi (a) pela sinergia com a W-019, mas (b) é leitura válida e pode coexistir. **Mesmo gotcha da W-019:** só temos a **PL 25/26** ingerida — jogo de copa/seleção no meio de semana some, então "jogo anterior" pode pular um jogo que não enxergamos; mostrar com ressalva ou só dentro da liga. **Assumi ✨** pelo seu "seria legal".
 
-### W-022 · Card de artilheiros das equipes na página da partida · ✨ · esforço P · `api` `ui`
-<adicionada: 2026-06-29 · status: ideia>
-
-**O quê:** na página da partida, um **card de marcadores** com os principais goleadores de cada equipe na season — gols (e assists) por jogador dos dois elencos, lado a lado, como uma prévia de "quem pode marcar neste jogo". Estatística de gols dos jogadores trazida pro contexto da partida específica, não só na aba de marcadores da liga.
-
-**Por quê:** antes do jogo, o apostador quer saber **quem são as ameaças de gol** de cada lado sem sair pra tabela da liga — é o insumo de props de marcador (anytime/first scorer) e leitura de over/under (ataque concentrado num cara x distribuído). Paridade com qualquer preview sério de jogo (top scorers das duas equipes é seção padrão).
-
-**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** É a mesma agregação `goal⋈match` do `scorers.service.ts` (gols excluindo `type = "own"`, assists via `goal.assistId`), só que **escopada aos dois times da partida** — exatamente o recorte por-time que a [[W-015]] (participação ofensiva na página do time) já desenha (`loadTeamScorers(teamId)`). API: `get-match.service.ts` reusa esse loader pros dois `teamId`. UI: novo card no `match-detail/` (`apps/web/features/leagues/components/match-detail/`).
-
-**Notas:** **forte sinergia — reusa o `loadTeamScorers(teamId)` da W-015**; promover pensando num único agregador "marcadores por time" consumido em 3 superfícies (liga = W-009, página do time = W-015, página da partida = W-022). **Par com a W-021 na mesma página:** W-021 é *retrospectiva* (quem marcou no último jogo), W-022 é *prospectiva* (quem mais marca na season) — juntas dão o contexto de gol completo do `match-detail`; vale promover as duas como uma feature só ("contexto de gol na página da partida"). **Gotcha pro `/pl`:** com 1 season a lista por time é curta — definir quantos exibir (top 3-5 por equipe) e mostrar contagem sempre. **Assumi ✨** pelo seu "seria legal".
-
 ### W-023 · Gols do jogador contra um adversário específico (casa/fora) · ✨ · esforço P · `api` `ui`
 <adicionada: 2026-06-29 · status: ideia>
 
@@ -247,20 +214,52 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **família de alertas (W-017 · W-018 · W-020)** — mesma máquina de alerta, produtores diferentes; W-020 puxa o produtor mais pesado (odds snapshots). **Guardrail de compliance é mais sensível aqui que nos outros dois:** "odd caindo" é exatamente o gatilho de FOMO que a `docs/ui/design-system/conformidade-jogo-responsavel.md:230` proíbe ("aposte de novo" / urgência) — desenhar como informação de mercado, jamais como chamariz pra apostar. **Pro `/rs`:** definir o que conta como "movimento" (delta absoluto vs %, qual janela, qual book de referência) — o `docs/investigacoes/steam-moves-sharp-vs-square.md` já tem o critério (direção igual + janela curta + origem em casa respeitada) pra distinguir steam real de ruído. **Assumi 💤** porque você disse "um possível alerta" (tom de só-anotando) — me fala se é ✨/🔥.
 
-### W-024 · Widget de gols concedidos por faixa de 15min na página da partida · 💤 · esforço M · `api` `ui`
-<adicionada: 2026-06-29 · status: ideia>
-
-**O quê:** na página da partida, um widget com a **distribuição temporal dos gols concedidos** por cada equipe na season, em faixas de 15 minutos (0–15, 16–30, 31–45, 46–60, 61–75, 76–90). Lê como perfil defensivo de timing: "esse time toma 40% dos gols nos últimos 15min" — onde cada lado costuma ser furado.
-
-**Por quê:** *quando* um time concede gol é insumo direto pra **over/under por tempo** e pra leitura de jogo (defesa que despenca no fim → over no 2º tempo; time que sofre cedo → handicap). Casa com a tese (padrão auditável no lugar onde se decide a aposta) e enriquece o `match-detail`, que hoje tem forma/escalação/eventos mas nenhuma leitura de *padrão* defensivo.
-
-**Depende de / esbarra em:** **zero schema, zero migração — derivável do que já existe.** `goal.minute` (já usado pelos splits de tempo da [[W-006]]) + `goal.teamId` vs os times da partida: gol **concedido** por um time = gol marcado pelo adversário nas partidas desse time; bucketizar `minute` em faixas de 15. Join `goal⋈match` que o `scorers.service.ts`/`getPlayerDetail` já fazem, agora escopado e agregado por time. API: `apps/api/src/modules/leagues/get-match/get-match.service.ts`. UI: novo componente no `match-detail/` (`apps/web/features/leagues/components/match-detail/`, irmão de `form-guide.tsx`/`match-events.tsx`). **Perna de UI do `SIN-017`** (game-state e timing de gols, *investigado*).
-
-**Notas:** **par natural com a [[W-022]]** (card de artilheiros na partida) — as duas dão o contexto de gol prospectivo do `match-detail`: W-022 = *quem* marca, W-024 = *quando* se toma. **Extensão óbvia:** o espelho ofensivo (gols **marcados** por faixa) sai do mesmo agregado de graça — anotar pro `/pl` se vale mostrar os dois lados (concedidos + marcados) no mesmo widget. **Gotchas pro `/pl`:** (1) acréscimos — como a SportMonks codifica o minuto aos 45+2 / 90+3? (mesma dúvida da W-006) define em qual bucket cai; (2) só temos a **PL 25/26** ingerida — ~38 jogos por time dá amostra ok pra distribuição, mas ainda ruidosa por bucket, mostrar contagem além de %; (3) decidir gráfico (barras por faixa) e se normaliza por nº de jogos. **Assumi 💤** — você só descreveu o widget, sem dizer o quanto quer; me fala se é ✨/🔥.
-
 ---
 
 ## 🗄️ Arquivadas (promovidas ou descartadas)
+
+### W-026 · Mini timeline de gols e assists por jogo no popover do jogador · ✨ · esforço P · `ui`
+<adicionada: 2026-06-29 · status: feito · feito: 2026-06-29>
+
+**Feito (2026-06-29):** **zero backend, zero migração** — derivado do que o `PlayerHoverCard` já carrega (`data.appearances`, com `goals`/`assists`/`opponent`/`opponentLogo`/`home` por jogo, mesma fonte do sparkline de notas). Nova seção **"Gols e assists · últimos 5"** no popover (`apps/web/features/leagues/components/player-hover-card/player-hover-card.tsx`), abaixo do sparkline de forma: tira de 5 células (uma por jogo, mais antigo→mais recente, mesma direção do sparkline), cada célula com **1 ícone de bola por gol + 1 ícone de chuteira por assist** (flex-wrap, traço quando o jogo foi em branco) e o **escudo do adversário** embaixo; o cabeçalho mostra os totais da janela (⚽ N · 👟 M, que também servem de legenda). Gate: só aparece pra quem tem `season.goals > 0 || season.assists > 0` (não polui card de goleiro). Leitura rápida de **forma ofensiva / produção recente** pra **props de marcador** (anytime/first scorer) e over/under de jogador.
+
+**Decisões de design (iteradas ao vivo com o João):** começou como "bolinhas" coloridas (pips), mas (1) o destaque de cor no jogo mais recente (roxo vs verde) **confundia** — removido, recência já vem da posição + escudo; (2) virou **gols + assists** (não só gols) a pedido; (3) os SVGs caseiros de bola/chuteira ficaram feios a ~12px → trocados por **`ball-football` do Tabler (MIT)** pro gol + **`sport-shoe` do lucide (ISC, já instalado)** pro assist, ambos line-style num `StripIcon` comum (stroke 2, viewBox 24) pra parecerem um conjunto; tamanho ~12px na tira, 14px no cabeçalho. `typecheck` 3/3 + lint limpos. **Verificação visual feita pelo João ao vivo** (chrome-devtools não anexou — Chrome dele segura o profile do MCP, igual [[W-025]]).
+
+**O quê (original):** no popover do jogador, um mini timeline pra saber quantos gols ele fez nos últimos 5 jogos, mostrando **quantos por jogo** (evoluiu pra incluir assists).
+
+**Notas:** **enriquecimento direto do [[W-001]]** (o `PlayerHoverCard`), mesma família "destilação da forma recente" do LIG-001. Implementado direto da wishlist, **sem ID de feature** (precedente W-009/W-013/W-024/W-025). Na captura foram desenhados 3 mockups `.html` (barras / bolinhas / heatmap) — o João escolheu o de bolinhas, que evoluiu pros ícones. Aberto p/ depois: quando o "dossiê" do W-001 tiver nomes de jogador linkáveis, a tira já vale lá junto.
+
+### W-022 · Card de artilheiros das equipes na página da partida · ✨ · esforço P · `api` `ui`
+<adicionada: 2026-06-29 · status: feito · feito: 2026-06-29>
+
+**Feito (2026-06-29):** **sem migração de schema** — derivado live de `goal⋈match`. Card **"Artilheiros"** no topo da aba **Gols (xG)** do `match-detail` (acima do timing da [[W-024]]): top-5 goleadores de cada equipe na season, lado a lado, com **gols (G) + assists (A)** por jogador, foto, link pro perfil e o `PlayerHoverCard`. Criado o agregador reutilizável **`loadTeamScorers(team, leagueCode, limit)`** em `shared/shared.ts` (escopado por `goal.teamId`, exclui gol contra, ranqueado por gols, `name` desempata) — a unidade que a [[W-015]] (squad table do time) vai reusar. Endpoint novo `GET /v1/matches/:id/scorers` (`get-scorers/`, padrão 1-rota-1-service) + hook `use-match-scorers-query.ts`. Tipos `MatchScorer`/`TeamScorers`/`MatchScorers` no contrato (`shared.ts` → `apps/api/src/index.ts` → web). **Caso de transferência validado:** Semenyo aparece sob o Bournemouth (não o Man City) porque `goal.teamId` conta gols feitos PELO clube — o split por time não vaza a transferência. Verificado no Chrome (Liverpool: Ekitiké 11G, Salah 7/7…; Bournemouth: Kroupi 13G…), console limpo, `typecheck` 3/3. Implementado **sem ID de feature** (precedente W-009/W-013/W-024).
+
+**O quê (original):** na página da partida, card de marcadores com os principais goleadores de cada equipe na season (gols + assists, lado a lado) — prévia de "quem pode marcar".
+
+**Notas:** **par com a [[W-021]]** (quem marcou no último jogo, *retrospectivo*) — W-022 é *prospectivo*; juntas + [[W-024]] (timing) fecham o contexto de gol do `match-detail`. O `loadTeamScorers` é o agregador único "marcadores por time" pra 3 superfícies (liga W-009 / time W-015 / partida W-022). Top-5 por equipe (lista curta com 1 season).
+
+### W-007 · Estádio de cada partida · 🔥 · esforço M · `dados` `ui`
+<adicionada: 2026-06-28 · status: promovido · promovido: 2026-06-29 → LIG-004>
+
+**Promovida (2026-06-29 → LIG-004, junto da [[W-008]]):** virou a feature **LIG-004 · Estádio (venue) com geo na página da partida** (`docs/features/ligas/LIG-004-venue-estadio-geo.md`, status `investigado`). O `/rs` confirmou por fetch na doc viva da SportMonks que o **venue vem completo por fixture** (`include=venue`, mesmo request do sync), com `name`/`city_name`/`capacity`/`surface`/`image_path`. Modelo: tabela `venue` própria (inglês), `match.venueId`. Investigação: `docs/investigacoes/venue-estadio-geo.md`.
+
+**O quê (original):** registrar e exibir em qual estádio cada partida foi disputada — o venue do jogo, na página da partida.
+
+### W-008 · Coordenadas (lat/lon) de cada estádio · 🔥 · esforço M · `dados`
+<adicionada: 2026-06-28 · status: promovido · promovido: 2026-06-29 → LIG-004>
+
+**Promovida (2026-06-29 → LIG-004, junto da [[W-007]]):** a dúvida-chave foi **respondida** — a SportMonks **devolve `latitude`/`longitude` (string) na própria entidade `venue`**, inclusas no include da fixture: **sem geocoding externo** (geocoding vira só plano B se a cobertura real vier furada). Coordenada entra como `numeric(9,6)` na tabela `venue`, insumo do sinal de viagem/fadiga (SIN-008), não display. Investigação: `docs/investigacoes/venue-estadio-geo.md`.
+
+**O quê (original):** ter latitude/longitude de cada estádio, pra geolocalizar partidas — habilita distância de viagem, mapas e proximidade entre clubes.
+
+### W-024 · Widget de gols por faixa de 15min na página da partida · 💤 · esforço M · `api` `ui`
+<adicionada: 2026-06-29 · status: feito · feito: 2026-06-29>
+
+**Feito (2026-06-29):** **sem migração de schema** — derivado live de `goal⋈match`. Virou o card **"Gols por faixa de 15'"** na aba **Gols (xG)** do `match-detail`, e foi **além do escopo original** em duas frentes: (1) o **espelho ofensivo** já previsto nas notas — o card mostra os DOIS lados por faixa de cada time (gols **marcados** em verde + **sofridos** em vermelho), cada métrica normalizada pelo próprio total com minuto conhecido; (2) o **recorte de mando Todos/Casa/Fora** (pedido nesta sessão) — toggle no topo-direito do card que refaz o perfil só com os jogos em casa / fora, com o corte aplicado igual aos dois times (mesma semântica do `form`). API: `loadGoalTiming(home, away, leagueCode, side)` em `shared/shared.ts` (predicado `inCut` filtra por mando) + `GET /v1/matches/:id/goal-timing?side=all|home|away`, validado no edge (TypeBox `UnionEnum` → 422). Web: `goal-timing.tsx` (toggle via `CardAction`, slot top-right do grid do shadcn) + `use-match-goal-timing-query.ts` (`side` na queryKey + `keepPreviousData` pra não piscar no toggle). Verificado no Chrome (Liverpool×Bournemouth): decomposição exata casa+fora=total (19+19=38 jogos, 34+29=63 marcados, 20+33=53 sofridos), 3 requests `side=` 200, console limpo, `typecheck` 3/3. Implementado **sem ID de feature** (precedente W-009/W-013/W-025); o comentário do componente carimba `W-024`. **Perna de UI do `SIN-017`** (game-state e timing de gols).
+
+**O quê (original):** na página da partida, a distribuição temporal dos gols (concedidos e marcados) de cada equipe na season, em faixas de 15 minutos — perfil de timing pro over/under por tempo.
+
+**Notas:** par natural com a [[W-022]] (card de artilheiros na partida): W-022 = *quem* marca, W-024 = *quando* se marca/toma. O espelho ofensivo previsto saiu de graça do mesmo agregado. Gotcha de acréscimos (45+2 / 90+3 → `timingBucket`) herdado da [[W-006]]. Amostra: ~38 jogos/time (19 por mando) — ok pra distribuição, contagem sempre ao lado do %.
 
 ### W-001 · Tooltip de jogador no hover (stats da season) · 🔥 · esforço M · `ui` `dados`
 <adicionada: 2026-06-28 · status: feito · feito: 2026-06-29>
