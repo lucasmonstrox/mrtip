@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia"
 
+import { getAbsenceImpact } from "./get-absence-impact/get-absence-impact.service"
 import { formQuery } from "./form/form.schema"
 import { form } from "./form/form.service"
 import { goalTimingQuery } from "./get-goal-timing/get-goal-timing.schema"
@@ -34,6 +35,10 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/injuries", ({ params }) => matchInjuries(params.id), {
     params: paramId,
     detail: { summary: "Absences (injuries/suspensions) of both teams" },
+  })
+  .get("/:id/absence-impact", ({ params }) => getAbsenceImpact(params.id), {
+    params: paramId,
+    detail: { summary: "Prognosis-grade absence impact per team (share of goals + with/without); null per side when none" },
   })
   .get("/:id/goal-timing", ({ params, query }) => matchGoalTiming(params.id, query), {
     params: paramId,

@@ -1,6 +1,7 @@
 // Domain types come from the API contract (@workspace/api) — single source of truth.
 export type {
   Absence,
+  AbsencePlayerImpact,
   CardItem,
   CoachDetail,
   CoachMatch,
@@ -11,6 +12,7 @@ export type {
   League,
   LineupPlayer,
   Match,
+  MatchAbsenceImpact,
   MatchGoalTiming,
   MatchScorer,
   MatchScorers,
@@ -19,6 +21,7 @@ export type {
   Round,
   Proportion,
   StandingRow,
+  TeamAbsenceImpact,
   TeamAbsences,
   TeamGoalTiming,
   TeamLineup,

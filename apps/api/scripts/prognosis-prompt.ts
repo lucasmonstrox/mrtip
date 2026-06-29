@@ -11,7 +11,7 @@
  * LLM faz só a camada de AJUSTE qualitativo. Anti-vazamento: tudo é cortado em `match.date` (CUTOFF),
  * então o prompt é exatamente o que existiria PRÉ-JOGO.
  */
-import { and, eq, inArray, isNotNull } from "drizzle-orm"
+import { and, eq, inArray, isNotNull, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
 import { goal, injury, lineup, lineupPlayer, match, player, standing, team, venue } from "../src/db/schema"
@@ -53,6 +53,34 @@ const teamMatches = (id: string): Row[] =>
 const goalsFor = (p: Row, id: string) => (p.homeTeamId === id ? p.ftHome : p.ftAway) ?? 0
 const goalsAgainst = (p: Row, id: string) => (p.homeTeamId === id ? p.ftAway : p.ftHome) ?? 0
 
+// SoT + key passes por (matchId, teamId): soma dos jogadores do time naquele jogo (lineup_player),
+// indexado em memória pra usar como goalsFor/goalsAgainst. Só a season atual tem esses stats; jogos
+// sem lineup ingerido simplesmente não entram (hasSot guarda contra contar 0 como ausência de dado).
+const statRows = await db
+  .select({
+    matchId: lineup.matchId,
+    teamId: lineup.teamId,
+    sot: sql<number>`coalesce(sum(${lineupPlayer.shotsOnTarget}), 0)::int`,
+    kp: sql<number>`coalesce(sum(${lineupPlayer.keyPasses}), 0)::int`,
+  })
+  .from(lineup)
+  .leftJoin(lineupPlayer, eq(lineupPlayer.lineupId, lineup.id))
+  .groupBy(lineup.matchId, lineup.teamId)
+const statByMatchTeam = new Map<string, Map<string, { sot: number; kp: number }>>()
+for (const r of statRows) {
+  let mm = statByMatchTeam.get(r.matchId)
+  if (!mm) {
+    mm = new Map()
+    statByMatchTeam.set(r.matchId, mm)
+  }
+  mm.set(r.teamId, { sot: r.sot, kp: r.kp })
+}
+const oppOf = (p: Row, id: string) => (p.homeTeamId === id ? p.awayTeamId : p.homeTeamId)
+const sotFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.sot ?? 0
+const sotAgainst = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(oppOf(p, id))?.sot ?? 0
+const kpFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.kp ?? 0
+const hasSot = (p: Row, id: string) => statByMatchTeam.get(p.id)?.has(id) ?? false
+
 // Gols marcados/sofridos por jogo num recorte (all/home/away) + os totais absolutos.
 function avg(rows: Row[], id: string) {
   if (!rows.length) return { n: 0, gf: 0, ga: 0, totalGf: 0, totalGa: 0 }
@@ -66,6 +94,23 @@ function avg(rows: Row[], id: string) {
     totalGa,
   }
 }
+
+// SoT marcado/sofrido por jogo num recorte — só jogos do time COM lineup ingerido (hasSot), pra não
+// diluir a média com jogos sem dado. Espelha `avg`, mas em chutes no alvo (3× mais denso que gols).
+function sotAvg(rows: Row[], id: string) {
+  const ws = rows.filter((p) => hasSot(p, id))
+  if (!ws.length) return { n: 0, sf: 0, sa: 0, totalSf: 0, totalSa: 0 }
+  const totalSf = ws.reduce((s, p) => s + sotFor(p, id), 0)
+  const totalSa = ws.reduce((s, p) => s + sotAgainst(p, id), 0)
+  return { n: ws.length, sf: +(totalSf / ws.length).toFixed(2), sa: +(totalSa / ws.length).toFixed(2), totalSf, totalSa }
+}
+// Key passes/jogo do time (criação) — mesma base de jogos com lineup.
+function kpPerGame(rows: Row[], id: string): number {
+  const ws = rows.filter((p) => hasSot(p, id))
+  return ws.length ? +(ws.reduce((s, p) => s + kpFor(p, id), 0) / ws.length).toFixed(2) : 0
+}
+// Conversão = gols / SoT em % (eficiência de finalização); null sem amostra de SoT.
+const convPct = (goals: number, sot: number): number | null => (sot ? Math.round((goals / sot) * 100) : null)
 
 // Split por tempo (do HT vs FT): gols marcados/sofridos no 1º e no 2º tempo, por jogo.
 function halfSplit(rows: Row[], id: string) {
@@ -133,6 +178,8 @@ type AbsenceLine = {
   pctGoals: number // % dos gols do time que ESTE jogador marcou (o que o ataque perde)
   pctInvolve: number // % dos gols do time em que ele participou (gol OU assistência)
   withN: number; withGf: number; withoutN: number; withoutGf: number; dropPct: number
+  sotPerGame: number | null // SoT/jogo do próprio jogador (o volume direto que sai com ele)
+  withSot: number; withoutSot: number // SoT/jogo do TIME com ele vs sem ele
   confound: boolean // sem G+A direta OU amostra pequena → with/without não confiável
 }
 
@@ -157,18 +204,78 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
     const w = avg(withRows, teamId)
     const wo = avg(withoutRows, teamId)
     const dropPct = w.gf ? Math.round((1 - wo.gf / w.gf) * 100) : 0
+    // SoT do próprio jogador (pré-cutoff, jogos que jogou) + SoT/jogo do TIME com ele vs sem ele.
+    const psRows = await db
+      .select({ matchId: lineup.matchId, sot: lineupPlayer.shotsOnTarget, mins: lineupPlayer.minutesPlayed })
+      .from(lineupPlayer)
+      .innerJoin(lineup, eq(lineupPlayer.lineupId, lineup.id))
+      .where(and(eq(lineupPlayer.playerId, i.playerId), eq(lineup.teamId, teamId)))
+    const psPlayed = psRows.filter((r) => ids.has(r.matchId) && (r.mins ?? 0) > 0)
+    const sotPerGame = psPlayed.length
+      ? +(psPlayed.reduce((s, r) => s + (r.sot ?? 0), 0) / psPlayed.length).toFixed(2)
+      : null
+    const wS = sotAvg(withRows, teamId)
+    const woS = sotAvg(withoutRows, teamId)
     out.push({
       name: (p?.name ?? "?").trim(), reason: i.reason,
       goals, assists,
       pctGoals: teamTotalGoals ? Math.round((goals / teamTotalGoals) * 100) : 0,
       pctInvolve: teamTotalGoals ? Math.round(((goals + assists) / teamTotalGoals) * 100) : 0,
       withN: w.n, withGf: w.gf, withoutN: wo.n, withoutGf: wo.gf, dropPct,
+      sotPerGame, withSot: wS.sf, withoutSot: woS.sf,
       // Confound guard: zero contribuição direta (Traoré) OU amostra "sem" pequena (Stach 8j) → não confiar no with/without.
       confound: goals + assists === 0 || w.n < LOW_SAMPLE || wo.n < LOW_SAMPLE,
     })
   }
   // ordena por contribuição direta (G+A) desc — o desfalque que mais pesa primeiro
   return out.sort((a, b) => b.goals + b.assists - (a.goals + a.assists))
+}
+
+// Forma recente: os últimos N jogos do time (pré-cutoff, sequência mais recente primeiro). Gols e SoT
+// feito/sofrido por jogo + pontos + V/E/D. O delta vs a média da season é o "momento" (em alta/baixa).
+function recentForm(teamId: string, n: number) {
+  const ms = teamMatches(teamId).slice(-n)
+  if (!ms.length) return null
+  let gf = 0, ga = 0, pts = 0
+  const seq: string[] = []
+  for (const p of ms) {
+    const f = goalsFor(p, teamId)
+    const a = goalsAgainst(p, teamId)
+    gf += f
+    ga += a
+    if (f > a) { pts += 3; seq.push("V") } else if (f < a) seq.push("D")
+    else { pts += 1; seq.push("E") }
+  }
+  const sot = sotAvg(ms, teamId)
+  const k = ms.length
+  return { n: k, seq: seq.reverse().join(""), pts, gf: +(gf / k).toFixed(2), ga: +(ga / k).toFixed(2), sf: sot.sf, sa: sot.sa }
+}
+
+// Poisson independente (home/away) → probabilidades de mercado. ÂNCORA determinística: o modelo deve
+// PARTIR daqui em vez de chutar over/BTTS/1x2 — a maior fonte da "compressão" pra ~40% em tudo.
+function poissonPmf(k: number, lambda: number): number {
+  let p = Math.exp(-lambda)
+  for (let i = 1; i <= k; i++) p *= lambda / i
+  return p
+}
+function marketProbs(lh: number, la: number) {
+  const MAX = 10
+  const ph = Array.from({ length: MAX + 1 }, (_, k) => poissonPmf(k, lh))
+  const pa = Array.from({ length: MAX + 1 }, (_, k) => poissonPmf(k, la))
+  let home = 0, draw = 0, away = 0, over15 = 0, over25 = 0, over35 = 0
+  for (let h = 0; h <= MAX; h++) {
+    for (let a = 0; a <= MAX; a++) {
+      const p = ph[h]! * pa[a]!
+      if (h > a) home += p
+      else if (h === a) draw += p
+      else away += p
+      if (h + a >= 2) over15 += p
+      if (h + a >= 3) over25 += p
+      if (h + a >= 4) over35 += p
+    }
+  }
+  const pc = (x: number) => Math.round(x * 100)
+  return { home: pc(home), draw: pc(draw), away: pc(away), over15: pc(over15), over25: pc(over25), over35: pc(over35), btts: pc((1 - ph[0]!) * (1 - pa[0]!)) }
 }
 
 // ---- Base rate Poisson (força ataque × fraqueza defesa, específica por mando) ----
@@ -180,6 +287,26 @@ const awayAway = avg(teamMatches(away.id).filter((p) => p.awayTeamId === away.id
 const lambdaHome = +(homeHome.gf * (awayAway.ga / leagueHomeAvg)).toFixed(2)
 const lambdaAway = +(awayAway.gf * (homeHome.ga / leagueAwayAvg)).toFixed(2)
 
+// Mesma base rate, em SoT (volume de finalização, 3× mais denso que gols → menos ruído). A média de
+// SoT por mando da liga normaliza; depois multiplica pela conversão do time → gols por uma rota
+// independente da contagem de gols. As duas rotas (gols puro vs SoT×conversão) devem convergir.
+const homeHomeSot = sotAvg(teamMatches(home.id).filter((p) => p.homeTeamId === home.id), home.id)
+const awayAwaySot = sotAvg(teamMatches(away.id).filter((p) => p.awayTeamId === away.id), away.id)
+let lgHomeSot = 0, lgAwaySot = 0, lgSotN = 0
+for (const p of played) {
+  const hs = statByMatchTeam.get(p.id)?.get(p.homeTeamId)?.sot
+  const as = statByMatchTeam.get(p.id)?.get(p.awayTeamId)?.sot
+  if (hs != null && as != null) {
+    lgHomeSot += hs
+    lgAwaySot += as
+    lgSotN += 1
+  }
+}
+const leagueHomeSotAvg = lgSotN ? +(lgHomeSot / lgSotN).toFixed(2) : 0
+const leagueAwaySotAvg = lgSotN ? +(lgAwaySot / lgSotN).toFixed(2) : 0
+const lambdaSotHome = leagueHomeSotAvg ? +(homeHomeSot.sf * (awayAwaySot.sa / leagueHomeSotAvg)).toFixed(2) : 0
+const lambdaSotAway = leagueAwaySotAvg ? +(awayAwaySot.sf * (homeHomeSot.sa / leagueAwaySotAvg)).toFixed(2) : 0
+
 // Rest days (in-league): dias desde o último jogo de cada lado antes deste.
 function restDays(teamId: string): number | null {
   const prev = teamMatches(teamId).at(-1)
@@ -189,6 +316,28 @@ function restDays(teamId: string): number | null {
 
 const homeAll = avg(teamMatches(home.id), home.id)
 const awayAll = avg(teamMatches(away.id), away.id)
+// SoT agregado (geral) + conversão de cada time. conv = % dos PRÓPRIOS SoT que viram gol (finalização);
+// convDef = % dos SoT SOFRIDOS que viram gol (qualidade das chances concedidas / solidez defensiva).
+const homeSotAll = sotAvg(teamMatches(home.id), home.id)
+const awaySotAll = sotAvg(teamMatches(away.id), away.id)
+const homeConv = convPct(homeAll.totalGf, homeSotAll.totalSf)
+const awayConv = convPct(awayAll.totalGf, awaySotAll.totalSf)
+const homeConvDef = convPct(homeAll.totalGa, homeSotAll.totalSa)
+const awayConvDef = convPct(awayAll.totalGa, awaySotAll.totalSa)
+// Gols esperados pela rota SoT: λ_SoT × conversão do time (compara com o λ de gols puro acima).
+const xgViaSotHome = homeConv != null ? +(lambdaSotHome * (homeConv / 100)).toFixed(2) : null
+const xgViaSotAway = awayConv != null ? +(lambdaSotAway * (awayConv / 100)).toFixed(2) : null
+const homeKpPg = kpPerGame(teamMatches(home.id), home.id)
+const awayKpPg = kpPerGame(teamMatches(away.id), away.id)
+// Forma recente (momento): últimos 5 e 10 jogos de cada lado.
+const homeF5 = recentForm(home.id, 5)
+const homeF10 = recentForm(home.id, 10)
+const awayF5 = recentForm(away.id, 5)
+const awayF10 = recentForm(away.id, 10)
+// Probabilidades de mercado por rota (Poisson sobre os λ): gols puro vs SoT×conversão. O modelo
+// ancora nesses números calibrados em vez de inventar as porcentagens.
+const probsGoals = marketProbs(lambdaHome, lambdaAway)
+const probsSot = marketProbs(xgViaSotHome ?? lambdaHome, xgViaSotAway ?? lambdaAway)
 const homeAbs = await absences(home.id, homeAll.totalGf)
 const awayAbs = await absences(away.id, awayAll.totalGf)
 const homeHalf = halfSplit(teamMatches(home.id), home.id)
@@ -379,10 +528,19 @@ function absBlock(label: string, list: AbsenceLine[]): string {
     const ga = `${a.goals} gols + ${a.assists} assists`
     const share = `representa **${a.pctGoals}% dos gols** do time (${a.pctInvolve}% com assists) → o ataque perde isso se ele não jogar`
     const wow = `with/without: com ele ${a.withGf} g/j (${a.withN}j) vs sem ele ${a.withoutGf} g/j (${a.withoutN}j) = ${a.dropPct >= 0 ? "−" : "+"}${Math.abs(a.dropPct)}%`
-    const flag = a.confound ? "  ⚠️ with/without NÃO confiável (sem contribuição direta ou amostra pequena)" : ""
-    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${wow}${flag}`
+    const sot = a.sotPerGame != null ? `; finaliza **${a.sotPerGame} SoT/jogo** (time: ${a.withSot} SoT/j com ele vs ${a.withoutSot} sem — volume mais estável que gols)` : ""
+    const flag = a.confound ? "  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT" : ""
+    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${wow}${sot}${flag}`
   })
   return `### ${label}\n${lines.join("\n")}\n`
+}
+
+// Linha de forma recente (momento) pro prompt: últimos 5 (+10) com setas ↑/↓/= vs a média da season.
+function formLines(f5: ReturnType<typeof recentForm>, f10: ReturnType<typeof recentForm>, seasonGf: number, seasonGa: number): string {
+  if (!f5) return "- Forma recente: sem jogos suficientes"
+  const arr = (r: number, s: number) => (r > s * 1.15 ? "↑" : r < s * 0.85 ? "↓" : "=")
+  const l10 = f10 ? ` · últimos 10: ${f10.seq} (${f10.pts}pts · ${f10.gf}/${f10.ga} g/j · SoT ${f10.sf}/${f10.sa})` : ""
+  return `- **Forma (momento) — últimos ${f5.n}: ${f5.seq}** (${f5.pts}pts) · marca ${f5.gf}${arr(f5.gf, seasonGf)} / sofre ${f5.ga}${arr(f5.ga, seasonGa)} g/j · SoT ${f5.sf} feito / ${f5.sa} sofrido${l10}`
 }
 
 const homeStakes = stakesFor(home.id, home.name)
@@ -393,11 +551,18 @@ const prompt = `# Prognóstico de expected goals — ${home.name} x ${away.name}
 **IMPORTANTE: raciocine (pense/chain-of-thought) E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno, deve ser em português do Brasil.
 
 Você é um analista quantitativo de futebol. Produza um prognóstico de **expected goals (xG)** para esta partida.
-Use o método: **PARTA da base rate Poisson** abaixo (já calculada) e **AJUSTE multiplicativamente** por fator
-(desfalques, fadiga, contexto), justificando cada ajuste. Regras:
+Use o método: **PARTA da base rate** abaixo (duas rotas já calculadas: λ de gols puro E λ_SoT × conversão) e
+**AJUSTE multiplicativamente** por fator (desfalques, fadiga, contexto), justificando cada ajuste. Regras:
+- **ANCORE nas probabilidades Poisson fornecidas** (seção "Probabilidades de mercado"): seu \`over25_prob\`, \`btts_prob\`
+  e \`one_x_two\` PARTEM delas (Rota B como principal). Só desvie com fator nomeado e quantificado. **NÃO** devolva tudo
+  comprimido perto de ~40% — é exatamente o erro que estamos corrigindo.
+- **SoT (chutes no alvo) é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a
+  CONVERSÃO (gols/SoT) e como checagem. Onde as duas rotas de base rate divergem, confie mais no SoT e trate a
+  diferença como finalização acima/abaixo da média (tende a regredir à conversão do time).
+- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão (a eficiência do time é mais estável).
 - **NÃO double-conte**: se um desfalque já estava fora nos últimos jogos, o efeito dele já está na média recente.
-- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ (volante/lateral sem G+A, ou amostra pequena).
-- Sinalize incerteza (dados ausentes: NÃO temos xG real, clima, nem chutes/posse — isto é proxy por gols reais).
+- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️. O with/without de **SoT** é mais estável que o de gols — prefira-o.
+- Sinalize incerteza: NÃO temos xG real, clima, nem posse/chutes totais — SoT é o melhor proxy de volume/qualidade aqui.
 
 ## Contexto
 - Data: ${m.date} ${m.time ?? ""} · Rodada ${m.round} · Liga ${m.leagueCode}
@@ -417,6 +582,9 @@ ${awayStakes.lines.map((s) => `  - ${s}`).join("\n")}
 - Média geral: marca ${homeAll.gf} / sofre ${homeAll.ga} por jogo
 - **Em casa (${homeHome.n}j): marca ${homeHome.gf} / sofre ${homeHome.ga}** (total ${homeHome.totalGf} gols em casa)
 - Por tempo (casa+fora): 1ºT marca ${homeHalf.scored1} sofre ${homeHalf.conceded1} · 2ºT marca ${homeHalf.scored2} sofre ${homeHalf.conceded2}
+- **Finalização: ${homeSotAll.totalSf} SoT total (${homeSotAll.sf}/jogo · em casa ${homeHomeSot.sf}/jogo) · conversão ${homeConv ?? "?"}%** (gols ÷ SoT)
+- Sofre ${homeSotAll.sa} SoT/jogo (adversário converte ${homeConvDef ?? "?"}%) · cria ${homeKpPg} key passes/jogo
+${formLines(homeF5, homeF10, homeAll.gf, homeAll.ga)}
 ${timingLines(homeTiming)}
 ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ## ${away.name} (visita) — até ${CUTOFF}
@@ -424,6 +592,9 @@ ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 - Média geral: marca ${awayAll.gf} / sofre ${awayAll.ga} por jogo
 - **Fora (${awayAway.n}j): marca ${awayAway.gf} / sofre ${awayAway.ga}** (total ${awayAway.totalGf} gols fora)
 - Por tempo (casa+fora): 1ºT marca ${awayHalf.scored1} sofre ${awayHalf.conceded1} · 2ºT marca ${awayHalf.scored2} sofre ${awayHalf.conceded2}
+- **Finalização: ${awaySotAll.totalSf} SoT total (${awaySotAll.sf}/jogo · fora ${awayAwaySot.sf}/jogo) · conversão ${awayConv ?? "?"}%** (gols ÷ SoT)
+- Sofre ${awaySotAll.sa} SoT/jogo (adversário converte ${awayConvDef ?? "?"}%) · cria ${awayKpPg} key passes/jogo
+${formLines(awayF5, awayF10, awayAll.gf, awayAll.ga)}
 ${timingLines(awayTiming)}
 ${absBlock(`Desfalques de ${away.name} neste jogo`, awayAbs)}
 ## Cruzamento ataque × defesa por faixa de 15 min
@@ -433,10 +604,26 @@ ${crossTable(home.name, homeTiming, away.name, awayTiming)}
 
 ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 
-## Base rate (ponto de partida — Poisson força ataque×defesa, por mando)
-- λ ${home.name} (casa) = ${lambdaHome}
-- λ ${away.name} (fora) = ${lambdaAway}
-- Total base = ${+(lambdaHome + lambdaAway).toFixed(2)}
+## Base rate (ponto de partida — duas rotas independentes; devem convergir)
+**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):
+- λ ${home.name} (casa) = ${lambdaHome} · λ ${away.name} (fora) = ${lambdaAway} · total = ${+(lambdaHome + lambdaAway).toFixed(2)}
+
+**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):
+- ${home.name}: λ_SoT ${lambdaSotHome} × conv ${homeConv ?? "?"}% → **${xgViaSotHome ?? "?"} gols**
+- ${away.name}: λ_SoT ${lambdaSotAway} × conv ${awayConv ?? "?"}% → **${xgViaSotAway ?? "?"} gols**
+- total via SoT = ${xgViaSotHome != null && xgViaSotAway != null ? +(xgViaSotHome + xgViaSotAway).toFixed(2) : "?"}
+- **Índice de volume do jogo**: λ_SoT total ${+(lambdaSotHome + lambdaSotAway).toFixed(1)} vs média da liga ${+(leagueHomeSotAvg + leagueAwaySotAvg).toFixed(1)} SoT → ${lambdaSotHome + lambdaSotAway > (leagueHomeSotAvg + leagueAwaySotAvg) * 1.1 ? "**ACIMA** (jogo de volume → pressão de OVER)" : lambdaSotHome + lambdaSotAway < (leagueHomeSotAvg + leagueAwaySotAvg) * 0.9 ? "**ABAIXO** (jogo travado → pressão de UNDER)" : "na média"}
+- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.
+
+## Probabilidades de mercado (Poisson sobre os λ — ÂNCORA: ajuste A PARTIR daqui, não invente)
+| Mercado | Rota A (gols) | Rota B (SoT×conv) |
+|---|---|---|
+| 1x2 casa/E/fora | ${probsGoals.home}/${probsGoals.draw}/${probsGoals.away}% | ${probsSot.home}/${probsSot.draw}/${probsSot.away}% |
+| Over 1.5 | ${probsGoals.over15}% | ${probsSot.over15}% |
+| Over 2.5 | ${probsGoals.over25}% | ${probsSot.over25}% |
+| Over 3.5 | ${probsGoals.over35}% | ${probsSot.over35}% |
+| BTTS | ${probsGoals.btts}% | ${probsSot.btts}% |
+São as probabilidades que o volume IMPLICA. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` devem **partir destes números** (use a Rota B como principal); só desvie com um **fator nomeado** (motivação, desfalque, fadiga) dizendo a direção e o tamanho. **NÃO comprima tudo pra ~40%** — se a âncora diz over 2.5 = 55%, justifique explicitamente para baixá-la.
 
 ## Saída exigida (objeto tipado — validado pelo runtime). Estrutura: PROGNÓSTICO POR TIME + GERAL.
 **Por time** — \`home\` (= ${home.name}) e \`away\` (= ${away.name}), cada um com:

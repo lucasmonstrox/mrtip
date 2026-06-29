@@ -218,6 +218,49 @@ export type TeamAbsences = {
   absences: Absence[]
 }
 
+// Prognosis-grade impact of one absent player (anti-leak, cut at the match date): how much the
+// team's attack leans on him. `pctGoals`/`pctInvolve` = his share of the team's real goals; with/
+// without = the team's goals/game WITH him available vs WITHOUT (the directional "quanto o time
+// perde sem ele"). `confound` flags when that with/without is noise (no direct G+A, or thin sample).
+export type AbsencePlayerImpact = {
+  player: { id: string; name: string }
+  didNotPlay: boolean
+  reason: string | null
+  goals: number
+  assists: number
+  pctGoals: number // % of the team's real goals this player scored
+  pctInvolve: number // % of the team's real goals he scored OR assisted (can exceed pctGoals)
+  withN: number
+  withGf: number // team goals/game in matches he played
+  withoutN: number
+  withoutGf: number // team goals/game in matches he missed
+  dropPct: number // how much the team's g/j drops without him (negative = scores more without him)
+  confound: boolean // with/without not trustworthy (no direct G+A or small sample) → show with ⚠️
+}
+
+// A team's absence impact for a match: the absent players + a TOTAL that does NOT lie. `sumPctGoals`
+// is additive-safe (each real goal has a single scorer) → "% dos gols do time que saíram de quem está
+// fora". The aggregate with/without (`fullSquadGf` = g/j with ALL these players available vs
+// `depletedGf` = g/j in matches missing ≥1) is the visceral read, gated on sample; individual drops do
+// NOT sum, hence the UI caveat.
+export type TeamAbsenceImpact = {
+  team: TeamRef
+  teamTotalGoals: number
+  players: AbsencePlayerImpact[]
+  total: {
+    sumPctGoals: number
+    sumPctInvolve: number
+    fullSquadN: number
+    fullSquadGf: number | null
+    depletedN: number
+    depletedGf: number | null
+    dropPct: number | null
+  }
+}
+
+// Absence impact of a match, per side. `null` when a side has no absence record.
+export type MatchAbsenceImpact = { home: TeamAbsenceImpact | null; away: TeamAbsenceImpact | null }
+
 // A goal of the match: minute, type, scoring team, scorer and assist.
 export type GoalItem = {
   minute: number | null
@@ -1169,6 +1212,147 @@ export async function loadMatchAbsences(matchId: string): Promise<TeamAbsences[]
     )
   }
   return [...byTeam.values()]
+}
+
+// Below this many "com ele"/"sem ele" games, the with/without scoring rate is noise — flagged, not trusted.
+const ABSENCE_LOW_SAMPLE = 6
+
+// Prognosis-grade absence impact of a match: for each absent player, how much the team's attack leans
+// on him (% of the team's goals + the team's goals/game WITH him vs WITHOUT), plus a per-team TOTAL
+// (additive-safe sum of % goals + the aggregate full-squad→depleted goals/game). Everything is cut at
+// the match date (anti-leak) and derived from `goal`/`lineup_player` — it mirrors the prognosis prompt's
+// own absence block so the read on the tab is auditable. `null` per side when there's no absence record.
+export async function loadAbsenceImpact(matchId: string): Promise<MatchAbsenceImpact> {
+  const [m] = await db.select().from(match).where(eq(match.id, matchId)).limit(1)
+  if (!m) return { home: null, away: null }
+  const { date: cutoff, leagueCode } = m
+
+  const inj = await db
+    .select({ playerId: injury.playerId, teamId: injury.teamId, type: injury.type, reason: injury.reason, name: player.name })
+    .from(injury)
+    .innerJoin(player, eq(player.id, injury.playerId))
+    .where(eq(injury.matchId, matchId))
+  if (!inj.length) return { home: null, away: null }
+
+  // All finished league matches strictly before this one — the pre-match picture, no leakage.
+  const playedAll = await db
+    .select()
+    .from(match)
+    .where(and(eq(match.leagueCode, leagueCode), isNotNull(match.ftHome), lt(match.date, cutoff)))
+  const teamMatches = (id: string) => playedAll.filter((p) => p.homeTeamId === id || p.awayTeamId === id)
+  const goalsFor = (p: MatchRow, id: string) => (p.homeTeamId === id ? p.ftHome : p.ftAway) ?? 0
+  const avgGf = (rows: MatchRow[], id: string) =>
+    rows.length ? +(rows.reduce((s, p) => s + goalsFor(p, id), 0) / rows.length).toFixed(2) : 0
+
+  const pids = [...new Set(inj.map((i) => i.playerId))]
+  const teamIds = [...new Set(inj.map((i) => i.teamId))]
+
+  // Team's own real goals (no own goals) up to the date — the denominator for each player's share.
+  const teamGoalsRows = await db
+    .select({ teamId: goal.teamId, n: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.teamId, teamIds)))
+    .groupBy(goal.teamId)
+  const teamTotalGoals = new Map(teamGoalsRows.map((r) => [r.teamId, Number(r.n)]))
+
+  // Each absent player's real goals + assists in the league up to the date.
+  const goalsUpTo = await db
+    .select({ pid: goal.playerId, n: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), ne(goal.type, "own"), inArray(goal.playerId, pids)))
+    .groupBy(goal.playerId)
+  const assistsUpTo = await db
+    .select({ pid: goal.assistId, n: count() })
+    .from(goal)
+    .innerJoin(match, eq(match.id, goal.matchId))
+    .where(and(eq(match.leagueCode, leagueCode), lt(match.date, cutoff), inArray(goal.assistId, pids)))
+    .groupBy(goal.assistId)
+  const goalsOf = new Map(goalsUpTo.map((r) => [r.pid, Number(r.n)]))
+  const assistsOf = new Map(assistsUpTo.filter((r) => r.pid).map((r) => [r.pid!, Number(r.n)]))
+
+  // Matches each absent player actually played (starter OR minutes > 0) — drives the with/without split.
+  const lp = await db
+    .select({ matchId: lineup.matchId, playerId: lineupPlayer.playerId, starter: lineupPlayer.starter, mins: lineupPlayer.minutesPlayed })
+    .from(lineupPlayer)
+    .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+    .where(inArray(lineupPlayer.playerId, pids))
+  const playedByPlayer = new Map<string, Set<string>>()
+  for (const r of lp) {
+    if (!(r.starter || (r.mins ?? 0) > 0)) continue
+    let s = playedByPlayer.get(r.playerId)
+    if (!s) playedByPlayer.set(r.playerId, (s = new Set()))
+    s.add(r.matchId)
+  }
+
+  const teamRows = await db
+    .select({ id: team.id, name: team.name, slug: team.slug, logoUrl: team.logoUrl })
+    .from(team)
+    .where(inArray(team.id, teamIds))
+  const teamRef = new Map(teamRows.map((t) => [t.id, t]))
+
+  const byTeam = new Map<string, TeamAbsenceImpact>()
+  for (const tId of teamIds) {
+    const ms = teamMatches(tId)
+    const teamGoals = teamTotalGoals.get(tId) ?? 0
+    const teamInj = inj.filter((i) => i.teamId === tId)
+
+    const players: AbsencePlayerImpact[] = teamInj.map((i) => {
+      const playedIds = playedByPlayer.get(i.playerId) ?? new Set<string>()
+      const withRows = ms.filter((p) => playedIds.has(p.id))
+      const withoutRows = ms.filter((p) => !playedIds.has(p.id))
+      const withGf = avgGf(withRows, tId)
+      const withoutGf = avgGf(withoutRows, tId)
+      const goals = goalsOf.get(i.playerId) ?? 0
+      const assists = assistsOf.get(i.playerId) ?? 0
+      return {
+        player: { id: i.playerId, name: i.name.trim() },
+        didNotPlay: i.type === "Missing Fixture",
+        reason: i.reason,
+        goals,
+        assists,
+        pctGoals: teamGoals ? Math.round((goals / teamGoals) * 100) : 0,
+        pctInvolve: teamGoals ? Math.round(((goals + assists) / teamGoals) * 100) : 0,
+        withN: withRows.length,
+        withGf,
+        withoutN: withoutRows.length,
+        withoutGf,
+        dropPct: withGf ? Math.round((1 - withoutGf / withGf) * 100) : 0,
+        // Confound guard: zero direct contribution OR a thin with/without sample → don't trust the drop.
+        confound: goals + assists === 0 || withRows.length < ABSENCE_LOW_SAMPLE || withoutRows.length < ABSENCE_LOW_SAMPLE,
+      }
+    })
+    players.sort((a, b) => b.goals + b.assists - (a.goals + a.assists))
+
+    // Aggregate with/without: g/j with ALL these absentees available vs in matches missing ≥1 of them.
+    const absentPlayed = teamInj.map((i) => playedByPlayer.get(i.playerId) ?? new Set<string>())
+    const fullRows = ms.filter((p) => absentPlayed.every((s) => s.has(p.id)))
+    const depletedRows = ms.filter((p) => absentPlayed.some((s) => !s.has(p.id)))
+    const fullSquadGf = fullRows.length ? avgGf(fullRows, tId) : null
+    const depletedGf = depletedRows.length ? avgGf(depletedRows, tId) : null
+    // Sum of % goals is additive-safe (one scorer per real goal); % involve can exceed 100 (a goal
+    // both scored and assisted by two absentees counts twice) — the UI labels it accordingly.
+    const sumGoals = teamInj.reduce((s, i) => s + (goalsOf.get(i.playerId) ?? 0), 0)
+    const sumInvolve = teamInj.reduce((s, i) => s + (goalsOf.get(i.playerId) ?? 0) + (assistsOf.get(i.playerId) ?? 0), 0)
+
+    byTeam.set(tId, {
+      team: teamRef.get(tId) ?? { id: tId, name: "?", slug: tId, logoUrl: null },
+      teamTotalGoals: teamGoals,
+      players,
+      total: {
+        sumPctGoals: teamGoals ? Math.round((sumGoals / teamGoals) * 100) : 0,
+        sumPctInvolve: teamGoals ? Math.round((sumInvolve / teamGoals) * 100) : 0,
+        fullSquadN: fullRows.length,
+        fullSquadGf,
+        depletedN: depletedRows.length,
+        depletedGf,
+        dropPct: fullSquadGf && depletedGf != null ? Math.round((1 - depletedGf / fullSquadGf) * 100) : null,
+      },
+    })
+  }
+
+  return { home: byTeam.get(m.homeTeamId) ?? null, away: byTeam.get(m.awayTeamId) ?? null }
 }
 
 /* ---------- Pure computations (over the domain contract, keyed by team.id) ---------- */

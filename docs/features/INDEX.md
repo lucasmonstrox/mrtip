@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-36 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+37 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -21,6 +21,7 @@
 | LIG-004 | Estádio (venue) com geo na página da partida | ligas | verificado | P2 | dados:verificado api:verificado ui:verificado | sim | — |
 | LIG-005 | Dias de descanso (rest days) na página da partida | ligas | verificado | P2 | api:verificado ui:verificado | sim | — |
 | LIG-006 | Snapshot da classificação na página da partida | ligas | em-andamento | P2 | api:feito ui:em-andamento | parcial | — |
+| LIG-007 | Impacto dos desfalques no prognóstico da partida | ligas | verificado | P2 | api:verificado ui:verificado | sim | — |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -67,10 +68,10 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `dossier_snapshot` → DOS-001, MOD-002 ⚠️ compartilhada
 - `entity_xref` → DOS-001
 - `estadios` → SIN-006, SIN-007, SIN-008, SIN-016 ⚠️ compartilhada
-- `goal` → LIG-001, LIG-002 ⚠️ compartilhada
-- `injury` → LIG-001, LIG-002, SIN-011, SIN-020 ⚠️ compartilhada
+- `goal` → LIG-001, LIG-002, LIG-007 ⚠️ compartilhada
+- `injury` → LIG-001, LIG-002, LIG-007, SIN-011, SIN-020 ⚠️ compartilhada
 - `lineup` → LIG-002
-- `lineup_player` → LIG-001, LIG-003, SIN-020 ⚠️ compartilhada
+- `lineup_player` → LIG-001, LIG-003, LIG-007, SIN-020 ⚠️ compartilhada
 - `match` → DOS-001, LIG-001, LIG-002, LIG-004, LIG-005, MOD-001, SIN-007, SIN-020 ⚠️ compartilhada
 - `match_event` → SIN-017
 - `match_features` → MOD-001, MOD-002, SIN-016 ⚠️ compartilhada
@@ -95,11 +96,13 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `computeForm` → LIG-002
 - `computeStandings` → LIG-002
 - `formatBRL` → CORE-001
+- `getAbsenceImpact` → LIG-007
 - `getMatch` → LIG-005, LIG-006 ⚠️ compartilhada
 - `getPlayerDetail` → LIG-001
 - `getTeam` → LIG-002
 - `getTeamBySlug` → LIG-002
 - `lastMatchBefore` → LIG-005
+- `loadAbsenceImpact` → LIG-007
 - `loadTeamMatches` → LIG-002
 - `loadTeamStanding` → LIG-006
 - `reaisParaCents` → CORE-001
@@ -112,6 +115,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 - `/conta` → CORE-003
 - `/matches/:id` → LIG-004, LIG-005 ⚠️ compartilhada
+- `/matches/:id/absence-impact` → LIG-007
 - `/players/:id` → LIG-001
 - `/sign-in` → CORE-003
 - `/sign-up` → CORE-003

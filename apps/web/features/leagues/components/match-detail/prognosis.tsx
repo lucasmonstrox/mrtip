@@ -5,6 +5,7 @@ import { cn } from "@workspace/ui/lib/utils"
 
 import type { TeamRest } from "../../types"
 import { useMatchPrognosisQuery } from "../../hooks/data/queries/use-match-prognosis-query"
+import { AbsenceImpactPanel } from "./absence-impact-panel"
 
 type TeamRef = { name: string; logoUrl: string | null }
 // Days each side rested before this match, as the prognosis prompt itself sees them (fatigue factor).
@@ -248,6 +249,9 @@ export function Prognosis({
 
       {/* Descanso (fadiga): mesmo sinal que entra no prompt, agora explícito na aba. @feature LIG-005 */}
       {rest ? <RestPanel home={home} away={away} rest={rest} /> : null}
+
+      {/* Impacto dos desfalques: quanto o ataque depende de quem está fora — determinístico. @feature LIG-007 */}
+      <AbsenceImpactPanel id={id} />
 
       {/* Por time */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -15,6 +15,7 @@ export type { App } from "./app"
 // Domain types reused by apps/web (single contract, no duplication).
 export type {
   Absence,
+  AbsencePlayerImpact,
   CardItem,
   CoachDetail,
   CoachMatch,
@@ -25,6 +26,7 @@ export type {
   League,
   LineupPlayer,
   Match,
+  MatchAbsenceImpact,
   MatchGoalTiming,
   MatchScorer,
   MatchScorers,
@@ -33,6 +35,7 @@ export type {
   Proportion,
   Round,
   StandingRow,
+  TeamAbsenceImpact,
   TeamAbsences,
   TeamGoalTiming,
   TeamLineup,
