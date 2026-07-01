@@ -8,6 +8,7 @@ import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
 import { useSeasonsQuery } from "../../hooks/data/queries/use-seasons-query"
 import { useStandingsQuery } from "../../hooks/data/queries/use-standings-query"
 import { SeasonSwitcher } from "../season-switcher/season-switcher"
+import { CupBracket } from "./cup-bracket"
 import { RoundsList } from "./rounds-list"
 import { ScorersTable } from "./scorers-table"
 import { StandingsTable } from "./standings-table"
@@ -19,6 +20,8 @@ export function LeagueDetail({ code }: { code: string }) {
   // above-the-fold reveals as one piece instead of the header popping in over a loading table.
   const { isPending: standingsPending } = useStandingsQuery(code)
   const headerLoading = isPending || standingsPending
+  // Copa (mata-mata) → a aba "Classificação" vira "Chaveamento" (bracket), sem tabela nem Rounds. @feature CUP-001
+  const isCup = league?.type === "cup"
 
   return (
     <section className="flex flex-col gap-6">
@@ -60,29 +63,46 @@ export function LeagueDetail({ code }: { code: string }) {
             </div>
             {league ? (
               <p className="text-sm text-muted-foreground">
-                {league.rounds} rodadas · {league.matches} jogos
+                {isCup ? `${league.matches} jogos` : `${league.rounds} rodadas · ${league.matches} jogos`}
               </p>
             ) : null}
           </>
         )}
       </header>
 
-      <Tabs defaultValue="standings">
-        <TabsList>
-          <TabsTrigger value="standings">Classificação</TabsTrigger>
-          <TabsTrigger value="rounds">Rounds</TabsTrigger>
-          <TabsTrigger value="scorers">Marcadores</TabsTrigger>
-        </TabsList>
-        <TabsContent value="standings" className="pt-2">
-          <StandingsTable code={code} />
-        </TabsContent>
-        <TabsContent value="rounds" className="pt-2">
-          <RoundsList code={code} />
-        </TabsContent>
-        <TabsContent value="scorers" className="pt-2">
-          <ScorersTable code={code} />
-        </TabsContent>
-      </Tabs>
+      {isCup ? (
+        // key distinta força remontagem ao trocar liga↔copa (senão o Radix mantém o valor "standings",
+        // que não existe em copa, e nenhuma aba ativa → conteúdo em branco). @feature CUP-001
+        <Tabs key="cup" defaultValue="bracket">
+          <TabsList>
+            <TabsTrigger value="bracket">Chaveamento</TabsTrigger>
+            <TabsTrigger value="scorers">Marcadores</TabsTrigger>
+          </TabsList>
+          <TabsContent value="bracket" className="pt-2">
+            <CupBracket code={code} />
+          </TabsContent>
+          <TabsContent value="scorers" className="pt-2">
+            <ScorersTable code={code} />
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <Tabs key="league" defaultValue="standings">
+          <TabsList>
+            <TabsTrigger value="standings">Classificação</TabsTrigger>
+            <TabsTrigger value="rounds">Rounds</TabsTrigger>
+            <TabsTrigger value="scorers">Marcadores</TabsTrigger>
+          </TabsList>
+          <TabsContent value="standings" className="pt-2">
+            <StandingsTable code={code} />
+          </TabsContent>
+          <TabsContent value="rounds" className="pt-2">
+            <RoundsList code={code} />
+          </TabsContent>
+          <TabsContent value="scorers" className="pt-2">
+            <ScorersTable code={code} />
+          </TabsContent>
+        </Tabs>
+      )}
     </section>
   )
 }

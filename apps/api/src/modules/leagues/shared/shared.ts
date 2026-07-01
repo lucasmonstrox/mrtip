@@ -29,6 +29,7 @@ export type League = {
   name: string
   country: string
   season: string
+  type: string // "league" (tabela) | "cup" (bracket) — o front escolhe a aba. @feature CUP-001
   logoUrl: string | null
 }
 
@@ -387,6 +388,28 @@ export type PlayerAppearance = {
   red: number // straight red OR second yellow (sent off)
 }
 
+// One of the player's CLUB's recent matches ACROSS ALL COMPETITIONS (league + cups, most recent last),
+// flagged played or missed. Anchored to the team's fixtures (not the player's appearances) so a game he
+// sat out shows as a gap with the opponent, instead of the form window silently collapsing to only games
+// he played. `competition` carries the tournament (name + crest) so the strip can show which cup/league
+// each game was. `absenceReason` is the injury/suspension cause when an absence row exists (else a plain
+// "didn't play"). @feature CUP-001
+export type RecentTeamGame = {
+  matchId: string
+  slug: string
+  date: string
+  round: number
+  opponent: string
+  opponentLogo: string | null
+  competition: { name: string; logoUrl: string | null }
+  home: boolean
+  played: boolean
+  rating: number | null
+  goals: number
+  assists: number
+  absenceReason: string | null
+}
+
 // Player page: bio (photo/birth/height/nationality/position) + totals (derived from goal/injury) +
 // the list of goals + per-match appearances. `position` is the most-played one (G/D/M/F).
 export type PlayerDetail = {
@@ -421,6 +444,9 @@ export type PlayerDetail = {
   goalSplits: { home: number; away: number; firstHalf: number; secondHalf: number }
   goalsList: PlayerGoal[]
   appearances: PlayerAppearance[]
+  // The club's last few matches with played/missed flags — drives the hover card's form window so a
+  // missed game reads as a gap, not a dropped slot. Most recent last (chronological, like appearances).
+  recentTeamGames: RecentTeamGame[]
   // Seasons the player has data in (for the page's season switcher). @feature LIG-008
   seasons: SeasonSummary[]
 }
@@ -785,6 +811,12 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       : { name: last.awayName, slug: last.awaySlug, logoUrl: last.awayLogo }
     : null
 
+  // Recent form anchored to the CLUB's last finished matches ACROSS ALL COMPETITIONS (league + cups), not
+  // the player's appearances, so a game he sat out surfaces as a gap with the opponent and a cup game sits
+  // next to the league ones (each tagged with its tournament crest). Team = his most recent club; the fn
+  // pulls his played/rating/goals/assists per match itself. Built oldest → newest for the strip.
+  const recentTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null)
+
   // Seasons the player has appearances in (for the switcher). @feature LIG-008
   const seasons = await seasonsOfPlayer(id)
 
@@ -814,8 +846,110 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       score: r.ftH != null && r.ftA != null ? [r.ftH, r.ftA] : null,
     })),
     appearances,
+    recentTeamGames,
     seasons,
   }
+}
+
+// How many of the club's most recent matches feed the hover card's form window — same count the strip
+// and sparkline render, now counted in TEAM games (so missed games occupy a slot) rather than the
+// player's appearances.
+const RECENT_TEAM_GAMES = 5
+
+// The club's last finished matches ACROSS ALL COMPETITIONS (league + cups) with the player's played/missed
+// flag — the form window for the hover card. Base table is `match` (filtered to the team, ANY competition,
+// so a Carabao/FA Cup game sits next to the league ones), joined to `league` for the tournament crest, and
+// left-joined to his lineup row (played + rating) and his absence row (why he sat out). Goals/assists are
+// counted per match here (scoped to these match ids, NOT the season) so a cup goal counts like a league
+// one. Oldest → newest; empty when the club is unknown (player with no appearances this season). @feature CUP-001
+async function getRecentTeamGames(playerId: string, teamId: string | null): Promise<RecentTeamGame[]> {
+  if (!teamId) return []
+
+  const recent = await db
+    .select({
+      matchId: match.id,
+      slug: match.slug,
+      date: match.date,
+      round: match.round,
+      homeTeamId: match.homeTeamId,
+      homeName: teamHome.name,
+      homeLogo: teamHome.logoUrl,
+      awayName: teamAway.name,
+      awayLogo: teamAway.logoUrl,
+      competitionName: league.name,
+      competitionLogo: league.logoUrl,
+    })
+    .from(match)
+    .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
+    .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
+    .innerJoin(league, eq(league.code, match.leagueCode))
+    .where(
+      and(
+        isNotNull(match.ftHome), // only matches already played
+        or(eq(match.homeTeamId, teamId), eq(match.awayTeamId, teamId)),
+      ),
+    )
+    .orderBy(desc(match.date))
+    .limit(RECENT_TEAM_GAMES)
+
+  if (recent.length === 0) return []
+  const ids = recent.map((m) => m.matchId)
+
+  // Played = a lineup row exists for him in that match (starter or bench, same as `appearances`); the
+  // rating rides along for the sparkline.
+  const playedRows = await db
+    .select({ matchId: lineup.matchId, rating: lineupPlayer.rating })
+    .from(lineupPlayer)
+    .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+    .where(and(eq(lineupPlayer.playerId, playerId), inArray(lineup.matchId, ids)))
+  const ratingByMatch = new Map(playedRows.map((r) => [r.matchId, r.rating]))
+
+  // His goals (own goals excluded) + assists in this window, counted per match off the events and scoped
+  // to these match ids — so a cup goal shows up, not just the season's league goals folded in from above.
+  const goalsByMatch = new Map<string, number>()
+  for (const r of await db
+    .select({ matchId: goal.matchId })
+    .from(goal)
+    .where(and(eq(goal.playerId, playerId), ne(goal.type, "own"), inArray(goal.matchId, ids))))
+    goalsByMatch.set(r.matchId, (goalsByMatch.get(r.matchId) ?? 0) + 1)
+
+  const assistsByMatch = new Map<string, number>()
+  for (const r of await db
+    .select({ matchId: goal.matchId })
+    .from(goal)
+    .where(and(eq(goal.assistId, playerId), inArray(goal.matchId, ids))))
+    assistsByMatch.set(r.matchId, (assistsByMatch.get(r.matchId) ?? 0) + 1)
+
+  // Why he was out, when an absence row exists (injury/suspension); null = simply not selected.
+  const absenceRows = await db
+    .select({ matchId: injury.matchId, reason: injury.reason })
+    .from(injury)
+    .where(and(eq(injury.playerId, playerId), inArray(injury.matchId, ids)))
+  const reasonByMatch = new Map(absenceRows.map((r) => [r.matchId, r.reason]))
+
+  // Oldest → newest so the strip and sparkline read left → right chronologically (like appearances).
+  return recent
+    .slice()
+    .reverse()
+    .map((m) => {
+      const home = m.homeTeamId === teamId
+      const played = ratingByMatch.has(m.matchId)
+      return {
+        matchId: m.matchId,
+        slug: m.slug,
+        date: m.date,
+        round: m.round,
+        opponent: home ? m.awayName : m.homeName,
+        opponentLogo: home ? m.awayLogo : m.homeLogo,
+        competition: { name: m.competitionName, logoUrl: m.competitionLogo },
+        home,
+        played,
+        rating: played ? (ratingByMatch.get(m.matchId) ?? null) : null,
+        goals: played ? (goalsByMatch.get(m.matchId) ?? 0) : 0,
+        assists: played ? (assistsByMatch.get(m.matchId) ?? 0) : 0,
+        absenceReason: played ? null : (reasonByMatch.get(m.matchId) ?? null),
+      }
+    })
 }
 
 // Seasons a player has appearances (lineup rows) in, most recent first — for the player-page

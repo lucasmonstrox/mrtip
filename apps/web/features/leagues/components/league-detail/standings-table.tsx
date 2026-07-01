@@ -27,20 +27,23 @@ const ZONES: Record<string, { border: string; dot: string; label: string }> = {
 // Larguras de coluna fixas, compartilhadas pela tabela real e pelo skeleton. Com table-fixed
 // elas decidem o layout em vez do conteúdo, então as colunas não saltam quando os dados chegam
 // (a coluna "Time" absorve o espaço restante). Fonte única — muda aqui e os dois lados acompanham.
+// Ordem das colunas: # · Time (flexível) · J · V · E · D · GP · GC · SG · Pts · Forma. NÃO colocar
+// comentário/espaço inline entre os <col> — um espaço na mesma linha vira text node, e <colgroup> não
+// aceita filho de texto (erro de hydration). Só os <col>, um por linha (a quebra é whitespace inócuo).
 function StandingsCols() {
   return (
     <colgroup>
-      <col className="w-12" /> {/* # */}
-      <col /> {/* Time — flexível */}
-      <col className="w-12" /> {/* J */}
-      <col className="w-12" /> {/* V */}
-      <col className="w-12" /> {/* E */}
-      <col className="w-12" /> {/* D */}
-      <col className="w-12" /> {/* GP */}
-      <col className="w-12" /> {/* GC */}
-      <col className="w-14" /> {/* SG */}
-      <col className="w-14" /> {/* Pts */}
-      <col className="w-44" /> {/* Forma */}
+      <col className="w-12" />
+      <col />
+      <col className="w-12" />
+      <col className="w-12" />
+      <col className="w-12" />
+      <col className="w-12" />
+      <col className="w-12" />
+      <col className="w-12" />
+      <col className="w-14" />
+      <col className="w-14" />
+      <col className="w-44" />
     </colgroup>
   )
 }
@@ -66,7 +69,7 @@ function StandingsHead() {
 }
 
 const TABLE_CLASS =
-  "table-fixed [&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4"
+  "table-fixed tabular-nums [&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4"
 
 export function StandingsTable({ code }: { code: string }) {
   const { data: table, isPending, isError } = useStandingsQuery(code)

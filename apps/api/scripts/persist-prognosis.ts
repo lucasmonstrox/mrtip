@@ -22,7 +22,7 @@ type Dump = {
       one_x_two: unknown; one_x_two_1t: unknown; one_x_two_2t: unknown; confidence: string; summary: string
     }
     best_bet?: {
-      market: string; selection: string; line: number | null; confidence: string; probability: number; analysis: string
+      market: string; selection: string; team?: string | null; line: number | null; confidence: string; probability: number; analysis: string
     }
     drivers: string[]
   } | null
@@ -50,7 +50,7 @@ export async function persistPrognosis(dump: Dump, promptText?: string): Promise
     over25Prob: g.over25_prob, bttsProb: g.btts_prob,
     oneXTwo: g.one_x_two as never, oneXTwo1t: g.one_x_two_1t as never, oneXTwo2t: g.one_x_two_2t as never,
     confianca: g.confidence, resumoGeral: g.summary,
-    bestBetMarket: b?.market ?? null, bestBetSelection: b?.selection ?? null, bestBetLine: b?.line ?? null,
+    bestBetMarket: b?.market ?? null, bestBetSelection: b?.selection ?? null, bestBetTeam: b?.team ?? null, bestBetLine: b?.line ?? null,
     bestBetConfidence: b?.confidence ?? null, bestBetProbability: b?.probability ?? null, bestBetAnalysis: b?.analysis ?? null,
     drivers: o.drivers,
     reasoning: dump.reasoningText ?? null,

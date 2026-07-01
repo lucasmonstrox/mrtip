@@ -190,15 +190,24 @@ function betLabel(b: BestBet, home: TeamRef, away: TeamRef): { title: string; te
   }
   if (b.market === "over_under") return { title: `${b.selection === "over" ? "Over" : "Under"} ${b.line ?? ""} gols`.trim(), team: null }
   if (b.market === "btts") return { title: `Ambos marcam: ${b.selection === "yes" ? "Sim" : "Não"}`, team: null }
-  return { title: "Sem aposta — passar", team: null }
+  if (b.market === "handicap") {
+    const h = b.line == null ? "" : b.line > 0 ? `+${b.line}` : `${b.line}`
+    return { title: `Handicap ${h}`.trim(), team: b.selection === "home" ? home : away }
+  }
+  if (b.market === "team_total") {
+    return {
+      title: `${b.selection === "over" ? "Over" : "Under"} ${b.line ?? ""} gols`.trim(),
+      team: b.team === "home" ? home : b.team === "away" ? away : null,
+    }
+  }
+  return { title: `${b.selection ?? ""} ${b.line ?? ""}`.trim() || "Aposta", team: null }
 }
 
 // "Aposta recomendada" — a leitura de sharp: a decisão estruturada (mercado + seleção + prob) e a
 // análise completa. O destaque da aba; "Sem aposta" quando o modelo passou (disciplina).
 function BestBetCard({ bet, home, away }: { bet: BestBet; home: TeamRef; away: TeamRef }) {
   const { title, team } = betLabel(bet, home, away)
-  const conf = CONF[bet.confidence] ?? CONF.medium!
-  const isNone = bet.market === "none"
+  const conf = CONF[bet.confidence ?? "medium"] ?? CONF.medium!
   return (
     <Card>
       <CardHeader>
@@ -210,13 +219,11 @@ function BestBetCard({ bet, home, away }: { bet: BestBet; home: TeamRef; away: T
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           {team?.logoUrl ? <img src={team.logoUrl} alt="" className="size-7 shrink-0 object-contain" /> : null}
-          <span className={cn("text-lg font-semibold", isNone && "text-muted-foreground")}>
+          <span className="text-lg font-semibold">
             {title}
             {team ? <span className="text-muted-foreground"> · {team.name}</span> : null}
           </span>
-          {!isNone ? (
-            <span className="ml-auto font-mono text-xl font-bold tabular-nums text-primary">{pct(bet.probability)}</span>
-          ) : null}
+          <span className="ml-auto font-mono text-xl font-bold tabular-nums text-primary">{pct(bet.probability ?? 0)}</span>
         </div>
         <p className="text-sm text-muted-foreground">{bet.analysis}</p>
       </CardContent>

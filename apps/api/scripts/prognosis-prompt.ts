@@ -14,12 +14,14 @@
 import { and, eq, inArray, isNotNull, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
-import { goal, injury, lineup, lineupPlayer, match, matchTeamStats, player, standing, team, venue } from "../src/db/schema"
+import { goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
+import { buildMomentum, type MomentumPoint, type TrendInput } from "../src/modules/leagues/get-match-momentum/momentum"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
 
-// Below this many "com ele"/"sem ele" games, the WITH/WITHOUT scoring rate is noise — flagged, not trusted.
-const LOW_SAMPLE = 6
+// Abaixo de tantos jogos "com ele"/"sem ele" a taxa de gols do with/without é ruído — gols/jogo só
+// estabiliza com ~12+ jogos de cada lado (6 era variância demais). Abaixo disto: flagged, not trusted.
+const LOW_SAMPLE = 12
 // Haversine distance (km) between two lat/long — feeds the travel/fatigue note when both venues are known.
 function haversineKm(aLat: number, aLng: number, bLat: number, bLng: number): number {
   const R = 6371
@@ -44,6 +46,9 @@ const [home] = await db.select().from(team).where(eq(team.id, m.homeTeamId))
 const [away] = await db.select().from(team).where(eq(team.id, m.awayTeamId))
 if (!home || !away) throw new Error("team not found")
 const [matchVenue] = m.venueId ? await db.select().from(venue).where(eq(venue.id, m.venueId)) : []
+const [matchWeather] = await db.select().from(weather).where(eq(weather.matchId, MATCH_ID))
+// Floats do clima (Postgres `real` = float32) vêm com ruído (27.5699996…); arredonda a 1 casa na exibição.
+const w1 = (n: number | null) => (n == null ? "?" : Math.round(n * 10) / 10)
 
 // Nome de QUALQUER time da liga (não só os 2 do jogo) — pra nomear os rivais que disputam a vaga.
 const allTeams = await db.select({ id: team.id, name: team.name }).from(team)
@@ -103,11 +108,27 @@ for (const r of teamStatRows) {
   }
   mm.set(r.teamId, r)
 }
-type TeamStatField = "shotsTotal" | "shotsInsidebox" | "bigChancesCreated" | "possession"
+type TeamStatField = "shotsTotal" | "shotsInsidebox" | "shotsOutsidebox" | "shotsOffTarget" | "shotsBlocked" | "bigChancesCreated" | "dangerousAttacks" | "possession" | "tackles" | "interceptions" | "duelsWon" | "crossesAccurate" | "dribblesSuccessful"
 // Média de um campo de match_team_stats sobre os jogos do time que têm a linha (null-safe).
 function teamStatAvg(rows: Row[], id: string, field: TeamStatField): number | null {
   const vals = rows.map((p) => teamStatsByMatch.get(p.id)?.get(id)?.[field]).filter((v): v is number => v != null)
   return vals.length ? +(vals.reduce((s, v) => s + v, 0) / vals.length).toFixed(1) : null
+}
+// Mesma média, mas devolve FEITO (do time) e SOFRIDO (do oponente naquele jogo) de uma team-stat — pra ler
+// o estilo nos dois sentidos: ataques perigosos criados vs concedidos, chutes bloqueados nossos vs do
+// adversário que travamos, chutes de fora nossos vs cedidos. Cada lado conta só jogos com a linha (null-safe).
+function teamStatForAgainst(rows: Row[], id: string, field: TeamStatField): { made: number; conceded: number } | null {
+  const fr: number[] = []
+  const ag: number[] = []
+  for (const p of rows) {
+    const vf = teamStatsByMatch.get(p.id)?.get(id)?.[field]
+    const va = teamStatsByMatch.get(p.id)?.get(oppOf(p, id))?.[field]
+    if (vf != null) fr.push(vf)
+    if (va != null) ag.push(va)
+  }
+  if (!fr.length && !ag.length) return null
+  const mean = (a: number[]) => (a.length ? +(a.reduce((s, v) => s + v, 0) / a.length).toFixed(1) : 0)
+  return { made: mean(fr), conceded: mean(ag) }
 }
 
 // Pênaltis convertidos (DOS-002 fix): com o relabel, pênalti tem goal.type="penalty". Tira-se da
@@ -222,6 +243,11 @@ type AbsenceLine = {
   withN: number; withGf: number; withoutN: number; withoutGf: number; dropPct: number
   sotPerGame: number | null // SoT/jogo do próprio jogador (o volume direto que sai com ele)
   withSot: number; withoutSot: number // SoT/jogo do TIME com ele vs sem ele
+  // Volume DEFENSIVO/CRIATIVO do jogador por jogo (o que o time perde além de gols): interceptações,
+  // desarmes, duelos, cruzamentos certos, dribles certos, key passes. `intShare` = % das interceptações
+  // do time que são dele; with/without de interceptações = a defesa piora sem ele?
+  pInt: number | null; pTkl: number | null; pDuel: number | null; pCross: number | null; pDrib: number | null; pKp: number | null
+  intShare: number | null; withInt: number | null; withoutInt: number | null
   confound: boolean // sem G+A direta OU amostra pequena → with/without não confiável
 }
 
@@ -246,16 +272,25 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
     const w = avg(withRows, teamId)
     const wo = avg(withoutRows, teamId)
     const dropPct = w.gf ? Math.round((1 - wo.gf / w.gf) * 100) : 0
-    // SoT do próprio jogador (pré-cutoff, jogos que jogou) + SoT/jogo do TIME com ele vs sem ele.
+    // SoT + volume DEFENSIVO/CRIATIVO do próprio jogador (pré-cutoff, jogos que jogou) + médias do TIME.
     const psRows = await db
-      .select({ matchId: lineup.matchId, sot: lineupPlayer.shotsOnTarget, mins: lineupPlayer.minutesPlayed })
+      .select({
+        matchId: lineup.matchId, sot: lineupPlayer.shotsOnTarget, mins: lineupPlayer.minutesPlayed,
+        tkl: lineupPlayer.tackles, intc: lineupPlayer.interceptions, duel: lineupPlayer.duelsWon,
+        cross: lineupPlayer.crossesAccurate, drib: lineupPlayer.dribblesSuccessful, kp: lineupPlayer.keyPasses,
+      })
       .from(lineupPlayer)
       .innerJoin(lineup, eq(lineupPlayer.lineupId, lineup.id))
       .where(and(eq(lineupPlayer.playerId, i.playerId), eq(lineup.teamId, teamId)))
     const psPlayed = psRows.filter((r) => ids.has(r.matchId) && (r.mins ?? 0) > 0)
-    const sotPerGame = psPlayed.length
-      ? +(psPlayed.reduce((s, r) => s + (r.sot ?? 0), 0) / psPlayed.length).toFixed(2)
-      : null
+    const ppg = (sel: (r: (typeof psPlayed)[number]) => number | null): number | null =>
+      psPlayed.length ? +(psPlayed.reduce((s, r) => s + (sel(r) ?? 0), 0) / psPlayed.length).toFixed(1) : null
+    const sotPerGame = psPlayed.length ? +(psPlayed.reduce((s, r) => s + (r.sot ?? 0), 0) / psPlayed.length).toFixed(2) : null
+    const pInt = ppg((r) => r.intc), pTkl = ppg((r) => r.tkl), pDuel = ppg((r) => r.duel)
+    const pCross = ppg((r) => r.cross), pDrib = ppg((r) => r.drib), pKp = ppg((r) => r.kp)
+    const withInt = teamStatAvg(withRows, teamId, "interceptions")
+    const withoutInt = teamStatAvg(withoutRows, teamId, "interceptions")
+    const intShare = pInt != null && withInt ? Math.round((pInt / withInt) * 100) : null
     const wS = sotAvg(withRows, teamId)
     const woS = sotAvg(withoutRows, teamId)
     // Forma recente: nos últimos 5 jogos do TIME, % dos gols que tiveram participação dele (G+A) —
@@ -275,8 +310,11 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
       recentN: recentPlayed.length, recentGA, recentTeamGoals, recentPctInvolve,
       withN: w.n, withGf: w.gf, withoutN: wo.n, withoutGf: wo.gf, dropPct,
       sotPerGame, withSot: wS.sf, withoutSot: woS.sf,
+      pInt, pTkl, pDuel, pCross, pDrib, pKp, intShare, withInt, withoutInt,
       // Confound guard: zero contribuição direta (Traoré) OU amostra "sem" pequena (Stach 8j) → não confiar no with/without.
-      confound: goals + assists === 0 || w.n < LOW_SAMPLE || wo.n < LOW_SAMPLE,
+      // + sinal IMPLAUSÍVEL: o ataque "melhora" >20% SEM o jogador (dropPct < -20) é confound temporal
+      // clássico (ele jogou na fase ruim, lesionou na boa) — Hudson-Odoi: 0.93 com ele vs 2.71 sem = −191%.
+      confound: goals + assists === 0 || w.n < LOW_SAMPLE || wo.n < LOW_SAMPLE || dropPct < -20,
     })
   }
   // ordena por contribuição direta (G+A) desc — o desfalque que mais pesa primeiro
@@ -300,7 +338,7 @@ function recentForm(teamId: string, n: number) {
   }
   const sot = sotAvg(ms, teamId)
   const k = ms.length
-  return { n: k, seq: seq.reverse().join(""), pts, gf: +(gf / k).toFixed(2), ga: +(ga / k).toFixed(2), sf: sot.sf, sa: sot.sa }
+  return { n: k, seq: seq.reverse().join(""), pts, gf: +(gf / k).toFixed(2), ga: +(ga / k).toFixed(2), gfTotal: gf, gaTotal: ga, sf: sot.sf, sa: sot.sa }
 }
 
 // Poisson independente (home/away) → probabilidades de mercado. ÂNCORA determinística: o modelo deve
@@ -385,11 +423,9 @@ const xgViaSotHome = homeConv != null ? +(lambdaSotHome * (homeConv / 100)).toFi
 const xgViaSotAway = awayConv != null ? +(lambdaSotAway * (awayConv / 100)).toFixed(2) : null
 const homeKpPg = kpPerGame(teamMatches(home.id), home.id)
 const awayKpPg = kpPerGame(teamMatches(away.id), away.id)
-// Forma recente (momento): últimos 5 e 10 jogos de cada lado.
+// Forma recente (momento): últimos 5 jogos de cada lado.
 const homeF5 = recentForm(home.id, 5)
-const homeF10 = recentForm(home.id, 10)
 const awayF5 = recentForm(away.id, 5)
-const awayF10 = recentForm(away.id, 10)
 // Probabilidades de mercado por rota (Poisson sobre os λ): gols puro vs SoT×conversão. O modelo
 // ancora nesses números calibrados em vez de inventar as porcentagens.
 const probsGoals = marketProbs(lambdaHome, lambdaAway)
@@ -398,6 +434,15 @@ const homeAbs = await absences(home.id, homeAll.totalGf)
 const awayAbs = await absences(away.id, awayAll.totalGf)
 const homeHalf = halfSplit(teamMatches(home.id), home.id)
 const awayHalf = halfSplit(teamMatches(away.id), away.id)
+// 1x2 por TEMPO (ÂNCORA do one_x_two_1t/2t): distribui o λ da Rota B pela proporção de gols de cada time
+// em cada tempo (halfSplit) e roda o mesmo Poisson — assim o modelo NÃO precisa "derivar" sem número.
+const lamH = xgViaSotHome ?? lambdaHome
+const lamA = xgViaSotAway ?? lambdaAway
+const share1 = (h: ReturnType<typeof halfSplit>) => (h.scored1 + h.scored2 > 0 ? h.scored1 / (h.scored1 + h.scored2) : 0.45)
+const hShare1 = share1(homeHalf)
+const aShare1 = share1(awayHalf)
+const probs1t = marketProbs(lamH * hShare1, lamA * aShare1)
+const probs2t = marketProbs(lamH * (1 - hShare1), lamA * (1 - aShare1))
 const homeTiming = await timing(home.id)
 const awayTiming = await timing(away.id)
 
@@ -503,6 +548,12 @@ const canFinishAbove = (id: string) => {
   const b = boundOf(id)
   return b ? bounds.filter((o) => o.teamId !== id && o.maxPts > b.pts).length : totalTeams
 }
+// Mesma conta SOMANDO `extra` pontos ao time (cenário "se empatar/vencer ESTE jogo"): quantos ainda
+// passariam. Base do "empate basta" — o estado de intenção entre "precisa vencer" e "já garantido".
+const canFinishAboveWith = (id: string, extra: number) => {
+  const b = boundOf(id)
+  return b ? bounds.filter((o) => o.teamId !== id && o.maxPts > b.pts + extra).length : totalTeams
+}
 // Quantos times `id` JÁ NÃO ALCANÇA (mesmo vencendo tudo, eles já estão acima do seu máximo).
 const guaranteedAbove = (id: string) => {
   const b = boundOf(id)
@@ -542,10 +593,10 @@ function contestersFor(teamId: string): string[] {
 // ⇔ guaranteedAbove ≥ K. Daí saem: seguro/ameaçado de rebaixamento, ainda-pode/já-era p/ campeão,
 // Champions e vaga europeia. A `intensity` orienta a direção do xG: "alta" = precisa de pontos (ataca),
 // "baixa" = nada em jogo (afrouxa).
-function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "media" | "baixa"; verdict: string; lines: string[] } {
+function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "media" | "baixa"; verdict: string; lines: string[]; pushes: boolean } {
   const b = boundOf(teamId)
   const pos = posOf(teamId)
-  if (!b || pos == null) return { intensity: "media", verdict: "sem foto de tabela", lines: [] } // sem jogos pré-cutoff
+  if (!b || pos == null) return { intensity: "media", verdict: "sem foto de tabela", lines: [], pushes: false } // sem jogos pré-cutoff
   const gr = gamesRemaining(teamId)
   const N = totalTeams, R = relegationCount, C = championsCount, Q = europeanCount
   const above = canFinishAbove(teamId) // podem passar
@@ -563,9 +614,20 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   const canChampions = C ? lost < C : false
   const europeanClinched = Q ? above < Q : false
   const canEuropean = Q ? lost < Q : false
+  // Intenção fina ANTI-Z: o que o time precisa NESTE jogo pra travar a permanência? Empate basta
+  // (contenta-se) vs só vencendo (precisa ir pra cima). canFinishAboveWith soma os pontos do cenário.
+  const fightingDownNow = R > 0 && !relegationSafe && !relegationDoomed
+  const drawSecuresStay = fightingDownNow && canFinishAboveWith(teamId, 1) < N - R
+  const winSecuresStay = fightingDownNow && !drawSecuresStay && canFinishAboveWith(teamId, 3) < N - R
+  // "Empate basta" = o time TRAVA o objetivo dele empatando → tende a ADMINISTRAR, não a se lançar (mata o over).
+  // Cobre os dois lados: sair do Z (drawSecuresStay) E defender a vaga continental (setado no bloco de
+  // concorrência abaixo, quando nenhum rival alcança os pontos-de-empate — ex.: 6º que já garante Europa no X).
+  let drawSuffices = drawSecuresStay
 
   const lines: string[] = [`${teamName}: ${pos}º, ${b.pts} pts, ${gr} jogo(s) restante(s) (máx possível ${b.maxPts} pts)`]
   if (relegationDoomed) lines.push("já REBAIXADO matematicamente — sem objetivo de tabela.")
+  else if (drawSecuresStay) lines.push("ainda não salvo, mas **um empate NESTE jogo já garante a permanência** — tende a jogar pra não perder, não a se lançar.")
+  else if (winSecuresStay) lines.push("AINDA PODE CAIR — e **só uma vitória** garante a permanência neste jogo; precisa ir pra cima.")
   else if (!relegationSafe) lines.push("AINDA PODE CAIR — luta direta contra o rebaixamento, precisa pontuar.")
   else lines.push("já SEGURO do rebaixamento.")
   if (titleClinched) lines.push("título já garantido.")
@@ -600,11 +662,16 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   }
   const chasingUp = chasingUpRaw && chaseViable
   const intensity: "alta" | "media" | "baixa" =
-    relegationDoomed ? "baixa" : fightingDown || chasingUp ? "alta" : relegationSafe || chasingUpRaw ? "baixa" : "media"
+    relegationDoomed ? "baixa"
+    : drawSecuresStay ? "media" // contenta-se com empate: 1 ponto trava a permanência
+    : fightingDown || chasingUp ? "alta"
+    : relegationSafe || chasingUpRaw ? "baixa"
+    : "media"
 
   // Motivo dominante (o que ele luta / por que não luta) → vira o veredito explícito.
   const reason =
-    fightingDown ? "luta contra o rebaixamento"
+    drawSecuresStay ? "contenta-se com o EMPATE — 1 ponto garante a permanência (joga pra não perder)"
+    : fightingDown ? "luta contra o rebaixamento"
     : chasingUp && titlePossible ? "briga pelo título"
     : chasingUp && canChampions && !championsClinched ? "briga por vaga de Champions"
     : chasingUp && canEuropean && !europeanClinched ? "briga por vaga europeia"
@@ -626,6 +693,7 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
     else {
       const drawPts = b.pts + gr // se o time empatar tudo que falta
       const stillAfterDraw = table.slice(pos).filter((r) => (boundOf(r.teamId)?.maxPts ?? 0) >= drawPts).length
+      if (stillAfterDraw === 0) drawSuffices = true // já trava a vaga empatando → administra (mesmo "alta" a perseguir acima)
       const lock =
         stillAfterDraw === 0
           ? `pro ${nameOf(teamId)} **um empate basta** (vai a ${drawPts}, fora do alcance) — só perde a vaga se PERDER`
@@ -633,7 +701,10 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
       lines.push(`disputa pela vaga (${pos}º): ${lock}. Quem ainda ameaça → ${contesters.join("; ")}`)
     }
   }
-  return { intensity, verdict, lines }
+  // pushes = de fato vai PRA CIMA neste jogo: precisa de pontos (alta) E um empate NÃO trava o objetivo.
+  // Time garantido/rebaixado/remoto (baixa/media) ou que "empate basta" (administra) → pushes=false.
+  const pushes = intensity === "alta" && !drawSuffices
+  return { intensity, verdict, lines, pushes }
 }
 
 type Timing = Awaited<ReturnType<typeof timing>>
@@ -671,47 +742,307 @@ function absBlock(label: string, list: AbsenceLine[]): string {
     const wow = `with/without: com ele ${a.withGf} g/j (${a.withN}j) vs sem ele ${a.withoutGf} g/j (${a.withoutN}j) = ${a.dropPct >= 0 ? "−" : "+"}${Math.abs(a.dropPct)}%`
     const sot = a.sotPerGame != null ? `; finaliza **${a.sotPerGame} SoT/jogo** (time: ${a.withSot} SoT/j com ele vs ${a.withoutSot} sem — volume mais estável que gols)` : ""
     const flag = a.confound ? "  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT" : ""
-    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${recent}; ${wow}${sot}${flag}`
+    const dp: string[] = []
+    if (a.pInt != null) dp.push(`**${a.pInt} interceptações/j**${a.intShare != null ? ` (~${a.intShare}% do time)` : ""}`)
+    if (a.pTkl != null) dp.push(`${a.pTkl} desarmes/j`)
+    if (a.pDuel != null) dp.push(`${a.pDuel} duelos ganhos/j`)
+    if (a.pCross != null) dp.push(`${a.pCross} cruz. certos/j`)
+    if (a.pDrib != null) dp.push(`${a.pDrib} dribles certos/j`)
+    if (a.pKp != null) dp.push(`${a.pKp} key passes/j`)
+    const def = dp.length ? `\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): ${dp.join(" · ")}` : ""
+    return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${recent}; ${wow}${sot}${flag}${def}`
   })
   return `### ${label}\n${lines.join("\n")}\n`
 }
 
 // Linha de forma recente (momento) pro prompt: últimos 5 (+10) com setas ↑/↓/= vs a média da season.
-function formLines(f5: ReturnType<typeof recentForm>, f10: ReturnType<typeof recentForm>, seasonGf: number, seasonGa: number): string {
+function formLines(f5: ReturnType<typeof recentForm>, seasonGf: number, seasonGa: number): string {
   if (!f5) return "- Forma recente: sem jogos suficientes"
   const arr = (r: number, s: number) => (r > s * 1.15 ? "↑" : r < s * 0.85 ? "↓" : "=")
-  const l10 = f10 ? ` · últimos 10: ${f10.seq} (${f10.pts}pts · ${f10.gf}/${f10.ga} g/j · SoT ${f10.sf}/${f10.sa})` : ""
-  return `- **Forma (momento) — últimos ${f5.n}: ${f5.seq}** (${f5.pts}pts) · marca ${f5.gf}${arr(f5.gf, seasonGf)} / sofre ${f5.ga}${arr(f5.ga, seasonGa)} g/j · SoT ${f5.sf} feito / ${f5.sa} sofrido${l10}`
+  return `- **Forma (momento) — últimos ${f5.n}: ${f5.seq}** (${f5.pts}pts) · **${f5.gfTotal} feitos / ${f5.gaTotal} sofridos** · marca ${f5.gf}${arr(f5.gf, seasonGf)} / sofre ${f5.ga}${arr(f5.ga, seasonGa)} g/j · SoT ${f5.sf} feito / ${f5.sa} sofrido`
+}
+
+// Estilo do time num recorte (temporada ou últimos N) em FEITO/SOFRIDO por jogo: ataques perigosos, chutes
+// pra fora, chutes bloqueados e chutes de fora da área — lê como o time pressiona e o que concede dos dois lados.
+function styleLine(label: string, rows: Row[], id: string): string {
+  const fmt = (x: { made: number; conceded: number } | null) => (x ? `${x.made}/${x.conceded}` : "?/?")
+  const dang = teamStatForAgainst(rows, id, "dangerousAttacks")
+  const off = teamStatForAgainst(rows, id, "shotsOffTarget")
+  const blk = teamStatForAgainst(rows, id, "shotsBlocked")
+  const out = teamStatForAgainst(rows, id, "shotsOutsidebox")
+  return `- **${label}** (feito/sofrido por jogo): ataques perigosos ${fmt(dang)} · chutes pra fora ${fmt(off)} · bloqueados ${fmt(blk)} · de fora da área ${fmt(out)}`
 }
 
 const homeStakes = stakesFor(home.id, home.name)
 const awayStakes = stakesFor(away.id, away.name)
+// Veredito de INTENÇÃO no nível do JOGO (o filtro que mais separou acerto de erro no backtest): "os dois
+// vão pra cima" (ninguém se contenta com empate → jogo abre → over/ataque coerentes) vs "intenção
+// assimétrica/travada" (≥1 lado administra, está garantido ou rebaixado → quem precisa pode não furar o
+// ferrolho → NÃO favoreça over/goleada por inércia estatística).
+const bothPush = homeStakes.pushes && awayStakes.pushes
+const intentHeadline = bothPush
+  ? "🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui."
+  : "⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico."
+
+// ---- Momentum / fluxo de jogo dos últimos 5 (SIN-021) ----
+// Reusa o buildMomentum canônico (delta+pesos+EMA, period-aware): pra cada jogo PASSADO do time, mede o
+// DOMÍNIO DE FLUXO — quanto da pressão total da partida foi dele (share %), no jogo todo e nos últimos 15'.
+// Lê como o time joga e ADMINISTRA o jogo (pressiona / cresce no fim / apaga). Pré-cutoff, sem vazamento.
+const momTrendIds = [...new Set([...teamMatches(home.id).slice(-5), ...teamMatches(away.id).slice(-5)].map((p) => p.id))]
+const momTrendRows = momTrendIds.length
+  ? await db
+      .select({ matchId: matchTrend.matchId, teamId: matchTrend.teamId, typeId: matchTrend.typeId, periodId: matchTrend.periodId, minute: matchTrend.minute, value: matchTrend.value })
+      .from(matchTrend)
+      .where(inArray(matchTrend.matchId, momTrendIds))
+  : []
+const trendsByMatch = new Map<string, TrendInput[]>()
+for (const r of momTrendRows) {
+  let arr = trendsByMatch.get(r.matchId)
+  if (!arr) trendsByMatch.set(r.matchId, (arr = []))
+  arr.push({ teamId: r.teamId, typeId: r.typeId, periodId: r.periodId, minute: r.minute, value: r.value })
+}
+// Gols COM MINUTO dos jogos do momentum — pra CRUZAR o minuto do gol com a curva de pressão (quando o time
+// "bate de verdade": gol durante surto = pressão produtiva; gol sofrido em queda longa = vulnerável).
+const momGoalRows = momTrendIds.length
+  ? await db.select({ matchId: goal.matchId, teamId: goal.teamId, minute: goal.minute }).from(goal).where(inArray(goal.matchId, momTrendIds))
+  : []
+const goalsByMatch = new Map<string, { teamId: string; minute: number | null }[]>()
+for (const g of momGoalRows) {
+  let arr = goalsByMatch.get(g.matchId)
+  if (!arr) goalsByMatch.set(g.matchId, (arr = []))
+  arr.push({ teamId: g.teamId, minute: g.minute })
+}
+// Tabela recomputada AO ENTRAR num jogo (só com jogos ANTES daquela data — anti-leak): posição, pontos e
+// jogos disputados de cada time. Base pra qualificar a forma e o stake de cada partida passada.
+type AsOf = { pos: number; pts: number; played: number }
+const standingsAsOf = (dateStr: string): Map<string, AsOf> => {
+  const tbl = new Map<string, { pts: number; gd: number; gf: number; pl: number }>()
+  const g = (id: string) => { let v = tbl.get(id); if (!v) tbl.set(id, (v = { pts: 0, gd: 0, gf: 0, pl: 0 })); return v }
+  for (const p of played.filter((r) => r.date < dateStr)) {
+    const hs = p.ftHome ?? 0, as = p.ftAway ?? 0
+    const h = g(p.homeTeamId), a = g(p.awayTeamId)
+    h.gf += hs; h.gd += hs - as; h.pl++; a.gf += as; a.gd += as - hs; a.pl++
+    if (hs > as) h.pts += 3; else if (hs < as) a.pts += 3; else { h.pts++; a.pts++ }
+  }
+  const ranked = [...tbl.entries()].sort((p, q) => q[1].pts - p[1].pts || q[1].gd - p[1].gd || q[1].gf - p[1].gf)
+  return new Map(ranked.map(([id, v], i) => [id, { pos: i + 1, pts: v.pts, played: v.pl }]))
+}
+// "Já estava classificado/decidido?" de um time AO ENTRAR num jogo — JUSTIFICA o resultado (quem já está salvo
+// e sem alvo afrouxa; quem briga pra não cair se mata). Condições CONSERVADORAS (só rotula o que é claro).
+// PL: 3 caem, ~7 pegam Europa, 38 rodadas. maxGain = 3 × jogos restantes do time.
+const ROUNDS = 38, RELEG = 3, EUROPE = 7
+const statusAsOf = (id: string, dateStr: string): string => {
+  const st = standingsAsOf(dateStr)
+  const me = st.get(id)
+  if (!me) return ""
+  const ranked = [...st.values()].sort((a, b) => a.pos - b.pos)
+  const N = ranked.length
+  const ptsAt = (rank: number) => ranked[Math.min(Math.max(rank, 1), N) - 1]?.pts ?? 0
+  const maxGain = 3 * (ROUNDS - me.played)
+  if (me.pos <= EUROPE) return me.pts - ptsAt(EUROPE + 1) > maxGain ? " Eur-gar" : " briga-top"
+  if (me.pos > N - RELEG && me.pts + maxGain < ptsAt(N - RELEG)) return " REBAIX."
+  const safe = me.pts - ptsAt(N - RELEG + 1) > maxGain
+  if (!safe && me.pos >= N - RELEG - 2) return " briga-Z"
+  if (safe) return me.pts + maxGain < ptsAt(EUROPE) ? " salvo/s-alvo" : " salvo"
+  return ""
+}
+// Média de gols feito/sofrido do time NO MANDO daquele jogo (casa OU fora), só com jogos ANTES da data — a
+// "média que ele tinha jogando casa/fora" ao entrar. Contextualiza o placar.
+const splitAvgAsOf = (id: string, dateStr: string, isHome: boolean): { gf: number; ga: number } | null => {
+  const ms = played.filter((r) => r.date < dateStr && (isHome ? r.homeTeamId === id : r.awayTeamId === id))
+  if (!ms.length) return null
+  let f = 0, a = 0
+  for (const p of ms) { f += goalsFor(p, id); a += goalsAgainst(p, id) }
+  return { gf: Math.round((f / ms.length) * 10) / 10, ga: Math.round((a / ms.length) * 10) / 10 }
+}
+// Bloco LIMPO "últimos 5 em contexto": cada resultado JUSTIFICADO numa linha — adversário + status decidido
+// dos dois times (salvo? rebaixado? brigando?) + a média do time no mando daquele jogo. Lê forma sem ser enganado.
+function contextoUltimos5(teamId: string): string {
+  const ms = teamMatches(teamId).slice(-5)
+  if (!ms.length) return "- (sem jogos)"
+  const legend =
+    "_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._"
+  const lines = ms
+    .map((p) => {
+      const isHome = p.homeTeamId === teamId
+      const oppId = isHome ? p.awayTeamId : p.homeTeamId
+      const tbl = standingsAsOf(p.date)
+      const myPos = tbl.get(teamId)?.pos, oppPos = tbl.get(oppId)?.pos
+      const split = splitAvgAsOf(teamId, p.date, isHome)
+      const gf = goalsFor(p, teamId), ga = goalsAgainst(p, teamId)
+      const res = gf > ga ? "V" : gf < ga ? "D" : "E"
+      const mando = isHome ? "casa" : "fora"
+      const splitStr = split ? ` · seu ${mando} até ali ${split.gf} marca/${split.ga} sofre` : ""
+      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**) — adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
+    })
+    .join("\n")
+  return `${legend}\n${lines}`
+}
+// Consistência de marcar/sofrer na season (pré-cutoff): MARCOU em X de Y (recorte casa/fora), não-marcou, clean
+// sheet, BTTS. É o que sustenta "casa marca" como aposta de baixa variância — a MÉDIA esconde, a frequência não.
+function consistencyLine(id: string): string {
+  const ms = teamMatches(id)
+  if (!ms.length) return "- **Consistência:** sem jogos."
+  const sc = ms.filter((p) => goalsFor(p, id) >= 1).length
+  const cs = ms.filter((p) => goalsAgainst(p, id) === 0).length
+  const btts = ms.filter((p) => goalsFor(p, id) >= 1 && goalsAgainst(p, id) >= 1).length
+  const home = ms.filter((p) => p.homeTeamId === id)
+  const away = ms.filter((p) => p.awayTeamId === id)
+  const scH = home.filter((p) => goalsFor(p, id) >= 1).length
+  const scA = away.filter((p) => goalsFor(p, id) >= 1).length
+  return `- **Consistência: MARCOU em ${sc}/${ms.length}** (casa ${scH}/${home.length} · fora ${scA}/${away.length}) · não-marcou ${ms.length - sc} · clean sheet ${cs} · BTTS ${btts}/${ms.length}`
+}
+
+// Momentum MINUTO A MINUTO do time num jogo (SIN-021): a curva COMPLETA do 1º ao último minuto. Reusa o
+// buildMomentum canônico e densifica por minuto inteiro (carry-forward nos minutos sem ponto). Devolve o NET
+// na ótica do time (momentum dele − do adversário): + = ele pressionando, − = sendo pressionado; magnitude =
+// intensidade do domínio. null se o jogo não tem trends ingeridos (cobertura / fixture antigo).
+function minuteNet(p: Row, teamId: string): number[] | null {
+  const tr = trendsByMatch.get(p.id)
+  if (!tr?.length) return null
+  const curve = buildMomentum(tr, p.homeTeamId, p.awayTeamId)
+  if (!curve.length) return null
+  const isHome = teamId === p.homeTeamId
+  const maxMin = Math.max(...curve.map((pt: MomentumPoint) => pt.minute))
+  const netAt = new Map<number, number>()
+  for (const pt of curve) netAt.set(pt.minute, Math.round(isHome ? pt.home - pt.away : pt.away - pt.home))
+  const out: number[] = []
+  let last = 0
+  for (let mm = 1; mm <= maxMin; mm++) {
+    const v = netAt.get(mm)
+    if (v !== undefined) last = v
+    out.push(last)
+  }
+  return out
+}
+// Atividade DEFENSIVA por faixa de 15 min, dos trends por minuto: interceptações (100) + desarmes (78).
+// Alta numa faixa = time DEFENDENDO/sob pressão ali. Cruza com a curva ofensiva e os gols sofridos.
+const DEF_TYPES = new Set([100, 78])
+function defenseBands(matchId: string, teamId: string): number[] | null {
+  const tr = (trendsByMatch.get(matchId) ?? []).filter((t) => t.teamId === teamId && DEF_TYPES.has(t.typeId))
+  if (!tr.length) return null
+  // O `value` é CUMULATIVO no JOGO INTEIRO (períodos continuam), com glitches ocasionais (cai e volta). Por isso
+  // NÃO se soma delta ponto-a-ponto (cada queda inflaria); usa-se o MÁXIMO acumulado em cada fronteira de faixa
+  // (15/30/45/60/75) e o total da faixa = diferença entre fronteiras. Robusto a glitch. Rank do período = ordem cronológica.
+  const bounds = [15, 30, 45, 60, 75, 9999]
+  const periodMin = new Map<number, number>()
+  for (const t of tr) { const c = periodMin.get(t.periodId); if (c === undefined || t.minute < c) periodMin.set(t.periodId, t.minute) }
+  const rank = new Map([...periodMin.entries()].sort((a, b) => a[1] - b[1]).map(([pid], i) => [pid, i]))
+  const slot = (pid: number, m: number) => (rank.get(pid) ?? 0) * 1000 + m
+  const bands = [0, 0, 0, 0, 0, 0]
+  const byType = new Map<number, typeof tr>()
+  for (const t of tr) { let s = byType.get(t.typeId); if (!s) byType.set(t.typeId, (s = [])); s.push(t) }
+  for (const series of byType.values()) {
+    series.sort((a, b) => slot(a.periodId, a.minute) - slot(b.periodId, b.minute))
+    const boundVal = [0, 0, 0, 0, 0, 0]
+    let mx = 0, bi = 0
+    for (const p of series) {
+      while (bi < 5 && p.minute > bounds[bi]!) { boundVal[bi] = mx; bi++ }
+      mx = Math.max(mx, p.value)
+    }
+    for (let k = bi; k < 6; k++) boundVal[k] = mx
+    let prev = 0
+    for (let k = 0; k < 6; k++) { bands[k]! += Math.max(0, boundVal[k]! - prev); prev = boundVal[k]! }
+  }
+  return bands
+}
+
+// Bloco de momentum do time: pra CADA um dos últimos 5, a curva net minuto a minuto (1→fim) — o jogo
+// inteiro. Agrupada de 15 em 15 (separador |) só pra orientar a leitura, mas é minuto a minuto. + = o time
+// pressionando, − = sendo pressionado. Mostra completo como ele conduz e SOFRE o jogo ao longo dos 90.
+function momentumLines(teamId: string): string {
+  const rows = teamMatches(teamId)
+    .slice(-5)
+    .map((p) => ({ p, net: minuteNet(p, teamId) }))
+    .filter((x): x is { p: Row; net: number[] } => x.net !== null)
+  if (!rows.length) return "- **Momentum minuto a minuto (últimos 5):** sem trends ingeridos para estes jogos."
+  // Rótulo de minuto por faixa de 15 + ‖INTERVALO‖ entre o 1º e o 2º tempo; minutos acima de 90 são acréscimo.
+  const CHUNK_LABELS = ["1'-15'", "16'-30'", "31'-45'", "46'-60'", "61'-75'", "76'-90'", "91'+"]
+  const fmtSeq = (net: number[]) => {
+    const parts: string[] = []
+    for (let i = 0, c = 0; i < net.length; i += 15, c++) {
+      const label = CHUNK_LABELS[c] ?? `${i + 1}'+`
+      parts.push(`${label} [${net.slice(i, i + 15).map((v) => (v > 0 ? `+${v}` : `${v}`)).join(" ")}]`)
+    }
+    if (parts.length > 3) parts.splice(3, 0, "‖INTERVALO‖")
+    return parts.join(" · ")
+  }
+  const per = rows
+    .map(({ p, net }) => {
+      const isHome = p.homeTeamId === teamId
+      const oppId = isHome ? p.awayTeamId : p.homeTeamId
+      const gf = goalsFor(p, teamId)
+      const ga = goalsAgainst(p, teamId)
+      const res = gf > ga ? "V" : gf < ga ? "D" : "E"
+      const gls = (goalsByMatch.get(p.id) ?? []).slice().sort((x, y) => (x.minute ?? 0) - (y.minute ?? 0))
+      const glsStr = gls.length ? gls.map((g) => `${g.minute ?? "?"}'${g.teamId === teamId ? "✓" : "✗"}`).join(" ") : "—"
+      const dfb = defenseBands(p.id, teamId)
+      const dfStr = dfb
+        ? `${dfb.slice(0, 3).map((v, i) => `${CHUNK_LABELS[i]} **${v}**`).join(" · ")} ‖ ${dfb.slice(3).map((v, i) => `${CHUNK_LABELS[i + 3]} **${v}**`).join(" · ")}`
+        : "—"
+      return `  - ${isHome ? "vs" : "@"} ${nameOf(oppId)} (${isHome ? "CASA" : "FORA"} · ${res} ${gf}-${ga}) — min 1→${net.length}:\n    📈 pressão (net/min): ${fmtSeq(net)}\n    ⚽ gols: ${glsStr}\n    🛡️ defesa (interceptações+desarmes): ${dfStr}`
+    })
+    .join("\n")
+  return `(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n${per}`
+}
 
 const prompt = `# Prognóstico de expected goals — ${home.name} x ${away.name}
 
-**IMPORTANTE: raciocine (pense/chain-of-thought) E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno, deve ser em português do Brasil.
+**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.
 
-Você é o melhor apostador de futebol do mundo — um **sharp**, não um palpiteiro. Seu edge vem de método e
-disciplina: decide com modelos quantitativos (Poisson, xG, volume de SoT), busca **valor** e não certeza, dimensiona o
-risco com frieza e **sempre crava o melhor mercado** — aquele onde o cenário mais o favorece. Mesmo sem edge enorme, ele
-aponta a aposta de maior valor relativo e calibra a **confiança** ao tamanho da margem (nunca "passa"). Produza um prognóstico de
-**expected goals (xG)** desta partida E a sua leitura de apostador.
-Método: **PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já
-calculadas**, e **AJUSTE** por fator (desfalques, fadiga, mando, contexto), justificando cada ajuste e o tamanho. Regras:
-- **ANCORE nas probabilidades Poisson fornecidas**: seu \`over25_prob\`, \`btts_prob\` e \`one_x_two\` PARTEM delas (Rota B
-  como principal). **Comprometa-se com a âncora** — só desvie com um fator nomeado e quantificado (direção e tamanho). Se
-  não há fator concreto pra mover, devolva a âncora; não regrida as probabilidades pro centro por cautela.
-- **SoT (chutes no alvo) é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a
-  CONVERSÃO (gols/SoT) e como checagem. Onde as duas rotas de base rate divergem, confie mais no SoT e trate a
-  diferença como finalização acima/abaixo da média (tende a regredir à conversão do time).
-- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão (a eficiência do time é mais estável).
-- **NÃO double-conte**: se um desfalque já estava fora nos últimos jogos, o efeito dele já está na média recente.
-- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️. O with/without de **SoT** é mais estável que o de gols — prefira-o.
-- Sinalize incerteza: NÃO temos xG real, clima, nem posse/chutes totais — SoT é o melhor proxy de volume/qualidade aqui.
+---
+
+**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.
+
+## Você
+O **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o "feeling" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca "passa", nunca regride pro meio por covardia).
+
+## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)
+Não despeje uma lista linear; construa um **grafo de raciocínio**:
+1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.
+2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.
+3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.
+4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.
+
+## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado
+O briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem "viver no prompt". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.
+- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.
+- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.
+- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o \`xg\`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.
+Suas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.
+
+## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)
+Pela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:
+- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.
+- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.
+- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.
+**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total "costuma" ser baixo.
+
+## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)
+A estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):
+- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR → o jogo morre.
+- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.
+- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.
+- **Cada roteiro AMARRADO a um dado** ("toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante"). Sem dado que o sustente, é achismo — descarte.
+- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = administra/segura o resultado).
+
+## Método numérico
+**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:
+- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu \`over25_prob\`, \`btts_prob\` e \`one_x_two\` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque "o total costuma ser baixo". Só fique colado no prior quando NÃO há fator nem roteiro claro.
+- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).
+- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.
+- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).
+- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).
+- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.
+
+---
+
+**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada \`##\` e cada \`###\`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.
 
 ## Contexto
 - Data: ${m.date} ${m.time ?? ""} · Rodada ${m.round} · Liga ${m.leagueCode}
 - Local: ${matchVenue ? `${matchVenue.name}${matchVenue.cityName ? `, ${matchVenue.cityName}` : ""}` : "—"}${matchVenue?.surface ? ` (${matchVenue.surface})` : ""}
+- Clima: ${matchWeather ? `${matchWeather.description ?? "?"} · ${w1(matchWeather.tempDay)}°C (sens. ${w1(matchWeather.feelsLikeDay)}°C) · vento ${w1(matchWeather.windSpeed)} m/s · umidade ${matchWeather.humidity ?? "?"} · nuvens ${matchWeather.clouds ?? "?"}` : "—"} (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)
 - Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias · ${away.name} ${restDays(away.id) ?? "?"} dias${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
 - Média da liga (pré-jogo, ${played.length} jogos): mandante ${leagueHomeAvg} gols/jogo · visitante ${leagueAwayAvg} gols/jogo
 - **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +${+(leagueHomeAvg - leagueAwayAvg).toFixed(2)} gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.
@@ -723,27 +1054,55 @@ calculadas**, e **AJUSTE** por fator (desfalques, fadiga, mando, contexto), just
 ${homeStakes.lines.map((s) => `  - ${s}`).join("\n")}
 ${awayStakes.lines.map((s) => `  - ${s}`).join("\n")}
 
+${intentHeadline}
+
 ## ${home.name} (manda) — até ${CUTOFF}
-- Total na temporada: **${homeAll.totalGf} gols marcados**, ${homeAll.totalGa} sofridos em ${homeAll.n} jogos
-- Média geral: marca ${homeAll.gf} / sofre ${homeAll.ga} por jogo
-- **Em casa (${homeHome.n}j): marca ${homeHome.gf} / sofre ${homeHome.ga}** (total ${homeHome.totalGf} gols em casa)
-- Por tempo (casa+fora): 1ºT marca ${homeHalf.scored1} sofre ${homeHalf.conceded1} · 2ºT marca ${homeHalf.scored2} sofre ${homeHalf.conceded2}
-- **Finalização: ${homeSotAll.totalSf} SoT total (${homeSotAll.sf}/jogo · em casa ${homeHomeSot.sf}/jogo) · conversão ${homeConv ?? "?"}%** (jogada aberta ÷ SoT; exclui ${homePens} pênaltis)
-- Sofre ${homeSotAll.sa} SoT/jogo (adversário converte ${homeConvDef ?? "?"}%) · cria ${homeKpPg} key passes/jogo
-- **Volume (chutes): ${teamStatAvg(teamMatches(home.id), home.id, "shotsTotal") ?? "?"}/jogo (${teamStatAvg(teamMatches(home.id), home.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesCreated") ?? "?"} big chances criadas/jogo** · posse ${teamStatAvg(teamMatches(home.id), home.id, "possession") ?? "?"}% (contexto — posse sozinha NÃO prevê gol)
-${formLines(homeF5, homeF10, homeAll.gf, homeAll.ga)}
+
+### Gols & finalização (season)
+- Total **${homeAll.totalGf} marcados / ${homeAll.totalGa} sofridos** em ${homeAll.n}j · média **${homeAll.gf} marca / ${homeAll.ga} sofre** por jogo
+- **Em casa (${homeHome.n}j): marca ${homeHome.gf} / sofre ${homeHome.ga}** (${homeHome.totalGf} gols) · por tempo: 1ºT ${homeHalf.scored1}/${homeHalf.conceded1} · 2ºT ${homeHalf.scored2}/${homeHalf.conceded2}
+- **Finalização: ${homeSotAll.totalSf} SoT (${homeSotAll.sf}/j · casa ${homeHomeSot.sf}/j) · conv ${homeConv ?? "?"}%** (aberta, −${homePens} pên) · sofre ${homeSotAll.sa} SoT/j (adv ${homeConvDef ?? "?"}%) · ${homeKpPg} KP/j
+- **Volume: ${teamStatAvg(teamMatches(home.id), home.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(home.id), home.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesCreated") ?? "?"} big chances/j** · posse ${teamStatAvg(teamMatches(home.id), home.id, "possession") ?? "?"}%
+
+### Estilo (feito/sofrido por jogo)
+${styleLine("Temporada", teamMatches(home.id), home.id)}
+${styleLine("Últimos 5", teamMatches(home.id).slice(-5), home.id)}
+
+### Forma & contexto (últimos 5 — cada resultado justificado)
+${formLines(homeF5, homeAll.gf, homeAll.ga)}
+${consistencyLine(home.id)}
+${contextoUltimos5(home.id)}
+
+### Momentum minuto a minuto (últimos 5)
+${momentumLines(home.id)}
+
+### Distribuição de gols por faixa (season)
 ${timingLines(homeTiming)}
+
 ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ## ${away.name} (visita) — até ${CUTOFF}
-- Total na temporada: **${awayAll.totalGf} gols marcados**, ${awayAll.totalGa} sofridos em ${awayAll.n} jogos
-- Média geral: marca ${awayAll.gf} / sofre ${awayAll.ga} por jogo
-- **Fora (${awayAway.n}j): marca ${awayAway.gf} / sofre ${awayAway.ga}** (total ${awayAway.totalGf} gols fora)
-- Por tempo (casa+fora): 1ºT marca ${awayHalf.scored1} sofre ${awayHalf.conceded1} · 2ºT marca ${awayHalf.scored2} sofre ${awayHalf.conceded2}
-- **Finalização: ${awaySotAll.totalSf} SoT total (${awaySotAll.sf}/jogo · fora ${awayAwaySot.sf}/jogo) · conversão ${awayConv ?? "?"}%** (jogada aberta ÷ SoT; exclui ${awayPens} pênaltis)
-- Sofre ${awaySotAll.sa} SoT/jogo (adversário converte ${awayConvDef ?? "?"}%) · cria ${awayKpPg} key passes/jogo
-- **Volume (chutes): ${teamStatAvg(teamMatches(away.id), away.id, "shotsTotal") ?? "?"}/jogo (${teamStatAvg(teamMatches(away.id), away.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesCreated") ?? "?"} big chances criadas/jogo** · posse ${teamStatAvg(teamMatches(away.id), away.id, "possession") ?? "?"}% (contexto — posse sozinha NÃO prevê gol)
-${formLines(awayF5, awayF10, awayAll.gf, awayAll.ga)}
+
+### Gols & finalização (season)
+- Total **${awayAll.totalGf} marcados / ${awayAll.totalGa} sofridos** em ${awayAll.n}j · média **${awayAll.gf} marca / ${awayAll.ga} sofre** por jogo
+- **Fora (${awayAway.n}j): marca ${awayAway.gf} / sofre ${awayAway.ga}** (${awayAway.totalGf} gols) · por tempo: 1ºT ${awayHalf.scored1}/${awayHalf.conceded1} · 2ºT ${awayHalf.scored2}/${awayHalf.conceded2}
+- **Finalização: ${awaySotAll.totalSf} SoT (${awaySotAll.sf}/j · fora ${awayAwaySot.sf}/j) · conv ${awayConv ?? "?"}%** (aberta, −${awayPens} pên) · sofre ${awaySotAll.sa} SoT/j (adv ${awayConvDef ?? "?"}%) · ${awayKpPg} KP/j
+- **Volume: ${teamStatAvg(teamMatches(away.id), away.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(away.id), away.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesCreated") ?? "?"} big chances/j** · posse ${teamStatAvg(teamMatches(away.id), away.id, "possession") ?? "?"}%
+
+### Estilo (feito/sofrido por jogo)
+${styleLine("Temporada", teamMatches(away.id), away.id)}
+${styleLine("Últimos 5", teamMatches(away.id).slice(-5), away.id)}
+
+### Forma & contexto (últimos 5 — cada resultado justificado)
+${formLines(awayF5, awayAll.gf, awayAll.ga)}
+${consistencyLine(away.id)}
+${contextoUltimos5(away.id)}
+
+### Momentum minuto a minuto (últimos 5)
+${momentumLines(away.id)}
+
+### Distribuição de gols por faixa (season)
 ${timingLines(awayTiming)}
+
 ${absBlock(`Desfalques de ${away.name} neste jogo`, awayAbs)}
 ## Cruzamento ataque × defesa por faixa de 15 min
 Onde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.
@@ -763,7 +1122,7 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 - **Índice de volume do jogo**: λ_SoT total ${+(lambdaSotHome + lambdaSotAway).toFixed(1)} vs média da liga ${+(leagueHomeSotAvg + leagueAwaySotAvg).toFixed(1)} SoT → ${lambdaSotHome + lambdaSotAway > (leagueHomeSotAvg + leagueAwaySotAvg) * 1.1 ? "**ACIMA** (jogo de volume → pressão de OVER)" : lambdaSotHome + lambdaSotAway < (leagueHomeSotAvg + leagueAwaySotAvg) * 0.9 ? "**ABAIXO** (jogo travado → pressão de UNDER)" : "na média"}
 - **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.
 
-## Probabilidades de mercado (Poisson sobre os λ — ÂNCORA: ajuste A PARTIR daqui, não invente)
+## Probabilidades de mercado (Poisson sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)
 | Mercado | Rota A (gols) | Rota B (SoT×conv) |
 |---|---|---|
 | 1x2 casa/E/fora | ${probsGoals.home}/${probsGoals.draw}/${probsGoals.away}% | ${probsSot.home}/${probsSot.draw}/${probsSot.away}% |
@@ -771,30 +1130,41 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 | Over 2.5 | ${probsGoals.over25}% | ${probsSot.over25}% |
 | Over 3.5 | ${probsGoals.over35}% | ${probsSot.over35}% |
 | BTTS | ${probsGoals.btts}% | ${probsSot.btts}% |
-São as probabilidades que o volume IMPLICA. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` devem **partir destes números** (use a Rota B como principal). **Comprometa-se com elas**: só desvie com um **fator nomeado** (motivação, desfalque, fadiga, mando) dizendo a direção e o tamanho. Se não há fator concreto pra mover, devolva a âncora — não regrida pro centro por cautela.
+
+**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de \`one_x_two_1t\`/\`one_x_two_2t\`): 1ºT casa/E/fora **${probs1t.home}/${probs1t.draw}/${probs1t.away}%** · 2ºT **${probs2t.home}/${probs2t.draw}/${probs2t.away}%**.
+São as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.
+
+---
+
+**PARTE 3 · SUA SAÍDA**
 
 ## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (\`summary\`, \`analysis\`) em português.
 **Por time** — \`home\` (= ${home.name}) e \`away\` (= ${away.name}), cada um com:
-- \`xg\` (total), \`xg_1t\`, \`xg_2t\` e **\`xg_bands\`** = o xG nas 6 faixas de 15 min (\`"0-15"\`,\`"16-30"\`,\`"31-45"\`,\`"46-60"\`,\`"61-75"\`,\`"76-90"\`). Soma das 6 = \`xg\`; 0-15+16-30+31-45 = \`xg_1t\`. Use o cruzamento ataque×defesa por faixa.
+- \`xg\` (total), \`xg_1t\`, \`xg_2t\` e **\`xg_bands\`** = o xG nas 6 faixas de 15 min (\`"0-15"\`,\`"16-30"\`,\`"31-45"\`,\`"46-60"\`,\`"61-75"\`,\`"76-90"\`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar \`xg\` (e o 1ºT = 3 primeiras).
 - \`summary\` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.
 
 **Geral** (\`general\`) — agregados do jogo:
 - \`total\`, \`total_1t\`, \`total_2t\`, \`over25_prob\`, \`btts_prob\`.
-- **1x2 (home/draw/away)** em 3 recortes: \`one_x_two\` (jogo 90min), \`one_x_two_1t\` (placar do 1º tempo), \`one_x_two_2t\` (2º tempo isolado). Derive do Poisson com os λ do respectivo tempo.
+- **1x2 (home/draw/away)** em 3 recortes: \`one_x_two\` (jogo 90min), \`one_x_two_1t\` (1º tempo), \`one_x_two_2t\` (2º tempo isolado). PARTA dos priors "1x2 por tempo" acima e mova pelo roteiro / fator nomeado.
 - \`confidence\` ∈ {low, medium, high} e \`summary\` (PT) = 1 parágrafo do jogo + a maior incerteza.
 
 No topo: \`drivers\` = os 3 fatores (frases em PT) que mais moveram o número.
 
-**\`best_bet\`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de \`selection\`):
-- \`market\`: \`"1x2"\` | \`"over_under"\` | \`"btts"\` — escolha SEMPRE um (o de maior valor); não há opção de passar.
-- \`selection\`: conforme o market — 1x2: \`"home"\`/\`"draw"\`/\`"away"\` · over_under: \`"over"\`/\`"under"\` · btts: \`"yes"\`/\`"no"\`.
-- \`line\`: a linha quando \`market="over_under"\` (ex.: 2.5); \`null\` nos outros.
-- \`confidence\`: \`"low"\` | \`"medium"\` | \`"high"\`.
-- \`probability\`: a sua probabilidade (0-1) do evento escolhido (coerente com \`general\`).
-- \`analysis\` (PT): análise COMPLETA e profissional — não um resumo. Junte tudo que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão), o cenário esperado e o que pode virar contra (o risco). **Sempre recomende o melhor mercado** — aquele onde o cenário mais te favorece; se o edge for fino, escolha mesmo assim e marque \`confidence\` baixa, explicando o tamanho da margem.
+**\`best_bet\`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de \`selection\`/\`team\`):
+- \`market\`: \`"1x2"\` | \`"over_under"\` | \`"btts"\` | \`"handicap"\` | \`"team_total"\` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece — **OBRIGATÓRIO escolher um mercado; NUNCA "passar"/"sem aposta". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, "mandante \`handicap\` -1" ou "mandante \`team_total\` over 1.5" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), \`team_total\` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.
+- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** \`team_total\` over 0.5 ("time marca" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** \`team_total\` over 1.5 ou \`handicap\` de favorito claro (dependem de UM time, não do placar exato) → **(3)** \`over_under\` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → "under 3.5" é quase trava (margem enorme), "under 2.5" é apertado; xG 3.2 → "over 2.5" tem folga, "over 1.5" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** \`1x2\` (o empate nega; só com vitória nítida) → **(5)** \`btts\` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte \`btts\` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira "o lado forte marca" via \`team_total\`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.
+- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o \`team_total\` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. \`team_total\` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.
+- **SIGA O "VEREDITO DE INTENÇÃO" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**
+  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / \`team_total\` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.
+  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **"empate basta"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: \`team_total\` over 0.5 do lado que precisa, ou \`1x2\`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo \`medium\`**.
+- \`selection\`: 1x2 → \`"home"\`/\`"draw"\`/\`"away"\` · over_under → \`"over"\`/\`"under"\` · btts → \`"yes"\`/\`"no"\` · **handicap** → o time bancado \`"home"\`/\`"away"\` · **team_total** → \`"over"\`/\`"under"\`.
+- \`team\`: SÓ em \`team_total\` — de qual time é o total (\`"home"\`/\`"away"\`); \`null\` nos demais mercados.
+- \`line\`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · \`null\` em 1x2/btts.
+- \`confidence\`: \`"low"\` | \`"medium"\` | \`"high"\` · \`probability\`: sua prob (0-1) do evento.
+- \`analysis\` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com \`confidence\` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor "não apostar", "evitar", "passar" ou "esperar" — a saída tem SEMPRE uma recomendação concreta e acionável.
 
 ---
-⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (chain-of-thought / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como "Vou analisar...". Não pense em inglês em nenhum momento. A resposta final também 100% em português.
+⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como "Vou analisar...". Não pense em inglês em nenhum momento. A resposta final também 100% em português.
 `
 
 // Escreve o arquivo pra leitura/auditoria + imprime no stdout.

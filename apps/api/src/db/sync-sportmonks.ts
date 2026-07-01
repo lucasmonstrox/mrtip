@@ -1,7 +1,7 @@
 import { and, eq, ne } from "drizzle-orm"
 
 import { db } from "./client"
-import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, nationality, player, season, standing, team, venue } from "./schema"
+import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, nationality, player, season, standing, team, venue, weather } from "./schema"
 import { matchSlug, slugify } from "./slug"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
@@ -26,9 +26,19 @@ const LINEUP_BENCH = 12
 // SportMonks lineups.details stat type_ids (Match Facts) — per player per match.
 // keyPasses (117): last pass before a teammate's shot — chance creation; omitted by the API when 0.
 // shotsOnTarget (86): per-player shots on target; SUM per team rebuilds the team's SoT for the match.
-const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86 } as const
+// Volume defensivo + criação por jogador (LIG-003 / tese do desfalque): tackles/interceptions/duels/
+// crosses/dribbles/big-chances-missed/passes — todos confirmados no lineups.details da PL 25/26.
+const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86,
+  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, bigChancesMissed: 581 } as const
+const STAT_IDS = Object.values(STAT).join(",")
 // SportMonks fixture-statistics type_ids ingeridos por time por partida (include=statistics). @feature DOS-002
-const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34 } as const
+// Bloco 2 (defesa + construção): só os que o probe confirmou virem no nível-partida da PL 25/26.
+const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, shotsOffTarget: 41, shotsBlocked: 58, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34, freeKicks: 55,
+  tackles: 78, interceptions: 100, duelsWon: 106, successfulHeaders: 65, attacks: 43, passes: 80, passesAccurate: 81, passAccuracy: 82, longPasses: 62, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbleSuccess: 1605, bigChancesMissed: 581, hitWoodwork: 64, goalAttempts: 54 } as const
+// SportMonks per-minute trend type_ids ingeridos pro attack momentum (include=trends). Os mais "perigosos"
+// pesam mais na reconstrução da gangorra (ver SIN-021): SoT/big-chance/dangerous-attack > shots > attack > posse. @feature SIN-021
+const TREND_TYPES = [86, 580, 44, 42, 43, 49, 34, 78, 100, 45] as const
+const TREND_TYPE_SET = new Set<number>(TREND_TYPES)
 const TEAM_STAT_IDS = Object.values(TEAM_STAT).join(",")
 
 // SportMonks goal-event developer_names → our goal.type. Por agora só goal vs owngoal: o pênalti
@@ -138,10 +148,27 @@ type SmFixture = {
   sidelined?: SmSidelined[]
   venue?: SmVenue | null
   statistics?: SmStatistic[]
+  trends?: SmTrend[]
+  weatherreport?: SmWeather | null // chave LOWERCASE no JSON (include=weatherReport, como `relatedplayer`)
+}
+// SportMonks weather report (include=weatherReport): a chave no JSON vem como `weatherreport` (minúscula).
+// temperature/feels_like/wind são objetos; usamos o período "day" (~horário do jogo). `description` = condição.
+type SmWeather = {
+  temperature?: { day?: number } | null
+  feels_like?: { day?: number } | null
+  wind?: { speed?: number; direction?: number } | null
+  humidity?: string | null
+  clouds?: string | null
+  pressure?: number | null
+  description?: string | null
+  type?: string | null
 }
 // SportMonks fixture statistic (include=statistics): one row per (team, type) per match. `type_id`
 // decodes the metric (45=possession, 42=shots total, 49=shots inside box, 580=big chances created).
 type SmStatistic = { type_id: number; participant_id: number; location?: "home" | "away"; data?: { value?: number } }
+// SportMonks per-minute trend (include=trends): one row per (team, type, period, minute). `value` is
+// CUMULATIVE within the period. Feeds the attack-momentum reconstruction (`match_trend`). @feature SIN-021
+type SmTrend = { type_id: number; participant_id: number; period_id: number; minute: number; value: number }
 // SportMonks `sidelined` item on a fixture: a player unavailable (or a doubt) for THAT match.
 // `type.developer_name` is the cause/category (HAMSTRING_INJURY, RED_CARD_SUSPENSION, DOUBTFUL).
 type SmSidelined = {
@@ -352,8 +379,8 @@ async function main() {
   const byId = new Map<number, SmFixture>()
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses},${STAT.shotsOnTarget};fixtureStatisticTypes:${TEAM_STAT_IDS}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics&per_page=50`,
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT_IDS};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
+        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -539,6 +566,15 @@ async function main() {
           minutesPlayed: stat(STAT.minutes) ?? null,
           keyPasses: stat(STAT.keyPasses) ?? null,
           shotsOnTarget: stat(STAT.shotsOnTarget) ?? null,
+          tackles: stat(STAT.tackles) ?? null,
+          interceptions: stat(STAT.interceptions) ?? null,
+          duelsWon: stat(STAT.duelsWon) ?? null,
+          passes: stat(STAT.passes) ?? null,
+          crossesTotal: stat(STAT.crossesTotal) ?? null,
+          crossesAccurate: stat(STAT.crossesAccurate) ?? null,
+          dribbleAttempts: stat(STAT.dribbleAttempts) ?? null,
+          dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null,
+          bigChancesMissed: stat(STAT.bigChancesMissed) ?? null,
           manOfMatch: stat(STAT.motm) === 1,
         }
         await db
@@ -581,9 +617,29 @@ async function main() {
         shotsInsidebox: g(TEAM_STAT.shotsInsidebox),
         shotsOutsidebox: g(TEAM_STAT.shotsOutsidebox),
         shotsOnTarget: g(TEAM_STAT.shotsOnTarget),
+        shotsOffTarget: g(TEAM_STAT.shotsOffTarget),
+        shotsBlocked: g(TEAM_STAT.shotsBlocked),
         bigChancesCreated: g(TEAM_STAT.bigChancesCreated),
         dangerousAttacks: g(TEAM_STAT.dangerousAttacks),
         corners: g(TEAM_STAT.corners),
+        freeKicks: g(TEAM_STAT.freeKicks),
+        tackles: g(TEAM_STAT.tackles),
+        interceptions: g(TEAM_STAT.interceptions),
+        duelsWon: g(TEAM_STAT.duelsWon),
+        successfulHeaders: g(TEAM_STAT.successfulHeaders),
+        attacks: g(TEAM_STAT.attacks),
+        passes: g(TEAM_STAT.passes),
+        passesAccurate: g(TEAM_STAT.passesAccurate),
+        passAccuracy: g(TEAM_STAT.passAccuracy),
+        longPasses: g(TEAM_STAT.longPasses),
+        crossesTotal: g(TEAM_STAT.crossesTotal),
+        crossesAccurate: g(TEAM_STAT.crossesAccurate),
+        dribbleAttempts: g(TEAM_STAT.dribbleAttempts),
+        dribblesSuccessful: g(TEAM_STAT.dribblesSuccessful),
+        dribbleSuccess: g(TEAM_STAT.dribbleSuccess),
+        bigChancesMissed: g(TEAM_STAT.bigChancesMissed),
+        hitWoodwork: g(TEAM_STAT.hitWoodwork),
+        goalAttempts: g(TEAM_STAT.goalAttempts),
       }
       await db
         .insert(matchTeamStats)
@@ -593,6 +649,52 @@ async function main() {
     }
   }
   console.log(`team stats: ${nTeamStats}`)
+
+  // 3e-ter) Per-minute trends (SportMonks `trends` include): ~1300 rows per match (one per team×type×
+  // period×minute), `value` cumulative within the period. Reconstructed into the attack-momentum curve
+  // at read time. BULK insert per fixture (one statement, not a row-at-a-time await — ~500k rows/season).
+  // `trendTypes` filter may be ignored upstream (same gotcha as fixtureStatisticTypes), so we also filter
+  // by TREND_TYPE_SET in code. @feature SIN-021
+  let nTrends = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    if (!matchId || !f.trends?.length) continue
+    const rows: (typeof matchTrend.$inferInsert)[] = []
+    for (const t of f.trends) {
+      if (!TREND_TYPE_SET.has(t.type_id)) continue
+      const teamId = teamIdBySm.get(t.participant_id)
+      if (!teamId) continue
+      rows.push({ matchId, teamId, typeId: t.type_id, periodId: t.period_id, minute: t.minute, value: t.value })
+    }
+    if (!rows.length) continue
+    await db.insert(matchTrend).values(rows).onConflictDoNothing()
+    nTrends += rows.length
+  }
+  console.log(`trends: ${nTrends}`)
+
+  // 3e-bis) Clima do jogo (include=weatherReport → chave `weatherreport` lowercase no JSON). 1 linha/match;
+  // pega o período "day" de temp/feels e o vento; `description` carrega chuva/sol. Upsert por matchId.
+  let nWeather = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    const w = f.weatherreport
+    if (!matchId || !w) continue
+    const wrow = {
+      matchId,
+      description: w.description ?? null,
+      tempDay: w.temperature?.day ?? null,
+      feelsLikeDay: w.feels_like?.day ?? null,
+      windSpeed: w.wind?.speed ?? null,
+      windDirection: w.wind?.direction ?? null,
+      humidity: w.humidity ?? null,
+      clouds: w.clouds ?? null,
+      pressure: w.pressure ?? null,
+      type: w.type ?? null,
+    }
+    await db.insert(weather).values(wrow).onConflictDoUpdate({ target: [weather.matchId], set: wrow })
+    nWeather += 1
+  }
+  console.log(`weather: ${nWeather}`)
 
   // 3f) Goals + cards of every match, from events. Most players are already in playerIdBySm
   // (lineups); for any that aren't, upsert a minimal player (id + name). Upsert by sportmonksEventId

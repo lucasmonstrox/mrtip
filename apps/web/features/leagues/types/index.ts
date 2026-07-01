@@ -19,6 +19,7 @@ export type {
   MatchScorers,
   PlayerDetail,
   PlayerGoal,
+  RecentTeamGame,
   Round,
   Proportion,
   StandingRow,

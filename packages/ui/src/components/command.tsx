@@ -15,7 +15,7 @@ import {
   InputGroup,
   InputGroupAddon,
 } from "@workspace/ui/components/input-group"
-import { SearchIcon, CheckIcon } from "lucide-react"
+import { SearchIcon, CheckIcon, Loader2Icon } from "lucide-react"
 
 function Command({
   className,
@@ -39,12 +39,16 @@ function CommandDialog({
   children,
   className,
   showCloseButton = false,
+  commandProps,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  // Props forwarded to the inner <Command> (e.g. `shouldFilter={false}` for server-side search,
+  // so cmdk doesn't re-filter results that came already matched from the backend).
+  commandProps?: React.ComponentProps<typeof Command>
 }) {
   return (
     <Dialog {...props}>
@@ -59,7 +63,7 @@ function CommandDialog({
         )}
         showCloseButton={showCloseButton}
       >
-        <Command>{children}</Command>
+        <Command {...commandProps}>{children}</Command>
       </DialogContent>
     </Dialog>
   )
@@ -67,8 +71,12 @@ function CommandDialog({
 
 function CommandInput({
   className,
+  loading = false,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+}: React.ComponentProps<typeof CommandPrimitive.Input> & {
+  // When true, the leading search icon becomes a spinner — signals an in-flight (server-side) search.
+  loading?: boolean
+}) {
   return (
     <div data-slot="command-input-wrapper" className="p-1 pb-0">
       <InputGroup className="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!">
@@ -81,7 +89,11 @@ function CommandInput({
           {...props}
         />
         <InputGroupAddon>
-          <SearchIcon className="size-4 shrink-0 opacity-50" />
+          {loading ? (
+            <Loader2Icon className="size-4 shrink-0 animate-spin opacity-50" />
+          ) : (
+            <SearchIcon className="size-4 shrink-0 opacity-50" />
+          )}
         </InputGroupAddon>
       </InputGroup>
     </div>

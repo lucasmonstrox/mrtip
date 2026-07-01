@@ -35,6 +35,7 @@ export type {
   PlayerDetail,
   PlayerGoal,
   Proportion,
+  RecentTeamGame,
   Round,
   StandingRow,
   TeamAbsenceImpact,
@@ -49,3 +50,13 @@ export type {
   TeamTrendSplit,
   VenueRecord,
 } from "./modules/leagues/shared/shared"
+
+// Search contract (global fuzzy search). @feature CORE-002
+export type {
+  SearchCoach,
+  SearchLeague,
+  SearchMatch,
+  SearchPlayer,
+  SearchResults,
+  SearchTeamRef,
+} from "./modules/leagues/search/search.service"

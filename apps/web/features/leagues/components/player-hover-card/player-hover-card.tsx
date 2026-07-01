@@ -22,14 +22,11 @@ const POSITION_LABEL: Record<string, string> = {
   F: "Atacante",
 }
 
-// How many recent rated appearances feed the sparkline — enough to read a trend without crowding.
-const FORM_GAMES = 5
+// The form window (how many of the club's recent games the strip + sparkline cover) is decided by the
+// API in `recentTeamGames` — counted in TEAM games so a missed game keeps its slot, not in appearances.
 
-// The per-game output strip covers this many recent games; each goal is a football icon and each
-// assist a boot icon, so a game reads as goal involvements at a glance.
-const GOAL_GAMES = 5
-
-type Appearance = PlayerDetail["appearances"][number]
+// One game in the form window — the club's recent match with the player's played/missed flag.
+type RecentGame = PlayerDetail["recentTeamGames"][number]
 
 // Shared line-icon wrapper so the goal ball and assist shoe read as one set (same stroke + size props).
 function StripIcon({ className, children }: { className?: string; children: ReactNode }) {
@@ -80,35 +77,83 @@ function Stat({ value, label, className }: { value: string | number; label: stri
   )
 }
 
-// One recent game in the output strip: a football per goal + a boot per assist, wrapped and centred,
-// with the opponent crest below and a dash for a blank game. Exact counts live in the title tooltip.
-function GameInvolvement({ a }: { a: Appearance }) {
-  const hasOutput = a.goals > 0 || a.assists > 0
+// "Did not play" marker — a slashed circle, kept visually distinct from the played-but-blank dash so a
+// missed game never reads as a goalless one. Same stroke set as the goal/assist icons.
+function AbsentIcon({ className }: { className?: string }) {
+  return (
+    <StripIcon className={className}>
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+      <path d="M5.6 5.6l12.8 12.8" />
+    </StripIcon>
+  )
+}
+
+// One game in the form strip. Played: a football per goal + a boot per assist (a dash when blank).
+// Missed: a dimmed slot with the slashed-circle icon and the greyed opponent crest, so the gap is
+// visible instead of dropped — the reason (injury/suspension) rides in the tooltip. The competition crest
+// (PL / Carabao / FA Cup) sits left of the opponent crest, so a cup game reads apart from a league one.
+function GameInvolvement({ g }: { g: RecentGame }) {
+  // "Which competition + who" footer of the slot: tournament crest (left) and opponent crest side by side
+  // with a spacer dot between them, both dimmed together on a missed game so the greyed slot stays coherent.
+  const dim = g.played ? "" : "opacity-40 grayscale"
+  const footer = (
+    <div className="flex items-center justify-center gap-1">
+      {g.competition.logoUrl ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={g.competition.logoUrl} alt={g.competition.name} className={`size-4.5 object-contain ${dim}`} />
+          <span className={`size-1 shrink-0 rounded-full bg-muted-foreground/40 ${dim}`} aria-hidden />
+        </>
+      ) : null}
+      {g.opponentLogo ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={g.opponentLogo} alt={g.opponent} className={`size-4.5 object-contain ${dim}`} />
+      ) : (
+        <span className={`text-[10px] font-bold text-muted-foreground ${g.played ? "" : "opacity-60"}`}>
+          {g.opponent.slice(0, 3).toUpperCase()}
+        </span>
+      )}
+    </div>
+  )
+
+  // opponent + tournament, shared by both tooltips (e.g. "vs Chelsea · Premier League").
+  const where = `${g.home ? "vs" : "@"} ${g.opponent} · ${g.competition.name}`
+
+  if (!g.played) {
+    return (
+      <div
+        className="flex flex-1 flex-col items-center gap-1.5 rounded-md bg-muted/30 py-1.5 opacity-70"
+        title={`Não jogou${g.absenceReason ? ` · ${g.absenceReason}` : ""} · ${where}`}
+      >
+        <div className="flex h-9 items-center justify-center">
+          <AbsentIcon className="size-3.5 text-muted-foreground/50" />
+        </div>
+        {footer}
+      </div>
+    )
+  }
+
+  const hasOutput = g.goals > 0 || g.assists > 0
   return (
     <div
       className="flex flex-1 flex-col items-center gap-1.5 rounded-md bg-muted/50 py-1.5"
-      title={`${a.goals}G ${a.assists}A · ${a.home ? "vs" : "@"} ${a.opponent}`}
+      title={`${g.goals}G ${g.assists}A · ${where}`}
     >
       <div className="flex h-9 flex-wrap content-center items-center justify-center gap-0.5 overflow-hidden">
         {hasOutput ? (
           <>
-            {Array.from({ length: a.goals }).map((_, i) => (
-              <GoalIcon key={`g${a.matchId}-${i}`} className="size-3 text-foreground" />
+            {Array.from({ length: g.goals }).map((_, i) => (
+              <GoalIcon key={`g${g.matchId}-${i}`} className="size-3 text-foreground" />
             ))}
-            {Array.from({ length: a.assists }).map((_, i) => (
-              <AssistIcon key={`b${a.matchId}-${i}`} className="size-3 text-muted-foreground" />
+            {Array.from({ length: g.assists }).map((_, i) => (
+              <AssistIcon key={`b${g.matchId}-${i}`} className="size-3 text-muted-foreground" />
             ))}
           </>
         ) : (
           <span className="text-sm leading-none text-muted-foreground/50">–</span>
         )}
       </div>
-      {a.opponentLogo ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={a.opponentLogo} alt={a.opponent} title={a.opponent} className="size-3.5 object-contain" />
-      ) : (
-        <span className="text-[8px] font-bold text-muted-foreground">{a.opponent.slice(0, 3).toUpperCase()}</span>
-      )}
+      {footer}
     </div>
   )
 }
@@ -129,18 +174,20 @@ function PlayerHoverSkeleton() {
 }
 
 function PlayerHoverBody({ data }: { data: PlayerDetail }) {
-  // Ratings in chronological order (the API returns appearances oldest → newest), most recent window.
-  const ratings = data.appearances
-    .filter((a) => a.rating != null)
-    .map((a) => a.rating as number)
-    .slice(-FORM_GAMES)
+  // Form window = the club's recent games (oldest → newest), games he missed kept as gaps. The strip
+  // and sparkline share this one spine, so they line up game-for-game and a sat-out match shows in both.
+  // `?? []` guards an older API payload (pre-recentTeamGames) so a stale server degrades to no strip
+  // instead of crashing the card.
+  const recentGames = data.recentTeamGames ?? []
 
-  // Per-game output strip: the player's goals + assists in each of the last few games. Same appearances
-  // spine as the sparkline (oldest → newest), so it reads left → right in the same direction. Shown for
-  // anyone with offensive output this season — a keeper's all-dash strip would be noise.
-  const recentGames = data.appearances.slice(-GOAL_GAMES)
-  const goalsInWindow = recentGames.reduce((sum, a) => sum + a.goals, 0)
-  const assistsInWindow = recentGames.reduce((sum, a) => sum + a.assists, 0)
+  // Ratings aligned to that window — null where he didn't play, so the sparkline breaks across an
+  // absence instead of fabricating a continuous line.
+  const ratings = recentGames.map((g) => (g.played ? g.rating : null))
+  const ratedCount = ratings.filter((r) => r != null).length
+
+  // Strip shown only for players with offensive output this season — a keeper's all-dash strip is noise.
+  const goalsInWindow = recentGames.reduce((sum, g) => sum + g.goals, 0)
+  const assistsInWindow = recentGames.reduce((sum, g) => sum + g.assists, 0)
   const showOutput = (data.season.goals > 0 || data.season.assists > 0) && recentGames.length > 0
 
   return (
@@ -180,9 +227,9 @@ function PlayerHoverBody({ data }: { data: PlayerDetail }) {
         />
       </div>
 
-      {ratings.length >= 2 ? (
+      {ratedCount >= 2 ? (
         <div className="flex items-center justify-between gap-2 border-t pt-2">
-          <span className="text-[10px] text-muted-foreground">Forma · últimos {ratings.length}</span>
+          <span className="text-[10px] text-muted-foreground">Forma · últimos {recentGames.length}</span>
           <Sparkline values={ratings} />
         </div>
       ) : null}
@@ -203,8 +250,8 @@ function PlayerHoverBody({ data }: { data: PlayerDetail }) {
             </span>
           </div>
           <div className="flex gap-1">
-            {recentGames.map((a) => (
-              <GameInvolvement key={a.matchId} a={a} />
+            {recentGames.map((g) => (
+              <GameInvolvement key={g.matchId} g={g} />
             ))}
           </div>
         </div>
@@ -225,7 +272,7 @@ export function PlayerHoverCard({ id, children }: { id: string; children: ReactN
   return (
     <HoverCard openDelay={200} closeDelay={100} onOpenChange={setOpen}>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
-      <HoverCardContent side="top" className="w-64">
+      <HoverCardContent side="top" className="w-80">
         {isError ? (
           <p className="text-xs text-muted-foreground">Não foi possível carregar o jogador.</p>
         ) : data ? (

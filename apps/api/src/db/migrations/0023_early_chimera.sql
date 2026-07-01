@@ -1,0 +1,1 @@
+ALTER TABLE "league" ADD COLUMN "type" text DEFAULT 'league' NOT NULL;

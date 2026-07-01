@@ -1,5 +1,7 @@
 import { Elysia, t } from "elysia"
 
+import { bracketQuery } from "./bracket/bracket.schema"
+import { getBracket } from "./bracket/bracket.service"
 import { getLeague } from "./get-league/get-league.service"
 import { listLeagues } from "./list-leagues/list-leagues.service"
 import { listRoundsQuery } from "./list-rounds/list-rounds.schema"
@@ -40,4 +42,9 @@ export const leaguesRoutes = new Elysia({ prefix: "/v1/leagues" })
     params: paramCode,
     query: seasonQuery,
     detail: { summary: "Top scorers (marcadores): goals + assists per player, ranked by goals; ?season=<id>" },
+  })
+  .get("/:code/bracket", ({ params, query }) => getBracket(params.code, query), {
+    params: paramCode,
+    query: bracketQuery,
+    detail: { summary: "Knockout bracket (cup): stages ordered + ties + winner + progression edges" },
   })

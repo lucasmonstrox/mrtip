@@ -9,6 +9,7 @@ import { matchGoalTiming } from "./get-goal-timing/get-goal-timing.service"
 import { matchInjuries } from "./get-injuries/get-injuries.service"
 import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
+import { matchMomentum } from "./get-match-momentum/get-match-momentum.service"
 import { getPrognosis } from "./get-prognosis/get-prognosis.service"
 import { matchScorers } from "./get-scorers/get-scorers.service"
 
@@ -56,6 +57,10 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/scorers", ({ params }) => matchScorers(params.id), {
     params: paramId,
     detail: { summary: "Top scorers (goals + assists) of each team over the season" },
+  })
+  .get("/:id/momentum", ({ params }) => matchMomentum(params.id), {
+    params: paramId,
+    detail: { summary: "Attack-momentum seesaw (per-minute home/away pressure) reconstructed from trends" },
   })
   .get("/:id/prognosis", ({ params }) => getPrognosis(params.id), {
     params: paramId,

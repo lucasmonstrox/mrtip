@@ -57,10 +57,12 @@ type GeneralPrognosis = {
   summary: string // parágrafo geral do jogo + maior incerteza
 }
 // Leitura de apostador (sharp): a DECISÃO estruturada, separada dos números. SEMPRE crava um mercado (sem "passar").
+// Inclui handicap e team_total: em jogo assimétrico, "mandante -1" ou "time over 1.5" captura o cenário melhor que o O/U do jogo.
 type BestBet = {
-  market: "1x2" | "over_under" | "btts"
+  market: "1x2" | "over_under" | "btts" | "handicap" | "team_total"
   selection: "home" | "draw" | "away" | "over" | "under" | "yes" | "no"
-  line: number | null // 2.5 etc. quando market = over_under; null nos outros
+  team: "home" | "away" | null // de qual time é o total (team_total); null nos mercados de jogo inteiro
+  line: number | null // over_under: linha do jogo (2.5) · handicap: hcap do time (-1, +1) · team_total: gols do time (1.5) · null em 1x2/btts
   confidence: "low" | "medium" | "high"
   probability: number
   analysis: string // análise completa e profissional da recomendação (PT — texto de UI)
@@ -108,14 +110,15 @@ const generalSchema = {
 const bestBetSchema = {
   type: "object" as const,
   properties: {
-    market: { type: "string" as const, enum: ["1x2", "over_under", "btts"] },
+    market: { type: "string" as const, enum: ["1x2", "over_under", "btts", "handicap", "team_total"] },
     selection: { type: "string" as const, enum: ["home", "draw", "away", "over", "under", "yes", "no"] },
+    team: { type: ["string", "null"] as ("string" | "null")[], enum: ["home", "away", null] },
     line: { type: ["number", "null"] as ("number" | "null")[] },
     confidence: conf,
     probability: num,
     analysis: str,
   },
-  required: ["market", "selection", "line", "confidence", "probability", "analysis"],
+  required: ["market", "selection", "team", "line", "confidence", "probability", "analysis"],
   additionalProperties: false,
 }
 const prognosisSchema = jsonSchema<Prognosis>({
@@ -159,6 +162,18 @@ if (!output) {
   if (jsonMatch) { try { output = JSON.parse(jsonMatch[1] ?? jsonMatch[0]) as Prognosis } catch { /* cru */ } }
 }
 
+// Normaliza as xg_bands pra somar exatamente o xg — o prompt instrui o modelo a NÃO conferir a soma no
+// raciocínio (libera o thinking pra estratégia); a consistência aritmética é garantida aqui.
+const normBands = (t: { xg: number; xg_bands: Bands } | undefined) => {
+  if (!t?.xg_bands) return
+  const sum = BANDS.reduce((s, k) => s + (t.xg_bands[k] ?? 0), 0)
+  if (sum > 0) for (const k of BANDS) t.xg_bands[k] = +((t.xg_bands[k] ?? 0) * (t.xg / sum)).toFixed(3)
+}
+if (output) {
+  normBands(output.home)
+  normBands(output.away)
+}
+
 // ---- Pasta por run ----
 const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) // 2026-06-29T05-58-17
 const runDir = new URL(`./output/${MATCH_ID}/${stamp}/`, import.meta.url)
@@ -174,9 +189,28 @@ const dump = {
 await Bun.write(new URL("dump.json", runDir), JSON.stringify(dump, null, 2))
 await Bun.write(new URL("prompt.md", runDir), prompt)
 
+// Arquivo enxuto SÓ pra análise local da cadeia de raciocínio (reasoning consolidado + cada hop/step),
+// sem o resto do dump (schema, usage, request). Não vai pro banco — é pra inspecionar o "como" do modelo.
+await Bun.write(
+  new URL("reasoning.json", runDir),
+  JSON.stringify(
+    { match: `${home?.name} x ${away?.name}`, result: actual, best_bet: output?.best_bet ?? null, reasoningTokens, reasoning: reasoningText ?? null, hops: steps ?? [] },
+    null,
+    2,
+  ),
+)
+
 // ---- HTML ----
 const esc = (s: unknown) =>
   String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+// Renderiza o reasoning (markdown leve do modelo: **negrito**, parágrafos) em HTML legível — muito melhor
+// que <pre> cru pra LER a cadeia de pensamento.
+const mdToHtml = (s: string) =>
+  esc(s)
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+    .split(/\n{2,}/)
+    .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+    .join("")
 const tokenRows = Object.entries((usage ?? {}) as Record<string, unknown>)
   .map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(typeof v === "object" ? JSON.stringify(v) : v)}</td></tr>`)
   .join("")
@@ -228,11 +262,15 @@ function geralCard(o: Prognosis | null): string {
 }
 // Monta o rótulo legível da aposta a partir dos campos estruturados (o time sai de selection + match).
 function bestBetLabel(m: BestBet): string {
-  const team = m.selection === "home" ? home?.name : m.selection === "away" ? away?.name : null
-  if (m.market === "1x2") return m.selection === "draw" ? "Empate" : `Vitória${team ? " do " + team : ""}`
+  const nameOf = (s: "home" | "away" | null) => (s === "home" ? home?.name : s === "away" ? away?.name : null)
+  const side = m.selection === "home" ? home?.name : m.selection === "away" ? away?.name : null
+  const hcap = (n: number | null) => (n == null ? "" : n > 0 ? `+${n}` : `${n}`)
+  if (m.market === "1x2") return m.selection === "draw" ? "Empate" : `Vitória${side ? " do " + side : ""}`
   if (m.market === "over_under") return `${m.selection === "over" ? "Over" : "Under"} ${m.line ?? ""} gols`.trim()
   if (m.market === "btts") return `Ambos marcam: ${m.selection === "yes" ? "Sim" : "Não"}`
-  return "Nenhuma aposta (passar)"
+  if (m.market === "handicap") return `${side ?? "?"} ${hcap(m.line)}`.trim()
+  if (m.market === "team_total") return `${nameOf(m.team) ?? "?"} ${m.selection === "over" ? "Over" : "Under"} ${m.line ?? ""} gols`.trim()
+  return "—"
 }
 function mercadoCard(o: Prognosis | null): string {
   const m = o?.best_bet
@@ -267,6 +305,10 @@ summary .hint { color:#677089; font-weight:400; font-size:12px; }
 .body { padding: 0 18px 18px; }
 pre { background:#0b0e14; border:1px solid #1e2533; border-radius:10px; padding:14px; overflow:auto; font:12.5px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; color:#c4ccd8; white-space:pre-wrap; word-break:break-word; }
 .reasoning pre { color:#b6a8d8; background:#100c1a; border-color:#2a2140; }
+.reasoning-md { color:#cabce8; font-size:14.5px; background:#100c1a; border:1px solid #2a2140; border-radius:10px; padding:16px 18px; }
+.reasoning-md p { margin:0 0 14px; }
+.reasoning-md p:last-child { margin-bottom:0; }
+.reasoning-md b { color:#ece2ff; }
 .answer pre { color:#a7e0c0; background:#0a1410; border-color:#1d3a2a; }
 .prompt pre { color:#cfe0ff; background:#0a0f1c; border-color:#1d2a44; }
 table { width:100%; border-collapse:collapse; font-size:13px; }
@@ -311,7 +353,7 @@ ${output ? `<details open><summary>Prognóstico (objeto tipado)</summary><div cl
 
 <details class="answer"><summary>Resposta final (texto cru) <span class="hint">content</span></summary><div class="body"><pre>${esc(text)}</pre></div></details>
 
-<details class="reasoning"><summary>🧠 Cadeia de raciocínio <span class="hint">reasoning_content · ${esc(reasoningTokens ?? "?")} tokens</span></summary><div class="body"><pre>${esc(reasoningText || "(provider não retornou reasoning text)")}</pre></div></details>
+<details class="reasoning" open><summary>🧠 Cadeia de raciocínio <span class="hint">reasoning_content · ${esc(reasoningTokens ?? "?")} tokens</span></summary><div class="body"><div class="reasoning-md">${reasoningText ? mdToHtml(reasoningText) : "<p>(provider não retornou reasoning text)</p>"}</div></div></details>
 
 <details class="prompt" open><summary>📤 Prompt enviado <span class="hint">${esc(prompt.length)} chars</span></summary><div class="body"><pre>${esc(prompt)}</pre></div></details>
 

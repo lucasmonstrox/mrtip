@@ -7,6 +7,7 @@ import { coachesRoutes } from "./modules/leagues/coaches.routes"
 import { leaguesRoutes } from "./modules/leagues/leagues.routes"
 import { matchesRoutes } from "./modules/leagues/matches.routes"
 import { playersRoutes } from "./modules/leagues/players.routes"
+import { searchRoutes } from "./modules/leagues/search.routes"
 import { teamsRoutes } from "./modules/leagues/teams.routes"
 import { corsPlugin } from "./shared/plugins/cors"
 
@@ -33,5 +34,6 @@ export const app = new Elysia()
   .use(teamsRoutes)
   .use(playersRoutes)
   .use(coachesRoutes)
+  .use(searchRoutes)
 
 export type App = typeof app

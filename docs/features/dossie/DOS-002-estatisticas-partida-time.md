@@ -12,6 +12,8 @@ testes:
   - "migração 0013 aplicada; match_team_stats → 760 linhas, posse média 50%, big chances 748/760 (2026-06-29)"
   - "re-sync: goal type=penalty → 77 (era 0 pelo bug); blast C2 limpo (2026-06-29)"
   - "prompt e48a0228 regenerado: linhas Volume (chutes/área/big chances/posse) + conversão open-play (2026-06-29)"
+  - "expansão defesa+construção (migração 0018): +17 colunas em match_team_stats; backfill 760 linhas; tackles/interceptions/duels/passes(+%)/crosses/dribbles(+%)/long-passes/attacks/big-chances-missed/hit-woodwork/goal-attempts (2026-06-30)"
+  - "probe season inteira (380 fixtures): headers(70)/challenges(77)/through-balls(124,125)/counter-attacks(1527)/cross-%(1533)/succ-interceptions(66)/shots(1677) NÃO vêm no nível-partida — ficaram de fora (2026-06-30)"
 depende_de: [DOS-001]
 impacta: [MOD-001, MOD-002]
 ancoras:
@@ -36,6 +38,8 @@ Ingerir as **estatísticas de partida por time** da SportMonks (include `statist
 - [x] P2 dados — include `statistics` + `fixtureStatisticTypes` no sync; ramo de upsert por `(matchId, teamId)` ✓ 760 linhas
 - [x] P3 dados — bug do pênalti `GOAL_TYPE.PENALTY` (`"normal"`→`"penalty"`) + varrer consumidores ✓ 77 pênaltis (era 0); blast C2 limpo
 - [x] P4 ia — consumir no `prognosis-prompt.ts`: chutes-na-área/totais + big-chances com conversão (open-play); posse como contexto rotulado ✓
+- [x] P5 dados — expansão defesa+construção por time (migração 0018, +17 colunas, backfill 760) ✓ 2026-06-30
+- [ ] ia — consumir as novas (interceptações/desarmes/duelos defensivos, big-chances-missed = "cria e desperdiça") no `prognosis-prompt.ts`
 
 ## Plano (2026-06-29)
 

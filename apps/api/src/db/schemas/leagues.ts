@@ -1,4 +1,4 @@
-import { boolean, date, integer, jsonb, numeric, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { boolean, date, index, integer, jsonb, numeric, pgTable, real, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
 
 // League + season (one row per league/season). `code` is the domain key (e.g. "PL"), used in the
 // URL and as the match FK. `sportmonksLeagueId` is the SportMonks league id (Premier League = 8);
@@ -10,6 +10,9 @@ export const league = pgTable("league", {
   name: text("name").notNull(),
   country: text("country").notNull(),
   season: text("season").notNull(),
+  // "league" (tabela/pontos corridos) vs "cup" (mata-mata/bracket) — decide se a aba mostra tabela ou
+  // chaveamento. Default "league": só o sync de copa marca "cup". @feature CUP-001
+  type: text("type").notNull().default("league"),
   // Logo URL in R2 (bucket mrtip); origin is the SportMonks CDN `image_path`.
   logoUrl: text("logo_url"),
 })
@@ -80,6 +83,20 @@ export const match = pgTable("match", {
     .notNull()
     .references(() => league.code),
   round: integer("round").notNull(),
+  // --- Copa / mata-mata (CUP-001): a liga deixa tudo isto null (o round numérico já basta). A "rodada"
+  // de copa é a STAGE ("Quarter-finals"); `stageOrder` (= sort_order da SportMonks) ordena as colunas do
+  // bracket; `stageTypeId` separa qualifying (225) de proper (224); `leg`/`aggregateId` cobrem ida-e-volta;
+  // `resultInfo` carrega o desempate exibível ("won after penalties").
+  stageId: integer("stage_id"),
+  stageName: text("stage_name"),
+  stageOrder: integer("stage_order"),
+  stageTypeId: integer("stage_type_id"),
+  leg: text("leg"),
+  aggregateId: integer("aggregate_id"),
+  resultInfo: text("result_info"),
+  // Quem AVANÇOU no confronto (FK → team.id) — vem de participants.meta.winner, então cobre pênaltis
+  // (placar empatado mas há vencedor). É o que liga a progressão do bracket à stage seguinte. @feature CUP-001
+  winnerTeamId: uuid("winner_team_id").references(() => team.id),
   name: text("name").notNull(),
   // Pretty, collision-free URL key (kebab of league-season-home-vs-away, e.g.
   // "premier-league-2025-2026-chelsea-vs-everton") — what goes in /matches/:slug. @feature LIG-009
@@ -103,6 +120,8 @@ export const match = pgTable("match", {
   htAway: integer("ht_away"),
   // SportMonks match state (state developer_name): "FT", "NS", "POSTP", etc.
   status: text("status"),
+  // Confronto de copa ainda indefinido (placeholder "Winner Match N") — não exibir os times. @feature CUP-001
+  isPlaceholder: boolean("is_placeholder").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -238,6 +257,18 @@ export const lineupPlayer = pgTable(
     minutesPlayed: integer("minutes_played"), // type 119
     keyPasses: integer("key_passes"), // type 117 — last pass leading to a teammate's shot; null = 0 or didn't play
     shotsOnTarget: integer("shots_on_target"), // type 86 — null = 0 or didn't play; SUM per team = team SoT that match
+    // Volume defensivo + criação POR JOGADOR (lineups.details; presença confirmada na PL 25/26).
+    // Base da tese do desfalque: jogador ausente com muita interceptação/desarme = mais espaço de
+    // criação pro adversário. Agregar por time (via lineup) descontando lesionados. null = 0 ou não jogou.
+    tackles: integer("tackles"), // type 78 — desarmes
+    interceptions: integer("interceptions"), // type 100 — interceptações
+    duelsWon: integer("duels_won"), // type 106 — duelos ganhos
+    passes: integer("passes"), // type 80 — passes tentados (volume de construção)
+    crossesTotal: integer("crosses_total"), // type 98 — cruzamentos
+    crossesAccurate: integer("crosses_accurate"), // type 99 — cruzamentos certos
+    dribbleAttempts: integer("dribble_attempts"), // type 108 — dribles tentados
+    dribblesSuccessful: integer("dribbles_successful"), // type 109 — dribles certos
+    bigChancesMissed: integer("big_chances_missed"), // type 581 — grandes chances perdidas
     manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
   (t) => [unique().on(t.lineupId, t.playerId)],
@@ -247,7 +278,8 @@ export type LineupPlayer = typeof lineupPlayer.$inferSelect
 
 // Per-team match statistics from the SportMonks fixture `statistics` include (team-level, one row per
 // team per match). Volume/quality inputs for the prognosis dossier that DON'T exist per-player in our
-// feed: ball possession, total/inside-box shots, big chances created. `shotsOnTarget` here is the
+// feed: ball possession, shot breakdown (total / on-target / off-target / blocked / inside / outside box),
+// free kicks, corners, big chances created. `shotsOnTarget` here is the
 // OFFICIAL team total (cross-check vs SUM of lineup_player). `xg` is reserved (nullable) for the
 // SportMonks xG add-on (type 5304), not yet purchased. @feature DOS-002
 export const matchTeamStats = pgTable(
@@ -265,15 +297,90 @@ export const matchTeamStats = pgTable(
     shotsInsidebox: integer("shots_insidebox"), // type 49
     shotsOutsidebox: integer("shots_outsidebox"), // type 50
     shotsOnTarget: integer("shots_on_target"), // type 86 — official team total
+    shotsOffTarget: integer("shots_off_target"), // type 41 — chutes pra fora (shots_total = on + off + blocked)
+    shotsBlocked: integer("shots_blocked"), // type 58 — chutes bloqueados pela defesa adversária
     bigChancesCreated: integer("big_chances_created"), // type 580
     dangerousAttacks: integer("dangerous_attacks"), // type 44
     corners: integer("corners"), // type 34
+    freeKicks: integer("free_kicks"), // type 55 — faltas a favor (cobranças de falta concedidas)
+    // Expansão DOS-002 (defesa + construção, mesmo include `statistics`; presença confirmada na PL
+    // 25/26 por probe na temporada inteira). Métricas pedidas mas NÃO entregues no nível-partida —
+    // headers(70), challenges(77), through-balls(124/125), counter-attacks(1527), cross-%(1533),
+    // succ-interceptions(66), shots(1677) — ficam de fora (0/380); cross-% deriva de acc/total na leitura.
+    tackles: integer("tackles"), // type 78 — desarmes
+    interceptions: integer("interceptions"), // type 100 — interceptações
+    duelsWon: integer("duels_won"), // type 106 — duelos ganhos
+    successfulHeaders: integer("successful_headers"), // type 65 — cabeçadas certas (70 "headers" não vem)
+    attacks: integer("attacks"), // type 43 — ataques (dangerous_attacks 44 é separado)
+    passes: integer("passes"), // type 80 — passes tentados
+    passesAccurate: integer("passes_accurate"), // type 81 — passes certos (successful-passes)
+    passAccuracy: real("pass_accuracy"), // type 82 — % de passes certos
+    longPasses: integer("long_passes"), // type 62 — passes longos
+    crossesTotal: integer("crosses_total"), // type 98 — cruzamentos totais
+    crossesAccurate: integer("crosses_accurate"), // type 99 — cruzamentos certos
+    dribbleAttempts: integer("dribble_attempts"), // type 108 — dribles tentados
+    dribblesSuccessful: integer("dribbles_successful"), // type 109 — dribles certos
+    dribbleSuccess: real("dribble_success"), // type 1605 — % de dribles certos
+    bigChancesMissed: integer("big_chances_missed"), // type 581 — fecha o par com created (580): "cria e desperdiça"
+    hitWoodwork: integer("hit_woodwork"), // type 64 — bolas na trave (omitido quando 0)
+    goalAttempts: integer("goal_attempts"), // type 54 — finalizações/tentativas a gol
     xg: real("xg"), // type 5304 — NULL até o add-on de xG (DOS-002 fase 2)
   },
   (t) => [unique().on(t.matchId, t.teamId)],
 )
 
 export type MatchTeamStats = typeof matchTeamStats.$inferSelect
+
+// Time-series trend (SportMonks `trends` include): one row per (team, stat-type, period, minute) per
+// match — the minute-by-minute attack momentum / pressão da partida. `value` is CUMULATIVE within the
+// period (e.g. dangerous-attacks 3→4→5→8), so the momentum is the per-minute DELTA, not the level.
+// Re-built into the seesaw curve (à la Sofascore) at read time; the paid Pressure Index is gated, this
+// is reconstructed from the free trends. ~1300 rows/match. @feature SIN-021
+export const matchTrend = pgTable(
+  "match_trend",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => match.id, { onDelete: "cascade" }),
+    teamId: uuid("team_id")
+      .notNull()
+      .references(() => team.id),
+    typeId: integer("type_id").notNull(), // 86=SoT, 580=big-chance, 44=dangerous-attack, 42=shots, 43=attack, 49=shots-insidebox, 34=corners…
+    periodId: integer("period_id").notNull(), // separates 1st/2nd half/ET so injury time doesn't overlap
+    minute: integer("minute").notNull(), // minute+extra already summed (injury time)
+    value: integer("value").notNull(), // CUMULATIVE within the period
+  },
+  (t) => [unique().on(t.matchId, t.teamId, t.typeId, t.periodId, t.minute), index("match_trend_match_idx").on(t.matchId)],
+)
+
+export type MatchTrend = typeof matchTrend.$inferSelect
+
+// Clima do jogo, do include `weatherReport` da SportMonks. ATENÇÃO: no JSON o campo vem como
+// `weatherreport` (tudo minúsculo) — ler camelCase devolve undefined. 1 linha por match. `description`
+// carrega a condição (chuva/sol); temp/feels em °C (período "day", ~horário do jogo); wind em m/s.
+// `type` = forecast | actual. @feature SIN-006
+export const weather = pgTable(
+  "weather",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => match.id, { onDelete: "cascade" }),
+    description: text("description"), // "sky is clear" | "light rain" | "scattered clouds"
+    tempDay: real("temp_day"), // °C — temperature.day
+    feelsLikeDay: real("feels_like_day"), // °C — feels_like.day
+    windSpeed: real("wind_speed"), // m/s — wind.speed
+    windDirection: integer("wind_direction"), // graus — wind.direction
+    humidity: text("humidity"), // "81%"
+    clouds: text("clouds"), // "5%"
+    pressure: integer("pressure"),
+    type: text("type"), // forecast | actual
+  },
+  (t) => [unique().on(t.matchId)],
+)
+
+export type Weather = typeof weather.$inferSelect
 
 // Injury/absence: a player who missed (or was doubtful for) ONE match. `type` = "Missing Fixture"
 // (didn't play) or "Questionable" (doubt); `reason` = cause (e.g. "Muscle Injury", "Suspended").
@@ -413,9 +520,10 @@ export const matchPrognosis = pgTable(
     drivers: jsonb("drivers").$type<string[]>().notNull(), // 3 fatores
 
     // --- BEST BET (leitura de apostador: a decisão + análise). Nullable: runs antigas não têm. ---
-    bestBetMarket: text("best_bet_market"), // "1x2" | "over_under" | "btts" | "none"
-    bestBetSelection: text("best_bet_selection"), // "home"|"draw"|"away"|"over"|"under"|"yes"|"no"|"none"
-    bestBetLine: real("best_bet_line"), // 2.5 etc. pra over_under; null nos outros
+    bestBetMarket: text("best_bet_market"), // "1x2" | "over_under" | "btts" | "handicap" | "team_total"
+    bestBetSelection: text("best_bet_selection"), // "home"|"draw"|"away"|"over"|"under"|"yes"|"no"
+    bestBetTeam: text("best_bet_team"), // "home" | "away" — só em team_total (de qual time é o total); null nos outros
+    bestBetLine: real("best_bet_line"), // over_under: linha do jogo · handicap: hcap do time · team_total: linha de gols · null em 1x2/btts
     bestBetConfidence: text("best_bet_confidence"), // "low" | "medium" | "high"
     bestBetProbability: real("best_bet_probability"), // 0-1
     bestBetAnalysis: text("best_bet_analysis"), // análise completa (PT — texto visível de UI)

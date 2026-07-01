@@ -13,6 +13,7 @@ import { FormChips } from "./form-guide"
 import { GoalTiming } from "./goal-timing"
 import { Lineup } from "./lineup"
 import { MatchEvents } from "./match-events"
+import { MatchMomentum } from "./match-momentum"
 import { Prognosis } from "./prognosis"
 import { Scorers } from "./scorers"
 
@@ -159,9 +160,14 @@ export function MatchDetail({ slug }: { slug: string }) {
           <TabsTrigger value="gols">Gols (xG)</TabsTrigger>
           <TabsTrigger value="noticias">Notícias</TabsTrigger>
           <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
+          <TabsTrigger value="momentum">Momentum</TabsTrigger>
           <TabsTrigger value="eventos">Eventos</TabsTrigger>
           <TabsTrigger value="narracao">Narração</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="momentum" className="pt-2">
+          <MatchMomentum id={id} home={match.home} away={match.away} />
+        </TabsContent>
 
         <TabsContent value="prognostico" className="pt-2">
           <Prognosis id={id} home={match.home} away={match.away} rest={match.rest} />

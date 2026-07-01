@@ -1,0 +1,1 @@
+ALTER TABLE "match_prognosis" ADD COLUMN "best_bet_team" text;

@@ -1,0 +1,2 @@
+ALTER TABLE "match" ADD COLUMN "winner_team_id" uuid;--> statement-breakpoint
+ALTER TABLE "match" ADD CONSTRAINT "match_winner_team_id_team_id_fk" FOREIGN KEY ("winner_team_id") REFERENCES "public"."team"("id") ON DELETE no action ON UPDATE no action;

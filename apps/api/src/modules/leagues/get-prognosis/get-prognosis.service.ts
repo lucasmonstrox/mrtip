@@ -48,6 +48,7 @@ export async function getPrognosis(id: string) {
       ? {
           market: p.bestBetMarket,
           selection: p.bestBetSelection,
+          team: p.bestBetTeam,
           line: p.bestBetLine,
           confidence: p.bestBetConfidence,
           probability: p.bestBetProbability,

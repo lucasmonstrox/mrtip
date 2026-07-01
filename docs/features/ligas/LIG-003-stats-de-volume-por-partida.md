@@ -2,14 +2,17 @@
 id: LIG-003
 titulo: Stats de volume por partida (chutes, passes, desarmes, faltas)
 modulo: ligas
-status: ideia # ideia | investigado | planejado | em-andamento | feito | verificado
+status: em-andamento # ideia | investigado | planejado | em-andamento | feito | verificado
 prioridade: P2 # P1 | P2 | P3
 facetas:
-  dados: ideia # alargar lineupDetailTypes no sync + colunas em lineup_player + re-sync
+  dados: feito # lineupDetailTypes alargado + colunas em lineup_player + backfill (migração 0019)
   api: ideia # expor os stats de volume + per-90 + hit-rate por threshold
   ui: ideia # seção de volume na página do jogador (over/under de chutes/SoT/desarmes/faltas)
-testada: nao
-testes: []
+testada: sim
+testes:
+  - "migração 0019 aplicada; backfill atualizou 15.179 lineup_player; interceptions/tackles/duels/passes/crosses/dribbles/big-chances-missed por jogador (2026-06-30)"
+  - "probe PL 25/26: 78/100/106/80/98/99/108/109/581 confirmados per-jogador no lineups.details; %s e attacks/long-passes/headers só nível-time (2026-06-30)"
+  - "tese do desfalque validada: top interceptadores por time (Caicedo/Chelsea 2.2/jogo, Garner/Everton 2.0/jogo) → query jogador→time funciona (2026-06-30)"
 depende_de: [LIG-001]
 impacta: []
 ancoras:
@@ -31,9 +34,10 @@ O maior unlock de produto de apostador, separado de LIG-001 por ser `dados`-pesa
 
 ## Tarefas
 
-- [ ] dados — alargar `lineupDetailTypes` no sync + colunas de volume em `lineup_player`; re-sync e verificar preenchimento
+- [x] dados — alargar `lineupDetailTypes` no sync + colunas de volume em `lineup_player`; re-sync e verificar preenchimento ✓ migração 0019, backfill 15.179 linhas
 - [ ] api — expor stats de volume agregados + per-90 + hit-rate por threshold no endpoint do jogador
 - [ ] ui — seção de volume na página do jogador (com gate de amostra, igual ao per-90 de LIG-001)
+- [ ] ia — agregar volume defensivo por time descontando desfalques (tese do desfalque → espaço de criação do adversário) e alimentar o prognóstico
 
 ## Plano
 
