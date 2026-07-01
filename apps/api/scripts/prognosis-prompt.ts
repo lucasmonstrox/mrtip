@@ -151,11 +151,15 @@ for (const r of playerStatRowsAll) {
 // Contribuição direta G+A por jogador (gols exceto own + assistências), nos jogos pré-cutoff dos 2 times.
 const gaMatchIds = [...new Set([...teamMatches(home.id), ...teamMatches(away.id), ...cupMatchesOf(home.id), ...cupMatchesOf(away.id)].map((p) => p.id))]
 const gaGoalRows = gaMatchIds.length
-  ? await db.select({ playerId: goal.playerId, assistId: goal.assistId, type: goal.type }).from(goal).where(inArray(goal.matchId, gaMatchIds))
+  ? await db.select({ playerId: goal.playerId, assistId: goal.assistId, type: goal.type, minute: goal.minute }).from(goal).where(inArray(goal.matchId, gaMatchIds))
   : []
 const playerGA = new Map<string, { g: number; a: number }>()
+const playerGoalMins = new Map<string, number[]>() // minuto de CADA gol do jogador (o "quando ele faz")
 for (const gg of gaGoalRows) {
-  if (gg.playerId && gg.type !== "own") { const e = playerGA.get(gg.playerId) ?? { g: 0, a: 0 }; e.g += 1; playerGA.set(gg.playerId, e) }
+  if (gg.playerId && gg.type !== "own") {
+    const e = playerGA.get(gg.playerId) ?? { g: 0, a: 0 }; e.g += 1; playerGA.set(gg.playerId, e)
+    if (gg.minute != null) { const arr = playerGoalMins.get(gg.playerId) ?? []; arr.push(gg.minute); playerGoalMins.set(gg.playerId, arr) }
+  }
   if (gg.assistId) { const e = playerGA.get(gg.assistId) ?? { g: 0, a: 0 }; e.a += 1; playerGA.set(gg.assistId, e) }
 }
 // Linha de perfil estatístico de um jogador (per-jogo) — G+A, criação, finalização, drible, volume defensivo.
@@ -166,6 +170,18 @@ function playerStatLine(playerId: string): string {
   const pg = (v: number) => +(v / s.g).toFixed(2)
   const parts: string[] = []
   if (ga && ga.g + ga.a > 0) parts.push(`**${ga.g}G+${ga.a}A**`)
+  // O QUANDO ele marca: os minutos de cada gol + resumo (2ºT? tardio?) — perfil temporal do artilheiro.
+  const gm = playerGoalMins.get(playerId)
+  if (gm && gm.length) {
+    const sorted = [...gm].sort((a, b) => a - b)
+    const shown = sorted.slice(0, 10).map((m) => `${m}'`).join(",") + (sorted.length > 10 ? "…" : "")
+    const sh = sorted.filter((m) => m > 45).length
+    const late = sorted.filter((m) => m >= 76).length
+    const tags: string[] = []
+    if (sh >= Math.ceil(sorted.length * 0.6)) tags.push("mais no 2ºT")
+    if (late >= 2 && late >= Math.ceil(sorted.length * 0.3)) tags.push(`${late} tardios (76'+)`)
+    parts.push(`gols aos ${shown}${tags.length ? ` — ${tags.join(", ")}` : ""}`)
+  }
   parts.push(`${pg(s.kp)} KP/j`, `${pg(s.sot)} SoT/j`, `${pg(s.drib)} dribles/j`)
   parts.push(`def: ${pg(s.tkl)} desarme + ${pg(s.intc)} int + ${pg(s.duel)} duelo/j`)
   if (s.cross > 0) parts.push(`${pg(s.cross)} cruz/j`)
