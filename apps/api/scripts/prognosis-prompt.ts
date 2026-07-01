@@ -142,29 +142,44 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
     e.rs.push({ date: r.date, rating: r.rating!, matchId: r.matchId })
   }
   const arrow = (f: number, s: number) => (f > s + 0.15 ? "↑" : f < s - 0.15 ? "↓" : "=")
+  // Régua comum = os últimos 5 JOGOS DO TIME (com nota), por data. Alinhar a trajetória a ela deixa VISÍVEL
+  // a AUSÊNCIA: se o jogador faltou a um jogo da janela, marca "–" em vez de pular — a média sozinha escondia
+  // que ele nem vinha jogando (desfalque/rotação/lesão). @feature MOD-004
+  const teamGames = [...new Map(rows.map((r) => [r.matchId, r.date] as [string, string])).entries()]
+    .sort((a, b) => a[1].localeCompare(b[1]))
+    .slice(-5)
+    .map(([mid]) => mid)
   const players = [...byPlayer.values()]
     .filter((p) => p.rs.length >= 5)
     .map((p) => {
       const sorted = [...p.rs].sort((a, b) => a.date.localeCompare(b.date))
       const season = +(sorted.reduce((s, x) => s + x.rating, 0) / sorted.length).toFixed(2)
-      const last5 = sorted.slice(-5)
-      const forma = +(last5.reduce((s, x) => s + x.rating, 0) / last5.length).toFixed(2)
-      // Trajetória CRUA (nota jogo a jogo, do mais antigo ao mais recente) + tendência DENTRO da janela:
-      // média das 2 últimas vs 2 primeiras — mostra se ele vem SUBINDO ou CAINDO, não só a média da forma.
-      const seq = last5.map((x) => +x.rating.toFixed(1))
-      const h = Math.floor(last5.length / 2) || 1
-      const older = last5.slice(0, h).reduce((s, x) => s + x.rating, 0) / h
-      const recent = last5.slice(-h).reduce((s, x) => s + x.rating, 0) / h
-      const trend = recent > older + 0.2 ? "📈 subindo" : recent < older - 0.2 ? "📉 caindo" : "➡️ estável"
+      // Trajetória ALINHADA aos jogos do time: nota se jogou, null (=ausente) se faltou.
+      const byMatch = new Map(p.rs.map((x) => [x.matchId, x.rating]))
+      const cells = teamGames.map((mid) => (byMatch.has(mid) ? +byMatch.get(mid)!.toFixed(1) : null))
+      const played = cells.filter((v): v is number => v !== null)
+      const absent = cells.length - played.length
+      const forma = played.length ? +(played.reduce((s, v) => s + v, 0) / played.length).toFixed(2) : season
+      // Tendência só sobre os jogos que ELE DE FATO jogou na janela (recente vs antigo); pouca amostra = flag.
+      const h = Math.floor(played.length / 2) || 1
+      const older = played.slice(0, h).reduce((s, v) => s + v, 0) / h
+      const recent = played.slice(-h).reduce((s, v) => s + v, 0) / h
+      const trend =
+        played.length < 3 ? "⚠️ poucos jogos na janela"
+        : recent > older + 0.2 ? "📈 subindo"
+        : recent < older - 0.2 ? "📉 caindo"
+        : "➡️ estável"
+      const seqStr = cells.map((v) => (v === null ? "–" : v)).join("→")
       const motm = p.rs.filter((x) => x.rating >= (matchMaxRating.get(x.matchId) ?? 99)).length
-      return { name: p.name, season, forma, seq, trend, n: sorted.length, motm }
+      return { name: p.name, season, forma, seqStr, trend, absent, n: sorted.length, motm }
     })
     .sort((a, b) => b.season - a.season)
     .slice(0, 6)
   const lines = players.map((p) => {
     const flag = injured.has(p.name) ? "⚠️(fora) " : ""
     const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
-    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5: ${p.seq.join("→")} ${p.trend})${motmStr} · ${p.n}j`
+    const absStr = p.absent > 0 ? ` · **faltou ${p.absent}/${teamGames.length}**` : ""
+    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5 do time: ${p.seqStr} ${p.trend})${absStr}${motmStr} · ${p.n}j`
   })
   return `- **Nota média do time (todas comps): ${teamAvg}**\n${lines.join("\n")}`
 }
