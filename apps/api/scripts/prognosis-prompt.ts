@@ -149,15 +149,22 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
       const season = +(sorted.reduce((s, x) => s + x.rating, 0) / sorted.length).toFixed(2)
       const last5 = sorted.slice(-5)
       const forma = +(last5.reduce((s, x) => s + x.rating, 0) / last5.length).toFixed(2)
+      // Trajetória CRUA (nota jogo a jogo, do mais antigo ao mais recente) + tendência DENTRO da janela:
+      // média das 2 últimas vs 2 primeiras — mostra se ele vem SUBINDO ou CAINDO, não só a média da forma.
+      const seq = last5.map((x) => +x.rating.toFixed(1))
+      const h = Math.floor(last5.length / 2) || 1
+      const older = last5.slice(0, h).reduce((s, x) => s + x.rating, 0) / h
+      const recent = last5.slice(-h).reduce((s, x) => s + x.rating, 0) / h
+      const trend = recent > older + 0.2 ? "📈 subindo" : recent < older - 0.2 ? "📉 caindo" : "➡️ estável"
       const motm = p.rs.filter((x) => x.rating >= (matchMaxRating.get(x.matchId) ?? 99)).length
-      return { name: p.name, season, forma, n: sorted.length, motm }
+      return { name: p.name, season, forma, seq, trend, n: sorted.length, motm }
     })
     .sort((a, b) => b.season - a.season)
     .slice(0, 6)
   const lines = players.map((p) => {
     const flag = injured.has(p.name) ? "⚠️(fora) " : ""
     const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
-    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5)${motmStr} · ${p.n}j`
+    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5: ${p.seq.join("→")} ${p.trend})${motmStr} · ${p.n}j`
   })
   return `- **Nota média do time (todas comps): ${teamAvg}**\n${lines.join("\n")}`
 }
