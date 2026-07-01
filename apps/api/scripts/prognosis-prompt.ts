@@ -234,8 +234,10 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
       const motm = p.rs.filter((x) => x.rating >= (matchMaxRating.get(x.matchId) ?? 99)).length
       return { playerId: p.playerId, name: p.name, season, forma, seqStr, trend, absent, n: sorted.length, motm }
     })
-    .sort((a, b) => b.season - a.season)
-    .slice(0, 6)
+    // Provável XI = os 11 MAIS USADOS (por minutos totais até a data), não os melhores por nota — é a
+    // escalação que o time de fato roda. Lesionado que é titular aparece flagado (⚠️ fora). @feature MOD-004
+    .sort((a, b) => (playerAgg.get(b.playerId)?.mins ?? 0) - (playerAgg.get(a.playerId)?.mins ?? 0))
+    .slice(0, 11)
   const lines = players.map((p) => {
     const flag = injured.has(p.name) ? "⚠️(fora) " : ""
     const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
@@ -1361,7 +1363,7 @@ ${intentHeadline}
 ${styleLine("Temporada", teamMatches(home.id), home.id)}
 ${styleLine("Últimos 5", teamMatches(home.id).slice(-5), home.id)}
 
-### Qualidade individual (notas · season vs forma)
+### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)
 ${ratingsBlock(home.id, new Set(homeAbs.map((a) => a.name)))}
 
 ### Forma & contexto (últimos 5 — cada resultado justificado)
@@ -1388,7 +1390,7 @@ ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ${styleLine("Temporada", teamMatches(away.id), away.id)}
 ${styleLine("Últimos 5", teamMatches(away.id).slice(-5), away.id)}
 
-### Qualidade individual (notas · season vs forma)
+### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)
 ${ratingsBlock(away.id, new Set(awayAbs.map((a) => a.name)))}
 
 ### Forma & contexto (últimos 5 — cada resultado justificado)
