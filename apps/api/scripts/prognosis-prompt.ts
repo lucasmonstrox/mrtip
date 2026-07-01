@@ -1102,6 +1102,31 @@ const splitAvgAsOf = (id: string, dateStr: string, isHome: boolean): { gf: numbe
   for (const p of ms) { f += goalsFor(p, id); a += goalsAgainst(p, id) }
   return { gf: Math.round((f / ms.length) * 10) / 10, ga: Math.round((a / ms.length) * 10) / 10 }
 }
+// Posse de bola por TEMPO (1ºT/2ºT) nos últimos 5 de cada time — da série type 45 (posse por minuto) do
+// matchTrend, separada por período. Períodos ordenados por 1º minuto → rank 0 = 1ºT, 1 = 2ºT. A média das
+// leituras de cada metade dá a posse daquele tempo. Mostra domínio estéril / crescer ou apagar por tempo. @feature MOD-004
+const possMatchIds = [...new Set([home.id, away.id].flatMap((tid) => [...teamMatches(tid).slice(-5), ...cupMatchesOf(tid).slice(-5)].map((p) => p.id)))]
+const possRows = possMatchIds.length
+  ? await db.select({ matchId: matchTrend.matchId, teamId: matchTrend.teamId, periodId: matchTrend.periodId, minute: matchTrend.minute, value: matchTrend.value }).from(matchTrend).where(and(inArray(matchTrend.matchId, possMatchIds), eq(matchTrend.typeId, 45)))
+  : []
+const possByHalf = new Map<string, { p1: number | null; p2: number | null }>() // `${matchId}|${teamId}` → posse 1ºT/2ºT
+{
+  const firstMin = new Map<string, Map<number, number>>() // matchId → periodId → menor minuto (pra rankear os tempos)
+  for (const r of possRows) {
+    let m = firstMin.get(r.matchId); if (!m) firstMin.set(r.matchId, (m = new Map()))
+    const cur = m.get(r.periodId); if (cur === undefined || r.minute < cur) m.set(r.periodId, r.minute)
+  }
+  const rankOf = new Map<string, Map<number, number>>()
+  for (const [mid, pm] of firstMin) rankOf.set(mid, new Map([...pm.entries()].sort((a, b) => a[1] - b[1]).map(([pid], i) => [pid, i])))
+  const acc = new Map<string, { s1: number; n1: number; s2: number; n2: number }>()
+  for (const r of possRows) {
+    const rank = rankOf.get(r.matchId)?.get(r.periodId) ?? 0
+    const key = `${r.matchId}|${r.teamId}`
+    let a = acc.get(key); if (!a) acc.set(key, (a = { s1: 0, n1: 0, s2: 0, n2: 0 }))
+    if (rank === 0) { a.s1 += r.value; a.n1 += 1 } else if (rank === 1) { a.s2 += r.value; a.n2 += 1 }
+  }
+  for (const [key, a] of acc) possByHalf.set(key, { p1: a.n1 ? Math.round(a.s1 / a.n1) : null, p2: a.n2 ? Math.round(a.s2 / a.n2) : null })
+}
 // Bloco LIMPO "últimos 5 em contexto": cada resultado JUSTIFICADO numa linha — adversário + status decidido
 // dos dois times (salvo? rebaixado? brigando?) + a média do time no mando daquele jogo. Lê forma sem ser enganado.
 function contextoUltimos5(teamId: string): string {
@@ -1141,8 +1166,11 @@ function contextoUltimos5(teamId: string): string {
           : ""
       }
       const sotStr = hasSot(p, teamId) ? `${sotFor(p, teamId)}-${sotAgainst(p, teamId)} SoT · ` : ""
-      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
-      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
+      // Posse por TEMPO daquele jogo (1ºT/2ºT) — domínio estéril (muita posse, pouco SoT)? cresceu/apagou por tempo?
+      const ph = possByHalf.get(`${p.id}|${teamId}`)
+      const possStr = ph && (ph.p1 != null || ph.p2 != null) ? `posse ${ph.p1 ?? "?"}%/${ph.p2 ?? "?"}% (1ºT/2ºT) · ` : ""
+      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
+      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
     })
     .join("\n")
   return `${legend}\n${lines}`
