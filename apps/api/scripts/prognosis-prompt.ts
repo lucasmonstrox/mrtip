@@ -1299,6 +1299,7 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 - **Dupla chance**: 1X **${probsSot.dcHomeDraw}%** · 12 **${probsSot.dcHomeAway}%** · X2 **${probsSot.dcDrawAway}%** · **Draw No Bet** casa ${probsSot.dnbHome}% / fora ${probsSot.dnbAway}%
 - **Placar exato (mais prováveis)**: ${probsSot.topScores.map((s) => `${s.score} ${s.prob}%`).join(" · ")}
 - **Odd/Even**: ímpar ${probsSot.oddPct}% / par ${probsSot.evenPct}% · **Multigoals**: 0-1 ${probsSot.mg01}% · 2-3 ${probsSot.mg23}% · 4+ ${probsSot.mg4}%
+- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do \`team_total\`): ${home.name} over 0.5 **${Math.round((1 - poissonPmf(0, lamH)) * 100)}%** / over 1.5 **${Math.round((1 - poissonPmf(0, lamH) - poissonPmf(1, lamH)) * 100)}%** · ${away.name} over 0.5 **${Math.round((1 - poissonPmf(0, lamA)) * 100)}%** / over 1.5 **${Math.round((1 - poissonPmf(0, lamA) - poissonPmf(1, lamA)) * 100)}%**
 - **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa ${probsSot.fairHome ?? "?"} · empate ${probsSot.fairDraw ?? "?"} · fora ${probsSot.fairAway ?? "?"}. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa "aposta certa").
 - ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.
 
