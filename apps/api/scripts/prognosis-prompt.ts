@@ -140,6 +140,9 @@ const playerStatRowsAll = await db
   .where(inArray(lineup.teamId, [home.id, away.id]))
 type PlayerAgg = { g: number; sot: number; kp: number; tkl: number; intc: number; duel: number; cross: number; drib: number; mins: number }
 const playerAgg = new Map<string, PlayerAgg>()
+// KP/SoT por JOGO (com data) → também o recorte "últimos 5" ao lado do season: mostra se o jogador vem
+// CRIANDO/FINALIZANDO mais ou menos AGORA, não só a média da temporada. @feature MOD-004
+const playerKpSot = new Map<string, { date: string; kp: number; sot: number }[]>()
 for (const r of playerStatRowsAll) {
   if (r.date >= CUTOFF || r.date < seasonStart || (r.mins ?? 0) <= 0) continue
   let e = playerAgg.get(r.playerId)
@@ -147,6 +150,7 @@ for (const r of playerStatRowsAll) {
   e.g += 1
   e.sot += r.sot ?? 0; e.kp += r.kp ?? 0; e.tkl += r.tkl ?? 0; e.intc += r.intc ?? 0
   e.duel += r.duel ?? 0; e.cross += r.cross ?? 0; e.drib += r.drib ?? 0; e.mins += r.mins ?? 0
+  const kr = playerKpSot.get(r.playerId) ?? []; kr.push({ date: r.date, kp: r.kp ?? 0, sot: r.sot ?? 0 }); playerKpSot.set(r.playerId, kr)
 }
 // Contribuição direta G+A por jogador (gols exceto own + assistências), nos jogos pré-cutoff dos 2 times.
 const gaMatchIds = [...new Set([...teamMatches(home.id), ...teamMatches(away.id), ...cupMatchesOf(home.id), ...cupMatchesOf(away.id)].map((p) => p.id))]
@@ -182,7 +186,13 @@ function playerStatLine(playerId: string): string {
     if (late >= 2 && late >= Math.ceil(sorted.length * 0.3)) tags.push(`${late} tardios (76'+)`)
     parts.push(`gols aos ${shown}${tags.length ? ` — ${tags.join(", ")}` : ""}`)
   }
-  parts.push(`${pg(s.kp)} KP/j`, `${pg(s.sot)} SoT/j`, `${pg(s.drib)} dribles/j`)
+  // KP e SoT com o recorte "últimos 5" (forma do OUTPUT): média recente vs season + seta ↑/↓/=.
+  const kr = [...(playerKpSot.get(playerId) ?? [])].sort((a, b) => a.date.localeCompare(b.date)).slice(-5)
+  const r5 = (sel: (x: { kp: number; sot: number }) => number) => (kr.length ? +(kr.reduce((s2, x) => s2 + sel(x), 0) / kr.length).toFixed(2) : null)
+  const recentTag = (recent: number | null, season: number) =>
+    recent == null || kr.length < 3 ? "" : ` (últ.5: ${recent}${recent > season * 1.2 ? "↑" : recent < season * 0.8 ? "↓" : "="})`
+  const kpS = pg(s.kp), sotS = pg(s.sot)
+  parts.push(`${kpS} KP/j${recentTag(r5((x) => x.kp), kpS)}`, `${sotS} SoT/j${recentTag(r5((x) => x.sot), sotS)}`, `${pg(s.drib)} dribles/j`)
   parts.push(`def: ${pg(s.tkl)} desarme + ${pg(s.intc)} int + ${pg(s.duel)} duelo/j`)
   if (s.cross > 0) parts.push(`${pg(s.cross)} cruz/j`)
   parts.push(`~${Math.round(s.mins / s.g)} min/j`)
