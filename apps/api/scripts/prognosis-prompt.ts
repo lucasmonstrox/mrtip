@@ -1109,16 +1109,28 @@ function contextoUltimos5(teamId: string): string {
       const myPos = tbl.get(teamId)?.pos, oppPos = tbl.get(oppId)?.pos
       const split = splitAvgAsOf(teamId, p.date, isHome)
       const gf = goalsFor(p, teamId), ga = goalsAgainst(p, teamId)
-      const res = gf > ga ? "V" : gf < ga ? "D" : "E"
+      const res = gf > ga ? "Vitória" : gf < ga ? "Derrota" : "Empate"
       const mando = isHome ? "casa" : "fora"
       const splitStr = split ? ` · seu ${mando} até ali ${split.gf} marca/${split.ga} sofre` : ""
       // "Como foi o jogo": placar do INTERVALO (mostra virada/entregou vantagem/controle) + SoT feito-sofrido
       // (o resultado mereceu ou foi sorte de finalização?). @feature MOD-004
       const htF = (isHome ? p.htHome : p.htAway), htA = (isHome ? p.htAway : p.htHome)
       const htStr = htF != null && htA != null ? `, HT ${htF}-${htA}` : ""
+      // Arco do jogo NOMEADO (o "como foi" mastigado): virada, levou a virada, cedeu vantagem — o que o
+      // caminho HT→FT revela sobre caráter/resiliência do time, não só o placar final. @feature MOD-004
+      let arc = ""
+      if (htF != null && htA != null) {
+        const hl = htF - htA, fl = gf - ga
+        arc =
+          hl < 0 && fl > 0 ? " 🔄 **VIRADA** (perdia no HT)"
+          : hl > 0 && fl < 0 ? " 🔻 **LEVOU A VIRADA** (vencia no HT)"
+          : hl > 0 && fl === 0 ? " 🔻 cedeu o empate (vencia no HT)"
+          : hl < 0 && fl === 0 ? " 🔺 buscou o empate (perdia no HT)"
+          : ""
+      }
       const sotStr = hasSot(p, teamId) ? `${sotFor(p, teamId)}-${sotAgainst(p, teamId)} SoT · ` : ""
-      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr}) — ${sotStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
-      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr}) — ${sotStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
+      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
+      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
     })
     .join("\n")
   return `${legend}\n${lines}`
