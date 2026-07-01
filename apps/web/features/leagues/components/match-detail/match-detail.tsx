@@ -26,8 +26,8 @@ function TabEmpty({ children }: { children: React.ReactNode }) {
   )
 }
 
-// Rest of one side: days since its previous in-league match, or "estreia" when the team has no
-// earlier match in the dataset. The number comes ready from the API. @feature LIG-005
+// Rest of one side: days since its previous match in ANY competition (league or cup), or "estreia" when
+// the team has no earlier match in the campaign. The number comes ready from the API. @feature LIG-005
 function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
   return (
     <div className="flex flex-col gap-0.5">
@@ -229,16 +229,17 @@ export function MatchDetail({ slug }: { slug: string }) {
             <TabEmpty>Estádio não informado.</TabEmpty>
           )}
 
-          {/* Rest days: days since each team's previous match IN THIS LEAGUE. Midweek cup/national-team
-              games aren't ingested, so this can overestimate rest — hence the "na liga" caveat. @feature LIG-005 */}
+          {/* Rest days: days since each team's previous match in ANY competition (league OR cup — cups are
+              ingested now, so a midweek cup tie correctly shortens the rest). Only national-team/friendlies
+              aren't ingested. @feature LIG-005 */}
           <div className="rounded-lg border bg-card p-4">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-wide text-muted-foreground">Descanso</span>
               <span
                 className="cursor-help text-xs text-muted-foreground underline decoration-dotted"
-                title="Dias desde o último jogo de cada time nesta liga. Jogos de meio de semana fora da liga (copa, seleção) não entram, então o descanso pode estar superestimado."
+                title="Dias desde o último jogo do time em qualquer competição (liga ou copa). Jogos de seleção/amistosos não são ingeridos, então pode superestimar em datas FIFA."
               >
-                na liga
+                liga + copa
               </span>
             </div>
             <div className="mt-2 grid grid-cols-2 gap-4">

@@ -3,13 +3,12 @@ import {
   getLeagueOrThrow,
   getMatchRow,
   getMatchRowBySlug,
-  lastMatchBefore,
+  lastPlayedDateAnyComp,
   loadMatchCards,
   loadMatchGoals,
   loadMatches,
   loadTeamStanding,
   serializeMatch,
-  type Match,
   type TeamRest,
 } from "../shared/shared"
 
@@ -17,15 +16,14 @@ import {
 // old uuid URLs keep resolving while new links use the pretty slug. @feature LIG-009
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
-// Rest of a side: days between this match's date and the team's previous PLAYED match in-league.
-// Both are pure yyyy-MM-dd dates (UTC midnight), so the diff is exact in CALENDAR days — no
-// date-fns (not a dep of apps/api) and no float/timezone error. Do NOT swap for date-fns.
-// "In-league" only: midweek cup/international games aren't ingested, so this can overestimate
-// rest — the UI labels it accordingly. @feature LIG-005
-function restFor(matches: Match[], teamId: string, date: string): TeamRest {
-  const last = lastMatchBefore(matches, teamId, date)
-  if (!last) return null
-  return { lastMatchDate: last.date, restDays: Math.round((Date.parse(date) - Date.parse(last.date)) / 86_400_000) }
+// Rest of a side: days between this match's date and the team's previous PLAYED match in ANY competition
+// (league OR cup). Both are pure yyyy-MM-dd dates (UTC midnight), so the diff is exact in CALENDAR days —
+// no date-fns (not a dep of apps/api) and no float/timezone error. Do NOT swap for date-fns. Cups ARE
+// ingested now, so a midweek cup tie correctly ENCURTA o descanso (antes só-liga superestimava). @feature LIG-005
+async function restFor(teamId: string, date: string, seasonStart: string): Promise<TeamRest> {
+  const lastDate = await lastPlayedDateAnyComp(teamId, date, seasonStart)
+  if (!lastDate) return null
+  return { lastMatchDate: lastDate, restDays: Math.round((Date.parse(date) - Date.parse(lastDate)) / 86_400_000) }
 }
 
 // GET /v1/matches/:key — detail of a match: match data + league summary + goals
@@ -38,12 +36,16 @@ export async function getMatch(key: string) {
   const league = await getLeagueOrThrow(row.m.leagueCode)
   const goals = await loadMatchGoals(id)
   const cards = await loadMatchCards(id)
-  // Scope rest/standing to THIS match's season (LIG-008) — a match always has a season post-backfill.
+  // Descanso cruza liga + copa, mas bounded ao campeonato: seasonStart = 1º jogo de liga da season (as
+  // copas caem depois disso). Sem esse bound o "último jogo" de uma estreia de season puxaria a temporada
+  // passada. Standing continua scopado à season (LIG-008/LIG-006).
   const matches = await loadMatches(row.m.leagueCode, row.m.seasonId ?? undefined)
-  const rest = {
-    home: restFor(matches, row.m.homeTeamId, row.m.date),
-    away: restFor(matches, row.m.awayTeamId, row.m.date),
-  }
+  const seasonStart = matches.reduce((min, mm) => (mm.date < min ? mm.date : min), row.m.date)
+  const [homeRest, awayRest] = await Promise.all([
+    restFor(row.m.homeTeamId, row.m.date, seasonStart),
+    restFor(row.m.awayTeamId, row.m.date, seasonStart),
+  ])
+  const rest = { home: homeRest, away: awayRest }
   // Official season standing of each side (position/points/W-D-L/goals/zone) for the Fatos snapshot;
   // null when the team has no standing row yet. @feature LIG-006
   const [homeStanding, awayStanding] = await Promise.all([

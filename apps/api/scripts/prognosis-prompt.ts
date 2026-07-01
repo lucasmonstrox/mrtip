@@ -11,10 +11,10 @@
  * LLM faz só a camada de AJUSTE qualitativo. Anti-vazamento: tudo é cortado em `match.date` (CUTOFF),
  * então o prompt é exatamente o que existiria PRÉ-JOGO.
  */
-import { and, eq, inArray, isNotNull, sql } from "drizzle-orm"
+import { and, eq, inArray, isNotNull, or, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
-import { goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
+import { goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
 import { buildMomentum, type MomentumPoint, type TrendInput } from "../src/modules/leagues/get-match-momentum/momentum"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
@@ -68,6 +68,26 @@ const teamMatches = (id: string): Row[] =>
 const goalsFor = (p: Row, id: string) => (p.homeTeamId === id ? p.ftHome : p.ftAway) ?? 0
 const goalsAgainst = (p: Row, id: string) => (p.homeTeamId === id ? p.ftAway : p.ftHome) ?? 0
 
+// Jogos de COPA (FA Cup, Carabao, …) dos 2 times NESTE campeonato, pré-cutoff — a matéria-prima do
+// congestionamento de calendário (o efeito "ressaca de meio de semana": mata-mata na quarta esvazia as
+// pernas pro jogo de liga no fim de semana). Copa vive em OUTRA season (seasonId ≠ liga), então NÃO dá
+// pra scopar por seasonId — scopa por time + janela do campeonato atual (≥ 1º jogo de liga da season).
+const seasonStart = played.reduce((min, p) => (p.date < min ? p.date : min), CUTOFF)
+const cupLeagues = await db.select({ code: league.code, name: league.name }).from(league).where(eq(league.type, "cup"))
+const cupNameByCode = new Map(cupLeagues.map((l) => [l.code, l.name]))
+const cupCodes = cupLeagues.map((l) => l.code)
+const cupPlayed: Row[] = cupCodes.length
+  ? (await db.select().from(match).where(and(inArray(match.leagueCode, cupCodes), isNotNull(match.ftHome)))).filter(
+      (p) =>
+        p.date < CUTOFF &&
+        p.date >= seasonStart &&
+        (p.homeTeamId === home.id || p.awayTeamId === home.id || p.homeTeamId === away.id || p.awayTeamId === away.id),
+    )
+  : []
+// Jogos de copa de UM time em ordem cronológica (mesmo shape de `Row`), pra medir fadiga/congestionamento.
+const cupMatchesOf = (id: string): Row[] =>
+  cupPlayed.filter((p) => p.homeTeamId === id || p.awayTeamId === id).sort((a, b) => a.date.localeCompare(b.date))
+
 // SoT + key passes por (matchId, teamId): soma dos jogadores do time naquele jogo (lineup_player),
 // indexado em memória pra usar como goalsFor/goalsAgainst. Só a season atual tem esses stats; jogos
 // sem lineup ingerido simplesmente não entram (hasSot guarda contra contar 0 como ausência de dado).
@@ -89,6 +109,57 @@ for (const r of statRows) {
     statByMatchTeam.set(r.matchId, mm)
   }
   mm.set(r.teamId, { sot: r.sot, kp: r.kp })
+}
+
+// Notas dos jogadores (rating type 118) dos 2 times, em TODAS as competições (liga + copa) do campeonato
+// atual pré-cutoff — o sinal de QUALIDADE INDIVIDUAL ("a camisa") que a média de gols do time não captura.
+// Cada nota guarda a data pra separar season × forma (últimos 5). Anti-vazamento: só date < CUTOFF.
+const ratingRowsAll = await db
+  .select({ matchId: lineup.matchId, teamId: lineup.teamId, playerId: lineupPlayer.playerId, name: player.name, date: match.date, rating: lineupPlayer.rating })
+  .from(lineupPlayer)
+  .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+  .innerJoin(match, eq(match.id, lineup.matchId))
+  .innerJoin(player, eq(player.id, lineupPlayer.playerId))
+  .where(and(or(inArray(match.homeTeamId, [home.id, away.id]), inArray(match.awayTeamId, [home.id, away.id])), isNotNull(lineupPlayer.rating)))
+const ratingRows = ratingRowsAll.filter((r) => r.rating != null && r.date < CUTOFF && r.date >= seasonStart)
+// MOTM DE VERDADE = a MAIOR nota do JOGO entre os 22 jogadores (dos DOIS times) — por isso a query traz os
+// dois lados de cada partida que os times jogaram. O campo nativo 1490 é bogus (vem vazio); MOTM se DERIVA
+// da nota (rating 118), que é o método padrão da indústria.
+const matchMaxRating = new Map<string, number>()
+for (const r of ratingRows) matchMaxRating.set(r.matchId, Math.max(matchMaxRating.get(r.matchId) ?? 0, r.rating!))
+// Bloco de QUALIDADE INDIVIDUAL: nota média do time + top jogadores por nota da season, cada um com season ×
+// forma (últimos 5, seta ↑/↓ vs season) e "nº MOTM" (maior nota do jogo entre os 22, derivado da nota). Marca ⚠️ quem está
+// fora (cruza com desfalques). Inclui copa. É o piso de qualidade / "camisa" pra o modelo não rebaixar um
+// elenco forte à média crua de gols.
+function ratingsBlock(teamId: string, injured: Set<string>): string {
+  const rows = ratingRows.filter((r) => r.teamId === teamId)
+  if (rows.length < 5) return "- (sem notas suficientes)"
+  const teamAvg = +(rows.reduce((s, r) => s + (r.rating ?? 0), 0) / rows.length).toFixed(2)
+  const byPlayer = new Map<string, { name: string; rs: { date: string; rating: number; matchId: string }[] }>()
+  for (const r of rows) {
+    let e = byPlayer.get(r.playerId)
+    if (!e) { e = { name: r.name, rs: [] }; byPlayer.set(r.playerId, e) }
+    e.rs.push({ date: r.date, rating: r.rating!, matchId: r.matchId })
+  }
+  const arrow = (f: number, s: number) => (f > s + 0.15 ? "↑" : f < s - 0.15 ? "↓" : "=")
+  const players = [...byPlayer.values()]
+    .filter((p) => p.rs.length >= 5)
+    .map((p) => {
+      const sorted = [...p.rs].sort((a, b) => a.date.localeCompare(b.date))
+      const season = +(sorted.reduce((s, x) => s + x.rating, 0) / sorted.length).toFixed(2)
+      const last5 = sorted.slice(-5)
+      const forma = +(last5.reduce((s, x) => s + x.rating, 0) / last5.length).toFixed(2)
+      const motm = p.rs.filter((x) => x.rating >= (matchMaxRating.get(x.matchId) ?? 99)).length
+      return { name: p.name, season, forma, n: sorted.length, motm }
+    })
+    .sort((a, b) => b.season - a.season)
+    .slice(0, 6)
+  const lines = players.map((p) => {
+    const flag = injured.has(p.name) ? "⚠️(fora) " : ""
+    const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
+    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5)${motmStr} · ${p.n}j`
+  })
+  return `- **Nota média do time (todas comps): ${teamAvg}**\n${lines.join("\n")}`
 }
 const oppOf = (p: Row, id: string) => (p.homeTeamId === id ? p.awayTeamId : p.homeTeamId)
 const sotFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.sot ?? 0
@@ -341,31 +412,76 @@ function recentForm(teamId: string, n: number) {
   return { n: k, seq: seq.reverse().join(""), pts, gf: +(gf / k).toFixed(2), ga: +(ga / k).toFixed(2), gfTotal: gf, gaTotal: ga, sf: sot.sf, sa: sot.sa }
 }
 
-// Poisson independente (home/away) → probabilidades de mercado. ÂNCORA determinística: o modelo deve
-// PARTIR daqui em vez de chutar over/BTTS/1x2 — a maior fonte da "compressão" pra ~40% em tudo.
+// Grid de placar Poisson CORRIGIDO por Dixon-Coles → probabilidades de mercado. ÂNCORA determinística: o
+// modelo PARTE daqui em vez de chutar over/BTTS/1x2. TODOS os mercados derivam da MESMA matriz (coerentes
+// por construção). @feature MOD-004
 function poissonPmf(k: number, lambda: number): number {
   let p = Math.exp(-lambda)
   for (let i = 1; i <= k; i++) p *= lambda / i
   return p
 }
-function marketProbs(lh: number, la: number) {
+// ρ de Dixon-Coles: corrige a correlação dos 4 placares baixos (0-0/1-0/0-1/1-1) que o Poisson independente
+// erra — sobe empate e BTTS, reforma o placar exato baixo (quase não mexe no over 2.5 ≈0, provado no backtest). Valor
+// PROVISÓRIO da literatura (PL ~−0.13); o número definitivo sai do MLE do backtest (scripts/_backtest-dc.ts,
+// MOD-004 P2) conforme a base cresce. @feature MOD-004
+const DC_RHO = -0.13
+function dcTau(h: number, a: number, lh: number, la: number, rho: number): number {
+  if (h === 0 && a === 0) return 1 - lh * la * rho
+  if (h === 0 && a === 1) return 1 + lh * rho
+  if (h === 1 && a === 0) return 1 + la * rho
+  if (h === 1 && a === 1) return 1 - rho
+  return 1
+}
+function marketProbs(lh: number, la: number, rho = DC_RHO) {
   const MAX = 10
   const ph = Array.from({ length: MAX + 1 }, (_, k) => poissonPmf(k, lh))
   const pa = Array.from({ length: MAX + 1 }, (_, k) => poissonPmf(k, la))
-  let home = 0, draw = 0, away = 0, over15 = 0, over25 = 0, over35 = 0
+  // Grid conjunto P(h,a) com τ de Dixon-Coles + renormalização — a matriz de onde tudo deriva.
+  const g: number[][] = []
+  let sum = 0
+  for (let h = 0; h <= MAX; h++) {
+    g[h] = []
+    for (let a = 0; a <= MAX; a++) {
+      const p = ph[h]! * pa[a]! * dcTau(h, a, lh, la, rho)
+      g[h]![a] = p
+      sum += p
+    }
+  }
+  let home = 0, draw = 0, away = 0, over15 = 0, over25 = 0, over35 = 0, btts = 0, oddT = 0, mg01 = 0, mg23 = 0, mg4 = 0
+  const scores: { score: string; p: number }[] = []
   for (let h = 0; h <= MAX; h++) {
     for (let a = 0; a <= MAX; a++) {
-      const p = ph[h]! * pa[a]!
+      const p = g[h]![a]! / sum
+      const t = h + a
       if (h > a) home += p
       else if (h === a) draw += p
       else away += p
-      if (h + a >= 2) over15 += p
-      if (h + a >= 3) over25 += p
-      if (h + a >= 4) over35 += p
+      if (t >= 2) over15 += p
+      if (t >= 3) over25 += p
+      if (t >= 4) over35 += p
+      if (h >= 1 && a >= 1) btts += p
+      if (t % 2 === 1) oddT += p
+      if (t <= 1) mg01 += p
+      else if (t <= 3) mg23 += p
+      else mg4 += p
+      if (h <= 5 && a <= 5) scores.push({ score: `${h}-${a}`, p })
     }
   }
   const pc = (x: number) => Math.round(x * 100)
-  return { home: pc(home), draw: pc(draw), away: pc(away), over15: pc(over15), over25: pc(over25), over35: pc(over35), btts: pc((1 - ph[0]!) * (1 - pa[0]!)) }
+  const notDraw = home + away || 1 // guarda contra /0
+  const topScores = scores.sort((x, y) => y.p - x.p).slice(0, 4).map((z) => ({ score: z.score, prob: pc(z.p) }))
+  const fair = (x: number) => (x > 0.005 ? +(1 / x).toFixed(2) : null)
+  return {
+    home: pc(home), draw: pc(draw), away: pc(away),
+    over15: pc(over15), over25: pc(over25), over35: pc(over35), btts: pc(btts),
+    // ---- mercados derivados do MESMO grid corrigido (MOD-004) ----
+    dcHomeDraw: pc(home + draw), dcHomeAway: pc(home + away), dcDrawAway: pc(draw + away),
+    dnbHome: pc(home / notDraw), dnbAway: pc(away / notDraw),
+    oddPct: pc(oddT), evenPct: pc(1 - oddT),
+    mg01: pc(mg01), mg23: pc(mg23), mg4: pc(mg4),
+    topScores,
+    fairHome: fair(home), fairDraw: fair(draw), fairAway: fair(away),
+  }
 }
 
 // ---- Base rate Poisson (força ataque × fraqueza defesa, específica por mando) ----
@@ -397,11 +513,29 @@ const leagueAwaySotAvg = lgSotN ? +(lgAwaySot / lgSotN).toFixed(2) : 0
 const lambdaSotHome = leagueHomeSotAvg ? +(homeHomeSot.sf * (awayAwaySot.sa / leagueHomeSotAvg)).toFixed(2) : 0
 const lambdaSotAway = leagueAwaySotAvg ? +(awayAwaySot.sf * (homeHomeSot.sa / leagueAwaySotAvg)).toFixed(2) : 0
 
-// Rest days (in-league): dias desde o último jogo de cada lado antes deste.
+// Último jogo REAL do time antes deste, cruzando competições (liga OU copa) — base honesta do descanso.
+function lastMatchAnyComp(teamId: string): Row | null {
+  const lg = teamMatches(teamId).at(-1) ?? null
+  const cup = cupMatchesOf(teamId).at(-1) ?? null
+  if (lg && cup) return cup.date > lg.date ? cup : lg
+  return lg ?? cup
+}
+// Rest days cruzando competições: dias desde o último jogo de QUALQUER torneio (a copa de meio de semana
+// também cansa as pernas). O cálculo só-liga superestimava o descanso quando havia mata-mata no meio de
+// semana — é essa fadiga real que o modelo precisa ver ("ressaca de meio de semana"). @feature LIG-005
 function restDays(teamId: string): number | null {
-  const prev = teamMatches(teamId).at(-1)
+  const prev = lastMatchAnyComp(teamId)
   if (!prev) return null
   return Math.round((Date.parse(CUTOFF) - Date.parse(prev.date)) / 86_400_000)
+}
+// Diz QUAL foi o último jogo (competição + data) — pra o modelo saber quando o time jogou por último,
+// sobretudo quando foi COPA (o que o número só-liga escondia): ex. "(último: FA Cup Final, 2026-05-16)".
+function lastMatchNote(teamId: string): string {
+  const last = lastMatchAnyComp(teamId)
+  if (!last) return ""
+  const isCup = cupCodes.includes(last.leagueCode)
+  const comp = isCup ? `${cupNameByCode.get(last.leagueCode) ?? last.leagueCode}${last.stageName ? ` ${last.stageName}` : ""}` : "liga"
+  return ` (último: ${comp}, ${last.date})`
 }
 
 const homeAll = avg(teamMatches(home.id), home.id)
@@ -438,11 +572,19 @@ const awayHalf = halfSplit(teamMatches(away.id), away.id)
 // em cada tempo (halfSplit) e roda o mesmo Poisson — assim o modelo NÃO precisa "derivar" sem número.
 const lamH = xgViaSotHome ?? lambdaHome
 const lamA = xgViaSotAway ?? lambdaAway
-const share1 = (h: ReturnType<typeof halfSplit>) => (h.scored1 + h.scored2 > 0 ? h.scored1 / (h.scored1 + h.scored2) : 0.45)
+// Split 1ºT/2ºT REAL da liga (sobre os jogos jogados, via placar do intervalo) — baseline pro modelo saber
+// o que é "normal" (a literatura aponta ~44/56) e fallback honesto do share1 quando um time não tem gols
+// registrados (antes era 0.45 chutado). @feature MOD-004
+let lgHtGoals = 0, lgFtGoals = 0
+for (const p of played) { lgHtGoals += (p.htHome ?? 0) + (p.htAway ?? 0); lgFtGoals += (p.ftHome ?? 0) + (p.ftAway ?? 0) }
+const leagueShare1 = lgFtGoals > 0 ? +(lgHtGoals / lgFtGoals).toFixed(3) : 0.45
+const share1 = (h: ReturnType<typeof halfSplit>) => (h.scored1 + h.scored2 > 0 ? h.scored1 / (h.scored1 + h.scored2) : leagueShare1)
 const hShare1 = share1(homeHalf)
 const aShare1 = share1(awayHalf)
-const probs1t = marketProbs(lamH * hShare1, lamA * aShare1)
-const probs2t = marketProbs(lamH * (1 - hShare1), lamA * (1 - aShare1))
+// Meio-tempo: SEM Dixon-Coles (rho=0) — o τ foi calibrado pra jogo inteiro; aplicá-lo sobre λ de meio-tempo
+// (menores) super-corrigiria o placar baixo por tempo. As âncoras 1t/2t ficam em Poisson puro. @feature MOD-004
+const probs1t = marketProbs(lamH * hShare1, lamA * aShare1, 0)
+const probs2t = marketProbs(lamH * (1 - hShare1), lamA * (1 - aShare1), 0)
 const homeTiming = await timing(home.id)
 const awayTiming = await timing(away.id)
 
@@ -858,12 +1000,16 @@ const splitAvgAsOf = (id: string, dateStr: string, isHome: boolean): { gf: numbe
 // Bloco LIMPO "últimos 5 em contexto": cada resultado JUSTIFICADO numa linha — adversário + status decidido
 // dos dois times (salvo? rebaixado? brigando?) + a média do time no mando daquele jogo. Lê forma sem ser enganado.
 function contextoUltimos5(teamId: string): string {
-  const ms = teamMatches(teamId).slice(-5)
+  // Últimos 5 jogos em QUALQUER competição (liga + copa), cronológico — a forma mostra contra quem foi,
+  // casa/fora, e marca 🏆 os que foram de copa (FA Cup/Carabao). Jogo de liga mantém o contexto de tabela.
+  const ms = [...teamMatches(teamId).map((p) => ({ p, cup: false })), ...cupMatchesOf(teamId).map((p) => ({ p, cup: true }))]
+    .sort((a, b) => a.p.date.localeCompare(b.p.date))
+    .slice(-5)
   if (!ms.length) return "- (sem jogos)"
   const legend =
     "_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._"
   const lines = ms
-    .map((p) => {
+    .map(({ p, cup }) => {
       const isHome = p.homeTeamId === teamId
       const oppId = isHome ? p.awayTeamId : p.homeTeamId
       const tbl = standingsAsOf(p.date)
@@ -873,6 +1019,7 @@ function contextoUltimos5(teamId: string): string {
       const res = gf > ga ? "V" : gf < ga ? "D" : "E"
       const mando = isHome ? "casa" : "fora"
       const splitStr = split ? ` · seu ${mando} até ali ${split.gf} marca/${split.ga} sofre` : ""
+      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**) — 🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
       return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**) — adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
     })
     .join("\n")
@@ -1020,11 +1167,11 @@ Pela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:
 
 ## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)
 A estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):
-- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR → o jogo morre.
+- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque "o favorito administra"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).
 - **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.
 - **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.
 - **Cada roteiro AMARRADO a um dado** ("toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante"). Sem dado que o sustente, é achismo — descarte.
-- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = administra/segura o resultado).
+- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).
 
 ## Método numérico
 **PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:
@@ -1043,7 +1190,8 @@ A estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem r
 - Data: ${m.date} ${m.time ?? ""} · Rodada ${m.round} · Liga ${m.leagueCode}
 - Local: ${matchVenue ? `${matchVenue.name}${matchVenue.cityName ? `, ${matchVenue.cityName}` : ""}` : "—"}${matchVenue?.surface ? ` (${matchVenue.surface})` : ""}
 - Clima: ${matchWeather ? `${matchWeather.description ?? "?"} · ${w1(matchWeather.tempDay)}°C (sens. ${w1(matchWeather.feelsLikeDay)}°C) · vento ${w1(matchWeather.windSpeed)} m/s · umidade ${matchWeather.humidity ?? "?"} · nuvens ${matchWeather.clouds ?? "?"}` : "—"} (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)
-- Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias · ${away.name} ${restDays(away.id) ?? "?"} dias${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
+- Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias${lastMatchNote(home.id)} · ${away.name} ${restDays(away.id) ?? "?"} dias${lastMatchNote(away.id)}${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
+- **Descanso / fadiga** (números acima — a nota "(último: …)" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.
 - Média da liga (pré-jogo, ${played.length} jogos): mandante ${leagueHomeAvg} gols/jogo · visitante ${leagueAwayAvg} gols/jogo
 - **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +${+(leagueHomeAvg - leagueAwayAvg).toFixed(2)} gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.
 
@@ -1068,6 +1216,9 @@ ${intentHeadline}
 ${styleLine("Temporada", teamMatches(home.id), home.id)}
 ${styleLine("Últimos 5", teamMatches(home.id).slice(-5), home.id)}
 
+### Qualidade individual (notas · season vs forma)
+${ratingsBlock(home.id, new Set(homeAbs.map((a) => a.name)))}
+
 ### Forma & contexto (últimos 5 — cada resultado justificado)
 ${formLines(homeF5, homeAll.gf, homeAll.ga)}
 ${consistencyLine(home.id)}
@@ -1091,6 +1242,9 @@ ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ### Estilo (feito/sofrido por jogo)
 ${styleLine("Temporada", teamMatches(away.id), away.id)}
 ${styleLine("Últimos 5", teamMatches(away.id).slice(-5), away.id)}
+
+### Qualidade individual (notas · season vs forma)
+${ratingsBlock(away.id, new Set(awayAbs.map((a) => a.name)))}
 
 ### Forma & contexto (últimos 5 — cada resultado justificado)
 ${formLines(awayF5, awayAll.gf, awayAll.ga)}
@@ -1122,7 +1276,7 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 - **Índice de volume do jogo**: λ_SoT total ${+(lambdaSotHome + lambdaSotAway).toFixed(1)} vs média da liga ${+(leagueHomeSotAvg + leagueAwaySotAvg).toFixed(1)} SoT → ${lambdaSotHome + lambdaSotAway > (leagueHomeSotAvg + leagueAwaySotAvg) * 1.1 ? "**ACIMA** (jogo de volume → pressão de OVER)" : lambdaSotHome + lambdaSotAway < (leagueHomeSotAvg + leagueAwaySotAvg) * 0.9 ? "**ABAIXO** (jogo travado → pressão de UNDER)" : "na média"}
 - **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.
 
-## Probabilidades de mercado (Poisson sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)
+## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)
 | Mercado | Rota A (gols) | Rota B (SoT×conv) |
 |---|---|---|
 | 1x2 casa/E/fora | ${probsGoals.home}/${probsGoals.draw}/${probsGoals.away}% | ${probsSot.home}/${probsSot.draw}/${probsSot.away}% |
@@ -1130,6 +1284,15 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 | Over 2.5 | ${probsGoals.over25}% | ${probsSot.over25}% |
 | Over 3.5 | ${probsGoals.over35}% | ${probsSot.over35}% |
 | BTTS | ${probsGoals.btts}% | ${probsSot.btts}% |
+
+**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):
+- **Dupla chance**: 1X **${probsSot.dcHomeDraw}%** · 12 **${probsSot.dcHomeAway}%** · X2 **${probsSot.dcDrawAway}%** · **Draw No Bet** casa ${probsSot.dnbHome}% / fora ${probsSot.dnbAway}%
+- **Placar exato (mais prováveis)**: ${probsSot.topScores.map((s) => `${s.score} ${s.prob}%`).join(" · ")}
+- **Odd/Even**: ímpar ${probsSot.oddPct}% / par ${probsSot.evenPct}% · **Multigoals**: 0-1 ${probsSot.mg01}% · 2-3 ${probsSot.mg23}% · 4+ ${probsSot.mg4}%
+- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa ${probsSot.fairHome ?? "?"} · empate ${probsSot.fairDraw ?? "?"} · fora ${probsSot.fairAway ?? "?"}. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa "aposta certa").
+- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.
+
+**Baseline da liga (1ºT/2ºT):** ${Math.round(leagueShare1 * 100)}% dos gols saem no 1º tempo / ${Math.round((1 - leagueShare1) * 100)}% no 2º (sobre ${played.length} jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).
 
 **1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de \`one_x_two_1t\`/\`one_x_two_2t\`): 1ºT casa/E/fora **${probs1t.home}/${probs1t.draw}/${probs1t.away}%** · 2ºT **${probs2t.home}/${probs2t.draw}/${probs2t.away}%**.
 São as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.
@@ -1151,13 +1314,13 @@ São as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. 
 No topo: \`drivers\` = os 3 fatores (frases em PT) que mais moveram o número.
 
 **\`best_bet\`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de \`selection\`/\`team\`):
-- \`market\`: \`"1x2"\` | \`"over_under"\` | \`"btts"\` | \`"handicap"\` | \`"team_total"\` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece — **OBRIGATÓRIO escolher um mercado; NUNCA "passar"/"sem aposta". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, "mandante \`handicap\` -1" ou "mandante \`team_total\` over 1.5" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), \`team_total\` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.
+- \`market\`: \`"1x2"\` | \`"over_under"\` | \`"btts"\` | \`"handicap"\` | \`"team_total"\` | \`"double_chance"\` | \`"draw_no_bet"\` | \`"odd_even"\` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **\`double_chance\`/\`draw_no_bet\`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de "Mercados derivados" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA "passar"/"sem aposta". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, "mandante \`handicap\` -1" ou "mandante \`team_total\` over 1.5" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), \`team_total\` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.
 - **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** \`team_total\` over 0.5 ("time marca" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** \`team_total\` over 1.5 ou \`handicap\` de favorito claro (dependem de UM time, não do placar exato) → **(3)** \`over_under\` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → "under 3.5" é quase trava (margem enorme), "under 2.5" é apertado; xG 3.2 → "over 2.5" tem folga, "over 1.5" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** \`1x2\` (o empate nega; só com vitória nítida) → **(5)** \`btts\` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte \`btts\` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira "o lado forte marca" via \`team_total\`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.
 - **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o \`team_total\` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. \`team_total\` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.
 - **SIGA O "VEREDITO DE INTENÇÃO" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**
   - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / \`team_total\` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.
   - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **"empate basta"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: \`team_total\` over 0.5 do lado que precisa, ou \`1x2\`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo \`medium\`**.
-- \`selection\`: 1x2 → \`"home"\`/\`"draw"\`/\`"away"\` · over_under → \`"over"\`/\`"under"\` · btts → \`"yes"\`/\`"no"\` · **handicap** → o time bancado \`"home"\`/\`"away"\` · **team_total** → \`"over"\`/\`"under"\`.
+- \`selection\`: 1x2 → \`"home"\`/\`"draw"\`/\`"away"\` · over_under → \`"over"\`/\`"under"\` · btts → \`"yes"\`/\`"no"\` · **handicap** → o time bancado \`"home"\`/\`"away"\` · **team_total** → \`"over"\`/\`"under"\` · **double_chance** → \`"home_draw"\` (1X) / \`"draw_away"\` (X2) / \`"home_away"\` (12) · **draw_no_bet** → o time bancado \`"home"\`/\`"away"\` · **odd_even** → \`"odd"\`/\`"even"\`.
 - \`team\`: SÓ em \`team_total\` — de qual time é o total (\`"home"\`/\`"away"\`); \`null\` nos demais mercados.
 - \`line\`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · \`null\` em 1x2/btts.
 - \`confidence\`: \`"low"\` | \`"medium"\` | \`"high"\` · \`probability\`: sua prob (0-1) do evento.

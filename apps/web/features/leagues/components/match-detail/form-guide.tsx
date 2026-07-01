@@ -59,6 +59,17 @@ function Chip({ r, team, size }: { r: FormResult; team: TeamRef; size: "sm" | "m
       </HoverCardTrigger>
       <HoverCardContent side="top" className="w-auto px-3 py-2.5">
         <div className="flex flex-col items-center gap-1.5">
+          <div className="flex items-center gap-1.5">
+            {r.competition.logoUrl ? (
+              <img
+                src={r.competition.logoUrl}
+                alt={r.competition.name}
+                className="size-3.5 object-contain"
+                loading="lazy"
+              />
+            ) : null}
+            <span className="text-[11px] font-medium text-muted-foreground">{r.competition.name}</span>
+          </div>
           <div className="flex items-center gap-3">
             <Crest team={home} />
             <div className="flex flex-col items-center gap-0.5">

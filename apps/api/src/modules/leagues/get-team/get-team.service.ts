@@ -2,6 +2,7 @@ import {
   computeForm,
   computeTeamTrends,
   getTeamBySlug,
+  loadTeamFormMatches,
   loadTeamMatches,
   loadTeamStanding,
   resolveSeason,
@@ -17,16 +18,19 @@ import {
 export async function getTeam(slug: string, seasonParam?: number) {
   const team = await getTeamBySlug(slug)
   const seasonId = await resolveSeason("PL", seasonParam)
-  const [standing, matches, seasons] = await Promise.all([
+  const [standing, matches, seasons, formMatches] = await Promise.all([
     loadTeamStanding(team.id, seasonId),
     loadTeamMatches(team.id, seasonId),
     seasonsOfTeam(team.id),
+    loadTeamFormMatches(team.id, { seasonId }),
   ])
   return {
     ...team,
     standing,
     trends: computeTeamTrends(matches, team.id),
-    form: computeForm(matches, team),
+    // Form crosses ALL competitions of the campaign (league + cups), not just the league match list
+    // above — the team's real recent run. Trends/standing stay league-scoped. @feature LIG-011
+    form: computeForm(formMatches, team),
     matches,
     seasons,
   }

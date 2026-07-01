@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, inArray, isNotNull, lt, lte, ne, or } from "drizzle-orm"
+import { and, asc, count, desc, eq, gte, inArray, isNotNull, lt, lte, ne, or } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 
 import { db } from "../../../db/client"
@@ -122,6 +122,15 @@ export type MatchVenue = {
   imageUrl: string | null
 }
 
+// The competition a match belongs to (league or cup), joined from the match's leagueCode — so a
+// mixed cross-competition form can label each game (Premier League vs FA Cup vs Carabao). @feature LIG-011
+export type Competition = {
+  code: string
+  name: string
+  type: string // "league" | "cup"
+  logoUrl: string | null
+}
+
 export type Match = {
   id: string
   slug: string // pretty URL key, e.g. "premier-league-2025-2026-chelsea-vs-everton" (LIG-009)
@@ -133,6 +142,7 @@ export type Match = {
   away: TeamRef
   score: Score | null // null = match without a result yet
   venue: MatchVenue | null
+  competition: Competition // which league/cup this match is from (LIG-011)
 }
 
 // Rest of one side before a match: its previous PLAYED match in-league + days until this one.
@@ -179,6 +189,9 @@ export type FormResult = {
   htGoalsFor: number | null
   htGoalsAgainst: number | null
   side: "home" | "away"
+  // Which competition this game was in (league/cup) — labels each chip when the form mixes
+  // competitions (team page + match analysis). @feature LIG-011
+  competition: Competition
 }
 
 export type Form = {
@@ -488,6 +501,9 @@ type MatchJoin = {
   awayName: string
   awaySlug: string
   awayLogo: string | null
+  leagueName: string
+  leagueType: string
+  leagueLogo: string | null
   v: typeof venue.$inferSelect | null
 }
 
@@ -504,11 +520,15 @@ const baseQuery = () =>
       awayName: teamAway.name,
       awaySlug: teamAway.slug,
       awayLogo: teamAway.logoUrl,
+      leagueName: league.name,
+      leagueType: league.type,
+      leagueLogo: league.logoUrl,
       v: venue,
     })
     .from(match)
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
+    .innerJoin(league, eq(league.code, match.leagueCode))
     .leftJoin(venue, eq(venue.id, match.venueId))
 
 // Flattens the join row (score in 4 columns + names from the join) into the output contract (score
@@ -541,6 +561,7 @@ export function serializeMatch(row: MatchJoin): Match {
           imageUrl: v.imageUrl,
         }
       : null,
+    competition: { code: m.leagueCode, name: row.leagueName, type: row.leagueType, logoUrl: row.leagueLogo },
   }
 }
 
@@ -584,6 +605,19 @@ export async function seasonsOf(code: string): Promise<SeasonSummary[]> {
     .from(season)
     .where(eq(season.leagueCode, code))
     .orderBy(desc(season.startYear))
+}
+
+// All season ids running in the SAME campaign as `anchorSeasonId` — those sharing its `startYear`
+// across EVERY competition (a league season + its concurrent cups, e.g. FA Cup/Carabao). The key of
+// cross-competition form: a team's campaign is league + cup games in the same year. @feature LIG-011
+export async function concurrentSeasonIds(anchorSeasonId: string): Promise<string[]> {
+  const anchor = alias(season, "anchor_season")
+  const rows = await db
+    .select({ id: season.id })
+    .from(season)
+    .innerJoin(anchor, eq(anchor.startYear, season.startYear))
+    .where(eq(anchor.id, anchorSeasonId))
+  return rows.map((r) => r.id)
 }
 
 // All matches of a league IN ONE SEASON (default: the current one), ordered by round and date —
@@ -1042,6 +1076,29 @@ export async function loadTeamMatches(id: string, seasonId: string | null): Prom
   if (!seasonId) return []
   const rows = await baseQuery()
     .where(and(or(eq(match.homeTeamId, id), eq(match.awayTeamId, id)), eq(match.seasonId, seasonId)))
+    .orderBy(desc(match.date))
+  return rows.map(serializeMatch)
+}
+
+// A team's PLAYED matches across ALL competitions of one campaign (league + concurrent cups), most
+// recent first — the input for CROSS-COMPETITION form (team page + match analysis). Scoped to the
+// concurrent seasons of `seasonId` (a past season via the switcher stays bounded on both ends);
+// `before` (yyyy-MM-dd, exclusive) anchors it to a match. @feature LIG-011
+export async function loadTeamFormMatches(
+  id: string,
+  opts: { seasonId: string; before?: string },
+): Promise<Match[]> {
+  const seasonIds = await concurrentSeasonIds(opts.seasonId)
+  if (!seasonIds.length) return []
+  const rows = await baseQuery()
+    .where(
+      and(
+        or(eq(match.homeTeamId, id), eq(match.awayTeamId, id)),
+        inArray(match.seasonId, seasonIds),
+        isNotNull(match.ftHome),
+        opts.before ? lt(match.date, opts.before) : undefined,
+      ),
+    )
     .orderBy(desc(match.date))
   return rows.map(serializeMatch)
 }
@@ -1768,6 +1825,7 @@ function formResult(m: Match, teamId: string): FormResult {
     htGoalsFor: ht ? (isHome ? ht[0] : ht[1]) : null,
     htGoalsAgainst: ht ? (isHome ? ht[1] : ht[0]) : null,
     side: isHome ? "home" : "away",
+    competition: m.competition,
   }
 }
 
@@ -1818,6 +1876,27 @@ export function lastMatchBefore(matches: Match[], teamId: string, before: string
       .filter((m) => m.date < before)
       .sort((a, b) => b.date.localeCompare(a.date))[0] ?? null
   )
+}
+
+// Data do último jogo DISPUTADO do time antes de `before`, cruzando TODAS as competições (liga + copa) —
+// a âncora HONESTA de descanso/fadiga: uma copa de meio de semana também cansa as pernas. Limitado a
+// `notBefore` (início do campeonato) pra não puxar a temporada passada. Consulta a tabela `match` direto
+// (copa vive sob outro leagueCode/season, então a lista scopada por season não a enxerga). @feature LIG-005
+export async function lastPlayedDateAnyComp(teamId: string, before: string, notBefore: string): Promise<string | null> {
+  const [row] = await db
+    .select({ date: match.date })
+    .from(match)
+    .where(
+      and(
+        or(eq(match.homeTeamId, teamId), eq(match.awayTeamId, teamId)),
+        lt(match.date, before),
+        gte(match.date, notBefore),
+        isNotNull(match.ftHome),
+      ),
+    )
+    .orderBy(desc(match.date))
+    .limit(1)
+  return row?.date ?? null
 }
 
 // Minimum played matches for a trend to be shown without a low-sample warning.

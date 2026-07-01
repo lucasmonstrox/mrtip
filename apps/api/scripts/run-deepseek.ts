@@ -59,8 +59,9 @@ type GeneralPrognosis = {
 // Leitura de apostador (sharp): a DECISÃO estruturada, separada dos números. SEMPRE crava um mercado (sem "passar").
 // Inclui handicap e team_total: em jogo assimétrico, "mandante -1" ou "time over 1.5" captura o cenário melhor que o O/U do jogo.
 type BestBet = {
-  market: "1x2" | "over_under" | "btts" | "handicap" | "team_total"
-  selection: "home" | "draw" | "away" | "over" | "under" | "yes" | "no"
+  // mercados de jogo inteiro + os derivados do grid Dixon-Coles (dupla chance, DNB, odd/even) — MOD-004
+  market: "1x2" | "over_under" | "btts" | "handicap" | "team_total" | "double_chance" | "draw_no_bet" | "odd_even"
+  selection: "home" | "draw" | "away" | "over" | "under" | "yes" | "no" | "home_draw" | "draw_away" | "home_away" | "odd" | "even"
   team: "home" | "away" | null // de qual time é o total (team_total); null nos mercados de jogo inteiro
   line: number | null // over_under: linha do jogo (2.5) · handicap: hcap do time (-1, +1) · team_total: gols do time (1.5) · null em 1x2/btts
   confidence: "low" | "medium" | "high"
@@ -110,8 +111,8 @@ const generalSchema = {
 const bestBetSchema = {
   type: "object" as const,
   properties: {
-    market: { type: "string" as const, enum: ["1x2", "over_under", "btts", "handicap", "team_total"] },
-    selection: { type: "string" as const, enum: ["home", "draw", "away", "over", "under", "yes", "no"] },
+    market: { type: "string" as const, enum: ["1x2", "over_under", "btts", "handicap", "team_total", "double_chance", "draw_no_bet", "odd_even"] },
+    selection: { type: "string" as const, enum: ["home", "draw", "away", "over", "under", "yes", "no", "home_draw", "draw_away", "home_away", "odd", "even"] },
     team: { type: ["string", "null"] as ("string" | "null")[], enum: ["home", "away", null] },
     line: { type: ["number", "null"] as ("number" | "null")[] },
     confidence: conf,

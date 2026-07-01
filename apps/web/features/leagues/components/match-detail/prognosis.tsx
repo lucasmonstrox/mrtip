@@ -149,9 +149,9 @@ function RestPanel({ home, away, rest }: { home: TeamRef; away: TeamRef; rest: M
           Descanso
           <span
             className="cursor-help rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground underline decoration-dotted"
-            title="Dias desde o último jogo de cada time nesta liga. Jogos de meio de semana fora da liga (copa, seleção) não entram, então o descanso pode estar superestimado."
+            title="Dias desde o último jogo do time em qualquer competição (liga ou copa). Jogos de seleção/amistosos não são ingeridos."
           >
-            na liga
+            liga + copa
           </span>
         </CardTitle>
         <CardDescription className="text-xs">
@@ -200,6 +200,16 @@ function betLabel(b: BestBet, home: TeamRef, away: TeamRef): { title: string; te
       team: b.team === "home" ? home : b.team === "away" ? away : null,
     }
   }
+  // Mercados derivados do grid Dixon-Coles (MOD-004)
+  if (b.market === "double_chance") {
+    const dc =
+      b.selection === "home_draw" ? `${home.name} ou Empate`
+      : b.selection === "draw_away" ? `Empate ou ${away.name}`
+      : `${home.name} ou ${away.name}`
+    return { title: `Dupla chance: ${dc}`, team: null }
+  }
+  if (b.market === "draw_no_bet") return { title: "Empate anula aposta", team: b.selection === "home" ? home : away }
+  if (b.market === "odd_even") return { title: `Total de gols: ${b.selection === "odd" ? "Ímpar" : "Par"}`, team: null }
   return { title: `${b.selection ?? ""} ${b.line ?? ""}`.trim() || "Aposta", team: null }
 }
 
