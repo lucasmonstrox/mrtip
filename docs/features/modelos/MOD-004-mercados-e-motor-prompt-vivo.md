@@ -44,8 +44,8 @@ O pipeline vivo de prognóstico (`prognosis-prompt.ts` → `run-deepseek.ts` →
 - [x] P3 ia — Dixon-Coles τ em `marketProbs` (ρ=−0.13 provisório; MLE fica pro harness quando a base crescer)
 - [x] P4 ia — materializar o grid → dupla chance, DNB, odd/even, multigoals, placar exato, fair odds
 - [~] P5 api+ia+ui — `double_chance`/`draw_no_bet`/`odd_even` selecionáveis + todos os derivados mostrados como prior. Falta `correct_score`/`ht_ft` selecionáveis (só exibidos)
-- [~] P6 dados+ia — split 1ºT/2ºT real da liga (mata `share1`=0.45) + baseline no prompt. Falta o baseline por FAIXA de 15min (6 buckets)
-- [ ] P7 ia — `bothPush` remodela `xg_bands` + mini-teste A/B de momentum (decide SIN-021 pelo número) — **não iniciado**
+- [x] P6 dados+ia — split 1ºT/2ºT real da liga (mata `share1`=0.45) + baseline por FAIXA de 15min (6 buckets) no prompt
+- [~] P7 ia — `bothPush` remodela a FORMA da curva `xg_bands` (gol tardio quando os dois empurram) feito; falta o mini-teste A/B de momentum (SIN-021)
 - [x] P8 ia — doutrina: park-the-bus corrigido, empate/DC destravado, `fair_odds` no-vig computado em código + prob-only
 
 ## Plano

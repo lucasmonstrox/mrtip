@@ -578,6 +578,16 @@ const lamA = xgViaSotAway ?? lambdaAway
 let lgHtGoals = 0, lgFtGoals = 0
 for (const p of played) { lgHtGoals += (p.htHome ?? 0) + (p.htAway ?? 0); lgFtGoals += (p.ftHome ?? 0) + (p.ftAway ?? 0) }
 const leagueShare1 = lgFtGoals > 0 ? +(lgHtGoals / lgFtGoals).toFixed(3) : 0.45
+// Baseline da liga por FAIXA de 15min: % dos gols da liga em cada janela (sobre os jogos jogados) — o
+// "normal" contra o qual o modelo julga se o timing de um time é anômalo. @feature MOD-004
+const leagueBandCounts = [0, 0, 0, 0, 0, 0]
+const playedIds = played.map((p) => p.id)
+if (playedIds.length) {
+  const lgGoals = await db.select({ minute: goal.minute }).from(goal).where(inArray(goal.matchId, playedIds))
+  for (const gg of lgGoals) if (gg.minute != null) leagueBandCounts[bandOf(gg.minute)]!++
+}
+const leagueBandTotal = leagueBandCounts.reduce((s, x) => s + x, 0) || 1
+const leagueBandPct = leagueBandCounts.map((c) => Math.round((c / leagueBandTotal) * 100))
 const share1 = (h: ReturnType<typeof halfSplit>) => (h.scored1 + h.scored2 > 0 ? h.scored1 / (h.scored1 + h.scored2) : leagueShare1)
 const hShare1 = share1(homeHalf)
 const aShare1 = share1(awayHalf)
@@ -1293,6 +1303,7 @@ ${crossTable(away.name, awayTiming, home.name, homeTiming)}
 - ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.
 
 **Baseline da liga (1ºT/2ºT):** ${Math.round(leagueShare1 * 100)}% dos gols saem no 1º tempo / ${Math.round((1 - leagueShare1) * 100)}% no 2º (sobre ${played.length} jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).
+**Baseline por faixa de 15min (% dos gols da liga):** ${BANDS.map((b, i) => `${b}: ${leagueBandPct[i]}%`).join(" · ")}. É a curva NORMAL — compare o timing de cada time (bloco "Distribuição de gols por faixa") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.
 
 **1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de \`one_x_two_1t\`/\`one_x_two_2t\`): 1ºT casa/E/fora **${probs1t.home}/${probs1t.draw}/${probs1t.away}%** · 2ºT **${probs2t.home}/${probs2t.draw}/${probs2t.away}%**.
 São as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus \`over25_prob\`, \`btts_prob\` e \`one_x_two\` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.
@@ -1304,6 +1315,7 @@ São as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. 
 ## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (\`summary\`, \`analysis\`) em português.
 **Por time** — \`home\` (= ${home.name}) e \`away\` (= ${away.name}), cada um com:
 - \`xg\` (total), \`xg_1t\`, \`xg_2t\` e **\`xg_bands\`** = o xG nas 6 faixas de 15 min (\`"0-15"\`,\`"16-30"\`,\`"31-45"\`,\`"46-60"\`,\`"61-75"\`,\`"76-90"\`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar \`xg\` (e o 1ºT = 3 primeiras).
+  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em \`"76-90"\`). ${bothPush ? "**Os dois PRECISAM ir pra cima** → concentre MAIS massa nas faixas TARDIAS (\`\"61-75\"\`/\`\"76-90\"\`): fadiga + desespero simultâneos empurram o gol pro fim. Mas o lado que estiver PERSEGUINDO (vai perdendo) converte PIOR no fim (chute apressado) — não infle demais o \`\"76-90\"\` DELE além do baseline." : "Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim."} Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).
 - \`summary\` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.
 
 **Geral** (\`general\`) — agregados do jogo:
