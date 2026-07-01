@@ -175,13 +175,48 @@ if (output) {
   normBands(output.away)
 }
 
+// TRAVA DE COERÊNCIA (CoVe do pobre, determinística): o pick contradiz os PRÓPRIOS números do modelo?
+// A conta verifica — não o LLM se auto-avaliando. Só SINALIZA (não reescreve); a incoerência já custou
+// resultado no backtest (ex.: bancar 1x2 do lado menos provável). @feature MOD-004
+function coherenceWarnings(o: Prognosis): string[] {
+  const w: string[] = []
+  const b = o.best_bet, g = o.general
+  const sumXg = +((o.home?.xg ?? 0) + (o.away?.xg ?? 0)).toFixed(2)
+  if (g.total != null && Math.abs(g.total - sumXg) > 0.5) w.push(`total ${g.total} não bate com xg somado ${sumXg} (Δ ${Math.abs(g.total - sumXg).toFixed(2)})`)
+  if (b.market === "over_under" && b.line != null) {
+    if (b.selection === "over" && g.total != null && g.total <= b.line) w.push(`bancou OVER ${b.line} mas o total esperado é ${g.total} (≤ linha)`)
+    if (b.selection === "under" && g.total != null && g.total >= b.line + 0.5) w.push(`bancou UNDER ${b.line} mas o total esperado é ${g.total} (bem acima da linha)`)
+    if (b.line === 2.5 && b.selection === "over" && g.over25_prob < 0.5) w.push(`bancou OVER 2.5 mas over25_prob=${g.over25_prob} (<50%)`)
+    if (b.line === 2.5 && b.selection === "under" && g.over25_prob > 0.5) w.push(`bancou UNDER 2.5 mas over25_prob=${g.over25_prob} (>50%)`)
+  }
+  if (b.market === "1x2" && g.one_x_two) {
+    const sel = b.selection as "home" | "draw" | "away"
+    const mine = g.one_x_two[sel], max = Math.max(g.one_x_two.home, g.one_x_two.draw, g.one_x_two.away)
+    if (mine != null && mine < max - 0.05) w.push(`bancou 1x2 ${sel} (${mine}) que NÃO é o resultado mais provável do modelo (máx ${max}) — considere double_chance/draw_no_bet`)
+  }
+  if (b.market === "btts") {
+    if (b.selection === "yes" && g.btts_prob < 0.5) w.push(`bancou BTTS sim mas btts_prob=${g.btts_prob} (<50%)`)
+    if (b.selection === "no" && g.btts_prob > 0.5) w.push(`bancou BTTS não mas btts_prob=${g.btts_prob} (>50%)`)
+  }
+  if (b.market === "team_total" && b.team && b.line != null && b.selection === "over") {
+    const tx = b.team === "home" ? o.home?.xg : o.away?.xg
+    if (tx != null && tx < b.line) w.push(`bancou ${b.team} team_total over ${b.line} mas o xg do time é ${tx} (< linha)`)
+  }
+  return w
+}
+const coherence = output ? coherenceWarnings(output) : []
+if (coherence.length) {
+  console.error(`\n⚠️  COERÊNCIA (${coherence.length}) — o pick pode contradizer os próprios números do modelo:`)
+  for (const x of coherence) console.error(`   - ${x}`)
+} else if (output) console.error(`\n✓ coerência: best_bet consistente com os números do modelo`)
+
 // ---- Pasta por run ----
 const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) // 2026-06-29T05-58-17
 const runDir = new URL(`./output/${MATCH_ID}/${stamp}/`, import.meta.url)
 
 const dump = {
   meta: { matchId: MATCH_ID, model: MODEL, thinking: true, reasoningEffort: EFFORT, elapsedMs, at: new Date().toISOString(), actual },
-  output, usage, reasoningTokens, finishReason, warnings, providerMetadata,
+  output, coherence, usage, reasoningTokens, finishReason, warnings, providerMetadata,
   request: { body: (request as { body?: unknown })?.body ?? null },
   steps,
   response: { modelId: response?.modelId, id: response?.id, messages: response?.messages },
@@ -195,7 +230,7 @@ await Bun.write(new URL("prompt.md", runDir), prompt)
 await Bun.write(
   new URL("reasoning.json", runDir),
   JSON.stringify(
-    { match: `${home?.name} x ${away?.name}`, result: actual, best_bet: output?.best_bet ?? null, reasoningTokens, reasoning: reasoningText ?? null, hops: steps ?? [] },
+    { match: `${home?.name} x ${away?.name}`, result: actual, best_bet: output?.best_bet ?? null, coherence, reasoningTokens, reasoning: reasoningText ?? null, hops: steps ?? [] },
     null,
     2,
   ),

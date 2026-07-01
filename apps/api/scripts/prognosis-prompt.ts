@@ -1072,6 +1072,41 @@ function minuteNet(p: Row, teamId: string): number[] | null {
   }
   return out
 }
+// Momentum médio por FAIXA de 15 min (agregado dos últimos 5): net médio do time em cada janela. + = ele
+// costuma DOMINAR o fluxo ali, − = costuma ser DOMINADO. É a curva minuto-a-minuto digerida em 6 números
+// pro cruzamento — o código faz a conta que o LLM não faria (cruzar 90 pontos × 90). @feature MOD-004
+function momentumBands(teamId: string): number[] | null {
+  const curves = teamMatches(teamId).slice(-5).map((p) => minuteNet(p, teamId)).filter((c): c is number[] => c !== null)
+  if (!curves.length) return null
+  const sum = [0, 0, 0, 0, 0, 0]
+  const cnt = [0, 0, 0, 0, 0, 0]
+  for (const net of curves) {
+    for (let mm = 0; mm < net.length; mm++) {
+      const b = Math.min(5, Math.floor(mm / 15)) // minuto mm (0-based) → faixa; acréscimo cai na última
+      sum[b]! += net[mm]!
+      cnt[b]! += 1
+    }
+  }
+  return sum.map((s, i) => (cnt[i] ? +(s / cnt[i]!).toFixed(1) : 0))
+}
+// CRUZAMENTO DE MOMENTUM (a conclusão mastigada): pra cada janela, o quanto o mandante costuma dominar MENOS
+// o quanto o visitante costuma dominar. Índice > 0 = janela do mandante (ele pressiona E o outro afunda ali);
+// < 0 = janela do visitante. Entrega a JANELA DE GOL provável em vez de despejar as curvas cruas. @feature MOD-004
+function momentumCrossBlock(): string {
+  const hb = momentumBands(home.id)
+  const ab = momentumBands(away.id)
+  if (!hb || !ab) return "**Cruzamento de momentum:** sem trends suficientes nos últimos 5 (cobertura)."
+  const B6 = ["0-15", "16-30", "31-45", "46-60", "61-75", "76-90"]
+  const sg = (n: number) => (n > 0 ? `+${n}` : `${n}`)
+  const idx = hb.map((h, i) => +(h - ab[i]!).toFixed(1)) // >0 mandante · <0 visitante
+  let bh = 0, ba = 0
+  idx.forEach((v, i) => { if (v > idx[bh]!) bh = i; if (v < idx[ba]!) ba = i })
+  const rows = B6.map((b, i) => `| ${b} | ${sg(hb[i]!)} | ${sg(ab[i]!)} | ${sg(idx[i]!)} ${idx[i]! > 1.5 ? "🏠" : idx[i]! < -1.5 ? "✈️" : "≈"} |`)
+  const head =
+    `**Janela de gol provável pela curva de momentum** — ${home.name}: **${B6[bh]}** (domínio ${sg(idx[bh]!)}) · ${away.name}: **${B6[ba]}** (domínio ${sg(idx[ba]!)}). ` +
+    `Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.`
+  return `${head}\n\n| Faixa | ${home.name} domínio/j | ${away.name} domínio/j | cruzamento |\n|---|---|---|---|\n${rows.join("\n")}`
+}
 // Atividade DEFENSIVA por faixa de 15 min, dos trends por minuto: interceptações (100) + desarmes (78).
 // Alta numa faixa = time DEFENDENDO/sob pressão ali. Cruza com a curva ofensiva e os gols sofridos.
 const DEF_TYPES = new Set([100, 78])
@@ -1274,6 +1309,11 @@ Onde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o go
 ${crossTable(home.name, homeTiming, away.name, awayTiming)}
 
 ${crossTable(away.name, awayTiming, home.name, homeTiming)}
+
+### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)
+A curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.
+
+${momentumCrossBlock()}
 
 ## Base rate (ponto de partida — duas rotas independentes; devem convergir)
 **Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):
