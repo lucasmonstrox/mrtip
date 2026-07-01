@@ -1,7 +1,7 @@
 # Investigação — Mercados e motor do prompt de prognóstico (MOD-004)
 
 > Escopo: melhorar o pipeline VIVO de prognóstico (`apps/api/scripts/prognosis-prompt.ts` + `run-deepseek.ts`) cobrindo TODOS os mercados de aposta e o cruzamento fases-do-jogo × muitos/poucos gols.
-> Base externa: dossiê de pesquisa web (61 subagentes, 1138 buscas) em `scratchpad/dossie-mercados-prognostico.md` — usado como arqueologia externa já feita.
+> Base externa: dossiê de pesquisa web (61 subagentes, 1138 buscas) em [`mercados-e-motor-prompt-prognostico-dossie.md`](./mercados-e-motor-prompt-prognostico-dossie.md) (207 fontes com contexto) — usado como arqueologia externa já feita.
 > Arqueologia interna (esta sessão): 3 frentes read-only sobre registro de features, schema e blast radius.
 > Data: 2026-07-01.
 
@@ -199,4 +199,4 @@ O dossiê é forte, mas foi produzido cego às decisões internas. Cruzando com 
 - DataGolf — blend modelo/mercado ~45/55; Pinnacle — corners como "value alternativo" e devig.
 - Ötting et al. (arXiv 2211.06052) — "Gambling on Momentum" (momentum como ruído, não sinal robusto).
 
-_(Lista completa de URLs no dossiê `scratchpad/dossie-mercados-prognostico.md`, §FONTES WEB.)_
+_(**Lista completa: 207 URLs** com título e contexto no dossiê commitado [`mercados-e-motor-prompt-prognostico-dossie.md`](./mercados-e-motor-prompt-prognostico-dossie.md), §FONTES WEB — agrupadas por mercado, fase temporal, contexto e tema transversal.)_
