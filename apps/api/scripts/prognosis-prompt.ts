@@ -127,6 +127,51 @@ const ratingRows = ratingRowsAll.filter((r) => r.rating != null && r.date < CUTO
 // da nota (rating 118), que é o método padrão da indústria.
 const matchMaxRating = new Map<string, number>()
 for (const r of ratingRows) matchMaxRating.set(r.matchId, Math.max(matchMaxRating.get(r.matchId) ?? 0, r.rating!))
+
+// Stats DETALHADAS por jogador (o DOSSIÊ INDIVIDUAL): SoT, key passes, dribles, desarmes, interceptações,
+// duelos, cruzamentos e minutos — de TODOS os jogadores dos 2 times, pré-cutoff, só jogos que jogou (min>0).
+// É o mesmo dado que o bloco de desfalque usa, mas para os TITULARES — o perfil de criação/finalização/defesa
+// que a nota sozinha não entrega, pra o LLM raciocinar por jogador. @feature MOD-004
+const playerStatRowsAll = await db
+  .select({ playerId: lineupPlayer.playerId, date: match.date, mins: lineupPlayer.minutesPlayed, sot: lineupPlayer.shotsOnTarget, kp: lineupPlayer.keyPasses, tkl: lineupPlayer.tackles, intc: lineupPlayer.interceptions, duel: lineupPlayer.duelsWon, cross: lineupPlayer.crossesAccurate, drib: lineupPlayer.dribblesSuccessful })
+  .from(lineupPlayer)
+  .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+  .innerJoin(match, eq(match.id, lineup.matchId))
+  .where(inArray(lineup.teamId, [home.id, away.id]))
+type PlayerAgg = { g: number; sot: number; kp: number; tkl: number; intc: number; duel: number; cross: number; drib: number; mins: number }
+const playerAgg = new Map<string, PlayerAgg>()
+for (const r of playerStatRowsAll) {
+  if (r.date >= CUTOFF || r.date < seasonStart || (r.mins ?? 0) <= 0) continue
+  let e = playerAgg.get(r.playerId)
+  if (!e) { e = { g: 0, sot: 0, kp: 0, tkl: 0, intc: 0, duel: 0, cross: 0, drib: 0, mins: 0 }; playerAgg.set(r.playerId, e) }
+  e.g += 1
+  e.sot += r.sot ?? 0; e.kp += r.kp ?? 0; e.tkl += r.tkl ?? 0; e.intc += r.intc ?? 0
+  e.duel += r.duel ?? 0; e.cross += r.cross ?? 0; e.drib += r.drib ?? 0; e.mins += r.mins ?? 0
+}
+// Contribuição direta G+A por jogador (gols exceto own + assistências), nos jogos pré-cutoff dos 2 times.
+const gaMatchIds = [...new Set([...teamMatches(home.id), ...teamMatches(away.id), ...cupMatchesOf(home.id), ...cupMatchesOf(away.id)].map((p) => p.id))]
+const gaGoalRows = gaMatchIds.length
+  ? await db.select({ playerId: goal.playerId, assistId: goal.assistId, type: goal.type }).from(goal).where(inArray(goal.matchId, gaMatchIds))
+  : []
+const playerGA = new Map<string, { g: number; a: number }>()
+for (const gg of gaGoalRows) {
+  if (gg.playerId && gg.type !== "own") { const e = playerGA.get(gg.playerId) ?? { g: 0, a: 0 }; e.g += 1; playerGA.set(gg.playerId, e) }
+  if (gg.assistId) { const e = playerGA.get(gg.assistId) ?? { g: 0, a: 0 }; e.a += 1; playerGA.set(gg.assistId, e) }
+}
+// Linha de perfil estatístico de um jogador (per-jogo) — G+A, criação, finalização, drible, volume defensivo.
+function playerStatLine(playerId: string): string {
+  const s = playerAgg.get(playerId)
+  const ga = playerGA.get(playerId)
+  if (!s || s.g === 0) return ""
+  const pg = (v: number) => +(v / s.g).toFixed(2)
+  const parts: string[] = []
+  if (ga && ga.g + ga.a > 0) parts.push(`**${ga.g}G+${ga.a}A**`)
+  parts.push(`${pg(s.kp)} KP/j`, `${pg(s.sot)} SoT/j`, `${pg(s.drib)} dribles/j`)
+  parts.push(`def: ${pg(s.tkl)} desarme + ${pg(s.intc)} int + ${pg(s.duel)} duelo/j`)
+  if (s.cross > 0) parts.push(`${pg(s.cross)} cruz/j`)
+  parts.push(`~${Math.round(s.mins / s.g)} min/j`)
+  return `\n    ↳ ${parts.join(" · ")}`
+}
 // Bloco de QUALIDADE INDIVIDUAL: nota média do time + top jogadores por nota da season, cada um com season ×
 // forma (últimos 5, seta ↑/↓ vs season) e "nº MOTM" (maior nota do jogo entre os 22, derivado da nota). Marca ⚠️ quem está
 // fora (cruza com desfalques). Inclui copa. É o piso de qualidade / "camisa" pra o modelo não rebaixar um
@@ -135,10 +180,10 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
   const rows = ratingRows.filter((r) => r.teamId === teamId)
   if (rows.length < 5) return "- (sem notas suficientes)"
   const teamAvg = +(rows.reduce((s, r) => s + (r.rating ?? 0), 0) / rows.length).toFixed(2)
-  const byPlayer = new Map<string, { name: string; rs: { date: string; rating: number; matchId: string }[] }>()
+  const byPlayer = new Map<string, { playerId: string; name: string; rs: { date: string; rating: number; matchId: string }[] }>()
   for (const r of rows) {
     let e = byPlayer.get(r.playerId)
-    if (!e) { e = { name: r.name, rs: [] }; byPlayer.set(r.playerId, e) }
+    if (!e) { e = { playerId: r.playerId, name: r.name, rs: [] }; byPlayer.set(r.playerId, e) }
     e.rs.push({ date: r.date, rating: r.rating!, matchId: r.matchId })
   }
   const arrow = (f: number, s: number) => (f > s + 0.15 ? "↑" : f < s - 0.15 ? "↓" : "=")
@@ -171,7 +216,7 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
         : "➡️ estável"
       const seqStr = cells.map((v) => (v === null ? "–" : v)).join("→")
       const motm = p.rs.filter((x) => x.rating >= (matchMaxRating.get(x.matchId) ?? 99)).length
-      return { name: p.name, season, forma, seqStr, trend, absent, n: sorted.length, motm }
+      return { playerId: p.playerId, name: p.name, season, forma, seqStr, trend, absent, n: sorted.length, motm }
     })
     .sort((a, b) => b.season - a.season)
     .slice(0, 6)
@@ -179,7 +224,7 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
     const flag = injured.has(p.name) ? "⚠️(fora) " : ""
     const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
     const absStr = p.absent > 0 ? ` · **faltou ${p.absent}/${teamGames.length}**` : ""
-    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5 do time: ${p.seqStr} ${p.trend})${absStr}${motmStr} · ${p.n}j`
+    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5 do time: ${p.seqStr} ${p.trend})${absStr}${motmStr} · ${p.n}j${playerStatLine(p.playerId)}`
   })
   return `- **Nota média do time (todas comps): ${teamAvg}**\n${lines.join("\n")}`
 }
