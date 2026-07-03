@@ -1,0 +1,871 @@
+{
+  "matchId": "e48a0228-e381-42d3-8ce9-c1a84c0009c0",
+  "homeName": "Liverpool",
+  "awayName": "Brentford",
+  "actual": "Liverpool 1-1 Brentford (HT 0-0)",
+  "ftH": 1,
+  "ftA": 1,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Liverpool x Brentford\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: Anfield, Liverpool (grass)\n- Clima: scattered clouds · 20.3°C (sens. 19.6°C) · vento 3.7 m/s · umidade 49% · nuvens 40% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Liverpool 9 dias (último: liga, 2026-05-15) · Brentford 7 dias (último: liga, 2026-05-17)\n- Viagem do visitante: ~282 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- Liverpool: 5º, 59 pts · Brentford: 9º, 52 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Liverpool: 5º, 59 pts, 1 jogo(s) restante(s) (máx possível 62 pts)\n  - já SEGURO do rebaixamento.\n  - vaga de Champions praticamente garantida.\n  - → motivação: **baixa** — NÃO precisa lutar — Champions praticamente garantida\n  - disputa pela vaga (5º): pro Liverpool **um empate basta** (vai a 60, fora do alcance) — só perde a vaga se PERDER. Quem ainda ameaça → AFC Bournemouth (6º, 56 pts, máx 59) empata em pontos mas está **-6 de saldo** (+4 vs +10) — só passa se o Liverpool perder por muito E ele vencer por muito (virar 6)\n  - Brentford: 9º, 52 pts, 1 jogo(s) restante(s) (máx possível 55 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Liverpool (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **62 marcados / 52 sofridos** em 37j · média **1.68 marca / 1.41 sofre** por jogo\n- **Em casa (18j): marca 1.83 / sofre 1.06** (33 gols) · por tempo: 1ºT 0.65/0.46 · 2ºT 1.03/0.95\n- **Finalização: 169 SoT (4.57/j · casa 5.11/j) · conv 36%** (aberta, −1 pên) · sofre 4.11 SoT/j (adv 32%) · 12.08 KP/j\n- **Volume: 15.3 chutes/j (9.9 na área) · 2.7 big chances/j** · posse 59.2%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 59.3/42.3 · chutes pra fora 5.8/4.2 · bloqueados 4.9/3.2 · de fora da área 5.4/4\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 43.6/37.6 · chutes pra fora 4.6/4.2 · bloqueados 3/2.4 · de fora da área 5/3.4\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.88**\n  - **Virgil van Dijk ** nota **7.09** (season) · forma 7.04= (últ.5 do time: 7.1→6.6→6.6→6.7→8.2 📈 subindo) · 2× MOTM · 41j\n    ↳ **6G+0A** · gols aos 24',45',52',61',90',90' — mais no 2ºT, 2 tardios (76'+) · 0.27 KP/j (últ.5: 0↓) · 0.39 SoT/j (últ.5: 0.8↑) · 0.07 dribles/j · def: 0.56 desarme + 0.73 int + 5.41 duelo/j · ~90 min/j\n  - **Dominik Szoboszlai** nota **7.4** (season) · forma 7.3= (últ.5 do time: 6.9→6.4→8.4→7.3→7.5 📈 subindo) · 7× MOTM · 39j\n    ↳ **8G+7A** · gols aos 9',18',47',56',74',80',80',83' — mais no 2ºT, 3 tardios (76'+) · 2.15 KP/j (últ.5: 2.8↑) · 0.64 SoT/j (últ.5: 0.6=) · 0.79 dribles/j · def: 1.49 desarme + 0.9 int + 3.72 duelo/j · 1.82 cruz/j · ~90 min/j\n  - **Ibrahima Konaté** nota **6.89** (season) · forma 6.78= (últ.5 do time: 7.3→7.4→6.6→6.5→6.1 📉 caindo) · 39j\n    ↳ **1G+0A** · gols aos 90' — mais no 2ºT · 0.18 KP/j (últ.5: 0↓) · 0.1 SoT/j (últ.5: 0↓) · 0.13 dribles/j · def: 1.36 desarme + 0.79 int + 5.79 duelo/j · 0.03 cruz/j · ~83 min/j\n  - **Ryan Gravenberch** nota **7.03** (season) · forma 6.82↓ (últ.5 do time: 6.7→6.3→7.2→7.4→6.5 📈 subindo) · 2× MOTM · 38j\n    ↳ **5G+4A** · gols aos 6',10',35',41',58' · 0.82 KP/j (últ.5: 0.8=) · 0.37 SoT/j (últ.5: 0.6↑) · 0.84 dribles/j · def: 1.55 desarme + 1.32 int + 4.26 duelo/j · 0.03 cruz/j · ~81 min/j\n  - **Cody Gakpo** nota **7.06** (season) · forma 6.86↓ (últ.5 do time: 7.9→6.6→7.1→6.5→6.2 📉 caindo) · 3× MOTM · 38j\n    ↳ **7G+5A** · gols aos 49',56',63',70',78',90',90' — mais no 2ºT, 3 tardios (76'+) · 1.46 KP/j (últ.5: 1.2=) · 0.59 SoT/j (últ.5: 1↑) · 0.9 dribles/j · def: 0.74 desarme + 0.36 int + 4.51 duelo/j · 0.33 cruz/j · ~76 min/j\n  - **Alexis Mac Allister** nota **6.87** (season) · forma 6.88= (últ.5 do time: 6.5→7.7→7→6.3→6.9 📉 caindo) · 1× MOTM · 41j\n    ↳ **2G+6A** · gols aos 43',90' · 0.93 KP/j (últ.5: 1.4↑) · 0.32 SoT/j (últ.5: 0↓) · 0.27 dribles/j · def: 1.54 desarme + 0.63 int + 3.1 duelo/j · 0.22 cruz/j · ~71 min/j\n  - **Florian Wirtz** nota **7.02** (season) · forma 6.85↓ (últ.5 do time: 7→7.2→7→–→6.2 📉 caindo) · **faltou 1/5** · 3× MOTM · 36j\n    ↳ **6G+4A** · gols aos 42',42',57',67',84',90' — mais no 2ºT, 2 tardios (76'+) · 1.78 KP/j (últ.5: 2=) · 0.53 SoT/j (últ.5: 0.2↓) · 1.19 dribles/j · def: 1 desarme + 0.31 int + 2.94 duelo/j · 0.14 cruz/j · ~71 min/j\n  - **Milos Kerkez** nota **6.72** (season) · forma 6.4↓ (últ.5 do time: –→–→6.5→6.4→6.3 ➡️ estável) · **faltou 2/5** · 35j\n    ↳ **2G+2A** · gols aos 30',45' · 0.78 KP/j (últ.5: 0.4↓) · 0.08 SoT/j (últ.5: 0↓) · 0.35 dribles/j · def: 1.3 desarme + 0.51 int + 3.38 duelo/j · 0.49 cruz/j · ~68 min/j\n  - **Alisson** nota **6.84** (season) · forma 6.84= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 27j\n    ↳ 0 KP/j (últ.5: 0=) · 0 SoT/j (últ.5: 0=) · 0.04 dribles/j · def: 0 desarme + 0 int + 0.44 duelo/j · ~90 min/j\n  - **Mohamed Salah** nota **6.9** (season) · forma 6.7↓ (últ.5 do time: 7→6.6→–→–→6.5 📉 caindo) · **faltou 2/5** · 1× MOTM · 29j\n    ↳ **9G+7A** · gols aos 29',40',45',53',68',83',89',90',90' — mais no 2ºT, 4 tardios (76'+) · 1.86 KP/j (últ.5: 0.8↓) · 0.76 SoT/j (últ.5: 1↑) · 0.79 dribles/j · def: 0.69 desarme + 0.14 int + 2.34 duelo/j · 0.76 cruz/j · ~79 min/j\n  - **Curtis Jones** nota **6.9** (season) · forma 7.02= (últ.5 do time: 7.3→6.9→6.6→7→7.3 ➡️ estável) · 1× MOTM · 38j\n    ↳ **2G+3A** · gols aos 42',74' · 0.71 KP/j (últ.5: 0.4↓) · 0.21 SoT/j (últ.5: 0↓) · 0.68 dribles/j · def: 1.18 desarme + 0.58 int + 3.08 duelo/j · 0.03 cruz/j · ~59 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DEDVV** (7pts) · **10 feitos / 10 sofridos** · marca 2↑ / sofre 2↑ g/j · SoT 4.4 feito / 5.8 sofrido\n- **Consistência: MARCOU em 33/37** (casa 16/18 · fora 17/19) · não-marcou 4 · clean sheet 10 · BTTS 25/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Everton** (fora · **Vitória 2-1**, HT 1-0) — 6-4 SoT · posse 54%/56% (1ºT/2ºT) · adv 10º · você 5º briga-top · seu fora até ali 1.4 marca/1.6 sofre\n- vs **Crystal Palace** (casa · **Vitória 3-1**, HT 2-0) — 3-7 SoT · posse 50%/58% (1ºT/2ºT) · adv 13º · você 5º briga-top · seu casa até ali 1.8 marca/1.1 sofre\n- @ **Manchester United** (fora · **Derrota 2-3**, HT 0-2) — 5-6 SoT · posse 55%/59% (1ºT/2ºT) · adv 3º briga-top · você 4º briga-top · seu fora até ali 1.5 marca/1.5 sofre\n- vs **Chelsea** (casa · **Empate 1-1**, HT 1-1) — 3-3 SoT · posse 56%/50% (1ºT/2ºT) · adv 9º salvo · você 4º briga-top · seu casa até ali 1.9 marca/1.1 sofre\n- @ **Aston Villa** (fora · **Derrota 2-4**, HT 0-1) — 5-9 SoT · posse 55%/54% (1ºT/2ºT) · adv 5º Eur-gar · você 4º Eur-gar · seu fora até ali 1.5 marca/1.6 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Everton (FORA · V 2-1) — min 1→102:\n    📈 pressão (net/min): 1'-15' [0 0 0 -1 0 -5 -3 -2 +1 +2 -1 -1 -1 -2 -2] · 16'-30' [-3 -3 -3 -1 -2 -2 +2 +2 +2 -6 -6 -10 -10 -12 -2] · 31'-45' [0 0 0 +1 +1 -1 -3 -3 -3 +2 +1 +5 +5 +6 +7] · ‖INTERVALO‖ · 46'-60' [+6 +7 +6 +4 +4 +3 +2 0 +1 -4 -4 -4 -4 -1 -2] · 61'-75' [-1 +2 +1 0 +2 -1 -1 -2 -6 -5 -5 -5 -5 -3 -6] · 76'-90' [-5 -3 -3 -2 -3 0 0 0 +2 +2 +2 +2 +2 +1 0] · 91'+ [0 0 0 0 0 -1 +1 +3 +3 +4 +8 +5]\n    ⚽ gols: 29'✓ 54'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **1** · 31'-45' **8** ‖ 46'-60' **4** · 61'-75' **2** · 76'-90' **4**\n  - vs Crystal Palace (CASA · V 3-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -2 -4 0 -1 -1 +5 +5 +5 +2 -3 -10 -10 -7 -4] · 16'-30' [-2 -2 -4 -3 -2 -3 -2 -4 -2 -2 -1 -1 -1 +1 +1] · 31'-45' [+3 +5 +3 +2 +2 +8 +7 +8 +4 +4 -1 -1 -2 -2 -3] · ‖INTERVALO‖ · 46'-60' [-6 -3 -4 -3 0 -3 -2 +1 +1 +1 +4 +2 +2 +2 +2] · 61'-75' [+3 +2 +3 +2 +2 +2 +4 +6 +6 +6 +2 +1 -6 -6 -6] · 76'-90' [-6 -4 -3 -2 -1 -1 -24 -16 -14 -14 -9 -9 -9 -4 -4] · 91'+ [-4 -3 -3 -3 -3 +1 +2]\n    ⚽ gols: 35'✓ 40'✓ 71'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **2** · 61'-75' **3** · 76'-90' **3**\n  - @ Manchester United (FORA · D 2-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 -1 -1 0 -3 -7 -6 -4 -4 +3 +2 +1 +2 -5 -5] · 16'-30' [-5 -5 +1 +2 +5 +5 +5 +5 +7 +6 +4 +3 +3 +3 +2] · 31'-45' [-1 -2 -1 -1 -2 0 0 +1 +1 -1 +4 0 -1 -2 -1] · ‖INTERVALO‖ · 46'-60' [+1 -4 -3 +1 +2 +2 +2 +1 0 0 +5 +2 +1 -1 0] · 61'-75' [-1 -2 0 +5 +5 +3 +2 +3 +14 +11 +8 +5 -4 -4 -2] · 76'-90' [-1 -2 -4 -3 -1 0 +1 +3 +8 +9 +6 +5 +4 +5 +3] · 91'+ [+2 +2 0 +3 +3 +3]\n    ⚽ gols: 6'✗ 14'✗ 47'✓ 56'✓ 77'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **0** ‖ 46'-60' **6** · 61'-75' **1** · 76'-90' **3**\n  - vs Chelsea (CASA · E 1-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -1 -2 -1 -1 +2 +2 +1 -1 -2 0 +4 +6 +5 +5] · 16'-30' [+3 +3 +3 +2 0 0 0 +1 +1 +1 +1 -2 -6 -6 -8] · 31'-45' [-6 -8 -8 -6 -4 -5 -5 -8 -9 -10 -10 -5 -3 -1 -1] · ‖INTERVALO‖ · 46'-60' [0 +3 +3 -2 -13 -10 -6 -5 -5 -6 -1 -1 -1 +2 +4] · 61'-75' [+3 +4 +4 +2 +2 0 0 +1 +2 +6 +5 +6 +5 +6 +4] · 76'-90' [+1 -1 +1 +5 +5 +3 +2 +2 +3 +2 +3 +1 0 -4 -2] · 91'+ [-2 -2 -2 +2 -1 -3 0]\n    ⚽ gols: 6'✓ 35'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **1** · 31'-45' **2** ‖ 46'-60' **4** · 61'-75' **3** · 76'-90' **5**\n  - @ Aston Villa (FORA · D 2-4) — min 1→98:\n    📈 pressão (net/min): 1'-15' [-2 -4 -3 -2 -2 0 +1 0 0 0 -3 -2 -2 -5 -4] · 16'-30' [-4 -3 -1 0 +1 +2 +2 +5 +4 +2 +2 +1 +2 +3 +5] · 31'-45' [+5 +8 +6 +7 +7 +8 +8 +5 +6 0 0 -3 -3 -3 -2] · ‖INTERVALO‖ · 46'-60' [-3 -4 -4 -3 -1 +2 +5 +8 +6 +4 +3 +3 +1 -2 -6] · 61'-75' [-2 -3 -2 -1 -1 -6 -4 -3 -3 -6 -6 -5 -5 -15 -10] · 76'-90' [-10 -9 -4 +1 +4 -1 +1 +5 +5 +4 +1 0 +4 -1 -1] · 91'+ [0 +4 +9 +2 +1 -2 0 -1]\n    ⚽ gols: 42'✗ 52'✓ 57'✗ 73'✗ 89'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **3** · 31'-45' **2** ‖ 46'-60' **3** · 61'-75' **3** · 76'-90' **4**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.14 · 31-45: 0.41 · 46-60: 0.32 · 61-75: 0.16 · 76-90: 0.54\n- Sofre por faixa (/j): 0-15: 0.19 · 16-30: 0.08 · 31-45: 0.19 · 46-60: 0.24 · 61-75: 0.24 · 76-90: 0.46\n- 1ºT: marca 24 / sofre 17 (totais na temporada)\n\n### Desfalques de Liverpool neste jogo\n- **Hugo Ekitiké** (Unknown Injury) — 11 gols + 4 assists até a data; season: **18% dos gols** do time (24% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.68 g/j (28j) vs sem ele 1.67 g/j (9j) = −1%; finaliza **0.68 SoT/jogo** (time: 4.86 SoT/j com ele vs 3.67 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.4 desarmes/j · 3.3 duelos ganhos/j · 0.1 cruz. certos/j · 1.4 dribles certos/j · 0.8 key passes/j\n- **Conor Bradley** (Knee Injury) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 1.47 g/j (15j) vs sem ele 1.82 g/j (22j) = +24%; finaliza **0 SoT/jogo** (time: 3.6 SoT/j com ele vs 5.23 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~13% do time) · 1.3 desarmes/j · 4.1 duelos ganhos/j · 0.3 cruz. certos/j · 0.5 dribles certos/j · 0.3 key passes/j\n- **Giovanni Leoni** (Cruciate Ligament Tear) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.68 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **S. Bajcetic Maquieira** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.68 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Brentford (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **54 marcados / 51 sofridos** em 37j · média **1.46 marca / 1.38 sofre** por jogo\n- **Fora (18j): marca 1.17 / sofre 1.67** (21 gols) · por tempo: 1ºT 0.65/0.65 · 2ºT 0.81/0.73\n- **Finalização: 145 SoT (3.92/j · fora 3.72/j) · conv 32%** (aberta, −8 pên) · sofre 4.3 SoT/j (adv 29%) · 8.08 KP/j\n- **Volume: 10.6 chutes/j (8 na área) · 3.1 big chances/j** · posse 47.8%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 46.2/54.6 · chutes pra fora 4.2/4.6 · bloqueados 2.5/4.2 · de fora da área 2.6/4.8\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 54.2/45.2 · chutes pra fora 4.8/6.2 · bloqueados 2.8/4 · de fora da área 3.2/5.6\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.81**\n  - **Michael Kayode** nota **6.78** (season) · forma 6.52↓ (últ.5 do time: 7.3→6.3→6.5→6.1→6.4 📉 caindo) · 1× MOTM · 43j\n    ↳ **1G+1A** · gols aos 22' · 0.88 KP/j (últ.5: 1=) · 0.14 SoT/j (últ.5: 0.2↑) · 1.4 dribles/j · def: 1.67 desarme + 1 int + 5.47 duelo/j · 0.37 cruz/j · ~83 min/j\n  - **Caoimhín Kelleher** nota **6.88** (season) · forma 6.88= (últ.5 do time: 6.6→6.6→7.5→7.8→5.9 📈 subindo) · 37j\n    ↳ 0.08 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0.08 dribles/j · def: 0.03 desarme + 0.03 int + 0.43 duelo/j · ~91 min/j\n  - **Igor Thiago** nota **7.1** (season) · forma 6.68↓ (últ.5 do time: 6.9→6.3→6.9→6.9→6.4 ➡️ estável) · 5× MOTM · 39j\n    ↳ **25G+1A** · gols aos 3',8',11',20',25',28',29',30',37',43'… — 9 tardios (76'+) · 0.62 KP/j (últ.5: 0.8↑) · 1.18 SoT/j (últ.5: 0.8↓) · 0.77 dribles/j · def: 1.05 desarme + 0.33 int + 5.36 duelo/j · 0.18 cruz/j · ~86 min/j\n  - **Nathan Collins** nota **6.89** (season) · forma 6.64↓ (últ.5 do time: 6.8→6.2→6.8→6.3→7.1 ➡️ estável) · 1× MOTM · 40j\n    ↳ **2G+3A** · gols aos 50',75' — mais no 2ºT · 0.35 KP/j (últ.5: 0.2↓) · 0.2 SoT/j (últ.5: 0↓) · 0.23 dribles/j · def: 0.78 desarme + 1 int + 4.08 duelo/j · 0.05 cruz/j · ~83 min/j\n  - **Sepp van den Berg** nota **6.9** (season) · forma 7.17↑ (últ.5 do time: 7.1→7→7.1→–→7.5 📈 subindo) · **faltou 1/5** · 37j\n    ↳ **0G+2A** · 0.19 KP/j (últ.5: 0.4↑) · 0.22 SoT/j (últ.5: 0.2=) · 0.03 dribles/j · def: 0.68 desarme + 0.92 int + 5.24 duelo/j · ~85 min/j\n  - **Yegor Yarmolyuk** nota **6.7** (season) · forma 6.98↑ (últ.5 do time: 6.7→7→7.2→6.9→7.1 ➡️ estável) · 41j\n    ↳ **1G+3A** · gols aos 73' — mais no 2ºT · 0.43 KP/j (últ.5: 0.2↓) · 0.1 SoT/j (últ.5: 0↓) · 0.5 dribles/j · def: 1.86 desarme + 0.76 int + 3.45 duelo/j · 0.21 cruz/j · ~71 min/j\n  - **Kevin Schade** nota **6.79** (season) · forma 6.48↓ (últ.5 do time: 7.2→6.3→6.4→6.3→6.2 📉 caindo) · 2× MOTM · 38j\n    ↳ **7G+3A** · gols aos 7',34',35',45',51',56',90' · 0.89 KP/j (últ.5: 0.6↓) · 0.61 SoT/j (últ.5: 0.2↓) · 0.53 dribles/j · def: 1.21 desarme + 0.53 int + 5.42 duelo/j · 0.16 cruz/j · ~78 min/j\n  - **Mathias Jensen** nota **6.97** (season) · forma 6.92= (últ.5 do time: 7.2→7.7→7.2→5.9→6.6 📉 caindo) · 3× MOTM · 41j\n    ↳ **5G+3A** · gols aos 22',64',87',90',90' — mais no 2ºT, 3 tardios (76'+) · 1.05 KP/j (últ.5: 1.4↑) · 0.29 SoT/j (últ.5: 0.2↓) · 0.59 dribles/j · def: 1.24 desarme + 0.56 int + 2.34 duelo/j · 1.17 cruz/j · ~65 min/j\n  - **Dango Ouattara** nota **6.85** (season) · forma 7.18↑ (últ.5 do time: 7.1→6.3→7→7→8.5 📈 subindo) · 4× MOTM · 36j\n    ↳ **7G+3A** · gols aos 5',12',40',45',85',88',90' — 3 tardios (76'+) · 0.86 KP/j (últ.5: 1=) · 0.56 SoT/j (últ.5: 1.4↑) · 0.78 dribles/j · def: 0.75 desarme + 0.64 int + 4.11 duelo/j · 0.61 cruz/j · ~69 min/j\n  - **Mikkel Damsgaard** nota **6.89** (season) · forma 7.06↑ (últ.5 do time: 6.8→7.7→7.8→6→7 📉 caindo) · 2× MOTM · 36j\n    ↳ **4G+4A** · gols aos 9',20',82',90' — 2 tardios (76'+) · 1.31 KP/j (últ.5: 1.6↑) · 0.31 SoT/j (últ.5: 0.4↑) · 0.61 dribles/j · def: 1.69 desarme + 0.75 int + 3.44 duelo/j · 0.78 cruz/j · ~66 min/j\n  - **Keane Lewis-Potter** nota **6.75** (season) · forma 6.58↓ (últ.5 do time: 6.8→6.2→6.9→6.5→6.5 ➡️ estável) · 1× MOTM · 38j\n    ↳ **5G+4A** · gols aos 26',27',63',71',83' — mais no 2ºT · 0.6 KP/j (últ.5: 0.6=) · 0.35 SoT/j (últ.5: 0.4=) · 0.5 dribles/j · def: 0.63 desarme + 0.3 int + 2.4 duelo/j · 0.55 cruz/j · ~56 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EDVDE** (5pts) · **6 feitos / 7 sofridos** · marca 1.2↓ / sofre 1.4= g/j · SoT 3.8 feito / 5 sofrido\n- **Consistência: MARCOU em 25/37** (casa 14/19 · fora 11/18) · não-marcou 12 · clean sheet 10 · BTTS 19/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Fulham** (casa · **Empate 0-0**, HT 0-0) — 4-0 SoT · posse 50%/45% (1ºT/2ºT) · adv 12º · você 7º briga-top · seu casa até ali 1.8 marca/1.2 sofre\n- @ **Manchester United** (fora · **Derrota 1-2**, HT 0-2) — 4-6 SoT · posse 47%/53% (1ºT/2ºT) · adv 3º briga-top · você 9º · seu fora até ali 1.3 marca/1.6 sofre\n- vs **West Ham United** (casa · **Vitória 3-0**, HT 1-0) — 6-4 SoT · posse 50%/47% (1ºT/2ºT) · adv 17º briga-Z · você 9º salvo · seu casa até ali 1.6 marca/1.1 sofre\n- @ **Manchester City** (fora · **Derrota 0-3**, HT 0-0) — 2-10 SoT · posse 36%/37% (1ºT/2ºT) · adv 2º Eur-gar · você 7º briga-top · seu fora até ali 1.2 marca/1.6 sofre\n- vs **Crystal Palace** (casa · **Empate 2-2**, HT 1-1) — 3-5 SoT · posse 52%/55% (1ºT/2ºT) · adv 15º salvo/s-alvo · você 8º salvo · seu casa até ali 1.7 marca/1.1 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Fulham (CASA · E 0-0) — min 1→95:\n    📈 pressão (net/min): 1'-15' [+1 +1 +1 0 0 +1 +1 +2 +1 +4 +2 -1 +3 +2 +3] · 16'-30' [+6 +6 +6 +4 +1 +1 +5 +5 +4 +5 +2 0 -3 -3 -6] · 31'-45' [-7 -6 -4 -3 -10 -7 -6 -4 -2 +2 +1 +2 0 0 -1] · ‖INTERVALO‖ · 46'-60' [+2 +1 +2 +2 0 -1 -2 -1 -1 -2 -2 +2 +2 +1 +1] · 61'-75' [+3 +5 +4 +2 +5 +5 +8 +6 +8 +5 +5 +4 +4 +2 +5] · 76'-90' [+5 +4 +1 +1 +1 +2 +1 -1 +1 +1 +2 -1 0 0 +4] · 91'+ [+3 +3 +7 +5 +3]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **5** · 31'-45' **1** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **3**\n  - @ Manchester United (FORA · D 1-2) — min 1→95:\n    📈 pressão (net/min): 1'-15' [0 -4 -10 -9 -9 -7 -5 -7 -8 -6 -4 -8 -5 +1 +1] · 16'-30' [+2 +2 +4 +9 +10 +7 +7 +5 +2 +6 +2 +4 +5 +5 +1] · 31'-45' [-1 -1 -3 +1 +2 +4 +3 +6 +13 +14 +10 +6 +5 0 +3] · ‖INTERVALO‖ · 46'-60' [+2 +2 +2 -1 -5 -3 -3 -4 0 +2 +2 +2 -1 +2 +4] · 61'-75' [+4 +3 +5 +4 +4 +2 +9 +9 +9 +9 +9 +9 +9 +9 +6] · 76'-90' [0 -1 0 +4 +7 +8 +8 +11 +8 +4 +6 +8 +5 +5 +4] · 91'+ [+8 +9 +7 +7 +5]\n    ⚽ gols: 11'✗ 43'✗ 87'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **2** · 31'-45' **5** ‖ 46'-60' **2** · 61'-75' **4** · 76'-90' **5**\n  - vs West Ham United (CASA · V 3-0) — min 1→98:\n    📈 pressão (net/min): 1'-15' [+1 0 +3 +3 +3 +1 -1 -2 -1 +1 +1 0 0 0 +4] · 16'-30' [+3 +1 -5 -6 -5 -8 -10 -8 -5 -2 -2 -3 -3 -2 +2] · 31'-45' [-1 -1 0 0 +1 +1 +5 +2 +2 +3 +3 +2 0 -1 -1] · ‖INTERVALO‖ · 46'-60' [-4 -5 -2 -1 -3 -1 +2 +1 +1 +5 +2 -1 -2 -2 -1] · 61'-75' [-1 +6 +7 +8 +8 +3 +1 +3 +2 +1 +1 0 +6 +4 +4] · 76'-90' [+1 +1 0 +1 -1 -1 -1 +3 +3 +3 +2 +2 +1 +1 +3] · 91'+ [+2 +2 +1 +3 +3 +1 +2 0]\n    ⚽ gols: 15'✓ 54'✓ 82'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **4** · 31'-45' **2** ‖ 46'-60' **4** · 61'-75' **6** · 76'-90' **4**\n  - @ Manchester City (FORA · D 0-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 -1 -7 -7 -3 -1 -1 -2 -2 -1 -1 +1 +3 +2] · 16'-30' [+5 +3 -2 -3 -5 -6 -3 0 -1 -6 -5 -11 -10 -15 -17] · 31'-45' [-15 -10 -7 -7 -8 -9 -6 -6 -4 -5 -8 -6 -5 -4 -6] · ‖INTERVALO‖ · 46'-60' [-8 -8 -6 -8 -5 -4 +1 0 0 -1 +6 +5 +5 -1 -1] · 61'-75' [-3 -2 +1 -1 -4 -5 -7 -12 -8 -6 -4 -1 0 -4 -4] · 76'-90' [-4 -4 -7 -5 -4 -4 -6 -10 -7 -5 -6 -5 -3 -3 -3] · 91'+ [-3 -1 -4 -1 +3 +5]\n    ⚽ gols: 60'✗ 75'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **9** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **8** · 76'-90' **1**\n  - vs Crystal Palace (CASA · E 2-2) — min 1→101:\n    📈 pressão (net/min): 1'-15' [-1 -1 -1 -1 -1 -5 -2 0 -1 -1 +1 +1 +1 -4 -2] · 16'-30' [-7 -6 -4 -1 -1 -3 -4 -3 -2 -5 -3 -2 +1 +1 +1] · 31'-45' [+1 -4 -5 -13 -10 -6 0 -2 +1 +1 +3 +3 +3 +2 +3] · ‖INTERVALO‖ · 46'-60' [0 +1 +3 +3 +3 +1 -4 -5 -2 -1 -1 -1 -2 -1 +1] · 61'-75' [+1 +2 +2 +2 +1 +2 +1 0 0 -1 -1 -1 -1 0 -1] · 76'-90' [0 0 0 -1 0 +2 +3 +2 +6 +4 +3 +5 +9 +6 +6] · 91'+ [+6 +9 +9 +5 +5 +8 +6 +4 +2 +4 +3]\n    ⚽ gols: 6'✗ 40'✓ 52'✗ 88'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **4** · 61'-75' **1** · 76'-90' **2**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.22 · 16-30: 0.16 · 31-45: 0.27 · 46-60: 0.16 · 61-75: 0.14 · 76-90: 0.51\n- Sofre por faixa (/j): 0-15: 0.16 · 16-30: 0.22 · 31-45: 0.27 · 46-60: 0.16 · 61-75: 0.16 · 76-90: 0.41\n- 1ºT: marca 24 / sofre 24 (totais na temporada)\n\n### Desfalques de Brentford neste jogo\n- **Fábio Carvalho** (Unknown Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 0.83 g/j (6j) vs sem ele 1.58 g/j (31j) = +90%; finaliza **0.17 SoT/jogo** (time: 2.83 SoT/j com ele vs 4.13 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.5 desarmes/j · 0.8 duelos ganhos/j · 0.2 cruz. certos/j · 0.2 dribles certos/j · 0 key passes/j\n- **Rico Henry** (Unknown Injury) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 1.64 g/j (25j) vs sem ele 1.08 g/j (12j) = −34%; finaliza **0 SoT/jogo** (time: 4.12 SoT/j com ele vs 3.5 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.4 interceptações/j** (~4% do time) · 0.6 desarmes/j · 2.6 duelos ganhos/j · 0.1 cruz. certos/j · 0.6 dribles certos/j · 0.2 key passes/j\n- **Antoni Milambo** (Cruciate Ligament Tear) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 1 g/j (1j) vs sem ele 1.47 g/j (36j) = +47%; finaliza **0 SoT/jogo** (time: 3 SoT/j com ele vs 3.94 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 3 desarmes/j · 5 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Liverpool atacando × Brentford defendendo**\n| Faixa | Liverpool marca/j | Brentford sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.16 | 0.27 |\n| 16-30 | 0.14 | 0.22 | 0.36 |\n| 31-45 | 0.41 | 0.27 | 0.68 |\n| 46-60 | 0.32 | 0.16 | 0.48 |\n| 61-75 | 0.16 | 0.16 | 0.32 |\n| 76-90 | 0.54 | 0.41 | 0.95 |\n\n**Brentford atacando × Liverpool defendendo**\n| Faixa | Brentford marca/j | Liverpool sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.22 | 0.19 | 0.41 |\n| 16-30 | 0.16 | 0.08 | 0.24 |\n| 31-45 | 0.27 | 0.19 | 0.46 |\n| 46-60 | 0.16 | 0.24 | 0.4 |\n| 61-75 | 0.14 | 0.24 | 0.38 |\n| 76-90 | 0.51 | 0.46 | 0.97 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Liverpool: **31-45** (domínio +1.4) · Brentford: **76-90** (domínio -2.4). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Liverpool domínio/j | Brentford domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -1.1 | -1.1 | 0 ≈ |\n| 16-30 | -0.3 | -0.8 | +0.5 ≈ |\n| 31-45 | +0.1 | -1.3 | +1.4 ≈ |\n| 46-60 | -0.2 | -0.5 | +0.3 ≈ |\n| 61-75 | +0.1 | +2.3 | -2.2 ✈️ |\n| 76-90 | -0.4 | +2 | -2.4 ✈️ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Liverpool (casa) = 1.99 · λ Brentford (fora) = 1.01 · total = 3\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Liverpool: λ_SoT 5.06 × conv 36% → **1.82 gols**\n- Brentford: λ_SoT 3.63 × conv 32% → **1.16 gols**\n- total via SoT = 2.98\n- **Índice de volume do jogo**: λ_SoT total 8.7 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 59/24/17% | 51/26/23% |\n| Over 1.5 | 81% | 81% |\n| Over 2.5 | 58% | 57% |\n| Over 3.5 | 35% | 35% |\n| BTTS | 56% | 59% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **77%** · 12 **74%** · X2 **49%** · **Draw No Bet** casa 69% / fora 31%\n- **Placar exato (mais prováveis)**: 1-1 12% · 2-1 10% · 2-0 8% · 1-0 8%\n- **Odd/Even**: ímpar 47% / par 53% · **Multigoals**: 0-1 19% · 2-3 46% · 4+ 35%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Liverpool over 0.5 **84%** / over 1.5 **54%** · Brentford over 0.5 **69%** / over 1.5 **32%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 1.94 · empate 3.88 · fora 4.39. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **35/41/23%** · 2ºT **47/32/21%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Liverpool) e `away` (= Brentford), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.5,
+    "xg_away": 1,
+    "total": 2.5,
+    "over25_prob": 0.44999998807907104,
+    "btts_prob": 0.5,
+    "one_x_two": "{\"home\":0.55,\"draw\":0.3,\"away\":0.15}",
+    "confianca": "medium",
+    "best_bet_market": "double_chance",
+    "best_bet_selection": "home_draw",
+    "best_bet_team": null,
+    "best_bet_line": null,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.8500000238418579,
+    "reasoning_tokens": 4771
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Liverpool** contra **equilibrado** (o estilo do Brentford, posse média 47.8%): marca **2.27/j** e sofre 1.82/j em 11 jogos — **0.60 ACIMA** da média (1.68).\n- **Brentford** contra **dominante** (o estilo do Liverpool, posse média 59.2%): marca **0.82/j** e sofre 1.55/j em 11 jogos — **-0.64 ABAIXO** da média (1.46).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — contra-ataque**: Liverpool gera 6% dos gols por aí × Brentford sofre 8% por aí (liga: 4%) → índice 2.7×.\n- **CANAL ABERTO — gol contra**: Liverpool gera 3% dos gols por aí × Brentford sofre 6% por aí (liga: 3%) → índice 1.9×.\n- **CANAL ABERTO — contra-ataque**: Brentford gera 10% dos gols por aí × Liverpool sofre 6% por aí (liga: 4%) → índice 2.9×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Liverpool** (27 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -2.5 nos 10min seguintes) · **MATA O JOGO após marcar** (Δ +1.1 — segue pressionando).\n- **Brentford** (21 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.2 nos 10min seguintes) · **MATA O JOGO após marcar** (Δ +1.4 — segue pressionando).",
+  "output": {
+    "home": {
+      "xg": 1.4,
+      "xg_1t": 0.56,
+      "xg_2t": 0.84,
+      "xg_bands": {
+        "0-15": 0.09,
+        "16-30": 0.12,
+        "31-45": 0.34,
+        "46-60": 0.27,
+        "61-75": 0.13,
+        "76-90": 0.45
+      },
+      "summary": "Liverpool entra em Anfield com a Champions praticamente garantida, precisando apenas de um empate. Isso deve reduzir seu ímpeto ofensivo, que já não está no máximo devido às quedas de forma de Salah e Wirtz, e à ausência de Ekitiké. A defesa, sem Alisson e Bradley, mostrou fragilidade recente. O time tende a administrar o jogo, buscando contra-ataques, e pode sofrer no segundo tempo devido à pressão do Brentford."
+    },
+    "away": {
+      "xg": 1.1,
+      "xg_1t": 0.44,
+      "xg_2t": 0.66,
+      "xg_bands": {
+        "0-15": 0.17,
+        "16-30": 0.12,
+        "31-45": 0.2,
+        "46-60": 0.12,
+        "61-75": 0.11,
+        "76-90": 0.38
+      },
+      "summary": "O Brentford, ainda sonhando com vaga europeia, precisa vencer e deve propor um jogo agressivo, especialmente no segundo tempo. Apesar da campanha fora modesta, conta com Igor Thiago e Ouattara em boa fase para explorar as brechas na defesa Liverpool. A equipe melhorou recentemente no equilíbrio, mas sua defesa ainda pode ser exposta em transições. O roteiro mais provável é um jogo tenso, com Brentford pressionando no final."
+    },
+    "general": {
+      "total": 2.5,
+      "total_1t": 1,
+      "total_2t": 1.5,
+      "over25_prob": 0.46,
+      "btts_prob": 0.52,
+      "one_x_two": {
+        "home": 0.42,
+        "draw": 0.3,
+        "away": 0.28
+      },
+      "one_x_two_1t": {
+        "home": 0.3,
+        "draw": 0.45,
+        "away": 0.25
+      },
+      "one_x_two_2t": {
+        "home": 0.35,
+        "draw": 0.35,
+        "away": 0.3
+      },
+      "confidence": "medium",
+      "confidence_regra": "Múltiplas arestas convergem para under (intenção assimétrica, queda ofensiva Liverpool, defesa Brentford equilibrada), mas também há evidências de gols (fragilidade defensiva Liverpool, ataque Brentford, janela 76-90). Sem clareza total, confiança média.",
+      "summary": "Jogo da última rodada com motivações assimétricas: o Liverpool administra, o Brentford precisa. O prior estatístico aponta para um total de gols na média, mas o contexto sugere um jogo mais travado, com poucos gols. A tendência é de um primeiro tempo estudado e um segundo tempo com mais emoção, com o Brentford crescendo. O mercado de under 2.5 emerge como a melhor opção de valor, embora com riscos devido à fragilidade defensiva do Liverpool e à janela de gols no fim."
+    },
+    "conclusoes": [
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Liverpool com motivação baixa e empate suficiente",
+        "dado": "Liverpool: motivação baixa — NÃO precisa lutar — Champions praticamente garantida; um empate basta",
+        "direcao": "Reduz ímpeto ofensivo, jogo tende a under",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "tabela_motivacao",
+        "fato": "Brentford com motivação alta, precisa vencer",
+        "dado": "Brentford: motivação alta — PRECISA LUTAR — briga por vaga europeia",
+        "direcao": "Aumenta ataque, mas expõe defesa",
+        "forca": "alta"
+      },
+      {
+        "id": "C4",
+        "bloco": "home_gols",
+        "fato": "Liverpool em casa marca 1.83/j, mas motivação pode reduzir",
+        "dado": "Em casa (18j): marca 1.83 / sofre 1.06",
+        "direcao": "Ataque forte em casa, mas deve cair",
+        "forca": "media"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_estilo",
+        "fato": "Queda recente em ataques perigosos",
+        "dado": "Últimos 5: ataques perigosos 43.6/37.6",
+        "direcao": "Menos volume ofensivo",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_qualidade",
+        "fato": "Szoboszlai em alta, mas Salah e Wirtz em baixa",
+        "dado": "Szoboszlai nota 7.4, 7 MOTM; Salah forma 6.7↓, Wirtz 6.85↓",
+        "direcao": "Ataque inconsistente",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_qualidade",
+        "fato": "Alisson fora há 5 jogos",
+        "dado": "Alisson faltou 5/5",
+        "direcao": "Defesa mais vulnerável",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_forma",
+        "fato": "Defesa sofreu 10 gols em 5 jogos",
+        "dado": "10 sofridos em últimos 5, SoT sofrido 5.8/j",
+        "direcao": "Defesa frágil",
+        "forca": "alta"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_forma",
+        "fato": "Liverpool marcou em todos os últimos 5",
+        "dado": "10 feitos, marcou em 33/37",
+        "direcao": "Ataque ainda produtivo",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_momentum",
+        "fato": "Pressão no 31-45, queda no 2º tempo, desmorona ao sofrer",
+        "dado": "Domínio 31-45 (+1.4); após sofrer gol Δ -2.5",
+        "direcao": "Vulnerável se sofrer primeiro",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_faixas",
+        "fato": "Marca e sofre mais em 76-90",
+        "dado": "Marca 0.54, sofre 0.46 em 76-90",
+        "direcao": "Gols prováveis no fim",
+        "forca": "media"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_desfalques",
+        "fato": "Ekitiké fora, mas time adaptado",
+        "dado": "Sem ele 3.67 SoT/j vs 4.86 com ele",
+        "direcao": "Leve redução volume ofensivo",
+        "forca": "baixa"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_desfalques",
+        "fato": "Bradley fora, defesa mais exposta",
+        "dado": "Sem ele SoT sofrido 5.23 vs 3.6 com ele",
+        "direcao": "Aumento xG adversário",
+        "forca": "alta"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_gols",
+        "fato": "Brentford fora marca 1.17/j",
+        "dado": "Fora 1.17 marca",
+        "direcao": "Ataque modesto, mas motivação pode elevar",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "away_estilo",
+        "fato": "Melhora recente em ataques perigosos",
+        "dado": "Últimos 5: ataques perigosos 54.2/45.2",
+        "direcao": "Time mais equilibrado",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_qualidade",
+        "fato": "Igor Thiago 25G, Ouattara em alta",
+        "dado": "Igor Thiago 25G+1A, Ouattara 7.18↑",
+        "direcao": "Poder ofensivo para marcar",
+        "forca": "alta"
+      },
+      {
+        "id": "C17",
+        "bloco": "away_forma",
+        "fato": "Não vence há 3, mas marcou em 3/5",
+        "dado": "EDVDE, 6 feitos",
+        "direcao": "Forma instável, mas pode marcar",
+        "forca": "media"
+      },
+      {
+        "id": "C18",
+        "bloco": "away_momentum",
+        "fato": "Pressiona no 2º tempo, especialmente 61-90",
+        "dado": "Domínio +2.3 em 61-75, +2.0 em 76-90",
+        "direcao": "Gols do Brentford no 2º tempo",
+        "forca": "alta"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_faixas",
+        "fato": "Marca e sofre mais em 76-90",
+        "dado": "Marca 0.51, sofre 0.41 em 76-90",
+        "direcao": "Gols no fim",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janela 76-90 muito favorável para gols",
+        "dado": "Índice 0.95 e 0.97",
+        "direcao": "Esperar gols no fim",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "base_rate",
+        "fato": "Rotas A e B convergem para total ~3.0",
+        "dado": "Total via SoT = 2.98",
+        "direcao": "Expectativa de jogo com gols (prior)",
+        "forca": "media"
+      },
+      {
+        "id": "C23",
+        "bloco": "probs_mercado",
+        "fato": "Prior 1x2 51/26/23, over 2.5 57%, BTTS 59%",
+        "dado": "Over 2.5 57%",
+        "direcao": "Mercado espera gols",
+        "forca": "media"
+      },
+      {
+        "id": "C24",
+        "bloco": "cruzamentos_computados",
+        "fato": "Liverpool contra equilibrado marca 2.27, Brentford contra dominante marca 0.82",
+        "dado": "2.27 e 0.82",
+        "direcao": "Liverpool tende a marcar, Brentford não",
+        "forca": "alta"
+      },
+      {
+        "id": "C25",
+        "bloco": "cruzamentos_computados",
+        "fato": "Contra-ataque canal aberto para ambos",
+        "dado": "Índice 2.7 e 2.9",
+        "direcao": "Gols em transição",
+        "forca": "media"
+      },
+      {
+        "id": "C26",
+        "bloco": "cruzamentos_computados",
+        "fato": "Liverpool desmorona mais ao sofrer gol (-2.5)",
+        "dado": "Liverpool Δ -2.5, Brentford Δ -1.2",
+        "direcao": "Primeiro gol crucial",
+        "forca": "alta"
+      },
+      {
+        "id": "C27",
+        "bloco": "cruzamentos_computados",
+        "fato": "Brentford domina 2º tempo (61-90)",
+        "dado": "Domínio +2.3 e +2.0",
+        "direcao": "Brentford forte no final",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [
+      {
+        "bloco": "contexto",
+        "motivo": "Clima neutro e diferença de descanso irrelevante (2 dias)"
+      }
+    ],
+    "descartadas": [
+      {
+        "id": "C20",
+        "motivo": "Desfalques do Brentford com impacto baixo e sem sinal direto no jogo (Henry fora, mas time adaptado)"
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Virgil van Dijk",
+        "time": "home",
+        "leitura": "Pilar defensivo, mas sem Alisson sua liderança será testada; crucial na bola aérea."
+      },
+      {
+        "nome": "Dominik Szoboszlai",
+        "time": "home",
+        "leitura": "Motor criativo em alta, principal arma para furar a defesa do Brentford."
+      },
+      {
+        "nome": "Ibrahima Konaté",
+        "time": "home",
+        "leitura": "Zagueiro físico, mas forma caindo; pode ter dificuldade contra Igor Thiago."
+      },
+      {
+        "nome": "Ryan Gravenberch",
+        "time": "home",
+        "leitura": "Meia versátil, mas contribuição ofensiva limitada; mais contenção."
+      },
+      {
+        "nome": "Cody Gakpo",
+        "time": "home",
+        "leitura": "Atacante em baixa, gols no 2ºT; pode ser opção no banco."
+      },
+      {
+        "nome": "Alexis Mac Allister",
+        "time": "home",
+        "leitura": "Volante de contenção, pouco criativo; importante na transição defensiva."
+      },
+      {
+        "nome": "Florian Wirtz",
+        "time": "home",
+        "leitura": "Meia talentoso, mas forma caindo e faltou 1 jogo; criatividade reduzida."
+      },
+      {
+        "nome": "Milos Kerkez",
+        "time": "home",
+        "leitura": "Lateral com pouco volume ofensivo; não é arma de ataque."
+      },
+      {
+        "nome": "Alisson",
+        "time": "home",
+        "leitura": "Goleiro titular, ausência prolongada aumenta incerteza defensiva; time sem seu goleiro principal."
+      },
+      {
+        "nome": "Mohamed Salah",
+        "time": "home",
+        "leitura": "Artilheiro em baixa e faltou 2/5; ainda perigoso em contra-ataques."
+      },
+      {
+        "nome": "Curtis Jones",
+        "time": "home",
+        "leitura": "Meia estável, mas pouca finalização; coadjuvante sem grande impacto."
+      },
+      {
+        "nome": "Hugo Ekitiké",
+        "time": "home",
+        "leitura": "Desfalque com 11 gols, mas time já adaptado; sem impacto adicional."
+      },
+      {
+        "nome": "Conor Bradley",
+        "time": "home",
+        "leitura": "Desfalque defensivo importante tira 13% das interceptações; defesa mais exposta."
+      },
+      {
+        "nome": "Giovanni Leoni",
+        "time": "home",
+        "leitura": "Desfalque irrelevante; não participou da temporada."
+      },
+      {
+        "nome": "S. Bajcetic Maquieira",
+        "time": "home",
+        "leitura": "Desfalque irrelevante; sem impacto."
+      },
+      {
+        "nome": "Michael Kayode",
+        "time": "away",
+        "leitura": "Lateral defensivo, forma caindo; seguro, mas pouco ofensivo."
+      },
+      {
+        "nome": "Caoimhín Kelleher",
+        "time": "away",
+        "leitura": "Goleiro regular, não é ponto fraco; sofreu gols nos últimos jogos."
+      },
+      {
+        "nome": "Igor Thiago",
+        "time": "away",
+        "leitura": "Artilheiro letal com 25 gols, principal ameaça; em boa fase."
+      },
+      {
+        "nome": "Nathan Collins",
+        "time": "away",
+        "leitura": "Zagueiro de área, mas poucos desarmes; pode sofrer com velocidade."
+      },
+      {
+        "nome": "Sepp van den Berg",
+        "time": "away",
+        "leitura": "Zagueiro em alta, pilar defensivo; crucial na defesa."
+      },
+      {
+        "nome": "Yegor Yarmolyuk",
+        "time": "away",
+        "leitura": "Volante de contenção, pouco criativo; protege defesa."
+      },
+      {
+        "nome": "Kevin Schade",
+        "time": "away",
+        "leitura": "Atacante em baixa, finalização caindo; pode ser opção secundária."
+      },
+      {
+        "nome": "Mathias Jensen",
+        "time": "away",
+        "leitura": "Meia criativo, mas minutos limitados; qualidade nos passes."
+      },
+      {
+        "nome": "Dango Ouattara",
+        "time": "away",
+        "leitura": "Atacante em excelente fase, finalizando bem; diferencial no ataque."
+      },
+      {
+        "nome": "Mikkel Damsgaard",
+        "time": "away",
+        "leitura": "Meia irregular, mas com lampejos de criatividade; arma incerta."
+      },
+      {
+        "nome": "Keane Lewis-Potter",
+        "time": "away",
+        "leitura": "Atacante de profundidade, mas pouco tempo em campo; opção de velocidade."
+      },
+      {
+        "nome": "Fábio Carvalho",
+        "time": "away",
+        "leitura": "Desfalque sem impacto; quase não jogou."
+      },
+      {
+        "nome": "Rico Henry",
+        "time": "away",
+        "leitura": "Desfalque sem grande impacto; time já adaptado."
+      },
+      {
+        "nome": "Antoni Milambo",
+        "time": "away",
+        "leitura": "Desfalque irrelevante; sem minutos."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C2",
+          "C3",
+          "C22",
+          "C23"
+        ],
+        "leitura": "Intenção assimétrica: Liverpool administra (C2) e Brentford precisa (C3) versus prior de total 2.98 (C22, C23). Resultado: redução do total esperado para ~2.5, aumento da probabilidade de under e empate.",
+        "efeito": "Reduz total e favorece under"
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C4",
+          "C5",
+          "C6",
+          "C12"
+        ],
+        "leitura": "Queda ofensiva Liverpool: volume em casa historicamente bom (C4), mas queda recente em ataques perigosos (C5), formas individuais caindo (C6) e ausência de Ekitiké (C12) reduzem xG para ~1.4.",
+        "efeito": "Reduz xG Liverpool"
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C8",
+          "C13",
+          "C16"
+        ],
+        "leitura": "Defesa Liverpool frágil: sofreu 10 gols em 5 jogos (C8), sem Bradley (C13) permitindo mais SoT, e Brentford com Igor Thiago (C16) eficiente, aumentando xG do Brentford para 1.1-1.2.",
+        "efeito": "Aumenta xG Brentford"
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C10",
+          "C18",
+          "C27"
+        ],
+        "leitura": "Momento do jogo: Liverpool domina 31-45 (C10), Brentford domina 61-90 (C18, C27), sugerindo gols no fim do 1ºT e 2ºT.",
+        "efeito": "Distribui gols principalmente no 2ºT"
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C14",
+          "C16",
+          "C17"
+        ],
+        "leitura": "Ataque Brentford motivado: fora marca 1.17 (C14), mas com Thiago e Ouattara (C16) e histórico recente de marcar (C17), xG maior que média fora.",
+        "efeito": "Aumenta xG Brentford"
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C24",
+          "C2",
+          "C3"
+        ],
+        "leitura": "Arquétipo distorcido: Liverpool contra equilibrado marca 2.27 (C24), mas motivação baixa (C2) reduz; Brentford contra dominante marca 0.82 (C24), mas precisa vencer (C3) eleva. Ajuste para 1.5 e 1.1.",
+        "efeito": "Aproxima xGs de 1.5 e 1.1"
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C25",
+          "C3",
+          "C13"
+        ],
+        "leitura": "Contra-ataque: canal aberto (C25) com Brentford exposto (C3) e defesa Liverpool sem Bradley (C13) pode gerar gols em transições para ambos.",
+        "efeito": "Aumenta chance de gols em transição"
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C26",
+          "C10",
+          "C18"
+        ],
+        "leitura": "Reação pós-gol: Liverpool desmorona ao sofrer (C26) e cai no 2ºT (C10), enquanto Brentford cresce (C18). Se Brentford abrir placar, jogo pode ter mais gols.",
+        "efeito": "Aumenta chance de over se Brentford marcar primeiro"
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C7",
+          "C13",
+          "C16"
+        ],
+        "leitura": "Goleiro e defesa: Alisson fora (C7) e Bradley fora (C13) ampliam vulnerabilidade contra finalizações de Igor Thiago (C16).",
+        "efeito": "Aumenta xG Brentford"
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C11",
+          "C19",
+          "C21",
+          "C27"
+        ],
+        "leitura": "Janela 76-90: ambos marcam e sofrem bastante (C11, C19), cruzamento aponta alto índice (C21) e Brentford domina (C27) → gols prováveis no final.",
+        "efeito": "Concentra gols na última faixa"
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C15",
+          "C2",
+          "C5"
+        ],
+        "leitura": "Defesa Brentford segura Liverpool desmotivado: melhora defensiva recente (C15) contra ataque Liverpool em baixa motivação (C2) e queda ofensiva (C5).",
+        "efeito": "Reduz xG Liverpool"
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C9",
+          "C17",
+          "C23"
+        ],
+        "leitura": "BTTS possível: Liverpool marcou em quase todos (C9), Brentford marcou em 3/5 (C17) e prior de mercado 59% (C23), mantendo chance de ambos marcarem.",
+        "efeito": "Sustenta BTTS em ~50-55%"
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Jogo travado, under 2.5",
+        "prob": 0.45,
+        "filme": "Liverpool entra administrando, Brentford tem dificuldade para criar. Liverpool marca em contra-ataque no fim do 1ºT. No 2ºT, Brentford pressiona mas não consegue furar a defesa, ou empata em lance casual. Placar final 1-0 ou 1-1.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A11",
+          "A8"
+        ]
+      },
+      {
+        "nome": "Brentford surpreende e gols saem",
+        "prob": 0.35,
+        "filme": "Brentford marca primeiro explorando defesa Liverpool frágil. Liverpool sente e desmorona. Brentford amplia em contra-ataque. Liverpool ainda faz um gol no final, mas jogo termina 1-2 ou 2-2, over 2.5.",
+        "arestas": [
+          "A3",
+          "A5",
+          "A8",
+          "A10"
+        ]
+      },
+      {
+        "nome": "Liverpool controla e vence sem sofrer",
+        "prob": 0.2,
+        "filme": "Liverpool marca cedo e dita o ritmo. Brentford não consegue reagir, e Liverpool administra. Placar 2-0 ou 2-1, com gols no 1ºT. Under ou over dependendo do 2º gol.",
+        "arestas": [
+          "A2",
+          "A6",
+          "A7",
+          "A8"
+        ]
+      }
+    ],
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.42,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Liverpool favorito, mas motivação baixa reduz confiança."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.3,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Jogo tende a travar, empate é resultado plausível."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.28,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Brentford precisa vencer, mas qualidade e histórico fora limitam."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.72,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Cobertura segura, mas odds curtas."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.58,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "Brentford não perde tem valor dada a assimetria motivacional."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.7,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Sem empate, mas probabilidade alta."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.6,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Seguro, mas odds tendem a ser baixas."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.4,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Brentford não perder tem valor implícito."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.71,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Alta probabilidade, mas odds baixas."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.46,
+        "variancia": 4,
+        "valor": "alto",
+        "nota": "Under 2.5 tem valor com jogo travado."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.24,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Baixa probabilidade, under atrativo."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.52,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Ambos marcam possível, mas não certo."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.75,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Liverpool deve marcar, mas odds curtas."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.41,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Baixa probabilidade de dois gols do Liverpool."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.67,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Brentford com boa chance de marcar."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.3,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Improvável Brentford fazer dois."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.22,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Cenário de vitória folgada improvável."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": 1,
+        "prob": 0.12,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Zebra total."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Sem padrão claro."
+      }
+    ],
+    "best_bet": {
+      "market": "over_under",
+      "selection": "under",
+      "team": null,
+      "line": 2.5,
+      "confidence": "medium",
+      "probability": 0.54,
+      "evidence_for": [
+        "C2",
+        "A1",
+        "A2",
+        "A11"
+      ],
+      "evidence_against": [
+        "C8",
+        "C13",
+        "A3",
+        "A5",
+        "A10"
+      ],
+      "analysis": "Com o Liverpool administrando vantagem na tabela e o Brentford precisando vencer, a tendência é de um jogo com poucos gols. O ataque Liverpool está abaixo do seu potencial, e a defesa do Brentford melhorou. Os riscos são os desfalques defensivos do Liverpool e a janela de gols no fim, mas o contexto geral favorece o under."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "under 2.5",
+          "argumento": "A defesa do Liverpool está frágil (C8, C13) e o Brentford tem ataque eficiente com Igor Thiago (C16), podendo gerar gols e estourar o under.",
+          "ids": [
+            "C8",
+            "C13",
+            "C16"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "under 2.5",
+          "argumento": "Ambos os times têm histórico de gols no fim (C11, C19, A10), e a janela 76-90 apresenta alto índice de gols, aumentando o risco de gols tardios que matam o under.",
+          "ids": [
+            "C11",
+            "C19",
+            "A10"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "under 2.5",
+          "argumento": "Se o Brentford marcar primeiro, o Liverpool pode desmoronar (C26) e o jogo se abrir, resultando em over 2.5.",
+          "ids": [
+            "C26"
+          ],
+          "veredito": "enfraquece"
+        }
+      ],
+      "conclusao": "Os ataques enfraquecem a confiança, mas não derrubam a tese, pois o peso da intenção assimétrica e da administração do Liverpool são mais fortes. A aposta under 2.5 permanece como a de maior valor com risco controlado."
+    },
+    "drivers": [
+      "Motivação assimétrica: Liverpool administra, Brentford precisa vencer",
+      "Fragilidade defensiva do Liverpool sem Bradley e Alisson",
+      "Momentum do Brentford no segundo tempo e janela de gols 76-90"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 18,
+    "blocosSemSinal": 1,
+    "blocosFaltando": [
+      "away_desfalques"
+    ],
+    "conclusoes": 25,
+    "arestas": 12,
+    "jogadores": 29,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar este confronto entre Liverpool e Brentford, válido pela última rodada da Premier League, seguindo o protocolo de análise em seis passos. O jogo ocorre em Anfield, com o Liverpool já praticamente garantido na Champions e o Brentford ainda com chances matemáticas de vaga europeia. A motivação é assimétrica: o Liverpool administra (um empate basta), o Brentford precisa vencer. Isso, somado aos dados, deve orientar toda a análise.\n\n**Passo 1 – Varredura por blocos**\n\nComeço percorrendo cada bloco de dados para extrair conclusões com IDs, fatos/dados e direção. Vou listar as conclusões bloco a bloco e depois integrá-las.\n\n**Bloco: Contexto**\n- Data: 24/05/2026, rodada 38, Anfield.\n- Clima ameno, sem evidência de impacto.\n- Descanso: Liverpool 9 dias, Brentford 7 dias. Diferença de 2 dias é ruído, não sinal forte.\n- Viagem: ~282 km, padrão.\n- Média de liga: mandante 1.53, visitante 1.23. Vantagem casa já embutida.\n- **Conclusão C1**: (contexto, clima e descanso neutros, sem impacto relevante para o xG, direção neutra)\n\n**Bloco: Tabela e motivação**\n- Liverpool 5º, 59 pts; Brentford 9º, 52 pts.\n- Liverpool seguro contra rebaixamento, Champions praticamente garantida (só perde se perder e Bournemouth tirar saldo de 6).\n- Motivação Liverpool: baixa, administra.\n- Brentford: segurança contra rebaixamento, mas briga por vaga europeia (matematicamente possível). Motivação: alta, precisa lutar.\n- **Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — um lado não precisa atacar, outro precisa, mas pode não furar ferrolho.\n- **Conclusão C2**: (tabela_motivacao, Liverpool com motivação baixa e empate suficiente → tende a administrar, reduzindo seu ímpeto ofensivo, direção under/baixo xG para o jogo)\n- **Conclusão C3**: (tabela_motivacao, Brentford com motivação alta, precisa vencer para sonhar com Europa → tende a se lançar ao ataque, aumentando seu xG ofensivo, mas também expondo defesa, direção: aumenta xG Brentford, mas pode abrir contra-ataques)\n\n**Bloco: Liverpool (home_gols)**\n- Marca 1.68/j, sofre 1.41/j (season). Em casa: 1.83/1.06.\n- SoT: 4.57/j (casa 5.11), conversão 36%.\n- Volume: 15.3 chutes/j, 2.7 big chances/j.\n- **Conclusão C4**: (home_gols, ataque do Liverpool é forte em casa (1.83 g/j), com alto volume de finalizações (5.11 SoT/j), mas sua motivação baixa pode reduzir essa taxa, direção: xG ofensivo provavelmente abaixo da média de casa)\n\n**Bloco: Liverpool (home_estilo)**\n- Ataques perigosos: 59.3 feito, 42.3 sofrido (season). Últimos 5: queda para 43.6 feito, 37.6 sofrido.\n- Chutes de fora: 5.4/j, bloqueados 4.9/j.\n- **Conclusão C5**: (home_estilo, queda recente em ataques perigosos (43.6 vs 59.3) sugere perda de ímpeto ofensivo, alinhada à baixa motivação, direção: menos volume ofensivo)\n\n**Bloco: Liverpool (home_qualidade)**\n- Nota média 6.88. Destaques: Szoboszlai (7.4, 7 MOTM), van Dijk (7.09, 2 MOTM), Gakpo (7.06), Gravenberch (7.03), Wirtz (7.02).\n- Salah: nota 6.9, 9G+7A, mas faltou 2/5 e forma caindo.\n- Kerkez faltou 2/5, Alisson faltou 5/5.\n- **Conclusão C6**: (home_qualidade, Szoboszlai em alta (nota 7.4, 8G+7A) é o principal criador; Salah ausente em 2/5 e forma caindo, Wirtz caindo, Gakpo caindo, ataque pode não estar no máximo, direção: qualidade ofensiva inconsistente ou reduzida)\n- **Conclusão C7**: (home_qualidade, defesa com van Dijk sólido (7.09) e Konaté (6.89), mas Alisson fora há 5 jogos, pode impactar segurança defensiva, direção: defesa ligeiramente mais vulnerável sem goleiro titular)\n\n**Bloco: Liverpool (home_forma)**\n- Últimos 5: DEDVV (10-10 gols), SoT 4.4/5.8.\n- Resultados: V Everton 2-1, V Palace 3-1, D United 2-3, E Chelsea 1-1, D Aston Villa 2-4.\n- Consistência: marcou em 33/37, clean sheet 10, BTTS 25/37.\n- **Conclusão C8**: (home_forma, últimos 5 com defesa frágil (sofreu 10 gols, 5.8 SoT/j), incluindo 3 e 4 gols sofridos fora, direção: defesa do Liverpool vulnerável, especialmente fora, mas em casa sofreu apenas 1 no período (contra Palace e Chelsea), porém os dados recentes mostram fragilidade)\n- **Conclusão C9**: (home_forma, ataque marcou em todos os últimos 5, mas a qualidade dos adversários foi mista; a derrota para United e Villa com muitos gols sofridos indica que contra times motivados o Liverpool pode ceder, direção: Brentford motivado pode marcar)\n\n**Bloco: Liverpool (home_momentum)**\n- Curvas mostram pressão irregular. Janela de domínio: 31-45 (+1.4). Janela de vulnerabilidade: 61-75 e 76-90.\n- Gol sofrido causa desmoronamento (Δ -2.5 pós-gol). Após marcar, mata jogo (+1.1).\n- **Conclusão C10**: (home_momentum, Liverpool tende a pressionar no fim do primeiro tempo, mas no segundo tempo cai, especialmente após sofrer gol, direção: gols do Liverpool mais prováveis no 1º tempo, e se sofrer, pode complicar)\n\n**Bloco: Liverpool (home_faixas)**\n- Marca: picos em 31-45 (0.41), 46-60 (0.32), 76-90 (0.54).\n- Sofre: picos em 61-75 (0.24) e 76-90 (0.46).\n- **Conclusão C11**: (home_faixas, Liverpool marca mais no fim do jogo (76-90) e sofre mais no fim (76-90), janela de gols no final, direção: esperar gols no segundo tempo, especialmente após 75')\n\n**Bloco: Liverpool (home_desfalques)**\n- Ekitiké (18% gols, 24% assists) fora. Mas participou 0% nos últimos 5 gols. With/without: gols quase iguais, SoT sem ele cai de 4.86 para 3.67.\n- Bradley: 0 gols, 1 assist. 13% interceptações. Sem ele, time até sobe SoT (5.23 vs 3.6). \n- Leoni e Bajcetic: sem impacto.\n- **Conclusão C12**: (home_desfalques, ausência de Ekitiké (11G+4A) tira do time 0.68 SoT/j, e o ataque sem ele tem volume menor (3.67 SoT/j vs 4.86), mas nos últimos jogos ele já não contribuiu, então o time está adaptado, direção: leve redução de volume ofensivo, mas já precificado na forma recente)\n- **Conclusão C13**: (home_desfalques, Bradley fora tira 13% das interceptações do time, mas sem ele o time permitiu mais SoT? Dados: com ele sofre 3.6 SoT/j, sem ele 5.23 SoT/j. Isso indica que a defesa pode ficar mais exposta sem ele, direção: aumento do xG adversário, Brentford pode criar mais)\n\n**Bloco: Brentford (away_gols)**\n- Marca 1.46/j, sofre 1.38/j. Fora: 1.17/1.67.\n- SoT: 3.92/j (fora 3.72), conversão 32%.\n- Volume: 10.6 chutes/j, 3.1 big chances/j.\n- **Conclusão C14**: (away_gols, ataque do Brentford é modesto fora (1.17 g/j), mas sua motivação alta pode elevar produção ofensiva, direção: xG ofensivo pode superar média de fora)\n\n**Bloco: Brentford (away_estilo)**\n- Ataques perigosos: 46.2/54.6 (season). Últimos 5: 54.2/45.2 (melhorou).\n- Chutes de fora: 2.6, bloqueados 2.5.\n- **Conclusão C15**: (away_estilo, Brentford melhorou recentemente em ataques perigosos (54.2 vs 46.2) e reduziu os sofridos (45.2 vs 54.6), sugerindo time mais equilibrado, direção: pode competir melhor contra Liverpool)\n\n**Bloco: Brentford (away_qualidade)**\n- Nota média 6.81. Destaque: Igor Thiago (7.1, 25G+1A, 5 MOTM), artilheiro e referência. Ouattara (6.85, 4 MOTM) em alta (7.18).\n- Damsgaard (6.89), Jensen (6.97) criam. Defesa: van den Berg (6.9, forma 7.17↑).\n- **Conclusão C16**: (away_qualidade, Igor Thiago é o principal perigo (25 gols, 1.18 SoT/j), capaz de marcar em qualquer momento; Ouattara em boa fase (7.18) pode ser diferencial, direção: Brentford tem qualidade para marcar, mesmo fora)\n\n**Bloco: Brentford (away_forma)**\n- Últimos 5: EDVDE (6-7 gols), SoT 3.8/5.0.\n- Resultados: E Fulham 0-0, D United 1-2, V West Ham 3-0, D City 0-3, E Palace 2-2.\n- Consistência: marcou em 25/37, clean sheet 10, BTTS 19/37.\n- **Conclusão C17**: (away_forma, Brentford não vence há 3 jogos (2D,1E), mas marcou em 3 dos últimos 5 (Fulham exceção), defesa sofreu 7 gols em 5, direção: forma instável, mas time pode marcar)\n\n**Bloco: Brentford (away_momentum)**\n- Curvas: pressão no 61-75 (+2.3) e 76-90 (+2.0), mas domínio negativo em outras.\n- Após sofrer gol: desmorona (Δ -1.2). Após marcar: mata jogo (+1.4).\n- Janela de domínio: 61-75 e 76-90.\n- **Conclusão C18**: (away_momentum, Brentford pressiona no segundo tempo, especialmente após 60'; se estiver vivo no jogo, tende a crescer no final, direção: gols do Brentford mais prováveis no 2º tempo)\n\n**Bloco: Brentford (away_faixas)**\n- Marca: picos em 31-45 (0.27), 76-90 (0.51).\n- Sofre: picos em 31-45 (0.27) e 76-90 (0.41).\n- **Conclusão C19**: (away_faixas, Brentford marca e sofre mais no fim (76-90), alinhado ao momentum, direção: esperar gols no segundo tempo, especialmente nos minutos finais)\n\n**Bloco: Brentford (away_desfalques)**\n- Fábio Carvalho (1G, 0% gols time) fora. Impacto insignificante.\n- Rico Henry (0G, 1A) fora. Sem ele, Brentford sofre menos? Dados: com Henry 4.12 SoT/j, sem 3.5. Mas também o ataque sem ele caiu (1.08 vs 1.64 g/j). Porém, Henry tem 0.4 interceptações/j, não é pilar defensivo.\n- Milambo: sem impacto.\n- **Conclusão C20**: (away_desfalques, desfalques do Brentford são de baixo impacto; Henry fazia falta no ataque, mas time já se adaptou, direção: neutro)\n\n**Bloco: Cruzamento ataque x defesa por faixa**\n- Liverpool atacando x Brentford defendendo: índice janela 0.95 em 76-90 e 0.68 em 31-45.\n- Brentford atacando x Liverpool defendendo: índice janela 0.97 em 76-90 e 0.46 em 31-45.\n- **Conclusão C21**: (cruzamento_faixa, janela de 76-90 é a mais favorável para gols de ambos os lados, especialmente Brentford (0.97) e Liverpool (0.95), direção: esperar gols no fim)\n\n**Bloco: Base rate**\n- Rota A: λ Liverpool 1.99, Brentford 1.01, total 3.00.\n- Rota B: Liverpool 1.82, Brentford 1.16, total 2.98.\n- λ_SoT total 8.7, média da liga 8.5 → volume na média.\n- **Conclusão C22**: (base_rate, as rotas convergem para total ~3.0 gols, indicando jogo com expectativa de gols razoável, mas a motivação pode reduzir, direção: partir do prior 2.98 e ajustar)\n\n**Bloco: Probs Mercado**\n- 1x2: 51/26/23 (Rota B). Over 2.5: 57%. BTTS: 59%.\n- Dupla chance: 1X 77%, X2 49%.\n- Team totals: Liverpool over 0.5 84%, over 1.5 54%; Brentford over 0.5 69%, over 1.5 32%.\n- **Conclusão C23**: (probs_mercado, prior indica favoritismo do Liverpool (51%), mas com alta chance de empate (26%); over 2.5 em 57% e BTTS em 59%, direção: prior sugere jogo com gols e equilíbrio relativo)\n\n**Bloco: Cruzamentos pré-computados**\n- Arquétipo: Liverpool contra equilibrado: 2.27/1.82 gols (acima). Brentford contra dominante: 0.82/1.55 (abaixo).\n- **Conclusão C24**: (cruzamentos_computados, arquétipo mostra Liverpool com ataque potente contra times equilibrados (+0.59), mas Brentford sofre pouco contra dominantes (1.55); Brentford ataca pouco contra dominantes (0.82), direção: Liverpool tende a marcar acima de sua média, Brentford abaixo da sua)\n- Mecanismo de gol: contra-ataque é canal aberto para ambos. Liverpool vs Brentford: índice 2.7/1.9. Brentford vs Liverpool: índice 2.9.\n- **Conclusão C25**: (cruzamentos_computados, contra-ataque é o canal provável: Brentford sofre e gera por aí, Liverpool também gera; com Brentford precisando atacar, Liverpool pode achar espaço em contra-ataque, direção: gols em transição)\n- Dinâmica pós-gol: ambos desmoronam ao sofrer (Liverpool -2.5, Brentford -1.2) e matam ao marcar (+1.1/+1.4).\n- **Conclusão C26**: (cruzamentos_computados, Liverpool desmorona mais ao sofrer (-2.5) do que Brentford (-1.2); se o Brentford marcar primeiro, pode dominar o jogo; mas se o Liverpool marcar primeiro, tende a controlar, direção: primeiro gol é crucial)\n- Momentum cruzado: domínio do Liverpool 31-45, domínio do Brentford 61-90.\n- **Conclusão C27**: (cruzamentos_computados, Brentford domina o 2º tempo (61-90) enquanto Liverpool cai, alinhado com intenção: Brentford pressiona no final, Liverpool pode ceder, direção: esperar gols do Brentford no 2º tempo)\n\n**Síntese do Passo 1:**\nConclusões de C1 a C27. Preciso garantir que todas sejam usadas ou descartadas.\n\n**Passo 2 – Jogador por jogador**\n\nListarei todos os nomeados no briefing (quality + desfalques) e farei leitura de 1 frase, focando no impacto para este jogo.\n\n**Liverpool:**\n- Virgil van Dijk: Pilar defensivo, 2 gols tardios, mas sua solidez pode ser testada sem Alisson; liderança mantém defesa.\n- Dominik Szoboszlai: Motor do meio-campo, 7 MOTM, cria chances (2.15 KP/j), forma em alta – motor ofensivo principal para furar defesa Brentford.\n- Ibrahima Konaté: Zagueiro físico, 5.79 duelos/j, mas forma caindo – pode ser explorado por Igor Thiago.\n- Ryan Gravenberch: Meia versátil, 2 MOTM, contribui defensivamente, mas forma irregular – menos impacto criativo.\n- Cody Gakpo: Atacante com 7G+5A, mas forma caindo (6.86↓) e gols no 2ºT – pode ser opção no banco ou titular apagado.\n- Alexis Mac Allister: Volante com 2G+6A, forma estável, mas volume criativo baixo (0.93 KP/j) – mais contenção do que criação.\n- Florian Wirtz: Meia talentoso (1.78 KP/j), mas faltou 1/5 e forma caindo (6.85↓) – pode não render o esperado.\n- Milos Kerkez: Lateral esquerdo, faltou 2/5, volume ofensivo baixo (0.08 SoT/j) – não é arma ofensiva relevante.\n- Alisson: Goleiro titular, faltou os últimos 5 jogos; sua ausência prolongada aumenta incerteza defensiva – defesa sem seu goleiro principal.\n- Mohamed Salah: Artilheiro histórico com 9G+7A, mas faltou 2/5 e forma caindo (6.7↓) – presença intermitente, mas ainda perigoso em contra-ataque.\n- Curtis Jones: Meia com 2G+3A, forma estável, mas pouca finalização (0.21 SoT/j) – coadjuvante.\n- Hugo Ekitiké (desfalque): 11G+4A, ausência tira volume ofensivo (SoT cai de 4.86 para 3.67), mas time já adaptado – baixo impacto incremental.\n- Conor Bradley (desfalque): Lateral com 0 gols, mas sua ausência reduz interceptações (13% do time) e expõe defesa – Brentford pode explorar lado direito.\n- Giovanni Leoni e Bajcetic: Sem impacto – irrelevantes.\n\n**Brentford:**\n- Michael Kayode: Lateral direito, 1G+1A, forma caindo (6.52↓), defensivamente sólido (5.47 duelos/j) – seguro, mas pouco ofensivo.\n- Caoimhín Kelleher: Goleiro, nota 6.88, forma estável – não é ponto fraco, mas sofreu 5 gols nos últimos 5.\n- Igor Thiago: Artilheiro (25G, 1.18 SoT/j), 5 MOTM, forma estável – principal ameaça, letal em qualquer janela.\n- Nathan Collins: Zagueiro, 2G+3A, forma estável, mas apenas 1 interceptação/j – defesa aérea, mas não é desarme.\n- Sepp van den Berg: Zagueiro, 0G+2A, forma em alta (7.17↑), 0.92 int/j – pilar defensivo em bom momento.\n- Yegor Yarmolyuk: Volante, 1G+3A, forma estável, 1.86 desarmes/j – proteção defensiva, pouco criativo.\n- Kevin Schade: Atacante, 7G+3A, mas forma caindo (6.48↓) e SoT baixo recente (0.2) – em baixa, pode ser opção secundária.\n- Mathias Jensen: Meia, 5G+3A, 3 MOTM, mas forma caindo (6.92=) e minutos reduzidos (65') – criador quando em campo.\n- Dango Ouattara: Atacante, 7G+3A, forma em alta (7.18↑), 1.4 SoT/j recente – em excelente fase, arma perigosa.\n- Mikkel Damsgaard: Meia, 4G+4A, forma: 7.06↑, mas irregular (6.8 a 7.8) – criativo quando inspirado.\n- Keane Lewis-Potter: Atacante, 5G+4A, forma estável, mas minutos baixos (56') – opção de profundidade.\n- Fábio Carvalho (desfalque): 1G, impacto nulo – irrelevante.\n- Rico Henry (desfalque): 0G+1A, sua ausência tira opção ofensiva, mas time se adaptou – baixo impacto.\n- Antoni Milambo: Sem impacto – irrelevante.\n\n**Passo 3 – Arestas (cruzamento de conclusões)**\n\nVou montar as arestas ligando conclusões. Preciso de no mínimo 8, com IDs de conclusões.\n\n1. **A1** (liga: C2, C3, C23) – Intenção assimétrica: Liverpool administra (C2) x Brentford precisa (C3) vs prior de mercado (C23). Leitura: O Liverpool não deve propor jogo intenso, enquanto o Brentford precisa arriscar. Isso reduz o xG total esperado (under) e favorece um jogo travado, com Brentford tendo mais volume ofensivo que o normal, mas ainda limitado. Efeito: reduzir total para ~2.5, aumentar probabilidade de empate e under 2.5.\n\n2. **A2** (liga: C4, C5, C6, C12) – Queda ofensiva do Liverpool: volume em casa alto (C4), mas recente queda em ataques perigosos (C5) e forma individual de atacantes caindo (C6: Salah, Wirtz, Gakpo em baixa), com Ekitiké fora (C12) reduzindo SoT. Leitura: O ataque do Liverpool não está no seu auge, e a motivação baixa agrava. Efeito: reduzir xG ofensivo do Liverpool para ~1.4-1.6 (abaixo do prior 1.82).\n\n3. **A3** (liga: C8, C9, C13) – Vulnerabilidade defensiva do Liverpool: defesa sofreu 10 gols nos últimos 5 (C8), com SoT elevado (5.8/j) e sem Bradley (C13) que era pilar de interceptações. Leitura: A defesa do Liverpool está frágil, especialmente sem Bradley, e o Brentford motivado pode explorar isso. Efeito: aumentar xG ofensivo do Brentford para ~1.4-1.6 (acima do prior 1.16).\n\n4. **A4** (liga: C10, C18, C27) – Momentum e timing: Liverpool domina 31-45 (C10), Brentford domina 61-90 (C18 e C27). Leitura: O jogo pode ter gols no fim do primeiro tempo pelo Liverpool e no segundo tempo pelo Brentford. O Brentford tende a crescer no final, e o Liverpool cai. Efeito: distribuir xG com mais gols no 2º tempo, especialmente após 60'.\n\n5. **A5** (liga: C14, C16, C17) – Ataque do Brentford: fora modesto (C14), mas Igor Thiago e Ouattara em boa fase (C16) e time marcou em 3 dos últimos 5 (C17). Leitura: A qualidade individual de Thiago e Ouattara pode superar a média fora de casa, especialmente contra defesa instável do Liverpool. Efeito: aumentar confiança no gol do Brentford (over 0.5 team total).\n\n6. **A6** (liga: C24, C2, C3) – Arquétipo e motivação: Liverpool contra equilibrado marca 2.27 (C24), mas com motivação baixa (C2), não deve atingir isso; Brentford contra dominante marca 0.82 (C24), mas precisa vencer (C3) pode elevar. Leitura: O arquétipo é distorcido pela motivação: Liverpool abaixo de 2.27, Brentford acima de 0.82. Efeito: xG Liverpool ~1.7, Brentford ~1.3.\n\n7. **A7** (liga: C25, C3, C13) – Mecanismo contra-ataque: Liverpool gera 6% em contra-ataque e Brentford sofre 8% (C25); Brentford ao se expor (C3) contra defesa sem Bradley (C13) pode sofrer contra-ataques. Leitura: Liverpool pode marcar em transições rápidas, aproveitando avanço do Brentford. Efeito: aumentar probabilidade de gol do Liverpool em contra-ataque, afetando timing (gols rápidos após roubada de bola).\n\n8. **A8** (liga: C26, C10, C18) – Reação pós-gol: ambos desmoronam ao sofrer (C26). Liverpool cai mais (-2.5) que Brentford (-1.2). Se Brentford marcar primeiro, Liverpool pode ruir; se Liverpool marcar, controla. Dado o momentum do Brentford no final (C18) e queda do Liverpool (C10), um gol do Brentford no 2º tempo pode gerar mais gols. Leitura: O primeiro gol é crucial; Brentford marcando primeiro pode abrir o jogo. Efeito: aumentar probabilidade de over se Brentford abrir placar.\n\n9. **A9** (liga: C7, C13, C16) – Goleiro e defesa: Alisson fora (C7) e Bradley fora (C13) enfraquecem defesa contra Igor Thiago artilheiro (C16). Leitura: Brentford tem boas chances de marcar em finalizações, pois a defesa do Liverpool sem seus pilares pode falhar. Efeito: aumentar xG do Brentford, especialmente em chances claras.\n\n10. **A10** (liga: C11, C19, C21, C27) – Faixas de gols: ambos marcam e sofrem mais em 76-90 (C11, C19), cruzamento aponta janela 76-90 como muito favorável (C21), e Brentford domina ali (C27). Leitura: Espera-se que o jogo tenha gols no final, especialmente se estiver empatado ou Brentford atrás. Efeito: concentrar xG na última faixa.\n\n11. **A11** (liga: C15, C3, C8) – Brentford melhorou defensivamente? Ataques perigosos sofridos caíram (C15), mas Liverpool em casa é forte (C8). Leitura: A defesa do Brentford pode segurar o Liverpool desmotivado, mas ainda sim sofrer um gol. Efeito: manter xG do Liverpool perto de 1.5-1.7.\n\n12. **A12** (liga: C9, C17, C23) – Forma recente de ambos: Liverpool sofreu muito (C9), Brentford marcou pouco (C17), mas prior BTTS 59% (C23). Leitura: Apesar da instabilidade, ambos têm capacidade de marcar, e o contexto de pressão final pode gerar BTTS. Efeito: BTTS com probabilidade em torno de 55-60%.\n\nAgora, preciso garantir que todas as conclusões do Passo 1 sejam usadas em pelo menos uma aresta ou descartadas com motivo. Vou listar as conclusões não usadas até agora e verificar:\n\nC1 (contexto neutro): usada? Não diretamente, mas é neutra, posso descartar como sem sinal.\nC22 (base_rate): usada em A1 indiretamente (prior), mas posso ligar explicitamente? Vou criar aresta extra ou considerar que ela é base para ajustes. Como ponto de partida, ela está implícita em várias arestas. Melhor não descartar e usar em A1 ajuste do total. Mas A1 já usou C23. Posso adicionar C22 em A1. A1 agora: liga C2, C3, C22, C23. Ajusto.\n\nC1: \"contexto, clima e descanso neutros\" – isso pode ir para blocos_sem_sinal como bloco context, motivo: \"clima neutro e diferença de descanso irrelevante (2 dias).\"\n\nC5: usada em A2.\nC6: usada em A2.\nC7: usada em A9.\nC8: usada em A3, A11.\nC9: usada em A3, A12.\nC10: usada em A4, A8.\nC11: usada em A10.\nC12: usada em A2.\nC13: usada em A3, A7, A9.\nC14: usada em A5.\nC15: usada em A11.\nC16: usada em A5, A9.\nC17: usada em A5, A12.\nC18: usada em A4, A8.\nC19: usada em A10.\nC20: desfalques Brentford baixo impacto -> posso descartar? Vou descartar C20 como 'desfalques de baixo impacto, neutro'.\nC21: usada em A10.\nC24: usada em A6.\nC25: usada em A7.\nC26: usada em A8.\nC27: usada em A4, A8, A10.\n\nTodas as outras foram usadas. C1 e C20 serão descartadas por neutralidade.\n\n**Passo 4 – Roteiros**\n\nCom base nas arestas, vou construir 3 roteiros com probabilidades somando ~1.0.\n\n**Roteiro 1: Jogo travado, poucos gols (Under 2.5) – 45%**\n- Liverpool entra administrando, Brentford não consegue furar bem a defesa no início.\n- Liverpool pode marcar em contra-ataque no 1º tempo (31-45), fazendo 1-0.\n- Brentford busca empate no 2º tempo, pressiona (61-90), mas defesa Liverpool segura ou sofre um gol.\n- Placar final 1-0 ou 1-1, total under 2.5.\n- Arestas: A1 (intenção assimétrica), A2 (ataque Liverpool baixo), A11 (defesa Brentford ok), A8 (controle se marcar primeiro).\n\n**Roteiro 2: Brentford surpreende e jogo tem mais gols (Over 2.5) – 35%**\n- Brentford marca primeiro (aproveitando fragilidade defensiva do Liverpool), Liverpool desmorona.\n- Liverpool busca empate, jogo fica aberto, Brentford amplia em contra-ataque.\n- Placar final 1-2 ou 2-2 (com gols no fim), over 2.5.\n- Arestas: A3 (defesa Liverpool frágil), A5 (Brentford em boa fase ofensiva), A8 (desmoronamento Liverpool), A10 (gols no fim).\n\n**Roteiro 3: Liverpool controla e vence sem sofrer muito (Cenário intermediário) – 20%**\n- Liverpool marca cedo, dita ritmo, Brentford não consegue reagir.\n- Liverpool administra, Brentford diminui intensidade após levar 2-0.\n- Placar final 2-0 ou 2-1, total under ou over 2.5 dependendo, mas mais provável under.\n- Arestas: A2 (ataque Liverpool), A7 (contra-ataque), A6 (arquétipo Liverpool favorece), A8 (controle se marcar).\n\n**Passo 5 – Board completo de mercados**\n\nPreciso atribuir probabilidades para cada mercado, usando meus xG finais e roteiros.\n\nPrimeiro, definir meus xG finais para Liverpool e Brentford.\n\nPartindo da Rota B (LIV 1.82, BRE 1.16, total 2.98). Com base nas arestas, ajusto:\n\n- Redução do ataque Liverpool (A2): -0.3 → 1.52\n- Aumento ataque Brentford (A3, A5): +0.2 → 1.36\n- Efeito motivação e intenção (A1): reduz total em ~0.3 → total ~2.5\n\nMas preciso ser coerente: os fatores não podem ser double-counted. Vou definir:\n\nxG Liverpool = 1.6 (abaixo do prior 1.82)\nxG Brentford = 1.2 (acima do prior 1.16)\nTotal = 2.8? Ainda alto. Considerando A1 (jogo tende a travar), total deveria ser menor. Vou calibrar para total 2.5, com distribuição:\n\nLiverpool: 1.5, Brentford: 1.0? Mas isso não reflete Brentford motivado. Melhor: Liverpool 1.5, Brentford 1.2, total 2.7. Ou 1.4 e 1.1 = 2.5.\n\nAnalisando roteiros: O mais provável é under (45%), com placares 1-0, 1-1. Então total médio perto de 2.2-2.5. Vou usar total = 2.4, sendo Liverpool 1.4, Brentford 1.0. Mas A5 e A3 sugerem Brentford com chances, então 1.0 parece baixo. Talvez 1.5 e 1.2 = 2.7, mas a intenção assimétrica segura o total?\n\nLembrete: a intenção assimétrica (um administra, outro precisa) pode resultar em jogo de ataque contra defesa, e historicamente isso gerou unders. Vou seguir a recomendação do veredito: \"NÃO favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de menor variância\". Então devo puxar o total para baixo.\n\nConsiderando que o prior B é 2.98, e temos forças contrárias (motivação baixa do Liverpool reduz, motivação alta do Brentford aumenta), o efeito líquido pode ser neutro ou levemente baixo. Mas a orientação é clara: jogo tende a travar. Portanto, total final: 2.5. Vou fixar:\n\n- xG Liverpool: 1.4\n- xG Brentford: 1.1\n- Total: 2.5\n\nAgora, distribuição por tempo: baseline liga 43/57. Liverpool em casa marca 0.65/1.03 (1ºT/2ºT) => 38.7% no 1ºT. Brentford fora: 0.65/0.81 => 44.5% no 1ºT. Vou considerar que o jogo pode ter 1ºT mais truncado, com Liverpool marcando se pressionar, mas Brentford crescendo no 2º. Pelo momentum, gols no 2ºT são mais prováveis. Vou alocar 40% no 1ºT e 60% no 2ºT para ambos, aproximadamente.\n\nEntão:\nLiverpool: xG_1t = 0.56, xG_2t = 0.84\nBrentford: xG_1t = 0.44, xG_2t = 0.66\nTotal_1t = 1.0, Total_2t = 1.5\n\nFaixas (xg_bands): distribuir aproximadamente 6 faixas de 15min, respeitando picos de cada time e timing.\n\nPara Liverpool (1.4 total):\nUsando a proporção das faixas de marca do Liverpool: 0.11,0.14,0.41,0.32,0.16,0.54 = soma 1.68. Normalizando para 1.4, multiplicar por 0.833. Faixas: 0-15: 0.09, 16-30: 0.12, 31-45: 0.34, 46-60: 0.27, 61-75: 0.13, 76-90: 0.45.\n\nPara Brentford (1.1 total):\nFaixas de marca: 0.22,0.16,0.27,0.16,0.14,0.51 = soma 1.46. Normalizando para 1.1, multiplicar por 0.753. Faixas: 0-15: 0.17, 16-30: 0.12, 31-45: 0.20, 46-60: 0.12, 61-75: 0.11, 76-90: 0.38.\n\nAgora, probabilidades de mercado usando Poisson (aproximado) com médias 1.4 e 1.1. Ou posso usar simulação mental baseada nos roteiros. O schema pede probabilidades para cada mercado. Vou estimar:\n\n- 1x2: Com λ 1.4 e 1.1, probabilidade de vitória casa ~44%, empate ~28%, fora ~28%. Isso bate com jogo equilibrado. Mas meu roteiro principal (45%) é under com vitória Liverpool ou empate. Vou ajustar para: home 40%, draw 30%, away 30%? Não foge muito do prior B (51/26/23). Como reduzi o xG Liverpool e aumentei o Brentford, o equilíbrio aumenta. Vou fazer: home 42%, draw 30%, away 28%. (Soma 100)\n\n- Double chance: 1X = 72%, 12 = 70%, X2 = 58%.\n\n- Draw no bet: home 60% (42/(42+28)=60%), away 40%.\n\n- Over 1.5: com total 2.5, over 1.5 é alto: ~80%? Poisson com λ=2.5: probabilidade de 0 ou 1 gol = e^{-2.5}*(1+2.5) = 0.082*3.5=0.287. Então over 1.5 = 71.3%. Mas meu total é 2.5, então over 1.5 ~71%. Over 2.5: Poisson λ=2.5: P(>2) = 1 - P(0,1,2) = 1 - 0.287 - (2.5^2/2 * e^{-2.5})= 1 - 0.287 - 0.256 = 0.457. Então over 2.5 = 45.7%. Over 3.5: P(>3) = 1 - P(0..3) = 1 - (0.287+0.256+0.213) = 0.244. (0.213 é P(3)=2.5^3/6 * e^{-2.5}=15.63/6*0.082=0.213). Então over 3.5 = 24.4%.\n\n- BTTS: λ1=1.4, λ2=1.1. Pelo Poisson, probabilidade de ambos marcarem = (1-P0_home)*(1-P0_away) = (1-e^{-1.4})*(1-e^{-1.1}) = (1-0.2466)*(1-0.3329) = 0.7534*0.6671 = 0.502. Cerca de 50%. Mas considerando correlação positiva (jogo aberto ou fechado), talvez ajuste para ~53% devido a situação de jogo. Vou usar 52%.\n\n- Team totals: Liverpool over 0.5 = 1 - e^{-1.4} = 75.3%. Over 1.5 = P(>1) Poisson: 0.592 (1 - P0-P1, P1=1.4*e^{-1.4}=0.345). 1 - 0.2466 - 0.345 = 0.408. Vou arredondar: Liverpool over 0.5: 75%, over 1.5: 41%.\n- Brentford over 0.5 = 1 - e^{-1.1} = 66.7%. Over 1.5: P(>1) = 1 - (e^{-1.1}*(1+1.1)) = 1 - (0.3329*2.1) = 1 - 0.699 = 0.301. Então 30%.\n\n- Handicap: home -1 (vencer por 2+). Probabilidade de Liverpool vencer por 2+ gols: usando distribuição de gols independentes, ou aproximar. Com λ1=1.4 e λ2=1.1, vitória por 2+: somar P(Liv gols - Bre gols >=2). Pode-se calcular, mas vou estimar ~22%. Away -1 (Bre vencer por 2+): ~12%.\n\n- Odd/Even: Ímpar ~48%, par ~52% (tendência a par em jogos de poucos gols).\n\nPara one_x_two por tempo: prior 1ºT: 35/41/23, 2ºT: 47/32/21. Com meus ajustes, 1ºT mais fechado, então empate maior. Vou fazer 1ºT: home 30%, draw 45%, away 25%. 2ºT: home 35%, draw 35%, away 30%.\n\nOver25_prob: como calculado, 46%. Mas meus roteiros: under 2.5 no roteiro 1 (45%), over nos outros (55%). A média seria over 2.5 ~50%. Vou manter 46% (Poisson), pois é o número base, mas com roteiro posso ajustar para 48% se quiser. Melhor ficar no Poisson: 46%.\n\nBtts_prob: 52%.\n\nConfidence: Aplicando regra: tenho arestas convergindo para under? Sim, A1, A2, A11 apontam para jogo travado. Mas A3, A5, A8 apontam para gols do Brentford. Conflito. Vou definir confiança como \"medium\" porque há argumentos dos dois lados, mas a força do veredito de intenção e dos dados de motivação pesam mais para under. A regra: \"medium = o resto\", então medium.\n\nConfidence_regra: \"Há convergência de fatores para under (intenção assimétrica, queda ofensiva Liverpool, administração), mas também evidências de que Brentford pode marcar (desfalques na defesa Liverpool, boa fase individual). Nenhum lado tem clareza total, portanto confiança média.\"\n\nAgora, board de mercados completo com prob, variancia, valor, nota.\n\nPara cada linha, `variancia` de 1 a 5, `valor` (alto/medio/baixo/nenhum), `nota` 1 frase.\n\nVou preencher:\n\n1. 1x2 home: prob 42%, variancia 4 (aposta arriscada, depende de motivação), valor: medio (prior 51%, eu tenho 42%, mas odds justas? Não tenho odds de mercado), nota: \"Liverpool favorito, mas motivação baixa reduz confiança.\"\n2. 1x2 draw: prob 30%, variancia 3 (empate é menos variável em jogo travado), valor: alto (prior 26%, eu 30%, diferença de 4pp, e contexto favorece), nota: \"Jogo tende a travar, empate é resultado plausível.\"\n3. 1x2 away: prob 28%, variancia 5, valor: medio (prior 23%), nota: \"Brentford precisa vencer, mas qualidade e histórico fora limitam.\"\n4. double_chance home_draw: prob 72%, variancia 1, valor: baixo (prior 77%, abaixo, sem valor), nota: \"Cobertura segura, mas odds curtas.\"\n5. double_chance draw_away: prob 58%, variancia 2, valor: alto (prior 49%, grande diferença), nota: \"Brentford não perde tem valor dada a assimetria motivacional.\"\n6. double_chance home_away: prob 70%, variancia 2, valor: medio, nota: \"Sem empate, mas probabilidade alta.\"\n7. draw_no_bet home: prob 60%, variancia 2, valor: baixo, nota: \"Seguro, mas odds tendem a ser baixas.\"\n8. draw_no_bet away: prob 40%, variancia 3, valor: medio, nota: \"Brentford não perder tem valor implícito.\"\n9. over_under over 1.5: prob 71%, variancia 2, valor: baixo (prior 81%, abaixo), nota: \"Alta probabilidade, mas odds baixas.\"\n10. over_under over 2.5: prob 46%, variancia 4, valor: alto (prior 57%, diferença grande), nota: \"Under 2.5 tem valor com jogo travado.\"\n11. over_under over 3.5: prob 24%, variancia 5, valor: medio (prior 35%), nota: \"Baixa probabilidade, under atrativo.\"\n12. btts yes: prob 52%, variancia 4, valor: medio (prior 59%), nota: \"Ambos marcam possível, mas não certo.\"\n13. team_total home over 0.5: prob 75%, variancia 1, valor: baixo (prior 84%), nota: \"Liverpool deve marcar, mas odds curtas.\"\n14. team_total home over 1.5: prob 41%, variancia 3, valor: medio (prior 54%), nota: \"Baixa probabilidade de dois gols do Liverpool.\"\n15. team_total away over 0.5: prob 67%, variancia 2, valor: medio (prior 69%), nota: \"Brentford com boa chance de marcar.\"\n16. team_total away over 1.5: prob 30%, variancia 5, valor: medio (prior 32%), nota: \"Improvável Brentford fazer dois.\"\n17. handicap home -1: prob 22%, variancia 5, valor: baixo, nota: \"Cenário de vitória folgada improvável.\"\n18. handicap away -1: prob 12%, variancia 5, valor: medio, nota: \"Zebra total.\"\n19. odd_even odd: prob 48%, variancia 3, valor: baixo, nota: \"Sem padrão claro.\"\n\n**Passo 6 – Refutação e escolha da best_bet**\n\nAplicando a disciplina de variância: Preciso escolher aposta com melhor relação valor x variância. As de menor variância (1-2) são double_chance home_draw (1), team_total home over 0.5 (1), etc. Mas valor baixo ou nenhum. Mercados com valor alto e variância controlada: double_chance draw_away (var 2, valor alto), over 2.5? Na verdade over 2.5 tem valor como under (ou seja, apostar contra over). Mas no mercado listado, \"over_under\" com selection \"over\" ou \"under\". No schema, só tem \"over\" como selection? Olhando o schema, em market \"over_under\", selection pode ser \"over\" ou \"under\". Então posso escolher \"under 2.5\" com prob = 1 - over_prob = 54%. Mas o campo prob deve refletir a probabilidade da selection. Se selection = \"under\", então prob = 54%, e valor: alto (prior over 57% implica under 43%, eu dou 54%, diferença). Mas a linha é 2.5. No schema, line é o número. Então para under 2.5, selection=\"under\", line=2.5. Variancia: média, pois under 2.5 é menos arriscado que over. Variancia 3 talvez.\n\nAgora, escolhendo candidata para best_bet: double_chance draw_away (X2) tem prob 58% e valor alto, variância 2. Mas o veredito de intenção recomenda preferir under ou team_total do lado que precisa. O Brentford é o lado que precisa, então team_total away over 0.5 (prob 67%, var 2) tem valor medio, mas prior 69% está próximo, então valor baixo? A diferença é pequena. A double chance draw_away cobre vitória do Brentford ou empate, que parece o cenário mais provável (Brentford não perde). Isso está alinhado com a intenção assimétrica: Liverpool administra, empate é suficiente, Brentford precisa vencer e pode empatar se der. Mas o empate é resultado que satisfaz ambos? Para Brentford não, mas ainda assim, eles podem não vencer. A aposta X2 é a de que Liverpool não vence. Isso tem forte apelo.\n\nNo entanto, a regra diz: \"Em jogo com veredito de intenção ⚠️ (um lado administra), prefira under com margem ou team_total do lado que precisa.\" Isso sugere que o melhor mercado seria ou under (com margem, ex. under 2.5) ou team_total do Brentford (over 0.5 ou 1.5?). team_total away over 1.5 é muito arriscado (30%). Over 0.5 é seguro mas odds baixas. Under 2.5 parece encaixar bem: jogo travado, poucos gols.\n\nVou considerar under 2.5 como candidata principal. Probabilidade: 54% (1 - 0.46). Valor: prior over 2.5 = 57%, então under = 43%. Eu dou 54%, diferença de 11pp, valor alto. Variância: em jogo de under, variância é média, pois um gol cedo pode estragar, mas a tendência de jogo fechado ajuda. Variancia 3.\n\nAgora, refutação: Atacar a aposta under 2.5.\n\nAtaque 1: \"A defesa do Liverpool está frágil (C8, C13) e o Brentford tem ataque eficiente (C16), podendo gerar gols e estourar o under.\" IDs: C8, C13, C16. Veredito: enfraquece (não derruba, pois Brentford fora marca pouco, 1.17/g).\n\nAtaque 2: \"Ambos os times têm histórico de gols no fim (C11, C19, A10) e a janela 76-90 é muito ativa, aumentando risco de gols tardios que matam o under.\" IDs: C11, C19, A10. Veredito: enfraquece.\n\nAtaque 3: \"Se o Brentford marcar primeiro, o Liverpool pode se desestabilizar (C26) e o jogo abrir, resultando em over 2.5.\" IDs: C26. Veredito: enfraquece.\n\nNenhum ataque derruba completamente, mas mostram riscos. Ainda assim, a força do veredito de intenção e a administração do Liverpool devem prevalecer. Portanto, mantenho under 2.5 como best bet, mas com confiança média (medium), pois há argumentos contra.\n\nA confiança pela regra: tenho arestas independentes convergindo para under? A1 (intenção), A2 (queda ofensiva Liverpool), A11 (defesa Brentford ok) sustentam under. Mas também há arestas opostas (A3, A5). Como não há convergência de 3 arestas fortes e independentes, e há ataques \"enfraquece\" com dado forte, a confiança é média. Justificativa: \"Apesar da intenção assimétrica favorecer under, a fragilidade defensiva do Liverpool e o poder de fogo do Brentford introduzem risco de gols. Nenhum lado com clareza total.\"\n\nEvidence_for: IDs das conclusões/arestas que suportam under: C2 (motivação Liverpool baixa), A1 (intenção assimétrica reduz total), A2 (ataque Liverpool enfraquecido), A11 (defesa Brentford ok).\nEvidence_against: C8, C13, A3, A5, A10 (gols no fim, ataque Brentford).\n\nDrivers (3 principais): Motivação assimétrica (C2, C3), desfalques defensivos do Liverpool (C13), e momentum do Brentford no 2º tempo (A4, A10).\n\nAgora, preciso preencher todos os campos do JSON de saída, conforme schema.\n\n**Conclusões** (lista completa):\n\nVou listar todas as conclusões com IDs, bloco, fato, dado, direção, força. Força: alta/media/baixa conforme impacto no jogo.\n\nC1: (contexto) Clima e descanso neutros, sem impacto. Direção: neutra. Força: baixa. (Vai para blocos_sem_sinal? Não, vou incluir como conclusão, mas depois descartá-la? Prefiro colocar em blocos_sem_sinal. Então C1 não será conclusão, mas sim um bloco sem sinal.)\n\nOk, melhor: conclusões só as que geram sinal. Blocos sem sinal vão para array `blocos_sem_sinal`. Então:\n\nBlocos sem sinal: context, porque clima neutro e diferença de descanso irrelevante.\n\nC2 (tabela_motivacao): Liverpool motivação baixa, administra. Dado: \"Liverpool: motivação baixa — NÃO precisa lutar — Champions praticamente garantida\" e \"um empate basta\". Direção: reduz ímpeto ofensivo, jogo tende a under. Força: alta.\nC3 (tabela_motivacao): Brentford motivação alta, precisa vencer. Dado: \"Brentford: motivação alta — PRECISA LUTAR — briga por vaga europeia\". Direção: aumenta ataque, mas expõe defesa. Força: alta.\nC4 (home_gols): Liverpool em casa marca 1.83/j, mas motivação pode reduzir. Dado: \"Em casa (18j): marca 1.83 / sofre 1.06\". Direção: ataque forte em casa, mas incerto. Força: media.\nC5 (home_estilo): Queda recente em ataques perigosos. Dado: \"Últimos 5: ataques perigosos 43.6/37.6\". Direção: menos volume ofensivo. Força: media.\nC6 (home_qualidade): Szoboszlai em alta, mas Salah e Wirtz em baixa. Dado: \"Szoboszlai nota 7.4, 7 MOTM; Salah forma 6.7↓, Wirtz 6.85↓\". Direção: ataque inconsistente. Força: media.\nC7 (home_qualidade): Alisson fora há 5 jogos. Dado: \"Alisson faltou 5/5\". Direção: defesa mais vulnerável. Força: media.\nC8 (home_forma): Defesa sofreu 10 gols em 5 jogos. Dado: \"10 sofridos em últimos 5, SoT sofrido 5.8/j\". Direção: defesa frágil. Força: alta.\nC9 (home_forma): Liverpool marcou em todos os últimos 5. Dado: \"10 feitos, marcou em 33/37\". Direção: ataque ainda produtivo. Força: media.\nC10 (home_momentum): Pressão no 31-45, queda no 2º tempo, desmorona ao sofrer. Dado: \"domínio 31-45 (+1.4); após sofrer gol Δ -2.5\". Direção: vulnerável se sofrer primeiro. Força: alta.\nC11 (home_faixas): Marca e sofre mais em 76-90. Dado: \"marca 0.54, sofre 0.46 em 76-90\". Direção: gols prováveis no fim. Força: media.\nC12 (home_desfalques): Ekitiké fora, mas time adaptado. Dado: \"sem ele 3.67 SoT/j vs 4.86 com ele\". Direção: leve redução volume ofensivo. Força: baixa.\nC13 (home_desfalques): Bradley fora, defesa mais exposta. Dado: \"sem ele SoT sofrido 5.23 vs 3.6 com ele\". Direção: aumento xG adversário. Força: alta.\nC14 (away_gols): Brentford fora marca 1.17/j. Dado: \"fora 1.17 marca\". Direção: ataque modesto, mas motivação pode elevar. Força: media.\nC15 (away_estilo): Melhora recente em ataques perigosos. Dado: \"últimos 5: ataques perigosos 54.2/45.2\". Direção: time mais equilibrado. Força: media.\nC16 (away_qualidade): Igor Thiago 25G, Ouattara em alta. Dado: \"Igor Thiago 25G+1A, Ouattara 7.18↑\". Direção: poder ofensivo para marcar. Força: alta.\nC17 (away_forma): Não vence há 3, mas marcou em 3/5. Dado: \"EDVDE, 6 feitos\". Direção: forma instável, mas pode marcar. Força: media.\nC18 (away_momentum): Pressiona no 2º tempo, especialmente 61-90. Dado: \"domínio +2.3 em 61-75, +2.0 em 76-90\". Direção: gols do Brentford no 2º tempo. Força: alta.\nC19 (away_faixas): Marca e sofre mais em 76-90. Dado: \"marca 0.51, sofre 0.41 em 76-90\". Direção: gols no fim. Força: media.\nC20 (away_desfalques): Henry fora, impacto limitado. Dado: \"sem ele 1.08 g/j vs 1.64 com ele\". Direção: neutro. Força: baixa. (Vou descartar depois? Ou manter como neutra? Melhor incluir como conclusão, mas com força baixa.)\nC21 (cruzamento_faixa): Janela 76-90 muito favorável para gols. Dado: \"índice 0.95 e 0.97\". Direção: esperar gols no fim. Força: alta.\nC22 (base_rate): Rotas A e B convergem para total ~3.0. Dado: \"total via SoT = 2.98\". Direção: expectativa de jogo com gols (prior). Força: media.\nC23 (probs_mercado): Prior 1x2 51/26/23, over 2.5 57%, BTTS 59%. Dado: \"over 2.5 57%\". Direção: mercado espera gols. Força: media.\nC24 (cruzamentos_computados): Liverpool contra equilibrado marca 2.27, Brentford contra dominante marca 0.82. Dado: \"2.27 e 0.82\". Direção: Liverpool tende a marcar, Brentford não. Força: alta.\nC25 (cruzamentos_computados): Contra-ataque canal aberto para ambos. Dado: \"índice 2.7 e 2.9\". Direção: gols em transição. Força: media.\nC26 (cruzamentos_computados): Liverpool desmorona mais ao sofrer gol (-2.5). Dado: \"Liverpool Δ -2.5, Brentford Δ -1.2\". Direção: primeiro gol crucial. Força: alta.\nC27 (cruzamentos_computados): Brentford domina 2º tempo (61-90). Dado: \"domínio +2.3 e +2.0\". Direção: Brentford forte no final. Força: alta.\n\nAgora, todas as conclusões serão usadas nas arestas. Preciso revisar se alguma ficou de fora. C1 foi para bloco sem sinal, C20 é neutra e pode ser usada em alguma aresta? Vou ligar C20 a A11 (sobre defesa Brentford), mas não é necessário. Posso colocar C20 em blocos sem sinal? Ela é uma conclusão sobre desfalques do Brentford, mas o impacto é tão baixo que não gera sinal. Vou colocar como concluída mas descartada? No schema, há `descartadas`: conclusões não usadas em arestas. Melhor colocar C20 em descartadas com motivo \"impacto desprezível, neutro\".\n\nC22 (base rate) foi usada em A1 (indiretamente) e serve como âncora. Vou mantê-la como conclusão e ligá-la explicitamente a uma aresta, por exemplo, A0 ou A1. Já adicionei C22 em A1.\n\nRevisão final das arestas:\n\nA1: C2, C3, C22, C23\nA2: C4, C5, C6, C12\nA3: C8, C9, C13 (C9 talvez não, é sobre ataque Liverpool, mas A3 é sobre defesa Liverpool. Melhor usar C8 e C13)\nA3: C8, C13, C16 (porque C16 é ataque Brentford) - vou refazer A3: liga C8, C13, C16 (defesa frágil + ataque Brentford bom)\nA4: C10, C18, C27 (momentum)\nA5: C14, C16, C17 (ataque Brentford)\nA6: C24, C2, C3 (arquétipo e motivação)\nA7: C25, C3, C13 (contra-ataque e exposição)\nA8: C26, C10, C18 (reação pós-gol)\nA9: C7, C13, C16 (goleiro e defesa)\nA10: C11, C19, C21, C27 (faixas gols fim)\nA11: C15, C3, C8 (defesa Brentford melhor e ataque Liverpool? C8 é defesa Liverpool, não encaixa. Melhor: C15, C2 (Liverpool baixo), C5 (queda ofensiva Liverpool) -> defesa Brentford pode segurar Liverpool desmotivado. Então A11: C15, C2, C5)\nA12: C9, C17, C23 (BTTS chances)\n\nAssim, todas as C estão ligadas? \nC9 usada em A12. \nC11 usada em A10. \nC12 usada em A2. \nC14 usada em A5. \nC18 usada em A4, A8. \nC19 usada em A10. \nC20 descartada. \nC21 usada em A10. \nC22 usada em A1. \nC23 usada em A1 e A12. \nC24 usada em A6. \nC25 usada em A7. \nC26 usada em A8. \nC27 usada em A4, A10.\n\nC15 usada em A11.\n\nOk.\n\nAgora, roteiros: vou refinar probabilidades.\n\nRoteiro 1 (Under travado): 45% (A1, A2, A11)\nRoteiro 2 (Brentford surpreende, over): 35% (A3, A5, A8, A10)\nRoteiro 3 (Liverpool controla): 20% (A2, A6, A7)\n\nSoma 1.0.\n\nfilme: descrição narrativa.\n\n**Mercados**: Preencher completo. Vou revisar as probs para consistência com os roteiros e xGs.\n\nTeam totals: home over 0.5 = 75%, home over 1.5 = 41% (mas com xG 1.4, Poisson dá 40.8%, ok)\naway over 0.5 = 67%, away over 1.5 = 30%\nHandicap: home -1 (Liverpool -1.5 gols? line -1 significa -1.5? No futebol, handicap -1 é vencer por 1+? Normalmente handicap -1 é vencer por 1 ou mais? Na verdade, handicap asiático -1 é vencer por 2+ para ganhar, empate por 1 devolve. Mas aqui parece ser handicap europeu? O schema não especifica, mas market \"handicap\" com line -1, selection \"home\" significa que Liverpool -1. Vou assumir que é handicap tradicional: apostar no Liverpool -1 significa que ele precisa vencer por 2 ou mais gols. Então prob = 22% como calculei (vitória por 2+). Similar away -1.\n\nOdd/Even: ímpar 48%, par 52%. Vou usar ímpar 48%.\n\nDouble chance: X2 = empate + away = 30% + 28% = 58%. 1X = 42+30=72%. 12 = 42+28=70%.\n\nDraw no bet: home = 42 / (42+28) = 60%. Away = 40%.\n\nOver/Under: Over 1.5: 71%, Over 2.5: 46%, Over 3.5: 24%. (Under correspondente é o complemento, mas no board só colocamos as seleções \"over\". O schema permite selection \"over\" ou \"under\". Vou colocar todos como \"over\" e a prob de over. Mas para best_bet posso escolher under.)\n\nPara o board, vou listar as 19 linhas com selection conforme schema. No schema, para over_under, selection deve ser \"over\" ou \"under\". Então posso colocar \"over\" e a prob de over. Ou posso colocar o under diretamente? O exemplo no schema não restringe, mas no enum de selection está \"over\",\"under\". Então para cada linha de over_under, posso escolher \"over\" e dar a prob de over. Fica mais simples. O campo line: para over 1.5, line=1.5, etc.\n\nNo best bet, vou escolher under 2.5: market \"over_under\", selection \"under\", line 2.5, probability 54%.\n\nAgora, evidências e análise.\n\nPara o resumo de cada time (summary), criar um parágrafo curto.\n\nHome summary: \"Liverpool entra em Anfield com a Champions praticamente garantida, precisando apenas de um empate. Isso deve reduzir seu ímpeto ofensivo, que já não está no máximo devido às quedas de forma de Salah e Wirtz, e à ausência de Ekitiké. A defesa, sem Alisson e Bradley, mostrou fragilidade recente. O time tende a administrar o jogo, buscando contra-ataques, e pode sofrer no segundo tempo devido à pressão do Brentford.\"\n\nAway summary: \"O Brentford, ainda sonhando com vaga europeia, precisa vencer e deve propor um jogo agressivo, especialmente no segundo tempo. Apesar da campanha fora modesta, conta com Igor Thiago e Ouattara em boa fase para explorar as brechas na defesa Liverpool. A equipe melhorou recentemente no equilíbrio, mas sua defesa ainda pode ser exposta em transições. O roteiro mais provável é um jogo tenso, com Brentford pressionando no final.\"\n\nGeneral summary: \"Jogo da última rodada com motivações assimétricas: o Liverpool administra, o Brentford precisa. O prior estatístico aponta para um total de gols na média, mas o contexto sugere um jogo mais travado, com poucos gols. A tendência é de um primeiro tempo estudado e um segundo tempo com mais emoção, com o Brentford crescendo. O mercado de under 2.5 emerge como a melhor opção de valor, embora com riscos devido à fragilidade defensiva do Liverpool e à janela de gols no fim.\"\n\nConclusão final e JSON.\n\nVou montar o JSON agora, com todos os campos.\n\nObservações: \n- `xg_bands` para cada time: usar os valores normalizados que calculei.\n- `general.one_x_two` etc. com as probs ajustadas.\n- `confidence_regra`: escrever a regra aplicada.\n- `jogadores`: incluir leitura de cada nomeado.\n- `arestas`: listar com IDs.\n- `roteiros`: incluir arestas relacionadas.\n- `mercados`: 19 objetos.\n- `best_bet`: objeto completo.\n- `refutacao`: ataques e conclusão.\n- `drivers`: array de strings com os 3 drivers.\n\nCuidado com o schema: em `mercados`, `selection` deve ser uma das opções, e `team` pode ser string ou null. Para over_under, team é null. Para team_total, team é \"home\" ou \"away\". Para handicap, team é o time que recebe o handicap? Normalmente handicap home -1 significa que o time da casa tem -1. No schema, `team` pode ser \"home\" ou \"away\", e `line` é o número. Então farei: market \"handicap\", selection \"home\", team \"home\", line -1? O schema não especifica o sinal da line. Vou assumir que line é um número, e se for handicap home -1, selection=\"home\", team=\"home\", line=-1? Mas line está como number, então para handicap asiático, pode ser -1. No schema, line pode ser number ou null. Vou colocar line: -1 (número negativo). Para away -1: selection=\"away\", team=\"away\", line=-1. Mas isso pode ser confuso. O comum é: handicap home -1 significa que o time da casa começa com -1 gol, então para apostar no home, você precisa que home vença por 2+ gols. A linha é do handicap. Então market \"handicap\", selection \"home\", team \"home\", line -1. Ou selection \"home\", team \"home\", line 1? O schema não deixa claro. Vou olhar o exemplo: não tem. Vou seguir a lógica: line é o handicap que o time selecionado recebe. Se time \"home\" e line -1, significa que o home tem -1 de handicap. Normalmente na indústria, handicap -1 = time favorito perde 1 gol. Então vou usar line -1 para home, e para away, line -1? Para away seria line +1? Na verdade, handicaps são expressos como -1 para o favorito. Para apostar no azarão com +1, selection \"away\", team \"away\", line 1. Mas o schema tem line como number, não string. Para simplificar, colocarei line: -1 para ambos, mas o market \"handicap\" com selection \"home\" e team \"home\" e line -1; e selection \"away\" e team \"away\" e line -1? Isso seria estranho, porque away com -1 seria handicap negativo para o visitante, ou seja, favorito. Mas o Brentford não é favorito. Então o correto seria: para handicap asiático -1 Liverpool (home -1), a aposta é no Liverpool -1. Então selection \"home\", team \"home\", line -1. Para o equivalente ao Brentford +1, seria selection \"away\", team \"away\", line 1. Mas o schema pode não suportar line positivo. Vou manter line: -1 para ambos e rezar. Ou então para away, selection \"away\", team \"away\", line -1 significando que o Brentford tem -1? Não faz sentido. Vou interpretar que o campo line representa o handicap do time selecionado. Então para handicap home -1 (aposta no Liverpool -1), selection \"home\", team \"home\", line -1. Para handicap away -1 (aposta no Brentford -1), selection \"away\", team \"away\", line -1, mas isso é irreal, ninguém aposta nisso. Talvez o mais comum no board sejam handicaps asiáticos principais. Como o schema é flexível, posso colocar para away: market \"handicap\", selection \"away\", team \"away\", line 1? Mas o schema diz line é number, então 1. Vou colocar line: 1 para away. Mas o campo `team` é enum: \"home\",\"away\". Então para handicap home -1: team=\"home\", line=-1. Para handicap away +1: team=\"away\", line=1. Mas qual selection? A selection no handicap é o time que você aposta. Se você aposta no Liverpool -1, selection=\"home\". Se aposta no Brentford +1, selection=\"away\". Então: \n- handicap home -1: market \"handicap\", selection \"home\", team \"home\", line -1.\n- handicap away +1: market \"handicap\", selection \"away\", team \"away\", line 1. \nMas isso é equivalente a um handicap asiático. Vou fazer assim. No entanto, o schema não especifica o sinal da linha. Para ser seguro, posso colocar line como número positivo e indicar no nome? Mas o JSON tem que ser validado. Vou arriscar e colocar line: -1 e line: 1, respectivamente.\n\nPara team_total: market \"team_total\", selection \"over\", team \"home\", line 0.5 (para over 0.5). A line é o número de gols? Sim, line: 0.5. Para over 1.5, line: 1.5.\n\nPara double_chance: market \"double_chance\", selection \"home_draw\", team null, line null.\n\nPara draw_no_bet: market \"draw_no_bet\", selection \"home\", team \"home\", line null.\n\nOdd_even: market \"odd_even\", selection \"odd\", team null, line null.\n\nVou preencher o board de mercados com essas definições.\n\nAgora, `best_bet`: vou escolher under 2.5. Market: \"over_under\", selection: \"under\", team: null, line: 2.5, confidence: \"medium\", probability: 0.54, evidence_for: [\"C2\",\"A1\",\"A2\",\"A11\"], evidence_against: [\"C8\",\"C13\",\"A3\",\"A5\",\"A10\"], analysis: \"Com o Liverpool administrando e o Brentford precisando vencer, mas com ataque limitado fora de casa, a tendência é de um jogo travado. A fragilidade defensiva do Liverpool é um risco, mas o contexto de última rodada e a falta de necessidade do Liverpool devem manter o placar baixo. O under 2.5 oferece valor em relação ao prior de mercado.\"\n\nRefutação: ataques conforme descrito, e conclusão: \"A aposta under 2.5 sobrevive aos ataques, pois o peso da intenção assimétrica e a administração do Liverpool são mais fortes que os riscos de gols no fim. Nenhum ataque derruba a tese, apenas enfraquece, justificando confiança média.\"\n\nDrivers: 3 strings: \"Motivação assimétrica: Liverpool administra, Brentford precisa\", \"Fragilidade defensiva do Liverpool sem Bradley e Alisson\", \"Momentum do Brentford no segundo tempo e janela de gols 76-90\".\n\nAgora, montar o JSON.\n\nVou escrever o objeto completo, garantindo que todas as strings estejam em português do Brasil e que o formato seja exatamente o schema.\n\nCuidados: \n- `conclusoes` é um array de objetos com id (string), bloco (string), fato (string), dado (string), direcao (string), forca (string).\n- `blocos_sem_sinal`: array com bloco e motivo.\n- `descartadas`: array com id e motivo.\n- `jogadores`: array com nome (string), time (\"home\" ou \"away\"), leitura (string).\n- `arestas`: array com id, liga (array de strings), leitura, efeito.\n- `roteiros`: array com nome, prob, filme, arestas (array de strings).\n- `mercados`: array com market, selection, team, line, prob, variancia, valor, nota.\n- `best_bet`: objeto.\n- `refutacao`: objeto com ataques (array de {alvo, argumento, ids, veredito}) e conclusao.\n- `drivers`: array de strings.\n- `home`/`away`: objetos com xg, xg_1t, xg_2t, xg_bands, summary.\n- `general`: objeto.\n\nVou gerar o JSON agora, revisando cada número.\n\nPara `home.xg_bands`: valores normalizados para 1.4: usando as faixas originais: 0.11,0.14,0.41,0.32,0.16,0.54. Soma = 1.68. Para 1.4, multiplicar por 0.833: 0.092, 0.117, 0.342, 0.267, 0.133, 0.45. Vou arredondar: 0.09, 0.12, 0.34, 0.27, 0.13, 0.45. (Soma 1.40)\n\n`away.xg_bands`: para Brentford 1.1. Faixas originais: 0.22,0.16,0.27,0.16,0.14,0.51. Soma = 1.46. Multiplicar por 0.753: 0.166, 0.120, 0.203, 0.120, 0.105, 0.384. Arredondar: 0.17, 0.12, 0.20, 0.12, 0.11, 0.38. (Soma 1.10)\n\n`general.total`: 2.5, total_1t: 1.0, total_2t: 1.5.\n\n`general.over25_prob`: 0.46, `btts_prob`: 0.52.\n\n`general.one_x_two`: home: 0.42, draw: 0.30, away: 0.28.\n`general.one_x_two_1t`: home: 0.30, draw: 0.45, away: 0.25.\n`general.one_x_two_2t`: home: 0.35, draw: 0.35, away: 0.30.\n\n`general.confidence`: \"medium\".\n`general.confidence_regra`: \"Múltiplas arestas convergem para under (intenção assimétrica, queda ofensiva Liverpool, defesa Brentford equilibrada), mas também há evidências de gols (fragilidade defensiva Liverpool, ataques Brentford, janela 76-90). Sem clareza total, confiança média.\"\n`general.summary`: texto resumo já escrito.\n\n`jogadores`: vou listar todos os nomes que aparecem nos blocos de qualidade e desfalques.\n\nLiverpool: van Dijk, Szoboszlai, Konaté, Gravenberch, Gakpo, Mac Allister, Wirtz, Kerkez, Alisson, Salah, Jones, Ekitiké, Bradley, Leoni, Bajcetic.\nBrentford: Kayode, Kelleher, Igor Thiago, Collins, van den Berg, Yarmolyuk, Schade, Jensen, Ouattara, Damsgaard, Lewis-Potter, Carvalho, Henry, Milambo.\n\nPreciso escrever leitura de 1 frase para cada, no contexto deste jogo.\n\nPara poupar texto, vou fazer frases concisas.\n\nExemplo: \"Van Dijk: Pilar defensivo, mas sem Alisson sua liderança será testada; crucial na bola aérea.\"\n\"Szoboszlai: Motor criativo em alta, principal arma para furar a defesa do Brentford.\"\n\"Konaté: Zagueiro físico, mas forma caindo; pode ter dificuldade contra Igor Thiago.\"\n\"Gravenberch: Meia versátil, mas contribuição ofensiva limitada; mais contenção.\"\n\"Gakpo: Atacante em baixa, gols no 2ºT; pode ser opção no banco.\"\n\"Mac Allister: Volante de contenção, pouco criativo; importante na transição defensiva.\"\n\"Wirtz: Meia talentoso, mas forma caindo e faltou 1 jogo; criatividade reduzida.\"\n\"Kerkez: Lateral com pouco volume ofensivo; não é arma de ataque.\"\n\"Alisson: Goleiro titular, ausência prolongada aumenta incerteza defensiva; time sem seu goleiro principal.\"\n\"Salah: Artilheiro em baixa e faltou 2/5; ainda perigoso em contra-ataques.\"\n\"Jones: Meia estável, mas pouca finalização; coadjuvante sem grande impacto.\"\n\"Ekitiké: Desfalque com 11 gols, mas time já adaptado; sem impacto adicional.\"\n\"Bradley: Desfalque defensivo importante tira 13% das interceptações; defesa mais exposta.\"\n\"Leoni: Desfalque irrelevante; não participou da temporada.\"\n\"Bajcetic: Desfalque irrelevante; sem impacto.\"\n\nBrentford:\n\"Kayode: Lateral defensivo, forma caindo; seguro, mas pouco ofensivo.\"\n\"Kelleher: Goleiro regular, não é ponto fraco; sofreu gols nos últimos jogos.\"\n\"Igor Thiago: Artilheiro letal com 25 gols, principal ameaça; em boa fase.\"\n\"Collins: Zagueiro de área, mas poucos desarmes; pode sofrer com velocidade.\"\n\"van den Berg: Zagueiro em alta, pilar defensivo; crucial na defesa.\"\n\"Yarmolyuk: Volante de contenção, pouco criativo; protege defesa.\"\n\"Schade: Atacante em baixa, finalização caindo; pode ser opção secundária.\"\n\"Jensen: Meia criativo, mas minutos limitados; qualidade nos passes.\"\n\"Ouattara: Atacante em excelente fase, finalizando bem; diferencial no ataque.\"\n\"Damsgaard: Meia irregular, mas com lampejos de criatividade; arma incerta.\"\n\"Lewis-Potter: Atacante de profundidade, mas pouco tempo em campo; opção de velocidade.\"\n\"Carvalho: Desfalque sem impacto; quase não jogou.\"\n\"Henry: Desfalque sem grande impacto; time já adaptado.\"\n\"Milambo: Desfalque irrelevante; sem minutos.\"\n\nAgora, arestas: vou formalizar os textos.\n\nA1: \"Intenção assimétrica: Liverpool administra (C2) e Brentford precisa (C3) versus prior de total 2.98 (C22, C23). Resultado: redução do total esperado para ~2.5, aumento da probabilidade de under e empate.\"\nA2: \"Queda ofensiva Liverpool: volume em casa historicamente bom (C4), mas queda recente em ataques perigosos (C5), formas individuais caindo (C6) e ausência de Ekitiké (C12) reduzem xG para ~1.4.\"\nA3: \"Defesa Liverpool frágil: sofreu 10 gols em 5 jogos (C8), sem Bradley (C13) permitindo mais SoT, e Brentford com Igor Thiago (C16) eficiente, aumentando xG do Brentford para 1.1-1.2.\"\nA4: \"Momento do jogo: Liverpool domina 31-45 (C10), Brentford domina 61-90 (C18, C27), sugerindo gols no fim do 1ºT e 2ºT.\"\nA5: \"Ataque Brentford motivado: fora marca 1.17 (C14), mas com Thiago e Ouattara (C16) e histórico recente de marcar (C17), xG maior que média fora.\"\nA6: \"Arquétipo distorcido: Liverpool contra equilibrado marca 2.27 (C24), mas motivação baixa (C2) reduz; Brentford contra dominante marca 0.82 (C24), mas precisa vencer (C3) eleva. Ajuste para 1.5 e 1.1.\"\nA7: \"Contra-ataque: canal aberto (C25) com Brentford exposto (C3) e defesa Liverpool sem Bradley (C13) pode gerar gols em transições para ambos.\"\nA8: \"Reação pós-gol: Liverpool desmorona ao sofrer (C26) e cai no 2ºT (C10), enquanto Brentford cresce (C18). Se Brentford abrir placar, jogo pode ter mais gols.\"\nA9: \"Goleiro e defesa: Alisson fora (C7) e Bradley fora (C13) ampliam vulnerabilidade contra finalizações de Igor Thiago (C16).\"\nA10: \"Janela 76-90: ambos marcam e sofrem bastante (C11, C19), cruzamento aponta alto índice (C21) e Brentford domina (C27) → gols prováveis no final.\"\nA11: \"Defesa Brentford segura Liverpool desmotivado: melhora defensiva recente (C15) contra ataque Liverpool em baixa motivação (C2) e queda ofensiva (C5).\"\nA12: \"BTTS possível: Liverpool marcou em quase todos (C9), Brentford marcou em 3/5 (C17) e prior de mercado 59% (C23), mantendo chance de ambos marcarem.\"\n\nRoteiros:\n\nRoteiro 1: \"Jogo travado, under 2.5\" (prob 0.45). Filme: \"Liverpool entra administrando, Brentford tem dificuldade para criar. Liverpool marca em contra-ataque no fim do 1ºT. No 2ºT, Brentford pressiona mas não consegue furar a defesa, ou empata em lance casual. Placar final 1-0 ou 1-1.\" Arestas: [\"A1\",\"A2\",\"A11\",\"A8\"]\nRoteiro 2: \"Brentford surpreende e gols saem\" (0.35). Filme: \"Brentford marca primeiro explorando defesa Liverpool frágil. Liverpool sente e desmorona. Brentford amplia em contra-ataque. Liverpool ainda faz um gol no final, mas jogo termina 1-2 ou 2-2, over 2.5.\" Arestas: [\"A3\",\"A5\",\"A8\",\"A10\"]\nRoteiro 3: \"Liverpool controla e vence sem sofrer\" (0.20). Filme: \"Liverpool marca cedo e dita o ritmo. Brentford não consegue reagir, e Liverpool administra. Placar 2-0 ou 2-1, com gols no 1ºT. Under ou over dependendo do 2º gol.\" Arestas: [\"A2\",\"A6\",\"A7\",\"A8\"]\n\nMercados: vou listar os 19 conforme definido.\n\nAgora, `best_bet`:\n\n{\n  \"market\": \"over_under\",\n  \"selection\": \"under\",\n  \"team\": null,\n  \"line\": 2.5,\n  \"confidence\": \"medium\",\n  \"probability\": 0.54,\n  \"evidence_for\": [\"C2\",\"A1\",\"A2\",\"A11\"],\n  \"evidence_against\": [\"C8\",\"C13\",\"A3\",\"A5\",\"A10\"],\n  \"analysis\": \"Com o Liverpool administrando vantagem na tabela e o Brentford precisando vencer, a tendência é de um jogo com poucos gols. O ataque Liverpool está abaixo do seu potencial, e a defesa do Brentford melhorou. Os riscos são os desfalques defensivos do Liverpool e a janela de gols no fim, mas o contexto geral favorece o under.\"\n}\n\nRefutação:\n\n{\n  \"ataques\": [\n    {\n      \"alvo\": \"under 2.5\",\n      \"argumento\": \"A defesa do Liverpool está frágil (C8, C13) e o Brentford tem ataque eficiente com Igor Thiago (C16), podendo gerar gols e estourar o under.\",\n      \"ids\": [\"C8\",\"C13\",\"C16\"],\n      \"veredito\": \"enfraquece\"\n    },\n    {\n      \"alvo\": \"under 2.5\",\n      \"argumento\": \"Ambos os times têm histórico de gols no fim (C11, C19, A10), e a janela 76-90 apresenta alto índice de gols, aumentando o risco de gols tardios que matam o under.\",\n      \"ids\": [\"C11\",\"C19\",\"A10\"],\n      \"veredito\": \"enfraquece\"\n    },\n    {\n      \"alvo\": \"under 2.5\",\n      \"argumento\": \"Se o Brentford marcar primeiro, o Liverpool pode desmoronar (C26) e o jogo se abrir, resultando em over 2.5.\",\n      \"ids\": [\"C26\"],\n      \"veredito\": \"enfraquece\"\n    }\n  ],\n  \"conclusao\": \"Os ataques enfraquecem a confiança, mas não derrubam a tese, pois o peso da intenção assimétrica e da administração do Liverpool são mais fortes. A aposta under 2.5 permanece como a de maior valor com risco controlado.\"\n}\n\nDrivers: [\n  \"Motivação assimétrica: Liverpool administra, Brentford precisa vencer\",\n  \"Fragilidade defensiva do Liverpool sem Bradley e Alisson\",\n  \"Momentum do Brentford no segundo tempo e janela de gols 76-90\"\n]\n\nAgora, `blocos_sem_sinal`: incluir \"contexto\" com motivo \"clima neutro e diferença de descanso irrelevante\". E incluir \"away_desfalques\"? Na verdade, away_desfalques gerou C20, que vou descartar. Mas o bloco em si gerou conclusão, mesmo que fraca. O bloco não fica sem sinal, porque eu tenho C20. Então não precisa de bloco sem sinal para away_desfalques. Só context mesmo.\n\n`descartadas`: C20 com motivo \"impacto desprezível, neutro\".\n\nAlém disso, preciso verificar se alguma conclusão não foi usada. Usei todas menos C1 (que foi para bloco sem sinal) e C20 (descartada). Então `descartadas` = [{\"id\":\"C20\",\"motivo\":\"Desfalques do Brentford com impacto baixo e sem sinal direto no jogo.\"}]\n\nAgora, construir o JSON final.\n\nVou escrever o objeto completo em formato JSON, com atenção às chaves.\n\nLembrando que os números devem ser numéricos, não strings.\n\nMãos à obra.",
+  "reasoningTokens": 21535,
+  "elapsedMs": 359752,
+  "promptChars": 43775,
+  "error": null
+}

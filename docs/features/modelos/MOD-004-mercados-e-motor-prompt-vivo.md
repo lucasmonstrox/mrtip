@@ -14,13 +14,15 @@ testes:
   - "typecheck api+web verde (2026-07-01)"
   - "prompt gen jogo real 00979e2b: blocos Dixon-Coles/dupla-chance/DNB/fair-odds/baseline renderizam; baseline 44/56 em 344 jogos"
   - "scripts/_backtest-dc.ts em 16 jogos reais: DC melhora log-loss do empate 0.848→0.808 e BTTS 0.708→0.697; over2.5 inalterado (esperado)"
+  - "super-prompt rodada 38 (3 jogos, 2026-07-02): best_bet 2W-1L; previsoes_jogadores no output (23/jogo); 3 dos 4 gols nao-banco/nao-contra vieram do top-4 P(marca) (Palmer 42%, Castellanos 31%, Bowen 20%)"
+  - "painel E setores: orientacao do grid verificada no banco (mandante col1=direita, Porro 2:1 casa / 2:4 fora); leitura Spurs-direita x Mykolenko = corredor aberto validada"
 depende_de: [DOS-002, LIG-007]
 impacta: [MOD-001, MOD-005, AGT-001, AGT-002, DOS-002, LIG-007, SIN-017]
 ancoras:
   settings: []
   tabelas: [match_prognosis, match_team_stats, card, match_trend, lineup_player]
   tools: []
-  funcoes: [marketProbs, buildPrompt, absences, timing, stakesFor]
+  funcoes: [marketProbs, buildPrompt, absences, timing, stakesFor, evidenceDigestMd, expectativaPanel, setorTeam, buildSuperPrompt]
   rotas: ["/matches/:id/prognosis"]
 docs:
   - docs/investigacoes/mercados-e-motor-prompt-prognostico.md
@@ -28,7 +30,7 @@ docs:
   - docs/arquitetura/arquitetura-agente-prognostico.md
   - docs/planos/MOD-004-mercados-e-motor-prompt-vivo.md
 verificado_em: null
-atualizado: 2026-07-01
+atualizado: 2026-07-02
 ---
 
 # Mercados e correção do motor no prompt de prognóstico vivo
@@ -47,6 +49,7 @@ O pipeline vivo de prognóstico (`prognosis-prompt.ts` → `run-deepseek.ts` →
 - [x] P6 dados+ia — split 1ºT/2ºT real da liga (mata `share1`=0.45) + baseline por FAIXA de 15min (6 buckets) no prompt
 - [~] P7 ia — `bothPush` remodela a FORMA da curva `xg_bands` (gol tardio quando os dois empurram) feito; falta o mini-teste A/B de momentum (SIN-021)
 - [x] P8 ia — doutrina: park-the-bus corrigido, empate/DC destravado, `fair_odds` no-vig computado em código + prob-only
+- [~] P9 ia — experimento super-prompt (`scripts/super-prognosis.ts` + `scripts/evidence-crossings.ts`): cruzamentos pré-computados injetados no prompt — arquétipo/mecanismo/dinâmica (A-C) + **expectativa POR JOGADOR** (D: xSoT/xG/P(marca)/xKP com fatores arquétipo·mando·forma·canal·desfalque-def-do-rival, conversão encolhida pra liga) + **duplas de gol** (assist→marcador, 71% dos gols com assist_id) + **setores** (E: formação provável + grid → miolo×miolo e criação por corredor × lado fraco do rival); output ganhou `previsoes_jogadores` (Passo 2b). Validado na rodada 38; falta A/B formal vs prompt antigo e amostra maior
 
 ## Plano
 

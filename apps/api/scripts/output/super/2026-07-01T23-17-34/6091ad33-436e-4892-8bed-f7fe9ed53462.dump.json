@@ -1,0 +1,912 @@
+{
+  "matchId": "6091ad33-436e-4892-8bed-f7fe9ed53462",
+  "homeName": "Brighton & Hove Albion",
+  "awayName": "Manchester United",
+  "actual": "Brighton & Hove Albion 0-3 Manchester United (HT 0-2)",
+  "ftH": 0,
+  "ftA": 3,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Brighton & Hove Albion x Manchester United\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: The American Express Community Stadium, Falmer (grass)\n- Clima: sky is clear · 19.9°C (sens. 20°C) · vento 2.7 m/s · umidade 81% · nuvens 5% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Brighton & Hove Albion 7 dias (último: liga, 2026-05-17) · Manchester United 7 dias (último: liga, 2026-05-17)\n- Viagem do visitante: ~326 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- Brighton & Hove Albion: 7º, 53 pts · Manchester United: 3º, 68 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Brighton & Hove Albion: 7º, 53 pts, 1 jogo(s) restante(s) (máx possível 56 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n  - disputa pela vaga (7º): o Brighton & Hove Albion **precisa vencer** pra travar (empate ainda deixa 3 rival vivo). Quem ainda ameaça → Chelsea (8º, 52 pts, máx 55) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Brentford (9º, 52 pts, máx 55) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Sunderland (10º, 51 pts, máx 54) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar\n  - Manchester United: 3º, 68 pts, 1 jogo(s) restante(s) (máx possível 71 pts)\n  - já SEGURO do rebaixamento.\n  - vaga de Champions já garantida.\n  - → motivação: **baixa** — NÃO precisa lutar — Champions já garantida\n  - disputa pela vaga (3º): ninguém abaixo alcança 68 pts → já travado.\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Brighton & Hove Albion (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **52 marcados / 43 sofridos** em 37j · média **1.41 marca / 1.16 sofre** por jogo\n- **Em casa (18j): marca 1.67 / sofre 0.94** (30 gols) · por tempo: 1ºT 0.54/0.62 · 2ºT 0.86/0.54\n- **Finalização: 177 SoT (4.78/j · casa 5.22/j) · conv 28%** (aberta, −3 pên) · sofre 3.92 SoT/j (adv 26%) · 9.84 KP/j\n- **Volume: 13 chutes/j (8.6 na área) · 2.4 big chances/j** · posse 54.1%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 53.8/44.6 · chutes pra fora 4.9/4.9 · bloqueados 3.4/2.9 · de fora da área 4.4/3.5\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 63.8/29.4 · chutes pra fora 5/3.8 · bloqueados 3.2/2.2 · de fora da área 3/2.4\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.84**\n  - **Ferdi Kadıoğlu** nota **6.83** (season) · forma 6.9= (últ.5 do time: 5.8→8.2→6.2→6.9→7.4 ➡️ estável) · 2× MOTM · 41j\n    ↳ **1G+0A** · gols aos 3' · 0.68 KP/j (últ.5: 1↑) · 0.34 SoT/j (últ.5: 0.8↑) · 0.34 dribles/j · def: 1.54 desarme + 0.68 int + 3.66 duelo/j · 0.61 cruz/j · ~84 min/j\n  - **Bart Verbruggen** nota **6.82** (season) · forma 6.52↓ (últ.5 do time: 6.6→6.9→6→6.8→6.3 ➡️ estável) · 1× MOTM · 37j\n    ↳ 0.03 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0.03 dribles/j · def: 0.03 desarme + 0 int + 0.43 duelo/j · ~90 min/j\n  - **Jan Paul van Hecke** nota **7.01** (season) · forma 6.84↓ (últ.5 do time: 7→7.4→6→7.3→6.5 📉 caindo) · 2× MOTM · 39j\n    ↳ **3G+3A** · gols aos 9',83',86' — mais no 2ºT, 2 tardios (76'+) · 0.33 KP/j (últ.5: 0.4↑) · 0.26 SoT/j (últ.5: 0.2↓) · 0.1 dribles/j · def: 1.41 desarme + 1.18 int + 5.59 duelo/j · 0.23 cruz/j · ~85 min/j\n  - **Lewis Dunk** nota **6.95** (season) · forma 7.5↑ (últ.5 do time: –→–→–→8.1→6.9 ⚠️ poucos jogos na janela) · **faltou 3/5** · 1× MOTM · 32j\n    ↳ **1G+0A** · gols aos 5' · 0.27 KP/j (últ.5: 0.4↑) · 0.09 SoT/j (últ.5: 0.2↑) · 0.12 dribles/j · def: 1.03 desarme + 0.91 int + 3.76 duelo/j · 0.03 cruz/j · ~86 min/j\n  - **Diego Gómez** nota **6.89** (season) · forma 6.25↓ (últ.5 do time: 6.3→–→–→–→6.2 ⚠️ poucos jogos na janela) · **faltou 3/5** · 4× MOTM · 36j\n    ↳ **10G+1A** · gols aos 6',9',21',30',33',60',64',64',68',70' · 0.75 KP/j (últ.5: 0.2↓) · 0.58 SoT/j (últ.5: 0.2↓) · 0.53 dribles/j · def: 2.36 desarme + 0.64 int + 4.75 duelo/j · 0.17 cruz/j · ~67 min/j\n  - **Yankuba Minteh** nota **6.92** (season) · forma 7= (últ.5 do time: 7.3→6.6→6.5→7.8→6.8 📈 subindo) · 1× MOTM · 35j\n    ↳ **3G+4A** · gols aos 8',58',86' — mais no 2ºT · 1.31 KP/j (últ.5: 1↓) · 0.34 SoT/j (últ.5: 0.2↓) · 1.97 dribles/j · def: 1.57 desarme + 0.49 int + 4.74 duelo/j · 1.06 cruz/j · ~69 min/j\n  - **Danny Welbeck** nota **6.84** (season) · forma 6.94= (últ.5 do time: 6.3→7.3→7.4→6.9→6.8 ➡️ estável) · 3× MOTM · 39j\n    ↳ **14G+2A** · gols aos 11',14',15',32',41',45',56',64',71',74'… · 0.62 KP/j (últ.5: 0.2↓) · 0.77 SoT/j (últ.5: 1↑) · 0.33 dribles/j · def: 0.62 desarme + 0.26 int + 1.82 duelo/j · 0.05 cruz/j · ~61 min/j\n  - **Yasin Ayari** nota **6.86** (season) · forma 6.43↓ (últ.5 do time: 6.4→6.4→–→6.4→6.5 ➡️ estável) · **faltou 1/5** · 31j\n    ↳ **4G+3A** · gols aos 28',31',47',89' · 0.5 KP/j (últ.5: 0.4=) · 0.41 SoT/j (últ.5: 0↓) · 0.56 dribles/j · def: 1.47 desarme + 0.84 int + 3.22 duelo/j · 0.16 cruz/j · ~63 min/j\n  - **Georginio Rutter** nota **6.78** (season) · forma 6.82= (últ.5 do time: 7.2→7.1→6.8→6.3→6.7 📉 caindo) · 33j\n    ↳ **3G+3A** · gols aos 29',90',90' — mais no 2ºT, 2 tardios (76'+) · 0.88 KP/j (últ.5: 0.8=) · 0.5 SoT/j (últ.5: 0.4=) · 0.88 dribles/j · def: 1.15 desarme + 0.38 int + 3.71 duelo/j · 0.09 cruz/j · ~57 min/j\n  - **Jack Hinshelwood** nota **6.72** (season) · forma 6.98↑ (últ.5 do time: 6.7→6.8→6.8→7.3→7.3 📈 subindo) · 29j\n    ↳ **4G+3A** · gols aos 1',56',61',84' — mais no 2ºT · 0.59 KP/j (últ.5: 0.6=) · 0.52 SoT/j (últ.5: 1.4↑) · 0.14 dribles/j · def: 0.9 desarme + 0.17 int + 1.9 duelo/j · ~66 min/j\n  - **Carlos Baleba** nota **6.69** (season) · forma 7↑ (últ.5 do time: –→7→7→7.1→6.9 ➡️ estável) · **faltou 1/5** · 32j\n    ↳ 0.29 KP/j (últ.5: 0.6↑) · 0.18 SoT/j (últ.5: 0.2=) · 0.47 dribles/j · def: 1.18 desarme + 1 int + 3.26 duelo/j · ~55 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DVDVE** (7pts) · **9 feitos / 6 sofridos** · marca 1.8↑ / sofre 1.2= g/j · SoT 6 feito / 2.8 sofrido\n- **Consistência: MARCOU em 29/37** (casa 15/18 · fora 14/19) · não-marcou 8 · clean sheet 10 · BTTS 21/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Tottenham Hotspur** (fora · **Empate 2-2**, HT 1-1) — 3-6 SoT · posse 48%/54% (1ºT/2ºT) · adv 18º briga-Z · você 9º · seu fora até ali 1.2 marca/1.3 sofre\n- vs **Chelsea** (casa · **Vitória 3-0**, HT 1-0) — 9-0 SoT · posse 67%/55% (1ºT/2ºT) · adv 6º briga-top · você 9º salvo · seu casa até ali 1.5 marca/1.1 sofre\n- @ **Newcastle United** (fora · **Derrota 1-3**, HT 0-2) — 4-6 SoT · posse 68%/69% (1ºT/2ºT) · adv 15º briga-Z · você 6º briga-top · seu fora até ali 1.2 marca/1.3 sofre\n- vs **Wolverhampton Wanderers** (casa · **Vitória 3-0**, HT 2-0) — 6-1 SoT · posse 73%/75% (1ºT/2ºT) · adv 20º REBAIX. · você 8º salvo · seu casa até ali 1.6 marca/1 sofre\n- @ **Leeds United** (fora · **Derrota 0-1**, HT 0-0) — 8-1 SoT · posse 64%/65% (1ºT/2ºT) · adv 14º salvo/s-alvo · você 7º briga-top · seu fora até ali 1.2 marca/1.4 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Tottenham Hotspur (FORA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 0 0 0 -1 -1 -1 0 0 0 -1 -1 0 0 -1] · 16'-30' [-1 0 0 0 0 0 -4 -2 -3 -2 -1 +1 +3 +2 +2] · 31'-45' [+5 +5 +7 +5 +5 +5 +7 +7 -1 -2 -4 -4 -10 -8 -6] · ‖INTERVALO‖ · 46'-60' [+5 +5 +4 +5 +6 +7 +2 +1 0 0 -5 -3 -2 +1 +4] · 61'-75' [+6 +4 +4 +4 +6 +6 +4 0 0 -5 -3 -1 0 0 0] · 76'-90' [+9 +4 +4 +3 -1 -4 -4 -3 -2 -2 +4 +3 +2 +4 +4] · 91'+ [+5 +3 +6 +5 +13 +13 +11 +4]\n    ⚽ gols: 39'✗ 45'✓ 77'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **4** · 31'-45' **0** ‖ 46'-60' **7** · 61'-75' **3** · 76'-90' **6**\n  - vs Chelsea (CASA · V 3-0) — min 1→95:\n    📈 pressão (net/min): 1'-15' [+2 +4 +4 +8 +9 +6 +7 +7 +4 +3 +3 +2 +2 +8 +7] · 16'-30' [+7 +6 +11 +11 +8 +5 +4 +4 +5 +2 0 +1 +1 +1 0] · 31'-45' [0 +3 +3 +5 +7 +7 +5 +6 +5 +1 -1 -2 -2 +2 +1] · ‖INTERVALO‖ · 46'-60' [+1 -3 -2 -1 -1 -1 -2 -4 +1 +1 -1 +4 +2 +1 +1] · 61'-75' [0 +1 +2 +1 +1 +2 +8 +10 +8 +3 +3 +5 +5 +3 +5] · 76'-90' [+4 +1 +1 0 0 -2 -4 -2 -2 0 +2 +3 +1 -1 -1] · 91'+ [+2 +3 +2 -1 0]\n    ⚽ gols: 3'✓ 56'✓ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **3**\n  - @ Newcastle United (FORA · D 1-3) — min 1→97:\n    📈 pressão (net/min): 1'-15' [-1 +4 +5 +6 +4 +8 +5 +5 +4 +5 +2 -3 -3 -2 -2] · 16'-30' [+2 +2 +2 +3 +2 +2 +3 +2 -3 -3 -3 -1 +1 +1 +1] · 31'-45' [-1 -7 -6 +1 +1 +3 +4 +2 +2 0 0 0 0 +2 +3] · ‖INTERVALO‖ · 46'-60' [+3 +7 +5 +4 +4 +7 +7 +5 +3 +5 +5 +4 +3 +4 +4] · 61'-75' [+4 +4 +8 +6 +6 +7 +5 +1 0 0 +1 0 -3 -2 +2] · 76'-90' [+2 +6 +5 +4 +3 +3 +3 +1 -1 +2 +2 +6 +4 +9 +10] · 91'+ [+5 +1 +1 -3 -5 -6 -6]\n    ⚽ gols: 12'✗ 24'✗ 61'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **2** · 61'-75' **2** · 76'-90' **3**\n  - vs Wolverhampton Wanderers (CASA · V 3-0) — min 1→97:\n    📈 pressão (net/min): 1'-15' [+3 +4 +3 +3 +4 +6 +6 +4 +3 +3 +3 +3 +3 +3 +5] · 16'-30' [+3 +1 0 -1 0 +1 +1 +4 +5 +4 +3 +3 +3 +3 +3] · 31'-45' [+3 +4 +5 +5 +4 +4 +4 +1 +5 +5 +6 +4 +3 +1 0] · ‖INTERVALO‖ · 46'-60' [+4 +6 +6 +10 +9 +8 +4 +4 -2 +1 +1 +1 +1 0 0] · 61'-75' [0 +1 0 0 +2 0 0 +5 +3 +3 +3 +3 +3 +4 +3] · 76'-90' [+4 +6 +6 +5 +7 +5 +7 +7 +9 +10 +10 +8 +10 +10 +7] · 91'+ [+7 +6 +6 +3 +1 +1 +1]\n    ⚽ gols: 1'✓ 5'✓ 86'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **2** · 61'-75' **5** · 76'-90' **3**\n  - @ Leeds United (FORA · D 0-1) — min 1→100:\n    📈 pressão (net/min): 1'-15' [0 -1 +2 +1 -1 +2 +3 +2 +1 0 0 -1 +2 +1 +2] · 16'-30' [+1 -4 -2 0 +3 +3 +9 +8 +7 +4 0 -2 -5 -4 -6] · 31'-45' [-4 -4 -2 0 0 +1 +2 +2 +1 +1 -1 -1 +1 +2 +6] · ‖INTERVALO‖ · 46'-60' [+2 +1 -1 +1 +3 +6 +7 +6 +4 +6 +10 +5 +6 +6 +5] · 61'-75' [+7 +5 +2 +1 +1 +1 +3 +2 +3 +2 -2 -1 -1 -1 +1] · 76'-90' [0 +3 +3 +9 +9 +11 +6 +4 +4 +3 +5 +6 +6 +8 +8] · 91'+ [+7 +4 +2 +1 +1 -2 -3 +1 +2 +3]\n    ⚽ gols: 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **2** · 31'-45' **1** ‖ 46'-60' **2** · 61'-75' **1** · 76'-90' **3**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.24 · 16-30: 0.11 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.24 · 76-90: 0.43\n- Sofre por faixa (/j): 0-15: 0.16 · 16-30: 0.22 · 31-45: 0.24 · 46-60: 0.11 · 61-75: 0.14 · 76-90: 0.3\n- 1ºT: marca 20 / sofre 23 (totais na temporada)\n\n### Desfalques de Brighton & Hove Albion neste jogo\n- **Kaoru Mitoma** (Unknown Injury) — 3 gols + 1 assists até a data; season: **6% dos gols** do time (8% com assists); **últimos 5 jogos do time**: participou de 1/9 gols = **11%** (≈ estável); with/without: com ele 1.36 g/j (25j) vs sem ele 1.5 g/j (12j) = +10%; finaliza **0.52 SoT/jogo** (time: 4.56 SoT/j com ele vs 5.25 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.4 interceptações/j** (~5% do time) · 0.7 desarmes/j · 3.3 duelos ganhos/j · 0.3 cruz. certos/j · 1.1 dribles certos/j · 1.2 key passes/j\n- **Stefanos Tzimas** (Cruciate Ligament Tear) — 1 gols + 1 assists até a data; season: **2% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/9 gols = **0%** (≈ estável); with/without: com ele 1.89 g/j (9j) vs sem ele 1.25 g/j (28j) = −34%; finaliza **0.11 SoT/jogo** (time: 4.89 SoT/j com ele vs 4.75 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.3 desarmes/j · 0.6 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.7 key passes/j\n- **A. Webster** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/9 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.41 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Manchester United (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **66 marcados / 50 sofridos** em 37j · média **1.78 marca / 1.35 sofre** por jogo\n- **Fora (18j): marca 1.5 / sofre 1.44** (27 gols) · por tempo: 1ºT 0.73/0.43 · 2ºT 1.05/0.92\n- **Finalização: 211 SoT (5.7/j · fora 4.44/j) · conv 29%** (aberta, −4 pên) · sofre 3.81 SoT/j (adv 33%) · 12.19 KP/j\n- **Volume: 15.8 chutes/j (10.4 na área) · 2.8 big chances/j** · posse 51.9%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 48.9/49.4 · chutes pra fora 5.8/4.2 · bloqueados 4.4/3.7 · de fora da área 5.4/3.8\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 38.8/59.8 · chutes pra fora 5.2/4.8 · bloqueados 5/5.6 · de fora da área 4.8/5.2\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.91**\n  - **Luke Shaw** nota **6.77** (season) · forma 7.04↑ (últ.5 do time: 7→7→7.1→7→7.1 ➡️ estável) · 1× MOTM · 37j\n    ↳ **1G+1A** · gols aos 5' · 0.43 KP/j (últ.5: 0↓) · 0.08 SoT/j (últ.5: 0.2↑) · 0.27 dribles/j · def: 1.95 desarme + 1.16 int + 4.46 duelo/j · 0.27 cruz/j · ~85 min/j\n  - **Bruno Fernandes** nota **7.73** (season) · forma 7.66= (últ.5 do time: 7.5→7.8→7.7→7.2→8.1 ➡️ estável) · 10× MOTM · 36j\n    ↳ **8G+21A** · gols aos 14',25',57',61',77',81',82',90' — mais no 2ºT, 4 tardios (76'+) · 3.86 KP/j (últ.5: 5.4↑) · 0.69 SoT/j (últ.5: 0.4↓) · 0.44 dribles/j · def: 1.58 desarme + 0.64 int + 3.58 duelo/j · 1.56 cruz/j · ~87 min/j\n  - **Senne Lammens** nota **6.73** (season) · forma 7↑ (últ.5 do time: 7.2→7.7→5.7→7.6→6.8 📉 caindo) · 32j\n    ↳ 0 KP/j (últ.5: 0=) · 0 SoT/j (últ.5: 0=) · 0 dribles/j · def: 0.03 desarme + 0 int + 0.44 duelo/j · ~90 min/j\n  - **Diogo Dalot** nota **6.87** (season) · forma 6.78= (últ.5 do time: 7.1→6.7→6.5→–→6.8 📉 caindo) · **faltou 1/5** · 1× MOTM · 36j\n    ↳ **1G+3A** · gols aos 58' — mais no 2ºT · 0.92 KP/j (últ.5: 0.4↓) · 0.19 SoT/j (últ.5: 0↓) · 0.53 dribles/j · def: 1.5 desarme + 0.81 int + 3.94 duelo/j · 0.56 cruz/j · ~79 min/j\n  - **Matheus Cunha** nota **7.16** (season) · forma 7.38↑ (últ.5 do time: 7.2→–→7.2→7.2→7.9 📈 subindo) · **faltou 1/5** · 1× MOTM · 35j\n    ↳ **10G+2A** · gols aos 6',24',43',45',55',56',65',71',79',87' — mais no 2ºT · 1.14 KP/j (últ.5: 1.6↑) · 1.03 SoT/j (últ.5: 1.2=) · 1.4 dribles/j · def: 1.2 desarme + 0.6 int + 5.09 duelo/j · 0.4 cruz/j · ~78 min/j\n  - **Bryan Mbeumo** nota **7.03** (season) · forma 6.68↓ (últ.5 do time: 6.4→7→7→6.6→6.4 ➡️ estável) · 2× MOTM · 33j\n    ↳ **11G+3A** · gols aos 2',32',37',38',51',57',61',65',75',76'… — mais no 2ºT · 1.61 KP/j (últ.5: 1↓) · 0.97 SoT/j (últ.5: 0.2↓) · 0.52 dribles/j · def: 0.79 desarme + 0.24 int + 2.61 duelo/j · 1.15 cruz/j · ~80 min/j\n  - ⚠️(fora) **Casemiro** nota **7.15** (season) · forma 7.3= (últ.5 do time: 6.9→8.5→7→–→6.8 📉 caindo) · **faltou 1/5** · 4× MOTM · 35j\n    ↳ **9G+2A** · gols aos 11',19',34',34',37',45',45',53',69' · 1.06 KP/j (últ.5: 1.6↑) · 0.54 SoT/j (últ.5: 0.8↑) · 0.2 dribles/j · def: 2.57 desarme + 0.89 int + 5.4 duelo/j · 0.14 cruz/j · ~74 min/j\n  - **Amad Diallo** nota **7** (season) · forma 6.5↓ (últ.5 do time: 6.6→6.6→6.1→6.6→6.6 ➡️ estável) · 32j\n    ↳ **2G+2A** · gols aos 13',81' · 1.34 KP/j (últ.5: 0.4↓) · 0.72 SoT/j (últ.5: 0.6=) · 1.22 dribles/j · def: 1.16 desarme + 0.47 int + 4.03 duelo/j · 0.38 cruz/j · ~73 min/j\n  - ⚠️(fora) **Benjamin Sesko** nota **6.82** (season) · forma 6.93= (últ.5 do time: 6.6→7.4→6.8→–→– ➡️ estável) · **faltou 2/5** · 2× MOTM · 32j\n    ↳ **12G+1A** · gols aos 14',26',31',43',50',60',65',71',81',85'… — mais no 2ºT, 4 tardios (76'+) · 0.31 KP/j (últ.5: 0.2↓) · 1.22 SoT/j (últ.5: 1.2=) · 0.38 dribles/j · def: 0.19 desarme + 0.09 int + 2.97 duelo/j · ~58 min/j\n  - **Leny Yoro** nota **6.62** (season) · forma 6.2↓ (últ.5 do time: –→6.2→–→–→– ⚠️ poucos jogos na janela) · **faltou 4/5** · 30j\n    ↳ 0.13 KP/j (últ.5: 0.2↑) · 0.09 SoT/j (últ.5: 0.2↑) · 0.06 dribles/j · def: 1.03 desarme + 0.97 int + 2.69 duelo/j · 0.06 cruz/j · ~57 min/j\n  - **Kobbie Mainoo** nota **6.87** (season) · forma 7.22↑ (últ.5 do time: 7→7.6→7.6→7→6.9 📉 caindo) · 27j\n    ↳ **1G+3A** · gols aos 77' — mais no 2ºT · 0.97 KP/j (últ.5: 0.8=) · 0.1 SoT/j (últ.5: 0.2↑) · 0.59 dribles/j · def: 1.24 desarme + 0.79 int + 3.1 duelo/j · 0.17 cruz/j · ~60 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: VEVVV** (13pts) · **9 feitos / 5 sofridos** · marca 1.8= / sofre 1↓ g/j · SoT 4.4 feito / 4 sofrido\n- **Consistência: MARCOU em 33/37** (casa 17/19 · fora 16/18) · não-marcou 4 · clean sheet 7 · BTTS 27/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Chelsea** (fora · **Vitória 1-0**, HT 1-0) — 1-3 SoT · posse 42%/41% (1ºT/2ºT) · adv 6º briga-top · você 3º briga-top · seu fora até ali 1.6 marca/1.6 sofre\n- vs **Brentford** (casa · **Vitória 2-1**, HT 2-0) — 6-4 SoT · posse 55%/47% (1ºT/2ºT) · adv 9º · você 3º briga-top · seu casa até ali 1.9 marca/1.2 sofre\n- vs **Liverpool** (casa · **Vitória 3-2**, HT 2-0) — 6-5 SoT · posse 45%/41% (1ºT/2ºT) · adv 4º briga-top · você 3º briga-top · seu casa até ali 1.9 marca/1.2 sofre\n- @ **Sunderland** (fora · **Empate 0-0**, HT 0-0) — 1-4 SoT · posse 47%/49% (1ºT/2ºT) · adv 12º salvo · você 3º Eur-gar · seu fora até ali 1.6 marca/1.5 sofre\n- vs **Nottingham Forest** (casa · **Vitória 3-2**, HT 1-0) — 8-4 SoT · posse 53%/51% (1ºT/2ºT) · adv 16º salvo/s-alvo · você 3º Eur-gar · seu casa até ali 2 marca/1.2 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Chelsea (FORA · V 1-0) — min 1→94:\n    📈 pressão (net/min): 1'-15' [-1 0 +1 +4 +1 0 +2 +1 -1 -2 -2 -4 -4 -4 -4] · 16'-30' [-3 -3 -3 -2 -1 0 0 +1 0 +1 +1 0 -1 -3 -5] · 31'-45' [-6 -7 -9 -8 -7 -3 +3 +2 -2 0 0 0 +3 +4 +2] · ‖INTERVALO‖ · 46'-60' [0 0 0 0 +2 +1 -1 -2 0 -1 -1 -7 -11 -10 -3] · 61'-75' [-1 -1 -1 -3 -2 -1 -3 -3 -2 -5 -4 -5 -11 -10 -10] · 76'-90' [-25 -20 -14 -10 -8 -8 -10 -6 -4 -4 -2 -5 -4 -25 -16] · 91'+ [-9 -7 -7 -5]\n    ⚽ gols: 43'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **1** · 31'-45' **6** ‖ 46'-60' **3** · 61'-75' **3** · 76'-90' **6**\n  - vs Brentford (CASA · V 2-1) — min 1→95:\n    📈 pressão (net/min): 1'-15' [0 +4 +10 +9 +9 +7 +5 +7 +8 +6 +4 +8 +5 -1 -1] · 16'-30' [-2 -2 -4 -9 -10 -7 -7 -5 -2 -6 -2 -4 -5 -5 -1] · 31'-45' [+1 +1 +3 0 -2 -4 -3 -6 -13 -14 -10 -6 -5 0 -3] · ‖INTERVALO‖ · 46'-60' [-2 -2 -2 +1 +5 +3 +3 +4 0 -2 -2 -2 +1 -2 -4] · 61'-75' [-4 -3 -5 -4 -4 -2 -9 -9 -9 -9 -9 -9 -9 -9 -6] · 76'-90' [0 +1 0 -4 -7 -8 -8 -11 -8 -4 -5 -8 -5 -5 -4] · 91'+ [-8 -9 -7 -7 -5]\n    ⚽ gols: 11'✓ 43'✓ 87'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **6** · 31'-45' **5** ‖ 46'-60' **7** · 61'-75' **6** · 76'-90' **10**\n  - vs Liverpool (CASA · V 3-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 +1 +1 0 +3 +7 +6 +4 +4 -3 -2 -1 -2 +5 +5] · 16'-30' [+5 +5 -1 -2 -5 -5 -5 -5 -7 -6 -4 -3 -3 -3 -2] · 31'-45' [+1 +2 +1 +1 +2 0 0 -1 -1 +1 -4 0 +1 +2 +1] · ‖INTERVALO‖ · 46'-60' [-1 +4 +3 -1 -2 -2 -2 -1 0 0 -5 -2 -1 +1 0] · 61'-75' [+1 +2 0 -5 -5 -3 -2 -3 -14 -11 -8 -5 +4 +4 +2] · 76'-90' [+1 +2 +4 +3 +1 0 -1 -3 -8 -9 -6 -5 -4 -5 -3] · 91'+ [-2 -2 0 -3 -3 -3]\n    ⚽ gols: 6'✓ 14'✓ 47'✗ 56'✗ 77'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **9** · 31'-45' **4** ‖ 46'-60' **5** · 61'-75' **2** · 76'-90' **8**\n  - @ Sunderland (FORA · E 0-0) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 +1 0 0 -4 -5 -3 -5 -8 -1 -1 -3 -4 -3 -2] · 16'-30' [-1 -1 -2 -8 -8 -5 -2 -1 -2 -2 -3 -2 -1 +5 +3] · 31'-45' [-1 -1 -1 -7 -7 -8 -8 -5 -6 -8 -5 -3 -2 -2 -1] · ‖INTERVALO‖ · 46'-60' [+3 0 -1 0 +3 +5 +10 +6 +6 +4 +4 +4 +3 +3 +2] · 61'-75' [+2 +1 +1 -2 -2 -2 -2 -1 -1 0 -3 -1 -2 -3 -3] · 76'-90' [-2 0 0 0 0 0 0 -1 0 +1 +1 -1 -3 -3 -3] · 91'+ [+2 +5 +5 +7]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **6** · 16'-30' **3** · 31'-45' **4** ‖ 46'-60' **5** · 61'-75' **2** · 76'-90' **5**\n  - vs Nottingham Forest (CASA · V 3-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 -1 0 +2 +3 +5 +3 +1 -1 0 0 0 -2 +3 +7] · 16'-30' [+8 +6 +3 +2 +1 -2 +1 +1 0 0 0 -2 -5 -5 -2] · 31'-45' [+2 0 -1 -2 -2 -1 -2 0 +4 +3 +2 +1 +3 0 0] · ‖INTERVALO‖ · 46'-60' [0 +3 +2 +4 +3 +5 +4 0 -5 -2 +3 +3 +3 +4 0] · 61'-75' [0 -3 -3 +2 +3 +3 +8 +8 +9 +9 +6 +6 +6 +2 +3] · 76'-90' [+3 +5 +1 +1 +1 +1 0 -16 -11 -4 -2 -5 -10 -4 -4] · 91'+ [-5 -4 -4 -2 +2 +4 +3 +6]\n    ⚽ gols: 5'✓ 53'✗ 55'✓ 76'✓ 78'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **2** · 31'-45' **4** ‖ 46'-60' **0** · 61'-75' **5** · 76'-90' **10**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.22 · 16-30: 0.19 · 31-45: 0.32 · 46-60: 0.32 · 61-75: 0.3 · 76-90: 0.43\n- Sofre por faixa (/j): 0-15: 0.14 · 16-30: 0.14 · 31-45: 0.16 · 46-60: 0.3 · 61-75: 0.22 · 76-90: 0.41\n- 1ºT: marca 27 / sofre 16 (totais na temporada)\n\n### Desfalques de Manchester United neste jogo\n- **Benjamin Sesko** (Leg Injury) — 11 gols + 1 assists até a data; season: **17% dos gols** do time (18% com assists); **últimos 5 jogos do time**: participou de 2/9 gols = **22%** (≈ estável); with/without: com ele 1.8 g/j (30j) vs sem ele 1.71 g/j (7j) = −5%; finaliza **1.13 SoT/jogo** (time: 5.6 SoT/j com ele vs 6.14 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.2 desarmes/j · 2.8 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.3 key passes/j\n- **Casemiro** (Unknown Injury) — 9 gols + 2 assists até a data; season: **14% dos gols** do time (17% com assists); **últimos 5 jogos do time**: participou de 1/9 gols = **11%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.88 g/j (34j) vs sem ele 0.67 g/j (3j) = −64%; finaliza **0.56 SoT/jogo** (time: 5.82 SoT/j com ele vs 4.33 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~10% do time) · 2.6 desarmes/j · 5.5 duelos ganhos/j · 0.1 cruz. certos/j · 0.2 dribles certos/j · 1.1 key passes/j\n- **Matthijs de Ligt** (Back Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/9 gols = **0%** (≈ estável); with/without: com ele 1.62 g/j (13j) vs sem ele 1.88 g/j (24j) = +16%; finaliza **0.23 SoT/jogo** (time: 5.23 SoT/j com ele vs 5.96 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.2 interceptações/j** (~15% do time) · 1.5 desarmes/j · 5.7 duelos ganhos/j · 0.3 cruz. certos/j · 0.1 dribles certos/j · 0.2 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Brighton & Hove Albion atacando × Manchester United defendendo**\n| Faixa | Brighton & Hove Albion marca/j | Manchester United sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.24 | 0.14 | 0.38 |\n| 16-30 | 0.11 | 0.14 | 0.25 |\n| 31-45 | 0.19 | 0.16 | 0.35 |\n| 46-60 | 0.19 | 0.3 | 0.49 |\n| 61-75 | 0.24 | 0.22 | 0.46 |\n| 76-90 | 0.43 | 0.41 | 0.84 |\n\n**Manchester United atacando × Brighton & Hove Albion defendendo**\n| Faixa | Manchester United marca/j | Brighton & Hove Albion sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.22 | 0.16 | 0.38 |\n| 16-30 | 0.19 | 0.22 | 0.41 |\n| 31-45 | 0.32 | 0.24 | 0.56 |\n| 46-60 | 0.32 | 0.11 | 0.43 |\n| 61-75 | 0.3 | 0.14 | 0.44 |\n| 76-90 | 0.43 | 0.3 | 0.73 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Brighton & Hove Albion: **76-90** (domínio +7.1) · Manchester United: **0-15** (domínio +1.3). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Brighton & Hove Albion domínio/j | Manchester United domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | +2.3 | +1 | +1.3 ≈ |\n| 16-30 | +1.6 | -2.1 | +3.7 🏠 |\n| 31-45 | +1.5 | -1.9 | +3.4 🏠 |\n| 46-60 | +2.9 | +0.5 | +2.4 🏠 |\n| 61-75 | +2.3 | -2.2 | +4.5 🏠 |\n| 76-90 | +3.3 | -3.8 | +7.1 🏠 |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Brighton & Hove Albion (casa) = 1.57 · λ Manchester United (fora) = 1.15 · total = 2.72\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Brighton & Hove Albion: λ_SoT 4.67 × conv 28% → **1.31 gols**\n- Manchester United: λ_SoT 4.15 × conv 29% → **1.2 gols**\n- total via SoT = 2.51\n- **Índice de volume do jogo**: λ_SoT total 8.8 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 46/28/26% | 38/30/32% |\n| Over 1.5 | 77% | 73% |\n| Over 2.5 | 51% | 46% |\n| Over 3.5 | 29% | 24% |\n| BTTS | 56% | 53% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **68%** · 12 **70%** · X2 **62%** · **Draw No Bet** casa 54% / fora 46%\n- **Placar exato (mais prováveis)**: 1-1 14% · 0-0 10% · 1-0 9% · 2-1 8%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 27% · 2-3 49% · 4+ 24%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Brighton & Hove Albion over 0.5 **73%** / over 1.5 **38%** · Manchester United over 0.5 **70%** / over 1.5 **34%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 2.67 · empate 3.31 · fora 3.1. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **27/47/26%** · 2ºT **35/36/29%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Brighton & Hove Albion) e `away` (= Manchester United), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.7000000476837158,
+    "xg_away": 0.8999999761581421,
+    "total": 2.5999999046325684,
+    "over25_prob": 0.47999998927116394,
+    "btts_prob": 0.44999998807907104,
+    "one_x_two": "{\"home\":0.5,\"draw\":0.28,\"away\":0.22}",
+    "confianca": "medium",
+    "best_bet_market": "team_total",
+    "best_bet_selection": "over",
+    "best_bet_team": "home",
+    "best_bet_line": 1.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.5099999904632568,
+    "reasoning_tokens": 7889
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Brighton & Hove Albion** contra **equilibrado** (o estilo do Manchester United, posse média 51.9%): marca **1.55/j** e sofre 1.73/j em 11 jogos — na média da temporada (1.41).\n- **Manchester United** contra **dominante** (o estilo do Brighton & Hove Albion, posse média 54.1%): marca **1.91/j** e sofre 1.36/j em 11 jogos — na média da temporada (1.78).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — falta**: Brighton & Hove Albion gera 2% dos gols por aí × Manchester United sofre 4% por aí (liga: 2%) → índice 1.9×.\n- **CANAL ABERTO — falta**: Manchester United gera 2% dos gols por aí × Brighton & Hove Albion sofre 5% por aí (liga: 2%) → índice 2.1×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Brighton & Hove Albion** (21 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -2.9 nos 10min seguintes) · **MATA O JOGO após marcar** (Δ +2.3 — segue pressionando).\n- **Manchester United** (25 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.3 nos 10min seguintes) · neutro após marcar (Δ -0.9).",
+  "output": {
+    "home": {
+      "xg": 1.5,
+      "xg_1t": 0.65,
+      "xg_2t": 0.85,
+      "xg_bands": {
+        "0-15": 0.2,
+        "16-30": 0.1,
+        "31-45": 0.25,
+        "46-60": 0.25,
+        "61-75": 0.25,
+        "76-90": 0.45
+      },
+      "summary": "Brighton joga em casa precisando vencer para garantir vaga europeia. Time ofensivamente forte em casa (1.67 gols/j), com Welbeck e Hinshelwood em boa fase. Defesa sólida, mas dúvidas sobre Dunk. Tendência de pressionar no final."
+    },
+    "away": {
+      "xg": 1.2,
+      "xg_1t": 0.52,
+      "xg_2t": 0.68,
+      "xg_bands": {
+        "0-15": 0.2,
+        "16-30": 0.15,
+        "31-45": 0.25,
+        "46-60": 0.2,
+        "61-75": 0.15,
+        "76-90": 0.25
+      },
+      "summary": "Manchester United já garantiu Champions e joga sem motivação real. Desfalcado de Sesko, Casemiro e De Ligt, mas tem Bruno Fernandes como maestro. Perigoso em contra-ataques, mas defesa vulnerável, sofre muitos ataques."
+    },
+    "general": {
+      "total": 2.7,
+      "total_1t": 1.17,
+      "total_2t": 1.53,
+      "over25_prob": 0.51,
+      "btts_prob": 0.54,
+      "one_x_two": {
+        "home": 0.42,
+        "draw": 0.26,
+        "away": 0.32
+      },
+      "one_x_two_1t": {
+        "home": 0.3,
+        "draw": 0.45,
+        "away": 0.25
+      },
+      "one_x_two_2t": {
+        "home": 0.38,
+        "draw": 0.32,
+        "away": 0.3
+      },
+      "confidence": "medium",
+      "confidence_regra": "medium: arestas independentes a favor do gol do Brighton (A1, A4, A14) convergem, mas ataque baseado no veredito de intenção assimétrica (C2, C3) enfraquece e é sustentado por dado forte (motivação do United baixa).",
+      "summary": "Jogo com assimetria de motivação: Brighton precisa, United não. Brighton favorito, mas risco de jogo truncado. Total esperado de 2.7 gols, com alta probabilidade de Brighton marcar (78%). Confiança média devido ao contraste entre necessidade e postura do United."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Contexto climático e de descanso",
+        "dado": "Clima claro 19.9°C, descanso igual 7 dias, viagem 326km",
+        "direcao": "Neutro, sem fator externo que mova xG",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Motivação Brighton alta x Man United baixa",
+        "dado": "Brighton 7º com 53pts precisa vencer para Europa; United 3º com 68pts Champions garantida",
+        "direcao": "Brighton mais intenso, United pode administrar",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito de intenção: jogo tende a travar",
+        "dado": "⚠️ VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR — pelo menos um lado NÃO precisa ir pra cima",
+        "direcao": "Menos gols, preferir under ou menor variância",
+        "forca": "alta"
+      },
+      {
+        "id": "C4",
+        "bloco": "home_gols",
+        "fato": "Brighton forte em casa",
+        "dado": "Marca 1.67/j, sofre 0.94/j em casa; SoT 5.22/j",
+        "direcao": "Favorável ao ataque do Brighton",
+        "forca": "media"
+      },
+      {
+        "id": "C5",
+        "bloco": "away_gols",
+        "fato": "Man United fora: ataque mediano, defesa vazada",
+        "dado": "Fora marca 1.5/j, sofre 1.44/j; SoT 4.44/j",
+        "direcao": "United vulnerável defensivamente",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_estilo",
+        "fato": "Brighton recentemente mais agressivo",
+        "dado": "Últ.5: ataques perigosos 63.8 feito, 29.4 sofrido",
+        "direcao": "Brighton dominante, pressão ofensiva",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "away_estilo",
+        "fato": "Man United recentemente sofrendo pressão",
+        "dado": "Últ.5: ataques perigosos 38.8 feito, 59.8 sofrido",
+        "direcao": "United sendo dominado, menos perigo",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_qualidade",
+        "fato": "Brighton: Welbeck artilheiro, Gómez dúvida",
+        "dado": "Welbeck 14G, Gómez 10G mas faltou 3/5",
+        "direcao": "Armas ofensivas, mas Gómez incerto",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_qualidade",
+        "fato": "Defesa Brighton: Dunk em dúvida",
+        "dado": "Dunk faltou 3/5 jogos recentes, van Hecke pilar",
+        "direcao": "Possível desorganização defensiva",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "away_qualidade",
+        "fato": "United: Bruno Fernandes decisivo, mas desfalques",
+        "dado": "Bruno 8G21A, nota 7.73; Sesko e Casemiro fora",
+        "direcao": "Qualidade individual mantida, mas time enfraquecido",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_forma",
+        "fato": "Brighton em casa: vitórias sólidas",
+        "dado": "Últ.5 em casa: 3-0 Chelsea, 3-0 Wolves; marca 1.8/j",
+        "direcao": "Casa forte, ataque produtivo",
+        "forca": "media"
+      },
+      {
+        "id": "C12",
+        "bloco": "away_forma",
+        "fato": "United boa sequência, mas atuações fora irregulares",
+        "dado": "Últ.5: 13pts, mas fora: 1-0 Chelsea, 0-0 Sunderland",
+        "direcao": "Time embalado, mas pode não se esforçar totalmente",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_momentum",
+        "fato": "Brighton: domínio final e reação pós-gol",
+        "dado": "Domínio 76-90 +7.1; desmorona ao sofrer, mata ao marcar",
+        "direcao": "Tende a gols no final e controle se sair na frente",
+        "forca": "alta"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_momentum",
+        "fato": "United: janela inicial e reação negativa",
+        "dado": "Domínio 0-15 +1.3; desmorona ao sofrer",
+        "direcao": "Pode marcar cedo, mas vulnerável se sofrer",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_faixas",
+        "fato": "Brighton marca/sofre mais no final",
+        "dado": "Marca 0.43/j 76-90, sofre 0.3/j",
+        "direcao": "Tendência de gols tardios",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_faixas",
+        "fato": "United marca/sofre mais no final",
+        "dado": "Marca 0.43/j 76-90, sofre 0.41/j",
+        "direcao": "Tendência de gols tardios",
+        "forca": "media"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_desfalques",
+        "fato": "Mitoma fora: impacto baixo",
+        "dado": "6% gols, 0.52 SoT; time manteve SoT sem ele",
+        "direcao": "Leve perda ofensiva",
+        "forca": "baixa"
+      },
+      {
+        "id": "C18",
+        "bloco": "away_desfalques",
+        "fato": "United sem Sesko, Casemiro, De Ligt",
+        "dado": "Sesko 17% gols, Casemiro 14% gols e 2.6 desarmes, De Ligt 15% int",
+        "direcao": "United ofensiva e defensivamente enfraquecido",
+        "forca": "alta"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_desfalques",
+        "fato": "Ausências tiram intensidade defensiva do United",
+        "dado": "Casemiro e De Ligt: 2.1 int/j, 4.1 desarmes/j a menos",
+        "direcao": "Aumenta xG do Brighton",
+        "forca": "alta"
+      },
+      {
+        "id": "C20",
+        "bloco": "cruzamento_faixa",
+        "fato": "Cruzamento faixas: pico no final",
+        "dado": "76-90: Brighton ataque 0.84, United ataque 0.73",
+        "direcao": "Alta probabilidade de gols nos minutos finais",
+        "forca": "alta"
+      },
+      {
+        "id": "C21",
+        "bloco": "base_rate",
+        "fato": "Prior total ~2.5-2.7 gols",
+        "dado": "Rota A 2.72, Rota B 2.51",
+        "direcao": "Jogo de médio volume",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "probs_mercado",
+        "fato": "Mercado: leve favoritismo Brighton, under 2.5 favorito",
+        "dado": "1x2 38/30/32; over 2.5 46%, BTTS 53%",
+        "direcao": "Jogo equilibrado, tendência under",
+        "forca": "media"
+      },
+      {
+        "id": "C23",
+        "bloco": "cruzamentos_computados",
+        "fato": "United se dá bem contra dominantes",
+        "dado": "Arquétipo: United marca 1.91/j contra times dominantes",
+        "direcao": "United pode marcar mesmo desfalcado",
+        "forca": "alta"
+      },
+      {
+        "id": "C24",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ambos eficientes em faltas",
+        "dado": "Brighton 1.9x, United 2.1x índice de gols de falta",
+        "direcao": "Leve aumento chance gol de falta",
+        "forca": "baixa"
+      },
+      {
+        "id": "C25",
+        "bloco": "cruzamentos_computados",
+        "fato": "Dinâmica pós-gol: desmoronam ao sofrer",
+        "dado": "Brighton desmorona (-2.9) ao sofrer, United (-1.3); Brighton mata jogo ao marcar",
+        "direcao": "Primeiro gol crucial; jogo pode abrir ou fechar",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [],
+    "jogadores": [
+      {
+        "nome": "Ferdi Kadıoğlu",
+        "time": "home",
+        "leitura": "Lateral com boa solidez defensiva (1.54 desarmes), mas pouco impacto ofensivo (1G, 0.68 KP). Não deve ser diferencial."
+      },
+      {
+        "nome": "Bart Verbruggen",
+        "time": "home",
+        "leitura": "Goleiro mediano, sem grandes defesas, mas seguro. Não influencia diretamente o xG."
+      },
+      {
+        "nome": "Jan Paul van Hecke",
+        "time": "home",
+        "leitura": "Zagueiro goleador (3G) com boa capacidade de interceptação (1.18 int), pilar defensivo na ausência de Dunk."
+      },
+      {
+        "nome": "Lewis Dunk",
+        "time": "home",
+        "leitura": "Líder defensivo, mas ritmo questionável por ter perdido 3/5 jogos. Se não estiver 100%, defesa do Brighton pode sofrer."
+      },
+      {
+        "nome": "Diego Gómez",
+        "time": "home",
+        "leitura": "Meia-atacante com 10G e faro de gol, mas ausente em 3/5 e forma caindo. Sua presença é dúvida; se jogar, é arma importante na entrada da área."
+      },
+      {
+        "nome": "Yankuba Minteh",
+        "time": "home",
+        "leitura": "Ponta habilidoso (1.97 dribles) em boa fase recente. Pode causar problemas para a defesa do United com sua velocidade."
+      },
+      {
+        "nome": "Danny Welbeck",
+        "time": "home",
+        "leitura": "Centroavante artilheiro (14G), mas com média de 61 min/j. Se estiver em campo, é referência e finalizador, mas não dura 90 min."
+      },
+      {
+        "nome": "Yasin Ayari",
+        "time": "home",
+        "leitura": "Meia com 4G+3A, mas finalização baixa (0.41 SoT). Irregular, pode ser opção no banco."
+      },
+      {
+        "nome": "Georginio Rutter",
+        "time": "home",
+        "leitura": "Atacante com gols tardios, mas pouco volume (0.5 SoT). Pouco impacto no xG."
+      },
+      {
+        "nome": "Jack Hinshelwood",
+        "time": "home",
+        "leitura": "Meia em ascensão: 1.4 SoT nos últimos 5 jogos, 4G+3A na temporada. Pode surpreender como alternativa ofensiva."
+      },
+      {
+        "nome": "Carlos Baleba",
+        "time": "home",
+        "leitura": "Volante de contenção (1.18 desarmes, 1 int), com pouco aporte ofensivo. Dá equilíbrio ao meio."
+      },
+      {
+        "nome": "Kaoru Mitoma",
+        "time": "home",
+        "leitura": "Desfalque: driblador e criador (1.2 key passes). Sua ausência tira imprevisibilidade, mas time mantém volume de SoT sem ele."
+      },
+      {
+        "nome": "Stefanos Tzimas",
+        "time": "home",
+        "leitura": "Desfalque: jovem pouco utilizado (0.11 SoT), irrelevante para o jogo."
+      },
+      {
+        "nome": "Adam Webster",
+        "time": "home",
+        "leitura": "Desfalque: zagueiro reserva, sem impacto."
+      },
+      {
+        "nome": "Luke Shaw",
+        "time": "away",
+        "leitura": "Lateral defensivamente sólido (1.95 desarmes), mas ofensivamente discreto (1G, 0.43 KP). Não é arma de ataque."
+      },
+      {
+        "nome": "Bruno Fernandes",
+        "time": "away",
+        "leitura": "Craque do time: 21 assistências, 3.86 KP/j. Forma estelar; ditador do ritmo, mesmo desfalcado, é a principal esperança de criação."
+      },
+      {
+        "nome": "Senne Lammens",
+        "time": "away",
+        "leitura": "Goleiro sem destaque, defesas rotineiras. Não deve fazer a diferença."
+      },
+      {
+        "nome": "Diogo Dalot",
+        "time": "away",
+        "leitura": "Lateral com alguma contribuição ofensiva (0.92 KP), mas forma em baixa e defensivamente pode ser exposto."
+      },
+      {
+        "nome": "Matheus Cunha",
+        "time": "away",
+        "leitura": "Atacante em grande fase (1.03 SoT/j, 10G). Principal arma ao lado de Bruno, especialmente em transições."
+      },
+      {
+        "nome": "Bryan Mbeumo",
+        "time": "away",
+        "leitura": "Ponta com 11G, mas produção em queda (0.2 SoT nos últ.5). Pode decidir, mas momento não é dos melhores."
+      },
+      {
+        "nome": "Casemiro",
+        "time": "away",
+        "leitura": "Desfalque: volante intenso (2.6 desarmes) e com 9G. Sua ausência deixa meio-campo mais frágil, facilitando a criação do Brighton."
+      },
+      {
+        "nome": "Amad Diallo",
+        "time": "away",
+        "leitura": "Ponta com baixa produtividade recente (nota 6.5). Pouco acrescenta no momento."
+      },
+      {
+        "nome": "Benjamin Sesko",
+        "time": "away",
+        "leitura": "Desfalque: artilheiro com 12G, mas time manteve SoT sem ele (6.14). Impacto ofensivo menor do que parece, mas faz falta como referência."
+      },
+      {
+        "nome": "Leny Yoro",
+        "time": "away",
+        "leitura": "Zagueiro jovem, pouco experiente (nota 6.62). Se titular, é ponto a ser explorado pelo ataque do Brighton."
+      },
+      {
+        "nome": "Kobbie Mainoo",
+        "time": "away",
+        "leitura": "Meia de controle, mas sem grande peso ofensivo (1G). Bom para manter posse, mas pouco decisivo."
+      },
+      {
+        "nome": "Matthijs de Ligt",
+        "time": "away",
+        "leitura": "Desfalque: zagueiro titular com 1.2 interceptações e 5.7 duelos/j. Sua ausência desorganiza a defesa, principal fator para aumento do xG do Brighton."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C2",
+          "C18",
+          "C19"
+        ],
+        "leitura": "Brighton precisando vencer, com defesa do United desfalcada (sem Casemiro e De Ligt), tende a pressionar mais e criar chances claras.",
+        "efeito": "xG Brighton sobe ~20% (de 1.31 para 1.57); total sobe."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C3",
+          "C12",
+          "C25"
+        ],
+        "leitura": "Jogo assimétrico: se Brighton marcar, controla; se United marcar, Brighton desmorona. Mas com United administrando, jogo pode ter poucos gols se Brighton não marcar cedo.",
+        "efeito": "Alta variância no total, mas viés para under se Brighton não marcar no 1ºT."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C6",
+          "C7"
+        ],
+        "leitura": "Brighton muito agressivo recentemente contra United sendo pressionado; espera-se domínio territorial do Brighton e maior volume de chances.",
+        "efeito": "SoT Brighton elevado, xG ofensivo maior."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C4",
+          "C5"
+        ],
+        "leitura": "Força ofensiva caseira do Brighton (1.67 gols/j) contra defesa frágil do United fora (1.44 sofridos). Brighton deve marcar ao menos 1 gol.",
+        "efeito": "Alta probabilidade de gol do Brighton."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C8",
+          "C10",
+          "C17",
+          "C18"
+        ],
+        "leitura": "Comparação de elenco: Brighton mantém Welbeck e dúvida Gómez, United perde Sesko e Casemiro. Poder de fogo se equilibra, mas criação do Brighton fica mais forte.",
+        "efeito": "Ligeiro aumento da probabilidade de vitória do Brighton."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C11",
+          "C12"
+        ],
+        "leitura": "Forma recente: Brighton muito forte em casa (2 vitórias por 3-0) vs United com vitórias sobressaltadas em casa e empate sem gols fora. Brighton tem maior consistência.",
+        "efeito": "Brighton favorito para vencer, mas empate possível."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C13",
+          "C14",
+          "C20"
+        ],
+        "leitura": "Ambos têm pico nos minutos finais (76-90) e desmoronam ao sofrer. Jogo pode ser decidido no final, com gols nessa faixa.",
+        "efeito": "Probabilidade de gols no 2º tempo maior, especialmente após 75'."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C15",
+          "C16",
+          "C20"
+        ],
+        "leitura": "Distribuição de gols e cruzamento de faixas confirmam alta probabilidade de gols no final. Janela 76-90 é a mais provável para gols.",
+        "efeito": "Espera-se gols nessa faixa, aumentando chance de over 2.5 se jogo chegar empatado."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C21",
+          "C23"
+        ],
+        "leitura": "Prior total 2.51, mas arquétipo United contra dominante marca 1.91/j, sugerindo que o total real pode ser maior.",
+        "efeito": "Total pode superar 2.51, aproximando-se de 2.7-3.0."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C2",
+          "C25"
+        ],
+        "leitura": "Brighton precisa vencer e, se marcar primeiro, tende a matar o jogo. Vitória do Brighton provável se abrir o placar.",
+        "efeito": "Probabilidade de vitória do Brighton condicionada ao primeiro gol."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C17",
+          "C18",
+          "C19"
+        ],
+        "leitura": "Desfalques: Brighton perde criatividade (Mitoma), mas United perde dois pilares defensivos. Prejuízo maior para o United.",
+        "efeito": "Vantagem Brighton, especialmente em casa."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C2",
+          "C3",
+          "C9"
+        ],
+        "leitura": "Se Dunk não estiver 100%, defesa do Brighton pode sofrer contra contra-ataques rápidos do United, que tem tradição nesse tipo de jogo.",
+        "efeito": "Risco de gol do United, mesmo sem Sesko."
+      },
+      {
+        "id": "A13",
+        "liga": [
+          "C10",
+          "C23"
+        ],
+        "leitura": "Bruno Fernandes e Cunha são perigosos no contra-ataque, e United marca bem contra times dominantes (1.91/j). United pode marcar, mesmo desfalcado.",
+        "efeito": "xG do United pode se manter em 1.2-1.3, apesar das ausências."
+      },
+      {
+        "id": "A14",
+        "liga": [
+          "C6",
+          "C19"
+        ],
+        "leitura": "Pressão ofensiva do Brighton nos últimos 5 contra defesa United sem De Ligt (15% int). Brighton deve criar alto volume de SoT.",
+        "efeito": "xG do Brighton sobe, chance de marcar 2+ gols."
+      },
+      {
+        "id": "A15",
+        "liga": [
+          "C13",
+          "C14"
+        ],
+        "leitura": "Ambos desmoronam ao sofrer: se houver gol, o time que sofre tende a piorar, podendo gerar mais gols em sequência.",
+        "efeito": "Se o primeiro gol sair, chance de mais gols aumenta."
+      },
+      {
+        "id": "A16",
+        "liga": [
+          "C1",
+          "C2"
+        ],
+        "leitura": "Contexto neutro e motivação elevada do Brighton: sem fatores externos, a necessidade pode ser o diferencial, impulsionando o Brighton.",
+        "efeito": "Favorece 1x2 casa."
+      },
+      {
+        "id": "A17",
+        "liga": [
+          "C20",
+          "C24"
+        ],
+        "leitura": "Ambos têm eficiência em faltas, e janela final é quente. Possibilidade de gol de bola parada no final.",
+        "efeito": "Ligeiro aumento de chance de gol de falta, mas sem grande impacto no total."
+      },
+      {
+        "id": "A18",
+        "liga": [
+          "C21",
+          "C22"
+        ],
+        "leitura": "Prior under 2.5 (54%), total 2.51. Tendência natural é under, mas fatores do jogo podem empurrar para over.",
+        "efeito": "Partida de baixo/médio volume, mas com upside."
+      },
+      {
+        "id": "A19",
+        "liga": [
+          "C8",
+          "C11"
+        ],
+        "leitura": "Brighton em casa com Welbeck e Hinshelwood em boa fase: ataque tem recursos para marcar em casa.",
+        "efeito": "Team total Brighton over 0.5 altamente provável (>80%)."
+      },
+      {
+        "id": "A20",
+        "liga": [
+          "C12",
+          "C18"
+        ],
+        "leitura": "United com boa sequência, mas sem Sesko e Casemiro. Time pode manter volume de SoT, mas com menos poder de finalização.",
+        "efeito": "xG United pode cair levemente, mas ainda assim marcar."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Brighton domina e vence",
+        "prob": 0.45,
+        "filme": "Brighton começa pressionando, marca ainda no 1ºT ou início do 2ºT. Após o gol, controla o jogo e mata, com United desinteressado não oferecendo perigo. Placar final 2-0 ou 2-1.",
+        "arestas": [
+          "A1",
+          "A4",
+          "A6",
+          "A10",
+          "A14",
+          "A19"
+        ]
+      },
+      {
+        "nome": "Empate com gols",
+        "prob": 0.3,
+        "filme": "Jogo equilibrado: Brighton propõe, United contra-ataca e marca. Brighton busca o empate, e o jogo fica aberto no final. Empate 1-1 ou 2-2, com ambos marcando.",
+        "arestas": [
+          "A2",
+          "A7",
+          "A8",
+          "A13",
+          "A15"
+        ]
+      },
+      {
+        "nome": "United surpreende",
+        "prob": 0.25,
+        "filme": "United marca primeiro em contra-ataque, Brighton desmorona ao sofrer. United segura resultado ou amplia. Vitória magra do United por 1-0 ou 2-1.",
+        "arestas": [
+          "A2",
+          "A9",
+          "A12",
+          "A13",
+          "C25"
+        ]
+      }
+    ],
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.42,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Probabilidade de vitória do Brighton é apenas 42%, abaixo do limiar de 45% recomendado para 1x2. Valor limitado."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.26,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Empate com 26%, sem valor claro; prior era 30%. Evitar."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.32,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Vitória do United pouco provável, mas com odds altas poderia ter valor. Neste board, prob 32% é baixa."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.68,
+        "variancia": 2,
+        "valor": "nenhum",
+        "nota": "68% de chance de Brighton não perder, mas prior era 68%; sem edge."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.58,
+        "variancia": 2,
+        "valor": "nenhum",
+        "nota": "58% chance de United não perder; ligeiramente abaixo do prior 62%, sem valor."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.74,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "74% chance de não dar empate; prior 70%. Pequeno valor, mas variância média."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.42,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Brighton DNB: vitória 42%, empate devolve. Probabilidade de vencer é 42%; justa."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.32,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "United DNB: pouca probabilidade de vitória (32%)."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.75,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "75% contra prior 73%, edge pequeno. Baixa variância mas pouco valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.51,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "51% contra prior 46%, edge de 5%, mas risco maior."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.25,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Apenas 25% de chance, sem valor claro."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.54,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "54% BTTS (prior 53%), edge de 1%, praticamente sem valor."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.78,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "78% de chance de Brighton marcar; prior 73%, edge de 5%. Seguro e com valor respeitável."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.44,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "44% (prior 38%): Brighton marcar 2+ tem edge de 6%, mas variância maior."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.7,
+        "variancia": 1,
+        "valor": "nenhum",
+        "nota": "70% (prior 70%): sem edge."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.34,
+        "variancia": 3,
+        "valor": "nenhum",
+        "nota": "34% (prior 34%): sem edge."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.22,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Brighton vencer por 2+ tem apenas 22% de chance; handicap -1 desaconselhado pelo protocolo."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.1,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "United vencer por 2+ improvável (10%), sem valor."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Total ímpar ~48%, sem edge significativo."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "over",
+      "team": "home",
+      "line": 0.5,
+      "confidence": "medium",
+      "probability": 0.78,
+      "evidence_for": [
+        "A1",
+        "A4",
+        "A6",
+        "A14",
+        "A19"
+      ],
+      "evidence_against": [
+        "C2",
+        "C3",
+        "A2",
+        "C12"
+      ],
+      "analysis": "Aposta de menor variância com valor (edge 5% sobre prior de 73%). Brighton precisa vencer em casa e enfrenta defesa desfalcada do United. O time tem 78% de chance de marcar ao menos 1 gol, apoiado por consistência ofensiva caseira e forma recente. Mesmo no cenário de jogo travado, um gol do Brighton é o desfecho mais provável. O risco é o United segurar 0-0, mas com seus desfalques defensivos e a motivação do Brighton, isso é pouco provável."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "Veredito de intenção assimétrico: Brighton precisa, mas United pode administrar e segurar o 0-0, como fez contra o Sunderland.",
+          "ids": [
+            "C2",
+            "C3",
+            "C12"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "Prior já é 73%, então o mercado precifica alta probabilidade; o edge de 5% pode ser insuficiente para superar a comissão da casa.",
+          "ids": [
+            "C22"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "Brighton pode sofrer gol primeiro e desmoronar, reduzindo seu ímpeto ofensivo e, consequentemente, a chance de marcar.",
+          "ids": [
+            "C25",
+            "A2"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "Os ataques enfraquecem a confiança, mas não derrubam a recomendação. O veredito de intenção sugere jogo travado, mas a necessidade do Brighton e a fragilidade defensiva do United criam cenário favorável ao gol mandante. Mesmo que o United segure 0-0, é um resultado de baixa probabilidade. O edge de 5% é modesto, mas em linha com a filosofia de baixa variância."
+    },
+    "drivers": [
+      "Intenção/motivação assimétrica (Brighton precisa vencer, United sem objetivos).",
+      "Desfalques defensivos do Manchester United (Casemiro e De Ligt), aumentando xG do Brighton.",
+      "Força ofensiva do Brighton em casa e momentum recente, com pico nos minutos finais."
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 25,
+    "arestas": 20,
+    "jogadores": 26,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar o jogo Brighton & Hove Albion x Manchester United pelo protocolo TOTAL, começando pela varredura dos blocos e extraindo conclusões.\n\n**Passo 1 – VARREDURA: conclusões por bloco**\n\nVou percorrer cada bloco do briefing e extrair de 1 a 3 conclusões, com ID sequencial, dado copiado literal do briefing (número ou frase), direção e força. A direção indica o que a conclusão implica para o jogo (ex: favorece mais gols, menos gols, time A, time B, etc.). Força: alta, média, baixa conforme a relevância do dado.\n\n1. **contexto**:\n   - Fato: Data 2026-05-24, rodada 38, Premier League. Clima bom (céu limpo, 19.9°C). Descanso igual: ambos com 7 dias. Sem assimetria de descanso viagem de ~326 km (sem impacto relevante).\n   - Conclusão: C1 - \"Contexto climático e de descanso sem assimetria significativa; sem fator externo que puxe xG para cima ou para baixo.\" Direção: neutra. Força: baixa (não move o número, mas descarta viés).\n\n2. **tabela_motivacao**:\n   - Brighton: 7º, 53 pts, precisa vencer para garantir vaga europeia (Chelsea, Brentford, Sunderland ameaçam). Motivação alta.\n   - Man United: 3º, 68 pts, Champions garantida, motivação baixa.\n   - Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR – pelo menos um lado não precisa ir pra cima.\n   - Conclusão: C2 - \"Brighton PRECISA vencer (motivação alta) x Man United NÃO precisa (Champions garantida) – veredito: ⚠️ jogo tende a travar.\" Direção: favorece under, time da casa com mais ímpeto, mas risco de jogo administrado pelo United. Força: alta.\n   - Conclusão: C3 - \"Veredito de intenção ASSIMÉTRICA: prefira under ou mercado de menor variância; lado que precisa pode não furar ferrolho.\" Direção: under / menor variância. Força: alta.\n\n3. **home_gols** (Brighton):\n   - Casa marca 1.67 gols/j, sofre 0.94. Volume: 5.22 SoT/j em casa. Conversão 28%.\n   - Conclusão: C4 - \"Brighton em casa é forte ofensivamente: 1.67 gols/j, SoT 5.22/j, mas defesa sólida: sofre 0.94/j.\" Direção: favorece Brighton ofensivamente, mas defesa caseira também restringe visitante. Força: média.\n\n4. **away_gols** (Man United):\n   - Fora marca 1.5, sofre 1.44. SoT fora: 4.44/j. Conversão 29%.\n   - Conclusão: C5 - \"Man United fora: ataque mediano (1.5 gols/j, 4.44 SoT) e defesa vazada (1.44 sofridos).\" Direção: visitante vulnerável defensivamente, mas com poder de fogo. Força: média.\n\n5. **home_estilo**:\n   - Brighton: ataques perigosos 53.8/j (feito) vs 44.6 sofridos. Últimos 5: 63.8 feito / 29.4 sofrido – time mais agressivo recentemente.\n   - Conclusão: C6 - \"Brighton recentemente (últ. 5) está muito mais agressivo: ataques perigosos 63.8/j (feito) e só 29.4 sofridos, dominante.\" Direção: favorece Brighton, pressão ofensiva alta. Força: média.\n\n6. **away_estilo**:\n   - Man United: ataques perigosos 48.9 feito / 49.4 sofridos na temporada. Últimos 5: 38.8 feito / 59.8 sofridos – queda ofensiva e exposição defensiva recente.\n   - Conclusão: C7 - \"Man United nos últimos 5: ataques perigosos caíram para 38.8 e sofreram 59.8, time sendo pressionado e menos perigoso.\" Direção: enfraquece visitante, favorece Brighton. Força: média.\n\n7. **home_qualidade**:\n   - Nota média do time: 6.84. Destaques: Diego Gómez (nota 6.89, 10G+1A, mas faltou 3/5), Welbeck (14G, nota 6.84), Minteh (3G+4A, nota 6.92), van Hecke (3G+3A, nota 7.01). Forma mista: Gómez ausente, Dunk e Ayari também faltaram jogos.\n   - Conclusão: C8 - \"Brighton tem Diego Gómez (artilheiro com 10 gols, mas irregular/pouco presente nos últimos 5) e Welbeck (14 gols) como referências ofensivas.\" Direção: qualidade individual ofensiva presente, mas com dúvidas de disponibilidade/forma. Força: média.\n   - Conclusão: C9 - \"Defensivamente, van Hecke (nota 7.01) e Dunk (nota 6.95, mas faltou 3/5) são pilares; Dunk ausente em vários jogos recentes.\" Direção: defesa pode estar desfalcada de seu líder. Força: média.\n\n8. **away_qualidade**:\n   - Nota média: 6.91. Destaques: Bruno Fernandes (nota 7.73, 8G+21A, 10 MOTM), Casemiro (7.15, 9G+2A, mas fora por lesão), Cunha (7.16, 10G+2A), Mbeumo (7.03, 11G+3A). Sesko (12G, nota 6.82) também fora.\n   - Conclusão: C10 - \"Man United tem Bruno Fernandes (cérebro, 21 assistências) e Matheus Cunha/Mbeumo como armas ofensivas; mas Sesko e Casemiro desfalcam.\" Direção: qualidade individual ofensiva permanece alta com Bruno, mas desfalques diminuem poder de fogo e intensidade. Força: alta.\n\n9. **home_forma** (últimos 5):\n   - DVDVE (7pts), 9 gols marcados, 6 sofridos. Marca 1.8 gols/j, sofre 1.2. SoT 6/2.8.\n   - Vitória sobre Chelsea (3-0) e Wolves (3-0) em casa; derrota para Newcastle (1-3) e Leeds (0-1) fora; empate com Tottenham (2-2) fora.\n   - Conclusão: C11 - \"Brighton em casa nos últimos 5: vitórias sólidas (3-0 x Chelsea, 3-0 x Wolves), mas fora oscilou; boa forma ofensiva (marca 1.8, SoT 6).\" Direção: casa forte, ataque produtivo. Força: média.\n\n10. **away_forma** (últimos 5):\n    - VEVVV (13 pts), 9 marcados, 5 sofridos. Marca 1.8, sofre 1.0. SoT 4.4/4.0.\n    - Vitórias sobre Chelsea (1-0 fora), Brentford (2-1 casa), Liverpool (3-2 casa), Forest (3-2 casa); empate com Sunderland (0-0 fora).\n    - Conclusão: C12 - \"Man United vem de sequência excelente (13 pts em 15), mas com adversários de peso (Chelsea, Liverpool) e alguns jogos sofridos em casa; fora, vitória magra sobre Chelsea e empate sem gols com Sunderland.\" Direção: time embalado, mas desempenho fora mais contido; motivação pode cair por já ter garantido objetivo. Força: média.\n\n11. **home_momentum** (últimos 5):\n    - Curvas mostram Brighton pressionando em vários momentos, especialmente no 2º tempo. Janela de domínio: 76-90 (domínio +7.1).\n    - Detalhe: reação pós-gol: \"DESMORONA ao sofrer gol\" (Δ -2.9), \"MATA O JOGO após marcar\" (Δ +2.3).\n    - Conclusão: C13 - \"Brighton tem janela de domínio clara nos 76-90 (+7.1) e tende a matar o jogo quando marca, mas é frágil emocionalmente ao sofrer gol (desmorona).\" Direção: tendência de gols tardios, mas vulnerabilidade se sofrer primeiro. Força: alta.\n\n12. **away_momentum** (últimos 5):\n    - Man United com domínio baixo; janela de domínio: 0-15 (+1.3), mas no geral negativo. Janela de gol: 76-90 (índice 0.73). Reage mal ao sofrer gol (desmorona -1.3) e neutro após marcar.\n    - Conclusão: C14 - \"Man United tem janela de domínio apenas inicial (0-15 +1.3) e também desmorona ao sofrer gol; seu ataque é mais perigoso nos minutos finais (0.43 gol/j marcados na faixa 76-90).\" Direção: United pode sofrer se Brighton pressionar no final, mas também pode marcar tarde. Força: média.\n\n13. **home_faixas**:\n    - Brighton marca mais nos 76-90 (0.43 gols/j), e também tem picos em 0-15 (0.24) e 61-75 (0.24).\n    - Sofre mais nos 76-90 (0.3) e 31-45 (0.24).\n    - Conclusão: C15 - \"Brighton concentra gols nos minutos finais (76-90: 0.43/j) e sofre mais também nessa faixa (0.3/j).\" Direção: aumento de gols no final. Força: média.\n\n14. **away_faixas**:\n    - Man United marca mais nos 76-90 (0.43/j) e 31-45 (0.32). Sofre mais nos 76-90 (0.41) e 46-60 (0.3).\n    - Conclusão: C16 - \"Man United marca e sofre bastante nos 76-90 (0.43 e 0.41); defesa vulnerável no início do 2º tempo (46-60: 0.3 sofridos).\" Direção: tendência de gols no final e possível gol logo após intervalo. Força: média.\n\n15. **home_desfalques**:\n    - Kaoru Mitoma (6% gols, 0.52 SoT/j) fora: impacto ofensivo baixo/moderado.\n    - Stefanos Tzimas (2% gols, 0.11 SoT/j) fora: irrelevante.\n    - Adam Webster (0% gols) fora: sem impacto.\n    - Conclusão: C17 - \"Desfalques do Brighton: Mitoma (baixo volume de gols, mas cria 1.2 key passes/j) fora; Tzimas e Webster sem impacto.\" Direção: leve perda ofensiva (criação), mas sem grande abalo. Força: baixa.\n\n16. **away_desfalques**:\n    - Benjamin Sesko (17% gols, 1.13 SoT/j, mas participação recente 22%) fora: impacto ofensivo significativo, mas time pode se adaptar (with/without SoT estável: 5.6 vs 6.14).\n    - Casemiro (14% gols, 0.56 SoT/j, mas 0.9 interceptações e 2.6 desarmes/j) fora: perda defensiva e de intensidade, mas time já jogou sem ele (3 jogos).\n    - De Ligt (2% gols, mas 1.2 interceptações/j, 15% do time) fora: desfalque defensivo importante (interceptações e duelos).\n    - Conclusão: C18 - \"Man United perde seu artilheiro Sesko (embora SoT sem ele até suba), o volante Casemiro (intensidade defensiva) e o zagueiro De Ligt (interceptações); defesa enfraquecida.\" Direção: favorece Brighton, especialmente ofensivamente; United mais frágil atrás. Força: alta.\n    - Conclusão: C19 - \"Ausência de Casemiro e De Ligt tira 2.1 interceptações/j (~25% do time) e 4.1 desarmes/j, aumentando λ do adversário.\" Direção: Brighton deve criar mais. Força: alta.\n\n17. **cruzamento_faixa** (tabelas ataque x defesa):\n    - Brighton ataque vs United defesa: maior janela em 76-90 (índice 0.84) e 46-60 (0.49).\n    - United ataque vs Brighton defesa: maior janela em 76-90 (0.73) e 31-45 (0.56).\n    - Conclusão: C20 - \"Cruzamento de faixas indica alta probabilidade de gols no final (76-90) e possível trocação nessa faixa, com Brighton também ameaçando no início do 2º tempo (46-60).\" Direção: over parcial no 2º tempo, especialmente no final. Força: alta.\n\n18. **base_rate**:\n    - Rota A (gols): total 2.72 (Brighton 1.57, United 1.15).\n    - Rota B (SoT): total 2.51 (Brighton 1.31, United 1.20). Índice de volume 8.8 SoT (na média).\n    - Conclusão: C21 - \"Prior: total esperado ~2.51-2.72 gols, jogo de médio volume; Rota B (mais estável) sugere 2.5 gols.\" Direção: baseline para total e probs. Força: alta (âncora).\n\n19. **probs_mercado**:\n    - 1x2 Rota B: Casa 38% / Empate 30% / Fora 32%.\n    - Over 2.5: 46%, BTTS 53%.\n    - Conclusão: C22 - \"Mercado dá leve favoritismo ao Brighton (38% vitória) com empate provável (30%); under 2.5 ligeiramente favorito (54% não over).\" Direção: jogo equilibrado, tendência under. Força: média.\n\n20. **cruzamentos_computados**:\n    - Arquétipo: Brighton contra equilibrado (estilo United) marca 1.55/j e sofre 1.73/j. United contra dominante (estilo Brighton) marca 1.91/j e sofre 1.36/j.\n    - Conclusão: C23 - \"Arquétipo: United se dá bem contra times dominantes como Brighton, marcando 1.91/j; Brighton sofre mais contra equilibrados (1.73/j).\" Direção: sugere que United pode explorar contra-ataque e marcar, apesar dos desfalques. Força: alta.\n    - Mecanismo de gol: ambos têm canal aberto em faltas (índice 1.9x e 2.1x).\n    - Conclusão: C24 - \"Ambos os times têm eficiência acima da liga em gols de falta (índice 1.9-2.1x).\" Direção: ligeiro aumento de probabilidade de gol de falta, mas impacto menor no total. Força: baixa.\n    - Dinâmica pós-gol: Brighton desmorona ao sofrer, mata ao marcar; United desmorona ao sofrer, neutro ao marcar.\n    - Conclusão: C25 - \"Ambos desmoronam ao sofrer gol; Brighton mata o jogo quando marca, United não reage.\" Direção: primeiro gol crucial; se Brighton marcar, tende a controlar; se sofrer, pode desabar. Força: alta.\n\n**Blocos sem sinal**: Nenhum bloco fica sem conclusão. Todos renderam pelo menos uma conclusão. No entanto, alguns dados como clima/descanso foram agrupados em contexto com força baixa, mas ainda geraram conclusão. Vou listar em `blocos_sem_sinal` apenas se realmente nenhum fato relevante fosse extraído. Aqui todos tiveram algum sinal, então `blocos_sem_sinal` ficará vazio? Talvez o bloco `cruzamentos_computados` já é um bloco de cruzamentos, mas eu extraí conclusões dele. Sem bloco sem sinal.\n\n**Passo 2 – JOGADOR POR JOGADOR**\n\nTodo jogador nomeado no briefing (qualidade individual e desfalques) recebe uma leitura de 1 frase.\n\nPrimeiro, listar todos os nomes que aparecem:\n- Brighton: Ferdi Kadıoğlu, Bart Verbruggen, Jan Paul van Hecke, Lewis Dunk, Diego Gómez, Yankuba Minteh, Danny Welbeck, Yasin Ayari, Georginio Rutter, Jack Hinshelwood, Carlos Baleba, Kaoru Mitoma (desfalque), Stefanos Tzimas (desfalque), Adam Webster (desfalque).\n- Man United: Luke Shaw, Bruno Fernandes, Senne Lammens, Diogo Dalot, Matheus Cunha, Bryan Mbeumo, Casemiro (desfalque), Amad Diallo, Benjamin Sesko (desfalque), Leny Yoro, Kobbie Mainoo, Matthijs de Ligt (desfalque).\n\nVou escrever uma leitura curta para cada, focando no que sua presença/ausência muda neste confronto específico.\n\n**Jogadores Brighton**:\n- Ferdi Kadıoğlu: Lateral/meia com 0.68 KP/j, mas apenas 1G+0A; forma estável, bom defensivamente (1.54 desarmes). Não é diferencial ofensivo, mas dá solidez.\n- Bart Verbruggen: Goleiro nota 6.82, 1 MOTM. Sem impacto direto em gols; seguro sob pressão? Média.\n- Jan Paul van Hecke: Zagueiro artilheiro (3G+3A), mas gols em lances de bola parada; boa defesa (5.59 duelos/j). Pilar defensivo.\n- Lewis Dunk: Zagueiro experiente, mas faltou 3/5 jogos recentes; sua ausência pode desorganizar a defesa. Presente? Provável que jogue (está no XI). Leitura: líder defensivo, mas ritmo de jogo questionável.\n- Diego Gómez: Meia-atacante com 10G+1A, mas faltou 3/5 e forma em queda; se jogar, é arma ofensiva importante, mas dúvida física.\n- Yankuba Minteh: Ponta com 3G+4A, 1.97 dribles/j, forma subindo recentemente. Desequilibrante, pode causar problemas à defesa do United.\n- Danny Welbeck: Centroavante com 14G, 0.77 SoT/j, mas joga apenas 61 min em média. Referência no ataque, mas não aguenta 90 min.\n- Yasin Ayari: Meia com 4G+3A, mas faltou 1/5 e SoT baixo (0.41). Irregular.\n- Georginio Rutter: Atacante com 3G+3A, gols tardios, mas volume de chutes baixo (0.5 SoT/j). Pouco impacto.\n- Jack Hinshelwood: Meia com 4G+3A, forma subindo (1.4 SoT/j nos últ.5), bom momento. Pode ser arma surpresa.\n- Carlos Baleba: Volante com pouco volume ofensivo (0.18 SoT/j), mas bom defensor (1.18 desarmes, 1 int/j). Dá equilíbrio.\n- Kaoru Mitoma (desfalque): Baixo volume de gols (3G), mas criação (1.2 key passes/j). Sua ausência tira um driblador, mas time já jogou sem ele e manteve SoT (5.25 sem ele). Impacto limitado.\n- Stefanos Tzimas (desfalque): Jovem, pouco utilizado (0.11 SoT/j), irrelevante.\n- Adam Webster (desfalque): Zagueiro reserva, sem impacto.\n\n**Jogadores United**:\n- Luke Shaw: Lateral com 0.43 KP/j, apenas 1G, mas forma estável e bom defensor (1.95 desarmes). Não é fator ofensivo.\n- Bruno Fernandes: Craque do time, 8G+21A, 3.86 KP/j. Cérebro, todas as jogadas passam por ele. Forma excelente (nota 7.73). Decisivo.\n- Senne Lammens: Goleiro nota 6.73, 0 defesas difíceis? Normal, sem destaque.\n- Diogo Dalot: Lateral com 0.92 KP/j, 1G+3A, mas forma caindo e faltou 1/5. Ofensivamente ok, defensivamente vulnerável.\n- Matheus Cunha: Atacante com 10G+2A, 1.03 SoT/j, forma subindo (7.38). Arma importante, especialmente em transição.\n- Bryan Mbeumo: Ponta com 11G+3A, 0.97 SoT/j, mas forma caindo (0.2 SoT/j nos últ.5). Pode decidir, mas momento não é dos melhores.\n- Casemiro (desfalque): Volante com 9G+2A, mas principalmente intensidade defensiva (2.6 desarmes/j). Sua ausência deixa meio-campo mais frágil, facilitando a saída de bola do Brighton.\n- Amad Diallo: Ponta com 2G+2A, 1.34 KP/j, mas forma ruim (nota 6.5). Pouco produtivo recentemente.\n- Benjamin Sesko (desfalque): Artilheiro com 12G, 1.22 SoT/j. Sua ausência tira referência de área, mas o time já mostrou capacidade de marcar sem ele (6.14 SoT/j). Impacto ofensivo menor que o esperado, pois o time se adapta.\n- Leny Yoro: Zagueiro jovem, nota 6.62, faltou 4/5. Não é titular absoluto; se jogar, é ponto fraco.\n- Kobbie Mainoo: Meia com 1G+3A, forma razoável (nota 7.22), mas sem grande volume. Bom para controle, mas pouco decisivo.\n- Matthijs de Ligt (desfalque): Zagueiro titular, 1.2 int/j, 5.7 duelos. Sua ausência desorganiza a defesa, aumentando chances de gol do Brighton.\n\n**Passo 3 – ARESTAS: o cruzamento**\n\nVou construir no mínimo 8 arestas, cada uma ligando duas ou mais conclusões (por ID). Cada aresta terá um ID (A1...), liga (lista de IDs das conclusões), leitura e efeito (direção e magnitude no xG/mercado). Garantir que toda conclusão seja usada em pelo menos uma aresta ou vá para descartadas.\n\nConclusões disponíveis: C1 a C25.\n\nPossíveis arestas:\n1. A1: Liga [C2, C18, C19] – Intenção Brighton precisa vencer x Man United desfalcado na defesa (Casemiro e De Ligt fora). Leitura: Brighton pressionará desde o início contra defesa enfraquecida, aumentando xG ofensivo e chances de gols no 1º tempo. Efeito: xG Brighton sobe ~20% em relação ao prior; total sobe ligeiramente.\n\n2. A2: Liga [C3, C12, C25] – Veredito de intenção assimétrica (jogo travado) x boa forma do United, mas sem motivação e com tendência a desmoronar se sofrer. Leitura: Se Brighton marcar primeiro, United pode se desinteressar e jogo pode morrer; mas se United marcar primeiro, Brighton desmorona e jogo pode abrir. Efeito: alta variância no total; mas considerando intenção, o mais provável é Brighton controlar e jogo ter menos gols se Brighton marcar.\n\n3. A3: Liga [C6, C7] – Brighton agressivo recentemente (ataques perigosos 63.8) x United sendo pressionado (59.8 ataques sofridos). Leitura: Brighton deve dominar territorialmente e criar mais chances, especialmente em casa. Efeito: xG Brighton sobe; total pode subir se converter, mas defesa do United pode ceder.\n\n4. A4: Liga [C4, C5] – Brighton forte em casa (marca 1.67, sofre 0.94) x United fora (marca 1.5, sofre 1.44). Leitura: Confronto de ataque caseiro eficiente contra defesa visitante frágil. Efeito: espera-se que Brighton marque pelo menos 1 gol; probabilidade de over 1.5 alta.\n\n5. A5: Liga [C8, C10, C17, C18] – Qualidade individual: Brighton com Welbeck e Gómez (dúvida) x United com Bruno Fernandes e Cunha, mas sem Sesko e Casemiro. Leitura: United perde poder de fogo e contenção, Brighton mantém suas armas principais. Efeito: equilíbrio pende para Brighton, especialmente se Gómez jogar.\n\n6. A6: Liga [C11, C12] – Forma recente: Brighton em casa muito forte (vitórias contundentes) x United em boa sequência, mas com jogos difíceis e atuações fora nem sempre convincentes. Leitura: Brighton tem maior consistência caseira, United embalado mas pode sentir falta de motivação. Efeito: Brighton favorito para vencer, mas empate possível.\n\n7. A7: Liga [C13, C14, C20] – Momentum e faixas: ambos têm pico no final (76-90) e desmoronam ao sofrer. Leitura: Jogo pode ser decidido nos minutos finais, com risco de gols se o placar estiver apertado. Efeito: aumenta probabilidade de gols no 2º tempo, especialmente após 75'.\n\n8. A8: Liga [C15, C16, C20] – Distribuição de gols: ambos marcam e sofrem mais nos 76-90. Leitura: Janela de 76-90 com alto índice de gols (0.84 e 0.73). Efeito: espera-se ao menos 1 gol nessa faixa; over 2.5 pode ser influenciado se jogo chegar empatado no final.\n\n9. A9: Liga [C21, C23] – Prior total 2.51, mas arquétipo United contra dominante marca 1.91/j e Brighton contra equilibrado sofre 1.73/j. Leitura: O histórico de confrontos de estilos sugere mais gols do que o prior, especialmente do United. Efeito: total pode ser maior que 2.51, talvez 2.8-3.0.\n\n10. A10: Liga [C2, C25] – Intenção alta do Brighton x dinâmica pós-gol: se Brighton marca, mata o jogo; se sofre, desmorona. Leitura: Primeiro gol crucial; Brighton tende a vencer se marcar primeiro. Efeito: probabilidade de vitória do Brighton sobe se considerarmos que eles devem propor jogo.\n\n11. A11: Liga [C17, C18, C19] – Desfalques: Brighton sem Mitoma (criação) x United sem Casemiro (contenção) e De Ligt (defesa). Leitura: United mais prejudicado, pois perde dois titulares defensivos; Brighton perde um driblador, mas ainda tem Minteh e outros. Efeito: vantagem Brighton.\n\n12. A12: Liga [C2, C3, C9] – Motivação Brighton x defesa Brighton (Dunk em dúvida). Leitura: Se Dunk não estiver 100%, defesa do Brighton pode sofrer contra contra-ataques do United, que é perigoso nesse tipo de jogo. Efeito: risco de gol do United mesmo sem Sesko.\n\n13. A13: Liga [C10, C23] – Qualidade Bruno Fernandes e arquétipo United contra dominante: United marca bem contra times que propõem jogo (1.91/j). Leitura: Com Bruno municiando Cunha e Mbeumo, United pode explorar espaços e marcar, mesmo desfalcado. Efeito: xG do United não cai tanto; manter em ~1.2 ou até subir para 1.4.\n\n14. A14: Liga [C6, C19] – Pressão Brighton (últ.5) contra defesa United sem De Ligt (interceptações). Leitura: Brighton deve criar volume de chances; SoT do Brighton pode superar a média de 5.2. Efeito: xG Brighton sobe para ~1.8.\n\n15. A15: Liga [C13, C14] – Momentum ambos desmoronam ao sofrer. Leitura: Se houver gol, o jogo pode abrir, pois o time que sofre tende a piorar. Efeito: probabilidade de múltiplos gols se o primeiro sair cedo.\n\n16. A16: Liga [C1, C2] – Contexto neutro e motivação alta do Brighton. Leitura: Sem fatores externos, a motivação pode ser o diferencial, com Brighton se impondo em casa. Efeito: favorece 1x2 casa.\n\n17. A17: Liga [C20, C24] – Cruzamento faixas e faltas: ambos marcam faltas, e janela final é quente. Leitura: Possível gol de bola parada no final. Efeito: ligeiro aumento de gols de falta, mas sem alterar muito o total.\n\n18. A18: Liga [C21, C22] – Prior under 2.5 (54%) e total 2.51. Leitura: A tendência natural é under, mas fatores como desfalques e motivação podem empurrar para over. Efeito: ponto de partida under, mas com risco de over.\n\n19. A19: Liga [C8, C11] – Brighton em casa com Welbeck e Hinshelwood em boa fase. Leitura: Ataque caseiro tem recursos para furar defesa do United. Efeito: team total Brighton over 0.5 com alta probabilidade (>80%).\n\n20. A20: Liga [C12, C18] – United boa fase, mas sem Sesko e Casemiro. Leitura: Time pode sentir falta de poder ofensivo e intensidade, mas manteve SoT sem eles. Efeito: xG United talvez caia levemente (de 1.2 para 1.1).\n\nBom, tenho arestas suficientes. Agora garantir que toda conclusão seja usada em ao menos uma aresta. Vou verificar:\nC1 usada em A16.\nC2 usada em A1, A10, A12, A16.\nC3 usada em A2, A12.\nC4 usada em A4.\nC5 usada em A4.\nC6 usada em A3, A14.\nC7 usada em A3.\nC8 usada em A5, A19.\nC9 usada em A12.\nC10 usada em A5, A13.\nC11 usada em A6, A19.\nC12 usada em A2, A6, A20.\nC13 usada em A7, A15.\nC14 usada em A7, A15.\nC15 usada em A8.\nC16 usada em A8.\nC17 usada em A5, A11.\nC18 usada em A1, A5, A11, A20.\nC19 usada em A1, A11, A14.\nC20 usada em A7, A8, A17.\nC21 usada em A9, A18.\nC22 usada em A18.\nC23 usada em A9, A13.\nC24 usada em A17.\nC25 usada em A2, A10.\n\nTodas as conclusões foram utilizadas em pelo menos uma aresta. Ok, nenhuma descartada. Mas algumas conclusões podem ser consideradas óbvias e poderiam ser descartadas? Prefiro manter todas.\n\n**Passo 4 – ROTEIROS: o filme, com ramificação**\n\nConstruir 2 a 3 roteiros prováveis, com probabilidades que somem ~1.0. Cada roteiro descreve a cascata condicional e cita os IDs das arestas que o sustentam.\n\nRoteiro 1: Brighton domina e vence (prob 45%)\n- Brighton, precisando vencer, começa pressionando em casa. Com desfalques defensivos do United (Casemiro, De Ligt), o Brighton cria chances (A1, A14). Marca primeiro gol ainda no 1º tempo ou início do 2º (A4, A6). Após o gol, Brighton controla e mata o jogo (C25, A10), enquanto United desinteressado não reage (C2). Placar final 2-0 ou 2-1 para o Brighton. Arestas: A1, A4, A6, A10, A14.\n\nRoteiro 2: Empate com gols (prob 30%)\n- Jogo truncado, Brighton propõe mas encontra dificuldades; United, mesmo sem motivação, aproveita contra-ataques e marca (A13). Brighton busca o gol, e o jogo fica aberto no final (A7, A8), resultando em empate 1-1 ou 2-2. Ambos marcam. Arestas: A2, A7, A8, A13.\n\nRoteiro 3: United surpreende e vence (prob 25%)\n- United, jogando sem pressão, consegue impor seu jogo de contra-ataque eficiente contra time dominante (A9, C23). Marca primeiro em jogada de Bruno Fernandes (A13), e Brighton desmorona ao sofrer (C25). United segura vitória magra (1-0, 2-1). Arestas: A2, A9, A13, A12, C25.\n\nSoma: 45+30+25=100%. As probabilidades refletem minha leitura: Brighton favorito, mas com chance de empate e até vitória visitante.\n\n**Passo 5 – BOARD COMPLETO DE MERCADOS**\n\nPreencher cada linha de mercado baseado nos xG e probabilidades coerentes com os roteiros.\n\nPrimeiro, definir xG final (home/away/total) ajustado pelos fatores.\n\nxG base (Rota B): Brighton 1.31, United 1.20, total 2.51.\n\nAjustes:\n- Motivação Brighton alta e desfalques United: +20% xG Brighton → 1.57 (similar à Rota A).\n- Desfalques ofensivos United (Sesko) mas qualidade de Bruno e arquétipo: xG United sobe ligeiramente (+10%?) para 1.32? Na verdade, sem Sesko, mas com bom histórico contra dominantes, vamos manter 1.30 mesmo.\n- Efeito líquido: Brighton ~1.6, United ~1.3, total 2.9.\n- Porém, o veredito de intenção assimétrico sugere under; vou equilibrar: total 2.7, com Brighton 1.5, United 1.2. (Escolha final: Brighton 1.50, United 1.20, total 2.70)\n\nDistribuição por tempos: 1ºT 43%, 2ºT 57%. \nBrighton 1T: 1.50 * 0.43 = 0.645, 2T: 0.855.\nUnited 1T: 1.20 * 0.43 = 0.516, 2T: 0.684.\nTotal 1T: 1.16, 2T: 1.54.\n\nDistribuição por faixas de 15 minutos baseado nos índices de cruzamento e distribuição histórica. Mas para o schema, xg_bands já é um objeto com as 6 faixas. Vou distribuir aproximadamente:\n\nBrighton xG bands (total 1.50):\n0-15: 0.20\n16-30: 0.10\n31-45: 0.25\n46-60: 0.25\n61-75: 0.25\n76-90: 0.45\n(Soma 1.50)\n\nMan United xG bands (total 1.20):\n0-15: 0.20\n16-30: 0.15\n31-45: 0.25\n46-60: 0.20\n61-75: 0.15\n76-90: 0.25\n(Soma 1.20)\n\nTotal bands somam 2.70.\n\nProbabilidades 1x2 e outras:\nA partir dos xG, posso usar simulação de Poisson para calcular probs. Mas vou derivar consistentemente.\n\n1x2: Brighton ~40%, Empate ~28%, United ~32%? Ajustando: com Brighton 1.5 x 1.2, vitória casa ~42%, empate ~26%, fora ~32%. Mas isso é próximo do prior? Prior era 38/30/32. Como subi xG Brighton, vitória casa sobe um pouco.\n\nOver 2.5: total 2.70 → prob over 2.5 ~55% (subiu de 46%).\nBTTS: com xG 1.5 e 1.2, prob BTTS ~60% (subiu de 53%).\n\nAgora preencher cada linha do board de mercados (19 linhas):\n\n1. 1x2 home: prob 0.42\n2. 1x2 draw: prob 0.26\n3. 1x2 away: prob 0.32\n\n4. double_chance home_draw: 0.68 (42+26)\n5. double_chance draw_away: 0.58 (26+32)\n6. double_chance home_away: 0.74 (42+32)\n\n7. draw_no_bet home: prob Brighton não perde? DNB home = vitória casa + empate (metade do empate?). Na verdade, DNB aposta reembolsa se empatar. Probabilidade de vitória = 0.42, empate 0.26, então chance de não perder = 0.68. O payoff é só em vitória, então o \"prob\" no contexto da aposta deve ser a chance de ganhar a aposta, ou seja, vitória do time (0.42). Mas no schema, prob pode ser a probabilidade implícita da seleção \"home\" no DNB. Vou colocar a probabilidade de ganhar a aposta: vitória = 0.42. Para DNB away, vitória away = 0.32.\n8. draw_no_bet away: prob 0.32.\n\n9. over_under over 1.5: total 2.70, prob over 1.5 ~0.85 (alta).\n10. over_under over 2.5: ~0.55.\n11. over_under over 3.5: ~0.25.\n\n12. btts yes: ~0.60.\n\n13. team_total home over 0.5: xG 1.5 → prob marcar pelo menos 1 = 1 - Poisson(0,1.5) = 1 - 0.223 = 0.777 ~0.78.\n14. team_total home over 1.5: prob 2 ou mais gols Brighton: 1 - P(0) - P(1) = 1 - 0.223 - 0.335 = 0.442 ~0.44.\n\n15. team_total away over 0.5: xG 1.2 → prob ~0.70.\n16. team_total away over 1.5: prob ~0.34.\n\n17. handicap home -1: vitória Brighton por 2+ gols. Com xG 1.5 x 1.2, prob vitória por 2+ ~0.20 (estimativa). Handicap -1 significa que Brighton vence por 1 já perde? Normalmente handicap -1: aposta ganha se vencer por 2+, empata se vencer por 1. Probabilidade de ganhar é P(2+). Vou estimar 0.22.\n18. handicap away -1: United -1, vitória por 2+. xG 1.2 x 1.5, prob ~0.10.\n\n19. odd_even odd: probabilidade de total ímpar. Historicamente ~46%. Total 2.70, ligeiramente acima de 2.5, distribuição de Poisson: prob ímpar ~0.48? Vou manter ~0.48.\n\nPara cada linha, preencher variancia (1 a 5), valor (alto/medio/baixo/nenhum) e nota.\n\nVariancia: team_total over 0.5 do lado forte é baixa variância (1), over/under 1.5 também baixa (2), handicap tem variância alta (4-5), 1x2 média (3), etc. Seguir a escada do protocolo.\n\nValor: comparar minha prob com o prior (Rota B). Se minha prob é maior que prior, valor está em apostar a favor; se menor, contra. Ex.: prior over 2.5 46%, minha 55% → valor no over. Prior BTTS 53%, minha 60% → valor no yes. Prior 1x2: Brighton 38% -> 42% → valor na vitória do Brighton.\n\nNota: uma frase justificando a escolha.\n\nVou preencher um array de objetos.\n\n**Passo 6 – REFUTAÇÃO e confiança por REGRA**\n\nAntes de escolher best_bet, aplicar disciplina de variância: entre apostas de valor parecido, escolher a de menor variância.\n\nObservar valores:\n- team_total home over 0.5: minha prob 0.78, prior Rota B team total over 0.5 Brighton era 73% (do base rate probs). Valor: 78% vs 73% → pequeno valor.\n- team_total home over 1.5: 44% vs prior 38% → valor médio.\n- over 2.5: 55% vs 46% → valor médio.\n- over 1.5: 85% vs 73% → valor médio, mas variância baixa.\n- BTTS yes: 60% vs 53% → valor.\n- Vitória Brighton: 42% vs 38% → valor baixo.\n- Handicap Brighton -1: 22% vs ? prior não explícito, mas estimado.\n\nCandidata natural: team_total home over 0.5 é muito segura (variância 1), mas valor baixo. team_total home over 1.5 tem mais valor (6% edge) e variância média (2-3). over 2.5 também. Mas o veredito de intenção assimétrico sugere under; isso cria conflito. Vou ponderar.\n\nEvidência a favor de over/team total: Brighton precisa vencer, defesa United desfalcada, Brighton forte em casa. Contra: United pode jogar por empate, motivação baixa do United pode tornar jogo morno. Roteiros indicam que o mais provável é Brighton vencer e marcar ao menos 1 gol (78% de chance). Então team_total home over 0.5 é quase certo, mas o mercado já precifica isso? Prior 73% já está alto. O valor real está em team_total home over 1.5 (44% vs 38%), ou seja, Brighton marcar 2+ gols. Considerando que Brighton fez 2+ gols em vários jogos em casa (3-0, 3-0), é plausível.\n\nNo entanto, devo seguir a disciplina de variância: team_total over 1.5 tem mais variância que over 0.5. Melhor opção pode ser over 1.5? Over 1.5 gols no jogo total tem prior 73% e minha prob 85%, edge de 12%. Variância baixa (linha segura). Isso é um bom equilíbrio: valor e baixa variância. E se o jogo travar, ainda assim 1 gol de cada lado ou 2 gols é bem provável. Over 1.5 cobre muitos cenários (1-1, 2-0, etc.). Brighton tem 78% de marcar 1, United 70% de marcar 1, então chance de pelo menos 2 gols total é bem alta.\n\nVou escolher over 1.5 como best_bet candidata.\n\nAgora, refutação: atacar over 1.5.\n\nAtaques:\n1. Alvo: over 1.5. Argumento: \"Veredito de intenção assimétrico: Brighton precisa, mas United administra; jogos com esse perfil tendem a ter menos gols, prior under 2.5 já indica isso.\" IDs: C2, C3. Veredito: enfraquece (não derruba, pois Brighton em casa e United desfalcado podem gerar gols mesmo assim).\n2. Alvo: over 1.5. Argumento: \"United, mesmo desfalcado, pode se fechar e buscar 0-0, como fez contra Sunderland fora (0-0).\" IDs: C12 (empate sem gols com Sunderland). Veredito: enfraquece também.\n3. Alvo: over 1.5. Argumento: \"Brighton pode ter dificuldade para furar defesa, mesmo desfalcada, se United jogar por uma bola.\" IDs: C23 (United sofre 1.36 contra dominantes, não muito). Veredito: enfraquece.\n\nNenhum ataque derrubou completamente, pois a probabilidade de over 1.5 permanece alta (mais de 80% na minha conta). Confiança: há arestas independentes convergindo? Sim: A1, A4, A14 apontam para Brighton ofensivo, A8, A20 indicam gols no final. As rotas A e B do base rate: total 2.72 (A) e 2.51 (B) já sugerem over 1.5 com alta prob (77% e 73%). Meu ajuste sobe para 85%. Então confiança é high? Aplicando regra de confiança: high se ≥3 arestas independentes convergem E nenhum ataque derruba/enfraquece com dado forte. Aqui os ataques \"enfraquece\" são baseados em intenção, mas temos dados fortes contrários (desfalques, casa). Portanto, confiança pode ser medium? Vou avaliar: a intenção é um fator forte, então o over 1.5 pode ser menos certo do que parece. Na verdade, o protocolo diz: em jogo com veredito de intenção ⚠️, prefira under ou team_total do lado que precisa. Isso sugere que over pode ser arriscado. Então talvez o melhor mercado seja team_total home over 1.5 ou mesmo handicap Brighton -1? Mas o protocolo proíbe handicap de mando por inércia. Vou reconsiderar.\n\nO veredito claramente diz: \"NÃO favoreça over / goleada / handicap de mando — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance)\". Então, mesmo que meu número diga over, o protocolo manda preferir under em jogo assimétrico. Mas não devo ignorar os dados; posso ajustar o número e escolher um mercado que respeite a intenção mas capture valor.\n\nEntão, em vez de over total, devo olhar para team_total do Brighton ou dupla chance Brighton/Draw. Team_total home over 1.5 tem valor (44% vs 38%) e é do lado que precisa. Se Brighton marca 2, provavelmente vence. Mas a variância ainda é média. Team_total home over 0.5 é seguro, mas valor baixo. Dupla chance 1X tem prior 68%, minha prob 68%? Na verdade, vitória Brighton 42% + empate 26% = 68%, igual prior. Sem valor.\n\nOutra opção: under 2.5? Prior under 54%, minha prob under é 45%? Na verdade, meu total 2.7 dá under 2.5 ~45%. Então under 2.5 seria valor negativo (mercado provavelmente paga menos). Não parece bom.\n\nAnalisando team_total away under 1.5? Prior 66% (1 - 34%). Minha prob 66% também, sem valor.\n\nTalvez o valor esteja em handicap Brighton -0.5 (ou seja, vitória Brighton)? Mas prob 42% não é alta.\n\nVou olhar para over 1.5: mesmo com veredito, o jogo pode ter 2 gols facilmente. O próprio texto do veredito diz \"prefira UNDER ou mercado de MENOR variância\". Over 1.5 é baixa variância comparado a over 2.5, mas ainda é over. Talvez focar em team_total home over 0.5 seja o mais conservador. Mas o objetivo é achar valor.\n\nRefetindo: o veredito é um alerta, não uma proibição. Se os dados mostram que o lado que precisa tem armas e o adversário está desfalcado, podemos confiar no over com moderação (linha baixa). Over 1.5 com edge de 12% parece bom, e a linha é baixa o suficiente para não depender de goleada.\n\nPara a best_bet, seguindo o protocolo, devo escolher a de maior valor com menor variância. Over 1.5 tem variância 2 (baixa/média). Vou mantê-la, mas com confiança medium devido ao contraponto da intenção.\n\nAgora, para confiança: aplicar regra. Convergência de arestas: A1, A4, A14, A8, etc. A favor do over. Mas há arestas contra? A2 aponta para jogo travado. Ataques enfraquecem, mas não derrubam. Então eu diria que a confiança é medium, porque há conflito com o veredito de intenção (dado forte). Vou escrever a regra em confidence_regra: \"medium: arestas independentes a favor do over (A1, A4, A14) convergem, mas ataque baseado no veredito de intenção assimétrica (C2, C3) enfraquece e é sustentado por dado forte (motivação do United baixa).\"\n\nAgora, preencher o restante dos campos.\n\n**drivers**: os 3 fatores que mais moveram o número: \n1. Intenção/motivação assimétrica (Brighton precisa, United não).\n2. Desfalques defensivos do United (Casemiro e De Ligt).\n3. Força ofensiva do Brighton em casa e momentum.\n\n**Conclusões**: listar todas as 25 conclusões com id, bloco, fato, dado (copiar trecho do briefing), direcao, forca.\n\n**Jogadores**: leituras já feitas, agora colocar no array.\n\n**Arestas**: IDs e leituras.\n\n**Roteiros**: os três descritos.\n\n**Mercados**: preencher os 19.\n\n**Best_bet**: over_under over 1.5, line 1.5, prob 0.85, confidence medium, evidence_for (IDs de conclusões/arestas), evidence_against, analysis.\n\n**Refutacao**: os ataques e conclusão.\n\n**Blocos sem sinal**: nenhum; alguns poderiam ser? contexto talvez não rendeu sinal forte, mas ainda gerei C1. Vou manter sem blocos sem sinal.\n\n**Descartadas**: nenhuma conclusão foi descartada, pois todas foram usadas em arestas.\n\nAgora, preciso gerar o JSON final. Vou estruturar cada parte.\n\nCampos do schema: home, away, general, conclusoes, blocos_sem_sinal, descartadas, jogadores, arestas, roteiros, mercados, best_bet, refutacao, drivers.\n\nTodos os campos obrigatórios devem ser preenchidos.\n\nVou agora escrever o JSON completo, garantindo que todos os valores estejam no formato correto.\n\nObservações:\n- Em `home` e `away`, `xg_bands` deve ter 6 faixas: \"0-15\", \"16-30\", \"31-45\", \"46-60\", \"61-75\", \"76-90\".\n- `general` tem `over25_prob` (probabilidade de over 2.5), `btts_prob`, etc.\n- `one_x_two` e variantes são objetos com home, draw, away.\n- `confidence` no general é a confiança geral da análise (low/medium/high) — a mesma do best_bet? Ou separada? No schema, `general.confidence` e `best_bet.confidence`. Vou usar a mesma lógica: medium.\n- `confidence_regra` é string.\n- `mercados` tem 19 entradas. Vou gerar cada uma.\n- `best_bet` com market, selection, team, line, confidence, probability, evidence_for, evidence_against, analysis.\n- `refutacao` com ataques (array de objetos com alvo, argumento, ids, veredito) e conclusao.\n- `drivers` array de 3 strings.\n\nVou elaborar cada parte com cuidado.\n\n**Home summary**: \"Brighton joga em casa precisando vencer para garantir vaga europeia. Time ofensivamente forte em casa (1.67 gols/j), com Welbeck e Hinshelwood em boa fase. Defesa sólida, mas dúvidas sobre Dunk. Tendência de pressionar no final.\"\n\n**Away summary**: \"Manchester United já garantiu Champions e joga sem motivação real. Desfalcado de Sesko, Casemiro e De Ligt, mas tem Bruno Fernandes como maestro. Perigoso em contra-ataques, mas defesa vulnerável, sofre muitos ataques.\"\n\n**General summary**: \"Jogo com assimetria de motivação: Brighton precisa, United não. Brighton favorito, mas risco de jogo truncado. Total esperado de 2.7 gols, com chances de over 1.5 elevadas. Confiança média devido ao contraste entre necessidade e postura do United.\"\n\nAgora, escrever o JSON.\n\nVou começar a montagem:\n\n```json\n{\n  \"home\": {\n    \"xg\": 1.50,\n    \"xg_1t\": 0.65,\n    \"xg_2t\": 0.85,\n    \"xg_bands\": {\n      \"0-15\": 0.20,\n      \"16-30\": 0.10,\n      \"31-45\": 0.25,\n      \"46-60\": 0.25,\n      \"61-75\": 0.25,\n      \"76-90\": 0.45\n    },\n    \"summary\": \"Brighton joga em casa precisando vencer para garantir vaga europeia. Time ofensivamente forte em casa (1.67 gols/j), com Welbeck e Hinshelwood em boa fase. Defesa sólida, mas dúvidas sobre Dunk. Tendência de pressionar no final.\"\n  },\n  \"away\": {\n    \"xg\": 1.20,\n    \"xg_1t\": 0.52,\n    \"xg_2t\": 0.68,\n    \"xg_bands\": {\n      \"0-15\": 0.20,\n      \"16-30\": 0.15,\n      \"31-45\": 0.25,\n      \"46-60\": 0.20,\n      \"61-75\": 0.15,\n      \"76-90\": 0.25\n    },\n    \"summary\": \"Manchester United já garantiu Champions e joga sem motivação real. Desfalcado de Sesko, Casemiro e De Ligt, mas tem Bruno Fernandes como maestro. Perigoso em contra-ataques, mas defesa vulnerável, sofre muitos ataques.\"\n  },\n  \"general\": {\n    \"total\": 2.70,\n    \"total_1t\": 1.17,\n    \"total_2t\": 1.53,\n    \"over25_prob\": 0.55,\n    \"btts_prob\": 0.60,\n    \"one_x_two\": {\n      \"home\": 0.42,\n      \"draw\": 0.26,\n      \"away\": 0.32\n    },\n    \"one_x_two_1t\": {\n      \"home\": 0.30,\n      \"draw\": 0.45,\n      \"away\": 0.25\n    },\n    \"one_x_two_2t\": {\n      \"home\": 0.38,\n      \"draw\": 0.32,\n      \"away\": 0.30\n    },\n    \"confidence\": \"medium\",\n    \"confidence_regra\": \"medium: arestas independentes a favor do over (A1, A4, A14) convergem, mas ataque baseado no veredito de intenção assimétrica (C2, C3) enfraquece e é sustentado por dado forte (motivação do United baixa).\",\n    \"summary\": \"Jogo com assimetria de motivação: Brighton precisa, United não. Brighton favorito, mas risco de jogo truncado. Total esperado de 2.7 gols, com chances de over 1.5 elevadas. Confiança média devido ao contraste entre necessidade e postura do United.\"\n  },\n  \"conclusoes\": [\n    {\"id\": \"C1\", \"bloco\": \"contexto\", \"fato\": \"Contexto climático e de descanso\", \"dado\": \"Clima claro 19.9°C, descanso igual 7 dias, viagem 326km\", \"direcao\": \"Neutro, sem fator externo que mova xG\", \"forca\": \"baixa\"},\n    {\"id\": \"C2\", \"bloco\": \"tabela_motivacao\", \"fato\": \"Motivação Brighton alta x Man United baixa\", \"dado\": \"Brighton 7º com 53pts precisa vencer para Europa; United 3º com 68pts Champions garantida\", \"direcao\": \"Brighton mais intenso, United pode administrar\", \"forca\": \"alta\"},\n    {\"id\": \"C3\", \"bloco\": \"tabela_motivacao\", \"fato\": \"Veredito de intenção: jogo tende a travar\", \"dado\": \"⚠️ VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR — pelo menos um lado NÃO precisa ir pra cima\", \"direcao\": \"Menos gols, preferir under ou menor variância\", \"forca\": \"alta\"},\n    {\"id\": \"C4\", \"bloco\": \"home_gols\", \"fato\": \"Brighton forte em casa\", \"dado\": \"Marca 1.67/j, sofre 0.94/j em casa; SoT 5.22/j\", \"direcao\": \"Favorável ao ataque do Brighton\", \"forca\": \"media\"},\n    {\"id\": \"C5\", \"bloco\": \"away_gols\", \"fato\": \"Man United fora: ataque mediano, defesa vazada\", \"dado\": \"Fora marca 1.5/j, sofre 1.44/j; SoT 4.44/j\", \"direcao\": \"United vulnerável defensivamente\", \"forca\": \"media\"},\n    {\"id\": \"C6\", \"bloco\": \"home_estilo\", \"fato\": \"Brighton recentemente mais agressivo\", \"dado\": \"Últ.5: ataques perigosos 63.8 feito, 29.4 sofrido\", \"direcao\": \"Brighton dominante, pressão ofensiva\", \"forca\": \"media\"},\n    {\"id\": \"C7\", \"bloco\": \"away_estilo\", \"fato\": \"Man United recentemente sofrendo pressão\", \"dado\": \"Últ.5: ataques perigosos 38.8 feito, 59.8 sofrido\", \"direcao\": \"United sendo dominado, menos perigo\", \"forca\": \"media\"},\n    {\"id\": \"C8\", \"bloco\": \"home_qualidade\", \"fato\": \"Brighton: Welbeck artilheiro, Gómez dúvida\", \"dado\": \"Welbeck 14G, Gómez 10G mas faltou 3/5\", \"direcao\": \"Armas ofensivas, mas Gómez incerto\", \"forca\": \"media\"},\n    {\"id\": \"C9\", \"bloco\": \"home_qualidade\", \"fato\": \"Defesa Brighton: Dunk em dúvida\", \"dado\": \"Dunk faltou 3/5 jogos recentes, van Hecke pilar\", \"direcao\": \"Possível desorganização defensiva\", \"forca\": \"media\"},\n    {\"id\": \"C10\", \"bloco\": \"away_qualidade\", \"fato\": \"United: Bruno Fernandes decisivo, mas desfalques\", \"dado\": \"Bruno 8G21A, nota 7.73; Sesko e Casemiro fora\", \"direcao\": \"Qualidade individual mantida, mas time enfraquecido\", \"forca\": \"alta\"},\n    {\"id\": \"C11\", \"bloco\": \"home_forma\", \"fato\": \"Brighton em casa: vitórias sólidas\", \"dado\": \"Últ.5 em casa: 3-0 Chelsea, 3-0 Wolves; marca 1.8/j\", \"direcao\": \"Casa forte, ataque produtivo\", \"forca\": \"media\"},\n    {\"id\": \"C12\", \"bloco\": \"away_forma\", \"fato\": \"United boa sequência, mas atuações fora irregulares\", \"dado\": \"Últ.5: 13pts, mas fora: 1-0 Chelsea, 0-0 Sunderland\", \"direcao\": \"Time embalado, mas pode não se esforçar totalmente\", \"forca\": \"media\"},\n    {\"id\": \"C13\", \"bloco\": \"home_momentum\", \"fato\": \"Brighton: domínio final e reação pós-gol\", \"dado\": \"Domínio 76-90 +7.1; desmorona ao sofrer, mata ao marcar\", \"direcao\": \"Tende a gols no final e controle se sair na frente\", \"forca\": \"alta\"},\n    {\"id\": \"C14\", \"bloco\": \"away_momentum\", \"fato\": \"United: janela inicial e reação negativa\", \"dado\": \"Domínio 0-15 +1.3; desmorona ao sofrer\", \"direcao\": \"Pode marcar cedo, mas vulnerável se sofrer\", \"forca\": \"media\"},\n    {\"id\": \"C15\", \"bloco\": \"home_faixas\", \"fato\": \"Brighton marca/sofre mais no final\", \"dado\": \"Marca 0.43/j 76-90, sofre 0.3/j\", \"direcao\": \"Tendência de gols tardios\", \"forca\": \"media\"},\n    {\"id\": \"C16\", \"bloco\": \"away_faixas\", \"fato\": \"United marca/sofre mais no final\", \"dado\": \"Marca 0.43/j 76-90, sofre 0.41/j\", \"direcao\": \"Tendência de gols tardios\", \"forca\": \"media\"},\n    {\"id\": \"C17\", \"bloco\": \"home_desfalques\", \"fato\": \"Mitoma fora: impacto baixo\", \"dado\": \"6% gols, 0.52 SoT; time manteve SoT sem ele\", \"direcao\": \"Leve perda ofensiva\", \"forca\": \"baixa\"},\n    {\"id\": \"C18\", \"bloco\": \"away_desfalques\", \"fato\": \"United sem Sesko, Casemiro, De Ligt\", \"dado\": \"Sesko 17% gols, Casemiro 14% gols e 2.6 desarmes, De Ligt 15% int\", \"direcao\": \"United ofensiva e defensivamente enfraquecido\", \"forca\": \"alta\"},\n    {\"id\": \"C19\", \"bloco\": \"away_desfalques\", \"fato\": \"Ausências tiram intensidade defensiva do United\", \"dado\": \"Casemiro e De Ligt: 2.1 int/j, 4.1 desarmes/j a menos\", \"direcao\": \"Aumenta xG do Brighton\", \"forca\": \"alta\"},\n    {\"id\": \"C20\", \"bloco\": \"cruzamento_faixa\", \"fato\": \"Cruzamento faixas: pico no final\", \"dado\": \"76-90: Brighton ataque 0.84, United ataque 0.73\", \"direcao\": \"Alta probabilidade de gols nos minutos finais\", \"forca\": \"alta\"},\n    {\"id\": \"C21\", \"bloco\": \"base_rate\", \"fato\": \"Prior total ~2.5-2.7 gols\", \"dado\": \"Rota A 2.72, Rota B 2.51\", \"direcao\": \"Jogo de médio volume\", \"forca\": \"alta\"},\n    {\"id\": \"C22\", \"bloco\": \"probs_mercado\", \"fato\": \"Mercado: leve favoritismo Brighton, under 2.5 favorito\", \"dado\": \"1x2 38/30/32; over 2.5 46%, BTTS 53%\", \"direcao\": \"Jogo equilibrado, tendência under\", \"forca\": \"media\"},\n    {\"id\": \"C23\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"United se dá bem contra dominantes\", \"dado\": \"Arquétipo: United marca 1.91/j contra times dominantes\", \"direcao\": \"United pode marcar mesmo desfalcado\", \"forca\": \"alta\"},\n    {\"id\": \"C24\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"Ambos eficientes em faltas\", \"dado\": \"Brighton 1.9x, United 2.1x índice de gols de falta\", \"direcao\": \"Leve aumento chance gol de falta\", \"forca\": \"baixa\"},\n    {\"id\": \"C25\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"Dinâmica pós-gol: desmoronam ao sofrer\", \"dado\": \"Brighton desmorona (-2.9) ao sofrer, United (-1.3); Brighton mata jogo ao marcar\", \"direcao\": \"Primeiro gol crucial; jogo pode abrir ou fechar\", \"forca\": \"alta\"}\n  ],\n  \"blocos_sem_sinal\": [],\n  \"descartadas\": [],\n  \"jogadores\": [\n    {\"nome\": \"Ferdi Kadıoğlu\", \"time\": \"home\", \"leitura\": \"Lateral com boa solidez defensiva (1.54 desarmes), mas pouco impacto ofensivo (1G, 0.68 KP). Não deve ser diferencial.\"},\n    {\"nome\": \"Bart Verbruggen\", \"time\": \"home\", \"leitura\": \"Goleiro mediano, sem grandes defesas, mas seguro. Não influencia diretamente o xG.\"},\n    {\"nome\": \"Jan Paul van Hecke\", \"time\": \"home\", \"leitura\": \"Zagueiro goleador (3G) com boa capacidade de interceptação (1.18 int), pilar defensivo na ausência de Dunk.\"},\n    {\"nome\": \"Lewis Dunk\", \"time\": \"home\", \"leitura\": \"Líder defensivo, mas ritmo questionável por ter perdido 3/5 jogos. Se não estiver 100%, defesa do Brighton pode sofrer.\"},\n    {\"nome\": \"Diego Gómez\", \"time\": \"home\", \"leitura\": \"Meia-atacante com 10G e faro de gol, mas ausente em 3/5 e forma caindo. Sua presença é dúvida; se jogar, é arma importante na entrada da área.\"},\n    {\"nome\": \"Yankuba Minteh\", \"time\": \"home\", \"leitura\": \"Ponta habilidoso (1.97 dribles) em boa fase recente. Pode causar problemas para a defesa do United com sua velocidade.\"},\n    {\"nome\": \"Danny Welbeck\", \"time\": \"home\", \"leitura\": \"Centroavante artilheiro (14G), mas com média de 61 min/j. Se estiver em campo, é referência e finalizador, mas não dura 90 min.\"},\n    {\"nome\": \"Yasin Ayari\", \"time\": \"home\", \"leitura\": \"Meia com 4G+3A, mas finalização baixa (0.41 SoT). Irregular, pode ser opção no banco.\"},\n    {\"nome\": \"Georginio Rutter\", \"time\": \"home\", \"leitura\": \"Atacante com gols tardios, mas pouco volume (0.5 SoT). Pouco impacto no xG.\"},\n    {\"nome\": \"Jack Hinshelwood\", \"time\": \"home\", \"leitura\": \"Meia em ascensão: 1.4 SoT nos últimos 5 jogos, 4G+3A na temporada. Pode surpreender como alternativa ofensiva.\"},\n    {\"nome\": \"Carlos Baleba\", \"time\": \"home\", \"leitura\": \"Volante de contenção (1.18 desarmes, 1 int), com pouco aporte ofensivo. Dá equilíbrio ao meio.\"},\n    {\"nome\": \"Kaoru Mitoma\", \"time\": \"home\", \"leitura\": \"Desfalque: driblador e criador (1.2 key passes). Sua ausência tira imprevisibilidade, mas time mantém volume de SoT sem ele.\"},\n    {\"nome\": \"Stefanos Tzimas\", \"time\": \"home\", \"leitura\": \"Desfalque: jovem pouco utilizado (0.11 SoT), irrelevante para o jogo.\"},\n    {\"nome\": \"Adam Webster\", \"time\": \"home\", \"leitura\": \"Desfalque: zagueiro reserva, sem impacto.\"},\n    {\"nome\": \"Luke Shaw\", \"time\": \"away\", \"leitura\": \"Lateral defensivamente sólido (1.95 desarmes), mas ofensivamente discreto (1G, 0.43 KP). Não é arma de ataque.\"},\n    {\"nome\": \"Bruno Fernandes\", \"time\": \"away\", \"leitura\": \"Craque do time: 21 assistências, 3.86 KP/j. Forma estelar; ditador do ritmo, mesmo desfalcado, é a principal esperança de criação.\"},\n    {\"nome\": \"Senne Lammens\", \"time\": \"away\", \"leitura\": \"Goleiro sem destaque, defesas rotineiras. Não deve fazer a diferença.\"},\n    {\"nome\": \"Diogo Dalot\", \"time\": \"away\", \"leitura\": \"Lateral com alguma contribuição ofensiva (0.92 KP), mas forma em baixa e defensivamente pode ser exposto.\"},\n    {\"nome\": \"Matheus Cunha\", \"time\": \"away\", \"leitura\": \"Atacante em grande fase (1.03 SoT/j, 10G). Principal arma ao lado de Bruno, especialmente em transições.\"},\n    {\"nome\": \"Bryan Mbeumo\", \"time\": \"away\", \"leitura\": \"Ponta com 11G, mas produção em queda (0.2 SoT nos últ.5). Pode decidir, mas momento não é dos melhores.\"},\n    {\"nome\": \"Casemiro\", \"time\": \"away\", \"leitura\": \"Desfalque: volante intenso (2.6 desarmes) e com 9G. Sua ausência deixa meio-campo mais frágil, facilitando a criação do Brighton.\"},\n    {\"nome\": \"Amad Diallo\", \"time\": \"away\", \"leitura\": \"Ponta com baixa produtividade recente (nota 6.5). Pouco acrescenta no momento.\"},\n    {\"nome\": \"Benjamin Sesko\", \"time\": \"away\", \"leitura\": \"Desfalque: artilheiro com 12G, mas time manteve SoT sem ele (6.14). Impacto ofensivo menor do que parece, mas faz falta como referência.\"},\n    {\"nome\": \"Leny Yoro\", \"time\": \"away\", \"leitura\": \"Zagueiro jovem, pouco experiente (nota 6.62). Se titular, é ponto a ser explorado pelo ataque do Brighton.\"},\n    {\"nome\": \"Kobbie Mainoo\", \"time\": \"away\", \"leitura\": \"Meia de controle, mas sem grande peso ofensivo (1G). Bom para manter posse, mas pouco decisivo.\"},\n    {\"nome\": \"Matthijs de Ligt\", \"time\": \"away\", \"leitura\": \"Desfalque: zagueiro titular com 1.2 interceptações e 5.7 duelos/j. Sua ausência desorganiza a defesa, principal fator para aumento do xG do Brighton.\"}\n  ],\n  \"arestas\": [\n    {\"id\": \"A1\", \"liga\": [\"C2\",\"C18\",\"C19\"], \"leitura\": \"Brighton precisando vencer, com defesa do United desfalcada (sem Casemiro e De Ligt), tende a pressionar mais e criar chances claras.\",\"efeito\": \"xG Brighton sobe ~20% (de 1.31 para 1.57); total sobe.\"},\n    {\"id\": \"A2\", \"liga\": [\"C3\",\"C12\",\"C25\"], \"leitura\": \"Jogo assimétrico: se Brighton marcar, controla; se United marcar, Brighton desmorona. Mas com United administrando, jogo pode ter poucos gols se Brighton não marcar cedo.\",\"efeito\": \"Alta variância no total, mas viés para under se Brighton não marcar no 1ºT.\"},\n    {\"id\": \"A3\", \"liga\": [\"C6\",\"C7\"], \"leitura\": \"Brighton muito agressivo recentemente contra United sendo pressionado; espera-se domínio territorial do Brighton e maior volume de chances.\",\"efeito\": \"SoT Brighton elevado, xG ofensivo maior.\"},\n    {\"id\": \"A4\", \"liga\": [\"C4\",\"C5\"], \"leitura\": \"Força ofensiva caseira do Brighton (1.67 gols/j) contra defesa frágil do United fora (1.44 sofridos). Brighton deve marcar ao menos 1 gol.\",\"efeito\": \"Alta probabilidade de gol do Brighton.\"},\n    {\"id\": \"A5\", \"liga\": [\"C8\",\"C10\",\"C17\",\"C18\"], \"leitura\": \"Comparação de elenco: Brighton mantém Welbeck e dúvida Gómez, United perde Sesko e Casemiro. Poder de fogo se equilibra, mas criação do Brighton fica mais forte.\",\"efeito\": \"Ligeiro aumento da probabilidade de vitória do Brighton.\"},\n    {\"id\": \"A6\", \"liga\": [\"C11\",\"C12\"], \"leitura\": \"Forma recente: Brighton muito forte em casa (2 vitórias por 3-0) vs United com vitórias sobressaltadas em casa e empate sem gols fora. Brighton tem maior consistência.\",\"efeito\": \"Brighton favorito para vencer, mas empate possível.\"},\n    {\"id\": \"A7\", \"liga\": [\"C13\",\"C14\",\"C20\"], \"leitura\": \"Ambos têm pico nos minutos finais (76-90) e desmoronam ao sofrer. Jogo pode ser decidido no final, com gols nessa faixa.\",\"efeito\": \"Probabilidade de gols no 2º tempo maior, especialmente após 75'.\"},\n    {\"id\": \"A8\", \"liga\": [\"C15\",\"C16\",\"C20\"], \"leitura\": \"Distribuição de gols e cruzamento de faixas confirmam alta probabilidade de gols no final. Janela 76-90 é a mais provável para gols.\",\"efeito\": \"Espera-se gols nessa faixa, aumentando chance de over 2.5 se jogo chegar empatado.\"},\n    {\"id\": \"A9\", \"liga\": [\"C21\",\"C23\"], \"leitura\": \"Prior total 2.51, mas arquétipo United contra dominante marca 1.91/j, sugerindo que o total real pode ser maior.\",\"efeito\": \"Total pode superar 2.51, aproximando-se de 2.7-3.0.\"},\n    {\"id\": \"A10\", \"liga\": [\"C2\",\"C25\"], \"leitura\": \"Brighton precisa vencer e, se marcar primeiro, tende a matar o jogo. Vitória do Brighton provável se abrir o placar.\",\"efeito\": \"Probabilidade de vitória do Brighton condicionada ao primeiro gol.\"},\n    {\"id\": \"A11\", \"liga\": [\"C17\",\"C18\",\"C19\"], \"leitura\": \"Desfalques: Brighton perde criatividade (Mitoma), mas United perde dois pilares defensivos. Prejuízo maior para o United.\",\"efeito\": \"Vantagem Brighton, especialmente em casa.\"},\n    {\"id\": \"A12\", \"liga\": [\"C2\",\"C3\",\"C9\"], \"leitura\": \"Se Dunk não estiver 100%, defesa do Brighton pode sofrer contra contra-ataques rápidos do United, que tem tradição nesse tipo de jogo.\",\"efeito\": \"Risco de gol do United, mesmo sem Sesko.\"},\n    {\"id\": \"A13\", \"liga\": [\"C10\",\"C23\"], \"leitura\": \"Bruno Fernandes e Cunha são perigosos no contra-ataque, e United marca bem contra times dominantes (1.91/j). United pode marcar, mesmo desfalcado.\",\"efeito\": \"xG do United pode se manter em 1.2-1.3, apesar das ausências.\"},\n    {\"id\": \"A14\", \"liga\": [\"C6\",\"C19\"], \"leitura\": \"Pressão ofensiva do Brighton nos últimos 5 contra defesa United sem De Ligt (15% int). Brighton deve criar alto volume de SoT.\",\"efeito\": \"xG do Brighton sobe, chance de marcar 2+ gols.\"},\n    {\"id\": \"A15\", \"liga\": [\"C13\",\"C14\"], \"leitura\": \"Ambos desmoronam ao sofrer: se houver gol, o time que sofre tende a piorar, podendo gerar mais gols em sequência.\",\"efeito\": \"Se o primeiro gol sair, chance de mais gols aumenta.\"},\n    {\"id\": \"A16\", \"liga\": [\"C1\",\"C2\"], \"leitura\": \"Contexto neutro e motivação elevada do Brighton: sem fatores externos, a necessidade pode ser o diferencial, impulsionando o Brighton.\",\"efeito\": \"Favorece 1x2 casa.\"},\n    {\"id\": \"A17\", \"liga\": [\"C20\",\"C24\"], \"leitura\": \"Ambos têm eficiência em faltas, e janela final é quente. Possibilidade de gol de bola parada no final.\",\"efeito\": \"Ligeiro aumento de chance de gol de falta, mas sem grande impacto no total.\"},\n    {\"id\": \"A18\", \"liga\": [\"C21\",\"C22\"], \"leitura\": \"Prior under 2.5 (54%), total 2.51. Tendência natural é under, mas fatores do jogo podem empurrar para over.\",\"efeito\": \"Partida de baixo/médio volume, mas com upside.\"},\n    {\"id\": \"A19\", \"liga\": [\"C8\",\"C11\"], \"leitura\": \"Brighton em casa com Welbeck e Hinshelwood em boa fase: ataque tem recursos para marcar em casa.\",\"efeito\": \"Team total Brighton over 0.5 altamente provável (>80%).\"},\n    {\"id\": \"A20\", \"liga\": [\"C12\",\"C18\"], \"leitura\": \"United com boa sequência, mas sem Sesko e Casemiro. Time pode manter volume de SoT, mas com menos poder de finalização.\",\"efeito\": \"xG United pode cair levemente, mas ainda assim marcar.\"}\n  ],\n  \"roteiros\": [\n    {\n      \"nome\": \"Brighton domina e vence\",\n      \"prob\": 0.45,\n      \"filme\": \"Brighton começa pressionando, marca ainda no 1ºT ou início do 2ºT. Após o gol, controla o jogo e mata, com United desinteressado não oferecendo perigo. Placar final 2-0 ou 2-1.\",\n      \"arestas\": [\"A1\",\"A4\",\"A6\",\"A10\",\"A14\",\"A19\"]\n    },\n    {\n      \"nome\": \"Empate com gols\",\n      \"prob\": 0.30,\n      \"filme\": \"Jogo equilibrado: Brighton propõe, United contra-ataca e marca. Brighton busca o empate, e o jogo fica aberto no final. Empate 1-1 ou 2-2, com ambos marcando.\",\n      \"arestas\": [\"A2\",\"A7\",\"A8\",\"A13\",\"A15\"]\n    },\n    {\n      \"nome\": \"United surpreende\",\n      \"prob\": 0.25,\n      \"filme\": \"United marca primeiro em contra-ataque, Brighton desmorona ao sofrer. United segura resultado ou amplia. Vitória magra do United por 1-0 ou 2-1.\",\n      \"arestas\": [\"A2\",\"A9\",\"A12\",\"A13\",\"C25\"]\n    }\n  ],\n  \"mercados\": [\n    {\"market\": \"1x2\", \"selection\": \"home\", \"team\": null, \"line\": null, \"prob\": 0.42, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"Probabilidade de vitória do Brighton é apenas 42%, abaixo do limiar de 45% recomendado para 1x2. Valor limitado.\"},\n    {\"market\": \"1x2\", \"selection\": \"draw\", \"team\": null, \"line\": null, \"prob\": 0.26, \"variancia\": 4, \"valor\": \"baixo\", \"nota\": \"Empate com 26%, sem valor claro; prior era 30%. Evitar.\"},\n    {\"market\": \"1x2\", \"selection\": \"away\", \"team\": null, \"line\": null, \"prob\": 0.32, \"variancia\": 4, \"valor\": \"baixo\", \"nota\": \"Vitória do United pouco provável, mas com odds altas poderia ter valor. Neste board, prob 32% é baixa.\"},\n    {\"market\": \"double_chance\", \"selection\": \"home_draw\", \"team\": null, \"line\": null, \"prob\": 0.68, \"variancia\": 2, \"valor\": \"nenhum\", \"nota\": \"68% de chance de Brighton não perder, mas prior era 68%; sem edge.\"},\n    {\"market\": \"double_chance\", \"selection\": \"draw_away\", \"team\": null, \"line\": null, \"prob\": 0.58, \"variancia\": 2, \"valor\": \"nenhum\", \"nota\": \"58% chance de United não perder; ligeiramente abaixo do prior 62%? Na verdade prior era X2 62%, minha prob 58% indica possível valor no 'contra', mas aqui é a favor, sem valor.\"},\n    {\"market\": \"double_chance\", \"selection\": \"home_away\", \"team\": null, \"line\": null, \"prob\": 0.74, \"variancia\": 2, \"valor\": \"baixo\", \"nota\": \"74% chance de não dar empate; prior 70%. Pequeno valor, mas variância média.\"},\n    {\"market\": \"draw_no_bet\", \"selection\": \"home\", \"team\": \"home\", \"line\": null, \"prob\": 0.42, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"Brighton DNB: vitória 42%, empate devolve. Probabilidade de vencer é 42%; justa.\"},\n    {\"market\": \"draw_no_bet\", \"selection\": \"away\", \"team\": \"away\", \"line\": null, \"prob\": 0.32, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"United DNB: pouca probabilidade de vitória (32%).\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 1.5, \"prob\": 0.85, \"variancia\": 1, \"valor\": \"alto\", \"nota\": \"Alta probabilidade de over 1.5 (85% vs prior 73%); linha baixa e grande margem. Melhor relação risco/valor.\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 2.5, \"prob\": 0.55, \"variancia\": 2, \"valor\": \"medio\", \"nota\": \"55% contra prior 46%, valor respeitável, mas maior risco que over 1.5.\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 3.5, \"prob\": 0.25, \"variancia\": 4, \"valor\": \"baixo\", \"nota\": \"Apenas 25% de chance, sem valor claro.\"},\n    {\"market\": \"btts\", \"selection\": \"yes\", \"team\": null, \"line\": null, \"prob\": 0.60, \"variancia\": 3, \"valor\": \"medio\", \"nota\": \"60% BTTS (prior 53%) é valor médio, mas dependente de ambos marcarem; United pode não marcar.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"home\", \"line\": 0.5, \"prob\": 0.78, \"variancia\": 1, \"valor\": \"baixo\", \"nota\": \"78% de chance de Brighton marcar; seguro, mas prior já era 73%, pequeno edge.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"home\", \"line\": 1.5, \"prob\": 0.44, \"variancia\": 3, \"valor\": \"medio\", \"nota\": \"44% (prior 38%): Brighton marcar 2+ tem valor, mas variância maior.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"away\", \"line\": 0.5, \"prob\": 0.70, \"variancia\": 1, \"valor\": \"nenhum\", \"nota\": \"70% (prior 70%): sem edge.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"away\", \"line\": 1.5, \"prob\": 0.34, \"variancia\": 3, \"valor\": \"nenhum\", \"nota\": \"34% (prior 34%): sem edge.\"},\n    {\"market\": \"handicap\", \"selection\": \"home\", \"team\": \"home\", \"line\": -1, \"prob\": 0.22, \"variancia\": 5, \"valor\": \"baixo\", \"nota\": \"Brighton vencer por 2+ tem apenas 22% de chance; handicap -1 desaconselhado pelo protocolo.\"},\n    {\"market\": \"handicap\", \"selection\": \"away\", \"team\": \"away\", \"line\": -1, \"prob\": 0.10, \"variancia\": 5, \"valor\": \"baixo\", \"nota\": \"United vencer por 2+ improvável (10%), sem valor.\"},\n    {\"market\": \"odd_even\", \"selection\": \"odd\", \"team\": null, \"line\": null, \"prob\": 0.48, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"Total ímpar ~48%, sem edge significativo.\"}\n  ],\n  \"best_bet\": {\n    \"market\": \"over_under\",\n    \"selection\": \"over\",\n    \"team\": null,\n    \"line\": 1.5,\n    \"confidence\": \"medium\",\n    \"probability\": 0.85,\n    \"evidence_for\": [\"A1\",\"A4\",\"A6\",\"A8\",\"A14\",\"A19\"],\n    \"evidence_against\": [\"C2\",\"C3\",\"A2\",\"C12\"],\n    \"analysis\": \"Over 1.5 gols é a aposta de melhor equilíbrio entre valor e variância. Brighton precisa vencer e enfrenta defesa desfalcada do United (sem Casemiro e De Ligt), enquanto o próprio Brighton tem desfalques que enfraquecem sua defesa. Ambos os times têm histórico de gols no final (76-90), e o Brighton em casa costuma marcar. O risco é o jogo travar devido ao desinteresse do United, mas mesmo um 1-1 ou 2-0 cobre a linha. Com 85% de chance estimada (prior 73%), o valor é alto.\"\n  },\n  \"refutacao\": {\n    \"ataques\": [\n      {\"alvo\": \"over 1.5\", \"argumento\": \"Veredito de intenção assimétrico: Brighton precisa, United administra. Jogos com esse perfil tendem a ter menos gols.\", \"ids\": [\"C2\",\"C3\"], \"veredito\": \"enfraquece\"},\n      {\"alvo\": \"over 1.5\", \"argumento\": \"United já mostrou capacidade de jogar por 0-0 fora (vs Sunderland) e pode se fechar, dificultando gols.\", \"ids\": [\"C12\"], \"veredito\": \"enfraquece\"},\n      {\"alvo\": \"over 1.5\", \"argumento\": \"Brighton pode ter dificuldade para furar a defesa mesmo desfalcada, pois United sofre apenas 1.36 contra dominantes.\", \"ids\": [\"C23\"], \"veredito\": \"enfraquece\"}\n    ],\n    \"conclusao\": \"Os ataques enfraquecem a confiança, mas não derrubam a recomendação. A probabilidade de over 1.5 permanece alta mesmo nos cenários mais conservadores, pois basta um gol de cada lado ou dois do Brighton. A assimetria de motivação sugere cautela, mas a linha baixa (1.5) oferece margem de segurança.\"\n  },\n  \"drivers\": [\n    \"Intenção/motivação assimétrica (Brighton precisa vencer, United sem objetivos).\",\n    \"Desfalques defensivos do Manchester United (Casemiro e De Ligt), aumentando xG do Brighton.\",\n    \"Força ofensiva do Brighton em casa e momentum recente, com pico nos minutos finais.\"\n  ]\n}\n```\n\nVou verificar se todos os campos obrigatórios estão presentes e com tipos corretos.\n\n- `home` e `away` com `xg`, `xg_1t`, `xg_2t`, `xg_bands` (6 faixas), `summary`.\n- `general` com `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`, `one_x_two`, `one_x_two_1t`, `one_x_two_2t`, `confidence`, `confidence_regra`, `summary`.\n- `conclusoes`: array com objetos (id, bloco, fato, dado, direcao, forca).\n- `blocos_sem_sinal`: array vazio.\n- `descartadas`: array vazio.\n- `jogadores`: array com nome, time, leitura.\n- `arestas`: array com id, liga, leitura, efeito.\n- `roteiros`: array com nome, prob, filme, arestas.\n- `mercados`: array de 19 objetos.\n- `best_bet`: objeto com market, selection, team, line, confidence, probability, evidence_for, evidence_against, analysis.\n- `refutacao`: objeto com ataques (array) e conclusao.\n- `drivers`: array de 3 strings.\n\nConfiança geral e do best_bet: ambas \"medium\". A regra aplicada em `confidence_regra` descreve o porquê.\n\nVerificar se os `enum` estão exatos: em `conclusoes.bloco`, `jogadores.time`, `best_bet.market`, etc.\n\nEm `best_bet.selection`, \"over\" é válido em over_under? Sim, o enum diz \"over\" para over_under.\n\nEm `mercados`, para handicap, team deve ser \"home\" ou \"away\"? No schema, team é \"home\" ou \"away\" ou null. Para handicap home -1, team deve ser \"home\". Corrigir: no handicap home -1, o time que recebe o handicap é o home. Então team: \"home\". No handicap away -1, team: \"away\".\n\nNo JSON acima, coloquei team: \"home\" nos handcaps? Sim, para handicap home: \"handicap\", \"selection\": \"home\", \"team\": \"home\". Isso está correto.\n\nOutro detalhe: no schema, `general.confidence` é enum \"low\",\"medium\",\"high\". `best_bet.confidence` também.\n\n`conclusoes.bloco` enum: tem várias opções; eu usei \"contexto\", \"tabela_motivacao\", etc. Preciso ver se \"contexto\" é exatamente a string do enum. No schema, enum: \"contexto\",\"tabela_motivacao\",\"home_gols\",\"home_estilo\",\"home_qualidade\",\"home_forma\",\"home_momentum\",\"home_faixas\",\"home_desfalques\",\"away_gols\",\"away_estilo\",\"away_qualidade\",\"away_forma\",\"away_momentum\",\"away_faixas\",\"away_desfalques\",\"cruzamento_faixa\",\"base_rate\",\"probs_mercado\",\"cruzamentos_computados\". Usei \"contexto\" (com acento? No schema está sem acento? Está \"contexto\" - ok). \"cruzamento_faixa\" usei, ok.\n\n`jogadores.time`: \"home\" ou \"away\".\n\n`blocos_sem_sinal.bloco`: mesmo enum.\n\n`refutacao.ataques.veredito`: \"derruba\",\"enfraquece\",\"nao_sustenta\" (sem acento em nao_sustenta). Usei \"enfraquece\".\n\nTudo ok.\n\nAgora, vou garantir que as probabilidades no general sejam consistentes com os xG.\n\n- `total`: 2.70 (1.50+1.20)\n- `total_1t`: 0.65+0.52 = 1.17, mas 1.17 não fecha com total 2.70? Na verdade, 43% de 2.70 = 1.161, então arredondei 1.17.\n- `total_2t`: 1.53 (2.70-1.17=1.53)\n- `over25_prob`: 0.55 (Poisson para lambda 2.7: 1 - P(0)-P(1)-P(2) = 1 - 0.067 - 0.181 - 0.245 = 0.507. Eu arredondei para 0.55, um pouco alto. Revisar: com lambda 2.7, over 2.5 é ~51%, não 55%. Para ser coerente, devo ajustar para ~0.52. Mas como usei 0.55, talvez esteja ok? O importante é estar próximo. Vou recalcular: P(0)=e^-2.7 = 0.0672, P(1)=0.1815, P(2)=0.2450, soma=0.4937, então over=0.5063. Portanto, ~0.51. Vou mudar `over25_prob` para 0.51 para ser mais preciso.\n- `btts_prob`: com lambdas 1.5 e 1.2, prob de ambos marcarem = (1-P(0,1.5)) * (1-P(0,1.2)) = (1-0.2231)*(1-0.3012) = 0.7769 * 0.6988 = 0.543. Então 54%, não 60%. Eu havia estimado 60%, mas o cálculo dá 54%. Vou corrigir para 0.54. No entanto, o prior B era 53%, então 54% é quase igual, sem valor em BTTS. Isso afeta o board de mercados (btts valor cai). Vou ajustar lá também.\n\nAjustes:\n- `general.over25_prob`: 0.51\n- `general.btts_prob`: 0.54\n\nE no mercado `btts yes`, `prob` muda para 0.54, `valor` fica \"baixo\" ou \"nenhum\"? Edge de 1% (54-53). Então valor baixo.\n\nNo `best_bet`, over 1.5: lambda 2.7, over 1.5 prob = 1 - P(0) - P(1) = 1 - 0.0672 - 0.1815 = 0.7513. Eu havia colocado 0.85, mas o cálculo correto é ~0.75. Isso muda drasticamente o valor! O prior over 1.5 era 73% (Rota B). Então 75% vs 73% = quase nenhum valor. Preciso recalibrar.\n\nNa verdade, meu xG total é 2.7, mas o prior B total era 2.51. Aumentei para 2.7, então over 1.5 sobe de 73% para 75%. O edge é pequeno. Então o valor em over 1.5 é baixo, não alto. Eu havia superestimado a probabilidade.\n\nRefletindo: se over 1.5 tem apenas 75%, não é uma boa aposta. Preciso reavaliar a best_bet.\n\nCom xG 2.7, over 2.5 fica 51%, prior 46%, edge de 5% (médio). BTTS: 54%, prior 53%, edge 1% (baixo). Team_total home over 0.5: 1 - P(0,1.5)=0.777, prior 73%, edge 4.7% (médio). Team_total home over 1.5: 1 - P(0)-P(1) = 1 - 0.223 - 0.335 = 0.442, prior 38%, edge 6.2% (médio). Esses têm mais valor.\n\nAplicando a disciplina de variância: team_total home over 0.5 tem variância 1, edge 4.7% (médio). team_total home over 1.5 tem variância 3, edge 6.2% (médio). Prefiro o de menor variância: over 0.5. Mas over 0.5 do Brighton é quase certeza, mas o mercado pode pagar pouco. Ainda assim, como sharp, valor é valor.\n\nOutra candidata: handicap Brighton -1? Não, proibido pelo protocolo.\n\nEntão, best_bet poderia ser team_total home over 0.5. Mas a confiança seria alta? Não, porque ainda temos o veredito de intenção. Vou recalcular as probs com mais precisão.\n\nMelhor: usar Poisson com lambda 2.7 para todos os derivados.\n\nPlanilha mental:\nlambda_total=2.7, lambda_home=1.5, lambda_away=1.2.\n\n- over 0.5 total: trivial ~95%\n- over 1.5 total: 1 - P(0) - P(1) = 1 - 0.067 - 0.181 = 0.752 → 75.2%\n- over 2.5 total: 1 - P(0) - P(1) - P(2) = 1 - 0.067 - 0.181 - 0.245 = 0.507 → 50.7%\n- BTTS: P(home≥1)*P(away≥1) = (1-0.223)*(1-0.301) = 0.777*0.699 = 0.543 → 54.3%\n- team_total home over 0.5: 1-0.223=0.777 → 77.7%\n- team_total home over 1.5: 1-0.223-0.335=0.442 → 44.2% (0.335 é P(1) para lambda=1.5: e^-1.5 *1.5 = 0.2231*1.5? Não, P(1)= e^-1.5 * 1.5^1 / 1! = 0.22313*1.5 = 0.3347. Sim)\n- team_total away over 0.5: 1-0.301=0.699 → 69.9%\n- team_total away over 1.5: 1-0.301-0.361=0.338 → 33.8% (P(1) for 1.2: 0.3012*1.2=0.3614)\n\nAgora comparando com prior Rota B:\n- over 1.5: 73% → 75% (peq valor)\n- over 2.5: 46% → 51% (valor médio)\n- BTTS: 53% → 54% (peq valor)\n- team total home over 0.5: 73% → 78% (valor médio)\n- team total home over 1.5: 38% → 44% (valor médio)\n\nOs maiores edges são team total home over 1.5 e over 2.5. Over 2.5 tem variância 2? Na escada, over_under com linha 2.5 tem variância média (~3) porque depende de 3 gols. team total over 1.5 tem variância 3 (precisa de 2 gols de um time). Quanto menor a variância, melhor. Se eu escolher over 2.5, estou indo contra o veredito de intenção (travar), o que aumenta o risco. Já team_total home over 1.5 também vai contra, pois se o jogo travar, Brighton pode não marcar 2. Mas over 0.5 home é muito seguro e ainda tem edge razoável. Por que não escolher team_total home over 0.5? Edge de 5% em algo com 78% de chance é bom, e a variância é a menor possível. Seguindo o protocolo: \"escada, da mais segura à mais arriscada: (1) team_total over 0.5 do lado forte\". Então essa é a aposta preferida em jogo assimétrico. O valor pode não ser enorme, mas é consistente com a filosofia de preservar banca.\n\nPortanto, vou mudar best_bet para team_total home over 0.5. Vou atualizar os campos.\n\nMelhor: posso inclusive recomendar team_total home over 0.5 como best_bet, e mencionar over 1.5 total como observação.\n\nAgora, ajustar o JSON.\n\nMudanças:\n- `general.over25_prob`: 0.51 (ou 0.51, vou deixar 0.51)\n- `general.btts_prob`: 0.54\n- `mercados` btts: prob 0.54, valor \"baixo\"\n- `mercados` over 1.5: prob 0.75, valor \"baixo\" (edge pequeno)\n- `mercados` team_total home over 0.5: prob 0.78, valor \"medio\"\n- `mercados` team_total home over 1.5: prob 0.44, valor \"medio\"\n- `best_bet` alterar para team_total home over 0.5\n- `best_bet.analysis` reescrever\n\nVou atualizar também os `evidence_for` e `evidence_against`.\n\n`evidence_for` para team_total home over 0.5: basicamente as mesmas arestas que indicam que Brighton marcará: A1, A4, A6, A14, A19. `evidence_against`: o veredito de intenção (C2, C3) e o fato de United poder segurar 0-0 (C12). Mas como é over 0.5, até um gol resolve, então os riscos são menores.\n\n`refutacao` agora ataca team_total home over 0.5. Os ataques seriam similares: Brighton pode não marcar (8% de chance). Mas é um risco pequeno. Ataque: prior já é 73%, então não há muito valor. Isso é verdade, mas ainda é 5% de edge.\n\nVou refazer a refutação.\n\nAgora, escrever o JSON final corrigido.\n\nVou colocar o JSON completo com as alterações.",
+  "reasoningTokens": 24559,
+  "elapsedMs": 395622,
+  "promptChars": 43649,
+  "error": null
+}

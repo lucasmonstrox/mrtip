@@ -1,0 +1,889 @@
+{
+  "matchId": "f0c7743f-3eaf-42ed-805b-d745dc4c4fb9",
+  "homeName": "Tottenham Hotspur",
+  "awayName": "Everton",
+  "actual": "Tottenham Hotspur 1-0 Everton (HT 1-0)",
+  "ftH": 1,
+  "ftA": 0,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Tottenham Hotspur x Everton\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: Tottenham Hotspur Stadium, London (grass)\n- Clima: sky is clear · 27°C (sens. 27.1°C) · vento 2.9 m/s · umidade 45% · nuvens 5% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Tottenham Hotspur 5 dias (último: liga, 2026-05-19) · Everton 7 dias (último: liga, 2026-05-17)\n- Viagem do visitante: ~284 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- Tottenham Hotspur: 17º, 38 pts · Everton: 12º, 49 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Tottenham Hotspur: 17º, 38 pts, 1 jogo(s) restante(s) (máx possível 41 pts)\n  - ainda não salvo, mas **um empate NESTE jogo já garante a permanência** — tende a jogar pra não perder, não a se lançar.\n  - → motivação: **media** — contenta-se com o EMPATE — 1 ponto garante a permanência (joga pra não perder)\n  - Everton: 12º, 49 pts, 1 jogo(s) restante(s) (máx possível 52 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - distância de saldo p/ a vaga: empata em pontos com o 8º e precisa **virar 10 de saldo** (-2 vs +7) em 1 jogo(s) — **exigiria goleada; porta praticamente fechada → não deve se matar**\n  - → motivação: **baixa** — NÃO precisa lutar — alvo continental matematicamente vivo mas REMOTO (saldo) — quase nada a jogar\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Tottenham Hotspur (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **47 marcados / 57 sofridos** em 37j · média **1.27 marca / 1.54 sofre** por jogo\n- **Em casa (18j): marca 1.17 / sofre 1.72** (21 gols) · por tempo: 1ºT 0.51/0.81 · 2ºT 0.76/0.73\n- **Finalização: 145 SoT (3.92/j · casa 4/j) · conv 32%** (aberta, −0 pên) · sofre 4.08 SoT/j (adv 36%) · 8.43 KP/j\n- **Volume: 11.2 chutes/j (7.8 na área) · 1.8 big chances/j** · posse 50.4%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 46.1/46.1 · chutes pra fora 4.2/5 · bloqueados 3.2/3.3 · de fora da área 3.5/4\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 45.4/36.2 · chutes pra fora 5.4/3.8 · bloqueados 2.6/2.6 · de fora da área 3.2/4\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.76**\n  - **Micky van de Ven** nota **6.75** (season) · forma 6.68= (últ.5 do time: 6.6→7.1→6.6→6.5→6.6 📉 caindo) · 1× MOTM · 35j\n    ↳ **4G+1A** · gols aos 19',38',45',64' · 0.17 KP/j (últ.5: 0.2=) · 0.17 SoT/j (últ.5: 0↓) · 0.31 dribles/j · def: 1.29 desarme + 0.66 int + 3.43 duelo/j · ~87 min/j\n  - **Pedro Porro** nota **7.01** (season) · forma 7.52↑ (últ.5 do time: 7.9→7.8→7.4→7.4→7.1 📉 caindo) · 4× MOTM · 36j\n    ↳ **1G+2A** · gols aos 39' · 1.58 KP/j (últ.5: 2.2↑) · 0.25 SoT/j (últ.5: 0.6↑) · 0.53 dribles/j · def: 2.28 desarme + 0.92 int + 4.03 duelo/j · 1.67 cruz/j · ~83 min/j\n  - **Guglielmo Vicario ** nota **6.71** (season) · forma 6.71= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 32j\n    ↳ 0.03 KP/j (últ.5: 0.2↑) · 0 SoT/j (últ.5: 0=) · 0 dribles/j · def: 0.03 desarme + 0 int + 0.5 duelo/j · ~90 min/j\n  - **João Palhinha** nota **6.9** (season) · forma 6.88= (últ.5 do time: 6.6→7.4→7.1→6.7→6.6 📉 caindo) · 3× MOTM · 35j\n    ↳ **5G+2A** · gols aos 14',45',78',82',90' — mais no 2ºT, 3 tardios (76'+) · 0.23 KP/j (últ.5: 0↓) · 0.29 SoT/j (últ.5: 0.6↑) · 0.31 dribles/j · def: 3.34 desarme + 1.03 int + 5.83 duelo/j · ~68 min/j\n  - **Djed Spence** nota **6.5** (season) · forma 6.46= (últ.5 do time: 6.3→7.2→6→6.4→6.4 📉 caindo) · 30j\n    ↳ 0.31 KP/j (últ.5: 0↓) · 0.22 SoT/j (últ.5: 0↓) · 1.16 dribles/j · def: 1.44 desarme + 0.56 int + 3.88 duelo/j · 0.28 cruz/j · ~67 min/j\n  - **Richarlison** nota **6.92** (season) · forma 6.92= (últ.5 do time: –→6.8→6.9→6.5→7.5 ➡️ estável) · **faltou 1/5** · 4× MOTM · 34j\n    ↳ **11G+5A** · gols aos 10',25',25',43',55',60',66',74',83',90'… — mais no 2ºT · 0.56 KP/j (últ.5: 0.6=) · 0.85 SoT/j (últ.5: 1.2↑) · 0.32 dribles/j · def: 0.82 desarme + 0.21 int + 4.35 duelo/j · ~60 min/j\n  - **Xavi Simons ** nota **6.97** (season) · forma 7.15↑ (últ.5 do time: 7.6→6.7→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 2× MOTM · 31j\n    ↳ **2G+5A** · gols aos 43',77' · 1.52 KP/j (últ.5: 1↓) · 0.39 SoT/j (últ.5: 0.4=) · 1 dribles/j · def: 1.13 desarme + 0.58 int + 4.29 duelo/j · 0.55 cruz/j · ~64 min/j\n  - **Rodrigo Bentancur ** nota **6.88** (season) · forma 7.14↑ (últ.5 do time: 7.2→7.2→7→7.3→7 ➡️ estável) · 27j\n    ↳ **1G+1A** · gols aos 5' · 0.37 KP/j (últ.5: 0.2↓) · 0.15 SoT/j (últ.5: 0.2↑) · 0.78 dribles/j · def: 2.11 desarme + 1.3 int + 4.3 duelo/j · 0.04 cruz/j · ~73 min/j\n  - **Cristian Romero ** nota **7.03** (season) · forma 7.03= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 2× MOTM · 23j\n    ↳ **4G+1A** · gols aos 64',78',90',90' — mais no 2ºT, 3 tardios (76'+) · 0.57 KP/j (últ.5: 0.4↓) · 0.26 SoT/j (últ.5: 0.2↓) · 0.35 dribles/j · def: 2.52 desarme + 1.3 int + 6.74 duelo/j · ~82 min/j\n  - **Randal Kolo Muani** nota **6.5** (season) · forma 6.54= (últ.5 do time: 6.7→6.7→7.1→6.2→6 📉 caindo) · 31j\n    ↳ **1G+2A** · gols aos 34' · 0.68 KP/j (últ.5: 0.2↓) · 0.13 SoT/j (últ.5: 0.2↑) · 0.9 dribles/j · def: 0.94 desarme + 0.1 int + 3.39 duelo/j · 0.23 cruz/j · ~56 min/j\n  - **Kevin Danso** nota **6.81** (season) · forma 6.76= (últ.5 do time: 5.8→7.3→7.1→6.8→6.8 📈 subindo) · 24j\n    ↳ 0.19 KP/j (últ.5: 0.6↑) · 0.12 SoT/j (últ.5: 0.2↑) · 0.19 dribles/j · def: 1.19 desarme + 1.12 int + 5.19 duelo/j · ~65 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DEVVE** (8pts) · **7 feitos / 6 sofridos** · marca 1.4= / sofre 1.2↓ g/j · SoT 3.8 feito / 2.8 sofrido\n- **Consistência: MARCOU em 30/37** (casa 15/18 · fora 15/19) · não-marcou 7 · clean sheet 8 · BTTS 23/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Brighton & Hove Albion** (casa · **Empate 2-2**, HT 1-1) — 6-3 SoT · posse 52%/46% (1ºT/2ºT) · adv 9º · você 18º briga-Z · seu casa até ali 1.1 marca/1.8 sofre\n- @ **Wolverhampton Wanderers** (fora · **Vitória 1-0**, HT 0-0) — 2-2 SoT · posse 67%/63% (1ºT/2ºT) · adv 20º REBAIX. · você 18º briga-Z · seu fora até ali 1.4 marca/1.4 sofre\n- @ **Aston Villa** (fora · **Vitória 2-1**, HT 2-0) — 5-1 SoT · posse 58%/61% (1ºT/2ºT) · adv 5º briga-top · você 18º briga-Z · seu fora até ali 1.4 marca/1.4 sofre\n- vs **Leeds United** (casa · **Empate 1-1**, HT 0-0) — 3-4 SoT · posse 66%/57% (1ºT/2ºT) · adv 16º briga-Z · você 17º briga-Z · seu casa até ali 1.2 marca/1.8 sofre\n- @ **Chelsea** (fora · **Derrota 1-2**, HT 0-1) — 3-4 SoT · posse 57%/53% (1ºT/2ºT) · adv 10º salvo · você 17º briga-Z · seu fora até ali 1.4 marca/1.3 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Brighton & Hove Albion (CASA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 0 0 0 +1 +1 +1 0 0 0 +1 +1 0 0 +1] · 16'-30' [+1 0 0 0 0 0 +4 +2 +3 +2 +1 -1 -3 -2 -2] · 31'-45' [-5 -5 -7 -5 -5 -5 -7 -7 +1 +2 +4 +4 +10 +8 +6] · ‖INTERVALO‖ · 46'-60' [-5 -5 -4 -5 -6 -7 -2 -1 0 0 +5 +3 +2 -1 -4] · 61'-75' [-6 -4 -4 -4 -6 -6 -4 0 0 +5 +3 +1 0 0 0] · 76'-90' [-9 -4 -4 -3 +1 +4 +4 +3 +2 +2 -4 -3 -2 -4 -4] · 91'+ [-5 -3 -6 -5 -13 -13 -11 -4]\n    ⚽ gols: 39'✓ 45'✗ 77'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **5** · 31'-45' **2** ‖ 46'-60' **5** · 61'-75' **6** · 76'-90' **2**\n  - @ Wolverhampton Wanderers (FORA · V 1-0) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 +1 +3 +4 +4 +5 +7 +7 +5 +4 +3 +3 +4 +3 +4] · 16'-30' [+4 +5 +4 +3 +2 +1 +1 +2 +6 +4 +6 +6 +6 -2 -2] · 31'-45' [-1 +1 +2 +3 +3 +7 +7 +6 +5 +5 +5 +1 -1 -1 -1] · ‖INTERVALO‖ · 46'-60' [-6 -4 +2 -3 0 -6 -4 -3 -1 -3 -4 -2 -2 -2 -2] · 61'-75' [-2 -3 -3 -2 -2 0 -1 +1 +1 +1 +7 +4 +4 +2 +2] · 76'-90' [0 0 -2 -1 -6 -6 -4 +3 +3 +2 +2 +8 +9 +9 +9] · 91'+ [+2 +2 +1 +3 +4 +3 +2 +2]\n    ⚽ gols: 82'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **6** · 31'-45' **7** ‖ 46'-60' **6** · 61'-75' **5** · 76'-90' **14**\n  - @ Aston Villa (FORA · V 2-1) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 0 0 +1 +3 +2 +1 +2 +1 +1 +3 +2 +2 +2] · 16'-30' [+4 +3 +5 +4 +3 +3 +7 +5 +6 +13 +13 +13 +18 +14 +9] · 31'-45' [+5 0 -2 -1 +1 +2 +3 +3 +3 +6 +6 +7 +5 +3 +2] · ‖INTERVALO‖ · 46'-60' [+2 0 +1 +1 +1 +1 +1 +3 +2 +4 +4 +3 +3 +3 +2] · 61'-75' [0 -3 -3 -3 -3 -3 -3 -1 +1 +1 +2 -2 0 -1 -3] · 76'-90' [-1 -1 -2 -2 -3 -2 -2 -1 +2 0 -1 -2 -3 -4 -6] · 91'+ [-6 -5 -4 -6 -6 -7]\n    ⚽ gols: 12'✓ 25'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **1** · 31'-45' **7** ‖ 46'-60' **4** · 61'-75' **4** · 76'-90' **12**\n  - vs Leeds United (CASA · E 1-1) — min 1→105:\n    📈 pressão (net/min): 1'-15' [-2 -1 -1 -1 0 +3 +4 +4 +3 +3 +3 +2 +2 +5 +8] · 16'-30' [+6 +7 +4 +2 +1 -5 -4 -3 0 -2 -2 +2 +2 +5 +4] · 31'-45' [+2 +2 +4 +2 +3 +8 +9 +6 +7 +3 +2 +1 +2 +3 0] · ‖INTERVALO‖ · 46'-60' [+3 +2 +2 +1 +1 +1 +3 +2 +1 +1 0 +1 +3 +9 +5] · 61'-75' [+2 -2 -1 -1 0 0 +1 -3 -3 -3 -3 -3 -3 -6 -8] · 76'-90' [-8 -4 -3 -5 -3 -6 -3 -2 -3 -3 -2 -3 -2 -1 -1] · 91'+ [+1 +6 +8 +5 +4 +5 +4 +5 +1 -5 -7 -4 -2 -2 +3]\n    ⚽ gols: 50'✓ 74'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **9** · 16'-30' **3** · 31'-45' **6** ‖ 46'-60' **6** · 61'-75' **7** · 76'-90' **4**\n  - @ Chelsea (FORA · D 1-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 -4 -4 -1 -1 0 -2 0 +1 +3 +7 +5 -1 -3] · 16'-30' [-3 -2 -2 -4 -2 -2 -1 -1 -2 -1 -2 -2 +2 +2 +2] · 31'-45' [+1 +3 +1 +1 0 -3 0 +2 +3 +1 +1 +1 +1 -1 -1] · ‖INTERVALO‖ · 46'-60' [-3 -2 -1 0 +1 +2 +4 +3 +2 +1 +1 +1 +1 0 +1] · 61'-75' [-1 -1 0 +1 +3 +3 -1 -2 0 -1 +2 +3 +7 +9 +7] · 76'-90' [+4 +4 +3 +3 +3 +3 0 +2 +3 +5 +5 +4 +4 +2 +1] · 91'+ [+1 +2 +2 +2 +3 +4]\n    ⚽ gols: 18'✗ 67'✗ 74'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **3** · 31'-45' **8** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **2**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.14 · 31-45: 0.27 · 46-60: 0.22 · 61-75: 0.19 · 76-90: 0.35\n- Sofre por faixa (/j): 0-15: 0.19 · 16-30: 0.11 · 31-45: 0.51 · 46-60: 0.14 · 61-75: 0.22 · 76-90: 0.38\n- 1ºT: marca 19 / sofre 30 (totais na temporada)\n\n### Desfalques de Tottenham Hotspur neste jogo\n- **Mohammed Kudus** (Muscle Injury) — 2 gols + 5 assists até a data; season: **4% dos gols** do time (15% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.37 g/j (19j) vs sem ele 1.17 g/j (18j) = −15%; finaliza **0.47 SoT/jogo** (time: 3.37 SoT/j com ele vs 4.5 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~3% do time) · 1.5 desarmes/j · 5.6 duelos ganhos/j · 1.5 cruz. certos/j · 2.7 dribles certos/j · 1.4 key passes/j\n- **Xavi Simons** (Unknown Injury) — 2 gols + 5 assists até a data; season: **4% dos gols** do time (15% com assists); **últimos 5 jogos do time**: participou de 2/7 gols = **29%** (↑ mais decisivo AGORA); with/without: com ele 1.29 g/j (28j) vs sem ele 1.22 g/j (9j) = −5%; finaliza **0.36 SoT/jogo** (time: 3.93 SoT/j com ele vs 3.89 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.5 interceptações/j** (~6% do time) · 1.2 desarmes/j · 4.2 duelos ganhos/j · 0.5 cruz. certos/j · 1 dribles certos/j · 1.3 key passes/j\n- **Cristian Romero** (Muscle Injury) — 4 gols + 1 assists até a data; season: **9% dos gols** do time (11% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.26 g/j (23j) vs sem ele 1.29 g/j (14j) = +2%; finaliza **0.26 SoT/jogo** (time: 4.04 SoT/j com ele vs 3.71 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.3 interceptações/j** (~18% do time) · 2.5 desarmes/j · 6.7 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.6 key passes/j\n- **Wilson Odobert** (Unknown Injury) — 0 gols + 2 assists até a data; season: **0% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 1.38 g/j (24j) vs sem ele 1.08 g/j (13j) = −22%; finaliza **0.33 SoT/jogo** (time: 3.92 SoT/j com ele vs 3.92 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.5 desarmes/j · 2 duelos ganhos/j · 0.3 cruz. certos/j · 1 dribles certos/j · 0.8 key passes/j\n- **Ben Davies** (Ankle Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 0.67 g/j (3j) vs sem ele 1.32 g/j (34j) = +97%; finaliza **0.67 SoT/jogo** (time: 4 SoT/j com ele vs 3.91 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.3 interceptações/j** (~3% do time) · 1.7 desarmes/j · 3 duelos ganhos/j · 0.7 cruz. certos/j · 0 dribles certos/j · 0.3 key passes/j\n- **D. Kulusevski** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.27 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Everton (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **47 marcados / 49 sofridos** em 37j · média **1.27 marca / 1.32 sofre** por jogo\n- **Fora (18j): marca 1.17 / sofre 1.22** (21 gols) · por tempo: 1ºT 0.51/0.54 · 2ºT 0.76/0.78\n- **Finalização: 142 SoT (3.84/j · fora 3.33/j) · conv 32%** (aberta, −2 pên) · sofre 4.24 SoT/j (adv 29%) · 8.38 KP/j\n- **Volume: 11.1 chutes/j (7.6 na área) · 1.9 big chances/j** · posse 43.5%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 47.4/51.5 · chutes pra fora 3.9/5.2 · bloqueados 3.4/4.4 · de fora da área 3.5/4.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 43.6/54.2 · chutes pra fora 3.4/5.6 · bloqueados 3.6/4.2 · de fora da área 3.4/4.8\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.86**\n  - **James Garner** nota **7.35** (season) · forma 7.1↓ (últ.5 do time: 7.3→6.9→7.2→7.3→6.8 ➡️ estável) · 6× MOTM · 40j\n    ↳ **3G+7A** · gols aos 19',52',89' — mais no 2ºT · 1.43 KP/j (últ.5: 1.4=) · 0.4 SoT/j (últ.5: 0.4=) · 0.45 dribles/j · def: 3.2 desarme + 1.63 int + 5.4 duelo/j · 1.27 cruz/j · ~91 min/j\n  - **James Tarkowski** nota **7.15** (season) · forma 7.16= (últ.5 do time: 7.1→7.2→6.3→8.4→6.8 📈 subindo) · 2× MOTM · 39j\n    ↳ **2G+3A** · gols aos 6',32' · 0.54 KP/j (últ.5: 0.8↑) · 0.28 SoT/j (últ.5: 0.6↑) · 0.15 dribles/j · def: 1.41 desarme + 0.85 int + 6.51 duelo/j · 0.05 cruz/j · ~91 min/j\n  - **Jordan Pickford** nota **6.83** (season) · forma 6.52↓ (últ.5 do time: 6.6→6.4→6.4→7.4→5.8 ➡️ estável) · 3× MOTM · 38j\n    ↳ 0.05 KP/j (últ.5: 0.4↑) · 0 SoT/j (últ.5: 0=) · 0 dribles/j · def: 0.05 desarme + 0 int + 0.34 duelo/j · ~91 min/j\n  - **Jake O'Brien** nota **6.7** (season) · forma 6.4↓ (últ.5 do time: 6.8→6.5→6.5→6.3→5.9 📉 caindo) · 37j\n    ↳ **1G+1A** · gols aos 73' — mais no 2ºT · 0.51 KP/j (últ.5: 0.6=) · 0.18 SoT/j (últ.5: 0.4↑) · 0.18 dribles/j · def: 1.54 desarme + 0.44 int + 5.15 duelo/j · 0.36 cruz/j · ~84 min/j\n  - **Vitaliy Mykolenko** nota **6.69** (season) · forma 6.48↓ (últ.5 do time: 6.8→6.7→6.2→6.4→6.3 📉 caindo) · 35j\n    ↳ **0G+1A** · 0.77 KP/j (últ.5: 0.4↓) · 0.09 SoT/j (últ.5: 0↓) · 0.34 dribles/j · def: 1.46 desarme + 0.94 int + 4.14 duelo/j · 0.71 cruz/j · ~88 min/j\n  - **Iliman Ndiaye** nota **6.88** (season) · forma 6.62↓ (últ.5 do time: 7.1→6.7→6.4→7→5.9 📉 caindo) · 33j\n    ↳ **6G+3A** · gols aos 15',23',33',42',76',76' — 2 tardios (76'+) · 0.88 KP/j (últ.5: 0.6↓) · 0.67 SoT/j (últ.5: 1↑) · 2.21 dribles/j · def: 2.06 desarme + 0.52 int + 5.67 duelo/j · 0.21 cruz/j · ~83 min/j\n  - **Michael Keane** nota **6.98** (season) · forma 6.68↓ (últ.5 do time: –→6.5→6.8→6.8→6.6 ➡️ estável) · **faltou 1/5** · 31j\n    ↳ **3G+1A** · gols aos 17',18',81' · 0.09 KP/j (últ.5: 0.2↑) · 0.26 SoT/j (últ.5: 0.2↓) · 0.18 dribles/j · def: 1.06 desarme + 1.21 int + 4.82 duelo/j · ~79 min/j\n  - **Kiernan Dewsbury-Hall** nota **7.04** (season) · forma 6.76↓ (últ.5 do time: 7→6.9→6.4→6.1→7.4 ➡️ estável) · 4× MOTM · 31j\n    ↳ **8G+4A** · gols aos 29',55',60',69',75',80',88',90' — mais no 2ºT, 3 tardios (76'+) · 1.29 KP/j (últ.5: 1.6↑) · 0.48 SoT/j (últ.5: 0.4=) · 0.94 dribles/j · def: 1.65 desarme + 0.42 int + 4.68 duelo/j · 0.71 cruz/j · ~84 min/j\n  - ⚠️(fora) **Idrissa Gueye** nota **6.88** (season) · forma 6.6↓ (últ.5 do time: 6.6→6.6→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 25j\n    ↳ **2G+3A** · gols aos 45',58' · 0.52 KP/j (últ.5: 0.4↓) · 0.28 SoT/j (últ.5: 0.4↑) · 0.28 dribles/j · def: 1.76 desarme + 1.12 int + 3.76 duelo/j · 0.28 cruz/j · ~84 min/j\n  - **Thierno Barry** nota **6.65** (season) · forma 6.92↑ (últ.5 do time: 6.5→6.6→8.2→6.8→6.5 ➡️ estável) · 39j\n    ↳ **8G+0A** · gols aos 45',59',68',76',79',81',83',90' — mais no 2ºT, 5 tardios (76'+) · 0.35 KP/j (últ.5: 0.4=) · 0.38 SoT/j (últ.5: 0.8↑) · 0.23 dribles/j · def: 0.17 desarme + 0.15 int + 4.05 duelo/j · 0.03 cruz/j · ~50 min/j\n  - **Beto** nota **6.73** (season) · forma 6.85= (últ.5 do time: 7.3→–→6.5→7.3→6.3 ➡️ estável) · **faltou 1/5** · 2× MOTM · 36j\n    ↳ **10G+1A** · gols aos 7',26',33',34',47',54',62',66',89',90' — mais no 2ºT · 0.41 KP/j (últ.5: 0.8↑) · 0.51 SoT/j (últ.5: 0.8↑) · 0.41 dribles/j · def: 0.44 desarme + 0.03 int + 3.72 duelo/j · ~45 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DEEDD** (2pts) · **8 feitos / 12 sofridos** · marca 1.6↑ / sofre 2.4↑ g/j · SoT 4.6 feito / 4.8 sofrido\n- **Consistência: MARCOU em 28/37** (casa 15/19 · fora 13/18) · não-marcou 9 · clean sheet 11 · BTTS 19/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Liverpool** (casa · **Derrota 1-2**, HT 0-1) — 4-6 SoT · posse 46%/44% (1ºT/2ºT) · adv 5º briga-top · você 10º · seu casa até ali 1.3 marca/1.2 sofre\n- @ **West Ham United** (fora · **Derrota 1-2**, HT 0-0) — 3-3 SoT · posse 52%/51% (1ºT/2ºT) · adv 17º briga-Z · você 10º salvo · seu fora até ali 1.1 marca/1.1 sofre\n- vs **Manchester City** (casa · **Empate 3-3**, HT 0-1) 🔺 buscou o empate (perdia no HT) — 6-4 SoT · posse 19%/25% (1ºT/2ºT) · adv 2º Eur-gar · você 11º · seu casa até ali 1.3 marca/1.2 sofre\n- @ **Crystal Palace** (fora · **Empate 2-2**, HT 1-1) — 6-8 SoT · posse 59%/45% (1ºT/2ºT) · adv 15º briga-Z · você 10º salvo · seu fora até ali 1.1 marca/1.2 sofre\n- vs **Sunderland** (casa · **Derrota 1-3**, HT 1-0) 🔻 **LEVOU A VIRADA** (vencia no HT) — 4-3 SoT · posse 40%/42% (1ºT/2ºT) · adv 12º salvo · você 10º salvo · seu casa até ali 1.4 marca/1.3 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Liverpool (CASA · D 1-2) — min 1→102:\n    📈 pressão (net/min): 1'-15' [0 0 0 +2 0 +5 +3 +2 -1 -2 +1 +1 +1 +2 +2] · 16'-30' [+3 +3 +3 +1 +2 +2 -2 -2 -2 +6 +6 +10 +10 +12 +2] · 31'-45' [0 0 0 -1 -1 +1 +3 +3 +3 -2 -1 -5 -5 -6 -7] · ‖INTERVALO‖ · 46'-60' [-6 -7 -6 -4 -4 -3 -2 0 -1 +4 +4 +4 +4 +2 +2] · 61'-75' [+1 -2 -1 0 -2 +1 +1 +2 +6 +5 +5 +5 +5 +3 +6] · 76'-90' [+5 +3 +3 +2 +3 0 0 0 -2 -2 -2 -2 -2 -1 0] · 91'+ [0 0 0 0 0 +1 -1 -3 -3 -4 -8 -5]\n    ⚽ gols: 29'✗ 54'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **8** · 16'-30' **5** · 31'-45' **4** ‖ 46'-60' **6** · 61'-75' **5** · 76'-90' **8**\n  - @ West Ham United (FORA · D 1-2) — min 1→100:\n    📈 pressão (net/min): 1'-15' [0 -1 0 0 +5 +5 +5 +7 +9 +6 +2 +2 -1 +1 0] · 16'-30' [-4 -4 -4 -5 -9 -7 -6 -6 -8 -5 -5 +2 0 0 0] · 31'-45' [-1 -1 0 0 0 +5 +3 +5 +5 +3 +3 +3 +1 0 -2] · ‖INTERVALO‖ · 46'-60' [-11 -11 -8 -8 -6 -7 -7 -14 -11 -9 -26 -19 -13 -9 -9] · 61'-75' [-14 -14 -9 -6 -6 -4 -3 -3 -2 -1 0 0 -2 -1 +6] · 76'-90' [+7 +5 +5 +12 +13 +13 +10 +10 +6 +6 +7 +7 +3 +6 +3] · 91'+ [+3 +4 +4 -4 -4 -3 0 0 +2 +1]\n    ⚽ gols: 51'✗ 88'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **8** · 31'-45' **4** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **1**\n  - vs Manchester City (CASA · E 3-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 -1 0 -2 -2 0 -6 -6 -6 -6 -13 -10 -11 -8 -5] · 16'-30' [-8 -8 -12 -13 -16 -13 -10 -8 -5 -4 -1 +3 0 0 0] · 31'-45' [+1 +5 +5 +1 0 0 -2 -3 -3 -3 -9 -6 -6 -6 -2] · ‖INTERVALO‖ · 46'-60' [-9 -5 -3 -4 -4 -4 -3 -2 -1 0 0 0 -2 -2 -3] · 61'-75' [0 0 0 +1 +6 +2 0 +3 +6 +3 -4 -2 +3 +3 0] · 76'-90' [-2 -3 -3 -1 -19 -14 -4 -4 -8 -4 -3 -6 -5 -4 -4] · 91'+ [-6 -5 -3 -4 -5 -6]\n    ⚽ gols: 43'✗ 68'✓ 73'✓ 81'✓ 83'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **5** · 61'-75' **2** · 76'-90' **10**\n  - @ Crystal Palace (FORA · E 2-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 +2 +9 +10 +10 +10 +10 +5 +3 0 0 -2 -1 -1 -2] · 16'-30' [-1 -5 -2 -5 -5 -5 -4 -3 -2 0 +2 +2 +1 +5 +2] · 31'-45' [+2 -2 +1 -3 -3 -2 -15 -12 -12 -12 -5 -4 -3 +2 +3] · ‖INTERVALO‖ · 46'-60' [+4 +2 +2 +3 -4 -3 -3 -3 -3 +1 +6 +5 +3 -1 -1] · 61'-75' [-1 -1 +3 +1 0 -1 -1 -8 -29 -24 -18 -18 -12 -9 -6] · 76'-90' [0 -6 -6 -2 -3 -3 -7 -5 -6 -6 -5 -8 -6 -4 -5] · 91'+ [-3 -1 +1 +4 +4 +2]\n    ⚽ gols: 6'✓ 34'✗ 47'✓ 77'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **4** · 31'-45' **0** ‖ 46'-60' **4** · 61'-75' **5** · 76'-90' **5**\n  - vs Sunderland (CASA · D 1-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 -1 -1 0 +2 +2 +3 +3 +3 +3 0 -1 -2 -3 -2] · 16'-30' [-3 -3 -1 -2 -1 -1 -1 -1 -2 -5 -7 -8 -6 -6 -4] · 31'-45' [-4 -3 -3 0 +5 +4 +4 +6 +4 +6 +5 +7 +9 +9 +5] · ‖INTERVALO‖ · 46'-60' [-2 -1 -4 -3 -3 -3 0 -1 -5 -6 -6 -5 -5 -8 -7] · 61'-75' [-7 -4 -4 -3 +4 +4 +5 +4 +4 +4 +3 +3 +3 +2 +2] · 76'-90' [+6 +4 +4 +4 +2 +1 -4 -1 +3 +3 +5 +5 +4 +4 +3] · 91'+ [+2 -3 -1 -1 0 +1]\n    ⚽ gols: 43'✓ 59'✗ 81'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **8** · 16'-30' **3** · 31'-45' **2** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **3**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.19 · 31-45: 0.22 · 46-60: 0.19 · 61-75: 0.16 · 76-90: 0.41\n- Sofre por faixa (/j): 0-15: 0.11 · 16-30: 0.24 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.19 · 76-90: 0.41\n- 1ºT: marca 19 / sofre 20 (totais na temporada)\n\n### Desfalques de Everton neste jogo\n- **Jack Grealish** (Unknown Injury) — 2 gols + 6 assists até a data; season: **4% dos gols** do time (17% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.2 g/j (20j) vs sem ele 1.35 g/j (17j) = +13%; finaliza **0.4 SoT/jogo** (time: 3.1 SoT/j com ele vs 4.71 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.6 interceptações/j** (~7% do time) · 1.1 desarmes/j · 5.3 duelos ganhos/j · 0.5 cruz. certos/j · 1.1 dribles certos/j · 2 key passes/j\n- **Idrissa Gueye** (Muscle Injury) — 2 gols + 3 assists até a data; season: **4% dos gols** do time (11% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.2 g/j (25j) vs sem ele 1.42 g/j (12j) = +18%; finaliza **0.28 SoT/jogo** (time: 3.8 SoT/j com ele vs 3.92 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.8 desarmes/j · 3.8 duelos ganhos/j · 0.3 cruz. certos/j · 0.3 dribles certos/j · 0.5 key passes/j\n- **J. Branthwaite** (Unknown Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (≈ estável); with/without: com ele 1.6 g/j (10j) vs sem ele 1.15 g/j (27j) = −28%; finaliza **0.2 SoT/jogo** (time: 5.1 SoT/j com ele vs 3.37 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.3 desarmes/j · 4.4 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0.3 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Tottenham Hotspur atacando × Everton defendendo**\n| Faixa | Tottenham Hotspur marca/j | Everton sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.11 | 0.22 |\n| 16-30 | 0.14 | 0.24 | 0.38 |\n| 31-45 | 0.27 | 0.19 | 0.46 |\n| 46-60 | 0.22 | 0.19 | 0.41 |\n| 61-75 | 0.19 | 0.19 | 0.38 |\n| 76-90 | 0.35 | 0.41 | 0.76 |\n\n**Everton atacando × Tottenham Hotspur defendendo**\n| Faixa | Everton marca/j | Tottenham Hotspur sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.19 | 0.3 |\n| 16-30 | 0.19 | 0.11 | 0.3 |\n| 31-45 | 0.22 | 0.51 | 0.73 |\n| 46-60 | 0.19 | 0.14 | 0.33 |\n| 61-75 | 0.16 | 0.22 | 0.38 |\n| 76-90 | 0.41 | 0.38 | 0.79 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Tottenham Hotspur: **16-30** (domínio +4.6) · Everton: **76-90** (domínio -0.3). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Tottenham Hotspur domínio/j | Everton domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | +1.6 | +0.5 | +1.1 ≈ |\n| 16-30 | +2.3 | -2.3 | +4.6 🏠 |\n| 31-45 | +1.8 | -0.4 | +2.2 🏠 |\n| 46-60 | +0.1 | -3.7 | +3.8 🏠 |\n| 61-75 | -0.5 | -1.4 | +0.9 ≈ |\n| 76-90 | -0.6 | -0.3 | -0.3 ≈ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Tottenham Hotspur (casa) = 0.93 · λ Everton (fora) = 1.64 · total = 2.57\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Tottenham Hotspur: λ_SoT 3.81 × conv 32% → **1.22 gols**\n- Everton: λ_SoT 3.48 × conv 32% → **1.11 gols**\n- total via SoT = 2.33\n- **Índice de volume do jogo**: λ_SoT total 7.3 vs média da liga 8.5 SoT → **ABAIXO** (jogo travado → pressão de UNDER)\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 20/28/53% | 37/32/32% |\n| Over 1.5 | 74% | 69% |\n| Over 2.5 | 47% | 41% |\n| Over 3.5 | 26% | 21% |\n| BTTS | 50% | 49% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **68%** · 12 **68%** · X2 **63%** · **Draw No Bet** casa 54% / fora 46%\n- **Placar exato (mais prováveis)**: 1-1 15% · 0-0 11% · 1-0 10% · 0-1 9%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 31% · 2-3 49% · 4+ 21%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Tottenham Hotspur over 0.5 **70%** / over 1.5 **34%** · Everton over 0.5 **67%** / over 1.5 **30%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 2.71 · empate 3.17 · fora 3.17. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **27/48/24%** · 2ºT **33/38/29%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Tottenham Hotspur) e `away` (= Everton), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.100000023841858,
+    "xg_away": 1,
+    "total": 2.0999999046325684,
+    "over25_prob": 0.3499999940395355,
+    "btts_prob": 0.41999998688697815,
+    "one_x_two": "{\"home\":0.4,\"draw\":0.35,\"away\":0.25}",
+    "confianca": "medium",
+    "best_bet_market": "double_chance",
+    "best_bet_selection": "home_draw",
+    "best_bet_team": null,
+    "best_bet_line": null,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.75,
+    "reasoning_tokens": 5471
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Tottenham Hotspur** contra **bloco baixo** (o estilo do Everton, posse média 43.5%): marca **1.33/j** e sofre 1.20/j em 15 jogos — na média da temporada (1.27).\n- **Everton** contra **equilibrado** (o estilo do Tottenham Hotspur, posse média 50.4%): marca **1.36/j** e sofre 1.73/j em 11 jogos — na média da temporada (1.27).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- nenhum canal com índice ≥1.4× — sem assimetria de mecanismo relevante.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Tottenham Hotspur** (18 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -2.0 nos 10min seguintes) · **MATA O JOGO após marcar** (Δ +3.0 — segue pressionando).\n- **Everton** (29 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.4 nos 10min seguintes) · **ADMINISTRA após marcar** (Δ -2.0 — recua).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Tottenham Hotspur**: Richarlison **11 gols** · últ.5: 2 · 0.8 SoT/j | João Palhinha **4 gols** · últ.5: 1 · 0.3 SoT/j | Micky van de Ven **4 gols** · últ.5: 0 · 0.2 SoT/j | Mathys Tel **4 gols** · últ.5: 1 · 0.3 SoT/j | Cristian Romero  **4 gols** · últ.5: 0 · 0.3 SoT/j ⚠️ DESFALQUE/dúvida neste jogo\n- **Everton**: Beto **9 gols** · últ.5: 2 · 0.5 SoT/j | Kiernan Dewsbury-Hall **8 gols** · últ.5: 1 · 0.5 SoT/j | Thierno Barry **8 gols** · últ.5: 2 · 0.4 SoT/j | Iliman Ndiaye **6 gols** (2 pên) · últ.5: 0 · 0.7 SoT/j | Michael Keane **3 gols** · últ.5: 0 · 0.2 SoT/j",
+  "realGoals": [
+    {
+      "minute": 43,
+      "side": "home",
+      "scorer": "João Palhinha",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 1.15,
+      "xg_1t": 0.5,
+      "xg_2t": 0.65,
+      "xg_bands": {
+        "0-15": 0.072,
+        "16-30": 0.144,
+        "31-45": 0.246,
+        "46-60": 0.185,
+        "61-75": 0.216,
+        "76-90": 0.287
+      },
+      "summary": "Tottenham em casa, precisando só de empate, deve ter ataque moderado (~1.15 xG). Defesa sem Romero fica mais exposta, mas o contexto de jogo travado limita as chances. Gols concentrados no fim do 1ºT e nos minutos finais."
+    },
+    "away": {
+      "xg": 0.9,
+      "xg_1t": 0.35,
+      "xg_2t": 0.55,
+      "xg_bands": {
+        "0-15": 0.059,
+        "16-30": 0.099,
+        "31-45": 0.168,
+        "46-60": 0.129,
+        "61-75": 0.188,
+        "76-90": 0.257
+      },
+      "summary": "Everton sem motivação real, mas com ataque capaz de explorar falhas defensivas do Tottenham, especialmente no 2º tempo. Volume ofensivo modesto, porém com finalizadores perigosos nos acréscimos."
+    },
+    "general": {
+      "total": 2.05,
+      "total_1t": 0.85,
+      "total_2t": 1.2,
+      "over25_prob": 0.35,
+      "btts_prob": 0.4,
+      "one_x_two": {
+        "home": 0.38,
+        "draw": 0.3,
+        "away": 0.32
+      },
+      "one_x_two_1t": {
+        "home": 0.3,
+        "draw": 0.45,
+        "away": 0.25
+      },
+      "one_x_two_2t": {
+        "home": 0.36,
+        "draw": 0.34,
+        "away": 0.3
+      },
+      "confidence": "medium",
+      "confidence_regra": "Aposta suportada por mais de 3 arestas independentes (A1, A8, A11, A12) e pelo veredito de intenção, com ataques que enfraquecem mas não derrubam; rotas A e B do base rate divergem levemente, mas a Rota B (preferida) indica under, e a diferença é explicada pela motivação.",
+      "summary": "Jogo de pouca intensidade, com Tottenham administrando pelo empate que salva e Everton sem ambição real. Volume de finalizações baixo (SoT 7.3), favorecendo under 2.5. Primeiro tempo tende a ser morno, com possíveis gols no fim de cada tempo. Vitória do Tottenham não é garantida, empate é resultado provável."
+    },
+    "conclusoes": [
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Tottenham precisa apenas de empate para se salvar; Everton já seguro e com vaga europeia remota.",
+        "dado": "Tottenham 17º, 38 pts, 1 ponto garante permanência; Everton 12º, 49 pts, precisa virar 10 de saldo em 1 jogo.",
+        "direcao": "Assimetria de motivação: Tottenham administra, Everton não se arrisca. Jogo tende a ser travado, com poucos gols.",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "home_gols",
+        "fato": "Tottenham em casa tem ataque abaixo da média e defesa frágil.",
+        "dado": "Marca 1.17/j, sofre 1.72/j (casa); SoT sofrido 4.08/j, conversão adversária 36%.",
+        "direcao": "Defesa caseira do Tottenham é vulnerável, mas ataque não é dominante. Oponente pode marcar, mas Tottenham também deve fazer gol.",
+        "forca": "media"
+      },
+      {
+        "id": "C4",
+        "bloco": "away_gols",
+        "fato": "Everton fora é equilibrado, defesa sólida e ataque modesto.",
+        "dado": "Marca 1.17/j, sofre 1.22/j (fora); SoT sofrido 4.24/j mas conversão adversária baixa (29%).",
+        "direcao": "Everton tende a jogos de poucos gols fora, mas sua defesa pode ser vazada se pressionada.",
+        "forca": "media"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_estilo",
+        "fato": "Tottenham melhorou defensivamente nos últimos 5 jogos.",
+        "dado": "Últ.5: ataques perigosos sofridos 36.2 (antes 46.1), chutes pra fora sofridos 3.8 (antes 5).",
+        "direcao": "Defesa do Tottenham mais organizada recentemente, o que pode reduzir chances do Everton.",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "away_estilo",
+        "fato": "Everton nos últimos 5 está pior defensivamente, cedendo mais ataques.",
+        "dado": "Últ.5: ataques perigosos sofridos 54.2 (antes 51.5), chutes pra fora sofridos 5.6 (antes 5.2).",
+        "direcao": "Defesa do Everton em declínio, oferecendo espaços que o Tottenham pode explorar.",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_qualidade",
+        "fato": "Tottenham depende de Richarlison no ataque; perdeu Romero e Xavi Simons.",
+        "dado": "Richarlison: 11G, 0.85 SoT/j; Romero (lesão): 7.03 nota, 18% das interceptações do time; Xavi Simons (lesão): 1.3 key passes/j.",
+        "direcao": "Ataque concentrado em Richarlison; defesa desfalcada e perda de criatividade no meio.",
+        "forca": "alta"
+      },
+      {
+        "id": "C8",
+        "bloco": "away_qualidade",
+        "fato": "Everton tem meio-campo criativo mas perdeu Grealish e Gueye; ataque com Beto e Barry decisivos no 2ºT.",
+        "dado": "Garner: 7.35 nota, 3G+7A; Dewsbury-Hall: 8G; Beto: 10G; Grealish (lesão): 2 key passes/j; Gueye (lesão): 1.1 int/j.",
+        "direcao": "Criação reduzida sem Grealish, mas ainda tem poder de fogo com Beto, Barry e Dewsbury-Hall, especialmente no 2º tempo.",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_forma",
+        "fato": "Tottenham vem de forma razoável, com defesa melhorada.",
+        "dado": "Últ.5: 8pts, 7GF/6GC, SoT 3.8/2.8. Vitórias contra Wolves e Villa.",
+        "direcao": "Time competitivo, capaz de segurar resultados, mesmo sofrendo em alguns momentos.",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "away_forma",
+        "fato": "Everton em péssima fase, defesa extremamente frágil.",
+        "dado": "Últ.5: 2pts, 8GF/12GC, SoT 4.6/4.8. Levou virada do Sunderland.",
+        "direcao": "Defesa vazada, dificuldade em segurar vantagem. Momento inspira pouca confiança.",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_momentum",
+        "fato": "Tottenham pressiona bem entre 16-30 e desmorona ao sofrer gol.",
+        "dado": "Domínio +4.6 na faixa 16-30; Δ momentum após sofrer: -2.0 (desmorona); após marcar: +3.0 (mata jogo).",
+        "direcao": "Se sofrer primeiro, time pode se abalar; se marcar primeiro, controla. Janela 16-30 é promissora.",
+        "forca": "media"
+      },
+      {
+        "id": "C12",
+        "bloco": "away_momentum",
+        "fato": "Everton costuma pressionar no fim do jogo, mas recua quando marca.",
+        "dado": "Domínio -0.3 no 76-90 (maior que outras faixas); após marcar: Δ -2.0 (recua); após sofrer: Δ -1.4 (desmorona).",
+        "direcao": "Pode buscar o gol nos minutos finais; se abrir o placar, tende a recuar e ceder espaços.",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_faixas",
+        "fato": "Tottenham marca e sofre mais no fim do 1ºT e nos minutos finais.",
+        "dado": "Marca: 0.27 (31-45), 0.35 (76-90); Sofre: 0.51 (31-45), 0.38 (76-90).",
+        "direcao": "Gols do Tottenham concentrados nessas faixas; defesa vulnerável nos mesmos períodos.",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_faixas",
+        "fato": "Everton também tem picos de gols no fim do 1ºT e especialmente no 76-90.",
+        "dado": "Marca: 0.22 (31-45), 0.41 (76-90); Sofre: 0.24 (16-30), 0.41 (76-90).",
+        "direcao": "Everton costuma sofrer e fazer gols no final dos jogos, sugerindo que o 76-90 pode ser decisivo.",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_desfalques",
+        "fato": "Desfalques defensivos importantes: Romero (líder da defesa) e Xavi Simons (criação).",
+        "dado": "Romero: 1.3 int/j (18% do time), 6.7 duelos/j; Xavi Simons: 1.3 key passes/j. Ambos fora.",
+        "direcao": "Defesa do Tottenham perde solidez e organização, aumentando chances do Everton. Ataque perde criatividade.",
+        "forca": "alta"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_desfalques",
+        "fato": "Everton sem Branthwaite (zaga) e Gueye (volante), mas time já adaptado a Grealish e Gueye.",
+        "dado": "Branthwaite: 1.1 int/j (13% do time); time sofre mais sem ele (1.15 g/j vs 1.6 com, mas amostra pequena).",
+        "direcao": "Defesa do Everton enfraquecida, mas ausência de Gueye já estava nos últimos jogos. Impacto moderado.",
+        "forca": "media"
+      },
+      {
+        "id": "C17",
+        "bloco": "cruzamento_faixa",
+        "fato": "Faixas de maior coincidência para gols: 31-45 e 76-90 para ambos os lados.",
+        "dado": "TOT atk x EVE def: 31-45=0.46, 76-90=0.76; EVE atk x TOT def: 31-45=0.73, 76-90=0.79.",
+        "direcao": "Gols prováveis de ocorrerem principalmente nesses dois períodos, com ligeira vantagem para o ataque do Everton no 76-90.",
+        "forca": "alta"
+      },
+      {
+        "id": "C18",
+        "bloco": "base_rate",
+        "fato": "Jogo de baixo volume de finalizações, tendendo a under.",
+        "dado": "SoT total 7.3 (média liga 8.5); xG Rota B: 1.22 x 1.11, total 2.33.",
+        "direcao": "Expectativa de poucos gols, abaixo da média da liga. Prior indica under 2.5.",
+        "forca": "alta"
+      },
+      {
+        "id": "C19",
+        "bloco": "probs_mercado",
+        "fato": "Mercado equilibrado, com leve favoritismo ao Tottenham e under 2.5 favorecido.",
+        "dado": "Rota B: 1x2 37/32/32; over 2.5 41%; BTTS 49%. Fair odds: casa 2.71, empate 3.17, fora 3.17.",
+        "direcao": "Jogo sem claro favorito; probabilidade de empate relevante (32%). Over 2.5 abaixo de 50%.",
+        "forca": "media"
+      },
+      {
+        "id": "C20",
+        "bloco": "cruzamentos_computados",
+        "fato": "Tottenham contra bloco baixo mantém média; Everton contra equilibrado sofre mais.",
+        "dado": "TOT vs bloco baixo: marca 1.33/j, sofre 1.20; EVE vs equilibrado: marca 1.36/j, sofre 1.73.",
+        "direcao": "Tottenham pode ter leve melhora ofensiva; Everton tende a sofrer mais gols do que sua média fora.",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "cruzamentos_computados",
+        "fato": "Primeiro gol dita o ritmo: Tottenham mata jogo, Everton recua.",
+        "dado": "TOT após marcar: Δ+3.0; EVE após marcar: Δ-2.0; ambos desmoronam ao sofrer.",
+        "direcao": "Se o Tottenham abrir o placar, jogo tende a esfriar; se Everton marcar, pode recuar e sofrer pressão.",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "cruzamentos_computados",
+        "fato": "Artilheiros: Richarlison (TOT, 11G) e Beto/Barry/Dewsbury-Hall (EVE) são os principais finalizadores.",
+        "dado": "Richarlison 11G, 0.8 SoT/j; Beto 9G, 0.5 SoT/j; Dewsbury-Hall 8G; Barry 8G (todos no 2ºT).",
+        "direcao": "Prováveis marcadores concentrados nesses nomes, com Barry e Beto perigosos como opções no 2º tempo.",
+        "forca": "media"
+      }
+    ],
+    "blocos_sem_sinal": [
+      {
+        "bloco": "contexto",
+        "motivo": "Clima e descanso sem correlação relevante com gols; diferença de descanso de apenas 2 dias é ruído."
+      }
+    ],
+    "descartadas": [],
+    "jogadores": [
+      {
+        "nome": "Micky van de Ven",
+        "time": "home",
+        "leitura": "Zagueiro de velocidade, importante nas interceptações, mas sem Romero ao lado terá que liderar a defesa contra atacantes móveis do Everton; forma em queda."
+      },
+      {
+        "nome": "Pedro Porro",
+        "time": "home",
+        "leitura": "Lateral em ótima fase ofensiva, principal criador de chances (2.2 KP/j recentes); pode explorar espaço deixado pelo Everton."
+      },
+      {
+        "nome": "Guglielmo Vicario",
+        "time": "home",
+        "leitura": "Goleiro com ritmo incerto após ausências recentes; defesa já desfalcada pode sofrer com sua readaptação."
+      },
+      {
+        "nome": "João Palhinha",
+        "time": "home",
+        "leitura": "Volante de contenção e chegada ao ataque (5 gols, muitos no 2T); crucial para neutralizar o meio-campo do Everton."
+      },
+      {
+        "nome": "Djed Spence",
+        "time": "home",
+        "leitura": "Ala de pouca produção ofensiva (0.22 SoT/j) e forma em declínio; não deve ser fator determinante."
+      },
+      {
+        "nome": "Richarlison",
+        "time": "home",
+        "leitura": "Principal referência ofensiva (11G, 0.85 SoT/j), em boa forma; enfrenta ex-time com motivação extra, provável marcador."
+      },
+      {
+        "nome": "Xavi Simons",
+        "time": "home",
+        "leitura": "Desfalque (lesão); sua ausência tira criatividade (1.3 key passes/j) e mobilidade no meio, sobrecarregando Bentancur."
+      },
+      {
+        "nome": "Rodrigo Bentancur",
+        "time": "home",
+        "leitura": "Meia estável e em boa forma, assume a criação na ausência de Xavi Simons; importante na transição e desarme."
+      },
+      {
+        "nome": "Cristian Romero",
+        "time": "home",
+        "leitura": "Desfalque crucial: líder defensivo (1.3 int/j, 6.7 duelos), sua falta desorganiza a zaga e aumenta o risco de gols sofridos."
+      },
+      {
+        "nome": "Randal Kolo Muani",
+        "time": "home",
+        "leitura": "Atacante de baixo volume (0.13 SoT/j) e forma em queda; opção secundária, pouco impacto esperado."
+      },
+      {
+        "nome": "Kevin Danso",
+        "time": "home",
+        "leitura": "Zagueiro em ascensão, ganha espaço com lesão de Romero; importante nos duelos (5.19/j), mas ainda não é o líder da defesa."
+      },
+      {
+        "nome": "James Garner",
+        "time": "away",
+        "leitura": "Motor do meio-campo (7.35 nota, 6x MOTM), com boa visão de jogo e desarme; principal articulador, pode explorar defesa desfalcada."
+      },
+      {
+        "nome": "James Tarkowski",
+        "time": "away",
+        "leitura": "Zagueiro líder, sólido nos duelos (6.51/j), terá que comandar a defesa sem Branthwaite; crucial para parar Richarlison."
+      },
+      {
+        "nome": "Jordan Pickford",
+        "time": "away",
+        "leitura": "Goleiro de fase instável (nota 5.8 no último jogo); pode ser ponto frágil em um jogo de poucas chances."
+      },
+      {
+        "nome": "Jake O'Brien",
+        "time": "away",
+        "leitura": "Defensor de forma declinante; ao lado de Tarkowski, não transmite segurança, podendo ser explorado por Porro."
+      },
+      {
+        "nome": "Vitaliy Mykolenko",
+        "time": "away",
+        "leitura": "Lateral defensivo e de pouco apoio ofensivo; forma em queda, terá trabalho com as subidas de Porro."
+      },
+      {
+        "nome": "Iliman Ndiaye",
+        "time": "away",
+        "leitura": "Atacante habilidoso (2.21 dribles/j), com volume de finalização razoável (0.67 SoT/j), mas não marcou nos últimos 5 jogos."
+      },
+      {
+        "nome": "Michael Keane",
+        "time": "away",
+        "leitura": "Zagueiro reserva, estável mas sem destaque; sua presença é indício de defesa ainda mais frágil sem Branthwaite."
+      },
+      {
+        "nome": "Kiernan Dewsbury-Hall",
+        "time": "away",
+        "leitura": "Meia artilheiro (8G, 4x MOTM), define jogos no 2ºT; principal ameaça de chutes de longa distância e chegada surpresa."
+      },
+      {
+        "nome": "Idrissa Gueye",
+        "time": "away",
+        "leitura": "Desfalque (lesão): volante de contenção, equipe já adaptada à sua ausência; perda moderada."
+      },
+      {
+        "nome": "Thierno Barry",
+        "time": "away",
+        "leitura": "Atacante especialista em 2ºT (todos os 8 gols após intervalo), baixo volume mas letal; opção para decidir no fim."
+      },
+      {
+        "nome": "Beto",
+        "time": "away",
+        "leitura": "Centroavante de referência (10G), boa forma recente (0.8 SoT/j nos últ.5); explora falhas da zaga sem Romero, provável marcador."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C2",
+          "C9",
+          "C10"
+        ],
+        "leitura": "Com Tottenham satisfeito com empate e Everton sem ambição, o ímpeto ofensivo de ambos será baixo, resultando em um jogo morno e de poucas chances.",
+        "efeito": "Redução do xG total em relação ao prior (de 2.33 para ~2.1), favorecendo under 2.5."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C3",
+          "C20",
+          "C6"
+        ],
+        "leitura": "Tottenham, mesmo administrando, deve ter ataque ligeiramente acima de sua média caseira contra bloco baixo (1.33), especialmente com a defesa do Everton em declínio.",
+        "efeito": "xG do Tottenham ajustado para ~1.2, levemente acima do prior (1.22)."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C4",
+          "C15",
+          "C13"
+        ],
+        "leitura": "Everton pode explorar a defesa desfalcada do Tottenham, especialmente nos períodos em que sofre mais gols (31-45 e 76-90), mantendo seu xG próximo de 0.9.",
+        "efeito": "xG do Everton ligeiramente abaixo do prior (1.11) devido à motivação, mas ainda com potencial para marcar."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C11",
+          "C13",
+          "C17",
+          "C12",
+          "C14"
+        ],
+        "leitura": "Janelas de 31-45 (pressão do Tottenham) e 76-90 (pressão do Everton) concentram as melhores chances, com gols prováveis nesses períodos.",
+        "efeito": "Distribuição não uniforme dos xG, com picos nessas faixas."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C15",
+          "C14",
+          "C17"
+        ],
+        "leitura": "A ausência de Romero torna a defesa do Tottenham ainda mais vulnerável no fim do jogo (76-90), justamente quando o Everton costuma marcar.",
+        "efeito": "Aumento do xG do Everton na faixa 76-90 para cerca de 0.26."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C9",
+          "C10"
+        ],
+        "leitura": "Forma do Tottenham (8pts contra adversários de qualidade) é mais confiável que a do Everton (2pts com defesa frágil), sugerindo superioridade competitiva real.",
+        "efeito": "Ligeiro viés para o Tottenham no resultado, mas não suficiente para alterar drasticamente as probabilidades."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C7",
+          "C8",
+          "C15",
+          "C16"
+        ],
+        "leitura": "Ambos perderam criadores importantes (Xavi Simons, Grealish), reduzindo a qualidade das chances. Tottenham depende de Richarlison e bolas paradas; Everton de erros defensivos.",
+        "efeito": "Menor número de chances claras, reforçando under e baixo BTTS."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C21",
+          "C2"
+        ],
+        "leitura": "O primeiro gol terá grande impacto: se o Tottenham marcar, administra e fecha o jogo; se o Everton marcar, recua mas pode ceder empate. Contexto de jogo travado amplifica o efeito de um gol solitário.",
+        "efeito": "Probabilidade de apenas um time marcar (BTTS no) é elevada; under 2.5 se beneficia se o gol sair cedo."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C2",
+          "C3",
+          "C19"
+        ],
+        "leitura": "Tottenham em casa não precisa vencer, o que reduz sua urgência; o favoritismo é leve e o empate é um resultado natural.",
+        "efeito": "Probabilidade de vitória do Tottenham permanece em ~38%, com empate valorizado (30%)."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C3",
+          "C10",
+          "C18"
+        ],
+        "leitura": "Ambas as defesas são frágeis, mas os ataques não são avassaladores. Combinado com baixo volume de SoT, o BTTS é possível (40%), mas não provável.",
+        "efeito": "BTTS prob de 40%, abaixo do prior (49%)."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C18",
+          "C2"
+        ],
+        "leitura": "Volume de SoT baixo (7.3) e intenção de jogo travado convergem para um total de gols abaixo de 2.5.",
+        "efeito": "Total esperado de ~2.05, under 2.5 com probabilidade de 65%."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C2",
+          "C19"
+        ],
+        "leitura": "Com Tottenham contente com empate e Everton sem stake, o empate é resultado de baixa variância e alta probabilidade (30%), alinhado com o fair do mercado.",
+        "efeito": "Mercados de dupla chance 1X e under são os de menor variância e valor consistente."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Empate administrado",
+        "prob": 0.5,
+        "filme": "Tottenham entra para não perder, Everton não se expõe. 1ºT truncado, poucas chances. Tottenham pressiona no fim do 1ºT (31-45) e pode abrir o placar em bola parada. Se fizer 1-0, administra e mata o jogo. Se 0-0 no intervalo, Tottenham segue administrando, Everton solta mais no fim (76-90) e ambos podem marcar. Placar final 1-0, 0-0 ou 1-1. Total under 2.5.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A3",
+          "A8",
+          "A9",
+          "A12"
+        ]
+      },
+      {
+        "nome": "Susto do Everton",
+        "prob": 0.3,
+        "filme": "Everton, sem pressão, joga solto e aproveita erros do Tottenham (sem Romero). Marca primeiro no 31-45 ou 76-90. Tottenham então precisa reagir (empate ainda salva), se lança ao ataque e abre espaços. Everton pode ampliar ou ceder empate. Placar 1-2 ou 2-2. Total pode passar de 2.5.",
+        "arestas": [
+          "A3",
+          "A5",
+          "A6",
+          "A10"
+        ]
+      },
+      {
+        "nome": "Tottenham resolve cedo",
+        "prob": 0.2,
+        "filme": "Tottenham, em casa, pressiona desde o início, marca nos primeiros 30 minutos e depois controla. Everton não esboça reação. Placar 2-0. Total under 2.5 ou exatamente 2 gols.",
+        "arestas": [
+          "A2",
+          "A4",
+          "A8"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Início estudado, Tottenham com posse mas sem profundidade; Everton recuado. Poucas chances.",
+        "prob_gol": 0.08,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Tottenham aumenta pressão (domínio +4.6), criando escanteios e chutes de fora. Melhor chance de gol para o mandante.",
+        "prob_gol": 0.12,
+        "lado": "home"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Fim do 1T: Tottenham intensifica, Everton defende. Faixa de alta coincidência de gols. Probabilidade de gol moderada.",
+        "prob_gol": 0.2,
+        "lado": "home"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Início do 2T ritmo lento; Tottenham administra se estiver em vantagem, Everton tenta se organizar. Pouco movimento.",
+        "prob_gol": 0.1,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Jogo pode abrir se Everton ainda não marcou; Tottenham busca contra-ataques. Chances para ambos os lados.",
+        "prob_gol": 0.18,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Janela crítica: fadiga e desespero (mesmo brando) aumentam chances. Everton pressiona, Tottenham pode sofrer. Ambos têm histórico de gols aqui.",
+        "prob_gol": 0.25,
+        "lado": "away"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Tottenham começa administrando, com posse mas sem agressividade. Everton recuado. A partir dos 16', o Tottenham pressiona mais e pode criar chances. O fim do 1T (31-45) é o período mais perigoso para o Everton, com Tottenham buscando o gol que dê tranquilidade. Placar provável ao intervalo: 0-0 ou 1-0 para o Tottenham.",
+        "prob_gol": 0.4
+      },
+      "segundo": {
+        "analise": "Se o Tottenham estiver em vantagem, recua e controla; Everton terá que propor jogo, mas sem qualidade para furar. Se 0-0, o jogo segue morno, com leve crescimento do Everton nos minutos finais. A faixa 76-90 concentra a maior probabilidade de gols, especialmente para o Everton, mas o cansaço e a falta de motivação podem limitar. Total de gols no 2T ligeiramente superior ao 1T.",
+        "prob_gol": 0.55
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Richarlison",
+          "prob": 0.3,
+          "motivo": "Principal finalizador (11G, 0.85 SoT/j), em boa forma, enfrenta ex-time e deve ter chances em bolas paradas ou erros defensivos."
+        },
+        {
+          "nome": "João Palhinha",
+          "prob": 0.12,
+          "motivo": "Volante que chega de trás (5G, maioria no 2T); bom cabeceador e finalizador em jogadas de bola parada."
+        },
+        {
+          "nome": "Mathys Tel",
+          "prob": 0.1,
+          "motivo": "Opção ofensiva que pode entrar no 2T (4G na temporada) e explorar o cansaço da defesa do Everton."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Beto",
+          "prob": 0.22,
+          "motivo": "Centroavante de área (10G, 0.5 SoT/j), boa presença física; explora desorganização da zaga sem Romero."
+        },
+        {
+          "nome": "Kiernan Dewsbury-Hall",
+          "prob": 0.18,
+          "motivo": "Meia artilheiro (8G), define jogos no 2T com chutes de longa distância e chegadas na área."
+        },
+        {
+          "nome": "Thierno Barry",
+          "prob": 0.15,
+          "motivo": "Especialista em gols no 2T (todos os 8 gols após intervalo); entra no decorrer do jogo e é letal nos acréscimos."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.38,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Prior 37%, sem diferença significativa; vitória do Tottenham não é valorizada pelo contexto de administrar."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.3,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Probabilidade alinhada com prior (32%), mas contexto de empate vantajoso aumenta atratividade como resultado de baixa variância."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.32,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Similar ao prior (32%), mas vitória do Everton é improvável dada sua motivação baixa."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.68,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Alinhado com prior (68%), segurança máxima, mas pouco valor agregado."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.62,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Levemente abaixo do prior (63%), mas ainda cobre cenários prováveis."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.7,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Ligeiramente acima do prior (68%), mas aposta contra o empate em um jogo propenso a ele."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.54,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Prior 54%; aposta segura, mas com pouco upside."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.46,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Prior 46%; não atrativa pela baixa motivação do Everton."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.62,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Provável (62%), mas baixo valor: linha baixa, jogo tende a ter pelo menos um gol."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.35,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Prob 35% vs prior 41%; over tem baixo valor, indicando que under 2.5 é a aposta de valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.16,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Muito improvável no contexto de jogo travado."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.4,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Prob 40% vs prior 49%; cenário de jogo com poucos gols reduz BTTS."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.7,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Idêntico ao prior (70%), sem valor adicional."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.34,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Prior 34%; improvável que Tottenham marque 2+ gols com postura administradora."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.59,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Ligeiramente abaixo do prior (67%); Everton pode não marcar se desinteressado."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.23,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Improvável que Everton marque 2+ gols fora com baixa motivação."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.15,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Tottenham não deve vencer por 2+ gols de diferença."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.1,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Ainda mais improvável; Everton não tem força para golear fora."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.46,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Alinhado com prior (46%); sem viés claro."
+      }
+    ],
+    "best_bet": {
+      "market": "over_under",
+      "selection": "under",
+      "team": null,
+      "line": 2.5,
+      "confidence": "medium",
+      "probability": 0.65,
+      "evidence_for": [
+        "A1: Intenção assimétrica reduz ímpeto ofensivo",
+        "A11: Volume de SoT baixo (7.3) e contexto travado",
+        "A12: Empate provável e poucos gols esperados",
+        "C18: Base rate Rota B total 2.33, abaixo de 2.5",
+        "C2: Motivação baixa de ambos os lados"
+      ],
+      "evidence_against": [
+        "C3: Tottenham sofre 1.72/j em casa, defesa frágil",
+        "C10: Everton sofreu 12 gols em 5 jogos, defesa em má fase",
+        "C15: Desfalque de Romero expõe defesa do Tottenham",
+        "C17: Faixas 76-90 com alto índice de gols para ambos"
+      ],
+      "analysis": "O jogo reúne todas as características de under: motivação baixa, necessidade apenas de empate para o mandante, volume de finalizações abaixo da média (SoT 7.3) e ambos os times sem urgência ofensiva. O primeiro gol pode até selar o jogo, com o time que marcar administrando o resultado. A linha de 2.5 gols oferece margem de segurança (total projetado ~2.05), e a probabilidade de under calculada em 65% contrasta com o prior de 59% (Rota B) e 53% (Rota A). A variância é média, mas o contexto é amplamente favorável. Riscos: defesas desfalcadas e histórico de gols no fim do jogo (76-90) podem gerar um resultado inesperado, mas a aposta é robusta."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "under 2.5",
+          "argumento": "Ambas as defesas são frágeis (Tottenham sofre 1.72 em casa, Everton 12 gols nos últimos 5 jogos) e podem ceder gols em janelas específicas (31-45, 76-90). Se o jogo abrir, o under cai.",
+          "ids": [
+            "C3",
+            "C10",
+            "C17"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "under 2.5",
+          "argumento": "Everton pode querer terminar a temporada com vitória e jogar sem pressão, aumentando a produção ofensiva, mas a motivação baixa (C2) e o contexto de time sem stake contrariam.",
+          "ids": [
+            "C6",
+            "C2"
+          ],
+          "veredito": "nao_sustenta"
+        },
+        {
+          "alvo": "under 2.5",
+          "argumento": "Desfalques defensivos (Romero, Branthwaite) podem gerar mais chances de gol, elevando o total, mas a ausência de criadores (Xavi Simons, Grealish) reduz a qualidade das chances.",
+          "ids": [
+            "C15",
+            "C16"
+          ],
+          "veredito": "enfraquece"
+        }
+      ],
+      "conclusao": "Nenhum ataque derruba a aposta; os argumentos contrários são enfraquecidos pelo peso da intenção e do volume. O under 2.5 permanece como a melhor aposta, com confiança média."
+    },
+    "drivers": [
+      "Veredito de intenção assimétrica (C2): Tottenham administra empate, Everton sem stake",
+      "Volume de finalizações baixo (C18): SoT total 7.3, jogo tende a under",
+      "Desfalque de Romero (C15): defesa do Tottenham exposta, mas ataque adversário limitado"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 19,
+    "blocosSemSinal": 1,
+    "blocosFaltando": [],
+    "conclusoes": 21,
+    "arestas": 12,
+    "jogadores": 22,
+    "mercados": 19,
+    "orfas": [
+      "C5",
+      "C22"
+    ]
+  },
+  "reasoningText": "Vou analisar o confronto Tottenham Hotspur x Everton, último da rodada 38 da Premier League, com ambos os times em situações distintas: Tottenham brigando para se salvar do rebaixamento, mas com um empate suficiente, e Everton já seguro, sem grandes ambições. O jogo tem um forte viés de \"jogo travado\" conforme o veredito de intenção.\n\n**Passo 1 — VARREDURA: conclusões por bloco**\n\nVou percorrer cada bloco do briefing e extrair conclusões com IDs sequenciais.\n\n**Contexto**\n- Data: 24/05/2026, 15h, Tottenham Hotspur Stadium, grama natural, clima bom (27°C, céu limpo, vento leve). Sem impacto climático relevante para gols (liga não mostrou correlação).\n- Descanso: Tottenham 5 dias (último jogo em 19/05), Everton 7 dias (17/05). Diferença de 2 dias: ruído, sem sinal forte. Everton ligeiramente mais descansado, mas não o bastante para mexer no número.\nConclusão C1: contexto sem sinal relevante — clima e descanso não alteram expectativa.\n\n**Tabela e motivação**\n- Tottenham: 17º, 38 pts. Um empate garante permanência (linha de segurança 38 pts). Motivação: média — contenta-se com empate, joga para não perder.\n- Everton: 12º, 49 pts. Já seguro, vaga europeia matematicamente possível mas remota (precisa virar 10 de saldo em 1 jogo). Motivação: baixa — quase nada a jogar.\n- Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR — pelo menos um lado não precisa ir pra cima, e um empate basta ao Tottenham, que administra. Isso favorece under, menor variância.\nConclusão C2: Tottenham precisa apenas de empate para se salvar → motivação média, joga para não perder (administra). Everton sem stake real → motivação baixa. Assimetria favorece jogo travado, under, e dificulta goleada ou handicap de mando.\n\n**Tottenham Hotspur: Gols & finalização (home_gols)**\n- Manda: 18j, 1.17 marcados, 1.72 sofridos (média alta de gols sofridos em casa). SoT feito: 4/j (casa), sofrido 4.08/j. Conversão 32%. Volume total: 11.2 chutes/j, posse 50.4%.\n- Em casa, ataque abaixo da média da liga (1.17 vs 1.53), defesa pior (1.72 vs 1.23).\nConclusão C3: Tottenham em casa é frágil defensivamente (sofre 1.72 g/j) mas ataque modesto (marca 1.17). SoT sofrido alto (4.08/j) e conversão adversária 36% > 32% (adversários convertem mais contra eles).\n\n**Everton: Gols & finalização (away_gols)**\n- Fora: 18j, 1.17 marcados, 1.22 sofridos. SoT feito: 3.33/j (fora), sofrido: 4.24/j. Conversão 32%. Volume: 11.1 chutes/j, posse 43.5%.\n- Defesa fora relativamente sólida (1.22 sofridos), ataque também 1.17.\nConclusão C4: Everton fora é equilibrado, defesa sofre pouco (1.22), ataque modesto. SoT sofrido alto (4.24/j) mas conversão adversária baixa (29%), indicando goleiro ou sorte defensiva.\n\n**Estilos**\n- Tottenham (home_estilo): temporada: ataques perigosos 46.1/46.1 equilibrado; últ.5: 45.4/36.2 (reduziu ataques sofridos). Chutes pra fora: 4.2/5, últimos 5: 5.4/3.8 (aumentou chutes pra fora, diminuiu sofridos). Sem grande sinal.\nConclusão C5: Tottenham nos últimos 5 reduziu ataques perigosos sofridos (36.2) e chutes pra fora sofridos, indicando melhora defensiva recente, mas ataque sem explosão.\n\n- Everton (away_estilo): temporada: ataques perigosos 47.4/51.5 (sofre mais que faz). Últimos 5: 43.6/54.2 (piora, sofre ainda mais ataques). Chutes pra fora: 3.9/5.2, últ.5: 3.4/5.6. Time que cede espaço.\nConclusão C6: Everton nos últimos 5 está pior defensivamente, sofrendo mais ataques perigosos e chutes pra fora. Pode ceder contra ataque mesmo que o Tottenham não seja tão agressivo.\n\n**Qualidade individual**\n- Tottenham: nota média 6.76. Destaques: Pedro Porro (7.01, 4x MOTM), Xavi Simons (6.97, mas falta 3/5, forma incerta), Richarlison (6.92, 11G+5A, melhor atacante). Defensivamente, van de Ven (6.75), Danso (6.81). Romero (7.03) está fora (desfalque importante). Palhinha (6.9, 5G) e Bentancur (6.88, estável). Kolo Muani (6.5, baixo volume).\nConclusão C7: Tottenham tem Richarlison como referência ofensiva, mas perdeu Romero na defesa e Xavi Simons está em dúvida/ausente. Qualidade mediana.\n\n- Everton: nota média 6.86. Destaques: Garner (7.35, 6x MOTM, 3G+7A, motor do time), Dewsbury-Hall (7.04, 8G+4A, meia artilheiro), Tarkowski (7.15, líder defensivo). Beto (6.73, 10G) e Barry (6.65, 8G) são atacantes de 2º tempo. Ndiaye (6.88, 6G). Pickford (6.83). Desfalques: Grealish (criação), Gueye (volante), Branthwaite (zagueiro).\nConclusão C8: Everton tem meio-campo criativo com Garner e Dewsbury-Hall, mas perdeu Grealish (criação) e Gueye (contenção). Defesa sem Branthwaite (bom zagueiro). Ataque com Beto e Barry, ambos perigosos no 2º tempo.\n\n**Forma**\n- Tottenham: últimos 5: DEVVE (8pts), 7GF/6GC. SoT 3.8/2.8. Consistência: marcou em 30/37. BTTS 23/37 (62%). Jogos recentes contra times de motivação variada, mas resultados razoáveis, incluindo vitória fora contra Villa (5º).\nConclusão C9: Tottenham vem de forma razoável (8pts em 5 jogos), com defesa melhorada (só 6 gols sofridos, SoT 2.8) e ataque ok. Enfrentou adversários de qualidade (Villa, Chelsea), mostrando competitividade. Em casa, tende a sofrer mais, mas nos últimos 5 a defesa melhorou.\n\n- Everton: últimos 5: DEEDD (2pts), 8GF/12GC. SoT 4.6/4.8. Forma péssima, sofrendo muitos gols (12 em 5). Consistência: marcou em 28/37, BTTS 19/37 (51%). Jogos recentes: derrotas para Liverpool, West Ham, Sunderland (virada), empates com City e Palace. Defesa muito vazada.\nConclusão C10: Everton está em péssima fase, com defesa extremamente frágil (12 gols sofridos em 5 jogos) e dificuldade de segurar resultados (levou virada do Sunderland). Ataque até marcou (8 gols), mas sofre demais.\n\n**Momentum**\n- Tottenham: pressão positiva em várias janelas, especialmente 16-30 (domínio +4.6 contra Everton). Em casa vs Brighton, teve reação. Contra Chelsea, sofreu pressão. Nos últimos jogos, time soube pressionar em momentos-chave. Após sofrer gol, DESMORONA (Δ -2.0). Após marcar, MATA O JOGO (Δ +3.0).\nConclusão C11: Tottenham tem janela de pressão forte entre 16-30, mas é vulnerável após sofrer gol (desmorona). Se marcar primeiro, tende a controlar.\n\n- Everton: pressão irregular. Janela de domínio: 76-90 (domínio -0.3). Após sofrer gol, DESMORONA (Δ -1.4). Após marcar, ADMINISTRA (Δ -2.0, recua). \nConclusão C12: Everton costuma pressionar no final, mas é frágil quando sofre gol. Se marcar primeiro, recua e pode ceder.\n\n**Faixas de gols**\n- Tottenham: marca mais no 31-45 (0.27), 46-60 (0.22) e 76-90 (0.35); sofre mais no 31-45 (0.51) e 76-90 (0.38).\nConclusão C13: Tottenham sofre muitos gols no fim do 1ºT e no fim do jogo; marca mais no fim do 1ºT e no 2ºT.\n\n- Everton: marca mais no 31-45 (0.22) e 76-90 (0.41); sofre mais no 16-30 (0.24), 76-90 (0.41) e 31-45 (0.19).\nConclusão C14: Everton também sofre no fim do jogo e marca no 2ºT; ambos sofrem no 76-90, indicando possibilidade de gols tardios.\n\n**Desfalques**\n- Tottenham: fora: Kudus (lesão), Xavi Simons (dúvida/lesão), Romero (lesão, zagueiro importante), Odobert, Davies, Kulusevski (sem impacto). Destaque: Romero tira 1.3 interceptações/j (18% do time) e 6.7 duelos, defensor-chave; Xavi Simons tira criação (1.3 key passes). Kudus já estava fora nos últimos jogos (0% de participação nos últimos 5 gols), impacto reduzido.\nConclusão C15: Desfalques defensivos pesados: Romero (18% das interceptações, líder da defesa) fora; Xavi Simons (criação) fora. Ataque perde pouco com Kudus (já adaptado). Defesa do Tottenham fica mais exposta, especialmente nas bolas aéreas e interceptações.\n\n- Everton: fora: Grealish (criação, 0.6 int/j, 2 key passes), Gueye (volante, 1.1 int/j, 13% do time), Branthwaite (zagueiro, 1.1 int/j, 13% do time). Grealish e Gueye já fora nos últimos jogos (0% participação nos últimos gols), time adaptado. Branthwaite: com ele 1.6 gols/j (10j) vs sem 1.15 (27j), mas amostra pequena e sem contribuição direta; volume defensivo (1.1 int/j) é relevante.\nConclusão C16: Everton sem Branthwaite na zaga perde interceptações e duelos; defesa já estava frágil e fica pior. Meio-campo sem Gueye perde contenção, mas time já acostumado com ausências de Grealish e Gueye.\n\n**Cruzamento de faixas**\n- Tottenham ataque x Everton defesa: maior índice no 76-90 (0.76), depois 31-45 (0.46). \n- Everton ataque x Tottenham defesa: maior índice no 76-90 (0.79) e 31-45 (0.73).\nConclusão C17: Faixas de maior coincidência para gols são 31-45 e 76-90 para ambos os lados, indicando que os gols tendem a se concentrar nesses períodos. Jogo pode ter gols no primeiro tempo (fim) e no segundo tempo (fim).\n\n**Base rate**\n- Rota A: total 2.57; Rota B: total 2.33. Índice de volume SoT: 7.3 vs média 8.5 (ABAIXO). Jogo tende a under.\nConclusão C18: Base rate indica jogo de baixo volume (SoT 7.3), com expectativa de menos de 2.5 gols. Prior Rota B: 1.22 x 1.11, total 2.33. Prefira Rota B por estabilidade.\n\n**Probs mercado**\n- Rota B: 1x2 casa/E/fora 37/32/32%; over 2.5: 41%; BTTS: 49%. Dupla chance 1X 68%, DNB casa 54%. Empate com probabilidade justa 32%.\nConclusão C19: Mercado vê equilíbrio, com leve favoritismo para Tottenham em casa (fair odds 1x2: 2.71/3.17/3.17). Over 2.5 abaixo de 50%, under é favorecido. BTTS equilibrado.\n\n**Cruzamentos computados**\n- Arquétipo: Tottenham contra bloco baixo (Everton) marca 1.33/j e sofre 1.20 (na média). Everton contra equilibrado (Tottenham) marca 1.36 e sofre 1.73 (piora defensiva).\nConclusão C20: Tottenham não sofre tanto contra bloco baixo, mas Everton sofre mais contra times equilibrados (1.73). Isso pode elevar o potencial ofensivo do Tottenham para perto de 1.33 e aumentar os gols sofridos pelo Everton.\n- Dinâmica pós-gol: ambos desmoronam ao sofrer gol. Tottenham após marcar mata o jogo (+3), Everton após marcar recua (-2). \nConclusão C21: Primeiro gol é crucial: quem marca tende a controlar (Tottenham) ou recuar (Everton). Se o Tottenham marcar primeiro, jogo pode esfriar; se Everton marcar, recua e pode ceder espaços.\n- Artilharia: Tottenham: Richarlison (11G, 2 nos últ.5, 0.8 SoT/j), Palhinha (4G, 1), Mathys Tel (4G, 1). Everton: Beto (9G, 2, 0.5 SoT/j), Dewsbury-Hall (8G, 1, 0.5), Barry (8G, 2, 0.4), Ndiaye (6G, 0, 0.7).\nConclusão C22: Principais finalizadores: Richarlison (TOT) e Beto, Dewsbury-Hall, Barry (EVE). Ndiaye tem volume de SoT (0.7) mas não marcou nos últimos 5.\n\n**Passo 2 — JOGADOR POR JOGADOR**\n\nVou listar todos os jogadores nomeados:\n\n**Tottenham:**\n- Micky van de Ven: zagueiro goleador (4G) com forma caindo, mas presença defensiva importante (1.29 desarmes/j). Contra ataque do Everton que tem atacantes móveis, sua velocidade e interceptações serão testadas; sem Romero ao lado, precisa liderar a zaga.\n- Pedro Porro: lateral ofensivo em ótima forma (7.52↑ nos últ.5), com 2.2 KP/j recentes, principal criador de chances. Contra defesa do Everton que cede espaço, pode ser arma importante nos cruzamentos.\n- Guglielmo Vicario: goleiro com nota estável mas faltou últimos 5 jogos, indicando possível lesão/ausência recente. Se estiver de volta, é dúvida de ritmo; defesa sem Romero pode sofrer mais com sua possível volta.\n- João Palhinha: volante com 5 gols, muitos no 2ºT, e forte na marcação (3.34 desarmes/j). Importante para conter o meio-campo do Everton, especialmente Garner e Dewsbury-Hall.\n- Djed Spence: lateral/ala de pouca produção ofensiva (0.22 SoT/j, forma caindo). Não deve ser diferencial.\n- Richarlison: principal atacante, 11 gols, 0.85 SoT/j, em boa forma (1.2 SoT/j nos últ.5). Contra ex-time? (Everton) motivação extra. Arma ofensiva clara.\n- Xavi Simons: meia criativo, mas dúvida/ausente. Sua falta tira key passes (1.3) e mobilidade; Bentancur deve assumir criação.\n- Rodrigo Bentancur: meia estável, boa forma (7.14↑), com capacidade de condução e desarme. Importante na transição.\n- Cristian Romero: zagueiro goleador (4G) e líder defensivo (2.52 desarmes, 6.74 duelos). Fora do jogo, sua ausência desorganiza a defesa.\n- Randal Kolo Muani: atacante de pouco volume (0.13 SoT/j), forma caindo, tende a ser opção secundária.\n- Kevin Danso: zagueiro em ascensão (forma subindo), importante nos duelos (5.19/j). Ganha minutos com lesão de Romero.\n\n**Everton:**\n- James Garner: motor do meio, 6x MOTM, 1.43 KP/j, 3.2 desarmes. Forma estável, é o principal articulador. Contra Tottenham que perdeu Romero, pode explorar passes em profundidade.\n- James Tarkowski: zagueiro líder, forma subindo, 6.51 duelos/j. Importante para segurar Richarlison. Com Branthwaite fora, é o pilar.\n- Jordan Pickford: goleiro de nota baixa recente (5.8 no último jogo). Instável, pode ser fator negativo.\n- Jake O'Brien: zagueiro/defensor de forma caindo (6.4↓). Joga ao lado de Tarkowski, mas não é tão confiável.\n- Vitaliy Mykolenko: lateral de pouco volume ofensivo, forma caindo. Defensivamente razoável.\n- Iliman Ndiaye: atacante de 6 gols, 0.67 SoT/j, bom driblador (2.21/j). Não marcou nos últimos 5, mas é perigoso.\n- Michael Keane: zagueiro reserva/improvisado? Forma estável, mas sem grande destaque. Com Branthwaite fora, pode jogar.\n- Kiernan Dewsbury-Hall: meia artilheiro (8G), 4x MOTM, boa forma. Define jogos no 2ºT. Principal ameaça vinda de trás.\n- Idrissa Gueye: volante desfalcado. Perda na contenção, time já adaptado (ausente nos últimos 3/5).\n- Thierno Barry: atacante de 8 gols, todos no 2ºT, especialista em entrar e decidir. Baixo volume (0.38 SoT/j), mas letal nos acréscimos.\n- Beto: centroavante, 10 gols, boa forma (0.8 SoT/j nos últ.5). Referência no ataque, mas também sai do banco (média 45 min/j).\n\n**Passo 3 — ARESTAS: o cruzamento**\n\nVou construir arestas ligando conclusões. Mínimo 8.\n\nA1 (Intenção x Estilo x Forma): C2 (intenção travada) + C9 (Tottenham forma razoável mas administra) + C10 (Everton forma ruim mas sem stake) → Com ambos sem necessidade de vencer (Tottenham só empate, Everton nada), jogo tende a ser morno, com pouco ímpeto ofensivo. Tottenham administra, Everton pode não se expor. Efeito: redução do xG total, under 2.5 favorecido.\n\nA2 (Ataque Tottenham x Defesa Everton + Arquétipo): C3 (Tottenham ataque 1.17) + C20 (Tottenham contra bloco baixo marca 1.33) + C6 (Everton defensivamente frágil nos últimos 5) → Tottenham deve ter ataque um pouco acima de sua média caseira (1.33), especialmente porque Everton cede espaço. Efeito: xG Tottenham ~1.3.\n\nA3 (Ataque Everton x Defesa Tottenham + Desfalque): C4 (Everton ataque 1.17) + C15 (Tottenham sem Romero, defesa exposta) + C13 (Tottenham sofre no 31-45 e 76-90) → Everton, mesmo desinteressado, pode explorar desorganização defensiva do Tottenham, especialmente no fim do 1T e fim do jogo. Efeito: xG Everton não cai muito, talvez 1.0-1.1.\n\nA4 (Momento x Faixas): C11 (Tottenham pressiona 16-30) + C13 (Tottenham marca mais 31-45) + C17 (cruzamento 31-45 alto) + C12 (Everton domina 76-90) + C14 (Everton marca mais 76-90) → Janelas de gol: 31-45 para Tottenham, 76-90 para ambos. Efeito: distribuição de xG concentrada nessas faixas.\n\nA5 (Desfalque defensivo x Faixa de pressão adversária): C15 (Romero fora, defesa Tottenham enfraquecida no jogo aéreo e interceptações) + C14/C17 (Everton marca no 76-90 e ataque x defesa índice alto nessa faixa) → Everton pode encontrar espaços no fim do jogo quando a defesa do Tottenham cansar e sem Romero. Efeito: aumento do xG do Everton no 2T.\n\nA6 (Forma real adversários): C9 (Tottenham 8pts contra adversários de qualidade) + C10 (Everton 2pts contra times com motivação ou sem) → Forma do Tottenham é mais confiável, pois enfrentou times brigando (Villa, Chelsea), enquanto Everton enfrentou times com stake e perdeu. Efeito: Tottenham ligeiramente superior em competitividade real.\n\nA7 (Qualidade individual x Desfalques): C7 (Richarlison principal) + C8 (Garner/Dewsbury-Hall criativos) + C15 (Tottenham sem Xavi Simons) + C16 (Everton sem Grealish/Gueye) → Ambos perderam criadores; Tottenham depende mais de Richarlison e bola parada, Everton de bolas longas e erros defensivos. Efeito: jogo com menos criação de qualidade, menos chances claras.\n\nA8 (Dinâmica pós-gol x Intenção): C21 (Tottenham mata jogo ao marcar, Everton recua) + C2 (jogo travado, primeiro gol importante) → Se sair gol cedo, o time que marcar tende a fechar o jogo, aumentando chance de under. Se 0-0 persiste, jogo pode abrir no final por desespero leve do Tottenham (precisa pelo menos empate) e desleixo do Everton. Efeito: o timing do primeiro gol é crucial para o total.\n\nA9 (Vantagem de casa x Intenção): C2 (Tottenham administra) + C3 (casa 1.17) + prior (1x2 casa 37%) → Mesmo em casa, Tottenham não deve se impor fortemente, pois só precisa de empate. Vitória não é prioridade absoluta. Efeito: prob de vitória do Tottenham menor que o prior? Na verdade, o prior já considera, mas a intenção pode reduzir ímpeto; ainda assim, Everton sem stake. Prob casa talvez mantenha 37%.\n\nA10 (BTTS x Defesas): C3 (Tottenham sofre em casa) + C10 (Everton marcou em 8/10? mas sofreu) + C18 (BTTS 49%) → Ambas defesas frágeis, mas ataques não tão eficientes. BTTS é possível, mas não certo. Com intenção travada, pode ser que um dos times não marque. \n\nA11 (Handicap/Over x Volume): C18 (volume SoT baixo, 7.3) + C2 (jogo travado) → Over 2.5 improvável; total esperado perto de 2.0-2.2.\n\nA12 (Mercado de empate x Intenção): C2 (empate basta) + C19 (fair empate 32%) → Empate é resultado provável e de baixa variância. Com Tottenham administrando e Everton sem ambição, 0-0 ou 1-1 são placares plausíveis.\n\n**Verificação de uso:** todas as conclusões C1 a C22 devem estar em arestas ou descartadas. Vou verificar: C1 (contexto) não está em nenhuma aresta; pode ser descartada sem impacto, pois clima e descanso não alteram. C18 (base rate) está em A11. C5 (estilo Tottenham) não usei explicitamente, mas pode ser ligada a A1 ou A2. Na verdade, C5 fala da melhora defensiva recente do Tottenham (menos ataques sofridos), que corrobora A1 (jogo travado). Vou incluí-la em A1 mencionando. C6 já em A2. C16 (desfalque Everton) está em A7. C19 (probs mercado) está em A9, A12. C22 (artilharia) usarei no Passo 4c. As demais parecem cobertas.\n\n**Descartadas:** C1 (contexto sem sinal) — motivo: sem impacto no número. C5 pode ser considerada redundante com C9, mas vou mantê-la como parte de A1.\n\nNa verdade, vou formalizar as conclusões e suas forças (alta, média, baixa). A maioria é média.\n\n**Passo 4 — ROTEIROS**\n\nVou elaborar 2 roteiros principais, com probs somando ~1.\n\n**Roteiro 1: \"Empate administrado\" (prob 0.50)**\n- Filme: Tottenham entra para não perder, Everton não se expõe. 1ºT truncado, poucas chances. Tottenham pode pressionar um pouco no fim do 1ºT (31-45) e abrir o placar em lance de bola parada ou erro. Se fizer 1-0, administra e mata o jogo. Everton, se sofrer, tenta reagir no 2ºT, mas com desânimo. Placar final 1-0 ou 1-1. Se 0-0 no intervalo, Tottenham segue administrando, Everton talvez solte mais no fim (76-90) e ambos podem marcar. Total under 2.5.\n- Arestas: A1, A2, A3, A8, A9, A12.\n\n**Roteiro 2: \"Susto do Everton\" (prob 0.30)**\n- Everton, sem pressão, joga solto e aproveita erros defensivos do Tottenham (sem Romero). Marca primeiro no 31-45 ou 76-90. Tottenham então precisa reagir (pois empate ainda salva, mas derrota não), e se lança ao ataque, abrindo espaços. Everton pode ampliar ou ceder empate. Placar 1-2 ou 2-2. Total over 2.5 possível.\n- Arestas: A3, A5, A6, A10.\n\n**Roteiro 3: \"Tottenham resolve cedo\" (prob 0.20)**\n- Tottenham, em casa, pressiona desde o início, marca nos primeiros 30 minutos e depois controla. Everton não esboça reação. Placar 2-0. \n- Arestas: A2, A4, A8.\n\nSoma: 0.50+0.30+0.20 = 1.00. O roteiro 1 é o mais provável, dado o contexto.\n\n**Passo 4b — LINHA DO TEMPO**\n\nCom base no roteiro vencedor (Roteiro 1), vamos prever janela a janela.\n\n**Primeiro tempo:**\n- Análise: Tottenham inicia controlando a posse, mas sem agressividade. Everton postado, esperando. Jogo morno até os 30'. Entre 31-45, Tottenham aumenta pressão e pode criar chances de bola parada ou chute de fora. Probabilidade de gol no 1T é moderada, talvez 0-1 gols. Placar provável ao intervalo: 0-0 ou 1-0.\n- Prob_gol 1T: 0.40 (40% de ter pelo menos 1 gol no 1T). O baseline da liga é 43% dos gols no 1T, mas aqui o jogo é mais travado, então prob menor que a média.\n\n**Janelas:**\n- 0-15: Estudo dos times, Tottenham com posse mas sem profundidade, Everton recuado. Poucas chances. Lado: equilibrado. Prob_gol: 0.08.\n- 16-30: Tottenham começa a pressionar mais (domínio +4.6), pode criar escanteios e chutes de fora. Lado: home. Prob_gol: 0.12.\n- 31-45: Fim do 1T, Tottenham intensifica, Everton defende. Faixa de maior coincidência (0.46). Lado: home. Prob_gol: 0.20.\n- Intervalo: 0-0 ou 1-0. Se 0-0, Tottenham ainda administra, mas pode se preocupar em não perder. Se 1-0, Tottenham retranca.\n\n**Segundo tempo:**\n- Análise: Se 0-0, Tottenham pode tentar um gol de segurança, mas sem se expor muito. Everton, sem nada a perder, pode se soltar um pouco mais, especialmente após os 60'. Fadiga pode pesar, e os gols tendem a sair no fim (76-90). Se 1-0, Tottenham fecha ainda mais, Everton tenta o empate. Probabilidade de gols no 2T é maior que no 1T, especialmente após 75'.\n- Prob_gol 2T: 0.55 (55% de ≥1 gol).\n\n- 46-60: Início do 2T, ritmo mais lento. Se 0-0, mesma toada; se 1-0, Tottenham administra. Lado: equilibrado. Prob_gol: 0.10.\n- 61-75: Jogo pode ficar mais aberto se Everton ainda não marcou. Tottenham pode explorar contra-ataques. Lado: equilibrado. Prob_gol: 0.18.\n- 76-90: Janela crítica: ambos sofrem/marcam no fim. Com fadiga e desespero (mesmo que brando), gols podem sair. Lado: away? Na verdade, ambos podem marcar; mas Everton tem histórico de marcar nessa faixa. Lado: away. Prob_gol: 0.25.\n\n**Coerência:** prob_gol janelas somam mais que 1, mas é a probabilidade de ocorrer pelo menos 1 gol naquela faixa, e não são mutuamente exclusivas. O cálculo dos xg_bands deve refletir a distribuição.\n\n**xG por tempo e bandas:**\nVou definir xG total ~2.1 (abaixo do prior 2.33, devido à intenção). Tottenham: ~1.2, Everton: ~0.9.\n\nDistribuição:\nTottenham xG: 1.2 (1T: 0.5, 2T: 0.7)\nBandas: 0-15: 0.05, 16-30: 0.10, 31-45: 0.20, 46-60: 0.15, 61-75: 0.20, 76-90: 0.25? Soma 0.95? Ajustar.\n\nVou normalizar depois, mas vou propor:\nHome: xg 1.15, xg_1t 0.50, xg_2t 0.65, bands: 0-15 0.06, 16-30 0.12, 31-45 0.18, 46-60 0.14, 61-75 0.18, 76-90 0.22. Soma 0.90, faltando 0.25? Ajustar: talvez xg home 1.2: 0.07+0.13+0.20+0.16+0.20+0.24 = 1.00, normaliza.\n\nAway: xg 0.90, xg_1t 0.35, xg_2t 0.55, bands: 0-15 0.03, 16-30 0.06, 31-45 0.10, 46-60 0.08, 61-75 0.12, 76-90 0.16. Soma 0.55. Ajustar: 0.04+0.07+0.12+0.09+0.14+0.19 = 0.65, normaliza para 0.9.\n\nTotal bands: 0.11, 0.20, 0.32, 0.25, 0.34, 0.43? Soma ~1.65? Estranho, mas são xG independentes, não somam. O runtime normaliza.\n\nVou confiar que o runtime ajusta.\n\n**Passo 4c — MARCADORES**\n\n**Tottenham:**\n- Richarlison: prob 0.30 (11 gols season, 0.8 SoT/j, boa forma, motivo: principal finalizador, joga contra ex-time, deve ter chances; pênaltis? não mencionado, mas pode bater).\n- João Palhinha: prob 0.12 (4 gols, aparece bem no 2T, motivo: volante que chega de trás, marcou gols importantes, especialmente em jogos truncados).\n- Mathys Tel: prob 0.10 (4 gols, 1 nos últ.5, motivo: opção de ataque que pode entrar e decidir).\n\n**Everton:**\n- Beto: prob 0.22 (9 gols, 2 nos últ.5, motivo: centroavante de área, explora falhas da zaga sem Romero).\n- Kiernan Dewsbury-Hall: prob 0.18 (8 gols, motor ofensivo, motivo: meia que chega de trás, bom chute de média, marcou gols decisivos).\n- Thierno Barry: prob 0.15 (8 gols, todos no 2T, motivo: especialista em entrar no decorrer do jogo e finalizar, muito perigoso nos acréscimos).\n\n**Passo 5 — BOARD COMPLETO DE MERCADOS**\n\nVou preencher as 19 linhas com base nos meus números (xG ~2.1 total, Poisson implícito). Vou derivar probs de 1x2 a partir do meu xG: Tottenham 1.2, Everton 0.9. Ajuste de Dixon-Coles para empate. Usando Poisson: média de gols casa 1.2, fora 0.9. Probabilidades aproximadas: vitória casa: ~38%, empate: ~30%, vitória fora: ~32%. (Coerente com roteiro). Over 2.5: com média 2.1, ~35%. BTTS: com média e correlação ~0, prob = 1 - P(casa 0) - P(fora 0) + P(0x0) = 1 - 0.301 - 0.407 + 0.122 = ~41%. Ajuste manual: 40%.\n\nVou calcular as linhas:\n1. 1x2 home: 0.38\n2. 1x2 draw: 0.30\n3. 1x2 away: 0.32\n4. double_chance home_draw: 0.68\n5. double_chance draw_away: 0.62\n6. double_chance home_away: 0.70\n7. draw_no_bet home: 0.54? Na verdade, DNB home = prob home / (1 - prob empate) = 0.38 / 0.70 = 0.543.\n8. draw_no_bet away: 0.32 / 0.70 = 0.457.\n9. over 1.5: prob total >1.5 = 1 - P(0) - P(1). P(0) = e^-2.1 = 0.122, P(1) = 2.1*e^-2.1 = 0.257. Soma 0.379, então over 1.5 = 0.621 (~62%).\n10. over 2.5: P(0)+P(1)+P(2). P(2) = (2.1^2/2)*e^-2.1 = (4.41/2)*0.122 = 0.269. Soma 0.122+0.257+0.269=0.648, então over 2.5 = 1-0.648=0.352? Errado. P(0)+P(1)+P(2) = prob de até 2 gols. P(2) = 0.27, então prob ≤2 = 0.122+0.257+0.27=0.649, over 2.5 = 0.351. Ok, ~35%.\n11. over 3.5: P(3) = (2.1^3/6)*e^-2.1 = (9.261/6)*0.122 = 1.5435*0.122=0.188. Então P(0)+P(1)+P(2)+P(3)=0.649+0.188=0.837, over 3.5 = 1-0.837=0.163 (~16%).\n12. BTTS yes: ~0.40.\n13. team_total home over 0.5: P(casa ≥1) = 1 - e^-1.2 = 1 - 0.301 = 0.699 (~70%).\n14. team_total home over 1.5: P(casa ≥2) = 1 - P(0) - P(1) = 1 - 0.301 - (1.2*0.301) = 1 - 0.301 - 0.361 = 0.338 (~34%).\n15. team_total away over 0.5: P(fora ≥1) = 1 - e^-0.9 = 1 - 0.407 = 0.593 (~59%).\n16. team_total away over 1.5: P(fora ≥2) = 1 - 0.407 - (0.9*0.407) = 1 - 0.407 - 0.366 = 0.227 (~23%).\n17. handicap home -1: vencer por ≥2. Prob = P(casa ≥2 | empate=0?) Aproximado via Poisson: P(casa 2+ e fora 0) + P(casa 3+ e fora 1) ... complexo. Simplifico: prob handicap -1 = ~0.15.\n18. handicap away -1: similar, ~0.10.\n19. odd_even odd: aproximado ~0.48 (ou calculado: empate par? Melhor usar o fair 46% ímpar do prior, mas com meu total pode mudar um pouco. Vou manter 0.46.\n\n**Variâncias:** \n- team_total home over 0.5: variância 2 (depende só do Tottenham marcar, mas Tottenham marcou em 30/37).\n- over 2.5: variância 3.\n- 1x2 home: variância 4.\n- BTTS: variância 3.\nA valoração (valor) depende da diferença entre minha prob e o prior. Por exemplo, meu over 2.5 é 35% vs prior 41% → valor baixo para under, mas under não está explicitamente em nenhuma linha, exceto se apostar under 2.5? As linhas incluem over, não under diretamente. Mas posso sugerir under como aposta, mas o board só tem over. O campo \"valor\" pode indicar \"alto\" se minha prob para over é muito menor que o prior, indicando valor no under. Mas o campo `valor` refere-se à distância entre minha prob e o \"prior Poisson\" quando existir, + robustez ao roteiro. Vou interpretar que \"valor\" alto significa que a aposta naquela seleção tem boa diferença de probabilidade em relação ao mercado implícito. Como não tenho odds de mercado reais, vou comparar com o prior Rota B. Se minha prob para over 2.5 é 35% e prior 41%, então há valor no under, mas a linha over 2.5 teria valor \"baixo\" ou \"nenhum\" porque a prob está mais baixa que o prior. Strictu sensu, o campo está na linha da aposta, então se eu recomendo under, não está no board. O board é fixo. Vou atribuir \"valor\" como a força da convicção de que minha prob está correta versus o prior. Para over 2.5, como minha prob < prior, posso dizer que a aposta em over tem \"baixo\" valor, e em under teria \"alto\", mas como under não está listado, não é o foco. Talvez eu deva adicionar under? O schema diz que `mercados` tem um array com `market` e `selection`, e o enum de selection inclui \"under\". Então posso incluir under 2.5! O board original listou só over, mas posso adicionar linhas para under se quiser. O schema permite over/under. Vou incluir under 2.5 e under 1.5 também? O board do Passo 5 diz \"TODAS estas linhas\", mas posso expandir. Para seguir o schema, vou criar as 19 linhas originais e talvez adicionar outras? O schema diz `mercados` array, sem número fixo. Vou preencher as 19 conforme pedido, e talvez adicionar under 2.5 se for relevante. Mas a instrução: \"Preencha `mercados` com TODAS estas linhas\" e lista 19. Vou fazer as 19 e depois posso adicionar outras na best_bet. A best_bet pode ser under 2.5.\n\nMelhor: no board, vou incluir under 2.5 como linha extra? O pedido foi: \"Preencha `mercados` com TODAS estas linhas (uma entrada por linha; probs coerentes com seus xG, 1x2 e roteiros)\". Depois lista 1 a 19. Vou seguir estritamente essas 19, sem adicionar. O campo `best_bet` pode ter qualquer market/selection, inclusive under. \n\nPara cada linha, `variancia` (1-5) e `valor` (alto/medio/baixo/nenhum). Vou julgar valor baseado na diferença entre minha prob e o prior Rota B (quando disponível). Se minha prob > prior, valor alto para essa seleção; se menor, valor baixo. Para team_total home over 0.5: minha prob 70% vs prior 70% -> igual, valor médio ou baixo? Como é a mesma, valor baixo. Para 1x2 home: 38% vs 37% -> igual, baixo. Para over 2.5: 35% vs 41% -> baixo (under teria alto). Para BTTS: 40% vs 49% -> baixo. Para double chance home_draw: 68% vs 68% -> igual.\n\n**Variância:** \n- team_total home over 0.5: var 2 (precisa de 1 gol do Tottenham, que costuma marcar).\n- double chance: var 1 (quase sempre cobre dois resultados).\n- 1x2: var 4.\n- over 2.5: var 3.\n- handicap: var 5.\n\n**Nota:** uma frase descritiva.\n\n**Passo 6 — REFUTAÇÃO e confiança**\n\nPreciso escolher a best_bet. Aplicar disciplina de variância: em jogo travado, under com margem é preferível. Meu total 2.1, under 2.5 tem boa margem (0.4 abaixo). Minha prob under 2.5 = 65%. É uma aposta de variância média (over/under linha tem var 3, mas under de jogo travado pode ser mais seguro). No entanto, o prior também aponta under (59%). Então não é um valor enorme. Mas consistente com o roteiro.\n\nAlternativa: team_total home over 0.5 (Tottenham marca) com 70% e var 2, mas o prior é 70% também, sem valor. \nDouble chance 1X com 68% e var 1, mas sem valor.\nTalvez \"under 2.5\" seja a melhor, pois combina segurança (jogo travado) com valor razoável (diferença de 41% para 35% de over, ou seja, under 65% vs 59% prior).\n\nVou propor best_bet: market \"over_under\", selection \"under\", line 2.5. Prob 0.65, confidence medium.\n\nAgora, refutação: atacar under 2.5.\n- Ataque 1: Ambos times têm defesas frágeis (C3, C10) e podem sofrer gols em janelas específicas (C17). Se o jogo abrir acidentalmente, pode ter gols. IDs: C3, C10. Veredito: enfraquece, mas não derruba, pois a intenção (C2) e o volume baixo (C18) são mais fortes.\n- Ataque 2: Everton pode querer terminar a temporada com vitória e jogar sem pressão, aumentando a produção ofensiva (C6). Mas a motivação baixa (C2) contradiz. IDs: C6 vs C2. Veredito: nao_sustenta, porque motivação é mais forte.\n- Ataque 3: Desfalques defensivos (Romero, Branthwaite) podem gerar mais chances e gols (C15, C16). IDs: C15, C16. Veredito: enfraquece, mas desfalques também podem desorganizar ataques? Na verdade, desfalques defensivos aumentam gols, mas o desfalque do Everton no ataque (Grealish) reduz criação. Pesando, pode aumentar um pouco o total, mas não a ponto de derrubar under 2.5.\n\nConclusão da refutação: under 2.5 sobrevive com confiança medium. Aplico regra de confiança: há arestas convergentes (A1, A11, A12) e nenhum ataque derruba. Porém, rotas A e B do base rate divergem? Rota A total 2.57 (over 2.5 prob 47%), Rota B 2.33 (over 2.5 prob 41%). Minha previsão está mais próxima da B. Como a Rota A é mais alta, não apontam na mesma direção? A divergência é pequena. Considero que a Rota B é preferida, então há alinhamento. Portanto, confiança medium, pois há alguns conflitos (desfalques defensivos), mas a intenção e volume são dominantes.\n\n**Confidence_regra:** \"Aposta suportada por mais de 3 arestas independentes (A1, A8, A11, A12) e pelo veredito de intenção, com ataques que enfraquecem mas não derrubam; rotas A e B do base rate divergem levemente, mas a Rota B (preferida) indica under, e a diferença é explicada pela motivação.\"\n\n**Drivers:** os 3 fatores que mais moveram o número: 1) Veredito de intenção assimétrica (C2), 2) Volume de SoT baixo (C18), 3) Desfalque de Romero na defesa do Tottenham (C15) – que afeta o xG do Everton.\n\nAgora, preciso gerar o JSON completo, com todos os campos. Vou estruturar a resposta.\n\n**Observações:** \n- `conclusoes`: array de objetos com id, bloco, fato, dado, direcao, forca.\n- `blocos_sem_sinal`: blocos que não geraram conclusão. Ex: contexto? Já gerei C1, mas posso considerar que contexto não deu sinal, então vai para blocos_sem_sinal e C1 não existe. Revisarei: contexto realmente não deu sinal relevante, então melhor colocar em blocos_sem_sinal. Removo C1 e a lista começa em C2. Ajustarei IDs.\n- `descartadas`: conclusões não usadas em arestas. C5 (estilo Tottenham) eu mencionei em A1? Vou ver. A1 cita C2, C9, C10. C5 não está. C5 poderia ser usada em A1 (melhora defensiva), vou incluir C5 na A1. C13, C14 usadas em A4. C15 em A3, A5, A7. C16 em A7. C17 em A4. C19 em A9. C20 em A2. C21 em A8. C22 em marcadores. C18 em A11. C6 em A2. C7, C8 em A7. C11, C12 em A4. C3, C4 em A2, A3. C2 em várias. Parece que todas são usadas. Vou manter.\n- `jogadores`: farei leituras curtas para cada um dos listados (os 11 de cada lado mais desfalques). Como muitos, vou resumir bastante.\n- `arestas`: já listei 12. Vou numerá-las A1 a A12.\n- `roteiros`: 3 roteiros, com nomes, probs, filme, arestas.\n- `janelas`: 6 entradas, com leitura, prob_gol, lado.\n- `tempos`: primeiro e segundo com análises e prob_gol (que é a probabilidade de ≥1 gol no tempo, não o xG). Para o primeiro, prob_gol = 0.40; para o segundo, 0.55.\n- `marcadores`: como acima.\n- `mercados`: array de 19 objetos, mais a best_bet separada.\n- `best_bet`: under 2.5.\n- `refutacao`: ataques e conclusão.\n- `drivers`: array de strings.\n\nVou calcular as xg_bands do home e away de forma que a soma seja próxima do xg total, mas não precisa somar exatamente, pois o runtime normaliza. Vou usar valores aproximados.\n\n**Home xg_bands:**\n0-15: 0.06\n16-30: 0.12\n31-45: 0.20\n46-60: 0.15\n61-75: 0.18\n76-90: 0.24\nSoma: 0.95, xg 1.15, diferença de 0.2. Ajusto: 1.15 total, distribuo proporcionalmente: 0.07, 0.14, 0.24, 0.18, 0.21, 0.28, soma 1.12. Ok.\n\n**Away xg_bands:**\n0-15: 0.04\n16-30: 0.07\n31-45: 0.12\n46-60: 0.09\n61-75: 0.14\n76-90: 0.19\nSoma: 0.65, mas xg 0.90. Proporcional: 0.06, 0.10, 0.17, 0.13, 0.19, 0.26, soma 0.91.\n\n**Total bands** não preciso preencher, só home e away.\n\n**General:**\ntotal: 2.05 (1.15 + 0.90 = 2.05, mas vou colocar 2.05)\ntotal_1t: 0.85 (0.50+0.35)\ntotal_2t: 1.20 (0.65+0.55)\nover25_prob: 0.35 (35%)\nbtts_prob: 0.40 (40%)\none_x_two: home 0.38, draw 0.30, away 0.32\none_x_two_1t: baseado no xG 1T? Podemos derivar: prob de liderar no 1T? Não tenho probs exatas. Vou usar os priors ajustados: 1T casa/E/fora 27/48/24% (do prior), mas como meu 1T tem menos gols, empate mais provável. Ajusto para 30/45/25? Ou mantenho similar. Vou usar 0.30/0.45/0.25.\none_x_two_2t: 0.35/0.35/0.30? Ajuste: 0.36/0.34/0.30.\nconfidence: \"medium\"\nconfidence_regra: texto\nsummary: resumo do jogo.\n\n**Mercados: vou calcular cada prob conforme meu modelo. Já calculei algumas.**\n\n1. 1x2 home: 0.38\n2. 1x2 draw: 0.30\n3. 1x2 away: 0.32\n4. double_chance home_draw: 0.68\n5. double_chance draw_away: 0.62\n6. double_chance home_away: 0.70\n7. draw_no_bet home: 0.54\n8. draw_no_bet away: 0.46\n9. over_under over 1.5: 0.62\n10. over_under over 2.5: 0.35\n11. over_under over 3.5: 0.16\n12. btts yes: 0.40\n13. team_total home over 0.5: 0.70\n14. team_total home over 1.5: 0.34\n15. team_total away over 0.5: 0.59\n16. team_total away over 1.5: 0.23\n17. handicap home -1: 0.15 (aproximado)\n18. handicap away -1: 0.10\n19. odd_even odd: 0.46\n\nPara cada, variancia:\n- Dupla chance: 1\n- Team total over 0.5: 2\n- Under 2.5? Não está na lista, mas nas linhas over 2.5, é over, var 3. Double chance 12: 1. DNB: 2. Handicap: 5. Odd/even: 2?\nVou definir:\n1: var 4\n2: var 3\n3: var 4\n4: var 1\n5: var 1\n6: var 1\n7: var 2\n8: var 2\n9: var 2\n10: var 3\n11: var 4\n12: var 3\n13: var 2\n14: var 4\n15: var 2\n16: var 4\n17: var 5\n18: var 5\n19: var 3\n\nValor: comparando minha prob com prior Rota B onde disponível. \n1x2 home: 0.38 vs 0.37 -> nenhum\n1x2 draw: 0.30 vs 0.32 -> baixo (under? mas é draw)\nover 2.5: 0.35 vs 0.41 -> baixo (over tem baixo valor, under teria alto)\nBTTS: 0.40 vs 0.49 -> baixo\nteam_total home over 0.5: 0.70 vs 0.70 -> nenhum\nLogo, a maioria tem baixo valor, exceto onde minha prob difere substancialmente. Under 2.5 não está na lista original, mas vou manter as linhas como pedido e na best_bet usar under.\n\nbest_bet: under 2.5, line 2.5, prob 0.65, confidence \"medium\".\n\n**Notas:** escreverei frases curtas.\n\n**Roles finais:** garantir que tudo está em português do Brasil, campos preenchidos conforme schema.\n\nVou gerar o JSON.",
+  "reasoningTokens": 13242,
+  "elapsedMs": 391144,
+  "promptChars": 47434,
+  "error": null
+}

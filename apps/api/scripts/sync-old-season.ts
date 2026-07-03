@@ -162,7 +162,7 @@ async function main() {
   for (const [from, to] of WINDOWS) {
     const win = await smAll<SmFixture>(
       `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT.rating},${STAT.minutes},${STAT.motm},${STAT.keyPasses},${STAT.shotsOnTarget}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue&per_page=50`,
+        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue&per_page=50`,
     )
     for (const f of win) byId.set(f.id, f)
   }

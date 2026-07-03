@@ -1,5 +1,7 @@
+import { sql } from "drizzle-orm"
+
 import { db } from "./client"
-import { card, commentary, goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, nationality, player, venue, weather } from "./schema"
+import { card, commentary, goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, matchTvStation, nationality, player, tvStation, venue, weather } from "./schema"
 import { slugify } from "./slug"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
@@ -17,8 +19,8 @@ export const LINEUP_STARTER = 11
 export const LINEUP_BENCH = 12
 
 // lineups.details stat type_ids (Match Facts) — por jogador por partida.
-export const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86,
-  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, bigChancesMissed: 581 } as const
+export const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86, shotsTotal: 42, shotsOffTarget: 41, shotsBlocked: 58, duelsLost: 1491, crossesSuccessfulPct: 1533, passesAccuratePct: 1584, fouls: 56, foulsDrawn: 96, saves: 57, savesInsidebox: 104, dispossessed: 94, blockedShots: 97, clearances: 101, duelsTotal: 105, aerialsWon: 107, passesAccurate: 116, touches: 120, longBalls: 122, longBallsWon: 123, bigChancesCreated: 580, chancesCreated: 9706, aerialsTotal: 27274, aerialsLost: 27266, aerialsWonPct: 27275, tacklesWon: 27267, tacklesWonPct: 27268, duelsWonPct: 27276, passesFinalThird: 27269, longBallsWonPct: 27270, ballRecoveries: 27271, backwardPasses: 27272, possessionLost: 27273, errorsLeadToShot: 48997, lastManTackle: 583, goodHighClaim: 584, offsides: 51, captain: 40,
+  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581 } as const
 export const STAT_IDS = Object.values(STAT).join(",")
 // fixture-statistics type_ids por time por partida (include=statistics).
 export const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, shotsOffTarget: 41, shotsBlocked: 58, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34, freeKicks: 55,
@@ -31,18 +33,29 @@ const TREND_TYPE_SET = new Set<number>(TREND_TYPES)
 // Includes ricos compartilhados. `stage` só faz sentido em copa (traz stage_id/sort_order/type_id).
 export function richInclude(withStage: boolean): string {
   return (
-    "participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;" +
-    "events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport" +
+    "participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;" +
+    "events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation" +
     (withStage ? ";stage" : "")
   )
 }
-// Filtros de tipos (pra limitar o volume dos includes de detalhe).
-export const richFilterTypes = `lineupDetailTypes:${STAT_IDS};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}`
+// Filtros de tipos (pra limitar o volume dos includes de detalhe). lineupDetailTypes foi REMOVIDO:
+// ingerimos 50+ types por jogador e a API limita cada filtro a 50 ids — sem filtro vêm todos (57)
+// e o mapeamento do STAT escolhe o que gravar.
+export const richFilterTypes = `fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}`
 
 const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = { GOAL: "normal", PENALTY: "penalty", OWNGOAL: "own" }
 const CARD_TYPE: Record<string, "yellow" | "red" | "yellowred"> = { YELLOWCARD: "yellow", REDCARD: "red", YELLOWREDCARD: "yellowred" }
 
-export type SmPlayer = { id: number; display_name?: string; name?: string; date_of_birth?: string; height?: number; weight?: number; image_path?: string; nationality_id?: number }
+// metadata: player metadata entries (type_id 229 = preferred foot "left"/"right"/"both"). @feature W-057
+export type SmPlayer = { id: number; display_name?: string; name?: string; date_of_birth?: string; height?: number; weight?: number; image_path?: string; nationality_id?: number; metadata?: { type_id: number; values?: unknown }[] }
+
+// SportMonks metadata type_id do pé preferido; extrai "left" | "right" | "both" do array de metadata do jogador.
+export const METADATA_PREFERRED_FOOT = 229
+export function preferredFootOf(pl: SmPlayer): string | null {
+  const v = pl.metadata?.find((m) => m.type_id === METADATA_PREFERRED_FOOT)?.values
+  // SportMonks devolve lixo ocasional nesse metadata (string vazia, "1,95m") — só aceita o enum real.
+  return v === "left" || v === "right" || v === "both" ? v : null
+}
 export type SmLineup = {
   team_id: number
   type_id: number
@@ -85,6 +98,70 @@ export type SmRichFixture = {
   statistics?: SmStatistic[]
   trends?: SmTrend[]
   weatherreport?: SmWeather | null
+  metadata?: SmFixtureMetadata[]
+  tvstations?: SmTvLink[] // chave LOWERCASE no JSON (include=tvStations.tvStation)
+}
+
+// Fixture metadata (include=metadata): 578 = attendance ({attendance: n}), 572 = lineup confirmed
+// ({confirmed: bool}). `values` é um shape diferente por type — extrair com guarda.
+export type SmFixtureMetadata = { type_id: number; values?: unknown }
+const META_ATTENDANCE = 578
+const META_LINEUP_CONFIRMED = 572
+export function fixtureMetaOf(f: { metadata?: SmFixtureMetadata[] }): { attendance: number | null; lineupConfirmed: boolean | null } {
+  const find = (t: number) => f.metadata?.find((m) => m.type_id === t)?.values as Record<string, unknown> | undefined
+  const att = find(META_ATTENDANCE)?.attendance
+  const conf = find(META_LINEUP_CONFIRMED)?.confirmed
+  return { attendance: typeof att === "number" ? att : null, lineupConfirmed: typeof conf === "boolean" ? conf : null }
+}
+
+// Vínculo estação×país de um fixture (include=tvStations.tvStation): a estação vem aninhada em
+// `tvstation` (lowercase). @feature W-059
+export type SmTvLink = {
+  tvstation_id: number
+  country_id?: number | null
+  tvstation?: { id: number; name?: string; url?: string | null; image_path?: string | null; type?: string | null } | null
+}
+
+// Onde assistir: upserta o catálogo de estações (logo → R2) e o vínculo match↔estação com os países
+// agregados em countryIds (dedupe da explosão estação×país da SportMonks). @feature W-059
+export async function ingestTvStations(
+  fixtures: { id: number; tvstations?: SmTvLink[] }[],
+  matchIdByFixture: Map<number, string>,
+): Promise<number> {
+  const stations = new Map<number, NonNullable<SmTvLink["tvstation"]>>()
+  for (const f of fixtures)
+    for (const l of f.tvstations ?? []) if (l.tvstation && !stations.has(l.tvstation.id)) stations.set(l.tvstation.id, l.tvstation)
+  const logoBySm = new Map<number, string | null>()
+  await pool([...stations.values()], 8, async (st) => {
+    logoBySm.set(st.id, st.image_path ? await uploadImagem(st.image_path, imgKey("tvstations", st.name ?? String(st.id), st.image_path, st.id)) : null)
+  })
+  const stationIdBySm = new Map<number, string>()
+  for (const st of stations.values()) {
+    const v = { sportmonksTvStationId: st.id, name: st.name ?? `station ${st.id}`, url: st.url ?? null, imageUrl: logoBySm.get(st.id) ?? null, type: st.type ?? null }
+    const [r] = await db.insert(tvStation).values(v).onConflictDoUpdate({ target: tvStation.sportmonksTvStationId, set: v }).returning({ id: tvStation.id })
+    stationIdBySm.set(st.id, r!.id)
+  }
+  let nLinks = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    if (!matchId || !f.tvstations?.length) continue
+    const countriesByStation = new Map<number, Set<number>>()
+    for (const l of f.tvstations) {
+      const set = countriesByStation.get(l.tvstation_id) ?? new Set<number>()
+      if (l.country_id) set.add(l.country_id)
+      countriesByStation.set(l.tvstation_id, set)
+    }
+    for (const [smId, countries] of countriesByStation) {
+      const tvStationId = stationIdBySm.get(smId)
+      if (!tvStationId) continue
+      // cast explícito: drizzle+postgres.js dupla-stringifica jsonb passado como array JS
+      const ids = sql`${JSON.stringify([...countries].sort((a, b) => a - b))}::jsonb`
+      const v = { matchId, tvStationId, countryIds: ids }
+      await db.insert(matchTvStation).values(v).onConflictDoUpdate({ target: [matchTvStation.matchId, matchTvStation.tvStationId], set: { countryIds: ids } })
+      nLinks += 1
+    }
+  }
+  return nLinks
 }
 
 function imgKey(folder: string, name: string, imagePath: string, suffix?: number | string): string {
@@ -178,6 +255,7 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
       seasonId,
       ...extractScore(f.scores),
       status: f.state?.developer_name ?? null,
+      ...fixtureMetaOf(f),
       ...matchFields(f, { homeTeamId, awayTeamId, homeSmId: home.id, awaySmId: away.id }),
     }
     const [m] = await db.insert(match).values(values as never).onConflictDoUpdate({ target: match.sportmonksFixtureId, set: values as never }).returning({ id: match.id })
@@ -205,7 +283,7 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
   await pool(players, 8, async (pl) => { photoByPlayer.set(pl.id, pl.image_path ? await uploadImagem(pl.image_path, imgKey("players", playerName(pl), pl.image_path, pl.id)) : null) })
   const playerIdBySm = new Map<number, string>()
   for (const pl of players) {
-    const v = { sportmonksPlayerId: pl.id, name: playerName(pl), dateOfBirth: pl.date_of_birth ?? null, height: pl.height ?? null, weight: pl.weight ?? null, imageUrl: photoByPlayer.get(pl.id) ?? null, nationalityId: pl.nationality_id && countries.has(pl.nationality_id) ? pl.nationality_id : null }
+    const v = { sportmonksPlayerId: pl.id, name: playerName(pl), dateOfBirth: pl.date_of_birth ?? null, height: pl.height ?? null, weight: pl.weight ?? null, imageUrl: photoByPlayer.get(pl.id) ?? null, nationalityId: pl.nationality_id && countries.has(pl.nationality_id) ? pl.nationality_id : null, preferredFoot: preferredFootOf(pl) }
     const [j] = await db.insert(player).values(v).onConflictDoUpdate({ target: player.sportmonksPlayerId, set: v }).returning({ id: player.id })
     playerIdBySm.set(pl.id, j!.id)
   }
@@ -231,9 +309,9 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
         const stat = (typeId: number) => l.details?.find((d) => d.type_id === typeId)?.data?.value
         const lp = {
           lineupId: lu!.id, playerId, number: l.jersey_number ?? null, position: shortPosition(l.position?.developer_name), starter: l.type_id === LINEUP_STARTER, grid: l.formation_field ?? null,
-          rating: stat(STAT.rating) ?? null, minutesPlayed: stat(STAT.minutes) ?? null, keyPasses: stat(STAT.keyPasses) ?? null, shotsOnTarget: stat(STAT.shotsOnTarget) ?? null,
+          rating: stat(STAT.rating) ?? null, minutesPlayed: stat(STAT.minutes) ?? null, keyPasses: stat(STAT.keyPasses) ?? null, shotsOnTarget: stat(STAT.shotsOnTarget) ?? null, shotsTotal: stat(STAT.shotsTotal) ?? null, shotsOffTarget: stat(STAT.shotsOffTarget) ?? null, shotsBlocked: stat(STAT.shotsBlocked) ?? null, duelsLost: stat(STAT.duelsLost) ?? null, crossesSuccessfulPct: stat(STAT.crossesSuccessfulPct) ?? null, fouls: stat(STAT.fouls) ?? null, foulsDrawn: stat(STAT.foulsDrawn) ?? null, saves: stat(STAT.saves) ?? null, savesInsidebox: stat(STAT.savesInsidebox) ?? null, dispossessed: stat(STAT.dispossessed) ?? null, blockedShots: stat(STAT.blockedShots) ?? null, clearances: stat(STAT.clearances) ?? null, duelsTotal: stat(STAT.duelsTotal) ?? null, aerialsWon: stat(STAT.aerialsWon) ?? null, passesAccurate: stat(STAT.passesAccurate) ?? null, touches: stat(STAT.touches) ?? null, longBalls: stat(STAT.longBalls) ?? null, longBallsWon: stat(STAT.longBallsWon) ?? null, bigChancesCreated: stat(STAT.bigChancesCreated) ?? null, chancesCreated: stat(STAT.chancesCreated) ?? null, aerialsTotal: stat(STAT.aerialsTotal) ?? null, aerialsLost: stat(STAT.aerialsLost) ?? null, aerialsWonPct: stat(STAT.aerialsWonPct) ?? null, tacklesWon: stat(STAT.tacklesWon) ?? null, tacklesWonPct: stat(STAT.tacklesWonPct) ?? null, duelsWonPct: stat(STAT.duelsWonPct) ?? null, passesFinalThird: stat(STAT.passesFinalThird) ?? null, longBallsWonPct: stat(STAT.longBallsWonPct) ?? null, ballRecoveries: stat(STAT.ballRecoveries) ?? null, backwardPasses: stat(STAT.backwardPasses) ?? null, possessionLost: stat(STAT.possessionLost) ?? null, errorsLeadToShot: stat(STAT.errorsLeadToShot) ?? null, lastManTackle: stat(STAT.lastManTackle) ?? null, goodHighClaim: stat(STAT.goodHighClaim) ?? null, offsides: stat(STAT.offsides) ?? null, captain: (stat(STAT.captain) ?? 0) >= 1, passesAccuratePct: stat(STAT.passesAccuratePct) ?? null,
           tackles: stat(STAT.tackles) ?? null, interceptions: stat(STAT.interceptions) ?? null, duelsWon: stat(STAT.duelsWon) ?? null, passes: stat(STAT.passes) ?? null,
-          crossesTotal: stat(STAT.crossesTotal) ?? null, crossesAccurate: stat(STAT.crossesAccurate) ?? null, dribbleAttempts: stat(STAT.dribbleAttempts) ?? null, dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null,
+          crossesTotal: stat(STAT.crossesTotal) ?? null, crossesAccurate: stat(STAT.crossesAccurate) ?? null, dribbleAttempts: stat(STAT.dribbleAttempts) ?? null, dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null, dribbledPast: stat(STAT.dribbledPast) ?? null,
           bigChancesMissed: stat(STAT.bigChancesMissed) ?? null, manOfMatch: stat(STAT.motm) === 1,
         }
         await db.insert(lineupPlayer).values(lp).onConflictDoUpdate({ target: [lineupPlayer.lineupId, lineupPlayer.playerId], set: lp })
@@ -356,7 +434,9 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
     nCommentaries += rows.length
   }
 
-  return { venues: venues.length, matches: matchIdByFixture.size, players: players.length, lineups: nLineups, lineupPlayers: nPlayers, teamStats: nTeamStats, trends: nTrends, weather: nWeather, goals: nGoals, cards: nCards, injuries: nInjuries, commentaries: nCommentaries }
+  const nTv = await ingestTvStations(fixtures, matchIdByFixture)
+
+  return { tvLinks: nTv, venues: venues.length, matches: matchIdByFixture.size, players: players.length, lineups: nLineups, lineupPlayers: nPlayers, teamStats: nTeamStats, trends: nTrends, weather: nWeather, goals: nGoals, cards: nCards, injuries: nInjuries, commentaries: nCommentaries }
 }
 
 // Busca fixtures ricas por LISTA de ids (copa: só os "proper"), em lotes. include=stage traz a stage.

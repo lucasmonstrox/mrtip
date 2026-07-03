@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, gte, inArray, isNotNull, lt, lte, ne, or } from "drizzle-orm"
+import { and, asc, avg, count, desc, eq, gte, inArray, isNotNull, lt, lte, ne, or, sql, sum } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 
 import { db } from "../../../db/client"
@@ -12,8 +12,10 @@ import {
   lineup,
   lineupPlayer,
   match,
+  matchTvStation,
   nationality,
   player,
+  tvStation,
   season,
   standing,
   team,
@@ -367,6 +369,17 @@ export type TeamScorers = {
 // Both sides of the match. Payload of GET /:id/scorers.
 export type MatchScorers = { home: TeamScorers; away: TeamScorers }
 
+// One team's match-level statistics for the "Estatísticas" tab: today just ball possession (posse de
+// bola, %) read from match_team_stats (SportMonks fixture statistics, DOS-002). Shape kept extensible
+// so shots/corners/big-chances slot in later; null when the stat is missing for this fixture.
+export type TeamMatchStats = {
+  team: TeamRef
+  possession: number | null // % de posse de bola (0–100), type 45 BALL_POSSESSION
+}
+
+// Both sides of the match. Payload of GET /:id/statistics.
+export type MatchStats = { home: TeamMatchStats; away: TeamMatchStats }
+
 // A goal from the player's perspective (for their page): the match + minute + type.
 export type PlayerGoal = {
   matchId: string
@@ -388,6 +401,7 @@ export type PlayerAppearance = {
   round: number
   opponent: string
   opponentLogo: string | null
+  competition: { name: string; logoUrl: string | null } // tournament (league/cup) of the match
   home: boolean
   score: [number, number] | null
   rating: number | null
@@ -399,6 +413,11 @@ export type PlayerAppearance = {
   assists: number
   yellow: number
   red: number // straight red OR second yellow (sent off)
+  // Per-match volume (from lineup_player, LIG-003 ingest) — feeds the form curve, the summary
+  // sparklines and the casa×fora split without a second per-match query. @feature LIG-001
+  keyPasses: number | null
+  shotsOnTarget: number | null
+  shotsTotal: number | null
 }
 
 // One of the player's CLUB's recent matches ACROSS ALL COMPETITIONS (league + cups, most recent last),
@@ -423,6 +442,17 @@ export type RecentTeamGame = {
   absenceReason: string | null
 }
 
+// One dated event of the player's season WITH its match minute — goal, assist or card — the raw
+// series behind the 0–90' clock widget (in which minute of games the player decides). @feature LIG-001
+export type PlayerMinuteEvent = {
+  kind: "goal" | "assist" | "yellow" | "red"
+  minute: number | null
+  matchId: string
+  date: string
+  opponent: string
+  home: boolean
+}
+
 // Player page: bio (photo/birth/height/nationality/position) + totals (derived from goal/injury) +
 // the list of goals + per-match appearances. `position` is the most-played one (G/D/M/F).
 export type PlayerDetail = {
@@ -433,6 +463,7 @@ export type PlayerDetail = {
   height: number | null
   weight: number | null
   position: string | null
+  preferredFoot: "left" | "right" | "both" | null // @feature W-057
   currentTeam: { name: string; slug: string; logoUrl: string | null } | null
   nationality: { name: string; flagUrl: string | null } | null
   goals: number
@@ -443,6 +474,8 @@ export type PlayerDetail = {
     appearances: number
     starts: number
     minutes: number
+    // Average minutes per game PLAYED (games with a known minutes count) — null with no sample.
+    avgMinutes: number | null
     avgRating: number | null
     goals: number
     penaltyGoals: number
@@ -451,17 +484,83 @@ export type PlayerDetail = {
     red: number
     motm: number
   }
+  // Full per-season stat profile summed over the player's lineup_player rows (SportMonks Match Facts).
+  // Counts are sums; *PctAvg fields are per-game averages (the API ships % per match, not numerators).
+  stats: PlayerSeasonStats
   // Per-90 production. `sufficient` gates display on a minutes floor (small-sample guard).
   per90: { sufficient: boolean; goals: number; assists: number; ga: number }
   // Goal breakdowns: by venue (home/away) and by half (from goal minutes).
   goalSplits: { home: number; away: number; firstHalf: number; secondHalf: number }
+  // Every goal/assist/card of the season with its match minute — the 0–90' clock widget series.
+  minuteEvents: PlayerMinuteEvent[]
   goalsList: PlayerGoal[]
   appearances: PlayerAppearance[]
   // The club's last few matches with played/missed flags — drives the hover card's form window so a
   // missed game reads as a gap, not a dropped slot. Most recent last (chronological, like appearances).
   recentTeamGames: RecentTeamGame[]
+  // Every finished match of the club in THIS league-season with the player's played/missed flag —
+  // the season-at-a-glance rating strip (a missed game renders as an empty cell). @feature LIG-001
+  seasonTeamGames: RecentTeamGame[]
   // Seasons the player has data in (for the page's season switcher). @feature LIG-008
   seasons: SeasonSummary[]
+}
+
+// Season aggregate of every per-match player stat ingested from lineups.details, grouped by theme for
+// the player page cards (finalização / criação / construção / defesa / duelos / disciplina / goleiro).
+export type PlayerSeasonStats = {
+  // finalização
+  shotsTotal: number
+  shotsOnTarget: number
+  shotsOffTarget: number
+  shotsBlocked: number // HIS shots that got blocked
+  bigChancesMissed: number
+  // criação
+  keyPasses: number
+  chancesCreated: number
+  bigChancesCreated: number
+  crossesTotal: number
+  crossesAccurate: number
+  crossesSuccessfulPctAvg: number | null
+  passesFinalThird: number
+  // construção/posse
+  passes: number
+  passesAccurate: number
+  passesAccuratePctAvg: number | null
+  longBalls: number
+  longBallsWon: number
+  backwardPasses: number
+  touches: number
+  ballRecoveries: number
+  possessionLost: number
+  dispossessed: number
+  dribbleAttempts: number
+  dribblesSuccessful: number
+  // defesa
+  tackles: number
+  tacklesWon: number
+  interceptions: number
+  clearances: number
+  blockedShots: number // shots HE blocked
+  lastManTackle: number
+  errorsLeadToShot: number
+  dribbledPast: number
+  // duelos
+  duelsTotal: number
+  duelsWon: number
+  duelsLost: number
+  aerialsTotal: number
+  aerialsWon: number
+  aerialsLost: number
+  // disciplina
+  fouls: number
+  foulsDrawn: number
+  offsides: number
+  // goleiro
+  saves: number
+  savesInsidebox: number
+  goodHighClaim: number
+  // meta
+  captainGames: number
 }
 
 // Minutes floor before per-90 rates are shown (≈6 full matches) — below this the rate is noise.
@@ -655,6 +754,28 @@ export async function getLeagueOrThrow(code: string): Promise<League> {
 // Player page for ONE season: totals (real goals, assists, matches out) + list of goals, all scoped
 // to `seasonId` via `match.seasonId` (so the page is the chosen season, not the player's career).
 // Derived from `goal`/`injury` (not a snapshot). 404 if the id doesn't exist. @feature LIG-008
+// Uma emissora/stream que transmite a partida (join match_tv_station ⋈ tv_station). `countries` é o
+// nº de países onde ela passa o jogo — proxy de alcance, usado pra ordenar. @feature W-059
+export type TvStationItem = { name: string; url: string | null; imageUrl: string | null; type: string | null; countries: number }
+
+// Onde assistir: emissoras/streams do jogo, mais abrangentes primeiro (mais países → maior alcance).
+export async function loadMatchTvStations(matchId: string): Promise<TvStationItem[]> {
+  const rows = await db
+    .select({
+      name: tvStation.name,
+      url: tvStation.url,
+      imageUrl: tvStation.imageUrl,
+      type: tvStation.type,
+      countryIds: matchTvStation.countryIds,
+    })
+    .from(matchTvStation)
+    .innerJoin(tvStation, eq(tvStation.id, matchTvStation.tvStationId))
+    .where(eq(matchTvStation.matchId, matchId))
+  return rows
+    .map((r) => ({ name: r.name, url: r.url, imageUrl: r.imageUrl, type: r.type, countries: Array.isArray(r.countryIds) ? r.countryIds.length : 0 }))
+    .sort((a, b) => b.countries - a.countries || a.name.localeCompare(b.name))
+}
+
 export async function getPlayerDetail(id: string, seasonId: string): Promise<PlayerDetail> {
   const [p] = await db
     .select({
@@ -664,6 +785,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       dateOfBirth: player.dateOfBirth,
       height: player.height,
       weight: player.weight,
+      preferredFoot: player.preferredFoot,
       nationalityName: nationality.name,
       nationalityFlag: nationality.flagUrl,
     })
@@ -731,12 +853,18 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       starter: lineupPlayer.starter,
       motm: lineupPlayer.manOfMatch,
       position: lineupPlayer.position,
+      keyPasses: lineupPlayer.keyPasses,
+      shotsOnTarget: lineupPlayer.shotsOnTarget,
+      shotsTotal: lineupPlayer.shotsTotal,
+      competitionName: league.name,
+      competitionLogo: league.logoUrl,
     })
     .from(lineupPlayer)
     .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
     .innerJoin(match, eq(match.id, lineup.matchId))
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
+    .innerJoin(league, eq(league.code, match.leagueCode))
     .where(and(eq(lineupPlayer.playerId, id), eq(match.seasonId, seasonId)))
     .orderBy(asc(match.date))
 
@@ -750,16 +878,18 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     goalsByMatch.set(r.matchId, e)
   }
 
+  // Assists with the assisted goal's minute — counted per match for the log AND kept raw for the
+  // 0–90' clock widget (which minute of games he creates). @feature LIG-001
   const assistRows = await db
-    .select({ matchId: goal.matchId, n: count() })
+    .select({ matchId: goal.matchId, minute: goal.minute })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
     .where(and(eq(goal.assistId, id), eq(match.seasonId, seasonId)))
-    .groupBy(goal.matchId)
-  const assistsByMatch = new Map(assistRows.map((r) => [r.matchId, Number(r.n)]))
+  const assistsByMatch = new Map<string, number>()
+  for (const r of assistRows) assistsByMatch.set(r.matchId, (assistsByMatch.get(r.matchId) ?? 0) + 1)
 
   const cardRows = await db
-    .select({ matchId: card.matchId, type: card.type })
+    .select({ matchId: card.matchId, type: card.type, minute: card.minute })
     .from(card)
     .innerJoin(match, eq(match.id, card.matchId))
     .where(and(eq(card.playerId, id), eq(match.seasonId, seasonId)))
@@ -782,6 +912,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       round: r.round,
       opponent: home ? r.awayName : r.homeName,
       opponentLogo: home ? r.awayLogo : r.homeLogo,
+      competition: { name: r.competitionName, logoUrl: r.competitionLogo },
       home,
       score: r.ftH != null && r.ftA != null ? [r.ftH, r.ftA] : null,
       rating: r.rating,
@@ -793,6 +924,9 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       assists: assistsByMatch.get(r.matchId) ?? 0,
       yellow: cm.yellow,
       red: cm.red,
+      keyPasses: r.keyPasses,
+      shotsOnTarget: r.shotsOnTarget,
+      shotsTotal: r.shotsTotal,
     }
   })
 
@@ -804,12 +938,18 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
   // Season aggregates over the appearances spine.
   const ratedValues = appearances.filter((x) => x.rating != null).map((x) => x.rating as number)
   const minutesTotal = appearances.reduce((s, x) => s + (x.minutes ?? 0), 0)
+  // Average minutes over games with a known minutes count (not over all appearances), so a lineup
+  // row without minutes doesn't drag the mean down.
+  const minuteGames = appearances.filter((x) => x.minutes != null)
   const totalGoals = Number(g!.n)
   const totalAssists = Number(a!.n)
   const season = {
     appearances: appearances.length,
     starts: appearances.filter((x) => x.starter).length,
     minutes: minutesTotal,
+    avgMinutes: minuteGames.length
+      ? minuteGames.reduce((s, x) => s + (x.minutes ?? 0), 0) / minuteGames.length
+      : null,
     avgRating: ratedValues.length ? ratedValues.reduce((s, v) => s + v, 0) / ratedValues.length : null,
     goals: totalGoals,
     penaltyGoals: appearances.reduce((s, x) => s + x.penaltyGoals, 0),
@@ -817,6 +957,82 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     yellow: appearances.reduce((s, x) => s + x.yellow, 0),
     red: appearances.reduce((s, x) => s + x.red, 0),
     motm: appearances.filter((x) => x.motm).length,
+  }
+
+  // Full season stat profile — one aggregate over the player's lineup_player rows of the season.
+  // Sums for counts; per-game average for the % stats (the API only ships % per match).
+  const [sh] = await db
+    .select({
+      shotsTotal: sum(lineupPlayer.shotsTotal),
+      shotsOnTarget: sum(lineupPlayer.shotsOnTarget),
+      shotsOffTarget: sum(lineupPlayer.shotsOffTarget),
+      shotsBlocked: sum(lineupPlayer.shotsBlocked),
+      bigChancesMissed: sum(lineupPlayer.bigChancesMissed),
+      keyPasses: sum(lineupPlayer.keyPasses),
+      chancesCreated: sum(lineupPlayer.chancesCreated),
+      bigChancesCreated: sum(lineupPlayer.bigChancesCreated),
+      crossesTotal: sum(lineupPlayer.crossesTotal),
+      crossesAccurate: sum(lineupPlayer.crossesAccurate),
+      crossesSuccessfulPctAvg: avg(lineupPlayer.crossesSuccessfulPct),
+      passesFinalThird: sum(lineupPlayer.passesFinalThird),
+      passes: sum(lineupPlayer.passes),
+      passesAccurate: sum(lineupPlayer.passesAccurate),
+      passesAccuratePctAvg: avg(lineupPlayer.passesAccuratePct),
+      longBalls: sum(lineupPlayer.longBalls),
+      longBallsWon: sum(lineupPlayer.longBallsWon),
+      backwardPasses: sum(lineupPlayer.backwardPasses),
+      touches: sum(lineupPlayer.touches),
+      ballRecoveries: sum(lineupPlayer.ballRecoveries),
+      possessionLost: sum(lineupPlayer.possessionLost),
+      dispossessed: sum(lineupPlayer.dispossessed),
+      dribbleAttempts: sum(lineupPlayer.dribbleAttempts),
+      dribblesSuccessful: sum(lineupPlayer.dribblesSuccessful),
+      tackles: sum(lineupPlayer.tackles),
+      tacklesWon: sum(lineupPlayer.tacklesWon),
+      interceptions: sum(lineupPlayer.interceptions),
+      clearances: sum(lineupPlayer.clearances),
+      blockedShots: sum(lineupPlayer.blockedShots),
+      lastManTackle: sum(lineupPlayer.lastManTackle),
+      errorsLeadToShot: sum(lineupPlayer.errorsLeadToShot),
+      dribbledPast: sum(lineupPlayer.dribbledPast),
+      duelsTotal: sum(lineupPlayer.duelsTotal),
+      duelsWon: sum(lineupPlayer.duelsWon),
+      duelsLost: sum(lineupPlayer.duelsLost),
+      aerialsTotal: sum(lineupPlayer.aerialsTotal),
+      aerialsWon: sum(lineupPlayer.aerialsWon),
+      aerialsLost: sum(lineupPlayer.aerialsLost),
+      fouls: sum(lineupPlayer.fouls),
+      foulsDrawn: sum(lineupPlayer.foulsDrawn),
+      offsides: sum(lineupPlayer.offsides),
+      saves: sum(lineupPlayer.saves),
+      savesInsidebox: sum(lineupPlayer.savesInsidebox),
+      goodHighClaim: sum(lineupPlayer.goodHighClaim),
+      captainGames: count(sql`case when ${lineupPlayer.captain} then 1 end`),
+    })
+    .from(lineupPlayer)
+    .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+    .innerJoin(match, eq(match.id, lineup.matchId))
+    .where(and(eq(lineupPlayer.playerId, id), eq(match.seasonId, seasonId)))
+  const n = (v: unknown) => Number(v ?? 0)
+  const pct = (v: unknown) => (v != null ? Number(v) : null)
+  const stats: PlayerSeasonStats = {
+    shotsTotal: n(sh?.shotsTotal), shotsOnTarget: n(sh?.shotsOnTarget), shotsOffTarget: n(sh?.shotsOffTarget),
+    shotsBlocked: n(sh?.shotsBlocked), bigChancesMissed: n(sh?.bigChancesMissed),
+    keyPasses: n(sh?.keyPasses), chancesCreated: n(sh?.chancesCreated), bigChancesCreated: n(sh?.bigChancesCreated),
+    crossesTotal: n(sh?.crossesTotal), crossesAccurate: n(sh?.crossesAccurate),
+    crossesSuccessfulPctAvg: pct(sh?.crossesSuccessfulPctAvg), passesFinalThird: n(sh?.passesFinalThird),
+    passes: n(sh?.passes), passesAccurate: n(sh?.passesAccurate), passesAccuratePctAvg: pct(sh?.passesAccuratePctAvg),
+    longBalls: n(sh?.longBalls), longBallsWon: n(sh?.longBallsWon), backwardPasses: n(sh?.backwardPasses),
+    touches: n(sh?.touches), ballRecoveries: n(sh?.ballRecoveries), possessionLost: n(sh?.possessionLost),
+    dispossessed: n(sh?.dispossessed), dribbleAttempts: n(sh?.dribbleAttempts), dribblesSuccessful: n(sh?.dribblesSuccessful),
+    tackles: n(sh?.tackles), tacklesWon: n(sh?.tacklesWon), interceptions: n(sh?.interceptions),
+    clearances: n(sh?.clearances), blockedShots: n(sh?.blockedShots), lastManTackle: n(sh?.lastManTackle),
+    errorsLeadToShot: n(sh?.errorsLeadToShot), dribbledPast: n(sh?.dribbledPast),
+    duelsTotal: n(sh?.duelsTotal), duelsWon: n(sh?.duelsWon), duelsLost: n(sh?.duelsLost),
+    aerialsTotal: n(sh?.aerialsTotal), aerialsWon: n(sh?.aerialsWon), aerialsLost: n(sh?.aerialsLost),
+    fouls: n(sh?.fouls), foulsDrawn: n(sh?.foulsDrawn), offsides: n(sh?.offsides),
+    saves: n(sh?.saves), savesInsidebox: n(sh?.savesInsidebox), goodHighClaim: n(sh?.goodHighClaim),
+    captainGames: n(sh?.captainGames),
   }
 
   // Per-90 rates (denominator = total minutes, not games); gated on a minutes floor.
@@ -827,6 +1043,19 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     assists: den ? totalAssists / den : 0,
     ga: den ? (totalGoals + totalAssists) / den : 0,
   }
+
+  // 0–90' clock series: every goal/assist/card with its minute, labelled with the opponent via the
+  // appearance of the same match (an event without a lineup row — backfill gap — is skipped). @feature LIG-001
+  const appByMatch = new Map(appearances.map((x) => [x.matchId, x]))
+  const minuteEvents: PlayerMinuteEvent[] = []
+  const pushMinuteEvent = (kind: PlayerMinuteEvent["kind"], matchId: string, minute: number | null) => {
+    const ap = appByMatch.get(matchId)
+    if (!ap) return
+    minuteEvents.push({ kind, minute, matchId, date: ap.date, opponent: ap.opponent, home: ap.home })
+  }
+  for (const r of goalRows) pushMinuteEvent("goal", r.matchId, r.minute)
+  for (const r of assistRows) pushMinuteEvent("assist", r.matchId, r.minute)
+  for (const r of cardRows) pushMinuteEvent(r.type === "yellow" ? "yellow" : "red", r.matchId, r.minute)
 
   // Goal breakdowns: venue from each appearance's `home`, half from each goal's minute.
   const goalSplits = { home: 0, away: 0, firstHalf: 0, secondHalf: 0 }
@@ -851,6 +1080,10 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
   // pulls his played/rating/goals/assists per match itself. Built oldest → newest for the strip.
   const recentTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null)
 
+  // The whole league-season of the club (up to 60 covers any league + postponements) for the rating
+  // strip — played/missed per game, oldest → newest. @feature LIG-001
+  const seasonTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null, { seasonId, limit: 60 })
+
   // Seasons the player has appearances in (for the switcher). @feature LIG-008
   const seasons = await seasonsOfPlayer(id)
 
@@ -862,6 +1095,8 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     height: p.height,
     weight: p.weight,
     position,
+    preferredFoot: (p.preferredFoot as "left" | "right" | "both" | null) ?? null,
+    stats,
     currentTeam,
     nationality: p.nationalityName ? { name: p.nationalityName, flagUrl: p.nationalityFlag } : null,
     goals: totalGoals,
@@ -870,6 +1105,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     season,
     per90,
     goalSplits,
+    minuteEvents,
     goalsList: goalRows.map((r) => ({
       matchId: r.matchId,
       date: r.date,
@@ -881,6 +1117,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     })),
     appearances,
     recentTeamGames,
+    seasonTeamGames,
     seasons,
   }
 }
@@ -896,7 +1133,13 @@ const RECENT_TEAM_GAMES = 5
 // left-joined to his lineup row (played + rating) and his absence row (why he sat out). Goals/assists are
 // counted per match here (scoped to these match ids, NOT the season) so a cup goal counts like a league
 // one. Oldest → newest; empty when the club is unknown (player with no appearances this season). @feature CUP-001
-async function getRecentTeamGames(playerId: string, teamId: string | null): Promise<RecentTeamGame[]> {
+// `opts.seasonId` narrows to one league-season (the rating strip wants the WHOLE season, cups out
+// because a cup match carries its own seasonId); `opts.limit` overrides the recent-window size.
+async function getRecentTeamGames(
+  playerId: string,
+  teamId: string | null,
+  opts?: { seasonId?: string; limit?: number },
+): Promise<RecentTeamGame[]> {
   if (!teamId) return []
 
   const recent = await db
@@ -921,10 +1164,11 @@ async function getRecentTeamGames(playerId: string, teamId: string | null): Prom
       and(
         isNotNull(match.ftHome), // only matches already played
         or(eq(match.homeTeamId, teamId), eq(match.awayTeamId, teamId)),
+        ...(opts?.seasonId ? [eq(match.seasonId, opts.seasonId)] : []),
       ),
     )
     .orderBy(desc(match.date))
-    .limit(RECENT_TEAM_GAMES)
+    .limit(opts?.limit ?? RECENT_TEAM_GAMES)
 
   if (recent.length === 0) return []
   const ids = recent.map((m) => m.matchId)

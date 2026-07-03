@@ -1,0 +1,1426 @@
+{
+  "matchId": "77a4255a-3e44-4fd9-a133-b13ca0898a91",
+  "homeName": "West Ham United",
+  "awayName": "Leeds United",
+  "actual": "West Ham United 3-0 Leeds United (HT 0-0)",
+  "ftH": 3,
+  "ftA": 0,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — West Ham United x Leeds United\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: London Stadium, London (grass)\n- Clima: sky is clear · 27.6°C (sens. 27.4°C) · vento 3 m/s · umidade 42% · nuvens 4% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: West Ham United 7 dias (último: liga, 2026-05-17) · Leeds United 7 dias (último: liga, 2026-05-17)\n- Viagem do visitante: ~270 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- West Ham United: 18º, 36 pts · Leeds United: 14º, 47 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - West Ham United: 18º, 36 pts, 1 jogo(s) restante(s) (máx possível 39 pts)\n  - AINDA PODE CAIR — luta direta contra o rebaixamento, precisa pontuar.\n  - → motivação: **alta** — PRECISA LUTAR — luta contra o rebaixamento\n  - Leeds United: 14º, 47 pts, 1 jogo(s) restante(s) (máx possível 50 pts)\n  - já SEGURO do rebaixamento.\n  - sem alvo continental alcançável.\n  - → motivação: **baixa** — NÃO precisa lutar — já seguro e sem alvo alcançável\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## West Ham United (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **43 marcados / 65 sofridos** em 37j · média **1.16 marca / 1.76 sofre** por jogo\n- **Em casa (18j): marca 1.33 / sofre 1.67** (24 gols) · por tempo: 1ºT 0.57/0.7 · 2ºT 0.59/1.05\n- **Finalização: 135 SoT (3.65/j · casa 3.61/j) · conv 30%** (aberta, −3 pên) · sofre 5.3 SoT/j (adv 30%) · 7.68 KP/j\n- **Volume: 10.5 chutes/j (7.6 na área) · 1.9 big chances/j** · posse 42.5%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 41.4/59.2 · chutes pra fora 3.8/5.4 · bloqueados 3.1/4.3 · de fora da área 2.8/4.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 45.2/51 · chutes pra fora 4.2/4.6 · bloqueados 2.6/4 · de fora da área 3.2/5.2\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.79**\n  - **Jarrod Bowen** nota **7.05** (season) · forma 6.98= (últ.5 do time: 6.8→7.7→6.8→7→6.6 📉 caindo) · 1× MOTM · 41j\n    ↳ **10G+11A** · gols aos 7',10',19',24',28',34',49',65',73',84' · 1.24 KP/j (últ.5: 1.6↑) · 0.78 SoT/j (últ.5: 0.6↓) · 1.39 dribles/j · def: 1.32 desarme + 0.78 int + 4.85 duelo/j · 0.73 cruz/j · ~92 min/j\n  - **Mateus Fernandes** nota **7.08** (season) · forma 6.98= (últ.5 do time: 7.4→6.6→6.7→7→7.2 ➡️ estável) · 3× MOTM · 37j\n    ↳ **4G+3A** · gols aos 1',43',90',90' — 2 tardios (76'+) · 1.08 KP/j (últ.5: 0.6↓) · 0.22 SoT/j (últ.5: 0.4↑) · 0.84 dribles/j · def: 2.89 desarme + 0.95 int + 5.59 duelo/j · 0.46 cruz/j · ~86 min/j\n  - **Konstantinos Mavropanos** nota **7.03** (season) · forma 7.12= (últ.5 do time: 7.2→6.8→6→8.3→7.3 📈 subindo) · 5× MOTM · 34j\n    ↳ **3G+0A** · gols aos 35',42',83' · 0.18 KP/j (últ.5: 0.2=) · 0.26 SoT/j (últ.5: 0.4↑) · 0.06 dribles/j · def: 1.26 desarme + 1.56 int + 4.47 duelo/j · 0.03 cruz/j · ~83 min/j\n  - **El Hadji Malick Diouf** nota **6.73** (season) · forma 6.92↑ (últ.5 do time: 6.8→7.5→6.5→7→6.8 📉 caindo) · 33j\n    ↳ **0G+5A** · 0.97 KP/j (últ.5: 2.4↑) · 0.12 SoT/j (últ.5: 0.4↑) · 0.73 dribles/j · def: 1.36 desarme + 0.97 int + 4.24 duelo/j · 1 cruz/j · ~85 min/j\n  - **Crysencio Summerville** nota **6.95** (season) · forma 6.94= (últ.5 do time: 6.9→6.8→6.8→7→7.2 📈 subindo) · 1× MOTM · 33j\n    ↳ **7G+2A** · gols aos 13',14',15',36',45',65',95' · 0.88 KP/j (últ.5: 1=) · 0.58 SoT/j (últ.5: 0↓) · 1.73 dribles/j · def: 1.42 desarme + 0.55 int + 5.55 duelo/j · 0.45 cruz/j · ~80 min/j\n  - **Tomáš Souček** nota **6.8** (season) · forma 7.04↑ (últ.5 do time: 7→7.9→7→6.7→6.6 📉 caindo) · 1× MOTM · 36j\n    ↳ **6G+0A** · gols aos 49',50',50',51',77',90' — mais no 2ºT, 2 tardios (76'+) · 0.34 KP/j (últ.5: 0.4=) · 0.42 SoT/j (últ.5: 0.2↓) · 0.13 dribles/j · def: 1.24 desarme + 0.55 int + 4.11 duelo/j · 0.03 cruz/j · ~64 min/j\n  - **Alphonse Areola** nota **6.75** (season) · forma 6.75= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 24j\n    ↳ **0G+1A** · 0.04 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0 dribles/j · def: 0 desarme + 0.04 int + 0.25 duelo/j · ~94 min/j\n  - **Aaron Wan-Bissaka** nota **6.72** (season) · forma 6.7= (últ.5 do time: –→–→6.7→6.8→6.6 ➡️ estável) · **faltou 2/5** · 1× MOTM · 27j\n    ↳ **0G+2A** · 0.67 KP/j (últ.5: 0.2↓) · 0 SoT/j (últ.5: 0=) · 0.67 dribles/j · def: 1.22 desarme + 1.59 int + 3.19 duelo/j · 0.67 cruz/j · ~82 min/j\n  - **Jean-Clair Todibo** nota **6.59** (season) · forma 6.2↓ (últ.5 do time: –→–→–→6.4→6 ⚠️ poucos jogos na janela) · **faltou 3/5** · 24j\n    ↳ **0G+1A** · 0.2 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0.16 dribles/j · def: 1.68 desarme + 0.72 int + 3.28 duelo/j · ~81 min/j\n  - **Maximilian Kilman** nota **6.62** (season) · forma 6.62= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 23j\n    ↳ 0.2 KP/j (últ.5: 0.2=) · 0.08 SoT/j (últ.5: 0↓) · 0.2 dribles/j · def: 0.96 desarme + 0.48 int + 3.64 duelo/j · 0.08 cruz/j · ~78 min/j\n  - **Kyle Walker-Peters** nota **6.75** (season) · forma 6.63= (últ.5 do time: 6.8→7→6.1→–→– 📉 caindo) · **faltou 2/5** · 26j\n    ↳ **1G+1A** · gols aos 87' — mais no 2ºT · 0.37 KP/j (últ.5: 0.6↑) · 0.15 SoT/j (últ.5: 0.2↑) · 0.81 dribles/j · def: 2.26 desarme + 0.48 int + 4.7 duelo/j · 0.11 cruz/j · ~65 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DDDVE** (4pts) · **3 feitos / 8 sofridos** · marca 0.6↓ / sofre 1.6= g/j · SoT 4.4 feito / 4.2 sofrido\n- **Consistência: MARCOU em 24/37** (casa 12/18 · fora 12/19) · não-marcou 13 · clean sheet 6 · BTTS 20/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Crystal Palace** (fora · **Empate 0-0**, HT 0-0) — 4-1 SoT · adv 13º · você 17º briga-Z · seu fora até ali 1.1 marca/1.8 sofre\n- vs **Everton** (casa · **Vitória 2-1**, HT 0-0) — 3-3 SoT · adv 10º salvo · você 17º briga-Z · seu casa até ali 1.4 marca/1.8 sofre\n- @ **Brentford** (fora · **Derrota 0-3**, HT 0-1) — 4-6 SoT · adv 9º salvo · você 17º briga-Z · seu fora até ali 1.1 marca/1.7 sofre\n- vs **Arsenal** (casa · **Derrota 0-1**, HT 0-0) — 3-4 SoT · adv 1º Eur-gar · você 18º briga-Z · seu casa até ali 1.4 marca/1.7 sofre\n- @ **Newcastle United** (fora · **Derrota 1-3**, HT 0-2) — 8-7 SoT · adv 13º salvo/s-alvo · você 18º briga-Z · seu fora até ali 1 marca/1.8 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Crystal Palace (FORA · E 0-0) — min 1→95:\n    📈 pressão (net/min): 1'-15' [+2 +2 -1 -1 -1 -1 -5 -4 -4 0 0 0 -3 -1 -3] · 16'-30' [-3 -4 -3 -3 -5 -1 -1 0 +1 +3 +3 +2 +3 +3 +6] · 31'-45' [+4 +4 -1 -1 -1 +1 +2 +7 +7 +7 +7 +5 +5 +5 +10] · ‖INTERVALO‖ · 46'-60' [+3 +2 -1 -3 -1 +3 +3 +3 0 -1 -3 -2 -4 -2 -3] · 61'-75' [-3 -3 -2 +1 +2 0 -2 0 +7 +2 0 0 +1 -2 0] · 76'-90' [0 -1 -2 -2 -2 -2 -5 -5 -2 -2 -1 +2 +1 +1 0] · 91'+ [-2 -3 -2 -4 -1]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **4** · 31'-45' **0** ‖ 46'-60' **8** · 61'-75' **1** · 76'-90' **4**\n  - vs Everton (CASA · V 2-1) — min 1→100:\n    📈 pressão (net/min): 1'-15' [0 +1 0 0 -5 -5 -5 -7 -9 -6 -2 -2 +1 -1 0] · 16'-30' [+4 +4 +4 +5 +9 +7 +6 +6 +8 +5 +5 -1 0 0 0] · 31'-45' [+1 +1 0 0 0 -5 -3 -5 -5 -3 -3 -3 -1 0 +2] · ‖INTERVALO‖ · 46'-60' [+11 +11 +8 +8 +6 +7 +7 +14 +11 +9 +26 +19 +13 +9 +9] · 61'-75' [+14 +14 +9 +6 +6 +4 +3 +3 +2 +1 0 0 +2 +1 -6] · 76'-90' [-7 -5 -5 -12 -13 -13 -10 -10 -6 -6 -7 -7 -3 -6 -3] · 91'+ [-3 -4 -4 +4 +4 +3 0 0 -2 -1]\n    ⚽ gols: 51'✓ 88'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **4** · 31'-45' **4** ‖ 46'-60' **7** · 61'-75' **3** · 76'-90' **9**\n  - @ Brentford (FORA · D 0-3) — min 1→98:\n    📈 pressão (net/min): 1'-15' [-1 0 -3 -3 -3 -1 +1 +2 +1 -1 -1 0 0 0 -4] · 16'-30' [-3 -1 +5 +6 +5 +8 +10 +8 +5 +2 +2 +3 +3 +2 -2] · 31'-45' [+1 +1 0 0 -1 -1 -5 -2 -2 -3 -3 -2 0 +1 +1] · ‖INTERVALO‖ · 46'-60' [+4 +5 +2 +1 +3 +1 -2 -1 -1 -5 -2 +1 +2 +2 +1] · 61'-75' [+1 -6 -7 -8 -8 -3 -1 -3 -2 -1 -1 0 -6 -4 -4] · 76'-90' [-1 -1 0 -1 +1 +1 +1 -3 -3 -3 -2 -2 -1 -1 -3] · 91'+ [-2 -2 -1 -3 -3 -1 -2 0]\n    ⚽ gols: 15'✗ 54'✗ 82'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **10** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **6** · 61'-75' **7** · 76'-90' **7**\n  - vs Arsenal (CASA · D 0-1) — min 1→102:\n    📈 pressão (net/min): 1'-15' [-3 -1 -1 -4 -4 -6 -5 -2 -2 -8 -8 -14 -10 -10 -15] · 16'-30' [-12 -10 -10 -10 -10 -7 -7 -9 -9 -9 -7 -7 -4 -4 -4] · 31'-45' [-3 0 -1 -1 -1 -1 -1 0 -2 -2 -2 +1 +3 +1 +5] · ‖INTERVALO‖ · 46'-60' [0 +3 +2 +1 0 +2 -1 -1 -2 +1 0 0 -2 -2 -4] · 61'-75' [-6 -6 -4 -4 -2 0 +1 0 -2 -1 -2 -1 0 -3 -5] · 76'-90' [+1 +2 +3 +9 +8 +10 +4 +1 -2 -1 0 -1 0 -1 0] · 91'+ [-1 0 0 +4 +4 +7 +7 +7 +17 +17 +12 +11]\n    ⚽ gols: 83'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **6** · 61'-75' **2** · 76'-90' **1**\n  - @ Newcastle United (FORA · D 1-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 -2 +2 +2 -2 -7 -4 -4 -2 -4 -3 -7 -7 -7 -10] · 16'-30' [-4 -4 -4 -5 -4 -4 -2 -1 -1 -3 -2 -2 -2 +6 +6] · 31'-45' [+8 +7 +7 +8 +8 +8 +3 0 -2 -2 -2 -2 0 -3 +1] · ‖INTERVALO‖ · 46'-60' [+1 +1 +1 +2 -1 +1 +1 +1 +1 +1 +4 -1 -1 0 0] · 61'-75' [0 +1 +2 +2 -2 -4 -3 -4 -1 0 -4 -4 +1 +1 +3] · 76'-90' [+6 +5 +2 -1 -1 +2 +3 +5 +6 +7 +5 +3 0 +1 0] · 91'+ [-2 -2 0 0 +2 -1]\n    ⚽ gols: 15'✗ 19'✗ 65'✗ 69'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **2** · 31'-45' **4** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **10**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.24 · 16-30: 0.08 · 31-45: 0.24 · 46-60: 0.11 · 61-75: 0.19 · 76-90: 0.3\n- Sofre por faixa (/j): 0-15: 0.3 · 16-30: 0.11 · 31-45: 0.3 · 46-60: 0.27 · 61-75: 0.38 · 76-90: 0.41\n- 1ºT: marca 21 / sofre 26 (totais na temporada)\n\n### Desfalques de West Ham United neste jogo\n- **Adama Traoré** (Muscle Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/3 gols = **0%** (≈ estável); with/without: com ele 1.44 g/j (9j) vs sem ele 1.07 g/j (28j) = −26%; finaliza **0 SoT/jogo** (time: 3.67 SoT/j com ele vs 3.64 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.1 desarmes/j · 0.8 duelos ganhos/j · 0.2 cruz. certos/j · 0.7 dribles certos/j · 0 key passes/j\n- **Ł. Fabiański** (Back Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/3 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.16 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Leeds United (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **49 marcados / 53 sofridos** em 37j · média **1.32 marca / 1.43 sofre** por jogo\n- **Fora (18j): marca 1.11 / sofre 1.78** (20 gols) · por tempo: 1ºT 0.65/0.43 · 2ºT 0.68/1\n- **Finalização: 150 SoT (4.05/j · fora 3.61/j) · conv 29%** (aberta, −6 pên) · sofre 4.24 SoT/j (adv 30%) · 8.7 KP/j\n- **Volume: 12.6 chutes/j (8.6 na área) · 2.4 big chances/j** · posse 45.4%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 44.1/51.5 · chutes pra fora 5/4.6 · bloqueados 3.6/3.7 · de fora da área 4/4.1\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 38.6/58.4 · chutes pra fora 5.2/4.6 · bloqueados 3/4.4 · de fora da área 3.6/3.2\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.82**\n  - **Ethan Ampadu** nota **7.01** (season) · forma 7.08= (últ.5 do time: 7→7→6.7→7.5→7.2 📈 subindo) · 2× MOTM · 39j\n    ↳ **1G+1A** · gols aos 60' — mais no 2ºT · 0.54 KP/j (últ.5: 0.4↓) · 0.18 SoT/j (últ.5: 0↓) · 0.36 dribles/j · def: 2.33 desarme + 1.56 int + 5.33 duelo/j · 0.23 cruz/j · ~89 min/j\n  - **Pascal Struijk** nota **6.89** (season) · forma 6.58↓ (últ.5 do time: 7.2→5.9→6.1→7.1→– ➡️ estável) · **faltou 1/5** · 36j\n    ↳ **0G+1A** · 0.44 KP/j (últ.5: 0.4=) · 0.17 SoT/j (últ.5: 0↓) · 0.14 dribles/j · def: 1.14 desarme + 0.92 int + 5.17 duelo/j · ~85 min/j\n  - **Jayden Bogle** nota **6.61** (season) · forma 6.77↑ (últ.5 do time: 6.4→6.7→7.2→–→– 📈 subindo) · **faltou 2/5** · 38j\n    ↳ **2G+3A** · gols aos 26',81' · 0.63 KP/j (últ.5: 1.2↑) · 0.13 SoT/j (últ.5: 0↓) · 0.58 dribles/j · def: 1.84 desarme + 0.97 int + 3.89 duelo/j · 0.39 cruz/j · ~79 min/j\n  - **Joe Rodon** nota **6.75** (season) · forma 6.66= (últ.5 do time: 6.5→6.5→6.5→6.9→6.9 📈 subindo) · 36j\n    ↳ **2G+0A** · gols aos 15',37' · 0.27 KP/j (últ.5: 0.8↑) · 0.22 SoT/j (últ.5: 0.6↑) · 0.05 dribles/j · def: 0.97 desarme + 0.86 int + 3.86 duelo/j · 0.08 cruz/j · ~81 min/j\n  - ⚠️(fora) **Gabriel Gudmundsson** nota **6.71** (season) · forma 6.8= (últ.5 do time: 6.9→6.7→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 3× MOTM · 35j\n    ↳ **1G+1A** · gols aos 43' · 0.71 KP/j (últ.5: 0.4↓) · 0.11 SoT/j (últ.5: 0↓) · 1.11 dribles/j · def: 2.11 desarme + 1.03 int + 5.57 duelo/j · 0.77 cruz/j · ~83 min/j\n  - **Dominic Calvert-Lewin** nota **6.89** (season) · forma 6.92= (últ.5 do time: 6.5→6.6→7.2→6.9→7.4 📈 subindo) · 3× MOTM · 38j\n    ↳ **15G+1A** · gols aos 31',38',45',45',47',49',49',56',72',73'… — mais no 2ºT · 0.53 KP/j (últ.5: 0.4↓) · 1 SoT/j (últ.5: 0.8=) · 0.26 dribles/j · def: 0.29 desarme + 0.11 int + 5.11 duelo/j · 0.03 cruz/j · ~76 min/j\n  - **Brenden Aaronson** nota **6.73** (season) · forma 6.72= (últ.5 do time: 7→6.8→6.6→6.5→6.7 📉 caindo) · 2× MOTM · 40j\n    ↳ **4G+5A** · gols aos 3',32',62',79' · 0.88 KP/j (últ.5: 0.8=) · 0.44 SoT/j (últ.5: 0.4=) · 0.83 dribles/j · def: 1.46 desarme + 0.41 int + 4.22 duelo/j · 0.29 cruz/j · ~64 min/j\n  - ⚠️(fora) **Anton Stach** nota **7.21** (season) · forma 7.18= (últ.5 do time: –→7→8→6.6→7.1 📉 caindo) · **faltou 1/5** · 5× MOTM · 33j\n    ↳ **5G+3A** · gols aos 8',31',39',75',90' · 1.97 KP/j (últ.5: 1↓) · 0.47 SoT/j (últ.5: 0.6↑) · 0.68 dribles/j · def: 2.09 desarme + 0.65 int + 4.85 duelo/j · 1.47 cruz/j · ~74 min/j\n  - **Jaka Bijol** nota **7** (season) · forma 7.04= (últ.5 do time: 6.9→6.7→7.2→7.4→7 📈 subindo) · 2× MOTM · 30j\n    ↳ **1G+3A** · gols aos 6' · 0.3 KP/j (últ.5: 0.4↑) · 0.2 SoT/j (últ.5: 0↓) · 0.1 dribles/j · def: 1.07 desarme + 1.1 int + 4.97 duelo/j · ~79 min/j\n  - **James Justin** nota **6.9** (season) · forma 6.82= (últ.5 do time: 6.8→6.3→7.1→7.2→6.7 📈 subindo) · 30j\n    ↳ **3G+1A** · gols aos 18',28',90' · 0.36 KP/j (últ.5: 0.2↓) · 0.24 SoT/j (últ.5: 0.2=) · 0.09 dribles/j · def: 1.79 desarme + 0.97 int + 4.3 duelo/j · 0.18 cruz/j · ~65 min/j\n  - **Karl Darlow** nota **6.83** (season) · forma 7.2↑ (últ.5 do time: 7.3→–→6.7→6.5→8.3 📈 subindo) · **faltou 1/5** · 1× MOTM · 23j\n    ↳ **1G+0A** · gols aos 63' — mais no 2ºT · 0 KP/j (últ.5: 0=) · 0 SoT/j (últ.5: 0=) · 0.04 dribles/j · def: 0.04 desarme + 0 int + 0.61 duelo/j · ~91 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: VEVEV** (11pts) · **10 feitos / 4 sofridos** · marca 2↑ / sofre 0.8↓ g/j · SoT 4.4 feito / 4.6 sofrido\n- **Consistência: MARCOU em 26/37** (casa 14/19 · fora 12/18) · não-marcou 11 · clean sheet 8 · BTTS 22/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **AFC Bournemouth** (fora · **Empate 2-2**, HT 0-0) — 3-7 SoT · adv 9º salvo · você 15º briga-Z · seu fora até ali 1.1 marca/1.8 sofre\n- @ **Chelsea** (fora · **Derrota 0-1**, HT 0-1) — 3-2 SoT · 🏆 FA Cup\n- vs **Burnley** (casa · **Vitória 3-1**, HT 1-0) — 8-3 SoT · adv 19º REBAIX. · você 15º briga-Z · seu casa até ali 1.5 marca/1.2 sofre\n- @ **Tottenham Hotspur** (fora · **Empate 1-1**, HT 0-0) — 4-3 SoT · adv 17º briga-Z · você 16º briga-Z · seu fora até ali 1.1 marca/1.8 sofre\n- vs **Brighton & Hove Albion** (casa · **Vitória 1-0**, HT 0-0) — 1-8 SoT · adv 7º briga-top · você 14º salvo/s-alvo · seu casa até ali 1.6 marca/1.2 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Wolverhampton Wanderers (CASA · V 3-0) — min 1→102:\n    📈 pressão (net/min): 1'-15' [+1 +4 +4 0 -2 +1 0 0 +1 +5 +4 +2 +2 +3 +6] · 16'-30' [+8 +2 +2 +2 +6 +9 +7 +6 +5 +3 0 +3 -1 -5 -5] · 31'-45' [-3 -2 0 +2 +2 -2 -3 -3 -3 -6 -5 -5 -3 -2 0] · ‖INTERVALO‖ · 46'-60' [+3 -2 -1 -1 -1 -2 -4 -4 -1 0 0 -1 -2 -1 -1] · 61'-75' [+1 +1 0 -7 -7 -4 -2 0 0 0 -3 -3 -3 -2 -2] · 76'-90' [0 +1 +1 +1 +1 +1 +1 +1 +3 +3 +2 +3 +2 +2 +2] · 91'+ [+3 0 +1 0 +5 +5 +5 +3 +2 -1 +2 +1]\n    ⚽ gols: 18'✓ 20'✓ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **6** ‖ 46'-60' **2** · 61'-75' **6** · 76'-90' **4**\n  - @ AFC Bournemouth (FORA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [+1 +3 +1 +1 -3 -1 -2 -3 -1 -3 -2 -3 0 +1 -2] · 16'-30' [-2 -1 +2 +2 +2 -1 -2 -3 -3 -3 +2 0 -2 +1 +1] · 31'-45' [-1 -5 -6 -6 -7 -9 -5 -5 -2 -2 0 +1 -7 -7 -4] · ‖INTERVALO‖ · 46'-60' [+1 0 0 0 +1 0 -2 -1 -4 -7 -12 -12 -7 -9 -6] · 61'-75' [-9 -6 -1 -1 -2 +1 +1 +3 +6 +7 +7 +5 +6 +3 -3] · 76'-90' [-3 -7 -9 -4 -6 -7 -3 -2 -1 -2 -6 -7 -3 -5 -5] · 91'+ [-8 -33 -21 -14 -9 -6 -2 -2]\n    ⚽ gols: 60'✗ 68'✓ 85'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **8** · 16'-30' **5** · 31'-45' **4** ‖ 46'-60' **1** · 61'-75' **3** · 76'-90' **7**\n  - vs Burnley (CASA · V 3-1) — min 1→99:\n    📈 pressão (net/min): 1'-15' [+3 +3 +2 +1 +1 +2 +5 +6 +4 +3 +3 +4 +4 +3 +3] · 16'-30' [+3 +1 +2 +2 +4 +3 +4 +7 +6 +4 +3 +5 +1 +1 0] · 31'-45' [+1 -1 0 -1 -4 -2 -1 +1 +1 +2 +3 -1 -1 -1 -2] · ‖INTERVALO‖ · 46'-60' [+1 0 0 -2 0 +3 +6 +6 +11 +8 +8 +12 +9 +9 +6] · 61'-75' [+4 +5 +6 +5 +5 +5 +2 -2 -4 -1 0 -3 -2 -2 +4] · 76'-90' [+4 +4 +10 +5 +6 +4 +2 +2 +1 +4 +6 +2 -1 0 0] · 91'+ [0 0 0 0 -2 -5 -8 -7 -4]\n    ⚽ gols: 8'✓ 52'✓ 56'✓ 71'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **4**\n  - @ Tottenham Hotspur (FORA · E 1-1) — min 1→105:\n    📈 pressão (net/min): 1'-15' [+2 +1 +1 +1 0 -3 -4 -4 -3 -3 -3 -2 -2 -5 -8] · 16'-30' [-6 -7 -4 -2 -1 +5 +4 +3 0 +2 +2 -2 -2 -5 -4] · 31'-45' [-2 -2 -4 -2 -3 -8 -9 -6 -7 -3 -2 -1 -2 -3 0] · ‖INTERVALO‖ · 46'-60' [-3 -2 -2 -1 -1 -1 -3 -2 -1 -1 0 -1 -3 -9 -5] · 61'-75' [-2 +2 +1 +1 0 0 -1 +3 +3 +3 +3 +3 +3 +6 +8] · 76'-90' [+8 +4 +3 +5 +3 +6 +3 +2 +3 +3 +2 +3 +2 +1 +1] · 91'+ [-1 -6 -8 -5 -4 -5 -4 -5 -1 +5 +7 +4 +2 +2 -3]\n    ⚽ gols: 50'✗ 74'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **9** · 16'-30' **2** · 31'-45' **6** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **7**\n  - vs Brighton & Hove Albion (CASA · V 1-0) — min 1→100:\n    📈 pressão (net/min): 1'-15' [0 +1 -2 -1 +1 -2 -3 -2 -1 0 0 +1 -2 -1 -2] · 16'-30' [-1 +4 +2 0 -3 -3 -9 -8 -7 -4 0 +2 +5 +4 +6] · 31'-45' [+4 +4 +2 0 0 -1 -2 -2 -1 -1 +1 +1 -1 -2 -6] · ‖INTERVALO‖ · 46'-60' [-2 -1 +1 -1 -3 -6 -7 -6 -4 -6 -10 -5 -6 -6 -5] · 61'-75' [-7 -5 -2 -1 -1 -1 -3 -2 -3 -2 +2 +1 +1 +1 -1] · 76'-90' [0 -3 -3 -9 -9 -11 -6 -4 -4 -3 -4 -6 -6 -8 -8] · 91'+ [-7 -4 -2 -1 -1 +2 +3 -1 -2 -3]\n    ⚽ gols: 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **1** · 31'-45' **3** ‖ 46'-60' **1** · 61'-75' **3** · 76'-90' **9**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.19 · 16-30: 0.16 · 31-45: 0.3 · 46-60: 0.19 · 61-75: 0.24 · 76-90: 0.24\n- Sofre por faixa (/j): 0-15: 0.11 · 16-30: 0.19 · 31-45: 0.14 · 46-60: 0.3 · 61-75: 0.3 · 76-90: 0.41\n- 1ºT: marca 24 / sofre 16 (totais na temporada)\n\n### Desfalques de Leeds United neste jogo\n- **Noah Okafor** (Calf Injury) — 8 gols + 1 assists até a data; season: **16% dos gols** do time (18% com assists); **últimos 5 jogos do time**: participou de 3/10 gols = **30%** (↑ mais decisivo AGORA); with/without: com ele 1.61 g/j (28j) vs sem ele 0.44 g/j (9j) = −73%; finaliza **0.54 SoT/jogo** (time: 4.39 SoT/j com ele vs 3 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.4 interceptações/j** (~4% do time) · 0.8 desarmes/j · 3.1 duelos ganhos/j · 0.3 cruz. certos/j · 1.4 dribles certos/j · 0.7 key passes/j\n- **Anton Stach** (Ankle Injury) — 5 gols + 3 assists até a data; season: **10% dos gols** do time (16% com assists); **últimos 5 jogos do time**: participou de 1/10 gols = **10%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.1 g/j (29j) vs sem ele 2.13 g/j (8j) = +94%; finaliza **0.48 SoT/jogo** (time: 3.9 SoT/j com ele vs 4.63 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.7 interceptações/j** (~8% do time) · 2.2 desarmes/j · 5.3 duelos ganhos/j · 1.6 cruz. certos/j · 0.7 dribles certos/j · 2.2 key passes/j\n- **Ilia Gruev** (Unknown Injury) — 0 gols + 3 assists até a data; season: **0% dos gols** do time (6% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.52 g/j (23j) vs sem ele 1 g/j (14j) = −34%; finaliza **0.04 SoT/jogo** (time: 3.96 SoT/j com ele vs 4.21 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.7 interceptações/j** (~7% do time) · 1 desarmes/j · 2.3 duelos ganhos/j · 0.2 cruz. certos/j · 0.3 dribles certos/j · 0.5 key passes/j\n- **Gabriel Gudmundsson** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 1.34 g/j (32j) vs sem ele 1.2 g/j (5j) = −10%; finaliza **0.09 SoT/jogo** (time: 4.03 SoT/j com ele vs 4.2 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~10% do time) · 2 desarmes/j · 5.6 duelos ganhos/j · 0.7 cruz. certos/j · 1.2 dribles certos/j · 0.7 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**West Ham United atacando × Leeds United defendendo**\n| Faixa | West Ham United marca/j | Leeds United sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.24 | 0.11 | 0.35 |\n| 16-30 | 0.08 | 0.19 | 0.27 |\n| 31-45 | 0.24 | 0.14 | 0.38 |\n| 46-60 | 0.11 | 0.3 | 0.41 |\n| 61-75 | 0.19 | 0.3 | 0.49 |\n| 76-90 | 0.3 | 0.41 | 0.71 |\n\n**Leeds United atacando × West Ham United defendendo**\n| Faixa | Leeds United marca/j | West Ham United sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.19 | 0.3 | 0.49 |\n| 16-30 | 0.16 | 0.11 | 0.27 |\n| 31-45 | 0.3 | 0.3 | 0.6 |\n| 46-60 | 0.19 | 0.27 | 0.46 |\n| 61-75 | 0.24 | 0.38 | 0.62 |\n| 76-90 | 0.24 | 0.41 | 0.65 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — West Ham United: **46-60** (domínio +3.7) · Leeds United: **0-15** (domínio -3.3). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | West Ham United domínio/j | Leeds United domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -3 | +0.3 | -3.3 ✈️ |\n| 16-30 | -0.4 | +0.7 | -1.1 ≈ |\n| 31-45 | +0.8 | -2.2 | +3 🏠 |\n| 46-60 | +2.4 | -1.3 | +3.7 🏠 |\n| 61-75 | -0.5 | +0.2 | -0.7 ≈ |\n| 76-90 | -0.2 | -1.3 | +1.1 ≈ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ West Ham United (casa) = 1.55 · λ Leeds United (fora) = 1.51 · total = 3.06\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- West Ham United: λ_SoT 3.89 × conv 30% → **1.17 gols**\n- Leeds United: λ_SoT 4.44 × conv 29% → **1.29 gols**\n- total via SoT = 2.46\n- **Índice de volume do jogo**: λ_SoT total 8.3 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 37/27/36% | 32/31/38% |\n| Over 1.5 | 82% | 72% |\n| Over 2.5 | 59% | 45% |\n| Over 3.5 | 37% | 23% |\n| BTTS | 63% | 52% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **62%** · 12 **69%** · X2 **68%** · **Draw No Bet** casa 46% / fora 54%\n- **Placar exato (mais prováveis)**: 1-1 15% · 0-0 10% · 0-1 9% · 1-0 8%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 28% · 2-3 49% · 4+ 23%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): West Ham United over 0.5 **69%** / over 1.5 **33%** · Leeds United over 0.5 **72%** / over 1.5 **37%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 3.14 · empate 3.27 · fora 2.66. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **27/42/31%** · 2ºT **28/41/32%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= West Ham United) e `away` (= Leeds United), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.399999976158142,
+    "xg_away": 0.949999988079071,
+    "total": 2.3499999046325684,
+    "over25_prob": 0.41999998688697815,
+    "btts_prob": 0.46000000834465027,
+    "one_x_two": "{\"home\":0.44,\"draw\":0.29,\"away\":0.27}",
+    "confianca": "medium",
+    "best_bet_market": "team_total",
+    "best_bet_selection": "over",
+    "best_bet_team": "home",
+    "best_bet_line": 0.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.75,
+    "reasoning_tokens": 10645
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **West Ham United** contra **bloco baixo** (o estilo do Leeds United, posse média 45.4%): marca **1.62/j** e sofre 1.31/j em 13 jogos — **0.45 ACIMA** da média (1.16).\n- **Leeds United** contra **bloco baixo** (o estilo do West Ham United, posse média 42.5%): marca **1.69/j** e sofre 1.00/j em 13 jogos — **0.37 ACIMA** da média (1.32).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — cruzamento**: West Ham United gera 2% dos gols por aí × Leeds United sofre 7% por aí (liga: 2%) → índice 5.3×.\n- **CANAL ABERTO — falta**: West Ham United gera 2% dos gols por aí × Leeds United sofre 5% por aí (liga: 2%) → índice 3.5×.\n- **CANAL ABERTO — falta**: Leeds United gera 4% dos gols por aí × West Ham United sofre 2% por aí (liga: 2%) → índice 1.9×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **West Ham United** (19 gols medidos, últimos 8 jogos): **REAGE ao sofrer gol** (Δ +1.1) · **MATA O JOGO após marcar** (Δ +2.5 — segue pressionando).\n- **Leeds United** (17 gols medidos, últimos 8 jogos): **REAGE ao sofrer gol** (Δ +1.9) · neutro após marcar (Δ 0.2).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **West Ham United**: Jarrod Bowen **8 gols** (1 pên) · últ.5: 0 · 0.7 SoT/j | Callum Wilson **6 gols** · últ.5: 1 · 0.5 SoT/j | Tomáš Souček **5 gols** · últ.5: 1 · 0.4 SoT/j | Crysencio Summerville **5 gols** · últ.5: 0 · 0.5 SoT/j | Taty Castellanos **5 gols** · últ.5: 1 · 1.2 SoT/j\n- **Leeds United**: Dominic Calvert-Lewin **14 gols** (4 pên) · últ.5: 4 · 1.0 SoT/j | Noah Okafor **8 gols** · últ.5: 2 · 0.5 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Lukas Nmecha **6 gols** (2 pên) · últ.5: 0 · 0.5 SoT/j | Anton Stach **5 gols** · últ.5: 1 · 0.5 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Brenden Aaronson **4 gols** · últ.5: 0 · 0.4 SoT/j\n\n### Setores — onde o jogo se ganha (formação provável + grid real: miolo × miolo e produção por corredor × lado fraco do rival)\n- **Formações prováveis (moda últ.5)**: West Ham United 4-4-1-1 × Leeds United 3-5-2 → pivô 4v5 — **inferioridade central do West Ham United** (o miolo é o setor decisivo). (Formação declarada ≠ real: hipótese, não lei.)\n- **West Ham United atacando**: 37% da criação nasce pela **esquerda** (El Hadji Malick Diouf (56), Crysencio Summerville (37)) × corredor direita do Leeds United defendido por Joe Rodon (nota 6.8 últ.5) + James Justin (nota 7.5 últ.5). Centro: 30%.\n- **Leeds United atacando**: 41% da criação nasce pela **direita** (Sean Longstaff (40), Anton Stach (37)) × corredor esquerda do West Ham United defendido por El Hadji Malick Diouf (nota 6.9 últ.5). Centro: 26%.\n\n### Duplas de gol — quem serve quem (assistente → marcador na temporada; desfalque numa ponta quebra a dupla)\n- **West Ham United**: Jarrod Bowen → Tomáš Souček **2x** | Jarrod Bowen → Taty Castellanos **2x** | Jarrod Bowen → Crysencio Summerville **2x** | Jarrod Bowen → Konstantinos Mavropanos **2x**\n- **Leeds United**: Sean Longstaff → Joe Rodon **2x** | Jayden Bogle → Noah Okafor **2x** (⚠️ Noah Okafor DESFALQUE) | Brenden Aaronson → Noah Okafor **2x** (⚠️ Noah Okafor DESFALQUE)\n\n### Expectativa por jogador — xSoT e xG do XI provável (taxa/90 × minutos esperados × defesa do rival; conversão encolhida pra liga)\n- **West Ham United** vs Leeds United (arquétipo do rival: bloco baixo · rival cede 1.00× o SoT da liga · rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora): λ bottom-up do XI **1.41 xG** vs top-down 1.16 gols/j (XI cobre 70% dos gols da season — o resto é banco). λ-XI ACIMA do ritmo do time — XI cheio + matchup favorável. Desfalques fora do XI: Adama Traoré, Lukasz Fabianski .\n  - **Taty Castellanos** (F, 72min esp.): xG **0.34** → **P(marca) 29%** · xSoT 1.33 → P(1+ SoT) 74% · conv 27% (5 gols/17j) · xKP 0.61 · fatores: arquétipo +25% [1.84 SoT/90 contra bloco baixo (489min) vs 1.38 geral]; casa -15% [1.15 SoT/90 em casa vs 1.38 geral]; forma +4% [rating últ.3 7.0 vs season 6.8]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Tomáš Souček** (M, 85min esp.): xG **0.23** → **P(marca) 21%** · xSoT 0.54 → P(1+ SoT) 42% · conv 39% (5 gols/34j) · xKP 0.56 · fatores: arquétipo -11% [0.46 SoT/90 contra bloco baixo (786min) vs 0.51 geral]; casa +15% [0.74 SoT/90 em casa vs 0.51 geral]; canal +10% [25% dos gols dele: contra-ataque — rival sofre 0.5× a liga aí; 25% dos gols dele: falta — rival sofre 2.0× a liga aí]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Jarrod Bowen** (F, 90min esp.): xG **0.22** → **P(marca) 20%** · xSoT 0.73 → P(1+ SoT) 52% · conv 30% (8 gols, 1 pên/37j) · xKP 1.45 · fatores: arquétipo -16% [0.62 SoT/90 contra bloco baixo (1170min) vs 0.73 geral]; casa +14% [0.83 SoT/90 em casa vs 0.73 geral]; forma -5% [rating últ.3 6.8 vs season 7.0]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Crysencio Summerville** (F, 90min esp.): xG **0.17** → **P(marca) 15%** · xSoT 0.45 → P(1+ SoT) 37% · conv 34% (5 gols/30j) · xKP 0.91 · fatores: arquétipo -15% [0.48 SoT/90 contra bloco baixo (943min) vs 0.56 geral]; casa -15% [0.46 SoT/90 em casa vs 0.56 geral]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Konstantinos Mavropanos** (D, 90min esp.): xG **0.16** → **P(marca) 15%** · xSoT 0.44 → P(1+ SoT) 36% · conv 36% (3 gols/30j) · xKP 0.17 · fatores: arquétipo +25% [0.50 SoT/90 contra bloco baixo (900min) vs 0.29 geral]; casa +5% [0.31 SoT/90 em casa vs 0.29 geral]; forma +4% [rating últ.3 7.2 vs season 7.0]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Kyle Walker-Peters** (D, 82min esp.): xG **0.10** → **P(marca) 10%** · xSoT 0.30 → P(1+ SoT) 26% · conv 34% (1 gols/22j) · xKP 0.56 · fatores: arquétipo +25% [0.37 SoT/90 contra bloco baixo (739min) vs 0.21 geral]; casa +15% [0.38 SoT/90 em casa vs 0.21 geral]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Mateus Fernandes** (M, 90min esp.): xG **0.07** → **P(marca) 6%** · xSoT 0.18 → P(1+ SoT) 16% · conv 39% (3 gols/35j) · xKP 1.04 · fatores: arquétipo -14% [0.18 SoT/90 contra bloco baixo (980min) vs 0.21 geral]; casa -12% [0.19 SoT/90 em casa vs 0.21 geral]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Pablo ** (F, 59min esp.): xG **0.05** → **P(marca) 5%** · xSoT 0.20 → P(1+ SoT) 19% · conv 26% (0 gols/13j) · xKP 1.10 · fatores: arquétipo +11% [0.26 SoT/90 contra bloco baixo (343min) vs 0.23 geral]; casa +11% [0.26 SoT/90 em casa vs 0.23 geral]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Axel Disasi** (D, 89min esp.): xG **0.05** → **P(marca) 5%** · xSoT 0.21 → P(1+ SoT) 19% · conv 23% (0 gols/13j) · xKP 0.07 · fatores: arquétipo +6% [0.25 SoT/90 contra bloco baixo (360min) vs 0.23 geral]; casa -15% [0.17 SoT/90 em casa vs 0.23 geral]; forma -6% [rating últ.3 6.5 vs season 6.7]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **El Hadji Malick Diouf** (D, 87min esp.): xG **0.02** → **P(marca) 2%** · xSoT 0.09 → P(1+ SoT) 9% · conv 20% (0 gols/31j) · xKP 0.90 · fatores: arquétipo -25% [0.10 SoT/90 contra bloco baixo (908min) vs 0.14 geral]; casa -15% [0.07 SoT/90 em casa vs 0.14 geral]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n  - **Mads Hermansen** (G, 90min esp.): xG **0.00** → **P(marca) 0%** · xSoT 0.00 → P(1+ SoT) 0% · conv 34% (0 gols/17j) · xKP 0.13 · fatores: forma -10% [rating últ.3 6.2 vs season 6.7]; desfalque def. rival +10% [rival perde 26% do volume defensivo (desarme+interceptação) com Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson fora]\n- **Leeds United** vs West Ham United (arquétipo do rival: bloco baixo · rival cede 1.24× o SoT da liga · rival perde 0% do volume defensivo (desarme+interceptação) com Adama Traoré, Lukasz Fabianski  fora): λ bottom-up do XI **1.43 xG** vs top-down 1.35 gols/j (XI cobre 54% dos gols da season — o resto é banco). Desfalques fora do XI: Ilia Gruev, Noah Okafor, Anton Stach, Gabriel Gudmundsson.\n  - **Dominic Calvert-Lewin** (F, 90min esp.): xG **0.70** → **P(marca) 51%** · xSoT 1.66 → P(1+ SoT) 81% · conv 41% (14 gols, 4 pên/34j) · xKP 0.82 · fatores: arquétipo +5% [1.18 SoT/90 contra bloco baixo (995min) vs 1.12 geral]; fora +8% [1.20 SoT/90 fora vs 1.12 geral]; forma +5% [rating últ.3 7.2 vs season 6.9]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **James Justin** (M, 90min esp.): xG **0.14** → **P(marca) 13%** · xSoT 0.40 → P(1+ SoT) 33% · conv 34% (2 gols/28j) · xKP 0.63 · fatores: arquétipo +25% [0.61 SoT/90 contra bloco baixo (587min) vs 0.30 geral]; fora -15% [0.10 SoT/90 fora vs 0.30 geral]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Jaka Bijol** (D, 85min esp.): xG **0.10** → **P(marca) 10%** · xSoT 0.41 → P(1+ SoT) 33% · conv 25% (1 gols/24j) · xKP 0.36 · fatores: arquétipo +25% [0.57 SoT/90 contra bloco baixo (628min) vs 0.30 geral]; fora -11% [0.26 SoT/90 fora vs 0.30 geral]; forma +6% [rating últ.3 7.2 vs season 6.9]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Ao Tanaka** (M, 80min esp.): xG **0.10** → **P(marca) 10%** · xSoT 0.27 → P(1+ SoT) 23% · conv 37% (2 gols/27j) · xKP 1.36 · fatores: arquétipo -25% [0.21 SoT/90 contra bloco baixo (436min) vs 0.36 geral]; fora -15% [0.14 SoT/90 fora vs 0.36 geral]; forma +4% [rating últ.3 7.0 vs season 6.8]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Brenden Aaronson** (M, 61min esp.): xG **0.10** → **P(marca) 9%** · xSoT 0.40 → P(1+ SoT) 33% · conv 27% (4 gols/36j) · xKP 1.14 · fatores: arquétipo -25% [0.41 SoT/90 contra bloco baixo (886min) vs 0.60 geral]; fora +10% [0.66 SoT/90 fora vs 0.60 geral]; forma -3% [rating últ.3 6.6 vs season 6.7]; canal -11% [25% dos gols dele: contra-ataque — rival sofre 0.5× a liga aí]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Joe Rodon** (D, 63min esp.): xG **0.07** → **P(marca) 7%** · xSoT 0.23 → P(1+ SoT) 21% · conv 29% (2 gols/34j) · xKP 0.21 · fatores: arquétipo +25% [0.35 SoT/90 contra bloco baixo (1022min) vs 0.25 geral]; fora -15% [0.20 SoT/90 fora vs 0.25 geral]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Ethan Ampadu** (M, 90min esp.): xG **0.07** → **P(marca) 7%** · xSoT 0.28 → P(1+ SoT) 25% · conv 25% (1 gols/34j) · xKP 0.70 · fatores: arquétipo +25% [0.24 SoT/90 contra bloco baixo (1146min) vs 0.18 geral]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Daniel James** (M, 41min esp.): xG **0.07** → **P(marca) 7%** · xSoT 0.31 → P(1+ SoT) 26% · conv 23% (0 gols/18j) · xKP 0.73 · fatores: arquétipo +25% [1.20 SoT/90 contra bloco baixo (150min) vs 0.51 geral]; fora -15% [0.34 SoT/90 fora vs 0.51 geral]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Jayden Bogle** (M, 75min esp.): xG **0.05** → **P(marca) 4%** · xSoT 0.15 → P(1+ SoT) 14% · conv 30% (1 gols/33j) · xKP 0.61 · fatores: arquétipo +25% [0.25 SoT/90 contra bloco baixo (1101min) vs 0.13 geral]; fora -15% [0.07 SoT/90 fora vs 0.13 geral]; forma +3% [rating últ.3 6.7 vs season 6.6]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Pascal Struijk** (D, 82min esp.): xG **0.03** → **P(marca) 3%** · xSoT 0.17 → P(1+ SoT) 15% · conv 17% (0 gols/33j) · xKP 0.36 · fatores: arquétipo -5% [0.18 SoT/90 contra bloco baixo (998min) vs 0.19 geral]; fora -15% [0.14 SoT/90 fora vs 0.19 geral]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]\n  - **Karl Darlow** (G, 90min esp.): xG **0.00** → **P(marca) 0%** · xSoT 0.00 → P(1+ SoT) 0% · conv 34% (0 gols/21j) · xKP 0.00 · fatores: forma +6% [rating últ.3 7.2 vs season 6.9]; volume cedido +24% [rival cede 5.19 SoT/j vs liga 4.18]",
+  "realGoals": [
+    {
+      "minute": 67,
+      "side": "home",
+      "scorer": "Taty Castellanos",
+      "type": "normal"
+    },
+    {
+      "minute": 79,
+      "side": "home",
+      "scorer": "Jarrod Bowen",
+      "type": "normal"
+    },
+    {
+      "minute": 90,
+      "side": "home",
+      "scorer": "Callum Wilson",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 1.6,
+      "xg_1t": 0.56,
+      "xg_2t": 1.04,
+      "xg_bands": {
+        "0-15": 0.24,
+        "16-30": 0.08,
+        "31-45": 0.24,
+        "46-60": 0.2,
+        "61-75": 0.24,
+        "76-90": 0.6
+      },
+      "summary": "West Ham pressionado pela necessidade, ataque deve produzir mais em casa contra defesa desfalcada do Leeds. Depende de bolas paradas e jogadas aéreas. Defesa vulnerável, mas Leeds sem intensidade deve aliviar."
+    },
+    "away": {
+      "xg": 1.1,
+      "xg_1t": 0.4,
+      "xg_2t": 0.7,
+      "xg_bands": {
+        "0-15": 0.1,
+        "16-30": 0.1,
+        "31-45": 0.2,
+        "46-60": 0.15,
+        "61-75": 0.25,
+        "76-90": 0.3
+      },
+      "summary": "Leeds sem motivação e desfalcado (Okafor, Stach), ataque perde criatividade. Calvert-Lewin isolado, mas ainda perigoso. Defesa sólida contra bloco baixo, mas baixa intensidade pode ceder."
+    },
+    "general": {
+      "total": 2.7,
+      "total_1t": 0.96,
+      "total_2t": 1.74,
+      "over25_prob": 0.51,
+      "btts_prob": 0.53,
+      "one_x_two": {
+        "home": 0.41,
+        "draw": 0.32,
+        "away": 0.27
+      },
+      "one_x_two_1t": {
+        "home": 0.33,
+        "draw": 0.4,
+        "away": 0.27
+      },
+      "one_x_two_2t": {
+        "home": 0.42,
+        "draw": 0.33,
+        "away": 0.25
+      },
+      "confidence": "medium",
+      "confidence_regra": "Medium: arestas A1, A2, A8 e A10 convergem para WHU marcar, mas A7 (boa forma do Leeds) e A3 (defesa do Leeds contra bloco baixo) enfraquecem a confiança. Nenhum ataque derruba, mas o risco de 0-0 existe.",
+      "summary": "Jogo de necessidade vs desinteresse, com West Ham precisando vencer e Leeds cumprindo tabela. Desfalques do Leeds (Okafor, Stach) aumentam a chance de gol do mandante, mas a defesa visitante contra bloco baixo é sólida. Tendência de poucos gols, com vitória apertada do West Ham ou empate sem gols."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Data e local sem impacto significativo",
+        "dado": "2026-05-24, London Stadium, clima claro 27.6°C",
+        "direcao": "neutra",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "contexto",
+        "fato": "Descanso igual para ambos (7 dias)",
+        "dado": "7 dias desde o último jogo para os dois times",
+        "direcao": "neutra, sem assimetria de fadiga",
+        "forca": "baixa"
+      },
+      {
+        "id": "C3",
+        "bloco": "contexto",
+        "fato": "Condições normais de jogo",
+        "dado": "grama natural, vento 3 m/s, umidade 42%",
+        "direcao": "neutra",
+        "forca": "baixa"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "West Ham precisa pontuar para evitar rebaixamento",
+        "dado": "18º, 36 pts, máximo 39 pts, 1 jogo restante",
+        "direcao": "aumenta xG ofensivo e reduz solidez defensiva do West Ham",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "tabela_motivacao",
+        "fato": "Leeds já seguro e sem objetivos",
+        "dado": "14º, 47 pts, sem alvo continental",
+        "direcao": "reduz intensidade e xG ofensivo do Leeds",
+        "forca": "alta"
+      },
+      {
+        "id": "C6",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito de intenção assimétrica: jogo tende a travar",
+        "dado": "pelo menos um lado não precisa ir pra cima",
+        "direcao": "favorece under e mercados de menor variância",
+        "forca": "alta"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_gols",
+        "fato": "Ataque do West Ham fraco (1.16 g/j), mas volume razoável (3.65 SoT/j)",
+        "dado": "1.16 marc / 1.76 sof por jogo; 3.65 SoT/j; conv 30%",
+        "direcao": "xG moderado, mas com potencial de melhora em casa contra defesa desfalcada",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_gols",
+        "fato": "Em casa, West Ham marca mais (1.33) e sofre menos (1.67)",
+        "dado": "casa: 1.33 marca / 1.67 sofre",
+        "direcao": "xG em casa ligeiramente superior",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_estilo",
+        "fato": "Estilo de jogo: sofre muitos ataques perigosos (59.2/j)",
+        "dado": "ataques perigosos sofridos 59.2/j na temporada",
+        "direcao": "defesa vulnerável, adversário pode criar chances",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_estilo",
+        "fato": "Volume de chutes de fora e bloqueados baixo-médio",
+        "dado": "chutes de fora 2.8/j, bloqueados 3.1/j",
+        "direcao": "não depende de chutes de longa distância; ataque mais direto",
+        "forca": "baixa"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_qualidade",
+        "fato": "Time nota média baixa (6.79); Bowen principal, mas em queda",
+        "dado": "nota média 6.79; Bowen 7.05 (forma 6.98 caindo); Fernandes 7.08 estável",
+        "direcao": "qualidade ofensiva concentrada em Bowen, mas forma recente preocupa",
+        "forca": "alta"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_qualidade",
+        "fato": "Goleiro e zagueiros com pouca minutagem ou em baixa",
+        "dado": "Areola faltou 5/5 jogos; Kilman e Todibo muitas ausências",
+        "direcao": "defesa pode estar desentrosada, aumentando xG do Leeds",
+        "forca": "alta"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_forma",
+        "fato": "Últimos 5 jogos: apenas 3 gols marcados, 8 sofridos (0.6-1.6)",
+        "dado": "DDDVE, 4pts, 0.6 g/j marc, 1.6 g/j sof",
+        "direcao": "momento ruim, ataque estagnado, defesa frágil",
+        "forca": "alta"
+      },
+      {
+        "id": "C14",
+        "bloco": "home_forma",
+        "fato": "Consistência: marcou em 65% dos jogos, mas apenas 6 clean sheets",
+        "dado": "marcou em 24/37, clean sheet 6, BTTS 20/37",
+        "direcao": "tende a sofrer gol, mas também marca com frequência moderada",
+        "forca": "alta"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_momentum",
+        "fato": "Momentum: pressiona bem no fim do 1ºT e início do 2ºT",
+        "dado": "curvas de pressão: 31-45 +0.8, 46-60 +2.4",
+        "direcao": "janelas 31-60 são de maior pressão do West Ham",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "home_momentum",
+        "fato": "Defesa muito ativa no fim do jogo (76-90)",
+        "dado": "muitas interceptações/desarmes nos 76-90 nos últimos jogos",
+        "direcao": "sofre pressão no fim, risco de gol sofrido tardio",
+        "forca": "media"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_faixas",
+        "fato": "Marca mais nos 76-90 (0.30/j) e sofre mais nos 61-75 (0.38) e 76-90 (0.41)",
+        "dado": "distribuição de gols: marca 0.30 em 76-90; sofre 0.38/0.41",
+        "direcao": "jogos do West Ham têm gols no fim, tanto a favor como contra",
+        "forca": "alta"
+      },
+      {
+        "id": "C18",
+        "bloco": "home_faixas",
+        "fato": "1ºT equilibrado (marca 21, sofre 26)",
+        "dado": "1ºT: 21 marc, 26 sof",
+        "direcao": "não há grande desequilíbrio no 1ºT",
+        "forca": "alta"
+      },
+      {
+        "id": "C19",
+        "bloco": "home_desfalques",
+        "fato": "Adama Traoré fora, impacto ofensivo nulo (0% gols), volume estável",
+        "dado": "0 G+A; with/without SoT estável (3.67 vs 3.64)",
+        "direcao": "praticamente nenhum impacto no xG",
+        "forca": "baixa"
+      },
+      {
+        "id": "C20",
+        "bloco": "home_desfalques",
+        "fato": "Fabiański fora, goleiro reserva sem impacto",
+        "dado": "0% gols; 0 jogos na temporada",
+        "direcao": "irrelevante",
+        "forca": "baixa"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_gols",
+        "fato": "Ataque do Leeds médio (1.32 g/j), mas bom volume (4.05 SoT/j)",
+        "dado": "1.32 marc / 1.43 sof; 4.05 SoT/j; conv 29%",
+        "direcao": "xG razoável, mas cai fora de casa",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "away_gols",
+        "fato": "Fora de casa, ataque cai para 1.11 g/j e defesa sofre 1.78 g/j",
+        "dado": "fora: 1.11 marca / 1.78 sofre",
+        "direcao": "Leeds visitante é mais frágil, xG ofensivo reduzido",
+        "forca": "alta"
+      },
+      {
+        "id": "C23",
+        "bloco": "away_estilo",
+        "fato": "Estilo: ataques perigosos caíram nos últimos 5 (38.6), sofrendo mais (58.4)",
+        "dado": "últ.5: ataques perigosos 38.6/58.4",
+        "direcao": "momento recente de menor criação e maior exposição defensiva",
+        "forca": "media"
+      },
+      {
+        "id": "C24",
+        "bloco": "away_estilo",
+        "fato": "Volume de chutes alto (12.6/j), muitos na área (8.6/j)",
+        "dado": "12.6 chutes/j, 8.6 na área",
+        "direcao": "quando ataca, gera volume; mas fora de casa tende a cair",
+        "forca": "media"
+      },
+      {
+        "id": "C25",
+        "bloco": "away_qualidade",
+        "fato": "Destaques: Calvert-Lewin em grande fase (15 gols, 4 nos últ.5); Stach (7.21) fora",
+        "dado": "Calvert-Lewin 1.0 SoT/j, Stach desfalcado",
+        "direcao": "ataque depende de Calvert-Lewin; perda de Stach reduz criação",
+        "forca": "alta"
+      },
+      {
+        "id": "C26",
+        "bloco": "away_qualidade",
+        "fato": "Defesa: Bijol (7.0) e Rodon (6.75) ok, mas Darlow goleiro subindo",
+        "dado": "notas: Bijol 7.0, Rodon 6.75, Darlow 7.2",
+        "direcao": "defesa razoável, mas sem entrosamento ideal pelos desfalques",
+        "forca": "alta"
+      },
+      {
+        "id": "C27",
+        "bloco": "away_forma",
+        "fato": "Últimos 5 excelentes (VVVEV): 10 gols marcados, 4 sofridos",
+        "dado": "VEVEV, 11pts, 2.0 g/j marc, 0.8 g/j sof",
+        "direcao": "momento muito bom, mas adversários em situações variadas",
+        "forca": "alta"
+      },
+      {
+        "id": "C28",
+        "bloco": "away_forma",
+        "fato": "Consistência: marcou em 70% dos jogos, 8 clean sheets",
+        "dado": "marcou em 26/37, clean sheet 8, BTTS 22/37",
+        "direcao": "tende a marcar, mas fora de casa sofre mais",
+        "forca": "alta"
+      },
+      {
+        "id": "C29",
+        "bloco": "away_momentum",
+        "fato": "Momentum: pressiona no início (0-15) e nos finais (76-90); reage bem ao sofrer",
+        "dado": "curvas: 0-15 +0.3, 76-90 -1.3 (domínio negativo, mas reação Δ+1.9)",
+        "direcao": "perigoso em transições e nos minutos finais",
+        "forca": "media"
+      },
+      {
+        "id": "C30",
+        "bloco": "away_momentum",
+        "fato": "Reação ao marcar: neutro; ao sofrer: reage bem",
+        "dado": "Δ+0.2 após marcar, Δ+1.9 após sofrer",
+        "direcao": "se sofrer, tende a buscar empate; se marcar, administra",
+        "forca": "media"
+      },
+      {
+        "id": "C31",
+        "bloco": "away_faixas",
+        "fato": "Marca mais em 31-45 (0.30/j); sofre mais em 76-90 (0.41/j) e 46-60 (0.30)",
+        "dado": "marca 0.30 em 31-45; sofre 0.41 em 76-90",
+        "direcao": "gols no fim dos tempos; sofre no início do 2ºT",
+        "forca": "alta"
+      },
+      {
+        "id": "C32",
+        "bloco": "away_faixas",
+        "fato": "Fora de casa: 1ºT marca 0.65/sofre 0.43; 2ºT marca 0.68/sofre 1.00",
+        "dado": "fora: 1ºT 0.65-0.43, 2ºT 0.68-1.00",
+        "direcao": "defesa visitante piora no 2ºT, especialmente após 60'",
+        "forca": "alta"
+      },
+      {
+        "id": "C33",
+        "bloco": "away_desfalques",
+        "fato": "Noah Okafor fora: 8 gols (16% do time), volume cai 32% sem ele",
+        "dado": "8G+1A; with/without: SoT cai de 4.39 para 3.00",
+        "direcao": "reduz xG do Leeds em ~0.3, perda de principal parceiro de ataque",
+        "forca": "alta"
+      },
+      {
+        "id": "C34",
+        "bloco": "away_desfalques",
+        "fato": "Anton Stach fora: 5 gols, 2.2 KP/j, time se adaptou?",
+        "dado": "5G+3A; with/without SoT sobe (3.9 para 4.63), mas perde criação e desarme",
+        "direcao": "reduz criatividade e pressiona defesa; efeito incerto, mas ainda desfalque importante",
+        "forca": "alta"
+      },
+      {
+        "id": "C35",
+        "bloco": "away_desfalques",
+        "fato": "Ilia Gruev fora: 0 gols, mas 0.7 int/j e 1 desarme/j; volume SoT estável",
+        "dado": "0G+3A; with/without SoT 3.96 vs 4.21; perda defensiva",
+        "direcao": "reduz proteção defensiva, especialmente contra bolas paradas",
+        "forca": "media"
+      },
+      {
+        "id": "C36",
+        "bloco": "away_desfalques",
+        "fato": "Gabriel Gudmundsson fora: 0 gols, mas 0.9 int/j, 2 desarmes/j; lateral",
+        "dado": "0G+0A; perde 10% das interceptações do time",
+        "direcao": "enfraquece lateral esquerda, facilita ataque do WHU pela direita",
+        "forca": "media"
+      },
+      {
+        "id": "C37",
+        "bloco": "cruzamento_faixa",
+        "fato": "Ataque WHU x defesa LEE: maior índice em 76-90 (0.71) e 61-75 (0.49)",
+        "dado": "índice 0.71 em 76-90, 0.49 em 61-75",
+        "direcao": "WHU deve criar mais perigo no 2ºT, especialmente no fim",
+        "forca": "alta"
+      },
+      {
+        "id": "C38",
+        "bloco": "cruzamento_faixa",
+        "fato": "Ataque LEE x defesa WHU: maior índice em 76-90 (0.65) e 61-75 (0.62)",
+        "dado": "índice 0.65 em 76-90, 0.62 em 61-75",
+        "direcao": "Leeds também pode marcar no fim, explorando desgaste do WHU",
+        "forca": "alta"
+      },
+      {
+        "id": "C39",
+        "bloco": "base_rate",
+        "fato": "Rota A (gols puros): λ WHU 1.55, λ LEE 1.51, total 3.06",
+        "dado": "λ WHU 1.55, λ LEE 1.51, total 3.06",
+        "direcao": "prior alto, mas baseado em gols; Rota B preferível",
+        "forca": "alta"
+      },
+      {
+        "id": "C40",
+        "bloco": "base_rate",
+        "fato": "Rota B (SoT×conv): WHU 1.17, LEE 1.29, total 2.46",
+        "dado": "λ_SoT WHU 3.89×30%→1.17; λ_SoT LEE 4.44×29%→1.29; total 2.46",
+        "direcao": "âncora principal de xG; indica jogo de menor escore que Rota A",
+        "forca": "alta"
+      },
+      {
+        "id": "C41",
+        "bloco": "base_rate",
+        "fato": "Volume de SoT total 8.3, na média da liga (8.5)",
+        "dado": "8.3 SoT/j vs 8.5",
+        "direcao": "jogo de volume normal, sem viés extremo",
+        "forca": "alta"
+      },
+      {
+        "id": "C42",
+        "bloco": "probs_mercado",
+        "fato": "Prior Dixon-Coles (Rota B): 1x2 32/31/38; over 2.5 45%; BTTS 52%",
+        "dado": "over 2.5 45%, BTTS 52%, 1x2 32/31/38",
+        "direcao": "prior mostra equilíbrio, com leve favoritismo ao Leeds (fora)",
+        "forca": "alta"
+      },
+      {
+        "id": "C43",
+        "bloco": "cruzamentos_computados",
+        "fato": "Arquétipo: ambos times rendem mais contra bloco baixo; WHU marca 1.62/j, LEE sofre só 1.00/j",
+        "dado": "WHU marca 1.62/j e sofre 1.31/j; LEE marca 1.69/j e sofre 1.00/j",
+        "direcao": "WHU melhor ataque, mas LEE defesa muito sólida; efeito duplo: pode travar",
+        "forca": "alta"
+      },
+      {
+        "id": "C44",
+        "bloco": "cruzamentos_computados",
+        "fato": "Mecanismo: canal cruzamento é aberto para WHU (5.3x); falta também (3.5x)",
+        "dado": "cruzamento índice 5.3x, falta 3.5x",
+        "direcao": "WHU deve explorar cruzamentos e bolas paradas; gols podem vir daí",
+        "forca": "alta"
+      },
+      {
+        "id": "C45",
+        "bloco": "cruzamentos_computados",
+        "fato": "Dinâmica pós-gol: WHU mata jogo (Δ+2.5) e reage ao sofrer (Δ+1.1); LEE reage ao sofrer (Δ+1.9)",
+        "dado": "WHU Δ+2.5 ao marcar; LEE Δ+1.9 ao sofrer",
+        "direcao": "se WHU marcar primeiro, tende a controlar; se sofrer, pressiona. LEE reage se sofrer",
+        "forca": "alta"
+      },
+      {
+        "id": "C46",
+        "bloco": "cruzamentos_computados",
+        "fato": "Artilharia: WHU depende de Bowen (8g), Wilson (6), Soucek (5); LEE de Calvert-Lewin (14g) e Okafor (8g, fora)",
+        "dado": "principais marcadores: Bowen 8g, Calvert-Lewin 14g",
+        "direcao": "gols concentrados; desfalque de Okafor tira segunda opção do Leeds",
+        "forca": "media"
+      },
+      {
+        "id": "C47",
+        "bloco": "cruzamentos_computados",
+        "fato": "Setores: WHU cria 37% pela esquerda (Diouf/Summerville) contra defesa direita do Leeds (Rodon 6.8, Justin 7.5); inferioridade central do WHU",
+        "dado": "37% criação esquerda WHU; 41% criação direita LEE; inferioridade 4v5 no meio",
+        "direcao": "duelos nas laterais importantes; Leeds pode dominar o meio",
+        "forca": "alta"
+      },
+      {
+        "id": "C48",
+        "bloco": "cruzamentos_computados",
+        "fato": "Duplas de gol: Bowen serve Soucek e Castellanos 2x cada; duplas do Leeds envolvendo Okafor estão quebradas",
+        "dado": "Bowen→Soucek 2x, Bowen→Castellanos 2x; Bogle→Okafor quebrada",
+        "direcao": "entrosamento WHU mantido; Leeds perde conexões",
+        "forca": "media"
+      },
+      {
+        "id": "C49",
+        "bloco": "cruzamentos_computados",
+        "fato": "Expectativa: WHU bottom-up 1.41 xG (XI cobre 70%); LEE 1.43 xG (XI cobre 54%); Castellanos 0.34, Calvert-Lewin 0.70",
+        "dado": "xi WHU 1.41, LEE 1.43; Castellanos P(marca) 29%, Calvert-Lewin 51%",
+        "direcao": "âncora para distribuição de xG por jogador; dados favorecem ataque do WHU se considerar desfalques",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C1",
+        "motivo": "contexto neutro, sem impacto direto nos números"
+      },
+      {
+        "id": "C2",
+        "motivo": "descanso igual, sem assimetria; já considerado na análise de fadiga, mas sem alteração"
+      },
+      {
+        "id": "C3",
+        "motivo": "condições climáticas normais, sem correlação com gols"
+      },
+      {
+        "id": "C7",
+        "motivo": "dados gerais de gols já cobertos por C40 e outras conclusões mais específicas"
+      },
+      {
+        "id": "C8",
+        "motivo": "mando já embutido nos λ, redundante com C7 e C40"
+      },
+      {
+        "id": "C9",
+        "motivo": "estilo geral já refletido no arquétipo (C43) e nos λ"
+      },
+      {
+        "id": "C10",
+        "motivo": "detalhe de estilo sem impacto direto no cruzamento; dado não gera aresta específica"
+      },
+      {
+        "id": "C12",
+        "motivo": "qualidade defensiva considerada indiretamente em C11 e nas arestas de desfalques"
+      },
+      {
+        "id": "C14",
+        "motivo": "consistência informa, mas já usada para calibrar xG; não entra em aresta"
+      },
+      {
+        "id": "C16",
+        "motivo": "momentum defensivo usado em A4 através das faixas (C17, C38)"
+      },
+      {
+        "id": "C21",
+        "motivo": "dados gerais de gols do Leeds já em C40; redundante"
+      },
+      {
+        "id": "C23",
+        "motivo": "estilo recente considerado em A7 (forma) e C27"
+      },
+      {
+        "id": "C24",
+        "motivo": "volume de chutes já refletido no λ SoT (C40)"
+      },
+      {
+        "id": "C26",
+        "motivo": "qualidade defensiva do Leeds usada em A3 e A6, mas não como conclusão isolada"
+      },
+      {
+        "id": "C28",
+        "motivo": "consistência já usada para calibrar xG, sem aresta direta"
+      },
+      {
+        "id": "C30",
+        "motivo": "reação pós-gol do Leeds usada em A5 junto com C45"
+      },
+      {
+        "id": "C37",
+        "motivo": "cruzamento de faixa do ataque WHU usado nas janelas, mas aresta A4 usa C17/C18/C31/C32/C38; C37 é implícito"
+      },
+      {
+        "id": "C39",
+        "motivo": "Rota A preterida pela Rota B; não usada em arestas"
+      },
+      {
+        "id": "C41",
+        "motivo": "volume de SoT na média; não move números, apenas referência"
+      },
+      {
+        "id": "C46",
+        "motivo": "artilharia usada nos marcadores, não em aresta"
+      },
+      {
+        "id": "C48",
+        "motivo": "duplas de gol afetadas por desfalques, mas impacto capturado em outras conclusões"
+      },
+      {
+        "id": "C49",
+        "motivo": "expectativa por jogador usada nas previsões, não em aresta"
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Jarrod Bowen",
+        "time": "home",
+        "leitura": "Principal arma ofensiva, mas forma em queda (6.98) e sem gols nos últimos 5. Enfrenta defesa do Leeds desfalcada, o que pode abrir espaços para seus passes e assistências."
+      },
+      {
+        "nome": "Mateus Fernandes",
+        "time": "home",
+        "leitura": "Meia estável (7.08), mas com pouca presença ofensiva (0.22 SoT/j). Deve focar na contenção e ligação, improvável que marque."
+      },
+      {
+        "nome": "Konstantinos Mavropanos",
+        "time": "home",
+        "leitura": "Zagueiro artilheiro (3 gols), em boa forma (7.12). Ameaça em bolas paradas, especialmente contra defesa do Leeds que perdeu altura e desarmes."
+      },
+      {
+        "nome": "El Hadji Malick Diouf",
+        "time": "home",
+        "leitura": "Lateral esquerdo com 5 assistências, bom cruzador (1.0/j). Enfrenta o lado direito do Leeds (Justin 7.5 em forma), duelo difícil, mas pode levar vantagem com apoio de Summerville."
+      },
+      {
+        "nome": "Crysencio Summerville",
+        "time": "home",
+        "leitura": "Atacante rápido (7 gols), mas sem SoT nos últimos 5. Pode explorar o lado direito do Leeds, mas forma instável contra bloco baixo."
+      },
+      {
+        "nome": "Tomáš Souček",
+        "time": "home",
+        "leitura": "Volante com faro de gol (6 gols, maioria no 2ºT). Chega bem de trás, especialmente em bolas paradas e cruzamentos; perigo real."
+      },
+      {
+        "nome": "Alphonse Areola",
+        "time": "home",
+        "leitura": "Goleiro sem ritmo (5 jogos perdidos), pode falhar em saídas. Defesa à sua frente desfalcada preocupa."
+      },
+      {
+        "nome": "Aaron Wan-Bissaka",
+        "time": "home",
+        "leitura": "Lateral defensivo, pouco efetivo no ataque (0 SoT). Missão é anular o lado direito do Leeds, especialmente sem Gudmundsson."
+      },
+      {
+        "nome": "Jean-Clair Todibo",
+        "time": "home",
+        "leitura": "Zagueiro com pouca minutagem recente (6.2 forma), pode ser ponto fraco contra Calvert-Lewin."
+      },
+      {
+        "nome": "Maximilian Kilman",
+        "time": "home",
+        "leitura": "Zagueiro sem ritmo (5 jogos fora), situação similar a Todibo. Defesa entrosada é dúvida."
+      },
+      {
+        "nome": "Kyle Walker-Peters",
+        "time": "home",
+        "leitura": "Lateral/ala com 1 gol, sobe pouco. Pode ser opção ofensiva se Diouf for sobrecarregado, mas foco defensivo."
+      },
+      {
+        "nome": "Adama Traoré",
+        "time": "home",
+        "leitura": "Desfalque sem impacto ofensivo (0% gols), time já se adaptou à ausência. Nenhum efeito relevante."
+      },
+      {
+        "nome": "Łukasz Fabiański",
+        "time": "home",
+        "leitura": "Goleiro reserva, nunca jogou na temporada. Desfalque irrelevante."
+      },
+      {
+        "nome": "Ethan Ampadu",
+        "time": "away",
+        "leitura": "Volante/Zagueiro adaptado, estável (7.01). Deve segurar o meio-campo e cobrir desfalques; baixa ameaça ofensiva."
+      },
+      {
+        "nome": "Pascal Struijk",
+        "time": "away",
+        "leitura": "Zagueiro em má forma (6.58). Pode ter dificuldades contra a velocidade de Bowen/Summerville, mas foco defensivo."
+      },
+      {
+        "nome": "Jayden Bogle",
+        "time": "away",
+        "leitura": "Ala direito, 2 gols, 3 assistências. Ofensivo, mas sem SoT recente. Enfrenta Diouf; duelo crucial."
+      },
+      {
+        "nome": "Joe Rodon",
+        "time": "away",
+        "leitura": "Zagueiro em boa forma (6.9 últ.5). Forte na bola aérea, ameaça no ataque (2 gols). Será testado por Castellanos."
+      },
+      {
+        "nome": "Gabriel Gudmundsson",
+        "time": "away",
+        "leitura": "Desfalcado (lesão). Lateral esquerdo que daria profundidade; sua falta obriga adaptação defensiva."
+      },
+      {
+        "nome": "Dominic Calvert-Lewin",
+        "time": "away",
+        "leitura": "Centroavante em grande fase (15 gols, 4 nos últ.5). Principal ameaça, finalizador letal (1.0 SoT/j). Explora defesa desfalcada do WHU."
+      },
+      {
+        "nome": "Brenden Aaronson",
+        "time": "away",
+        "leitura": "Meia ofensivo em queda (6.72). Deve flutuar, mas sem Okafor e Stach, perde parceiros de jogada; pouco efetivo."
+      },
+      {
+        "nome": "Anton Stach",
+        "time": "away",
+        "leitura": "Desfalcado. Meia criativo (5 gols, 2.2 KP/j). Sua falta reduz significativamente a criação do Leeds."
+      },
+      {
+        "nome": "Jaka Bijol",
+        "time": "away",
+        "leitura": "Zagueiro artilheiro (1 gol, 3 assists), boa forma (7.04). Perigo em bolas paradas; WHU sofre nesse fundamento."
+      },
+      {
+        "nome": "James Justin",
+        "time": "away",
+        "leitura": "Ala/volante, 3 gols. Pode aparecer como surpresa, mas baixo volume ofensivo (0.24 SoT/j)."
+      },
+      {
+        "nome": "Karl Darlow",
+        "time": "away",
+        "leitura": "Goleiro em ascensão (7.2). Seguro, mas defesa à frente desfalcada pode expô-lo."
+      },
+      {
+        "nome": "Noah Okafor",
+        "time": "away",
+        "leitura": "Desfalque crucial: 8 gols (16% do time), maior parceiro de Calvert-Lewin. Time perde 32% de volume ofensivo sem ele."
+      },
+      {
+        "nome": "Ilia Gruev",
+        "time": "away",
+        "leitura": "Desfalque defensivo: volante com 0.7 int/j e 1 desarme/j. Sua ausência enfraquece a proteção à zaga."
+      }
+    ],
+    "previsoes_jogadores": [
+      {
+        "nome": "Taty Castellanos",
+        "time": "home",
+        "x_sot": 1.4,
+        "x_gols": 0.38,
+        "prob_marca": 0.33,
+        "prob_sot1": 0.75,
+        "x_kp": 0.61,
+        "leitura": "Centroavante de área, terá chances em cruzamentos de Diouf e Bowen. Forte no jogo aéreo contra defesa desfalcada. Principal esperança de gol."
+      },
+      {
+        "nome": "Tomáš Souček",
+        "time": "home",
+        "x_sot": 0.6,
+        "x_gols": 0.25,
+        "prob_marca": 0.23,
+        "prob_sot1": 0.45,
+        "x_kp": 0.56,
+        "leitura": "Chega de surpresa na área, perigo em bolas paradas. Janela 46-60 é a sua, pode marcar de cabeça."
+      },
+      {
+        "nome": "Jarrod Bowen",
+        "time": "home",
+        "x_sot": 0.73,
+        "x_gols": 0.2,
+        "prob_marca": 0.18,
+        "prob_sot1": 0.52,
+        "x_kp": 1.45,
+        "leitura": "Principal criador, mas finalização em baixa. Deve flutuar pela direita e buscar assistências. Menos chance de gol próprio."
+      },
+      {
+        "nome": "Crysencio Summerville",
+        "time": "home",
+        "x_sot": 0.45,
+        "x_gols": 0.15,
+        "prob_marca": 0.13,
+        "prob_sot1": 0.37,
+        "x_kp": 0.91,
+        "leitura": "Velocidade no contra-ataque, mas com Leeds fechado terá pouco espaço. Pode aparecer em jogadas individuais."
+      },
+      {
+        "nome": "Konstantinos Mavropanos",
+        "time": "home",
+        "x_sot": 0.44,
+        "x_gols": 0.18,
+        "prob_marca": 0.18,
+        "prob_sot1": 0.36,
+        "x_kp": 0.17,
+        "leitura": "Zagueiro artilheiro, sobe em todas as bolas paradas. Defesa do Leeds sem alguns marcadores, chance de cabecear para o gol."
+      },
+      {
+        "nome": "Kyle Walker-Peters",
+        "time": "home",
+        "x_sot": 0.3,
+        "x_gols": 0.12,
+        "prob_marca": 0.11,
+        "prob_sot1": 0.26,
+        "x_kp": 0.56,
+        "leitura": "Lateral direito, apoio ao ataque limitado. Pode arriscar chutes de longe, mas baixa probabilidade."
+      },
+      {
+        "nome": "Mateus Fernandes",
+        "time": "home",
+        "x_sot": 0.18,
+        "x_gols": 0.06,
+        "prob_marca": 0.06,
+        "prob_sot1": 0.16,
+        "x_kp": 1.04,
+        "leitura": "Volante de contenção e saída de bola. Focado em anular o meio-campo adversário. Pouca presença ofensiva."
+      },
+      {
+        "nome": "Pablo",
+        "time": "home",
+        "x_sot": 0.2,
+        "x_gols": 0.05,
+        "prob_marca": 0.05,
+        "prob_sot1": 0.19,
+        "x_kp": 1.1,
+        "leitura": "Meia ofensivo de pouca experiência, chance baixa de contribuir. Pode ser opção de último passe."
+      },
+      {
+        "nome": "Axel Disasi",
+        "time": "home",
+        "x_sot": 0.21,
+        "x_gols": 0.05,
+        "prob_marca": 0.05,
+        "prob_sot1": 0.19,
+        "x_kp": 0.07,
+        "leitura": "Zagueiro sem chegada ofensiva. Foco defensivo total."
+      },
+      {
+        "nome": "El Hadji Malick Diouf",
+        "time": "home",
+        "x_sot": 0.09,
+        "x_gols": 0.02,
+        "prob_marca": 0.02,
+        "prob_sot1": 0.09,
+        "x_kp": 0.9,
+        "leitura": "Lateral esquerdo de ofício defensivo, mas pode cruzar. Anulado pelo lado direito do Leeds."
+      },
+      {
+        "nome": "Mads Hermansen",
+        "time": "home",
+        "x_sot": 0,
+        "x_gols": 0,
+        "prob_marca": 0,
+        "prob_sot1": 0,
+        "x_kp": 0.13,
+        "leitura": "Goleiro, sem envolvimento ofensivo."
+      },
+      {
+        "nome": "Dominic Calvert-Lewin",
+        "time": "away",
+        "x_sot": 1.66,
+        "x_gols": 0.55,
+        "prob_marca": 0.4,
+        "prob_sot1": 0.81,
+        "x_kp": 0.82,
+        "leitura": "Artilheiro em grande fase, finalizador nato. Mesmo com time desfalcado, terá chances em contra-ataques e bolas paradas. Principal arma do Leeds."
+      },
+      {
+        "nome": "James Justin",
+        "time": "away",
+        "x_sot": 0.4,
+        "x_gols": 0.12,
+        "prob_marca": 0.12,
+        "prob_sot1": 0.33,
+        "x_kp": 0.63,
+        "leitura": "Ala/meia com chegada, mas sem parceiros de criação. Pode surpreender em infiltrações."
+      },
+      {
+        "nome": "Jaka Bijol",
+        "time": "away",
+        "x_sot": 0.41,
+        "x_gols": 0.1,
+        "prob_marca": 0.12,
+        "prob_sot1": 0.33,
+        "x_kp": 0.36,
+        "leitura": "Zagueiro com presença ofensiva, perigo em escanteios. WHU sofre com bolas aéreas."
+      },
+      {
+        "nome": "Ao Tanaka",
+        "time": "away",
+        "x_sot": 0.27,
+        "x_gols": 0.08,
+        "prob_marca": 0.08,
+        "prob_sot1": 0.23,
+        "x_kp": 1.36,
+        "leitura": "Meia criativo, mas recuado. Responsável por ligar jogadas, pouca finalização."
+      },
+      {
+        "nome": "Brenden Aaronson",
+        "time": "away",
+        "x_sot": 0.4,
+        "x_gols": 0.08,
+        "prob_marca": 0.08,
+        "prob_sot1": 0.33,
+        "x_kp": 1.14,
+        "leitura": "Meia ofensivo em má fase. Sem Stach e Okafor, fica isolado. Pouco efetivo."
+      },
+      {
+        "nome": "Joe Rodon",
+        "time": "away",
+        "x_sot": 0.23,
+        "x_gols": 0.07,
+        "prob_marca": 0.07,
+        "prob_sot1": 0.21,
+        "x_kp": 0.21,
+        "leitura": "Zagueiro, perigo relativo em bolas paradas. Foco defensivo."
+      },
+      {
+        "nome": "Ethan Ampadu",
+        "time": "away",
+        "x_sot": 0.28,
+        "x_gols": 0.06,
+        "prob_marca": 0.06,
+        "prob_sot1": 0.25,
+        "x_kp": 0.7,
+        "leitura": "Volante de contenção, pode arriscar chutes de longe. Missão principal é anular Souček."
+      },
+      {
+        "nome": "Daniel James",
+        "time": "away",
+        "x_sot": 0.31,
+        "x_gols": 0.06,
+        "prob_marca": 0.06,
+        "prob_sot1": 0.26,
+        "x_kp": 0.73,
+        "leitura": "Atacante rápido, opção de contra-ataque. Pode aproveitar erros defensivos do WHU."
+      },
+      {
+        "nome": "Jayden Bogle",
+        "time": "away",
+        "x_sot": 0.15,
+        "x_gols": 0.04,
+        "prob_marca": 0.04,
+        "prob_sot1": 0.14,
+        "x_kp": 0.61,
+        "leitura": "Ala direito, baixo volume ofensivo. Duelo com Diouf deve ser equilibrado."
+      },
+      {
+        "nome": "Pascal Struijk",
+        "time": "away",
+        "x_sot": 0.17,
+        "x_gols": 0.03,
+        "prob_marca": 0.03,
+        "prob_sot1": 0.15,
+        "x_kp": 0.36,
+        "leitura": "Zagueiro, sem impacto ofensivo significativo."
+      },
+      {
+        "nome": "Karl Darlow",
+        "time": "away",
+        "x_sot": 0,
+        "x_gols": 0,
+        "prob_marca": 0,
+        "prob_sot1": 0,
+        "x_kp": 0,
+        "leitura": "Goleiro, sem envolvimento ofensivo."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C4",
+          "C5",
+          "C6",
+          "C42"
+        ],
+        "leitura": "Intenção assimétrica: West Ham precisa vencer, Leeds não tem objetivo. Isso direciona o jogo para pressão do WHU e postura reativa do Leeds.",
+        "efeito": "xG do WHU sobe de 1.17 para ~1.6; xG do Leeds cai de 1.29 para ~1.1; mercado tende a under/team total do mandante."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C40",
+          "C33",
+          "C34",
+          "C35",
+          "C36"
+        ],
+        "leitura": "Desfalques do Leeds: Okafor (16% gols, volume cai 32%), Stach (criação e desarme), Gruev e Gudmundsson (defesa). Perda coletiva significativa.",
+        "efeito": "Reduz xG ofensivo do Leeds em ~0.3 gols; aumenta vulnerabilidade defensiva."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C43",
+          "C47"
+        ],
+        "leitura": "Arquétipo: WHU e Leeds rendem melhor contra bloco baixo, mas Leeds sofre pouco (1.00/j) nesse cenário. Setores: inferioridade central do WHU pode dar controle ao Leeds.",
+        "efeito": "Limita xG do WHU apesar da pressão; Leeds pode ditar ritmo quando tem a bola, mas desinteresse reduz efeito."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C17",
+          "C18",
+          "C31",
+          "C32",
+          "C38"
+        ],
+        "leitura": "Cruzamento de faixas: ambas as defesas sofrem mais no 2ºT, especialmente após 75'. WHU marca e sofre no fim; Leeds sofre no meio do 2ºT e marca no fim.",
+        "efeito": "Probabilidade de gols aumenta no 2ºT, especialmente nos minutos finais; jogo pode decidir após 60'."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C15",
+          "C29",
+          "C45"
+        ],
+        "leitura": "Momentum e reação pós-gol: WHU pressiona entre 31-60 e mata jogo ao marcar; Leeds reage bem ao sofrer.",
+        "efeito": "Se WHU marcar primeiro, tende a controlar ou ampliar; se Leeds abrir, WHU pressiona e pode empatar."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C11",
+          "C25",
+          "C33",
+          "C34"
+        ],
+        "leitura": "Qualidade individual: WHU depende de Bowen (em queda) e Castellanos; Leeds sem Okafor e Stach perde 26% dos gols e criatividade.",
+        "efeito": "Menor número de gols de ambos os lados, mas WHU tem mais opções em bolas paradas (Soucek, Mavropanos)."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C22",
+          "C27",
+          "C5"
+        ],
+        "leitura": "Forma recente: Leeds excelente (VVVEV), mas contra times sem motivação; WHU péssimo contra rivais difíceis. Forma pode ser inflada.",
+        "efeito": "Ajuste baixo no xG do Leeds, pois motivação e desfalques atuam contra; WHU pode ter desempenho melhor que a forma sugere."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C44",
+          "C47"
+        ],
+        "leitura": "Mecanismo de gol: cruzamento é canal aberto para WHU (5.3x), especialmente pela esquerda de Diouf/Summerville.",
+        "efeito": "WHU deve focar jogadas aéreas e bolas paradas, favorecendo Castellanos e Soucek."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C6",
+          "C43"
+        ],
+        "leitura": "Veredito de intenção x arquétipo: jogo tende a travar, com WHU precisando furar bloco baixo. Leeds não precisa se expor.",
+        "efeito": "Aumenta probabilidade de under 2.5 e de placares magros."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C19",
+          "C20",
+          "C33",
+          "C34",
+          "C35",
+          "C36"
+        ],
+        "leitura": "Desfalques defensivos: WHU perde pouco; Leeds perde 26% do volume defensivo (desarme+interceptação).",
+        "efeito": "Defesa do Leeds mais frágil, especialmente em bolas paradas e pelo alto; sobe xG do WHU."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Pressão inicial do West Ham e gol cedo",
+        "prob": 0.35,
+        "filme": "WHU começa intenso, marca no 1ºT (31-45). Recua e mata o jogo; Leeds reage sem força. Placar 2-0 ou 2-1.",
+        "arestas": [
+          "A1",
+          "A5",
+          "A8"
+        ]
+      },
+      {
+        "nome": "Jogo travado, 0-0 no intervalo, gol solitário no 2ºT",
+        "prob": 0.45,
+        "filme": "WHU pressiona, mas encontra defesa do Leeds postada. 0-0 ao intervalo. No 2ºT, WHU cresce e marca. Leeds não ameaça. Placar 1-0 ou 0-0.",
+        "arestas": [
+          "A3",
+          "A9"
+        ]
+      },
+      {
+        "nome": "Leeds surpreende e vence",
+        "prob": 0.2,
+        "filme": "Leeds marca primeiro em contra-ataque ou bola parada, WHU sente a pressão e se desorganiza. Leeds administra. Placar 0-1 ou 1-2.",
+        "arestas": [
+          "A4",
+          "A7"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "West Ham inicia pressionando, mas Leeds se defende bem. Algumas chances em bolas paradas. Índice cruzado 0.84, abaixo da média, mas WHU marca 0.24/j nessa faixa.",
+        "prob_gol": 0.29,
+        "lado": "home"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Jogo cai de intensidade, Leeds troca passes sem agredir. WHU sente a primeira queda. Índice 0.54, o mais baixo do jogo.",
+        "prob_gol": 0.2,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "WHU acelera perto do intervalo, empurrado pela torcida. Leeds pode ceder. Índice 0.98, janela mais quente do 1ºT.",
+        "prob_gol": 0.33,
+        "lado": "home"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "WHU volta com tudo, típico de time que precisa. Leeds sente o ritmo. Índice 0.87, médio, mas momentum do WHU é alto aqui.",
+        "prob_gol": 0.36,
+        "lado": "home"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Se ainda 0-0, WHU se lança ao ataque, Leeds contra-ataca. Índice 1.11, alta probabilidade de gol.",
+        "prob_gol": 0.44,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Desespero total, ambas defesas cansadas. WHU se expõe, Leeds pode matar no contra-ataque. Índice 1.36, máxima do jogo.",
+        "prob_gol": 0.51,
+        "lado": "equilibrado"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "WHU começa pressionando, mas Leeds se defende bem. Jogo truncado, poucas chances claras. WHU finaliza de longe ou em cruzamentos, mas sem eficácia. Leeds não se arrisca, esperando contra-ataque. 0-0 ao intervalo provável.",
+        "prob_gol": 0.62
+      },
+      "segundo": {
+        "analise": "WHU volta mais intenso, explora bolas paradas e desgaste do Leeds. Se ainda não fez, aumenta pressão. Leeds pode achar espaços em contra-ataques. Jogo se decide nos últimos 30 minutos, com desespero do WHU. Gols prováveis após 60'.",
+        "prob_gol": 0.82
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Taty Castellanos",
+          "prob": 0.33,
+          "motivo": "Centroavante com volume de finalização (1.33 SoT/j) e principal alvo em cruzamentos. Defesa do Leeds desfalcada perdeu 26% do volume defensivo."
+        },
+        {
+          "nome": "Tomáš Souček",
+          "prob": 0.23,
+          "motivo": "Volante com 6 gols na temporada, maioria no 2ºT. Explora bolas paradas e chegadas na área; defesa do Leeds sofre nesse tipo de lance."
+        },
+        {
+          "nome": "Konstantinos Mavropanos",
+          "prob": 0.18,
+          "motivo": "Zagueiro artilheiro (3 gols), em boa forma (7.2 últ.3). Ameaça em escanteios; Leeds perdeu desarmes e altura."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Dominic Calvert-Lewin",
+          "prob": 0.4,
+          "motivo": "Artilheiro do time (14 gols), em excelente fase (4 gols nos últ.5). Finalizador nato; defesa do WHU vulnerável, especialmente em bolas paradas."
+        },
+        {
+          "nome": "Jaka Bijol",
+          "prob": 0.12,
+          "motivo": "Zagueiro com 1 gol e 3 assists, sobe em bolas paradas. WHU sofreu gols de zagueiros recentemente."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.41,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Probabilidade de vitória do WHU acima do prior (32%), mas dependente de furar defesa sólida."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.32,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Empate provável em jogo travado; prior 31%, pouco valor."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.27,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Leeds desmotivado e desfalcado; prior 38% superestimava visitante."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.73,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "1X cobre 73% vs prior 62%; boa margem de segurança."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.59,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "X2 caiu em relação ao prior (68%), refletindo menor expectativa para o Leeds."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.68,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "12 estável vs prior 69%, sem valor significativo."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.6,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "DNB WHU sobe de 46% para 60%; proteção contra empate."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.4,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "DNB Leeds caiu; prior 54%, agora 40%."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.75,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Over 1.5 sobe ligeiramente (prior 72%); baixa variância, mas pouco valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.51,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Over 2.5 sobe de 45% para 51% com xG total 2.7; margem fina."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.29,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Over 3.5 sobe (prior 23%), mas ainda improvável; alta variância."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.53,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "BTTS estável em 53% vs prior 52%; jogo de poucos gols não favorece."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.8,
+        "variancia": 1,
+        "valor": "alto",
+        "nota": "WHU over 0.5 sobe de 69% para 80%. Melhor valor com menor risco."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.48,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "WHU over 1.5 sobe de 33% para 48%. Bom valor, mas dependente de dois gols."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.67,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "LEE over 0.5 caiu de 72% para 67%; Leeds desfalcado desmotivado."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.3,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "LEE over 1.5 cai de 37% para 30%; improvável."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.18,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "WHU -1 requer vitória por 2+; prior ~12%; valor, mas alta variância."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.08,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "LEE -1 improvável; prior ~10%."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.47,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Ímpar ligeiramente abaixo de par; sem valor."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "over",
+      "team": "home",
+      "line": 0.5,
+      "confidence": "medium",
+      "probability": 0.8,
+      "evidence_for": [
+        "C4",
+        "C6",
+        "C19",
+        "C33",
+        "A1",
+        "A2",
+        "A8",
+        "A10"
+      ],
+      "evidence_against": [
+        "C14",
+        "C43",
+        "A3",
+        "A7"
+      ],
+      "analysis": "West Ham precisa vencer para escapar do rebaixamento, enfrenta Leeds desmotivado e desfalcado (Okafor, Stach). Em casa, com volume de finalização razoável (3.65 SoT/j) e defesa do Leeds enfraquecida (perdeu 26% do volume defensivo), é provável que marque ao menos um gol. Risco: defesa do Leeds é sólida contra bloco baixo (sofre apenas 1.00/j nesse contexto) e WHU pode ter dificuldade de criação. No entanto, a necessidade e o mando devem prevalecer."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "WHU marcou apenas 3 gols nos últimos 5 jogos e não marcou em 35% dos jogos na temporada.",
+          "ids": [
+            "C13",
+            "C14"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "Leeds contra bloco baixo sofre apenas 1.00 g/j; mesmo desfalcado, pode se segurar.",
+          "ids": [
+            "C43",
+            "A3"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total home over 0.5",
+          "argumento": "Leeds em ótima forma (VVVEV) e Calvert-Lewin pode decidir; se Leeds marcar primeiro, cenário muda.",
+          "ids": [
+            "C27",
+            "C5"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "Apesar dos riscos, a necessidade do WHU e os desfalques do Leeds criam um cenário favorável para o gol do mandante. Ataques enfraquecem, mas não derrubam a aposta de baixa variância. A forma do Leeds não é sustentada por motivação real, e a defesa visitante sofreu baixas. A probabilidade de 80% reflete um edge significativo sobre o mercado (prior 69%)."
+    },
+    "drivers": [
+      "Motivação assimétrica: WHU precisa vencer, Leeds não tem objetivo (C4, C5, C6)",
+      "Desfalques do Leeds: Okafor (16% gols) e Stach (criação) fora (C33, C34)",
+      "Defesa do Leeds desfalcada perde 26% do volume defensivo, facilitando bolas paradas e cruzamentos para WHU (A10, C44)"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 49,
+    "arestas": 10,
+    "jogadores": 26,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar o confronto entre West Ham United e Leeds United pela 38ª rodada da Premier League, seguindo o protocolo de 6 passos. O jogo é no London Stadium, com o West Ham lutando contra o rebaixamento (18º, 36 pts) e o Leeds já seguro (14º, 47 pts). A intenção é assimétrica: West Ham precisa vencer, Leeds não tem nada a jogar. Isso molda toda a análise.\n\n**Passo 1 – Varredura: conclusões por bloco**\n\nListo os blocos e extraio de 1 a 3 conclusões de cada. Uso IDs sequenciais \"C1\", \"C2\", etc.\n\n- **contexto**: \n  - C1: Data e local sem grande impacto. Clima claro e quente, sem correlação com gols. \n  - C2: Descanso igual (7 dias para ambos) – sem assimetria de fadiga.\n  - C3: Gramado natural, condições normais.\n  - Força: baixa (contexto não altera números).\n\n- **tabela_motivacao**:\n  - C4: West Ham 18º, 36 pts, 1 jogo restante, máximo 39 pts. Ainda pode cair, precisa pontuar. Motivação alta.\n  - C5: Leeds 14º, 47 pts, seguro do rebaixamento, sem alvo continental. Motivação baixa.\n  - C6: Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR. West Ham precisa, Leeds administra. Favorece under ou mercado de menor variância.\n  - Força: alta (motivação é o principal driver).\n\n- **home_gols** (West Ham):\n  - C7: Ataque fraco: 1.16 gols/j (1.33 em casa). Volume ok: 3.65 SoT/j, conversão 30%. Defesa sofre 1.76 g/j (1.67 em casa), 5.3 SoT/j concedidos.\n  - C8: Em casa, marca mais (1.33) e sofre um pouco menos (1.67), mas ainda vulnerável.\n  - Força: média.\n\n- **home_estilo**:\n  - C9: Estilo: ataques perigosos 41.4/59.2 (feito/sofrido). Últimos 5 melhorou ataque (45.2) e defesa cedeu menos (51). Mas ainda sofre muitos ataques.\n  - C10: Chutes de fora 2.8, bloqueados 3.1 – volume baixo-médio.\n  - Força: média.\n\n- **home_qualidade**:\n  - C11: Time nota média 6.79 (abaixo da média da liga). Jarrod Bowen (7.05) principal jogador, mas forma recente caindo (6.98 últ.5). Mateus Fernandes (7.08) estável. Mavropanos (7.03) subindo.\n  - C12: Goleiro Areola (6.75) sem jogos recentes; defesa com desfalques (Kilman 6.62, Todibo 6.59) e pouca minutagem. \n  - Força: alta (qualidade individual afeta xG).\n\n- **home_forma**:\n  - C13: Últimos 5: DDDVE (4pts), 3 gols marcados, 8 sofridos. Média 0.6 gols marcados, 1.6 sofridos. Queda ofensiva acentuada.\n  - C14: Consistência: marcou em 24/37 jogos (65%), mas apenas 6 clean sheets. BTTS em 54% dos jogos.\n  - Força: alta.\n\n- **home_momentum**:\n  - C15: Momentum dos últimos 5: padrão irregular. Pressiona bem nos minutos finais do 1ºT (31-45) e início do 2ºT (46-60), mas sofre quedas. \n  - C16: Defesa muito ativa nos minutos 76-90 (muitas interceptações/desarmes) – sinal de sofrer pressão no fim.\n  - Força: média.\n\n- **home_faixas**:\n  - C17: Marca mais nos minutos 76-90 (0.30/j) e 0-15 (0.24/j). Sofre mais em 76-90 (0.41/j) e 61-75 (0.38/j). \n  - C18: No 1ºT, marca 21 e sofre 26 (equilibrado). No 2ºT, a defesa piora.\n  - Força: alta (distribuição temporal).\n\n- **home_desfalques**:\n  - C19: Adama Traoré fora (lesão muscular). Contribuição ofensiva nula (0 gols, 0 assists), mas with/without mostra queda de gols (1.44 para 1.07), embora SoT estável (3.67 vs 3.64). Defensivamente quase nada (0 interceptações). Desfalque de baixo impacto real.\n  - C20: Łukasz Fabiański fora (lesão costas). Goleiro reserva, sem impacto no volume (0% gols). Desfalque irrelevante.\n  - Força: baixa (nenhum afeta significativamente).\n\n- **away_gols** (Leeds):\n  - C21: Ataque médio: 1.32 gols/j (1.11 fora). Volume bom: 4.05 SoT/j (3.61 fora). Conversão 29%. Defesa sofre 1.43 g/j (1.78 fora) – vulnerável fora de casa.\n  - C22: Fora de casa, ataque cai para 1.11, defesa piora para 1.78. Sinal de que sofre como visitante.\n  - Força: alta.\n\n- **away_estilo**:\n  - C23: Estilo: ataques perigosos 44.1/51.5. Últimos 5: ataque caiu (38.6) e defesa piorou (58.4 sofridos). Time parece menos intenso recentemente.\n  - C24: Volume de chutes: 12.6/j, muitos na área (8.6). Mas fora de casa tende a criar menos.\n  - Força: média.\n\n- **away_qualidade**:\n  - C25: Nota média 6.82. Destaques: Dominic Calvert-Lewin (6.89, 15 gols) em grande fase (últ.5: 4 gols). Anton Stach (7.21) desfalcado (lesão). Ethan Ampadu (7.01) estável. Brenden Aaronson (6.73) caindo.\n  - C26: Defesa: Jaka Bijol (7.0) subindo, Joe Rodon (6.75) ok. Goleiro Karl Darlow (6.83) subindo.\n  - Força: alta (qualidade e desfalques).\n\n- **away_forma**:\n  - C27: Últimos 5: VEVEV (11pts), 10 gols marcados, 4 sofridos. Média 2.0 gols marcados, 0.8 sofridos. Excelente forma.\n  - C28: Consistência: marcou em 26/37 (70%), 8 clean sheets. BTTS em 59%.\n  - Força: alta.\n\n- **away_momentum**:\n  - C29: Momentum: padrão de pressão no início (0-15) e finais (76-90). Defesa sólida, mas sofre pressão no meio do 2ºT (46-60? Na verdade, análise mostra variação). \n  - C30: Reage bem ao sofrer gol (Δ +1.9), neutro ao marcar.\n  - Força: média.\n\n- **away_faixas**:\n  - C31: Marca mais em 31-45 (0.30/j) e 61-75/76-90 (0.24). Sofre mais em 76-90 (0.41/j) e 46-60/61-75 (0.30).\n  - C32: Fora: 1ºT marca 0.65, sofre 0.43; 2ºT marca 0.68, sofre 1.00. Defesa visitante piora no 2ºT.\n  - Força: alta.\n\n- **away_desfalques**:\n  - C33: Noah Okafor fora (lesão panturrilha). 8 gols, 1 assist (16% gols). Últimos 5: participou de 30% dos gols (mais decisivo). With/without: 1.61 g/j com ele, 0.44 sem (-73%), mas SoT cai de 4.39 para 3.00 (volume cai 32%). Perda significativa.\n  - C34: Anton Stach fora (lesão tornozelo). 5 gols, 3 assists (10% gols). Últimos 5: 10% participação (menos decisivo). With/without: 1.10 g/j com, 2.13 sem (estranho, mas SoT sobe de 3.9 para 4.63) – time se adaptou? Desarme cai (2.2/j), criação (2.2 KP/j). Perda defensiva e criativa.\n  - C35: Ilia Gruev fora (lesão desconhecida). 0 gols, 3 assists (6% assist). With/without: 1.52 g/j com, 1.00 sem (-34%). SoT estável (3.96 vs 4.21). 0.7 interceptações/j, 1 desarme/j. Perda defensiva moderada.\n  - C36: Gabriel Gudmundsson fora (lesão desconhecida). 0 gols, 0 assists. With/without irrelevante. Defensivamente: 0.9 interceptações/j, 2 desarmes/j. Perda defensiva.\n  - Força: alta (múltiplos desfalques, especialmente Okafor e Stach afetam ataque e criação).\n\n- **cruzamento_faixa**:\n  - C37: Ataque West Ham x defesa Leeds: maior índice em 76-90 (0.71) e 61-75 (0.49). Janelas quentes para o West Ham.\n  - C38: Ataque Leeds x defesa West Ham: maior índice em 76-90 (0.65) e 61-75 (0.62). Janelas quentes para o Leeds.\n  - Força: alta.\n\n- **base_rate**:\n  - C39: Rota A: λ WHU 1.55, λ LEE 1.51, total 3.06.\n  - C40: Rota B (SoT×conv): WHU 1.17, LEE 1.29, total 2.46. Prefira Rota B (volume mais estável).\n  - C41: Volume SoT total 8.3, na média da liga (8.5). Jogo de volume normal.\n  - Força: alta (âncora quantitativa).\n\n- **probs_mercado**:\n  - C42: Prior Dixon-Coles (Rota B): 1x2: 32/31/38%. Over 2.5: 45%. BTTS: 52%. Empate com prob razoável (31%).\n  - Força: alta.\n\n- **cruzamentos_computados** (trato cada linha como conclusão pronta):\n  - C43: Arquétipo: West Ham contra bloco baixo marca 1.62/j, sofre 1.31/j (0.45 acima da média). Leeds contra bloco baixo marca 1.69/j, sofre 1.00/j (0.37 acima). Ambos se dão bem contra blocos baixos, mas West Ham sofre mais.\n  - C44: Mecanismo: Canal aberto – cruzamento: WHU gera 2% gols, Leeds sofre 7% (índice 5.3x). Falta: WHU gera 2%, Leeds sofre 5% (3.5x). Para Leeds: falta gera 4%, WHU sofre 2% (1.9x).\n  - C45: Dinâmica pós-gol: West Ham reage ao sofrer (Δ +1.1) e mata jogo ao marcar (Δ +2.5). Leeds reage ao sofrer (Δ +1.9), neutro ao marcar.\n  - C46: Artilharia: WHU: Bowen 8g, Wilson 6g, Soucek 5g, Summerville 5g, Castellanos 5g. LEE: Calvert-Lewin 14g, Okafor 8g (fora), Nmecha 6g, Stach 5g (fora), Aaronson 4g.\n  - C47: Setores: WHU cria 37% pela esquerda (Diouf, Summerville) vs lado direito do Leeds (Rodon 6.8, Justin 7.5). LEE cria 41% pela direita (Longstaff, Stach) vs esquerda do WHU (Diouf 6.9). Inferioridade central do WHU (4-4-1-1 vs 3-5-2).\n  - C48: Duplas: WHU: Bowen → Soucek, Castellanos, Summerville, Mavropanos (2x cada). LEE: Longstaff → Rodon 2x, Bogle → Okafor (fora), Aaronson → Okafor (fora).\n  - C49: Expectativa por jogador: WHU xG bottom-up 1.41, LEE 1.43. WHU XI cobre 70% gols, LEE XI cobre 54% (desfalques reduzem). Castellanos xG 0.34, Calvert-Lewin xG 0.70.\n\n**Passo 2 – Jogador por jogador**\n\nListo todos os nomeados no briefing e faço leitura de 1 frase. Depois, no Passo 2b, as previsões.\n\nJogadores do West Ham:\n- Jarrod Bowen: Principal arma ofensiva, mas forma em queda (6.98) e sem gols nos últimos 5. Enfrenta defesa do Leeds desfalcada (Stach, Gudmundsson fora), o que pode abrir espaços para seus passes.\n- Mateus Fernandes: Meia estável (7.08), mas com pouca presença ofensiva (0.22 SoT/j). Deve focar na contenção e ligação, improvável que marque.\n- Konstantinos Mavropanos: Zagueiro artilheiro (3 gols), em boa forma (7.12). Ameaça em bolas paradas, especialmente contra defesa do Leeds que perdeu altura e desarmes.\n- El Hadji Malick Diouf: Lateral esquerdo com 5 assistências, bom cruzador (1.0/j). Enfrenta o lado direito do Leeds (Justin 7.5 em forma), duelo difícil.\n- Crysencio Summerville: Atacante rápido (7 gols), mas sem SoT nos últimos 5. Pode explorar o lado direito do Leeds, mas forma instável.\n- Tomáš Souček: Volante com faro de gol (6 gols, maioria no 2ºT). Chega bem de trás, especialmente em bolas paradas e cruzamentos.\n- Alphonse Areola: Goleiro sem ritmo (5 jogos perdidos), pode falhar em saídas. Defesa à sua frente desfalcada.\n- Aaron Wan-Bissaka: Lateral defensivo, pouco efetivo no ataque (0 SoT). Missão é anular o lado direito do Leeds.\n- Jean-Clair Todibo: Zagueiro com pouca minutagem recente (6.2 forma), pode ser ponto fraco contra Calvert-Lewin.\n- Maximilian Kilman: Zagueiro sem ritmo (5 jogos fora), situação similar a Todibo. Defesa entrosada?\n- Kyle Walker-Peters: Lateral/ala com 1 gol, sobe pouco. Pode ser opção ofensiva se Diouf for sobrecarregado.\n\nJogadores do Leeds:\n- Ethan Ampadu: Volante/Zagueiro adaptado, estável (7.01). Deve segurar o meio-campo e cobrir desfalques.\n- Pascal Struijk: Zagueiro em má forma (6.58). Pode ter dificuldades contra a velocidade de Bowen/Summerville.\n- Jayden Bogle: Ala direito, 2 gols, 3 assistências. Ofensivo, mas sem SoT recente. Enfrenta Diouf.\n- Joe Rodon: Zagueiro em boa forma (6.9 últ.5). Forte na bola aérea, ameaça no ataque (2 gols).\n- Gabriel Gudmundsson: Desfalcado (lesão). Lateral esquerdo que daria profundidade.\n- Dominic Calvert-Lewin: Centroavante em grande fase (15 gols, 4 nos últ.5). Principal ameaça, finalizador letal (1.0 SoT/j). Explora defesa desfalcada do WHU.\n- Brenden Aaronson: Meia ofensivo em queda (6.72). Deve flutuar, mas sem Okafor e Stach, perde parceiros de jogada.\n- Anton Stach: Desfalcado. Meia criativo (5 gols, 2.2 KP/j). Sua falta reduz criatividade.\n- Jaka Bijol: Zagueiro artilheiro (1 gol, 3 assists), boa forma (7.04). Perigo em bolas paradas.\n- James Justin: Ala/volante, 3 gols. Pode aparecer como surpresa, mas baixo volume.\n- Karl Darlow: Goleiro em ascensão (7.2). Seguro, mas defesa à frente desfalcada.\n\n**Passo 2b – Previsão por jogador**\n\nÂncora nos dados computados, movo conforme roteiro (West Ham precisa, Leeds administra). O roteiro tende a ser de pressão inicial do West Ham, Leeds tentando segurar e contra-atacar. Como Leeds não precisa, pode poupar intensidade, favorecendo ataque do West Ham. A defesa do Leeds perdeu 26% do volume defensivo (desarme+interceptação) com 4 desfalques (Gruev, Okafor, Stach, Gudmundsson). Isso beneficia o ataque do West Ham.\n\nPara o Leeds, apesar de não precisar, Calvert-Lewin está em ótima forma e pode ser acionado. Mas a falta de Okafor e Stach reduz criação. O time pode adotar postura reativa.\n\nAjusto xG ofensivo do West Ham para cima (prior Rota B 1.17, mas com desfalques do Leeds e motivação, subo para ~1.5-1.6). Para o Leeds, ajusto para baixo (prior 1.29, mas com desfalques e sem motivação, desço para ~1.0-1.1). Depois distribuo entre jogadores.\n\nVou listar cada jogador com sua previsão final, ancorando nos números do bloco Expectativa e ajustando conforme fatores.\n\n**West Ham United**:\n\n- **Taty Castellanos**: Comp. xG 0.34, P(marca) 29%, xSoT 1.33, P(SoT1) 74%, xKP 0.61. Fatores: arquétipo +25%, casa -15% (mas ele é meia? Não, é atacante). O resumo diz \"casa -15%\" mas isso parece erro? No bloco, Castellanos: \"casa -15% [1.15 SoT/90 em casa vs 1.38 geral]\". Então rende menos em casa. Porém, com desfalques do rival, há +10%. Forma recente: rating 7.0 vs 6.8, +4%. Considerando que o West Ham deve pressionar mais em casa precisando do resultado, imagino que ele terá mais volume. Ajusto xG ligeiramente para cima: 0.38. xSoT: 1.40. Leitura: Centroavante de área, deve ter chances em cruzamentos e jogadas aéreas, especialmente contra defesa desfalcada. Pode marcar de cabeça.\n\n- **Tomáš Souček**: Comp. xG 0.23, P(marca) 21%, xSoT 0.54, P(SoT1) 42%, xKP 0.56. Fatores: arquétipo -11%, casa +15%, canal +10% (contra-ataque e falta), desfalque rival +10%. No geral, ele se beneficia. Ajusto xG para 0.25. xSoT: 0.60. Leitura: Chega de surpresa na área, forte no jogo aéreo. Pode marcar em escanteios ou faltas, janela 46-60 é a dele.\n\n- **Jarrod Bowen**: Comp. xG 0.22, P(marca) 20%, xSoT 0.73, P(SoT1) 52%, xKP 1.45. Fatores: arquétipo -16% (bloco baixo o prejudica? Ele é driblador/velocidade, contra defesa postada rende menos), casa +14%, forma -5%, desfalque rival +10%. A forma recente caindo, mas continua sendo o principal criador. Ajusto xG: 0.20. Leitura: Joga pelos lados, buscando diagonais. Com Leeds fechado, terá menos espaço, mas pode criar para outros. Probabilidade de marcar é menor que Castellanos e Soucek.\n\n- **Crysencio Summerville**: Comp. xG 0.17, P(marca) 15%, xSoT 0.45, P(SoT1) 37%, xKP 0.91. Fatores: arquétipo -15%, casa -15%, desfalque rival +10%. Ajusto xG: 0.15. Leitura: Atacante de velocidade, mas sem espaço contra bloco baixo. Pode ser opção no contra-ataque se Leeds se abrir.\n\n- **Konstantinos Mavropanos**: Comp. xG 0.16, P(marca) 15%, xSoT 0.44, P(SoT1) 36%, xKP 0.17. Fatores: arquétipo +25%, casa +5%, forma +4%, desfalque rival +10%. Ajusto xG: 0.18 (sobe por bolas paradas). Leitura: Zagueiro perigoso no ataque, especialmente em escanteios. Defesa do Leeds perdeu altura com desfalques? Stach e Gudmundsson não são zagueiros, mas Gruev é volante. De qualquer forma, chance em bola parada.\n\n- **Kyle Walker-Peters**: Comp. xG 0.10, P(marca) 10%, xSoT 0.30, P(SoT1) 26%, xKP 0.56. Fatores: arquétipo +25%, casa +15%, desfalque rival +10%. Ajusto xG: 0.12. Leitura: Lateral pode aparecer em jogadas de ataque, mas foco defensivo. Chance baixa.\n\n- **Mateus Fernandes**: Comp. xG 0.07, P(marca) 6%, xSoT 0.18, P(SoT1) 16%, xKP 1.04. Fatores: arquétipo -14%, casa -12%, desfalque rival +10%. Ajusto xG: 0.06. Leitura: Meia de contenção e ligação, pouco finalizador. Focado em anular o meio-campo do Leeds.\n\n- **Pablo** (quem? Não listado no XI, mas aparece no Expectativa. Provavelmente um atacante reserva ou jovem. No XI provável não está. Ignoro? Mas é parte do XI esperado. Vou considerar como opção de banco com minutos. xG 0.05. Leitura: Jovem atacante, chance baixa.\n\n- **Axel Disasi**: Comp. xG 0.05, similar. Leitura: Zagueiro, baixa ameaça.\n\n- **El Hadji Malick Diouf**: Comp. xG 0.02, P(marca) 2%, xSoT 0.09, P(SoT1) 9%, xKP 0.90. Leitura: Lateral, foco defensivo/marcação. Baixíssima chance de gol.\n\n- **Mads Hermansen**: Goleiro, xG 0.\n\n**Leeds United**:\n\nNota: Leeds tem desfalques importantes, e sem motivação, o time pode não forçar. O xG bottom-up de 1.43 parece alto; vou reduzi-lo para refletir a falta de intensidade. O prior Rota B de 1.29 já é menor, e com desfalques cai mais. Ajusto para ~1.0 xG.\n\n- **Dominic Calvert-Lewin**: Comp. xG 0.70, P(marca) 51%, xSoT 1.66, P(SoT1) 81%, xKP 0.82. Fatores: arquétipo +5%, fora +8%, forma +5%, volume cedido +24% (rival cede muito SoT). Ele é o principal, mesmo com time misto deve ter chances. Mas a falta de criação pode limitá-lo. Ajusto xG para baixo: 0.55 (ainda alto). Leitura: Centroavante letal, em grande fase. Contra defesa do West Ham desorganizada, terá chances, especialmente em contra-ataques e bolas paradas. Principal candidato a marcar pelo Leeds.\n\n- **James Justin**: Comp. xG 0.14, P(marca) 13%, xSoT 0.40, P(SoT1) 33%, xKP 0.63. Fatores: arquétipo +25%, fora -15%, volume cedido +24%. Ajusto xG: 0.12. Leitura: Ala/volante com chegada, mas sem Stach e Okafor, perde referências. Pode surgir como surpresa.\n\n- **Jaka Bijol**: Comp. xG 0.10, P(marca) 10%, xSoT 0.41, P(SoT1) 33%, xKP 0.36. Fatores: arquétipo +25%, fora -11%, forma +6%, volume cedido +24%. Ajusto xG: 0.10. Leitura: Zagueiro artilheiro, perigo em bolas paradas. WHU sofre nesse tipo de jogada.\n\n- **Ao Tanaka**: Comp. xG 0.10, P(marca) 10%, xSoT 0.27, P(SoT1) 23%, xKP 1.36. Fatores: arquétipo -25%, fora -15%, forma +4%, volume cedido +24%. Ajusto xG: 0.08. Leitura: Meia criativo, mas sem Stach pode ter que recuar. Baixa probabilidade.\n\n- **Brenden Aaronson**: Comp. xG 0.10, P(marca) 9%, xSoT 0.40, P(SoT1) 33%, xKP 1.14. Fatores: arquétipo -25%, fora +10%, forma -3%, canal -11%, volume cedido +24%. Ajusto xG: 0.08. Leitura: Meia ofensivo em má fase. Sem parceiros, tende a sumir.\n\n- **Joe Rodon**: Comp. xG 0.07, P(marca) 7%, xSoT 0.23, P(SoT1) 21%, xKP 0.21. Fatores: arquétipo +25%, fora -15%, volume cedido +24%. Ajusto xG: 0.07. Leitura: Zagueiro com presença ofensiva em bolas paradas, mas fora de casa rende menos.\n\n- **Ethan Ampadu**: Comp. xG 0.07, P(marca) 7%, xSoT 0.28, P(SoT1) 25%, xKP 0.70. Ajusto xG: 0.06. Leitura: Volante de contenção, chance em chutes de fora.\n\n- **Daniel James**: Comp. xG 0.07, P(marca) 7%, xSoT 0.31, P(SoT1) 26%, xKP 0.73. Ajusto xG: 0.06. Leitura: Atacante rápido, opção de contra-ataque. Pode ter chances se Leeds jogar recuado e sair rápido.\n\n- **Jayden Bogle**: Comp. xG 0.05, P(marca) 4%, xSoT 0.15, P(SoT1) 14%, xKP 0.61. Ajusto xG: 0.04. Leitura: Ala defensivo, baixo volume.\n\n- **Pascal Struijk**: Comp. xG 0.03, P(marca) 3%, xSoT 0.17, P(SoT1) 15%, xKP 0.36. Ajusto xG: 0.03. Leitura: Zagueiro, baixa ameaça.\n\n- **Karl Darlow**: Goleiro, xG 0.\n\n**Soma dos xG dos jogadores:**\n\nWHU: Castellanos 0.38 + Soucek 0.25 + Bowen 0.20 + Summerville 0.15 + Mavropanos 0.18 + Walker-Peters 0.12 + Fernandes 0.06 + Diouf 0.02 + Pablo 0.05 + Disasi 0.05 = ~1.46 (próximo do bottom-up 1.41). Ajustei levemente para cima.\n\nLEE: Calvert-Lewin 0.55 + Justin 0.12 + Bijol 0.10 + Tanaka 0.08 + Aaronson 0.08 + Rodon 0.07 + Ampadu 0.06 + James 0.06 + Bogle 0.04 + Struijk 0.03 = ~1.19 (abaixo do bottom-up 1.43, refletindo desmotivação e desfalques).\n\nEsses valores são coerentes com meus xG totais esperados: WHU ~1.5, LEE ~1.2, total 2.7.\n\nAgora, Passo 3: Arestas.\n\n**Passo 3 – Arestas: o cruzamento**\n\nConstruo no mínimo 8 arestas, ligando conclusões por ID, com leitura e efeito.\n\nA1: [C4, C5, C6, C42] – Intenção assimétrica: West Ham precisa, Leeds não. Isso direciona o jogo para pressão do WHU e postura reativa do Leeds. Efeito: xG do WHU sobe (de 1.17 para ~1.5), xG do Leeds cai (de 1.29 para ~1.0). Mercado tende a under/team total do mandante.\n\nA2: [C40, C33, C34, C35, C36] – Desfalques do Leeds: perda de 16% gols (Okafor) e criação (Stach 2.2 KP/j, Gruev desarmes). Volume SoT do Leeds cai de 4.05 para abaixo de 3.5. Efeito: xG Leeds reduz em ~0.3.\n\nA3: [C43, C47] – Arquétipo: ambos times rendem melhor contra bloco baixo, mas Leeds sofre menos (1.00/j) que WHU (1.31/j) nesse cenário. Setores: inferioridade central do WHU (4-4-1-1 vs 3-5-2). Efeito: Leeds pode controlar o meio e ditar ritmo quando tiver a bola, mas como não precisa, pode não aproveitar. Redução moderada do xG do WHU (defesa do Leeds boa contra bloco baixo), mas desfalques atenuam.\n\nA4: [C17, C18, C31, C32, C38] – Cruzamento de faixas: ambas defesas sofrem mais no fim (76-90). Leeds marca mais no 31-45, WHU sofre mais no 61-75 e 76-90. Efeito: probabilidade de gols no 2ºT aumenta, especialmente após 75'. Isso casa com fadiga e desespero do WHU.\n\nA5: [C15, C29, C45] – Momentum e reação pós-gol: WHU reage bem ao sofrer e mata ao marcar. Leeds reage ao sofrer, mas neutro ao marcar. Se WHU marcar primeiro, tende a controlar. Se sofrer, pressiona. Efeito: cenários de virada ou empate são prováveis se houver gol cedo.\n\nA6: [C11, C25, C33, C34] – Qualidade individual: WHU depende de Bowen (queda) e Castellanos (regular). Leeds sem Okafor e Stach perde 26% dos gols e criatividade; Calvert-Lewin isolado. Efeito: menor número de gols de ambos os lados, mas WHU com mais opções de bola parada (Soucek, Mavropanos).\n\nA7: [C22, C27, C5] – Forma recente: Leeds excelente (VVVEV), mas enfrentou times sem motivação ou rebaixados (Burnley, Brighton já salvo). WHU péssimo (DDDVE), mas contra rivais fortes/motivados. Efeito: forma do Leeds pode ser inflada, a do WHU subestimada (jogos fora, contra Arsenal etc.). Ajuste baixo no xG do Leeds.\n\nA8: [C44, C47] – Mecanismo de gol: cruzamento é canal aberto para WHU (5.3x), especialmente pelo lado esquerdo (Diouf, Summerville) contra lado direito do Leeds. Efeito: WHU deve explorar cruzamentos, aumentando xG de Castellanos e Soucek.\n\nA9: [C6, C43] – Veredito de intenção x arquétipo: Jogo tende a travar, mas WHU precisa furar bloco baixo do Leeds. Leeds não precisa, mas se sofrer não deve se expor muito (sem motivação). Efeito: probabilidade de under 2.5 aumenta.\n\nA10: [C19, C20, C33, C34, C35, C36] – Desfalques defensivos: WHU sem Traoré e Fabianski (impacto mínimo), Leeds perde 26% do volume defensivo (desarme+interceptação). Efeito: defesa do Leeds mais frágil, especialmente em bolas paradas e pelo alto. Sobe xG WHU.\n\n**Passo 4 – Roteiros: o filme, com ramificação**\n\nConstruo 2-3 roteiros prováveis, com probs somando ~1.0.\n\nRoteiro 1: \"Pressão inicial do West Ham e gol cedo\" (prob 35%)\n- WHU começa intenso, aproveitando a necessidade e o mando. Leeds desinteressado cede espaços. WHU marca no 1ºT (31-45, janela quente). Após o gol, WHU recua um pouco (mata o jogo? Dinâmica diz que sim, Δ +2.5). Leeds reage, mas sem força. Jogo pode ter mais 1 gol no 2ºT (WHU em contra-ataque ou Leeds em desespero). Placar: 2-0 ou 2-1. Total: over 2.5 possível, mas mais provável under 3.5. Arestas: A1, A5, A8.\n\nRoteiro 2: \"Jogo travado, 0-0 no intervalo, gol solitário no 2ºT\" (prob 45%)\n- WHU pressiona, mas encontra defesa do Leeds bem postada (bom contra bloco baixo, mesmo desfalcada). Leeds não se arrisca, jogo morno. 1ºT 0-0. No 2ºT, WHU cresce (janela 46-60) e pode marcar. Se fizer, Leeds não reage com força. Se não, WHU se lança e pode sofrer contra-ataque. Placar: 1-0 ou 0-0. Total: under 2.5 forte. Arestas: A3, A9.\n\nRoteiro 3: \"Leeds surpreende e vence\" (prob 20%)\n- Leeds, apesar de desmotivado, tem qualidade individual (Calvert-Lewin) e explora erros defensivos do WHU. Marca primeiro em contra-ataque ou bola parada. WHU sente a pressão e se desorganiza. Leeds administra. Placar: 0-1 ou 1-2. Arestas: A4, A7.\n\n**Passo 4b – Linha do tempo: o jogo previsto NO RELÓGIO**\n\nBaseado no roteiro mais provável (Roteiro 2, 45%), mas considero os outros.\n\nPrimeiro, calculo os índices de faixa para determinar a distribuição-base de gols. Soma dos índices de ambos os lados por faixa:\n\n- Faixa 0-15: WHU 0.35 + LEE 0.49 = 0.84\n- 16-30: 0.27 + 0.27 = 0.54\n- 31-45: 0.38 + 0.60 = 0.98\n- 46-60: 0.41 + 0.46 = 0.87\n- 61-75: 0.49 + 0.62 = 1.11\n- 76-90: 0.71 + 0.65 = 1.36\n\nNormalizando (soma total = 0.84+0.54+0.98+0.87+1.11+1.36 = 5.70):\n- 0-15: 0.84/5.70 = 14.7%\n- 16-30: 0.54/5.70 = 9.5%\n- 31-45: 0.98/5.70 = 17.2%\n- 46-60: 0.87/5.70 = 15.3%\n- 61-75: 1.11/5.70 = 19.5%\n- 76-90: 1.36/5.70 = 23.9%\n\nEssas são as probabilidades-base de um gol ocorrer em cada faixa. Ajusto com momentum e roteiro.\n\nO roteiro 2 prevê 0-0 no 1ºT e gol no 2ºT. Então, redistribuo: 1ºT terá menos gols, 2ºT mais. Ajusto os números do xG total (2.7, sendo WHU 1.6, LEE 1.1). Divido em tempos: 1ºT ~0.9 xG, 2ºT ~1.8 xG (seguindo baseline 43/57, mas como é jogo travado, 1ºT pode ser ainda menor: ~35% dos gols, 2ºT 65%). Então xG 1ºT: 2.7*0.35 = 0.945, 2ºT: 1.755.\n\nDistribuo por faixas, ancorando nos índices normalizados, mas puxando para 2ºT.\n\n- 0-15: WHU começa pressionando, Leeds recuado. Índice baixo. Prob gol: baixa. Lado: WHU.\n- 16-30: Jogo equilibrado, meio-campo truncado. Prob baixa. Equilibrado.\n- 31-45: WHU aumenta pressão perto do intervalo. Índice médio. Prob média. Lado: WHU.\n- 46-60: WHU volta com tudo, Leeds pode sentir. Índice médio-alto. Prob alta. Lado: WHU.\n- 61-75: Se ainda 0-0, WHU se desespera, Leeds contra-ataca. Índice alto. Prob alta. Lado: equilibrado.\n- 76-90: Desespero total, ambas defesas cansam. Índice muito alto. Prob muito alta. Lado: equilibrado ou LEE.\n\nAjuste fino: no Roteiro 2, o gol tende a sair entre 46-75, com o WHU. Então:\n\nJanelas:\n- 0-15: leitura: WHU inicia pressionando, mas Leeds bem postado. Poucas chances claras. Índice baixo (0.84). Prob_gol: 0.05 (5%). Lado: home.\n- 16-30: jogo morno, Leeds retém a bola sem agredir. Índice 0.54. Prob: 0.03 (3%). Lado: equilibrado.\n- 31-45: WHU acelera no fim do tempo. Índice 0.98. Prob: 0.10 (10%). Lado: home.\n- 46-60: WHU volta intenso, explora bolas paradas. Índice 0.87. Prob: 0.15 (15%). Lado: home.\n- 61-75: jogo pode abrir se 0-0. WHU se lança, Leeds acha espaços. Índice 1.11. Prob: 0.18 (18%). Lado: equilibrado.\n- 76-90: tensão máxima, gols podem sair de ambos os lados. Índice 1.36. Prob: 0.22 (22%). Lado: equilibrado (leve away se Leeds contra-ataca).\n\nChecagem: soma das probs de gol por faixa? Esses números não são xG, são a probabilidade de haver pelo menos um gol naquela faixa (prob_gol da janela). Depois eu distribuo xG bands de acordo. O importante é que as janelas reflitam a história contada.\n\nTempos:\n- Primeiro: Análise completa: WHU começa em cima, mas Leeds se defende bem. Aos poucos, o jogo fica truncado, com WHU tendo mais posse, mas criando pouco. Perto do intervalo, pressão aumenta. Prob_gol 1ºT: P(≥1 gol) ~25% (baseado nos xG bands: 0-15: 0.05, 16-30: 0.03, 31-45: 0.10, mas não são independentes; vou calcular depois).\n- Segundo: Análise completa: WHU volta mais agressivo, explorando as bolas paradas e o cansaço do Leeds. Se ainda não fez, aumenta o volume. Leeds pode surpreender em contra-ataque. O jogo se decide nos últimos 30 minutos. Prob_gol 2ºT: P(≥1 gol) ~60%.\n\n**Passo 4c – Marcadores**\n\nDo Passo 2b, os maiores prob_marca:\n\nWHU:\n- Taty Castellanos: prob 29% (comp.) → ajusto para 33% (sobe com roteiro)\n- Tomáš Souček: prob 21% → 23%\n- Jarrod Bowen: prob 20% → 18% (queda de forma)\n- Konstantinos Mavropanos: 15% → 18%\n\nEscolho: Castellanos (33%), Soucek (23%), Mavropanos (18%).\n\nLEE:\n- Dominic Calvert-Lewin: 51% (comp.) → ajusto para 40% (menos serviço)\n- James Justin: 13% → 12%\n- Jaka Bijol: 10% → 12%\n\nEscolho: Calvert-Lewin (40%), Bijol (12%), Justin (12%). Mas como só 2-3, fico com Calvert-Lewin e Bijol.\n\nMotivos: Castellanos: volume de finalização, estilo de jogo aéreo contra defesa desfalcada. Soucek: chega bem em bolas paradas, janela 46-60. Mavropanos: zagueiro artilheiro, 3 gols na temporada, forma em alta. Calvert-Lewin: artilheiro do time, em grande fase, pênaltis. Bijol: zagueiro com presença ofensiva, 1 gol, 3 assists.\n\n**Passo 5 – Board completo de mercados**\n\nPreencho cada linha com base nos meus números.\n\nMeus xG: WHU 1.6, LEE 1.1, total 2.7.\nUso Poisson para calcular probabilidades aproximadas.\n\nProbabilidades 1x2 (simulação simples): \nCom λ WHU=1.6, λ LEE=1.1:\nP(WHU win) ≈ 44% (usando Poisson e ajuste Dixon-Coles, mas vou aproximar: média de gols esperados, desvio padrão)\nNa verdade, vou usar a relação: odds justas 1x2 podem ser derivadas de simulação. Com total 2.7, média de gols, a probabilidade de empate é significativa. Dixon-Coles já dá prior 32-31-38 para WHU-empate-LEE. Com minha alteração (WHU mais forte, LEE mais fraco), espero WHU ~42%, empate ~30%, LEE ~28%. Ajuste fino: WHU 40%, Draw 32%, LEE 28%. (Soma 100%).\n\nOver/Under:\n- Over 1.5: P(>1.5) com λ=2.7 → 1 - P(0) - P(1). P(0)=e^{-2.7}=0.067, P(1)=2.7*e^{-2.7}=0.181, soma 0.248. Então over 1.5 ~75%.\n- Over 2.5: P(>2.5) = 1 - P(0)-P(1)-P(2). P(2)= (2.7^2/2)*e^{-2.7}=0.244. Soma 0.067+0.181+0.244=0.492. Então over 2.5 ~51%.\n- Over 3.5: P(>3.5) = 1 - soma até 3. P(3)= (2.7^3/6)*e^{-2.7}=0.220. Soma até 3: 0.492+0.220=0.712. Over 3.5: 28.8% ~29%.\n\nBTTS: Prob de ambos marcarem = 1 - P(WHU não marca) - P(LEE não marca) + P(ambos não marcam). P(WHU não marca)=e^{-1.6}=0.202, P(LEE não marca)=e^{-1.1}=0.333. P(ambos não)=e^{-2.7}=0.067. Então BTTS = 1 - 0.202 - 0.333 + 0.067 = 0.532 → 53%.\n\nTeam totals:\nWHU over 0.5: 1 - e^{-1.6} = 1 - 0.202 = 79.8% ~80%.\nWHU over 1.5: 1 - e^{-1.6} - 1.6*e^{-1.6} = 1 - 0.202 - 0.323 = 0.475 → 47.5%.\nLEE over 0.5: 1 - e^{-1.1} = 1 - 0.333 = 66.7% ~67%.\nLEE over 1.5: 1 - 0.333 - 1.1*0.333 = 1 - 0.333 - 0.366 = 0.301 → 30%.\n\nHandicap -1: WHU -1: significa WHU ganha por 2 ou mais. Prob ≈ P(WHU gols - LEE gols >=2). Aproximadamente, com Poisson, P(WHU ganha por 2+) ~ 18% (estimativa). LEE -1: ~10%.\n\nDouble chance, DNB, odd/even: calculo baseado nas probs acima.\n\nDouble chance:\n1X: P(WHU or Draw) = 40%+32%=72% (mas precisa ser coerente: 1X = 1 - P(LEE win) = 1 - 0.28 = 72%).\n12: 1 - P(Draw) = 68%.\nX2: 1 - P(WHU win) = 60%.\n\nDraw no bet: WHU DNB = P(WHU win) / (1 - P(Draw)) = 0.40 / (1 - 0.32) = 0.40/0.68 = 58.8% ~59%. LEE DNB = 0.28/0.68 = 41.2% ~41%.\n\nOdd/Even: baseado na distribuição de gols. A média 2.7, a probabilidade de ímpar é ligeiramente menor que par? Com Poisson, skewness. Aprox: ímpar 48%, par 52%.\n\nAgora, para cada mercado, atribuo variancia (1-5) e valor (alto/medio/baixo/nenhum) e nota.\n\nValor: comparo minha prob com o prior Rota B. Se minha prob > prior, há valor no lado que subiu. Por exemplo, WHU over 0.5: minha prob 80% vs prior 69% (da Rota B? Na verdade, prior team total WHU over 0.5 era 69% da Rota B). Então valor alto. Já over 2.5: minha 51% vs prior 45% → valor medio. Empate: prior 31%, minha 32% → valor baixo.\n\nVariancia: baseada na escala de confiança. Apostas de maior variancia são mais arriscadas.\n\nListo as 19 linhas:\n\n1. 1x2 home: prob 40%, var 4 (média-alta), valor medio (prior 32%).\n2. 1x2 draw: prob 32%, var 3 (média), valor baixo (prior 31%).\n3. 1x2 away: prob 28%, var 4, valor baixo (prior 38%).\n4. DC 1X: prob 72%, var 2 (baixa), valor alto (prior 62%).\n5. DC X2: prob 60%, var 2, valor baixo (prior 68%).\n6. DC 12: prob 68%, var 2, valor medio? (prior 69%).\n7. DNB home: prob 59%, var 2, valor alto (prior 46%).\n8. DNB away: prob 41%, var 2, valor baixo (prior 54%).\n9. OU over 1.5: prob 75%, var 2, valor medio (prior 72%).\n10. OU over 2.5: prob 51%, var 3, valor medio (prior 45%).\n11. OU over 3.5: prob 29%, var 4, valor medio (prior 23%).\n12. BTTS yes: prob 53%, var 3, valor baixo (prior 52%).\n13. TT WHU over 0.5: prob 80%, var 1, valor alto (prior 69%).\n14. TT WHU over 1.5: prob 47.5%, var 2, valor alto (prior 33%).\n15. TT LEE over 0.5: prob 67%, var 1, valor baixo (prior 72%).\n16. TT LEE over 1.5: prob 30%, var 3, valor baixo (prior 37%).\n17. Handicap WHU -1: prob 18%, var 5, valor medio? (prior ~12%?).\n18. Handicap LEE -1: prob 10%, var 5, valor baixo.\n19. Odd/Even odd: prob 48%, var 3, valor baixo.\n\nNotas curtas.\n\n**Passo 6 – Refutação e confiança**\n\nDisciplina de variância: busco maior valor com menor variância. As melhores candidatas são:\n- TT WHU over 0.5: var 1, valor alto (80% vs 69%).\n- DC 1X: var 2, valor alto (72% vs 62%).\n- DNB WHU: var 2, valor alto (59% vs 46%).\n\nTT WHU over 0.5 é a mais segura. Mas preciso considerar o roteiro: se o jogo travar e WHU não marcar, perco. Porém, com tantos fatores a favor (motivação, mando, desfalques do Leeds), a probabilidade de WHU não marcar é baixa (20%). Ainda assim, é um mercado de baixo payoff (odds baixas). Mas o protocolo pede para cravar o melhor mercado com confiança.\n\nEntre as três, TT WHU over 0.5 é a de menor variância. Sigo com ela como best bet.\n\nAtaques da refutação:\n\nAtaque 1: [C14, C13] West Ham tem dificuldade para marcar: apenas 3 gols nos últimos 5 jogos, e não marcou em 13/37 partidas (35% dos jogos). Ataque enfraquece, mas não derruba: os últimos 5 foram contra defesas fortes ou fora de casa, e agora em casa contra defesa desfalcada, a tendência é melhorar.\n\nAtaque 2: [C43, A3] Leeds contra bloco baixo sofre apenas 1.00 g/j. Ou seja, mesmo desfalcado, é um time que se defende bem contra times de posse baixa como o WHU. Se o Leeds repetir a atuação defensiva, o WHU pode ter dificuldades. Ataque enfraquece: a defesa do Leeds é boa nesse contexto, mas os desfalques (C33-C36) pesam contra. Não derruba.\n\nAtaque 3: [C5, C27] Leeds em ótima forma (VVVEV) e pode querer terminar a temporada bem, mesmo sem objetivo. Além disso, Calvert-Lewin em grande fase pode castigar. Se o Leeds marcar primeiro, o WHU pode se desesperar e o jogo mudar. Ataque enfraquece: a motivação do Leeds é baixa, mas a forma recente é real. No entanto, os desfalques e a falta de objetivo podem fazer o time tirar o pé. Ainda assim, não derruba, mas adiciona risco.\n\nNenhum ataque derruba, mas o terceiro enfraquece. Portanto, confiança não é alta. Aplico regra: \n- High: ≥3 arestas convergentes e nenhum ataque derruba/enfraquece com dado forte. Aqui temos um ataque que enfraquece (Leeds em forma). As arestas convergem para WHU, mas a convergência não é total (A3 e A7 mostram ressalvas). Então, confiança medium.\n\nEscolho best bet: Team Total West Ham Over 0.5. Mas é uma aposta muito óbvia e de pouco valor? O protocolo diz para não ter medo de apostar em team total over 0.5 do lado forte. Vou manter.\n\nConfidence_regra: \"Medium: arestas A1, A2, A8 e A10 convergem para WHU marcar, mas A7 (boa forma do Leeds) e A3 (defesa do Leeds contra bloco baixo) enfraquecem a confiança. Nenhum ataque derruba, mas o risco de um 0-0 existe.\"\n\n**Mercados adicionais e coerência final**\n\nAgora vou preencher todos os campos do JSON conforme schema.\n\nPrimeiro, finalizo os xG e distribuição:\n\nxg_home: 1.6\nxg_away: 1.1\ntotal: 2.7\n\nxg_1t: 0.95 (35% de 2.7)\nxg_2t: 1.75 (65%)\n\nxg_bands home: distribuo 1.6 nas faixas de acordo com a proporção dos índices de ataque do WHU e timing. Baseado em C17: WHU marca mais em 76-90 e 0-15. Mas o roteiro pode alterar. Vou usar: 0-15: 0.24, 16-30: 0.08, 31-45: 0.24, 46-60: 0.20, 61-75: 0.24, 76-90: 0.60. (Soma 1.6). Aumentei 76-90 porque é onde a defesa do Leeds mais sofre e o desespero aumenta.\n\nxg_bands away: 1.1. Leeds marca: 0-15: 0.10, 16-30: 0.10, 31-45: 0.20, 46-60: 0.15, 61-75: 0.25, 76-90: 0.30. (Soma 1.1). Baseado em C31 e sofridos do WHU.\n\nConclusoes: listo todas as conclusões numeradas C1 a C49, com bloco, fato, dado, direção, força.\n\nDescartadas: conclusões não usadas em arestas. Algumas podem ficar de fora? Preciso garantir que toda conclusão é usada ou descartada. Vou verificar depois.\n\nBlocos sem sinal: se algum bloco não gerou conclusão, coloco aqui. Mas acho que todos geraram.\n\nJogadores: leitura de cada um (já tenho acima).\n\nPrevisoes_jogadores: lista com todos do XI provável, com os números ajustados e leitura.\n\nArestas: 10 arestas (A1 a A10).\n\nRoteiros: os três roteiros com prob, filme e arestas.\n\nJanelas: as 6 faixas com leitura, prob_gol, lado.\n\nTempos: primeiro e segundo com analise e prob_gol.\n\nMarcadores: home e away.\n\nMercados: 19 linhas.\n\nBest_bet: TT WHU over 0.5.\n\nRefutacao: os três ataques e conclusão.\n\nDrivers: os 3 fatores mais importantes.\n\nAgora, monto o JSON.\n\nObservações: nomes de campos em inglês conforme schema, mas textos em PT-BR. Valores numéricos com precisão.\n\nVou escrever o JSON pensando em cada parte.\n\n**home**:\n- xg: 1.60\n- xg_1t: 0.95\n- xg_2t: 1.75 (não é isso, xg_1t e xg_2t são o xG de cada tempo para o time. Então WHU: xg_1t = ~0.55 (0.95 total no 1ºT, mas dividido entre os times? No schema, home.xg_1t é o xG do time da casa no 1º tempo. Preciso decompor o total_1t entre home e away. Se total_1t = 0.95, e a razão de forças é WHU 1.6/2.7 ≈ 0.59, então WHU xg_1t ≈ 0.95 * (1.6/2.7) ≈ 0.56. Away xg_1t ≈ 0.39. Similar para 2ºT: WHU xg_2t ≈ 1.75 * (1.6/2.7) ≈ 1.04, away ≈ 0.71. Mas note que a distribuição pode ser diferente por tempo. Na verdade, pelas faixas, posso somar as xg_bands de cada tempo. xg_bands home: 0-15:0.24, 16-30:0.08, 31-45:0.24 → 1ºT home = 0.56; 46-60:0.20, 61-75:0.24, 76-90:0.60 → 2ºT home = 1.04. Bateu! xg_bands away: 0-15:0.10, 16-30:0.10, 31-45:0.20 → 1ºT away = 0.40; 2ºT away = 0.15+0.25+0.30 = 0.70. Ok.\n\nEntão home.xg_1t = 0.56, home.xg_2t = 1.04. (Soma 1.60)\naway.xg_1t = 0.40, away.xg_2t = 0.70. (Soma 1.10, arredondei para 1.10, mas lá em cima era 1.1). Vou manter 1.10.\n\nxg_bands home: como acima: 0-15: 0.24, 16-30: 0.08, 31-45: 0.24, 46-60: 0.20, 61-75: 0.24, 76-90: 0.60. Soma 1.60.\nxg_bands away: 0-15: 0.10, 16-30: 0.10, 31-45: 0.20, 46-60: 0.15, 61-75: 0.25, 76-90: 0.30. Soma 1.10.\n\nsummary: \"West Ham pressionado pela necessidade, ataque deve produzir mais em casa contra defesa desfalcada, mas depende de bolas paradas. Defesa vulnerável, mas Leeds sem intensidade.\", etc.\n\n**away**: similar.\n\n**general**:\n- total: 2.70\n- total_1t: 0.96 (0.56+0.40)\n- total_2t: 1.74 (1.04+0.70)\n- over25_prob: 0.51 (51%)\n- btts_prob: 0.53 (53%)\n\none_x_two: home 0.40, draw 0.32, away 0.28.\none_x_two_1t: prior Rota B dava 27/42/31. Com ajuste, acho que 1ºT tem menos gols, então empate sobe. Home 30, draw 45, away 25? Preciso de números. Vou calcular baseado nos xG do 1ºT. total_1t 0.96, λ_home=0.56, λ_away=0.40. Usando Poisson independente (não corrigido), P(home win 1ºT) = prob de home marcar mais que away. Aprox: simulando. P(home win) ≈ 0.33, draw ≈ 0.40, away ≈ 0.27. (Isso é sem Dixon-Coles, mas ok). Para 2ºT: λ_home=1.04, λ_away=0.70, total 1.74. P(home) ≈ 0.42, draw ≈ 0.33, away ≈ 0.25.\n\nconfidence: \"medium\"\nconfidence_regra: \"Medium: arestas A1, A2, A8 e A10 convergem para WHU marcar, mas A7 (boa forma do Leeds) e A3 (defesa do Leeds contra bloco baixo) enfraquecem a confiança. Nenhum ataque derruba, mas o risco de 0-0 existe.\"\n\nsummary: \"Jogo de necessidade vs desinteresse, com West Ham precisando vencer e Leeds cumprindo tabela. Desfalques do Leeds (Okafor, Stach) aumentam a chance de gol do mandante, mas a defesa visitante contra bloco baixo é sólida. Tendência de poucos gols, com vitória apertada do West Ham ou empate sem gols.\"\n\nAgora, conclusoes: vou listar todas as 49 conclusões com seus campos. Mas muitas são de força baixa ou repetitivas. Para cada, preencho id, bloco, fato, dado, direcao, forca. Exemplo: C1: contexto, \"Data e local sem impacto\", \"2026-05-24, London Stadium, clima bom\", \"neutra\", \"baixa\". Não preciso listar todas 49 aqui, mas no JSON vou listar.\n\nBlocos_sem_sinal: nenhum, pois todos renderam.\n\nDescartadas: aqui, conclusões que não usei em arestas. Por exemplo, C2 (descanso igual) pode ser usada? Usei indiretamente. Mas se não for citada em nenhuma aresta, vai para descartadas. Vou verificar uso: A1 usei C4,C5,C6,C42. C2 não usei. Posso descartar C2 com motivo \"descanso igual, sem assimetria\". C3 também. C7 e C8 usei em A4? A4 usei C17,C18,C31,C32,C38. C7 e C8 não usadas diretamente, mas aparecem no background. O protocolo diz: conclusão órfã vai para descartadas. Vou ser honesto: se não citei explicitamente na aresta, descarto. Porém, muitas conclusões são usadas como suporte. Para simplificar, vou considerar que as conclusões usadas nas arestas são aquelas listadas nos arrays \"liga\". Então, C7 não está em nenhuma aresta? Posso colocar C7 e C8 na A4? Mas A4 é sobre faixas, não sobre gols totais. Vou revisar minhas arestas e incluir mais conclusões para cobrir tudo.\n\nPara evitar descartar muitas, posso adicionar arestas ou ampliar as existentes. Vou criar uma aresta extra sobre ataque/defesa geral: \"A0: [C7, C21] – Ataque WHU fraco (1.16) vs defesa LEE fora vulnerável (1.78) e ataque LEE mediano (1.32) vs defesa WHU ruim (1.76) – equilíbrio.\" Mas isso é genérico. Melhor: A2 já cobre desfalques. A3 cobre arquétipo. A4 cobre faixas. A5 momentum. A6 qualidade. A7 forma. A8 mecanismo. A9 intenção. A10 desfalques defensivos. Faltam algumas conclusões: C2, C3 (contexto), C9, C10 (estilo), C11, C12 (qualidade), C13, C14 (forma), C15, C16 (momentum), C19, C20 (desfalques WHU), C22, C23, C24 (gols/estilo LEE), C25, C26 (qualidade LEE), C27, C28 (forma LEE), C29, C30 (momentum LEE), C31, C32 (faixas LEE), C33-C36 (desfalques LEE), C37-C38 (cruzamento faixa), C39-C41 (base rate), C42-C49 (probs/cruzamentos). Muitas dessas estão nas arestas. As que não estão: posso descartar com motivo \"dado já considerado em outras conclusões\" ou \"impacto indireto\". Mas o protocolo exige que toda conclusão seja usada ou descartada. Então, para ser preciso, listarei as não usadas em descartadas.\n\nVou listar as conclusões e marcar as usadas:\nA1: C4, C5, C6, C42\nA2: C40, C33, C34, C35, C36\nA3: C43, C47\nA4: C17, C18, C31, C32, C38\nA5: C15, C29, C45\nA6: C11, C25, C33, C34\nA7: C22, C27, C5\nA8: C44, C47\nA9: C6, C43\nA10: C19, C20, C33, C34, C35, C36\n\nConclusões não usadas: C1, C2, C3, C7, C8, C9, C10, C12, C13, C14, C16, C21, C23, C24, C26, C28, C30, C37, C39, C41, C46, C48, C49. (C39? Usei C40. C41? Não usei. C46? Artilharia, usei nos marcadores, mas não em aresta. Posso usar em uma aresta de marcadores? Mas o protocolo diz que arestas ligam conclusões do Passo 1. C46 é conclusão. Posso criar uma aresta sobre artilharia: \"A11: [C46, C33] – Artilheiros: desfalque de Okafor (8g) tira principal parceiro de Calvert-Lewin; WHU tem mais opções (Bowen, Soucek, Castellanos).\" Mas melhor descartar e explicar. O importante é que nenhum bloco fique sem sinal, e conclusões possam ser descartadas. Vou listar as descartadas com motivo breve.\n\nJogadores: já tenho a lista. Preciso incluir todos os nomeados, inclusive os desfalcados? O schema diz \"TODO jogador NOMEADO no briefing (blocos de qualidade individual E de desfalques, dos DOIS times)\". Então sim, incluo os desfalcados com leitura sobre sua ausência. Ex: Adama Traoré: \"Desfalque sem impacto ofensivo (0% gols), time já se adaptou.\" etc.\n\nPrevisoes_jogadores: apenas os do XI provável. Os desfalcados não aparecem aqui, pois não jogam. Porém, o bloco \"Expectativa por jogador\" lista apenas os do XI. Então, sigo essa lista. Note que alguns nomes como \"Pablo\" e \"Axel Disasi\" aparecem, mas não estavam no XI provável inicial. No XI provável listado no briefing, temos: West Ham: Bowen, Fernandes, Mavropanos, Diouf, Summerville, Soucek, Areola, Wan-Bissaka, Todibo, Kilman, Walker-Peters. Mas no Expectativa, aparecem Taty Castellanos (não no XI?), Tomáš Souček, Jarrod Bowen, Crysencio Summerville, Konstantinos Mavropanos, Kyle Walker-Peters, Mateus Fernandes, Pablo, Axel Disasi, El Hadji Malick Diouf, Mads Hermansen. Tem diferença: no XI provável não tem Castellanos? Estranho. O XI provável lista \"Taty Castellanos\" como artilheiro, mas no XI inicial não. No \"Provável XI & perfil individual\" listam 11: Bowen, Fernandes, Mavropanos, Diouf, Summerville, Soucek, Areola, Wan-Bissaka, Todibo, Kilman, Walker-Peters. Mas a artilharia menciona Castellanos com 5 gols. Provavelmente Castellanos é esperado para jogar, mas não apareceu na lista de 11? Vou verificar: no bloco \"Provável XI & perfil individual (11 mais usados)\" para West Ham, os 11 são: Jarrod Bowen, Mateus Fernandes, Konstantinos Mavropanos, El Hadji Malick Diouf, Crysencio Summerville, Tomáš Souček, Alphonse Areola, Aaron Wan-Bissaka, Jean-Clair Todibo, Maximilian Kilman, Kyle Walker-Peters. Isso são 11. Taty Castellanos não está. Depois, em \"Artilharia\", citam \"Taty Castellanos 5 gols\". E no \"Expectativa por jogador\", incluem \"Taty Castellanos (F, 72min esp.)\". Então, há uma inconsistência: o XI provável não inclui Castellanos, mas a expectativa sim. Considerando que o XI provável é uma hipótese baseada nos 11 mais usados, mas Castellanos pode ser titular ou entrar. No meu prognóstico, vou assumir que Castellanos é titular no lugar de alguém (talvez no ataque, mudando a formação). Vou ajustar: WHU deve jogar num 4-4-2 ou 4-2-3-1 com Castellanos de centroavante. O XI que vou usar nas previsoes_jogadores é o do bloco \"Expectativa\", que é mais confiável para o jogo. Então, listarei os 11 de lá: para WHU: Taty Castellanos, Tomáš Souček, Jarrod Bowen, Crysencio Summerville, Konstantinos Mavropanos, Kyle Walker-Peters, Mateus Fernandes, **Pablo** (quem? provavelmente um meia), **Axel Disasi** (zagueiro), El Hadji Malick Diouf, **Mads Hermansen** (goleiro). Hermansen é goleiro, mas Areola era o goleiro no XI provável. Talvez Hermansen seja o goleiro esperado? No XI provável, Areola era o goleiro. Mas na expectativa, Hermansen aparece. Preciso resolver: vou seguir o bloco de expectativa, pois é o mais atualizado. Mas Pablo e Axel Disasi não estão no perfil individual detalhado. Tudo bem.\n\nPara Leeds: XI provável: Ampadu, Struijk, Bogle, Rodon, Gudmundsson (fora), Calvert-Lewin, Aaronson, Stach (fora), Bijol, Justin, Darlow. Mas na expectativa, aparecem: Dominic Calvert-Lewin, James Justin, Jaka Bijol, Ao Tanaka, Brenden Aaronson, Joe Rodon, Ethan Ampadu, Daniel James, Jayden Bogle, Pascal Struijk, Karl Darlow. E também Sean Longstaff? Não, Longstaff aparece nas duplas. Na expectativa, eles consideram Ao Tanaka e Daniel James. Gudmundsson e Stach estão fora. Então, o XI esperado é: Calvert-Lewin, James (Daniel James), Justin, Bijol, Tanaka, Aaronson, Rodon, Ampadu, Bogle, Struijk, Darlow. Ok.\n\nVou montar as previsoes_jogadores com esses nomes.\n\n**Previsoes_jogadores** (detalhado):\n\nWest Ham:\n1. Taty Castellanos: x_sot 1.40, x_gols 0.38, prob_marca 0.33, prob_sot1 0.75, x_kp 0.61, leitura: \"Centroavante de área, terá chances em cruzamentos de Diouf e Bowen. Forte no jogo aéreo contra defesa desfalcada. Principal esperança de gol.\"\n2. Tomáš Souček: x_sot 0.60, x_gols 0.25, prob_marca 0.23, prob_sot1 0.45, x_kp 0.56, leitura: \"Chega de surpresa na área, perigo em bolas paradas. Janela 46-60 é a sua, pode marcar de cabeça.\"\n3. Jarrod Bowen: x_sot 0.73, x_gols 0.20, prob_marca 0.18, prob_sot1 0.52, x_kp 1.45, leitura: \"Principal criador, mas finalização em baixa. Deve flutuar pela direita e buscar assistências. Menos chance de gol próprio.\"\n4. Crysencio Summerville: x_sot 0.45, x_gols 0.15, prob_marca 0.13, prob_sot1 0.37, x_kp 0.91, leitura: \"Velocidade no contra-ataque, mas com Leeds fechado terá pouco espaço. Pode aparecer em jogadas individuais.\"\n5. Konstantinos Mavropanos: x_sot 0.44, x_gols 0.18, prob_marca 0.18, prob_sot1 0.36, x_kp 0.17, leitura: \"Zagueiro artilheiro, sobe em todas as bolas paradas. Defesa do Leeds sem alguns marcadores, chance de cabecear para o gol.\"\n6. Kyle Walker-Peters: x_sot 0.30, x_gols 0.12, prob_marca 0.11, prob_sot1 0.26, x_kp 0.56, leitura: \"Lateral direito, apoio ao ataque limitado. Pode arriscar chutes de longe, mas baixa probabilidade.\"\n7. Mateus Fernandes: x_sot 0.18, x_gols 0.06, prob_marca 0.06, prob_sot1 0.16, x_kp 1.04, leitura: \"Volante de contenção e saída de bola. Focado em anular o meio-campo adversário. Pouca presença ofensiva.\"\n8. Pablo (não identificado): x_sot 0.20, x_gols 0.05, prob_marca 0.05, prob_sot1 0.19, x_kp 1.10, leitura: \"Meia ofensivo de pouca experiência, chance baixa de contribuir. Pode ser opção de último passe.\"\n9. Axel Disasi: x_sot 0.21, x_gols 0.05, prob_marca 0.05, prob_sot1 0.19, x_kp 0.07, leitura: \"Zagueiro sem chegada ofensiva. Foco defensivo total.\"\n10. El Hadji Malick Diouf: x_sot 0.09, x_gols 0.02, prob_marca 0.02, prob_sot1 0.09, x_kp 0.90, leitura: \"Lateral esquerdo de ofício defensivo, mas pode cruzar. Anulado pelo lado direito do Leeds.\"\n11. Mads Hermansen: x_sot 0.00, ... goleiro.\n\nLeeds:\n1. Dominic Calvert-Lewin: x_sot 1.66, x_gols 0.55, prob_marca 0.40, prob_sot1 0.81, x_kp 0.82, leitura: \"Artilheiro em grande fase, finalizador nato. Mesmo com time desfalcado, terá chances em contra-ataques e bolas paradas. Principal arma do Leeds.\"\n2. James Justin: x_sot 0.40, x_gols 0.12, prob_marca 0.12, prob_sot1 0.33, x_kp 0.63, leitura: \"Ala/meia com chegada, mas sem parceiros de criação. Pode surpreender em infiltrações.\"\n3. Jaka Bijol: x_sot 0.41, x_gols 0.10, prob_marca 0.12, prob_sot1 0.33, x_kp 0.36, leitura: \"Zagueiro com presença ofensiva, perigo em escanteios. WHU sofre com bolas aéreas.\"\n4. Ao Tanaka: x_sot 0.27, x_gols 0.08, prob_marca 0.08, prob_sot1 0.23, x_kp 1.36, leitura: \"Meia criativo, mas recuado. Responsável por ligar jogadas, pouca finalização.\"\n5. Brenden Aaronson: x_sot 0.40, x_gols 0.08, prob_marca 0.08, prob_sot1 0.33, x_kp 1.14, leitura: \"Meia ofensivo em má fase. Sem Stach e Okafor, fica isolado. Pouco efetivo.\"\n6. Joe Rodon: x_sot 0.23, x_gols 0.07, prob_marca 0.07, prob_sot1 0.21, x_kp 0.21, leitura: \"Zagueiro, perigo relativo em bolas paradas. Foco defensivo.\"\n7. Ethan Ampadu: x_sot 0.28, x_gols 0.06, prob_marca 0.06, prob_sot1 0.25, x_kp 0.70, leitura: \"Volante de contenção, pode arriscar chutes de longe. Missão principal é anular Souček.\"\n8. Daniel James: x_sot 0.31, x_gols 0.06, prob_marca 0.06, prob_sot1 0.26, x_kp 0.73, leitura: \"Atacante rápido, opção de contra-ataque. Pode aproveitar erros defensivos do WHU.\"\n9. Jayden Bogle: x_sot 0.15, x_gols 0.04, prob_marca 0.04, prob_sot1 0.14, x_kp 0.61, leitura: \"Ala direito, baixo volume ofensivo. Duelo com Diouf deve ser equilibrado.\"\n10. Pascal Struijk: x_sot 0.17, x_gols 0.03, prob_marca 0.03, prob_sot1 0.15, x_kp 0.36, leitura: \"Zagueiro, sem impacto ofensivo significativo.\"\n11. Karl Darlow: goleiro.\n\n**Marcadores**: com base nisso, escolho:\nhome: \n- {\"nome\": \"Taty Castellanos\", \"prob\": 0.33, \"motivo\": \"Centroavante com volume de finalização (1.33 SoT/j) e principal alvo em cruzamentos. Defesa do Leeds desfalcada perdeu 26% do volume defensivo.\"}\n- {\"nome\": \"Tomáš Souček\", \"prob\": 0.23, \"motivo\": \"Volante com 6 gols na temporada, maioria no 2ºT. Explora bolas paradas e chegadas na área, defesa do Leeds sofre nesse tipo de lance.\"}\n- {\"nome\": \"Konstantinos Mavropanos\", \"prob\": 0.18, \"motivo\": \"Zagueiro artilheiro (3 gols), em boa forma (7.2 últ.3). Ameaça em escanteios, Leeds perdeu desarmes e altura.\"}\n\naway:\n- {\"nome\": \"Dominic Calvert-Lewin\", \"prob\": 0.40, \"motivo\": \"Artilheiro do time (14 gols), em excelente fase (4 gols nos últ.5). Finalizador nato, defesa do WHU vulnerável.\"}\n- {\"nome\": \"Jaka Bijol\", \"prob\": 0.12, \"motivo\": \"Zagueiro com 1 gol e 3 assists, sobe em bolas paradas. WHU sofreu 2 gols de zagueiros nos últ.5.\"}\n\n**Roteiros**: os três.\n\n**Janelas**: como descrito.\n\n**Tempos**: \nprimeiro: analise: \"WHU começa pressionando, mas Leeds se defende bem. Jogo truncado, poucas chances claras. WHU finaliza de longe ou em cruzamentos, mas sem eficácia. Leeds não se arrisca, esperando contra-ataque. Probabilidade de gol baixa.\"\nsegundo: analise: \"WHU volta mais intenso, explora bolas paradas e desgaste do Leeds. Se ainda não fez, aumenta pressão. Leeds pode achar espaços em contra-ataques. Jogo se decide nos últimos 30 minutos, com desespero do WHU.\"\n\nprob_gol primeiro: P(≥1 gol) = 1 - P(0 gols no 1ºT) = 1 - e^{-0.96} = 1 - 0.383 = 0.617? Mas isso é probabilidade de pelo menos um gol independente do tempo? Na verdade, com Poisson, P(total 1ºT >=1) = 1 - e^{-0.96} = 0.618. Mas minhas janelas tinham probs baixas. Há inconsistência. Preciso alinhar: se total_1t = 0.96, a prob de 0 gols é e^{-0.96}=0.38, então prob_gol 1ºT = 0.62. Mas minhas janelas tinham 0.05, 0.03, 0.10 = 0.18 de soma? Não, atenção: as prob_gol das janelas são a probabilidade de que HAJA AO MENOS UM GOL NAQUELA JANELA. Elas não são independentes, e a soma pode passar de 1, ou não precisam corresponder exatamente porque são condicionais. Mas o total de gols no 1ºT tem média 0.96, então a prob de ≥1 gol é 62%. Para as janelas, posso estimar: a prob de não haver gol em nenhuma das três janelas do 1ºT é (1-0.05)*(1-0.03)*(1-0.10) = 0.95*0.97*0.90 = 0.829, então prob de pelo menos um gol = 0.171, muito baixo. Para bater com 0.62, preciso aumentar as probs das janelas. Outra abordagem: a prob_gol da janela é a prob de ocorrer um gol naquela janela especificamente, dado que o jogo está naquele estado. Elas podem ser calibradas para que a prob conjunta bata com o total. Mas o schema não exige essa consistência dura; apenas que a distribuição faça sentido. Vou ajustar as probs das janelas para refletir melhor a média de 0.96 no 1ºT. Se 0.96 gols são esperados, e assumindo distribuição uniforme nas três faixas, cada faixa teria ~0.32 gols. A prob de ≥1 gol em cada faixa seria ≈ 1 - e^{-0.32} = 0.274. Mas minhas faixas têm índices diferentes. Usando os índices normalizados (14.7%, 9.5%, 17.2% para as três primeiras), a distribuição de gols no 1ºT (0.96) seria: 0-15: 0.14, 16-30: 0.09, 31-45: 0.17, e ainda faltam 0.56 para completar? Não, a soma dos índices do 1ºT é 14.7+9.5+17.2=41.4%. Então do total de 2.7, 41.4% = 1.12 gols no 1ºT. Mas eu quero apenas 0.96 no 1ºT. Então há um descolamento. Vou ignorar a normalização e simplesmente distribuir o total_1t pelas faixas de acordo com os índices, e então calcular prob_gol = 1 - e^{-xg_faixa}. Isso faz mais sentido.\n\nPara o 1ºT: xg_faixa 0-15 = 0.96 * (0.84/5.70) ? Não, a soma dos índices das três primeiras é 0.84+0.54+0.98 = 2.36. A soma total é 5.70. Então a proporção do 1ºT é 2.36/5.70 = 0.414. Mas eu defini total_1t=0.96. Então os xg_faixa no 1ºT seriam:\n0-15: 0.96 * (0.84/2.36) = 0.34\n16-30: 0.96 * (0.54/2.36) = 0.22\n31-45: 0.96 * (0.98/2.36) = 0.40\nSoma 0.96.\n\nAgora, prob_gol da janela = 1 - e^{-xG_faixa}.\n0-15: 1 - e^{-0.34} = 1 - 0.712 = 0.288 (~29%)\n16-30: 1 - e^{-0.22} = 0.197 (~20%)\n31-45: 1 - e^{-0.40} = 0.330 (33%)\n\nIsso é mais realista. Para o 2ºT: total_2t=1.74, índices 46-60: 0.87, 61-75: 1.11, 76-90: 1.36, soma 3.34. Proporções: 46-60: 0.26, 61-75: 0.33, 76-90: 0.41. xg_faixa:\n46-60: 1.74 * 0.26 = 0.45 → prob = 1 - e^{-0.45} = 0.362 (36%)\n61-75: 1.74 * 0.33 = 0.57 → prob = 0.435 (43.5%)\n76-90: 1.74 * 0.41 = 0.71 → prob = 0.508 (51%)\n\nEssas são as probs se não houvesse influência do roteiro. Mas meu roteiro diz que o jogo tende a travar no 1ºT e abrir no 2ºT, então posso ajustar essas probs um pouco, mas mantendo a coerência. Vou usar esses números como base e narrativa das janelas alinhada.\n\nEntão, janelas:\n- 0-15: prob_gol 0.29, lado home (WHU pressiona mais). Leitura: \"West Ham inicia pressionando, mas Leeds se defende bem. Algumas chances em bolas paradas. Índice cruzado 0.84, abaixo da média, mas WHU marca 0.24/j nessa faixa.\"\n- 16-30: prob_gol 0.20, lado equilibrado. Leitura: \"Jogo cai de intensidade, Leeds troca passes sem agredir. WHU sente a primeira queda. Índice 0.54, o mais baixo.\"\n- 31-45: prob_gol 0.33, lado home. Leitura: \"WHU acelera perto do intervalo, empurrado pela torcida. Leeds pode ceder. Índice 0.98, janela mais quente do 1ºT.\"\n- 46-60: prob_gol 0.36, lado home. Leitura: \"WHU volta com tudo, típico de time que precisa. Leeds sente o ritmo. Índice 0.87, médio, mas momentum WHU é alto aqui.\"\n- 61-75: prob_gol 0.44, lado equilibrado. Leitura: \"Se ainda 0-0, WHU se lança ao ataque, Leeds contra-ataca. Índice 1.11, alta probabilidade de gol.\"\n- 76-90: prob_gol 0.51, lado equilibrado (ou away leve). Leitura: \"Desespero total, ambas defesas cansadas. Leeds pode matar no contra-ataque. Índice 1.36, máxima do jogo.\"\n\nIsso faz mais sentido. As prob_gol não precisam somar 1, porque são independentes? Na verdade, a prob de pelo menos um gol no jogo é 1 - e^{-2.7} = 0.933. Pelas janelas: a prob de NÃO haver gol em nenhuma janela é (1-0.29)*(1-0.20)*(1-0.33)*(1-0.36)*(1-0.44)*(1-0.51) = 0.71*0.80*0.67*0.64*0.56*0.49 = 0.067, então prob de pelo menos um gol = 0.933, bate perfeitamente! Ótimo.\n\nEntão, ajusto as prob_gol das janelas para esses valores. E as leituras conforme acima.\n\nTempos:\nprimeiro: prob_gol = 1 - e^{-0.96} = 0.62 (62%). Analise: \"WHU pressiona, mas Leeds se segura. Chances escassas, 0-0 ao intervalo provável.\"\nsegundo: prob_gol = 1 - e^{-1.74} = 0.824 (82.4%). Analise: \"Jogo abre no 2ºT, com WHU se expondo. Gols prováveis, especialmente após 60'.\"\n\n**Mercados**: recalculo probs com meus xG para maior precisão.\n\nTotal xG = 2.7.\nOver 2.5: P(>2.5) = 1 - P(0) - P(1) - P(2). P(0)=e^{-2.7}=0.0672, P(1)=2.7*e^{-2.7}=0.1815, P(2)=(2.7^2/2)*e^{-2.7}=0.2450. Soma 0.4937. Over 2.5 = 0.5063 ≈ 51%.\nOver 1.5: 1 - 0.0672 - 0.1815 = 0.7513 ≈ 75%.\nOver 3.5: P(3)=(2.7^3/6)*e^{-2.7}=0.2205. Soma até 3: 0.7142. Over 3.5 = 0.2858 ≈ 29%.\nBTTS: P(ambos não)=e^{-2.7}=0.0672, P(WHU não)=e^{-1.6}=0.2019, P(LEE não)=e^{-1.1}=0.3329. BTTS = 1 - 0.2019 - 0.3329 + 0.0672 = 0.5324 ≈ 53%.\n\n1x2: calcular com Poisson independente pode ser impreciso, mas uso aproximação com simulação mental. Com λ1=1.6, λ2=1.1, P(WHU win) ≈ 0.43, P(Draw) ≈ 0.30, P(LEE win) ≈ 0.27. (Dixon-Coles daria empate mais alto, talvez 0.32). Vou manter 0.41, 0.32, 0.27.\n\nTeam totals:\nWHU over 0.5: 1 - 0.2019 = 0.7981 ≈ 80%.\nWHU over 1.5: 1 - 0.2019 - (1.6*0.2019)= 1 - 0.2019 - 0.3230 = 0.4751 ≈ 48%.\nLEE over 0.5: 1 - 0.3329 = 0.6671 ≈ 67%.\nLEE over 1.5: 1 - 0.3329 - (1.1*0.3329)= 1 - 0.3329 - 0.3662 = 0.3009 ≈ 30%.\n\nHandicap:\nWHU -1: probabilidade de WHU vencer por 2+ gols. Estimo ≈ 0.18 (18%).\nLEE -1: ≈ 0.08 (8%).\n\nDouble chance:\n1X: 1 - P(LEE win) = 0.73 (73%)\n12: 0.68 (68%)\nX2: 1 - P(WHU win) = 0.59 (59%)\n\nDNB:\nWHU DNB: P(WHU win) / (1 - P(Draw)) = 0.41/0.68 = 0.6029 ≈ 60%\nLEE DNB: 0.27/0.68 = 0.3971 ≈ 40%\n\nOdd/Even: par ~53%, ímpar ~47%.\n\nValor: comparo com prior Rota B. Onde minha prob é maior que a do prior, há valor.\n\nPrior Rota B (do briefing):\n1x2: 32/31/38\nOver 2.5: 45%\nBTTS: 52%\nTeam WHU over 0.5: 69%\nTeam WHU over 1.5: 33%\nTeam LEE over 0.5: 72%\nTeam LEE over 1.5: 37%\nDC 1X: 62%\nDC X2: 68%\nDC 12: 69%\nDNB WHU: 46%\nDNB LEE: 54%\n\nMinhas probs:\n1x2: 41/32/27 -> WHU sobe, LEE cai.\nOver 2.5: 51% -> sobe.\nBTTS: 53% -> estável.\nWHU over 0.5: 80% -> sobe (valor alto).\nWHU over 1.5: 48% -> sobe (valor alto).\nLEE over 0.5: 67% -> cai (valor baixo).\nLEE over 1.5: 30% -> cai.\nDC 1X: 73% -> sobe (valor alto).\nDC X2: 59% -> cai.\nDNB WHU: 60% -> sobe (valor alto).\n\nVarancia: atribuo conforme escala.\n\nAgora, best_bet: escolho \"team_total home over 0.5\". Market: \"team_total\", selection: \"over\", team: \"home\", line: 0.5. Confidence: \"medium\". Probability: 0.80. Evidence_for: IDs de conclusões e arestas que suportam (ex: C4, C6, C19, C33, A1, A2, A8, A10). Evidence_against: C14, C43, A3, A7. Analysis: \"West Ham precisa vencer para escapar do rebaixamento, enfrenta Leeds desmotivado e desfalcado (Okafor, Stach). Em casa, com volume de finalização razoável e defesa do Leeds enfraquecida, é provável que marque ao menos um gol. Risco: defesa do Leeds é sólida contra bloco baixo e WHU pode ter dificuldade de criação.\"\n\nRefutacao: ataques:\n1. alvo: \"Aposta em West Ham over 0.5\", argumento: \"WHU marcou apenas 3 gols nos últimos 5 jogos e não marcou em 35% dos jogos na temporada.\", ids: [\"C13\", \"C14\"], veredito: \"enfraquece\"\n2. alvo: mesma aposta, argumento: \"Leeds contra bloco baixo sofre apenas 1.00 g/j, mesmo desfalcado pode se segurar.\", ids: [\"C43\", \"A3\"], veredito: \"enfraquece\"\n3. alvo: mesma, argumento: \"Leeds em ótima forma (VVVEV) e Calvert-Lewin pode decidir, mudando o cenário.\", ids: [\"C27\", \"C5\"], veredito: \"nao_sustenta\" (porque a motivação do Leeds é baixa e desfalques pesam).\n\nconclusao: \"Apesar dos riscos, a necessidade do WHU e os desfalques do Leeds criam um cenário favorável para o gol do mandante. Nenhum ataque derruba a aposta, que é de baixa variância.\"\n\nDrivers: [\"Motivação assimétrica: WHU precisa, Leeds não\", \"Desfalques do Leeds: Okafor e Stach fora\", \"Defesa do Leeds desfalcada perde 26% do volume defensivo\"] (escolho os 3 fatores que mais moveram o número).\n\nAgora, preencho o JSON. Preciso incluir todos os campos obrigatórios. Vou escrever o JSON completo.\n\nCuidado com enumerações: os blocos devem ser exatamente os nomes definidos. Em \"blocos_sem_sinal\", o campo \"bloco\" deve ser um dos enum. Em \"conclusoes\", \"bloco\" também. Em \"descartadas\", \"id\" é o ID da conclusão descartada.\n\nAntes de finalizar, confiro se todos os jogadores mencionados no briefing estão em \"jogadores\". Listo os nomes que aparecem nos blocos de qualidade e desfalques:\n\nWHU: Jarrod Bowen, Mateus Fernandes, Konstantinos Mavropanos, El Hadji Malick Diouf, Crysencio Summerville, Tomáš Souček, Alphonse Areola, Aaron Wan-Bissaka, Jean-Clair Todibo, Maximilian Kilman, Kyle Walker-Peters, Adama Traoré (desfalque), Łukasz Fabiański (desfalque). Além disso, Taty Castellanos não está no XI provável mas é citado na artilharia e na expectativa. Vou incluí-lo nos jogadores também, pois é nomeado. Callum Wilson é citado na artilharia, mas não no XI nem na qualidade, então não preciso? O protocolo diz \"jogador NOMEADO no briefing (blocos de qualidade individual E de desfalques)\". Callum Wilson aparece na artilharia, mas sem detalhes. Pode ser omitido. Pablo e Axel Disasi não são nomeados em qualidade, apenas na expectativa. Não preciso deles em \"jogadores\", apenas em \"previsoes_jogadores\". Mas para seguir estritamente o protocolo, em \"jogadores\" devo listar todos os jogadores NOMEADOS no briefing. Então listo todos os que têm nome em qualquer bloco, incluindo artilharia? O texto diz: \"TODO jogador NOMEADO no briefing (blocos de qualidade individual E de desfalques, dos DOIS times)\". Então, apenas qualidade individual e desfalques. Qualidade individual é o bloco \"Provável XI & perfil individual\". Desfalques são os listados. Então, os jogadores de qualidade são aqueles 11 de cada time. Os desfalques também. Mais ninguém. Callum Wilson não está, Taty Castellanos não está (estava na artilharia apenas), então não preciso inclui-los em \"jogadores\". Mas Taty Castellanos aparece na \"Expectativa por jogador\", que é um bloco de cruzamento, não de qualidade. Ok. Então, meus \"jogadores\" terão os 22 (11 de cada) mais os desfalques (Adama Traoré, Fabianski, Okafor, Stach, Gruev, Gudmundsson). Isso dá 28? Na verdade, alguns desfalques podem já estar na lista de qualidade? Stach está na lista de qualidade do Leeds? Sim, Stach está listado no XI provável (⚠️(fora) Anton Stach). Gudmundsson também. Então, eles já são incluídos. Os desfalques que não estão na lista de qualidade: Adama Traoré, Fabianski, Okafor, Gruev. Esses devem ser adicionados. No total, para WHU, qualidade (11) + desfalques extras (Traoré, Fabianski) = 13. Para Leeds, qualidade (11, incluindo Stach e Gudmundsson que estão lesionados) + desfalques extras (Okafor, Gruev) = 13. Mas Stach e Gudmundsson já estão na qualidade. Então total Leeds 13? Vou ver: qualidade Leeds: Ampadu, Struijk, Bogle, Rodon, Gudmundsson, Calvert-Lewin, Aaronson, Stach, Bijol, Justin, Darlow. Desfalques Leeds: Okafor, Stach, Gruev, Gudmundsson. Stach e Gudmundsson repetidos. Então, adiciono Okafor e Gruev. Total 13. Ok.\n\nPara cada um, faço leitura.\n\nMontarei o JSON agora. Como é grande, serei organizado.\n\nObservação: os nomes dos blocos no campo \"bloco\" devem ser exatamente os listados: \"contexto\", \"tabela_motivacao\", \"home_gols\", \"home_estilo\", etc. Vou usá-los.\n\nNas conclusões, \"direcao\" é uma string qualquer, \"forca\" é \"alta\", \"media\", \"baixa\".\n\nNas arestas, \"efeito\" é string.\n\nNos roteiros, \"arestas\" é array de IDs.\n\nNas janelas, \"faixa\" é \"0-15\", etc.\n\nNos tempos, \"prob_gol\" é number.\n\nNos mercados, \"market\" e \"selection\" devem ser do enum. \"team\" pode ser \"home\", \"away\", ou null. \"line\" number ou null.\n\nNa best_bet, similar.\n\nVou começar a escrever o JSON. Como é muito grande, farei no final do raciocínio.\n\nRaciocínio completo, agora gerar saída.",
+  "reasoningTokens": 24246,
+  "elapsedMs": 552477,
+  "promptChars": 58542,
+  "error": null
+}

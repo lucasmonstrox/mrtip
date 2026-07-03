@@ -1,0 +1,1175 @@
+{
+  "matchId": "60a3d183-588a-47b8-985c-322ce5436927",
+  "homeName": "Sunderland",
+  "awayName": "Chelsea",
+  "actual": "Sunderland 2-1 Chelsea (HT 1-0)",
+  "ftH": 2,
+  "ftA": 1,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Sunderland x Chelsea\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: Stadium of Light, Sunderland (grass)\n- Clima: scattered clouds · 21°C (sens. 20.6°C) · vento 2.8 m/s · umidade 55% · nuvens 41% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Sunderland 7 dias (último: liga, 2026-05-17) · Chelsea 5 dias (último: liga, 2026-05-19)\n- Viagem do visitante: ~390 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- Sunderland: 10º, 51 pts · Chelsea: 8º, 52 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Sunderland: 10º, 51 pts, 1 jogo(s) restante(s) (máx possível 54 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n  - Chelsea: 8º, 52 pts, 1 jogo(s) restante(s) (máx possível 55 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n  - disputa pela vaga (8º): o Chelsea **precisa vencer** pra travar (empate ainda deixa 2 rival vivo). Quem ainda ameaça → Brentford (9º, 52 pts, máx 55) pode **passar em pontos** — vencendo, se o Chelsea tropeçar; Sunderland (10º, 51 pts, máx 54) pode **passar em pontos** — vencendo, se o Chelsea tropeçar; Newcastle United (11º, 49 pts, máx 52) empata em pontos mas está **-7 de saldo** (+0 vs +7) — só passa se o Chelsea perder por muito E ele vencer por muito (virar 7); Everton (12º, 49 pts, máx 52) empata em pontos mas está **-9 de saldo** (-2 vs +7) — só passa se o Chelsea perder por muito E ele vencer por muito (virar 9); Fulham (13º, 49 pts, máx 52) empata em pontos mas está **-13 de saldo** (-6 vs +7) — só passa se o Chelsea perder por muito E ele vencer por muito (virar 13)\n\n🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui.\n\n## Sunderland (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **40 marcados / 47 sofridos** em 37j · média **1.08 marca / 1.27 sofre** por jogo\n- **Em casa (18j): marca 1.28 / sofre 1.06** (23 gols) · por tempo: 1ºT 0.32/0.62 · 2ºT 0.76/0.65\n- **Finalização: 125 SoT (3.38/j · casa 3.5/j) · conv 29%** (aberta, −4 pên) · sofre 4.65 SoT/j (adv 26%) · 6.95 KP/j\n- **Volume: 10.1 chutes/j (7.2 na área) · 1.7 big chances/j** · posse 44.9%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 44.8/55.9 · chutes pra fora 3.9/5.5 · bloqueados 2.9/4.4 · de fora da área 3/5.1\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 51.8/45 · chutes pra fora 3.6/4.8 · bloqueados 3.6/3.4 · de fora da área 3.8/5\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.79**\n  - **Robin Roefs** nota **6.97** (season) · forma 6.5↓ (últ.5 do time: 5.8→5.2→7.6→7→6.9 📈 subindo) · 3× MOTM · 36j\n    ↳ 0.11 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0.03 dribles/j · def: 0 desarme + 0 int + 0.97 duelo/j · ~91 min/j\n  - **Enzo Le Fée** nota **7.07** (season) · forma 7.46↑ (últ.5 do time: 8.2→6.3→6.7→7.7→8.4 📈 subindo) · 6× MOTM · 39j\n    ↳ **6G+6A** · gols aos 30',30',33',76',81',82' — 3 tardios (76'+) · 1.77 KP/j (últ.5: 2.2↑) · 0.33 SoT/j (últ.5: 0.8↑) · 0.44 dribles/j · def: 2.41 desarme + 0.85 int + 4.49 duelo/j · 0.87 cruz/j · ~84 min/j\n  - **Trai Hume** nota **6.79** (season) · forma 6.74= (últ.5 do time: 7.3→6.2→6.8→6.9→6.5 ➡️ estável) · 39j\n    ↳ **1G+1A** · gols aos 86' — mais no 2ºT · 0.69 KP/j (últ.5: 0.6=) · 0.21 SoT/j (últ.5: 0.2=) · 0.13 dribles/j · def: 1.77 desarme + 0.69 int + 4.74 duelo/j · 0.44 cruz/j · ~81 min/j\n  - **Nordi Mukiele** nota **6.99** (season) · forma 6.76↓ (últ.5 do time: 6.3→6.2→7.4→7.2→6.7 📈 subindo) · 1× MOTM · 34j\n    ↳ **3G+4A** · gols aos 16',17',61' · 0.71 KP/j (últ.5: 0.6=) · 0.18 SoT/j (últ.5: 0.2=) · 0.44 dribles/j · def: 2.03 desarme + 1.15 int + 5.59 duelo/j · 0.44 cruz/j · ~88 min/j\n  - **Noah Sadiki** nota **6.71** (season) · forma 6.62= (últ.5 do time: 6.7→6→7.2→7→6.2 📈 subindo) · 34j\n    ↳ **0G+1A** · 0.5 KP/j (últ.5: 1↑) · 0.15 SoT/j (últ.5: 0.2↑) · 0.88 dribles/j · def: 1.47 desarme + 1.03 int + 3.76 duelo/j · 0.12 cruz/j · ~87 min/j\n  - **Granit Xhaka** nota **7.15** (season) · forma 7.22= (últ.5 do time: 6.5→6.9→8→7.8→6.9 📈 subindo) · 3× MOTM · 35j\n    ↳ **1G+6A** · gols aos 46' — mais no 2ºT · 1.06 KP/j (últ.5: 1.2=) · 0.14 SoT/j (últ.5: 0↓) · 0.34 dribles/j · def: 1.46 desarme + 0.91 int + 4.49 duelo/j · 0.63 cruz/j · ~84 min/j\n  - **Omar Alderete** nota **6.86** (season) · forma 6.54↓ (últ.5 do time: 6.1→6.2→6.8→7.2→6.4 📈 subindo) · 2× MOTM · 34j\n    ↳ **1G+1A** · gols aos 38' · 0.29 KP/j (últ.5: 0↓) · 0.26 SoT/j (últ.5: 0.2↓) · 0.56 dribles/j · def: 1.06 desarme + 1.09 int + 4.53 duelo/j · 0.09 cruz/j · ~85 min/j\n  - ⚠️(fora) **D. Ballard** nota **6.86** (season) · forma 5.63↓ (últ.5 do time: 6.4→6.1→4.4→–→– 📉 caindo) · **faltou 2/5** · 1× MOTM · 31j\n    ↳ **2G+0A** · gols aos 36',73' · 0.52 KP/j (últ.5: 0.4↓) · 0.35 SoT/j (últ.5: 0.4=) · 0.13 dribles/j · def: 1.1 desarme + 0.68 int + 5.84 duelo/j · 0.03 cruz/j · ~74 min/j\n  - **Brian Brobbey** nota **6.69** (season) · forma 6.68= (últ.5 do time: 6.4→6.3→6.8→6.8→7.1 📈 subindo) · 31j\n    ↳ **7G+1A** · gols aos 59',66',69',71',80',90',90' — mais no 2ºT, 3 tardios (76'+) · 0.48 KP/j (últ.5: 1↑) · 0.55 SoT/j (últ.5: 0.8↑) · 0.06 dribles/j · def: 0.29 desarme + 0 int + 3.48 duelo/j · ~62 min/j\n  - **R. Mandava** nota **6.74** (season) · forma 6.6= (últ.5 do time: 5.8→6.5→6.6→7.2→6.9 📈 subindo) · 24j\n    ↳ **0G+1A** · 0.25 KP/j (últ.5: 0.4↑) · 0 SoT/j (últ.5: 0=) · 0.63 dribles/j · def: 1.54 desarme + 1.25 int + 4.88 duelo/j · 0.17 cruz/j · ~78 min/j\n  - **Lutsharel Geertruida** nota **6.7** (season) · forma 7.3↑ (últ.5 do time: –→–→–→7.4→7.2 ⚠️ poucos jogos na janela) · **faltou 3/5** · 28j\n    ↳ 0.28 KP/j (últ.5: 0.2↓) · 0.1 SoT/j (últ.5: 0.4↑) · 0.24 dribles/j · def: 1.34 desarme + 0.76 int + 2.28 duelo/j · 0.07 cruz/j · ~61 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: VEEDD** (5pts) · **7 feitos / 11 sofridos** · marca 1.4↑ / sofre 2.2↑ g/j · SoT 4 feito / 5 sofrido\n- **Consistência: MARCOU em 24/37** (casa 13/18 · fora 11/19) · não-marcou 13 · clean sheet 11 · BTTS 17/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Aston Villa** (fora · **Derrota 3-4**, HT 1-2) — 7-7 SoT · posse 47%/48% (1ºT/2ºT) · adv 4º briga-top · você 11º · seu fora até ali 0.6 marca/1.4 sofre\n- vs **Nottingham Forest** (casa · **Derrota 0-5**, HT 0-4) — 4-6 SoT · posse 63%/59% (1ºT/2ºT) · adv 16º briga-Z · você 11º · seu casa até ali 1.4 marca/0.9 sofre\n- @ **Wolverhampton Wanderers** (fora · **Empate 1-1**, HT 1-0) 🔻 cedeu o empate (vencia no HT) — 2-7 SoT · posse 60%/42% (1ºT/2ºT) · adv 20º REBAIX. · você 12º · seu fora até ali 0.8 marca/1.5 sofre\n- vs **Manchester United** (casa · **Empate 0-0**, HT 0-0) — 4-1 SoT · posse 53%/51% (1ºT/2ºT) · adv 3º Eur-gar · você 12º salvo · seu casa até ali 1.4 marca/1.1 sofre\n- @ **Everton** (fora · **Vitória 3-1**, HT 0-1) 🔄 **VIRADA** (perdia no HT) — 3-4 SoT · posse 60%/58% (1ºT/2ºT) · adv 10º salvo · você 12º salvo · seu fora até ali 0.8 marca/1.5 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Aston Villa (FORA · D 3-4) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -3 -7 -2 +1 +4 +4 +3 +5 +7 +7 +5 +5 +5 +2] · 16'-30' [-2 -6 -6 -7 -4 -2 -2 -3 -3 -1 -3 -2 0 +3 +5] · 31'-45' [+3 +3 +5 +3 +1 -4 -7 -6 -3 -2 0 +1 +3 +1 -1] · ‖INTERVALO‖ · 46'-60' [-4 -7 -6 -4 -2 -1 0 +1 +2 +3 -3 -8 -6 -5 -3] · 61'-75' [-2 -3 -3 -4 -7 -3 -3 +1 +2 +2 +2 +2 +1 +2 +5] · 76'-90' [+4 +5 +3 +3 +3 +1 -3 -6 -4 -3 +3 +5 +5 +3 +3] · 91'+ [+3 +2 -2 -4 -4 -3 -3]\n    ⚽ gols: 2'✗ 9'✓ 36'✗ 46'✗ 86'✓ 87'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **5** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **5**\n  - vs Nottingham Forest (CASA · D 0-5) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 +2 +1 -1 +1 +7 +8 +9 +6 +3 0 -1 0 +1 +6] · 16'-30' [+6 +4 +2 +3 +1 0 -3 -5 -4 -1 0 0 -5 -4 -4] · 31'-45' [-4 -8 -7 -6 -7 -5 -4 -6 -4 +1 +1 0 0 +2 +3] · ‖INTERVALO‖ · 46'-60' [+3 +2 +2 0 -1 -1 0 -1 0 +2 +2 +6 +7 +5 +7] · 61'-75' [+7 +9 +9 +9 +15 +11 +7 +3 +2 +3 0 0 +1 +4 +3] · 76'-90' [+5 +4 +4 +5 +6 +6 +10 +11 +9 +10 +8 +12 +10 +7 +5] · 91'+ [+6 +6 +17 +9 +4 +1]\n    ⚽ gols: 17'✗ 31'✗ 34'✗ 37'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **3** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **3**\n  - @ Wolverhampton Wanderers (FORA · E 1-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 0 0 -2 0 +2 +2 +3 +3 0 -1 -1 -1 -1 +1] · 16'-30' [+2 +5 +6 +4 +3 +9 +6 +6 +6 +6 +4 +3 +6 +6 +4] · 31'-45' [+3 +1 +1 -1 -9 -9 -6 -4 -3 -9 -6 -6 -6 -2 -5] · ‖INTERVALO‖ · 46'-60' [-2 -7 -11 -11 -12 -9 -12 -9 -5 -9 -9 -9 -6 -6 -6] · 61'-75' [-6 -7 -7 -4 -3 -5 -2 -1 +4 +4 +1 -3 -3 -2 0] · 76'-90' [+2 +4 +3 +5 +6 +12 +9 +2 -5 -5 -8 -5 -3 -4 -1] · 91'+ [-1 0 -1 -3]\n    ⚽ gols: 17'✓ 54'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **4** · 76'-90' **1**\n  - vs Manchester United (CASA · E 0-0) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 -1 0 0 +4 +5 +3 +5 +8 +1 +1 +3 +4 +3 +2] · 16'-30' [+1 +1 +2 +8 +8 +5 +2 +1 +2 +2 +3 +2 +1 -5 -3] · 31'-45' [+1 +1 +1 +7 +7 +8 +8 +5 +6 +8 +5 +3 +2 +2 +1] · ‖INTERVALO‖ · 46'-60' [-3 0 +1 0 -3 -5 -10 -6 -6 -4 -4 -4 -3 -3 -2] · 61'-75' [-2 -1 -1 +2 +2 +2 +2 +1 +1 0 +3 +1 +2 +3 +3] · 76'-90' [+2 0 0 0 0 0 0 +1 0 -1 -1 +1 +3 +3 +3] · 91'+ [-2 -5 -5 -7]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **2**\n  - @ Everton (FORA · V 3-1) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 +1 0 -2 -2 -3 -3 -3 -3 0 +1 +2 +3 +2] · 16'-30' [+3 +3 +1 +2 +1 +1 +1 +1 +2 +5 +7 +8 +6 +6 +4] · 31'-45' [+4 +3 +3 0 -5 -4 -4 -6 -4 -6 -5 -7 -9 -9 -5] · ‖INTERVALO‖ · 46'-60' [+2 +1 +4 +3 +3 +3 0 +1 +5 +6 +6 +5 +5 +8 +7] · 61'-75' [+7 +4 +4 +3 -4 -4 -5 -4 -4 -4 -3 -3 -3 -2 -2] · 76'-90' [-6 -4 -4 -4 -2 -1 +4 +1 -3 -3 -5 -5 -4 -4 -3] · 91'+ [-2 +3 +1 +1 0 -1]\n    ⚽ gols: 43'✗ 59'✓ 81'✓ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **3** · 31'-45' **2** ‖ 46'-60' **2** · 61'-75' **1** · 76'-90' **5**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.05 · 16-30: 0.16 · 31-45: 0.11 · 46-60: 0.14 · 61-75: 0.27 · 76-90: 0.35\n- Sofre por faixa (/j): 0-15: 0.22 · 16-30: 0.14 · 31-45: 0.27 · 46-60: 0.19 · 61-75: 0.24 · 76-90: 0.22\n- 1ºT: marca 12 / sofre 23 (totais na temporada)\n\n### Desfalques de Sunderland neste jogo\n- **D. Ballard** (Red Card Suspension) — 2 gols + 0 assists até a data; season: **5% dos gols** do time (5% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 1.07 g/j (29j) vs sem ele 1.13 g/j (8j) = +6%; finaliza **0.31 SoT/jogo** (time: 3.41 SoT/j com ele vs 3.25 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.7 interceptações/j** (~9% do time) · 1.1 desarmes/j · 5.8 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.6 key passes/j\n- **Simon Moore** (Broken Hand) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.08 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **R. Mundle** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/7 gols = **0%** (≈ estável); with/without: com ele 0.93 g/j (14j) vs sem ele 1.17 g/j (23j) = +26%; finaliza **0.14 SoT/jogo** (time: 3.5 SoT/j com ele vs 3.3 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.4 desarmes/j · 1.7 duelos ganhos/j · 0.1 cruz. certos/j · 0.5 dribles certos/j · 0.1 key passes/j\n\n## Chelsea (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **57 marcados / 50 sofridos** em 37j · média **1.54 marca / 1.35 sofre** por jogo\n- **Fora (18j): marca 1.72 / sofre 1.39** (31 gols) · por tempo: 1ºT 0.7/0.62 · 2ºT 0.84/0.73\n- **Finalização: 164 SoT (4.43/j · fora 4.61/j) · conv 30%** (aberta, −7 pên) · sofre 4.19 SoT/j (adv 31%) · 10.27 KP/j\n- **Volume: 13.5 chutes/j (9 na área) · 2.7 big chances/j** · posse 57.8%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 54.5/43.7 · chutes pra fora 4.7/3.8 · bloqueados 4.4/2.6 · de fora da área 4.5/3.1\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 49.4/35.6 · chutes pra fora 4/3 · bloqueados 5.6/1.4 · de fora da área 5.8/2\n\n### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)\n- **Nota média do time (todas comps): 6.89**\n  - **Robert Sánchez** nota **6.78** (season) · forma 6.7= (últ.5 do time: 7.3→6.2→–→7→6.3 ➡️ estável) · **faltou 1/5** · 2× MOTM · 41j\n    ↳ **0G+1A** · 0.12 KP/j (últ.5: 0↓) · 0 SoT/j (últ.5: 0=) · 0 dribles/j · def: 0.05 desarme + 0.02 int + 0.73 duelo/j · ~88 min/j\n  - **Enzo Fernández** nota **7.28** (season) · forma 7.6↑ (últ.5 do time: 8.3→7.6→6.6→7→8.5 ➡️ estável) · 10× MOTM · 43j\n    ↳ **12G+5A** · gols aos 18',23',23',24',34',35',56',64',88',90'… — 4 tardios (76'+) · 1.93 KP/j (últ.5: 2.6↑) · 0.88 SoT/j (últ.5: 1=) · 0.35 dribles/j · def: 1.49 desarme + 0.51 int + 3.77 duelo/j · 0.49 cruz/j · ~82 min/j\n  - **Moisés Caicedo** nota **7.07** (season) · forma 6.94= (últ.5 do time: 6.6→6.8→7.6→6.7→7 ➡️ estável) · 2× MOTM · 39j\n    ↳ **3G+1A** · gols aos 14',54',85' — mais no 2ºT · 0.74 KP/j (últ.5: 0.8=) · 0.21 SoT/j (últ.5: 0.2=) · 0.49 dribles/j · def: 2.56 desarme + 1.69 int + 5.23 duelo/j · 0.1 cruz/j · ~83 min/j\n  - **Trevoh Chalobah ** nota **6.89** (season) · forma 6.67↓ (últ.5 do time: 7.1→6.4→–→–→6.5 📉 caindo) · **faltou 2/5** · 38j\n    ↳ **3G+0A** · gols aos 48',58',80' — mais no 2ºT · 0.16 KP/j (últ.5: 0.4↑) · 0.13 SoT/j (últ.5: 0↓) · 0.24 dribles/j · def: 1.03 desarme + 1 int + 4.03 duelo/j · 0.03 cruz/j · ~82 min/j\n  - **Pedro Neto ** nota **7.05** (season) · forma 6.97= (últ.5 do time: 7→–→–→6.7→7.2 ➡️ estável) · **faltou 2/5** · 3× MOTM · 43j\n    ↳ **10G+8A** · gols aos 23',37',40',50',51',52',71',73',82',90' — mais no 2ºT · 1.63 KP/j (últ.5: 1↓) · 0.49 SoT/j (últ.5: 0.2↓) · 1.44 dribles/j · def: 0.53 desarme + 0.21 int + 2.88 duelo/j · 1 cruz/j · ~72 min/j\n  - **João Pedro** nota **7.1** (season) · forma 7= (últ.5 do time: 6.7→7.4→7.2→6.7→– ➡️ estável) · **faltou 1/5** · 4× MOTM · 41j\n    ↳ **17G+6A** · gols aos 4',15',24',25',26',34',35',37',45',45'… · 0.85 KP/j (últ.5: 0.6↓) · 0.76 SoT/j (últ.5: 0.2↓) · 1.17 dribles/j · def: 0.66 desarme + 0.15 int + 5.49 duelo/j · 0.02 cruz/j · ~75 min/j\n  - **Marc Cucurella** nota **6.81** (season) · forma 6.76= (últ.5 do time: 6.8→7→6.8→6.7→6.5 📉 caindo) · 2× MOTM · 40j\n    ↳ **1G+4A** · gols aos 70' — mais no 2ºT · 1.05 KP/j (últ.5: 0.8↓) · 0.15 SoT/j (últ.5: 0.2↑) · 0.03 dribles/j · def: 1.55 desarme + 0.9 int + 3.48 duelo/j · 0.33 cruz/j · ~76 min/j\n  - **Malo Gusto** nota **6.83** (season) · forma 6.68= (últ.5 do time: 6.9→6.9→6.3→6.6→– 📉 caindo) · **faltou 1/5** · 1× MOTM · 41j\n    ↳ **2G+4A** · gols aos 45',51' · 0.88 KP/j (últ.5: 1.4↑) · 0.17 SoT/j (últ.5: 0.2=) · 0.37 dribles/j · def: 1.61 desarme + 1 int + 3 duelo/j · 0.46 cruz/j · ~67 min/j\n  - **Wesley Fofana** nota **6.92** (season) · forma 6.73↓ (últ.5 do time: –→–→6.6→6.8→6.8 ➡️ estável) · **faltou 2/5** · 31j\n    ↳ **0G+1A** · 0.13 KP/j (últ.5: 0.2↑) · 0.06 SoT/j (últ.5: 0.2↑) · 0.42 dribles/j · def: 0.74 desarme + 1.42 int + 4.52 duelo/j · 0.03 cruz/j · ~70 min/j\n  - **Andrey Santos** nota **6.95** (season) · forma 7= (últ.5 do time: 6.8→6.8→6.6→–→7.8 📈 subindo) · **faltou 1/5** · 1× MOTM · 36j\n    ↳ **3G+2A** · gols aos 5',67',69' — mais no 2ºT · 0.49 KP/j (últ.5: 0.2↓) · 0.16 SoT/j (últ.5: 0.2↑) · 0.16 dribles/j · def: 1.84 desarme + 0.65 int + 3.68 duelo/j · ~57 min/j\n  - **Cole Palmer** nota **6.92** (season) · forma 6.56↓ (últ.5 do time: 6.5→6.2→6.7→6.7→6.7 📈 subindo) · 2× MOTM · 29j\n    ↳ **9G+1A** · gols aos 13',15',21',35',38',55',58',61',76' · 0.97 KP/j (últ.5: 0.4↓) · 0.86 SoT/j (últ.5: 0.6↓) · 0.83 dribles/j · def: 0.93 desarme + 0.55 int + 3 duelo/j · 0.21 cruz/j · ~72 min/j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: VEDDD** (4pts) · **4 feitos / 9 sofridos** · marca 0.8↓ / sofre 1.8↑ g/j · SoT 3 feito / 4 sofrido\n- **Consistência: MARCOU em 30/37** (casa 15/19 · fora 15/18) · não-marcou 7 · clean sheet 9 · BTTS 23/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Leeds United** (casa · **Vitória 1-0**, HT 1-0) — 2-3 SoT · posse 78%/60% (1ºT/2ºT) · 🏆 FA Cup\n- vs **Nottingham Forest** (casa · **Derrota 1-3**, HT 0-2) — 5-4 SoT · posse 56%/67% (1ºT/2ºT) · adv 16º briga-Z · você 9º · seu casa até ali 1.4 marca/1.2 sofre\n- @ **Liverpool** (fora · **Empate 1-1**, HT 1-1) — 3-3 SoT · posse 44%/50% (1ºT/2ºT) · adv 4º briga-top · você 9º salvo · seu fora até ali 1.8 marca/1.4 sofre\n- vs **Manchester City** (casa · **Derrota 0-1**, HT 0-0) — 1-4 SoT · posse 30%/45% (1ºT/2ºT) · 🏆 FA Cup\n- vs **Tottenham Hotspur** (casa · **Vitória 2-1**, HT 1-0) — 4-3 SoT · posse 45%/47% (1ºT/2ºT) · adv 17º briga-Z · você 10º salvo · seu casa até ali 1.3 marca/1.3 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Manchester United (CASA · D 0-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [+1 0 -1 -4 -1 0 -2 -1 +1 +2 +2 +4 +4 +4 +4] · 16'-30' [+3 +3 +3 +2 +1 0 0 -1 0 -1 -1 0 +1 +3 +5] · 31'-45' [+6 +7 +9 +8 +7 +3 -3 -2 +2 0 0 0 -3 -4 -2] · ‖INTERVALO‖ · 46'-60' [0 0 0 0 -2 -1 +1 +2 0 +1 +1 +7 +11 +10 +3] · 61'-75' [+1 +1 +1 +3 +2 +1 +3 +3 +2 +5 +4 +5 +11 +10 +10] · 76'-90' [+25 +20 +14 +10 +9 +8 +10 +6 +4 +4 +2 +5 +4 +25 +16] · 91'+ [+9 +7 +7 +5]\n    ⚽ gols: 43'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **2** · 31'-45' **5** ‖ 46'-60' **2** · 61'-75' **4** · 76'-90' **3**\n  - @ Brighton & Hove Albion (FORA · D 0-3) — min 1→95:\n    📈 pressão (net/min): 1'-15' [-2 -4 -4 -8 -9 -6 -7 -7 -4 -3 -3 -2 -2 -8 -7] · 16'-30' [-7 -6 -11 -11 -8 -5 -4 -4 -5 -2 0 -1 -1 -1 0] · 31'-45' [0 -3 -3 -5 -7 -7 -5 -6 -5 -1 +1 +2 +2 -2 -1] · ‖INTERVALO‖ · 46'-60' [-1 +3 +2 +1 +1 +1 +2 +4 -1 -1 +1 -4 -2 -1 -1] · 61'-75' [0 -1 -2 -1 -1 -2 -8 -10 -8 -3 -3 -5 -5 -3 -5] · 76'-90' [-4 -1 -1 0 0 +2 +4 +2 +2 0 -2 -3 -1 +1 +1] · 91'+ [-2 -3 -2 +1 0]\n    ⚽ gols: 3'✗ 56'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **1** · 31'-45' **6** ‖ 46'-60' **2** · 61'-75' **2** · 76'-90' **3**\n  - vs Nottingham Forest (CASA · D 1-3) — min 1→98:\n    📈 pressão (net/min): 1'-15' [-3 -6 -6 -3 -3 -1 0 0 -1 +1 +2 -2 -2 -1 -5] · 16'-30' [-3 -2 +1 +2 +2 +5 +8 +7 +6 +4 +4 +7 +7 +5 +5] · 31'-45' [+4 +3 +3 +2 +4 +1 +2 +6 +8 +5 +6 +5 +7 +6 +8] · ‖INTERVALO‖ · 46'-60' [+4 +4 +4 +2 +5 +5 0 0 0 -1 0 +7 +1 +2 +3] · 61'-75' [+2 +2 +2 +2 +2 +2 +2 +2 +2 +2 +6 +6 +6 +9 +10] · 76'-90' [+27 +21 +21 +21 +21 +13 +10 +10 +14 +15 +15 +13 +12 +12 +11] · 91'+ [+8 +8 +12 +12 +14 +14 +14 +11]\n    ⚽ gols: 2'✗ 15'✗ 52'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **6** · 31'-45' **1** ‖ 46'-60' **4** · 61'-75' **2** · 76'-90' **2**\n  - @ Liverpool (FORA · E 1-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 +1 +2 +1 +1 -2 -2 -1 +1 +2 0 -4 -6 -5 -5] · 16'-30' [-3 -3 -2 -2 0 0 0 -1 -1 -1 -1 +2 +6 +6 +8] · 31'-45' [+6 +8 +8 +6 +4 +5 +5 +8 +9 +10 +10 +5 +3 +1 +1] · ‖INTERVALO‖ · 46'-60' [0 -3 -3 +2 +13 +10 +6 +5 +5 +6 +1 +1 +1 -2 -4] · 61'-75' [-3 -4 -4 -2 -2 0 0 -1 -2 -6 -5 -6 -5 -6 -4] · 76'-90' [-1 +1 -1 -5 -5 -3 -2 -2 -3 -2 -3 -1 0 +4 +2] · 91'+ [+2 +2 +2 -2 +1 +3 0]\n    ⚽ gols: 6'✗ 35'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **7** · 61'-75' **4** · 76'-90' **6**\n  - vs Tottenham Hotspur (CASA · V 2-1) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 -1 +4 +4 +1 +1 0 +2 0 -1 -3 -7 -5 +1 +3] · 16'-30' [+3 +2 +2 +4 +2 +2 +1 +1 +2 +1 +2 +2 -2 -2 -2] · 31'-45' [-1 -3 -1 -1 0 +3 0 -2 -3 -1 -1 -1 -1 +1 +1] · ‖INTERVALO‖ · 46'-60' [+3 +2 +1 0 -1 -2 -4 -3 -2 -1 -1 -1 -1 0 -1] · 61'-75' [+1 +1 0 -1 -3 -3 +1 +2 0 +1 -2 -3 -7 -9 -7] · 76'-90' [-4 -4 -3 -3 -3 -3 0 -2 -3 -5 -5 -4 -4 -2 -1] · 91'+ [-1 -2 -2 -2 -3 -4]\n    ⚽ gols: 18'✓ 67'✓ 74'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **5** · 61'-75' **6** · 76'-90' **5**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.16 · 16-30: 0.19 · 31-45: 0.35 · 46-60: 0.35 · 61-75: 0.24 · 76-90: 0.24\n- Sofre por faixa (/j): 0-15: 0.3 · 16-30: 0.14 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.24 · 76-90: 0.3\n- 1ºT: marca 26 / sofre 23 (totais na temporada)\n\n### Desfalques de Chelsea neste jogo\n- **Estêvão** (Unknown Injury) — 2 gols + 2 assists até a data; season: **4% dos gols** do time (7% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.45 g/j (22j) vs sem ele 1.67 g/j (15j) = +15%; finaliza **0.36 SoT/jogo** (time: 4.59 SoT/j com ele vs 4.2 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~2% do time) · 0.5 desarmes/j · 2.4 duelos ganhos/j · 0.2 cruz. certos/j · 1.3 dribles certos/j · 0.7 key passes/j\n- **Jamie Gittens** (Doubtful) — 0 gols + 2 assists até a data; season: **0% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 2.06 g/j (16j) vs sem ele 1.14 g/j (21j) = −45%; finaliza **0.13 SoT/jogo** (time: 5.56 SoT/j com ele vs 3.57 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.5 desarmes/j · 2 duelos ganhos/j · 0.3 cruz. certos/j · 0.8 dribles certos/j · 0.6 key passes/j\n- **Roméo Lavia** (Doubtful) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 1.08 g/j (12j) vs sem ele 1.76 g/j (25j) = +63%; finaliza **0 SoT/jogo** (time: 4.42 SoT/j com ele vs 4.44 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.5 interceptações/j** (~5% do time) · 0.7 desarmes/j · 1.8 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.1 key passes/j\n- **M. Mudryk** (Doping Ban) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.54 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **C. Wiley** (Adductor Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.54 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Sunderland atacando × Chelsea defendendo**\n| Faixa | Sunderland marca/j | Chelsea sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.05 | 0.3 | 0.35 |\n| 16-30 | 0.16 | 0.14 | 0.3 |\n| 31-45 | 0.11 | 0.19 | 0.3 |\n| 46-60 | 0.14 | 0.19 | 0.33 |\n| 61-75 | 0.27 | 0.24 | 0.51 |\n| 76-90 | 0.35 | 0.3 | 0.65 |\n\n**Chelsea atacando × Sunderland defendendo**\n| Faixa | Chelsea marca/j | Sunderland sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.16 | 0.22 | 0.38 |\n| 16-30 | 0.19 | 0.14 | 0.33 |\n| 31-45 | 0.35 | 0.27 | 0.62 |\n| 46-60 | 0.35 | 0.19 | 0.54 |\n| 61-75 | 0.24 | 0.24 | 0.48 |\n| 76-90 | 0.24 | 0.22 | 0.46 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Sunderland: **0-15** (domínio +3) · Chelsea: **31-45** (domínio -3.1). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Sunderland domínio/j | Chelsea domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | +1.5 | -1.5 | +3 🏠 |\n| 16-30 | +1.5 | +0.5 | +1 ≈ |\n| 31-45 | -1.3 | +1.8 | -3.1 ✈️ |\n| 46-60 | -1.7 | +1.3 | -3 ✈️ |\n| 61-75 | +0.5 | -0.2 | +0.7 ≈ |\n| 76-90 | +1.2 | +4.2 | -3 ✈️ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Sunderland (casa) = 1.16 · λ Chelsea (fora) = 1.49 · total = 2.65\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Sunderland: λ_SoT 3.42 × conv 29% → **0.99 gols**\n- Chelsea: λ_SoT 4.56 × conv 30% → **1.37 gols**\n- total via SoT = 2.36\n- **Índice de volume do jogo**: λ_SoT total 8 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 28/29/43% | 25/31/44% |\n| Over 1.5 | 76% | 70% |\n| Over 2.5 | 49% | 42% |\n| Over 3.5 | 27% | 21% |\n| BTTS | 55% | 49% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **56%** · 12 **69%** · X2 **75%** · **Draw No Bet** casa 37% / fora 63%\n- **Placar exato (mais prováveis)**: 1-1 14% · 0-1 11% · 0-0 11% · 0-2 9%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 30% · 2-3 49% · 4+ 21%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Sunderland over 0.5 **63%** / over 1.5 **26%** · Chelsea over 0.5 **75%** / over 1.5 **40%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 3.93 · empate 3.26 · fora 2.28. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **15/48/37%** · 2ºT **30/38/33%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Sunderland) e `away` (= Chelsea), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). **Os dois PRECISAM ir pra cima** → concentre MAIS massa nas faixas TARDIAS (`\"61-75\"`/`\"76-90\"`): fadiga + desespero simultâneos empurram o gol pro fim. Mas o lado que estiver PERSEGUINDO (vai perdendo) converte PIOR no fim (chute apressado) — não infle demais o `\"76-90\"` DELE além do baseline. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.2000000476837158,
+    "xg_away": 1.600000023841858,
+    "total": 2.799999952316284,
+    "over25_prob": 0.550000011920929,
+    "btts_prob": 0.5600000023841858,
+    "one_x_two": "{\"home\":0.28,\"draw\":0.22,\"away\":0.5}",
+    "confianca": "medium",
+    "best_bet_market": "over_under",
+    "best_bet_selection": "over",
+    "best_bet_team": null,
+    "best_bet_line": 2.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.550000011920929,
+    "reasoning_tokens": 4882
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Sunderland** contra **dominante** (o estilo do Chelsea, posse média 57.8%): marca **0.82/j** e sofre 1.55/j em 11 jogos — **-0.26 ABAIXO** da média (1.08).\n- **Chelsea** contra **bloco baixo** (o estilo do Sunderland, posse média 44.9%): marca **2.00/j** e sofre 1.27/j em 15 jogos — **0.46 ACIMA** da média (1.54).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — escanteio**: Sunderland gera 41% dos gols por aí × Chelsea sofre 52% por aí (liga: 38%) → índice 1.5×.\n- **CANAL ABERTO — contra-ataque**: Chelsea gera 7% dos gols por aí × Sunderland sofre 7% por aí (liga: 4%) → índice 2.6×.\n- **CANAL ABERTO — escanteio**: Chelsea gera 49% dos gols por aí × Sunderland sofre 41% por aí (liga: 38%) → índice 1.4×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Sunderland** (23 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.5) · **MATA O JOGO após marcar** (Δ +1.0 — segue pressionando).\n- **Chelsea** (20 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.2) · **ADMINISTRA após marcar** (Δ -1.1 — recua).",
+  "output": {
+    "home": {
+      "xg": 0.95,
+      "xg_1t": 0.29,
+      "xg_2t": 0.66,
+      "xg_bands": {
+        "0-15": 0.04,
+        "16-30": 0.14,
+        "31-45": 0.1,
+        "46-60": 0.12,
+        "61-75": 0.24,
+        "76-90": 0.31
+      },
+      "summary": "Sunderland, em casa, tem ataque limitado (0.95 xG), mas com motivação alta e desfalque importante na defesa (Ballard). Deve marcar mais no 2º tempo. Defesa frágil tende a sofrer gols."
+    },
+    "away": {
+      "xg": 2,
+      "xg_1t": 0.9,
+      "xg_2t": 1.1,
+      "xg_bands": {
+        "0-15": 0.212,
+        "16-30": 0.253,
+        "31-45": 0.455,
+        "46-60": 0.455,
+        "61-75": 0.313,
+        "76-90": 0.313
+      },
+      "summary": "Chelsea, favorito, com ataque potente (2.00 xG) contra defesa frágil. Enzo Fernández e João Pedro lideram. Pode sofrer no início, mas deve dominar e marcar no fim do 1º tempo e no 2º."
+    },
+    "general": {
+      "total": 2.95,
+      "total_1t": 1.19,
+      "total_2t": 1.76,
+      "over25_prob": 0.57,
+      "btts_prob": 0.55,
+      "one_x_two": {
+        "home": 0.18,
+        "draw": 0.22,
+        "away": 0.6
+      },
+      "one_x_two_1t": {
+        "home": 0.15,
+        "draw": 0.45,
+        "away": 0.4
+      },
+      "one_x_two_2t": {
+        "home": 0.25,
+        "draw": 0.3,
+        "away": 0.45
+      },
+      "confidence": "medium",
+      "confidence_regra": "≥3 arestas independentes convergem para Chelsea marcar 2+ gols (A1, A3, A5, A9, A10), e nenhum ataque de refutação foi derrubador. Porém, as rotas A e B do base rate divergem na força do over (49% vs 42%), impedindo confiança alta. Ataques 'enfraquece' foram neutralizados por evidências mais fortes.",
+      "summary": "Partida de alta intensidade com ambos precisando vencer. Chelsea é favorito claro, com ataque potente contra defesa frágil do Sunderland. Espera-se um jogo aberto, com mais de 2.5 gols e ambos marcando. O Chelsea deve fazer ao menos 2 gols."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Sunderland com 2 dias a mais de descanso (7 vs 5), mas diferença é ruído",
+        "dado": "Sunderland 7 dias (…) Chelsea 5 dias",
+        "direcao": "Pequena vantagem para Sunderland, sem impacto significativo",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "contexto",
+        "fato": "Clima ameno sem impacto no total",
+        "dado": "scattered clouds · 21°C",
+        "direcao": "Neutro",
+        "forca": "baixa"
+      },
+      {
+        "id": "C3",
+        "bloco": "contexto",
+        "fato": "Vantagem de casa para Sunderland, mas Chelsea tem qualidade superior",
+        "dado": "mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes",
+        "direcao": "Favorece Sunderland, mas já está nos λ",
+        "forca": "baixa"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "Ambos os times com alta motivação para vencer, brigando por vaga europeia",
+        "dado": "Sunderland: 10º, 51 pts (…) já SEGURO do rebaixamento. vaga europeia ainda matematicamente possível. → motivação: alta",
+        "direcao": "Aumenta intensidade ofensiva de ambos",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "tabela_motivacao",
+        "fato": "Chelsea precisa vencer para garantir vaga; empate pode eliminá-lo",
+        "dado": "Chelsea: 8º, 52 pts (…) precisa vencer pra travar (empate ainda deixa 2 rival vivo)",
+        "direcao": "Força Chelsea a buscar o gol",
+        "forca": "alta"
+      },
+      {
+        "id": "C6",
+        "bloco": "tabela_motivacao",
+        "fato": "Sunderland, em casa, precisa vencer para ter chance de Europa",
+        "dado": "Sunderland (10º, 51 pts, máx 54) pode passar em pontos — vencendo, se o Chelsea tropeçar",
+        "direcao": "Força Sunderland ao ataque",
+        "forca": "alta"
+      },
+      {
+        "id": "C7",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito: ambos vão pra cima, jogo aberto",
+        "dado": "OS DOIS PRECISAM IR PRA CIMA",
+        "direcao": "Tende a abrir, over ganha peso",
+        "forca": "alta"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_gols",
+        "fato": "Sunderland em casa: ataque moderado, volume baixo",
+        "dado": "Em casa (18j): marca 1.28 / sofre 1.06 (…) 125 SoT (3.38/j · casa 3.5/j)",
+        "direcao": "Ataque não explosivo, depende de eficiência",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_gols",
+        "fato": "Conversão alta do Sunderland (29%)",
+        "dado": "conv 29% (aberta, −4 pên)",
+        "direcao": "Eficiência pode regredir",
+        "forca": "baixa"
+      },
+      {
+        "id": "C10",
+        "bloco": "away_gols",
+        "fato": "Chelsea fora: ataque forte (1.72 g/j, 4.61 SoT/j)",
+        "dado": "Fora (18j): marca 1.72 / sofre 1.39 (…) 164 SoT (4.43/j · fora 4.61/j)",
+        "direcao": "Chelsea deve criar muitas chances",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "away_gols",
+        "fato": "Conversão do Chelsea também alta (30%)",
+        "dado": "conv 30% (aberta, −7 pên)",
+        "direcao": "Provável que marque",
+        "forca": "alta"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_estilo",
+        "fato": "Sunderland sofre mais ataques perigosos do que cria",
+        "dado": "ataques perigosos 44.8/55.9",
+        "direcao": "Time é dominado territorialmente",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_estilo",
+        "fato": "Volume de chutes do Sunderland é baixo",
+        "dado": "10.1 chutes/j (7.2 na área)",
+        "direcao": "Ataque pouco incisivo",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_estilo",
+        "fato": "Chelsea é dominante: muitos ataques perigosos, posse alta",
+        "dado": "ataques perigosos 54.5/43.7 · posse 57.8%",
+        "direcao": "Deve controlar o jogo",
+        "forca": "alta"
+      },
+      {
+        "id": "C15",
+        "bloco": "away_estilo",
+        "fato": "Últimos 5: ataque Chelsea criou menos, mas ainda razoável",
+        "dado": "Últimos 5: ataques perigosos 49.4",
+        "direcao": "Queda recente pode ser pontual",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "home_qualidade",
+        "fato": "Enzo Le Fée é o principal criador do Sunderland, em ótima forma",
+        "dado": "Enzo Le Fée nota 7.07 (…) 6G+6A · 1.77 KP/j · forma 7.46↑",
+        "direcao": "Peça-chave para criação",
+        "forca": "alta"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_qualidade",
+        "fato": "Granit Xhaka contribui com assistências e passes-chave",
+        "dado": "Granit Xhaka nota 7.15 (…) 1G+6A · 1.06 KP/j",
+        "direcao": "Importante na armação",
+        "forca": "media"
+      },
+      {
+        "id": "C18",
+        "bloco": "home_qualidade",
+        "fato": "Brian Brobbey: artilheiro do time, gols no 2º tempo",
+        "dado": "Brian Brobbey (…) 7G+1A · gols aos 59',66',69',71',80',90',90'",
+        "direcao": "Pode ser decisivo saindo do banco ou como titular",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "home_desfalques",
+        "fato": "D. Ballard fora: zagueiro importante, enfraquece defesa",
+        "dado": "D. Ballard (…) 2 gols · 0.7 interceptações/j (~9% do time) · 5.8 duelos",
+        "direcao": "Defesa do Sunderland mais frágil",
+        "forca": "alta"
+      },
+      {
+        "id": "C20",
+        "bloco": "away_qualidade",
+        "fato": "Enzo Fernández é o motor do Chelsea, em grande forma",
+        "dado": "Enzo Fernández nota 7.28 (…) 12G+5A · 1.93 KP/j · forma 7.6↑",
+        "direcao": "Criação e finalização de alto nível",
+        "forca": "alta"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_qualidade",
+        "fato": "João Pedro é o artilheiro, finalizador perigoso",
+        "dado": "João Pedro nota 7.1 (…) 17G+6A · 0.76 SoT/j",
+        "direcao": "Referência no ataque",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "away_qualidade",
+        "fato": "Pedro Neto contribui com gols e dribles, mas ritmo incerto",
+        "dado": "Pedro Neto nota 7.05 (…) 10G+8A · 1.44 dribles/j · faltou 2/5",
+        "direcao": "Desequilibrador se estiver em campo",
+        "forca": "media"
+      },
+      {
+        "id": "C23",
+        "bloco": "away_qualidade",
+        "fato": "Cole Palmer em baixa forma, queda em finalizações",
+        "dado": "Cole Palmer nota 6.92 (…) forma 6.56↓ · 0.86 SoT/j (últ.5: 0.6↓)",
+        "direcao": "Pode não render o esperado",
+        "forca": "media"
+      },
+      {
+        "id": "C24",
+        "bloco": "away_desfalques",
+        "fato": "Desfalques do Chelsea têm baixo impacto geral",
+        "dado": "Estêvão (4% dos gols), Gittens (0% gols), Lavia (0% gols)",
+        "direcao": "Não alteram significativamente o xG",
+        "forca": "baixa"
+      },
+      {
+        "id": "C25",
+        "bloco": "home_forma",
+        "fato": "Defesa do Sunderland muito frágil nos últimos 5 jogos",
+        "dado": "últimos 5: VEEDD (…) 7 feitos / 11 sofridos · sofre 2.2↑ g/j",
+        "direcao": "Tendência a sofrer gols",
+        "forca": "alta"
+      },
+      {
+        "id": "C26",
+        "bloco": "home_forma",
+        "fato": "Resultados recentes do Sunderland com contexto de adversários sem ambição",
+        "dado": "vs Manchester United (…) adv 3º Eur-gar · você 12º salvo · @ Everton (…) adv 10º salvo",
+        "direcao": "Vitória e empate podem não refletir força real",
+        "forca": "media"
+      },
+      {
+        "id": "C27",
+        "bloco": "home_forma",
+        "fato": "Ataque do Sunderland marcou em 4 dos últimos 5 jogos, mas com pouco volume",
+        "dado": "forma: marca 1.4↑ (…) SoT 4 feito",
+        "direcao": "Ataque não é nulo, mas depende de eficiência",
+        "forca": "media"
+      },
+      {
+        "id": "C28",
+        "bloco": "away_forma",
+        "fato": "Chelsea com forma ofensiva pobre (0.8 g/j nos últimos 5)",
+        "dado": "últimos 5: VEDDD (4pts) · 4 feitos / 9 sofridos · marca 0.8↓",
+        "direcao": "Produção ofensiva muito abaixo do normal",
+        "forca": "alta"
+      },
+      {
+        "id": "C29",
+        "bloco": "away_forma",
+        "fato": "Má fase do Chelsea atenuada por adversários difíceis (Liverpool, City)",
+        "dado": "Nottingham Forest (briga-Z) · @ Liverpool (briga-top) · vs Manchester City (FA Cup) · vs Tottenham",
+        "direcao": "Fora de casa na temporada média é 1.72, então há potencial de recuperação",
+        "forca": "media"
+      },
+      {
+        "id": "C30",
+        "bloco": "home_momentum",
+        "fato": "Sunderland pressiona no início dos jogos (0-15, 16-30)",
+        "dado": "📈 pressão: 1'-15' [0 +2 +1 ...] · 16'-30' [+6 +4 +2 ...] (vs Nottingham, casa)",
+        "direcao": "Pode criar chances cedo",
+        "forca": "media"
+      },
+      {
+        "id": "C31",
+        "bloco": "home_momentum",
+        "fato": "Defesa do Sunderland vulnerável no fim do 1º tempo",
+        "dado": "⚽ gols: 36'✗ 46'✗ 43'✗ (em vários jogos) · 🛡️ defesa baixa em 31-45",
+        "direcao": "Sofre gols nessa faixa",
+        "forca": "alta"
+      },
+      {
+        "id": "C32",
+        "bloco": "home_momentum",
+        "fato": "Baixa atividade defensiva geral do Sunderland",
+        "dado": "🛡️ defesa (int+desarmes) frequentemente 1-5 por faixa",
+        "direcao": "Não intercepta bem, permite progressão",
+        "forca": "media"
+      },
+      {
+        "id": "C33",
+        "bloco": "away_momentum",
+        "fato": "Chelsea sofre gols nos primeiros 15-30 minutos frequentemente",
+        "dado": "⚽ gols: 3'✗ 2'✗ 15'✗ (vs Brighton e Nottingham)",
+        "direcao": "Desatenção inicial pode ser punida",
+        "forca": "alta"
+      },
+      {
+        "id": "C34",
+        "bloco": "away_momentum",
+        "fato": "Chelsea cresce no 2º tempo e marca gols tardios",
+        "dado": "⚽ gols: 90'✓ (vs Nottingham) · 67'✓ (vs Tottenham) · pressão alta em 76-90",
+        "direcao": "Pode decidir no final",
+        "forca": "alta"
+      },
+      {
+        "id": "C35",
+        "bloco": "away_momentum",
+        "fato": "Defesa do Chelsea também instável, sofreu em vários jogos",
+        "dado": "sofreu 9 gols em 5 jogos",
+        "direcao": "Não é sólida, Sunderland pode marcar",
+        "forca": "media"
+      },
+      {
+        "id": "C36",
+        "bloco": "home_faixas",
+        "fato": "Sunderland marca a maioria dos gols em casa no 2º tempo (63%)",
+        "dado": "1ºT 0.32/0.62 · 2ºT 0.76/0.65",
+        "direcao": "Time de 2º tempo, especialmente 61-90",
+        "forca": "alta"
+      },
+      {
+        "id": "C37",
+        "bloco": "home_faixas",
+        "fato": "Sunderland sofre mais no fim do 1º tempo (31-45: 0.27)",
+        "dado": "Sofre por faixa (/j): 31-45: 0.27",
+        "direcao": "Vulnerável antes do intervalo",
+        "forca": "media"
+      },
+      {
+        "id": "C38",
+        "bloco": "away_faixas",
+        "fato": "Chelsea marca bem no fim do 1º tempo e início do 2º",
+        "dado": "Marca por faixa (/j): 31-45: 0.35 · 46-60: 0.35",
+        "direcao": "Pode marcar nessas janelas",
+        "forca": "alta"
+      },
+      {
+        "id": "C39",
+        "bloco": "away_faixas",
+        "fato": "Chelsea sofre no início (0-15: 0.30) e no fim (76-90: 0.30)",
+        "dado": "Sofre por faixa (/j): 0-15: 0.3 · 76-90: 0.3",
+        "direcao": "Vulnerável em transições iniciais e finais",
+        "forca": "alta"
+      },
+      {
+        "id": "C41",
+        "bloco": "home_desfalques",
+        "fato": "Simon Moore e R. Mundle são desfalques irrelevantes",
+        "dado": "Simon Moore: 0% dos gols (…) R. Mundle: 0% dos gols",
+        "direcao": "Não impactam",
+        "forca": "baixa"
+      },
+      {
+        "id": "C42",
+        "bloco": "away_desfalques",
+        "fato": "Estêvão fora não reduz poder ofensivo do Chelsea",
+        "dado": "Estêvão: 4% dos gols (…) with/without: sem ele 1.67 g/j vs 1.45",
+        "direcao": "Time já adaptado",
+        "forca": "baixa"
+      },
+      {
+        "id": "C43",
+        "bloco": "away_desfalques",
+        "fato": "Gittens dúvida: criador secundário, mas impacto baixo",
+        "dado": "Jamie Gittens: 0G+2A (…) 0.6 key passes/j",
+        "direcao": "Se ausente, perda menor",
+        "forca": "baixa"
+      },
+      {
+        "id": "C44",
+        "bloco": "away_desfalques",
+        "fato": "Lavia dúvida: pode afetar proteção defensiva",
+        "dado": "Roméo Lavia: 0.5 interceptações/j (~5% do time)",
+        "direcao": "Defesa pode ficar um pouco exposta",
+        "forca": "baixa"
+      },
+      {
+        "id": "C45",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janela de ouro Chelsea: 31-45 (índice 0.62)",
+        "dado": "Chelsea atacando × Sunderland defendendo: 31-45 índice 0.62",
+        "direcao": "Gol do Chelsea provável nessa faixa",
+        "forca": "alta"
+      },
+      {
+        "id": "C46",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janela de ouro Sunderland: 61-90 (índices 0.51 e 0.65)",
+        "dado": "Sunderland atacando × Chelsea defendendo: 61-75 índice 0.51, 76-90 índice 0.65",
+        "direcao": "Gol do Sunderland provável no 2º tempo",
+        "forca": "alta"
+      },
+      {
+        "id": "C47",
+        "bloco": "base_rate",
+        "fato": "Prior Rota B: total 2.36, Chelsea favorito (44%), over 2.5 42%, BTTS 49%",
+        "dado": "Rota B — SoT × conversão: Sunderland 0.99, Chelsea 1.37, total 2.36",
+        "direcao": "Baseline para ajustes",
+        "forca": "alta"
+      },
+      {
+        "id": "C48",
+        "bloco": "base_rate",
+        "fato": "Rota A (2.65) é mais alta, mas Rota B é preferível por estabilidade",
+        "dado": "Rota A — gols puros: total = 2.65",
+        "direcao": "Cautela com over, mas evidências podem empurrar para cima",
+        "forca": "media"
+      },
+      {
+        "id": "C49",
+        "bloco": "probs_mercado",
+        "fato": "Prior empate 31% (Rota B)",
+        "dado": "1x2 casa/E/fora: Rota B 25/31/44%",
+        "direcao": "Sem ajustes, empate provável",
+        "forca": "media"
+      },
+      {
+        "id": "C50",
+        "bloco": "probs_mercado",
+        "fato": "Prior BTTS 49% (Rota B)",
+        "dado": "BTTS Rota B 49%",
+        "direcao": "Baseline neutra para BTTS",
+        "forca": "media"
+      },
+      {
+        "id": "C51",
+        "bloco": "probs_mercado",
+        "fato": "Prior over 2.5 42% (Rota B)",
+        "dado": "Over 2.5 Rota B 42%",
+        "direcao": "Ponto de partida baixo para over",
+        "forca": "media"
+      },
+      {
+        "id": "C52",
+        "bloco": "cruzamentos_computados",
+        "fato": "Chelsea contra bloco baixo marca 2.00 g/j (+0.46 acima da média)",
+        "dado": "Chelsea contra bloco baixo: marca 2.00/j (…) 0.46 ACIMA da média",
+        "direcao": "Aumenta expectativa de gols do Chelsea",
+        "forca": "alta"
+      },
+      {
+        "id": "C53",
+        "bloco": "cruzamentos_computados",
+        "fato": "Sunderland contra dominante marca apenas 0.82 g/j (-0.26)",
+        "dado": "Sunderland contra dominante: marca 0.82/j (…) -0.26 ABAIXO da média",
+        "direcao": "Reduz expectativa de gols do Sunderland",
+        "forca": "alta"
+      },
+      {
+        "id": "C54",
+        "bloco": "cruzamentos_computados",
+        "fato": "Contra-ataque do Chelsea é arma letal (índice 2.6x)",
+        "dado": "CANAL ABERTO — contra-ataque: Chelsea gera 7% × Sunderland sofre 7% → índice 2.6×",
+        "direcao": "Chelsea pode marcar em transições",
+        "forca": "alta"
+      },
+      {
+        "id": "C55",
+        "bloco": "cruzamentos_computados",
+        "fato": "Escanteios são via perigosa para ambos (índices 1.4-1.5x)",
+        "dado": "escanteio: Sunderland gera 41% × Chelsea sofre 52% → 1.5× · Chelsea gera 49% × Sunderland sofre 41% → 1.4×",
+        "direcao": "Gols de bola parada prováveis",
+        "forca": "media"
+      },
+      {
+        "id": "C56",
+        "bloco": "cruzamentos_computados",
+        "fato": "Sunderland mata o jogo após marcar; Chelsea administra após marcar",
+        "dado": "Sunderland: MATA O JOGO após marcar (Δ +1.0) · Chelsea: ADMINISTRA após marcar (Δ -1.1)",
+        "direcao": "Comportamento pós-gol pode abrir ou fechar o jogo",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C1",
+        "motivo": "Diferença de descanso é ruído, sem impacto significativo no xG"
+      },
+      {
+        "id": "C2",
+        "motivo": "Clima ameno sem impacto no total"
+      },
+      {
+        "id": "C3",
+        "motivo": "Vantagem de casa já está embutida nos λ; não é fator adicional"
+      },
+      {
+        "id": "C9",
+        "motivo": "Conversão alta é detalhe, não altera o xG além do já considerado"
+      },
+      {
+        "id": "C11",
+        "motivo": "Similar a C10, já coberta pela força do ataque do Chelsea"
+      },
+      {
+        "id": "C13",
+        "motivo": "Volume baixo de chutes é característica do time, já refletida no xG baixo"
+      },
+      {
+        "id": "C24",
+        "motivo": "Desfalques do Chelsea de baixo impacto, não alteram xG"
+      },
+      {
+        "id": "C27",
+        "motivo": "Ataque marcou em 4/5 jogos, mas já considerado na forma; não é fator isolado"
+      },
+      {
+        "id": "C37",
+        "motivo": "Vulnerabilidade no fim do 1ºT já coberta por C31 e C45"
+      },
+      {
+        "id": "C41",
+        "motivo": "Desfalques irrelevantes, sem impacto"
+      },
+      {
+        "id": "C42",
+        "motivo": "Estêvão fora não altera xG"
+      },
+      {
+        "id": "C43",
+        "motivo": "Gittens dúvida com baixo impacto"
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Robin Roefs",
+        "time": "home",
+        "leitura": "Goleiro que pode fazer defesas, mas exposto pela defesa sem Ballard; não é um diferencial que mude o xG significativamente."
+      },
+      {
+        "nome": "Enzo Le Fée",
+        "time": "home",
+        "leitura": "Principal arma ofensiva, em grande forma. Se o Sunderland marcar, provavelmente passará por ele. Aumenta chances de gol do Sunderland, especialmente em transições."
+      },
+      {
+        "nome": "Trai Hume",
+        "time": "home",
+        "leitura": "Lateral com pouca participação ofensiva, mas defesa razoável. Enfrentará Pedro Neto ou alguém rápido; pode sofrer."
+      },
+      {
+        "nome": "Nordi Mukiele",
+        "time": "home",
+        "leitura": "Zagueiro/lateral que aparece no ataque (3G4A). Pode ser surpresa em bolas paradas. Defensivamente, terá que lidar com João Pedro."
+      },
+      {
+        "nome": "Noah Sadiki",
+        "time": "home",
+        "leitura": "Meio-campo defensivo, baixa criação. Sua função é conter Enzo Fernández, missão difícil."
+      },
+      {
+        "nome": "Granit Xhaka",
+        "time": "home",
+        "leitura": "Meio-campo experiente, 6 assistências. Fará a ligação com Le Fée; pode ser importante em bolas paradas, mas contra a intensidade do Chelsea pode ser pressionado."
+      },
+      {
+        "nome": "Omar Alderete",
+        "time": "home",
+        "leitura": "Com Ballard fora, será o líder da defesa. Sofre com ataque móvel do Chelsea? Tem boa nota, mas forma em baixa (6.54). Pode ser sobrecarregado."
+      },
+      {
+        "nome": "D. Ballard",
+        "time": "home",
+        "leitura": "Zagueiro titular, ausência importante. Sem ele, a defesa perde físico e interceptações. Chelsea deve explorar isso com infiltrações de Enzo Fernández e João Pedro."
+      },
+      {
+        "nome": "Brian Brobbey",
+        "time": "home",
+        "leitura": "Atacante, 7 gols, muitos no 2º tempo. Não é titular absoluto, mas pode ser arma no 2º tempo contra defesa cansada do Chelsea."
+      },
+      {
+        "nome": "R. Mandava",
+        "time": "home",
+        "leitura": "Lateral/ala, ofensivamente limitado; defensivamente terá que conter as subidas do Chelsea."
+      },
+      {
+        "nome": "Lutsharel Geertruida",
+        "time": "home",
+        "leitura": "Defensor que faltou 3/5 jogos. Se jogar, não está em ritmo. Piora a defesa."
+      },
+      {
+        "nome": "Robert Sánchez",
+        "time": "away",
+        "leitura": "Goleiro de nota 6.78, não é excepcional, mas o Sunderland não finaliza muito. Pode ser vazado se a defesa falhar."
+      },
+      {
+        "nome": "Enzo Fernández",
+        "time": "away",
+        "leitura": "Craque do time, 12G5A, grande forma. O motor do Chelsea; vai ditar o ritmo contra um meio-campo frágil do Sunderland. Espera-se que crie várias chances."
+      },
+      {
+        "nome": "Moisés Caicedo",
+        "time": "away",
+        "leitura": "Volante, principalmente defensivo. Será o cão de guarda contra Le Fée; se anular o francês, Sunderland perde criatividade."
+      },
+      {
+        "nome": "Trevoh Chalobah",
+        "time": "away",
+        "leitura": "Zagueiro, 3G, faltou 2/5. Defesa instável; pode ser o elo fraco na zaga, especialmente em bolas paradas do Sunderland."
+      },
+      {
+        "nome": "Pedro Neto",
+        "time": "away",
+        "leitura": "Atacante/ponta, 10G8A, driblador. Se estiver em campo, é desequilíbrio contra a defesa lenta do Sunderland."
+      },
+      {
+        "nome": "João Pedro",
+        "time": "away",
+        "leitura": "Centroavante, 17G. Finalizador nato; vai testar a zaga reserva do Sunderland. Deve ter chances."
+      },
+      {
+        "nome": "Marc Cucurella",
+        "time": "away",
+        "leitura": "Lateral, mais defensivo. Seu foco será conter as subidas do Sunderland pela direita."
+      },
+      {
+        "nome": "Malo Gusto",
+        "time": "away",
+        "leitura": "Lateral ofensivo, pode criar sobreposições."
+      },
+      {
+        "nome": "Wesley Fofana",
+        "time": "away",
+        "leitura": "Zagueiro, faltou 2/5. Defesa não está em ritmo; Sunderland pode explorar."
+      },
+      {
+        "nome": "Andrey Santos",
+        "time": "away",
+        "leitura": "Meio-campo, forma subindo. Pode ser elemento surpresa, mas joga pouco."
+      },
+      {
+        "nome": "Cole Palmer",
+        "time": "away",
+        "leitura": "Atacante, 9G, mas forma em baixa. Se não render, Chelsea perde poder de fogo; ainda é talentoso e pode decidir."
+      },
+      {
+        "nome": "Estêvão",
+        "time": "away",
+        "leitura": "Fora por lesão, baixo impacto."
+      },
+      {
+        "nome": "Jamie Gittens",
+        "time": "away",
+        "leitura": "Dúvida, criador secundário. Se ausente, perda menor."
+      },
+      {
+        "nome": "Roméo Lavia",
+        "time": "away",
+        "leitura": "Dúvida, pode afetar proteção defensiva, mas impacto pequeno."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C10",
+          "C11",
+          "C14",
+          "C19",
+          "C25",
+          "C31",
+          "C32"
+        ],
+        "leitura": "Ataque forte do Chelsea (1.72 g/j fora, 4.61 SoT/j) contra defesa do Sunderland enfraquecida (sem Ballard, 2.2 sofridos/j, vulnerável no fim do 1ºT e com baixa atividade defensiva) resulta em alta probabilidade de gols do Chelsea.",
+        "efeito": "Aumenta xG Chelsea em ~0.4-0.6 (de 1.37 para ~2.0)"
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C8",
+          "C52",
+          "C53",
+          "C35",
+          "C14"
+        ],
+        "leitura": "Sunderland tem ataque moderado (1.28 em casa), mas contra times dominantes marca apenas 0.82, e o Chelsea limita adversários (43.7 ataques perigosos). Defesa do Chelsea instável, mas Sunderland deve ter produção ofensiva abaixo da média.",
+        "efeito": "Reduz xG Sunderland para ~0.8-0.95"
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C4",
+          "C5",
+          "C6",
+          "C7",
+          "C12",
+          "C14",
+          "C49",
+          "C50",
+          "C51"
+        ],
+        "leitura": "Ambos precisam vencer (motivação alta), o que força o jogo aberto. Sunderland, apesar de dominado, terá que atacar; Chelsea não pode se contentar com empate. O prior de empate cai, over e BTTS sobem.",
+        "efeito": "Aumenta total do jogo e reduz probabilidade de empate; over 2.5 mais provável"
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C19",
+          "C45",
+          "C38"
+        ],
+        "leitura": "Ausência do zagueiro Ballard enfraquece a defesa do Sunderland exatamente na faixa onde o Chelsea é mais perigoso (31-45, índice 0.62, e Chelsea marca 0.35 nessa faixa).",
+        "efeito": "Aumenta probabilidade de gol do Chelsea no fim do 1º tempo"
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C25",
+          "C26",
+          "C28",
+          "C29",
+          "C15"
+        ],
+        "leitura": "Forma defensiva ruim do Sunderland é real (11 sofridos em 5 jogos), e a má fase ofensiva do Chelsea (0.8 g/j) foi contra adversários fortes. Contra defesa frágil, Chelsea deve voltar a marcar.",
+        "efeito": "Confirma que Chelsea deve ter sucesso ofensivo; xG Chelsea mantido alto"
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C30",
+          "C33",
+          "C39"
+        ],
+        "leitura": "Sunderland costuma pressionar no início, e o Chelsea frequentemente sofre gols nos primeiros 15-30 minutos. Isso pode resultar em gol cedo do Sunderland.",
+        "efeito": "Aumenta probabilidade de Sunderland marcar no 1º tempo, especialmente cedo"
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C34",
+          "C36",
+          "C38",
+          "C46"
+        ],
+        "leitura": "Chelsea cresce no 2º tempo e marca gols tardios; Sunderland também marca a maioria de seus gols no 2º tempo (61-90). Isso sugere um 2º tempo movimentado com chances para ambos.",
+        "efeito": "Aumenta xG no 2º tempo; ambos podem marcar no 2º tempo"
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C56",
+          "C5",
+          "C7"
+        ],
+        "leitura": "Chelsea tende a administrar após marcar, mas a necessidade de vencer pode moderar esse recuo. Sunderland, após marcar, continua pressionando. Isso pode gerar mais gols após abertura do placar.",
+        "efeito": "Jogo pode ter gols de ambos os lados independentemente de quem saia na frente"
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C54",
+          "C7",
+          "C12",
+          "C22"
+        ],
+        "leitura": "Contra-ataque do Chelsea é arma letal (índice 2.6x), e Sunderland, precisando vencer e já sofrendo muitos ataques perigosos, deve deixar espaços. Pedro Neto é peça chave em transições.",
+        "efeito": "Aumenta probabilidade de gols do Chelsea em contra-ataque"
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C20",
+          "C21",
+          "C22",
+          "C19",
+          "C23"
+        ],
+        "leitura": "Enzo Fernández e João Pedro em grande fase, contra defesa desfalcada do Sunderland. Cole Palmer em baixa pode reduzir um pouco o potencial, mas no geral o ataque do Chelsea tem qualidade para definir.",
+        "efeito": "Aumenta confiança no ataque do Chelsea; múltiplas ameaças"
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C45",
+          "C46",
+          "C36",
+          "C38"
+        ],
+        "leitura": "Cruzamento de faixas indica alta probabilidade de gols do Chelsea no fim do 1º tempo e do Sunderland no 2º tempo, alinhado com os históricos de ambos.",
+        "efeito": "Ajuda a distribuir o xG nas bandas; 2º tempo e fim do 1º concentram gols"
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C55"
+        ],
+        "leitura": "Escanteios são via perigosa para ambos, com índices acima da média. Isso adiciona uma rota de gol que pode furar defesas.",
+        "efeito": "Ligeiro aumento no xG total, especialmente em jogos de pouca criação aberta"
+      },
+      {
+        "id": "A13",
+        "liga": [
+          "C16",
+          "C17",
+          "C18",
+          "C27",
+          "C35",
+          "C44"
+        ],
+        "leitura": "Sunderland possui Le Fée em ótima forma, Xhaka na criação e Brobbey como arma no 2º tempo. A defesa do Chelsea tem instabilidades e possível ausência de Lavia (proteção). Sunderland pode explorar isso, especialmente em casa.",
+        "efeito": "Aumenta ligeiramente xG Sunderland para ~0.95, com potencial de marcar"
+      },
+      {
+        "id": "A14",
+        "liga": [
+          "C47",
+          "C48",
+          "C52",
+          "C53"
+        ],
+        "leitura": "Partindo da Rota B (total 2.36), aplicamos o arquétipo: Chelsea contra bloco baixo tem xG elevado (2.00), Sunderland contra dominante tem xG reduzido (0.82). A diferença entre Rotas A e B reforça a escolha da B. O total ajustado é ~2.95, bem acima do prior.",
+        "efeito": "Estabelece o xG ajustado: Sunderland 0.95, Chelsea 2.00, total 2.95"
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Chelsea dominante, mas Sunderland reage",
+        "prob": 0.4,
+        "filme": "Sunderland marca cedo (1-0) aproveitando desatenção do Chelsea. Chelsea empata ainda no 1º tempo (1-1). No 2º tempo, Chelsea vira (1-2), mas Sunderland busca empate no final (2-2) ou Chelsea faz mais um (1-3). Jogo aberto, over 2.5 e BTTS.",
+        "arestas": [
+          "A3",
+          "A4",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10",
+          "A11"
+        ]
+      },
+      {
+        "nome": "Chelsea resolve cedo",
+        "prob": 0.35,
+        "filme": "Chelsea controla, não sofre gol cedo e abre o placar no fim do 1º tempo (0-1). No 2º tempo, amplia em contra-ataque (0-2). Sunderland diminui no final (1-2), mas Chelsea segura ou faz 1-3. Chelsea vence, over 2.5.",
+        "arestas": [
+          "A1",
+          "A3",
+          "A4",
+          "A9",
+          "A10"
+        ]
+      },
+      {
+        "nome": "Sunderland surpreende e segura",
+        "prob": 0.15,
+        "filme": "Sunderland marca primeiro (1-0) e, ao contrário do esperado, segura a pressão. Chelsea não consegue empatar no 1º tempo. No 2º tempo, Sunderland amplia (2-0) e Chelsea desconta (2-1). Sunderland vence.",
+        "arestas": [
+          "A6",
+          "A13",
+          "A8"
+        ]
+      },
+      {
+        "nome": "Jogo amarrado, poucos gols",
+        "prob": 0.1,
+        "filme": "Apesar da intenção, os times se anulam. 0-0 no HT. No 2º tempo, um gol solitário decide: 1-0 para Chelsea ou Sunderland. Under 2.5.",
+        "arestas": []
+      }
+    ],
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.18,
+        "variancia": 4,
+        "valor": "nenhum",
+        "nota": "Probabilidade baixa, não recomendado."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.22,
+        "variancia": 4,
+        "valor": "nenhum",
+        "nota": "Empate improvável com ambos precisando vencer."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.6,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Chelsea claro favorito, subestimado pelo prior."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.4,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Baixa probabilidade, não cobre o risco."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.82,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Muito seguro, mas odds baixas; bom para combinadas."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.78,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Aposta de que não dá empate; valor razoável."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.23,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Não recomendado."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.77,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "Excelente aposta: Chelsea vence, empate devolve."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.79,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Muito provável, mas odds baixas."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.57,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Forte valor: jogo tende a ser aberto e com gols."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.34,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Bom valor, mas mais arriscado."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.55,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Valor moderado; ambas defesas frágeis."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.61,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Sem valor, prior já alto."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.25,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Não recomendado."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.86,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Altamente provável, mas odds baixas."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.59,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Forte valor: Chelsea deve fazer pelo menos 2 gols."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.38,
+        "variancia": 4,
+        "valor": "alto",
+        "nota": "Bom valor se Chelsea dominar como esperado."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.05,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Improvável."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 5,
+        "valor": "nenhum",
+        "nota": "Aleatório, sem edge."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "over",
+      "team": "away",
+      "line": 1.5,
+      "confidence": "medium",
+      "probability": 0.59,
+      "evidence_for": [
+        "A1",
+        "A3",
+        "A5",
+        "A9",
+        "A10",
+        "C10",
+        "C19",
+        "C25"
+      ],
+      "evidence_against": [
+        "C28",
+        "C56",
+        "C29"
+      ],
+      "analysis": "Chelsea deve dominar e criar muitas chances contra a defesa frágil do Sunderland, desfalcada e em má forma. A necessidade de vencer força o Chelsea a buscar gols. Apesar da má fase ofensiva recente, os adversários eram mais fortes. O Chelsea tem média de 1.72 g/j fora e, contra bloco baixo, 2.00. Com Enzo Fernández e João Pedro em boa fase, espera-se ao menos 2 gols do Chelsea. O risco é o jogo ficar amarrado ou o Chelsea desperdiçar chances, mas a evidência sugere valor."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "Team total away over 1.5",
+          "argumento": "Chelsea em má fase ofensiva (0.8 g/j nos últimos 5 jogos) pode continuar com dificuldades para marcar contra qualquer adversário.",
+          "ids": [
+            "C28"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Team total away over 1.5",
+          "argumento": "Sunderland em casa tem defesa razoável na temporada (1.06 sofridos), e Ballard fora pode não ser tão impactante se o substituto for competente.",
+          "ids": [
+            "C8"
+          ],
+          "veredito": "nao_sustenta"
+        },
+        {
+          "alvo": "Team total away over 1.5",
+          "argumento": "Chelsea tende a administrar resultados após marcar, podendo recuar e não buscar o segundo gol se estiver vencendo por 1-0.",
+          "ids": [
+            "C56",
+            "C5"
+          ],
+          "veredito": "enfraquece"
+        }
+      ],
+      "conclusao": "Nenhum ataque derruba a aposta. A má fase ofensiva é atenuada pela qualidade dos adversários enfrentados, e a defesa do Sunderland mostrou fragilidade recente (2.2 sofridos/j) com desfalque importante. A tendência a administrar pode ser neutralizada pela necessidade de vitória do Chelsea. As evidências a favor são mais robustas, então a aposta sobrevive com confiança média."
+    },
+    "drivers": [
+      "Arquétipo: Chelsea é muito eficaz contra blocos baixos (2.00 g/j) e Sunderland é time de posse baixa",
+      "Desfalque de Ballard enfraquece a defesa do Sunderland",
+      "Alta motivação de ambos, especialmente Chelsea precisando vencer"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 55,
+    "arestas": 14,
+    "jogadores": 25,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar este jogo com o protocolo completo, do Passo 1 ao 6, em português do Brasil. O jogo é Sunderland x Chelsea, última rodada da Premier League, ambos brigando por vaga europeia. O veredito de intenção é \"OS DOIS PRECISAM IR PRA CIMA\", então o jogo tende a abrir. Vou começar a varredura de cada bloco.\n\n## Passo 1 - VARREDURA: conclusões por bloco\n\n### Bloco: contexto\n- Data: 2026-05-24, 15:00, Stadium of Light, grama natural, clima ameno (21°C, vento leve). Nada relevante climaticamente (chuva/vento não reduzem gols nesta liga).\n- Descanso: Sunderland 7 dias, Chelsea 5 dias. Sunderland tem 2 dias a mais de descanso, o que é uma pequena vantagem, mas diferença de apenas 2 dias é ruído (a regra diz que 1-2 dias é ruído). Na verdade, a diferença é de 2 dias (7 vs 5), então não devo mexer no número por fadiga significativamente. Será considerado apenas para cruzamento se houver outro fator.\n- Viagem do visitante: ~390 km, não é longa.\n- Vantagem de casa: já embutida nos λ. Mandantes marcam +0.3 g/j. Em jogo de stake alto, fator casa pesa. Sunderland é mandante, mas não é um time dominante. Chelsea é visitante, mas tem qualidade.\n- Conclusões: \n  - C1: Sunderland com 2 dias a mais de descanso (7 vs 5), mas diferença pequena (ruído) - não deve mover o número sozinha. (bloco: contexto, direção: neutra/leve favor ao Sunderland, força: baixa) — mas vou tratar como neutra, pois a regra diz que 1-2 dias é ruído.\n  - C2: Clima ameno sem impacto esperado no total de gols. (neutro)\n  - C3: Vantagem de casa para Sunderland, mas qualidade do Chelsea é superior; fator casa pode equilibrar. (direção: favorece Sunderland, mas não define)\n\n### Bloco: tabela_motivacao\n- Sunderland: 10º, 51 pts, 1 jogo restante. Já seguro do rebaixamento. Ainda pode chegar à última vaga europeia (8º, atualmente 52 pts). Precisam vencer e torcer por tropeço do Chelsea e Brentford. Motivação alta: precisam lutar.\n- Chelsea: 8º, 52 pts, 1 jogo restante. Seguro do rebaixamento. Disputa vaga europeia. Precisam vencer para garantir, pois empate deixa Brentford (9º, 52 pts) vivo, e Sunderland pode passar se vencer. Ou seja, Chelsea também precisa vencer.\n- Veredito de intenção: OS DOIS PRECISAM IR PRA CIMA (nenhum se contenta com empate) → jogo tende a ABRIR.\n- Conclusões:\n  - C4: Ambos os times com alta motivação para vencer, pois brigam por vaga europeia na última rodada. (direção: aumenta a intensidade ofensiva de ambos, favorece over e BTTS)\n  - C5: O Chelsea precisa vencer para garantir a vaga; empate pode tirá-los da Europa se Brentford vencer. Isso os força a buscar o gol mesmo fora de casa. (direção: Chelsea mais ofensivo que o normal)\n  - C6: Sunderland, em casa, também precisa vencer para ter chance de Europa, então não deve se contentar com empate. (direção: Sunderland também ofensivo)\n  - C7: Veredito de intenção: ambos vão pra cima → jogo aberto, tendência a mais gols e menos empate.\n\n### Bloco: home_gols (Sunderland)\n- Média de gols em casa: 1.28 marcados, 1.06 sofridos. SoT em casa: 3.5/j, conversão 29%. Volume de chutes: 10.1/j, 7.2 na área.\n- Conclusões:\n  - C8: Sunderland em casa tem ataque moderado (1.28 g/j) e defesa razoável (1.06 sofridos), mas volume de finalização baixo (3.5 SoT/j) em comparação com a liga. (direção: ataque não é explosivo)\n  - C9: Conversão de 29% é alta (ligeiramente acima da média da liga? A média da liga é 1.532/1.227, mas não temos conversão da liga. De qualquer forma, 29% é decente). SoT baixo sugere dependência de eficiência.\n\n### Bloco: away_gols (Chelsea)\n- Chelsea fora: 1.72 marcados, 1.39 sofridos. SoT fora: 4.61/j, conversão 30%. Volume de chutes: 13.5/j, 9 na área.\n- Conclusões:\n  - C10: Chelsea fora de casa tem ataque forte (1.72 g/j, 4.61 SoT/j) e defesa um pouco vazada (1.39 sofridos). Volume ofensivo alto. (direção: Chelsea deve criar chances)\n  - C11: Conversão de 30% também é alta. Chelsea finaliza muito (4.61 SoT/j fora), então é provável que marque.\n\n### Bloco: home_estilo (Sunderland)\n- Ataques perigosos: 44.8/j (temporada), 51.8 nos últimos 5. Chutes pra fora: 3.9, bloqueados: 2.9. De fora da área: 3.0.\n- Sofre: ataques perigosos 55.9, chutes pra fora 5.5, bloqueados 4.4, de fora 5.1.\n- Estilo: parece um time que sofre muitos ataques perigosos (56/j), mas cria menos (45). Nos últimos 5, ataque melhorou (51.8) e defesa piorou (45 sofridos, menor que a média). \n- Conclusões:\n  - C12: Sunderland tende a ser dominado em ataques perigosos (sofre mais que cria), mas em casa pode ser mais equilibrado. Nos últimos jogos, ataque gerou mais ataques perigosos (51.8), mas defesa ainda sofreu bem menos (45) — isso é ambíguo: 45 sofridos é menor que 55.9 da temporada, então talvez enfrentou adversários mais fracos? Verificar forma.\n  - C13: Volume de chutes baixo (10.1/j) e muitos chutes bloqueados/pra fora pelo adversário. Sunderland não é time de pressionar muito.\n\n### Bloco: away_estilo (Chelsea)\n- Ataques perigosos: 54.5/j (temporada), 49.4 nos últimos 5. Chutes pra fora: 4.7, bloqueados: 4.4, de fora: 4.5.\n- Sofre: ataques perigosos 43.7, chutes pra fora 3.8, bloqueados 2.6, de fora 3.1.\n- Chelsea é time dominante (57.8% posse), gera muitos ataques perigosos (54.5) e limita o adversário (43.7). Nos últimos 5, ataque caiu um pouco (49.4) e defesa melhorou (35.6 sofridos).\n- Conclusões:\n  - C14: Chelsea é time de posse alta, muito ofensivo, criando muitos ataques perigosos e limitando o adversário. Defensivamente, sofre poucos ataques perigosos em comparação.\n  - C15: Nos últimos 5, o ataque do Chelsea parece menos produtivo (média de 0.8 g/j), mas os números de estilo ainda mostram criação (49.4 ataques perigosos). Pode ser má pontaria recente.\n\n### Bloco: home_qualidade (Sunderland)\n- Nota média do time: 6.79. Destaques: Enzo Le Fée (nota 7.07, 6G6A, forma subindo), Granit Xhaka (7.15, 1G6A), Brian Brobbey (6.69, 7G, forma estável). Desfalque: D. Ballard (fora, nota 6.86, 2G, importante na defesa).\n- Conclusões:\n  - C16: Enzo Le Fée é o principal criador (1.77 KP/j, 6G6A, 6 MOTM), em ótima forma (7.46 nas últimas 5). Peça chave no ataque. (direção: positivo para criação do Sunderland)\n  - C17: Granit Xhaka também importante (1.06 KP/j, 6A), mas menos gols. Contribui na criação.\n  - C18: Brian Brobbey é o artilheiro (7G), mas joga em média 62 min, então pode não ser titular ou sair cedo. Seus gols são mais no 2º tempo, muitos tardios — pode ser impactante saindo do banco.\n  - C19: Desfalque de Ballard: zagueiro com 1.1 desarmes, 0.68 int, 5.84 duelos/j. Sua ausência enfraquece a defesa, especialmente em interceptações (0.7 int/j, 9% do time) e duelos.\n\n### Bloco: away_qualidade (Chelsea)\n- Nota média: 6.89. Destaques: Enzo Fernández (7.28, 12G5A, 10 MOTM, forma 7.6↑), João Pedro (7.10, 17G6A, 4 MOTM), Pedro Neto (7.05, 10G8A), Cole Palmer (6.92, 9G1A). Desfalques: Estêvão (lesão, 2G2A, mas pouco impacto), Jamie Gittens (dúvida, 0G2A), Roméo Lavia (dúvida, 0G0A), outros irrelevantes.\n- Conclusões:\n  - C20: Enzo Fernández é o motor do meio-campo (12G, 1.93 KP/j), em grande forma. Essencial para criação e finalização. (direção: fortalece ataque do Chelsea)\n  - C21: João Pedro é o artilheiro (17G, 0.76 SoT/j), mas forma recente estável (nota 7.0). Perigoso na área.\n  - C22: Pedro Neto contribui com gols e assistências (10G8A), mas faltou 2 dos últimos 5 jogos, então ritmo incerto. Mesmo assim, importante.\n  - C23: Cole Palmer tem 9G, mas forma em baixa (6.56↓) e volume de chutes caiu (0.86 SoT/j, mas recente 0.6). Talvez não esteja 100%.\n  - C24: Desfalques: Estêvão fora, mas seu impacto era baixo (4% dos gols, 0.36 SoT/j). Gittens dúvida, mas seus números defensivos/criativos não são altos; Lavia dúvida (0% gols, 0 SoT/j). Ausências não devem afetar muito o Chelsea.\n\n### Bloco: home_forma (Sunderland)\n- Últimos 5: VEEDD (5pts), 7 gols marcados, 11 sofridos, SoT 4/5. Média de 1.4 marcados, 2.2 sofridos por jogo (pior que a média da temporada em casa).\n- Resultados: derrota 3-4 para Villa (fora), derrota 0-5 para Nottingham (casa), empate 1-1 com Wolverhampton (fora, time rebaixado), empate 0-0 com Man United (casa), vitória 3-1 sobre Everton (fora).\n- Consistência: marcou em 24/37 jogos, clean sheet 11, BTTS 17/37.\n- Conclusões:\n  - C25: Forma recente do Sunderland é ruim defensivamente (11 sofridos em 5 jogos, 2.2 por jogo), incluindo uma goleada em casa para o Nottingham (0-5). Ataque até marcou em 4 dos 5 jogos, mas a defesa é frágil. (direção: defesa vulnerável, pode sofrer gols)\n  - C26: O empate com o Man United (0-0) mostra que em casa podem segurar times maiores, mas o United já estava garantido (salvo/s-alvo) e talvez não forçou. O 0-5 para Nottingham é alarmante: Nottingham brigava contra Z, Sunderland já estava salvo? Contexto: Sunderland estava 11º/12º, talvez já sem ambição naquele momento.\n  - C27: A vitória sobre o Everton (fora) foi de virada, mostrando poder de reação, mas Everton estava salvo e sem ambição.\n\n### Bloco: away_forma (Chelsea)\n- Últimos 5: VEDDD (4pts), 4 gols marcados, 9 sofridos, SoT 3/4. Média de 0.8 marcados, 1.8 sofridos (ataque fraco, defesa pior que a média).\n- Resultados (considerando últimos 5 jogos de liga? O briefing mostra alguns jogos da FA Cup também. Últimos 5 jogos: vs Leeds (FA Cup, V 1-0), vs Nottingham (D 1-3 em casa), @ Liverpool (E 1-1), vs Man City (FA Cup, D 0-1), vs Tottenham (V 2-1). Dois jogos de FA Cup no meio. A forma recente na liga: Nottingham D 1-3, Liverpool E 1-1, Tottenham V 2-1. Isso dá 4 pontos em 3 jogos, com 4 gols marcados e 5 sofridos? Na verdade, contra Nottingham levou 3, contra Liverpool 1, contra Tottenham 1 = 5 sofridos. Marcou: 1+1+2 = 4. Então a média de gols marcados é 1.33, sofridos 1.67, melhor que 0.8/1.8 se incluímos FA Cup. Mas o briefing diz \"últimos 5: VEDDD (4pts) 4 feitos / 9 sofridos · marca 0.8↓ / sofre 1.8↑\". Isso inclui os jogos de copa? Ele lista: vs Leeds (FA Cup, V 1-0), vs Nottingham (D 1-3), @ Liverpool (E 1-1), vs Man City (FA Cup, D 0-1), vs Tottenham (V 2-1). Portanto, são 5 jogos, com 2 da FA Cup. A média de gols marcados é realmente 4 gols em 5 jogos = 0.8. Sofridos 9 em 5 = 1.8. Isso é baixo para o Chelsea, mas enfrentou times fortes (Liverpool, Man City) e Nottingham (briga-Z) em má fase.\n- Consistência: marcou em 30/37, clean sheet 9, BTTS 23/37.\n- Conclusões:\n  - C28: Forma recente do Chelsea é pobre ofensivamente (0.8 g/j nos últimos 5, todos os jogos), mas enfrentou adversários de qualidade (Liverpool, City) e um Nottingham aguerrido. Ainda assim, conseguiu 2 vitórias magras (1-0 e 2-1). Defensivamente, sofreu gols em todos os jogos de liga recentes (exceto contra o City, mas foi derrota). (direção: ataque não está fluindo, mas pode melhorar contra defesa frágil)\n  - C29: Chelsea fora de casa na temporada tem 1.72 g/j, muito acima do desempenho recente, sugerindo que a má fase é mais conjuntural (adversários difíceis). Contra Sunderland, deve voltar a criar mais.\n\n### Bloco: home_momentum (Sunderland)\n- Curvas de pressão minuto a minuto nos últimos 5 jogos. \n- Observações: Sunderland costuma começar bem em alguns jogos (ex: 0-15 vs Villa, net positivo), mas sofreu gols cedo em outros. Defensivamente, a atividade defensiva é baixa em alguns intervalos (ex: 1'-15' vs Everton só 1 interceptação+desarme). \n- Padrão: Sunderland pressiona mais no início dos jogos? Vendo os dados: \n  - vs Villa: pressão positiva no início (+1 a +5), depois caiu.\n  - vs Nottingham: pressão positiva no início, mas sofreu 4 gols no 1º tempo.\n  - vs Wolves: pressão positiva 16-30, marcou, depois caiu.\n  - vs Man United: pressão positiva no início, depois neutra.\n  - vs Everton: pressão positiva 16-30 e 46-60, marcou no 2º tempo.\n- Em geral, Sunderland parece ter bons momentos no início dos jogos (até 30 min) e depois cai. No 2º tempo, varia: contra Everton reagiu bem, contra outros sofreu.\n- A linha de defesa: baixa atividade defensiva em alguns momentos significa que está controlando a posse ou sendo dominado sem conseguir desarmar? No caso do Sunderland, que tem baixa posse (44.9%), provavelmente está sendo dominado.\n- Janela de gol provável pelo cruzamento de momentum: Sunderland domina 0-15 (+3), Chelsea domina 31-45 (-3.1) e 76-90 (-3).\n- Conclusões:\n  - C30: Sunderland inicia jogos pressionando, especialmente nos primeiros 15-30 minutos. Isso pode gerar chances iniciais. (direção: possibilidade de gol cedo do Sunderland)\n  - C31: A defesa do Sunderland é vulnerável em vários momentos, especialmente no fim do 1º tempo e no 2º tempo, onde sofreu gols em vários jogos recentes. (direção: Chelsea pode marcar no final do 1º tempo e no 2º tempo)\n  - C32: A atividade defensiva baixa (ex: 1 a 5 desarmes+int por faixa) sugere que Sunderland não é time de muita interceptação, então se o Chelsea trocar passes, pode encontrar espaços.\n\n### Bloco: away_momentum (Chelsea)\n- Curvas de pressão do Chelsea nos últimos 5 jogos:\n  - vs Man United: pressão negativa no início, depois cresceu e dominou o 2º tempo, mas perdeu.\n  - @ Brighton: pressão muito negativa no início, sofreu 3 gols.\n  - vs Nottingham: pressão positiva em vários momentos, mas sofreu 3 gols (2 no início).\n  - @ Liverpool: pressão variável, marcou no 1º tempo.\n  - vs Tottenham: pressão iniciou negativa, depois equilibrou, marcou no 1º e 2º tempo.\n- Padrão: Chelsea frequentemente começa mal, sofrendo gols cedo (3' vs Brighton, 2' e 15' vs Nottingham). Depois melhora no 2º tempo, mas a defesa é instável.\n- Janela de domínio: Chelsea domina 31-45 e 76-90 (via cruzamento de momentum).\n- Conclusões:\n  - C33: Chelsea costuma sofrer gols nos primeiros 15-30 minutos em jogos recentes, indicando desatenção inicial. (direção: Sunderland pode marcar cedo)\n  - C34: Chelsea tende a crescer no 2º tempo e nos minutos finais (76-90), com pressão alta e gols tardios (ex: 90' vs Nottingham). (direção: Chelsea pode marcar no fim)\n  - C35: Defesa do Chelsea também não é sólida: sofreu 9 gols em 5 jogos, com baixa atividade defensiva em algumas faixas (ex: 1 desarme+int nos 0-15 vs Brighton).\n\n### Bloco: home_faixas (Sunderland gols por faixa)\n- Marca mais: 61-75 (0.27), 76-90 (0.35). Marca pouco no 1º tempo (0.05, 0.16, 0.11).\n- Sofre mais: 31-45 (0.27), 61-75 (0.24), 76-90 (0.22). Sofre relativamente bem distribuído, mas pico no fim do 1º tempo.\n- Comparado com a baseline da liga: Sunderland marca muito mais no 2º tempo (especialmente 61-90) e menos no 1º. Sofre mais no 31-45 do que a média.\n- Conclusões:\n  - C36: Sunderland é time de 2º tempo: marca 63% de seus gols em casa no 2º tempo (0.76 marcados no 2ºT vs 0.32 no 1ºT). Isso é uma tendência forte. (direção: esperar gols do Sunderland mais no 2º tempo)\n  - C37: Sunderland sofre mais no final do 1º tempo (31-45: 0.27) e no 2º tempo. Defesa não é segura.\n\n### Bloco: away_faixas (Chelsea gols por faixa)\n- Marca mais: 31-45 (0.35), 46-60 (0.35), depois 61-75 e 76-90 (0.24). No 1º tempo, marca bem no início (0.16) e no fim (0.35).\n- Sofre mais: 0-15 (0.30), 76-90 (0.30). Sofre gols no início e no fim.\n- Conclusões:\n  - C38: Chelsea marca bem no fim do 1º tempo (31-45: 0.35) e no início do 2º (46-60: 0.35). Isso coincide com janelas de domínio. (direção: esperar gols do Chelsea nessas faixas)\n  - C39: Chelsea sofre gols no início dos jogos (0-15: 0.30) e no final (76-90: 0.30), mostrando vulnerabilidade em momentos de desatenção.\n\n### Bloco: home_desfalques (Sunderland)\n- D. Ballard: suspenso. Zagueiro, 5% dos gols, 0.7 int/j (~9% do time), 1.1 desarmes, 5.8 duelos. Ausência enfraquece a defesa, especialmente em interceptações.\n- Simon Moore: goleiro reserva? Nome não está no XI provável. Lesionado, mas irrelevante (0% gols).\n- R. Mundle: atacante/ponta? 0 gols, 0.14 SoT/j, 0.1 interceptações. Com ele, time marcou 0.93 g/j; sem ele, 1.17. Ausência parece não prejudicar; pelo contrário, time marca mais sem ele. Provavelmente não é titular.\n- Conclusões:\n  - C40: Desfalque de Ballard é significativo para a defesa: perde 9% das interceptações do time e um zagueiro físico. (direção: defesa do Sunderland mais frágil, favorece Chelsea)\n  - C41: Moore e Mundle são desfalques irrelevantes (baixo impacto, baixo volume). (neutro)\n\n### Bloco: away_desfalques (Chelsea)\n- Estêvão: atacante, 2G2A, 4% dos gols. Lesionado, mas time sem ele marca 1.67 g/j vs 1.45 com ele. Ausência não reduz ataque; talvez time até mais equilibrado. SoT cai um pouco (4.2 vs 4.59), mas ainda alto.\n- Jamie Gittens: dúvida. 0G2A, 0.13 SoT/j. Time com ele marca 2.06 g/j, sem ele 1.14 (mas amostras distorcidas?). É um jogador de criação? 0.6 key passes, 0.8 dribbles. Se ausente, pode reduzir um pouco a criatividade, mas não é essencial.\n- Roméo Lavia: dúvida. Volante, 0G0A, 0 SoT/j. Time sem ele marca 1.76, com ele 1.08 (estranho, talvez tenha jogado contra times mais fáceis). Defensivamente, 0.5 int/j (5% do time). Ausência pode enfraquecer um pouco a marcação no meio.\n- Mudryk e Wiley: banidos/lesionados, irrelevantes (nunca jogaram).\n- Conclusões:\n  - C42: Chelsea sem Estêvão não perde poder ofensivo; time já se adaptou (ele não participou dos últimos gols). (neutro)\n  - C43: Dúvida de Gittens pode tirar um driblador e criador secundário (0.6 KP/j, 0.8 dribbles), mas seu impacto nos gols é baixo. Se não jogar, ataque do Chelsea pode ser um pouco menos imprevisível.\n  - C44: Dúvida de Lavia pode afetar a proteção defensiva (0.5 int/j, 5% do time), mas seu impacto geral é pequeno. Chelsea tem outras opções.\n\n### Bloco: cruzamento_faixa (tabelas ataque x defesa)\n- Sunderland ataque x Chelsea defesa: maior índice em 76-90 (0.65), depois 61-75 (0.51). Isso indica que as chances do Sunderland podem vir mais no 2º tempo, especialmente no final.\n- Chelsea ataque x Sunderland defesa: maior índice em 31-45 (0.62), depois 46-60 (0.54) e 76-90 (0.46). Chelsea deve gerar perigo no fim do 1º tempo e início do 2º.\n- Conclusões:\n  - C45: Janela de ouro para Chelsea: 31-45 (0.62), onde seu ataque forte encontra defesa do Sunderland que sofre nessa faixa. Provável gol do Chelsea no fim do 1º tempo.\n  - C46: Janela de ouro para Sunderland: 61-90 (índices 0.51 e 0.65), onde ataque do Sunderland cresce e defesa do Chelsea sofre gols no final. Sunderland pode marcar no 2º tempo, possivelmente quando o jogo estiver aberto.\n\n### Bloco: base_rate\n- Rota A: Sunderland 1.16 x Chelsea 1.49, total 2.65.\n- Rota B: Sunderland 0.99 x Chelsea 1.37, total 2.36.\n- Rota B é baseada em SoT, mais estável. Então partimos de ~2.36 gols totais.\n- Probabilidades da Rota B: 1x2: 25/31/44; over 2.5: 42%; BTTS: 49%.\n- Conclusões:\n  - C47: O prior (Rota B) aponta um jogo com total de 2.36 gols, ligeiramente abaixo da média da liga (2.76), com Chelsea favorito (44% vitória). BTTS abaixo de 50% (49%). (direção: sem ajustes, seria jogo equilibrado, mas com leve favoritismo ao Chelsea e menos gols que a média)\n  - C48: Diferença entre A e B: Rota A é maior (2.65 vs 2.36). Isso sugere que os gols do Sunderland e Chelsea podem estar inflados por conversão acima do esperado. Como preferimos B, devemos ser um pouco cautelosos com over alto.\n\n### Bloco: probs_mercado (Poisson Dixon-Coles)\n- Fornece probabilidades para vários mercados. Servem como prior.\n- Conclusões:\n  - C49: Empate tem probabilidade de 31% (Rota B), o que é alto, mas com ambos precisando vencer, essa probabilidade deve cair. (direção: tendência a menos empates)\n  - C50: BTTS 49% no prior, mas com motivação ofensiva de ambos e defesas frágeis, deve subir.\n  - C51: Over 2.5 apenas 42%, mas com o jogo aberto, pode aumentar.\n\n### Bloco: cruzamentos_computados\n- Arquétipo: Sunderland contra dominante: marca 0.82/j, sofre 1.55. Ou seja, piora seu ataque e defesa contra times de posse. Chelsea contra bloco baixo: marca 2.00/j, sofre 1.27. Melhora muito o ataque contra times que se defendem. Isso é crucial.\n- Mecanismo de gol: \n  - Sunderland escanteio vs Chelsea sofre escanteio: índice 1.5x (escanteios são via perigosa).\n  - Chelsea contra-ataque vs Sunderland sofre contra-ataque: índice 2.6x (contra-ataque é arma letal).\n  - Chelsea escanteio vs Sunderland sofre escanteio: índice 1.4x.\n- Dinâmica pós-gol:\n  - Sunderland: após sofrer, neutro; após marcar, MATA O JOGO (segue pressionando +1.0).\n  - Chelsea: após sofrer, neutro; após marcar, ADMINISTRA (recua -1.1).\n- Conclusões:\n  - C52: Chelsea é muito eficaz contra times de bloco baixo (marca 2.00 g/j), e Sunderland é um time de bloco baixo (posse 44.9%). Isso eleva o xG esperado do Chelsea. (direção: aumento no xG do Chelsea)\n  - C53: Sunderland contra times dominantes marca menos (0.82) e sofre mais (1.55), então seu ataque pode ser ainda mais fraco e defesa mais exposta. (direção: reduz xG do Sunderland, aumenta do Chelsea)\n  - C54: Contra-ataque do Chelsea é perigoso (índice 2.6x), e Sunderland sofre 7% dos gols em contra-ataque (igual à média). Isso sugere que o Chelsea pode marcar em transições rápidas.\n  - C55: Escanteios são via perigosa para ambos (índices 1.5 e 1.4). Jogo pode ter gols de bola parada.\n  - C56: Dinâmica pós-gol: se Sunderland marcar, tende a continuar pressionando (mata o jogo). Se Chelsea marcar, tende a recuar (administrar). Isso pode influenciar a distribuição de gols: se Chelsea fizer 1-0, pode recuar e sofrer pressão; se Sunderland fizer 1-0, pode ampliar ou sofrer reação.\n\nAgora vou organizar todas as conclusões com IDs. Vou numerar de C1 a C56, mas algumas podem ser agrupadas. Vou listar todas as conclusões relevantes.\n\n### Lista de conclusões (Passo 1)\nC1: Contexto - Sunderland com 2 dias a mais de descanso (7 vs 5), mas diferença de 1-2 dias é ruído, sem impacto significativo. (força baixa)\nC2: Contexto - Clima ameno sem impacto no total. (força baixa)\nC3: Contexto - Vantagem de casa para Sunderland, mas Chelsea tem qualidade superior; fator casa pode equilibrar. (força média)\nC4: Tabela_motivacao - Ambos os times com alta motivação para vencer, brigando por vaga europeia na última rodada. Aumenta intensidade ofensiva. (força alta)\nC5: Tabela_motivacao - Chelsea precisa vencer para garantir vaga; empate pode eliminá-lo. Força busca por gol. (força alta)\nC6: Tabela_motivacao - Sunderland, em casa, precisa vencer para ter chance; não se contenta com empate. (força alta)\nC7: Tabela_motivacao - Veredito: ambos vão pra cima, jogo aberto, tendência a mais gols e menos empate. (força alta)\nC8: home_gols - Sunderland em casa: ataque moderado (1.28 g/j, 3.5 SoT/j), volume baixo. (força média)\nC9: home_gols - Conversão alta (29%), mas dependência de eficiência. (força baixa)\nC10: away_gols - Chelsea fora: ataque forte (1.72 g/j, 4.61 SoT/j), defesa vazada (1.39). (força alta)\nC11: away_gols - Conversão alta (30%), volume ofensivo alto; provável que marque. (força alta)\nC12: home_estilo - Sunderland sofre mais ataques perigosos (55.9) do que cria (44.8), sendo dominado. (força média)\nC13: home_estilo - Volume de chutes baixo (10.1/j) e muitos bloqueios; ataque pouco incisivo. (força média)\nC14: away_estilo - Chelsea é dominante: muitos ataques perigosos (54.5), posse alta (57.8%), limita adversário (43.7). (força alta)\nC15: away_estilo - Últimos 5: ataque do Chelsea caiu em produção (0.8 g/j), mas criação ainda razoável (49.4 ataques). (força média)\nC16: home_qualidade - Enzo Le Fée: principal criador do Sunderland (6G6A, 1.77 KP/j), em ótima forma. (força alta)\nC17: home_qualidade - Granit Xhaka: contribui com assistências (6A) e passes-chave (1.06 KP/j). (força média)\nC18: home_qualidade - Brian Brobbey: artilheiro (7G), mas joga ~62 min; seus gols são mais no 2º tempo e podem ser decisivos. (força média)\nC19: home_desfalques - D. Ballard (zagueiro) fora: perda de 9% das interceptações, enfraquece defesa. (força alta)\nC20: away_qualidade - Enzo Fernández: meio-campista goleador e criador (12G5A, 1.93 KP/j), em grande forma. (força alta)\nC21: away_qualidade - João Pedro: artilheiro (17G), 0.76 SoT/j, perigo constante na área. (força alta)\nC22: away_qualidade - Pedro Neto: 10G8A, driblador (1.44 dribles/j), mas ritmo incerto (faltou 2/5 jogos). (força média)\nC23: away_qualidade - Cole Palmer: 9G, mas forma em baixa (nota 6.56↓) e queda em finalizações (0.86 para 0.6 SoT/j). (força média)\nC24: away_desfalques - Desfalques do Chelsea (Estêvão, Gittens, Lavia) têm baixo impacto; time não deve ser muito afetado. (força baixa)\nC25: home_forma - Sunderland: defesa frágil nos últimos 5 (11 sofridos, 2.2 por jogo), incluindo 0-5 em casa para Nottingham. (força alta)\nC26: home_forma - Empate 0-0 com Man United (casa) foi contra time já sem ambição. Vitória sobre Everton foi contra time salvo. (força baixa, contexto)\nC27: home_forma - Ataque do Sunderland marcou em 4/5 jogos recentes, mas volume de SoT baixo (4/j). (força média)\nC28: away_forma - Chelsea: forma ofensiva pobre (0.8 g/j nos últimos 5), mas enfrentou adversários fortes; defesa sofreu em todos os jogos de liga recentes. (força alta)\nC29: away_forma - Chelsea fora de casa na temporada tem média de 1.72 g/j, muito acima da má fase recente, sugerindo que adversários difíceis deprimiram os números. (força média)\nC30: home_momentum - Sunderland costuma pressionar no início dos jogos (0-15, 16-30), com chances de gol cedo. (força média)\nC31: home_momentum - Defesa do Sunderland é vulnerável no fim do 1º tempo (31-45) e no 2º tempo, onde sofreu gols. (força alta)\nC32: home_momentum - Baixa atividade defensiva (int+desarmes) sugere que Sunderland não intercepta muito; Chelsea pode achar espaços. (força média)\nC33: away_momentum - Chelsea frequentemente sofre gols nos primeiros 15-30 minutos, indicando desatenção inicial. (força alta)\nC34: away_momentum - Chelsea cresce no 2º tempo e em minutos finais (76-90), com pressão alta e gols tardios. (força alta)\nC35: away_momentum - Defesa do Chelsea também instável, sofreu 9 gols em 5 jogos, com baixa atividade defensiva em alguns momentos. (força média)\nC36: home_faixas - Sunderland marca 63% dos gols em casa no 2º tempo, com picos em 61-90. Time de 2º tempo. (força alta)\nC37: home_faixas - Sunderland sofre mais no fim do 1º tempo (31-45: 0.27) e no 2º tempo. (força média)\nC38: away_faixas - Chelsea marca bem no fim do 1º tempo (31-45: 0.35) e início do 2º (46-60: 0.35). (força alta)\nC39: away_faixas - Chelsea sofre no início (0-15: 0.30) e no fim (76-90: 0.30), mostrando vulnerabilidade em momentos de transição. (força alta)\nC40: home_desfalques - Ballard fora: defesa do Sunderland mais frágil, especialmente em interceptações (9% do time). (força alta) - similar a C19, vou juntar.\nC41: home_desfalques - Moore e Mundle são desfalques irrelevantes. (neutro)\nC42: away_desfalques - Chelsea sem Estêvão não perde poder ofensivo; time adaptado. (neutro)\nC43: away_desfalques - Gittens dúvida: se ausente, tira um driblador/criador secundário, mas impacto baixo. (força baixa)\nC44: away_desfalques - Lavia dúvida: pode afetar proteção defensiva, mas impacto pequeno. (força baixa)\nC45: cruzamento_faixa - Janela de ouro para Chelsea: 31-45 (índice 0.62), ataque forte encontra defesa frágil. (força alta)\nC46: cruzamento_faixa - Janela de ouro para Sunderland: 61-90 (índices 0.51 e 0.65), ataque do Sunderland cresce e defesa do Chelsea sofre no fim. (força alta)\nC47: base_rate - Prior Rota B: total 2.36, Chelsea favorito (44%), over 2.5 42%, BTTS 49%. (força alta, é a baseline)\nC48: base_rate - Rota A (2.65) inflada por conversão; Rota B mais confiável, sugerindo cautela com over. (força média)\nC49: probs_mercado - Empate prior: 31%, mas com motivação deve cair. (força média)\nC50: probs_mercado - BTTS prior 49%, mas com motivação e defesas frágeis deve subir. (força média)\nC51: probs_mercado - Over 2.5 prior 42%, mas deve subir com jogo aberto. (força média)\nC52: cruzamentos_computados - Chelsea contra bloco baixo marca 2.00 g/j (0.46 acima da média); Sunderland é bloco baixo. Aumenta xG Chelsea. (força alta)\nC53: cruzamentos_computados - Sunderland contra dominante marca apenas 0.82 g/j, sofre 1.55. Reduz xG Sunderland, aumenta Chelsea. (força alta)\nC54: cruzamentos_computados - Contra-ataque do Chelsea é arma letal (índice 2.6x) contra Sunderland. (força alta)\nC55: cruzamentos_computados - Escanteios são via perigosa para ambos, com índices de 1.4 a 1.5x. (força média)\nC56: cruzamentos_computados - Dinâmica pós-gol: Sunderland se marca segue pressionando; Chelsea se marca tende a recuar. Isso pode gerar mais gols se Sunderland marcar primeiro, ou jogo mais controlado se Chelsea marcar primeiro. (força alta)\n\nAgora, alguns blocos podem não ter gerado conclusão? Vou verificar:\n- Bloco home_gols: gerou C8, C9.\n- away_gols: C10, C11.\n- home_estilo: C12, C13.\n- away_estilo: C14, C15.\n- home_qualidade: C16, C17, C18.\n- away_qualidade: C20, C21, C22, C23.\n- home_forma: C25, C26, C27.\n- away_forma: C28, C29.\n- home_momentum: C30, C31, C32.\n- away_momentum: C33, C34, C35.\n- home_faixas: C36, C37.\n- away_faixas: C38, C39.\n- home_desfalques: C19 (Ballard), C41 (Moore, Mundle). Mas C19 e C40 são redundantes. Vou manter C19 como a conclusão principal de desfalque. C40 é a mesma. Então excluo C40, pois já está em C19.\n- away_desfalques: C42, C43, C44.\n- cruzamento_faixa: C45, C46.\n- base_rate: C47, C48.\n- probs_mercado: C49, C50, C51.\n- cruzamentos_computados: C52, C53, C54, C55, C56.\n- contexto: C1, C2, C3 (C3 é meio óbvia, mas manter).\n- tabela_motivacao: C4, C5, C6, C7.\n\nTodos os blocos têm conclusões. Blocos sem sinal: talvez nenhum, mas devo colocar em `blocos_sem_sinal` se algum bloco não rendeu nada. O bloco de \"descanso\" renderia apenas ruído; C1 diz que é ruído, então é uma conclusão, mesmo que de baixa força. Não deixo sem sinal.\n\nAgora vou para o Passo 2: Jogador por jogador.\n\n## Passo 2 - JOGADOR POR JOGADOR\n\n### Sunderland\n**Robin Roefs** (goleiro): Nota 6.97, forma 6.5 em baixa, mas 3 MOTM. Sofre muitos gols, mas defesa à frente é frágil. Leitura: Goleiro que pode fazer defesas, mas exposto pela defesa sem Ballard; não é um diferencial que mude o xG significativamente.\n**Enzo Le Fée**: Principal arma ofensiva, em grande forma, criador e finalizador. Contra um meio-campo do Chelsea que pode deixar espaços (Lavia dúvida), ele pode ter liberdade para criar. Leitura: Se o Sunderland marcar, provavelmente passará por ele. Aumenta chances de gol do Sunderland, especialmente em transições.\n**Trai Hume**: Lateral com pouca participação ofensiva (1G1A), mas defesa razoável. Leitura: Enfrentará Pedro Neto ou alguém rápido; pode sofrer. Não deve ser diferencial ofensivo.\n**Nordi Mukiele**: Zagueiro/lateral? 3G4A, aparece no ataque. Leitura: Pode ser surpresa em bolas paradas (escanteios são perigosos para o Sunderland). Defensivamente, terá que lidar com João Pedro.\n**Noah Sadiki**: Meio-campo defensivo, 0G1A, baixa criação. Leitura: Titular, mas não agrega muito ofensivamente; sua função é conter Enzo Fernández, missão difícil.\n**Granit Xhaka**: Meio-campo experiente, 6 assistências, passes-chave. Leitura: Fará a ligação com Le Fée; pode ser importante em bolas paradas. Mas contra a intensidade do Chelsea, pode ser pressionado.\n**Omar Alderete**: Zagueiro, 1G1A. Leitura: Com Ballard fora, será o líder da defesa. Sofre com ataque móvel do Chelsea? Tem boa nota, mas forma em baixa (6.54). Pode ser sobrecarregado.\n**D. Ballard** (fora): Zagueiro titular, ausência importante. Leitura: Sem ele, a defesa perde físico e interceptações. Chelsea deve explorar isso com infiltrações de Enzo Fernández e João Pedro.\n**Brian Brobbey**: Atacante, 7 gols, muitos no 2º tempo. Leitura: Não é titular absoluto (62 min/j), mas pode ser arma no 2º tempo contra defesa cansada do Chelsea. Se começar, pode não aguentar 90 min.\n**R. Mandava**: Lateral/ala, 0G1A, driblador (0.63 dribles/j). Leitura: Ofensivamente limitado; defensivamente terá que conter as subidas do Chelsea.\n**Lutsharel Geertruida**: Defensor, faltou 3/5 jogos. Leitura: Se jogar, não está em ritmo. Piora a defesa.\n\n### Chelsea\n**Robert Sánchez**: goleiro, nota 6.78, forma estável. Leitura: Não é um goleiro excepcional, mas o Sunderland não finaliza muito (3.5 SoT/j em casa). Pode ser vazado se a defesa falhar.\n**Enzo Fernández**: craque do time, 12G5A, 1.93 KP/j, grande forma. Leitura: O motor do Chelsea; vai ditar o ritmo contra um meio-campo frágil do Sunderland. Espera-se que crie várias chances.\n**Moisés Caicedo**: volante, 3G1A, mas principalmente defensivo (2.56 desarmes, 1.69 int). Leitura: Será o cão de guarda contra Le Fée; se anular o francês, Sunderland perde criatividade.\n**Trevoh Chalobah**: zagueiro, 3G, faltou 2/5. Leitura: Defesa instável; pode ser o elo fraco na zaga, especialmente em bolas paradas do Sunderland.\n**Pedro Neto**: atacante/ponta, 10G8A, driblador. Leitura: Se estiver em campo, é desequilibrio contra a defesa lenta do Sunderland. Sua ausência parcial recente pode indicar que não está 100%, mas ainda é perigoso.\n**João Pedro**: centroavante, 17G. Leitura: Finalizador nato; vai testar a zaga reserva do Sunderland. Deve ter chances.\n**Marc Cucurella**: lateral, 1G4A, mas mais defensivo. Leitura: Apoia pouco; seu foco será conter as subidas do Sunderland pela direita.\n**Malo Gusto**: lateral, 2G4A, faltou 1/5. Leitura: Ofensivamente mais participativo; pode criar sobreposições.\n**Wesley Fofana**: zagueiro, 0G1A, faltou 2/5. Leitura: Defesa não está em ritmo; Sunderland pode explorar.\n**Andrey Santos**: meio-campo, 3G2A, forma subindo. Leitura: Pode ser o elemento surpresa no meio, mas joga pouco (57 min/j).\n**Cole Palmer**: atacante, 9G, mas forma em baixa. Leitura: Se não render, Chelsea perde poder de fogo; mas ainda é talentoso e pode decidir.\n\n## Passo 3 - ARESTAS (cruzamentos)\n\nVou criar arestas ligando conclusões. Preciso de no mínimo 8, todas as conclusões devem ser usadas ou descartadas.\n\nVou listar as arestas com IDs A1, A2...\n\n**A1**: Ataque Chelsea (C10: forte 1.72 g/j fora, C14: dominante) x Defesa Sunderland (C19: Ballard fora, C25: frágil 2.2 sofridos/j, C31: vulnerável no fim do 1ºT)\nLiga: C10, C14, C19, C25, C31\nLeitura: Chelsea com ataque forte enfrenta uma defesa do Sunderland enfraquecida por desfalque e má forma. Isso deve elevar o xG do Chelsea para perto de 2.0 ou mais.\nEfeito: Aumenta xG Chelsea em ~0.4-0.6 (de 1.37 para ~1.8-2.0).\n\n**A2**: Ataque Sunderland (C8: moderado 1.28 em casa, mas C52: contra dominantes marca só 0.82, C53: 0.82) x Defesa Chelsea (C35: instável, sofreu em jogos recentes, mas C14: limita adversários a 43.7 ataques perigosos)\nLiga: C8, C52, C53, C35, C14\nLeitura: Sunderland enfrenta dificuldade histórica contra times dominantes, e o Chelsea tende a limitar chances adversárias. Porém, a defesa do Chelsea não é segura, então Sunderland ainda pode marcar, mas provavelmente abaixo de sua média em casa. \nEfeito: Reduz xG Sunderland para ~0.7-0.8.\n\n**A3**: Intenção de ambos (C4, C5, C6, C7: precisam vencer) x Estilo (C12: Sunderland dominado, C14: Chelsea dominante)\nLiga: C4, C5, C6, C7, C12, C14\nLeitura: Ambos precisam vencer, então o jogo será aberto. Sunderland, mesmo sendo dominado, terá que se expor mais que o normal, o que pode piorar sua defesa mas também dar chances em contra-ataque. Chelsea, precisando vencer, não pode se contentar em administrar, então deve pressionar o tempo todo.\nEfeito: Aumenta o total de gols do jogo; over 2.5 mais provável.\n\n**A4**: Desfalque Ballard (C19) x Janela de pressão do Chelsea (C45: 31-45 é janela de ouro, C38: Chelsea marca bem nessa faixa)\nLiga: C19, C45, C38\nLeitura: Ballard fora enfraquece a defesa bem na faixa onde o Chelsea é mais perigoso (fim do 1º tempo). A probabilidade de o Chelsea marcar no 1º tempo (especialmente 31-45) aumenta.\nEfeito: Aumenta xG Chelsea no 1º tempo; gol do Chelsea no 1º tempo mais provável.\n\n**A5**: Forma recente (C25: Sunderland sofreu 11 gols, C28: Chelsea ataque pobre) x Qualidade dos adversários (C26: Sunderland enfrentou times sem ambição ou já salvos; C29: Chelsea enfrentou Liverpool, City, Nottingham brigando)\nLiga: C25, C26, C28, C29\nLeitura: A forma defensiva ruim do Sunderland é real (goleada do Nottingham), mas a forma ofensiva pobre do Chelsea pode ser explicada por adversários difíceis. Contra um adversário mais frágil, o Chelsea deve voltar a marcar. A defesa do Sunderland é realmente vulnerável.\nEfeito: Confirma que Chelsea deve marcar; xG Chelsea mantido alto.\n\n**A6**: Momentum inicial (C30: Sunderland pressiona início, C33: Chelsea sofre gols cedo)\nLiga: C30, C33\nLeitura: Sunderland começa pressionando e o Chelsea tem histórico recente de sofrer gols nos primeiros 15-30 minutos. Isso pode resultar em gol cedo do Sunderland.\nEfeito: Aumenta a probabilidade de o Sunderland marcar no 1º tempo, especialmente antes dos 30 min.\n\n**A7**: Momentum final (C34: Chelsea cresce no fim, C36: Sunderland marca no 2º tempo) e Janela de ouro Sunderland (C46: 61-90)\nLiga: C34, C36, C46\nLeitura: Chelsea costuma fazer gols no 2º tempo e no fim, mas Sunderland também marca muito no 2º tempo, especialmente 61-90. Isso sugere um 2º tempo movimentado, com chances para ambos.\nEfeito: Aumenta xG no 2º tempo; ambos podem marcar no 2º tempo.\n\n**A8**: Dinâmica pós-gol (C56: Chelsea recua após marcar, Sunderland pressiona) x Intenção (C5: Chelsea precisa vencer)\nLiga: C56, C5\nLeitura: Se Chelsea marcar primeiro, tende a recuar (administrar), mas como precisa vencer, pode não recuar tanto (intenção alta modera o efeito). Mesmo assim, pode dar espaços para o Sunderland. Se Sunderland marcar primeiro, continuará pressionando, o que pode levar a mais gols (contra ou a favor).\nEfeito: Jogo pode ter gols dos dois lados independentemente de quem marca primeiro.\n\n**A9**: Contra-ataque Chelsea (C54: índice 2.6x) x Sunderland se expondo (C7: ambos vão pra cima, C12: Sunderland sofre ataques perigosos)\nLiga: C54, C7, C12\nLeitura: Com Sunderland precisando vencer, deve se expor mais, deixando espaços na defesa. O Chelsea, com velocidade no contra-ataque (Pedro Neto, João Pedro), pode ser letal.\nEfeito: Aumenta probabilidade de gols do Chelsea em transições; pode gerar mais de um gol.\n\n**A10**: Qualidade individual Chelsea (C20: Enzo Fernández, C21: João Pedro) x Defesa Sunderland sem Ballard (C19)\nLiga: C20, C21, C19\nLeitura: Enzo Fernández e João Pedro são decisivos, e enfrentarão uma defesa desfalcada. A chance de participação em gols é alta.\nEfeito: Aumenta confiança no ataque do Chelsea.\n\n**A11**: Cruzamento de faixas (C45 e C46) e Distribuição de gols (C36, C38)\nLiga: C45, C46, C36, C38\nLeitura: O jogo tem janelas de gols bem definidas: Chelsea perigoso no fim do 1º tempo e início do 2º; Sunderland perigoso no 2º tempo, especialmente 61-90. Isso distribui o xG ao longo do jogo, mas com maior concentração no 2º tempo e fim do 1º.\nEfeito: Ajuda a distribuir o xG nas bandas.\n\n**A12**: Escanteios (C55) x Times que marcam de escanteio (C52? não, o mecanismo diz que Sunderland gera 41% dos gols de escanteio e Chelsea sofre 52% de escanteio; Chelsea gera 49% dos gols de escanteio e Sunderland sofre 41% de escanteio)\nLiga: C55, e dados de escanteio nos mecanismos.\nLeitura: Ambos os times têm alta proporção de gols de escanteio, e as defesas sofrem muitos gols assim. Isso adiciona uma via de gol que não depende tanto de jogada aberta.\nEfeito: Ligeiro aumento no xG total, pois escanteios podem gerar gols mesmo em jogos travados.\n\n**A13**: Fadiga (C1: diferença de descanso é ruído) – mas podemos cruzar com intenção? Como a diferença é pequena, não mexe. Vou para descartadas? Não, C1 pode ser usada em uma aresta sobre fadiga x intenção. Mas a regra diz que 1-2 dias é ruído, então não vou forçar. Vou deixar C1 como usada em uma aresta fraca? Melhor descartar conclusões que não são usadas. Vou listar as conclusões não usadas depois.\n\nPreciso garantir que todas as conclusões sejam usadas ou descartadas. Vou verificar:\n\nConclusões: C1, C2, C3, C4-C7, C8, C9, C10-C15, C16-C18, C19, C20-C23, C24? (C24 é de desfalques do Chelsea, usada? Não usei explicitamente, mas posso descartar como irrelevante). C25-C29, C30-C35, C36-C39, C41 (irrelevante), C42-C44, C45-C56.\n\nC1 (ruído) - não usada em nenhuma aresta? Posso descartar como ruído.\nC2 (clima) - descartar como neutro.\nC3 (vantagem casa) - já implícito, não usei, mas posso considerar usada indiretamente? Não, devo usar ou descartar. Vou descartar C3 como \"já embutida nos λ\".\nC9 (conversão alta) - não usada diretamente; posso usar em aresta sobre eficiência? Talvez em A1 ou A2, mas não mencionei. Vou criar uma aresta ou descartar. Como é um detalhe, posso descartar: \"conversão alta, mas volume baixo, então não é um sinal forte para aumentar xG\".\nC15 (últimos 5 Chelsea criação ainda razoável) - usada em A5 indiretamente (C28, C29). Mas C15 é uma conclusão separada. Usei C28 e C29. Posso juntar? O ideal é que cada conclusão seja usada em pelo menos uma aresta ou descartada. Vou tentar incluir C15 em A5 ou A7. A5 fala de forma, menciona C28 e C29. Posso adicionar C15. \nC17 (Xhaka) - usei? Jogadores foram lidos no Passo 2, mas as conclusões de qualidade individual (C16, C17, C18) devem ser usadas em arestas. C16 (Le Fée) usei em A10? A10 fala de C20 e C21 (Chelsea), não do Sunderland. Preciso criar aresta para o ataque do Sunderland. Posso criar A14: Qualidade Sunderland (C16, C17, C18) x Defesa Chelsea (C35, C44). Liga: C16, C17, C18, C35, C44. Leitura: Sunderland tem Le Fée criando, Brobbey finalizando, e a defesa do Chelsea não é sólida e tem dúvidas no meio (Lavia). Isso pode permitir que o Sunderland crie chances, especialmente se o Chelsea der espaços. Efeito: Aumenta ligeiramente xG Sunderland (0.1-0.2), mas ainda abaixo da média devido ao arquétipo.\nC20 e C21 usei em A10.\nC22 (Neto) - não usei. Posso incluir em A9 (contra-ataque) ou A10. A10 já tem C20 e C21. Vou adicionar C22 na A10.\nC23 (Palmer) - não usei. Pode entrar em A5 ou A10 como \"forma em baixa\" reduzindo ligeiramente? Mas ele ainda é ameaça. \nC24 (desfalques Chelsea) - é uma conclusão de que o impacto é baixo; posso usar em A4 ou A5? Não, é independente. Descarto como \"impacto baixo, não altera xG\".\nC26 (contexto dos jogos do Sunderland) - usei em A5? A5 fala de adversários do Sunderland, então C26 está lá.\nC27 (ataque Sunderland marcou em 4/5) - usei? Não diretamente. Posso incluir em A14.\nC32 (baixa atividade defensiva) - usei em A1? A1 menciona C31 (vulnerável), mas não C32. Posso adicionar C32 em A1.\nC39 (Chelsea sofre no início) - usei em A6? A6 usa C33 (Chelsea sofre cedo), C39 é similar, mas C39 é da temporada, C33 é dos últimos jogos. Posso juntar ou usar ambos. A6 já captura a ideia.\nC41 (Moore, Mundle irrelevantes) - descartar.\nC42, C43, C44 - posso descartar como irrelevantes ou usar C43 e C44 em A14? A14 já considera que a defesa do Chelsea tem dúvidas (Lavia) - C44. Vou adicionar C44 em A14.\nC48 (Rota A inflada) - não usei, mas posso usar em A1 ou A2 para justificar por que prefiro B. Aresta sobre base rate? Pode ser uma aresta de calibragem: \"Confiança na Rota B: C48\". Na verdade, não é uma aresta de cruzamento de conclusões, mas posso criar uma aresta que liga C47 e C48 para dizer que partimos da Rota B. Isso é mais metodológico. Vou criar A15: Base rate: Rota B é preferível (C47, C48). Mas isso é mais uma nota. Não é um cruzamento de dados de jogo. Vou descartar C48 como \"informação de calibragem, não é fator de jogo\". \nC49 (empate 31% prior) - uso em A3? A3 fala em menos empate. Posso usar C49 para mostrar que o prior já tem empate alto, mas a motivação reduz. \nC50 e C51 - mesma coisa.\n\nVou reorganizar as arestas e garantir que todas as conclusões sejam cobertas.\n\nLista final de arestas (pelo menos 8, mas vou fazer mais):\n\nA1: Ataque Chelsea vs Defesa Sunderland (C10, C14, C19, C25, C31, C32)\nA2: Ataque Sunderland vs Defesa Chelsea (C8, C52, C53, C35, C14, C32?)\nA3: Intenção ambos x Estilos (C4, C5, C6, C7, C12, C14, C49)\nA4: Desfalque Ballard x Janela Chelsea (C19, C45, C38)\nA5: Forma recente x Qualidade adversários (C25, C26, C28, C29, C15)\nA6: Momentum inicial: Sunderland pressiona, Chelsea sofre cedo (C30, C33, C39)\nA7: Momentum final: ambos marcam no 2º tempo (C34, C36, C46, C38?)\nA8: Dinâmica pós-gol (C56, C5, C7)\nA9: Contra-ataque Chelsea (C54, C7, C12, C22)\nA10: Qualidade individual Chelsea (C20, C21, C22, C19)\nA11: Cruzamento de faixas e distribuição (C45, C46, C36, C38)\nA12: Escanteios (C55)\nA13: Qualidade individual Sunderland (C16, C17, C18, C27, C35, C44)\nA14: Ataque Sunderland no 2º tempo (C36, C46, C35) (já coberto por A7 e A11)\nA15: Baseline e ajuste (C47, C48) - talvez desnecessário.\n\nPreciso verificar se todas as conclusões com ID estão em alguma aresta. Vou rastrear:\n\nC1: descanso -> descartar? Ou criar aresta? Como é ruído, descarto: \"Diferença de descanso é ruído, sem impacto\".\nC2: clima -> descartar.\nC3: vantagem casa -> descartar (já embutida).\nC4-C7: em A3, A8.\nC8: em A2.\nC9: em nenhuma? descartar: \"Conversão alta é detalhe, não move xG significativamente\".\nC10: em A1.\nC11: em nenhuma? Pode entrar em A1 (Chelsea deve marcar). A1 já tem C10. C11 é redundante com C10, então posso não usar C11 separadamente. Ou usar em A1: adicionar C11.\nC12: em A3, A9.\nC13: em nenhuma? descartar: \"Volume baixo de chutes reforça que ataque é limitado, mas já considerado no xG baixo\".\nC14: em A1, A2, A3.\nC15: em A5.\nC16, C17, C18: em A13.\nC19: em A1, A4, A10.\nC20, C21, C22: em A10. C23 (Palmer) não usei? Pode ser descartado ou usado: \"Forma em baixa de Palmer reduz ligeiramente o potencial ofensivo, mas ainda é perigoso\". Vou adicionar C23 em A10 como fator moderador.\nC24: descartar (impacto baixo).\nC25: em A1, A5.\nC26: em A5.\nC27: em A13.\nC28: em A5.\nC29: em A5.\nC30: em A6.\nC31: em A1.\nC32: em A1.\nC33: em A6.\nC34: em A7.\nC35: em A2, A13.\nC36: em A7, A11.\nC37: em nenhuma? Similar a C31, mas pode ser descartada: \"Sunderland sofre mais no fim do 1ºT, já coberto por C31 e C45\".\nC38: em A4, A7, A11.\nC39: em A6.\nC40: inexistente (já é C19).\nC41: descartar.\nC42, C43, C44: descartar, ou usar C44 em A13. Vou usar C44 em A13.\nC45: em A4, A11.\nC46: em A7, A11.\nC47: essencial, mas não é uma conclusão de jogo; é baseline. Vou usá-la em uma aresta de ancoragem? Posso criar uma aresta \"Baseline Rota B é ponto de partida (C47)\", mas é mais uma declaração. Talvez em A15? Vou manter C47 como referência e não usar em aresta, pois arestas são cruzamentos. Mas para não descartar, posso linkar em A15? Na verdade, o protocolo diz que toda conclusão do Passo 1 é usada em ≥1 aresta OU vai para descartadas. Então posso descartar C47? Mas C47 é fundamental. Talvez seja melhor considerar que as conclusões do base_rate são usadas implicitamente nos ajustes. Mas para cumprir a regra, vou colocar C47 em uma aresta \"Base Rate\" junto com C48? C48 já foi descartada. Fica estranho. Vou considerar que C47 não precisa de aresta porque é a baseline sobre a qual as outras arestas ajustam. No entanto, o runtime pode exigir. Vou criar uma aresta A15 que liga C47 e C52/C53? Algo como \"A baseline Rota B é ajustada pelo arquétipo\": Liga: C47, C52, C53. Leitura: Partindo da Rota B (total 2.36), aplicamos o fator do arquétipo que aumenta o ataque do Chelsea e reduz o do Sunderland. \nC48: posso descartar, como \"diferença entre rotas, preferimos B\".\nC49, C50, C51: São probabilidades prior. Posso usá-las em A3 para mostrar o movimento. A3 já menciona C49 (empate cai). Vou adicionar C49, C50, C51 em A3.\nC52, C53: em A2, A15.\nC54: em A9.\nC55: em A12.\nC56: em A8.\n\nAgora sim, todas as conclusões ou são usadas ou descartadas. Vou listar as descartadas explicitamente.\n\n**Descartadas**:\n- C1: ruído, diferença de descanso insignificante.\n- C2: clima neutro, sem impacto.\n- C3: vantagem de casa já embutida nos λ.\n- C9: conversão alta é detalhe que não altera xG além do já considerado.\n- C11: similar a C10, já considerada.\n- C13: volume baixo de chutes, já refletido no xG baixo.\n- C23: forma de Palmer em baixa, mas impacto incerto; mantido como observação, mas não usado em aresta (pode ser descartado ou usado em A10 como modulador, mas na A10 já mencionei que adicionei C23? Vou adicionar C23 em A10, então não descartar. Ajusto A10 para incluir C23: \"Qualidade Chelsea (C20, C21, C22) e forma de Palmer (C23)\") - feito.\n- C24: desfalques Chelsea de baixo impacto, não alteram xG.\n- C27: ataque Sunderland marcou em 4/5, mas já em A13.\n- C37: sofre mais no fim do 1ºT, já coberto por C31 e C45.\n- C41: Moore e Mundle irrelevantes.\n- C42: Estêvão irrelevante.\n- C43: Gittens dúvida, impacto baixo.\n- C44: Lavia dúvida, impacto baixo (mas usei em A13, então não descarto C44).\n- C48: preferência pela Rota B, informação metodológica.\n\nAjustar: C44 foi usada em A13, então não descarto.\n\nConclusões usadas: C4-C8, C10, C12, C14-C22, C25-C26, C28-C36, C38-C39, C45-C47, C49-C56.\n\nAgora, Passo 4: Roteiros.\n\n## Passo 4 - ROTEIROS\n\nCom base nas arestas, o jogo tem alta probabilidade de gols, com Chelsea favorito. Vou montar roteiros com probabilidades.\n\n**Roteiro 1: \"Chelsea dominante, mas Sunderland reage\" (prob 40%)**\nChelsea começa pressionando, mas sofre gol cedo do Sunderland (A6). Sunderland 1-0 no 1º tempo (até 30 min). Chelsea reage e empata ainda no 1º tempo (A4, A11: 31-45). No 2º tempo, Chelsea vira para 2-1 (A7, A9), mas Sunderland busca empate no final (A7, A13, A11). Placar final 2-2 ou 3-2 Chelsea. Jogo movimentado, over 2.5, BTTS.\nArestas envolvidas: A3, A4, A6, A7, A8, A9, A10, A11.\n\n**Roteiro 2: \"Chelsea resolve cedo\" (prob 30%)**\nChelsea não sofre gol cedo, controla o jogo e abre o placar no fim do 1º tempo (A4, A10, A11). 0-1 no HT. No 2º tempo, Chelsea amplia em contra-ataque (A9), faz 0-2. Sunderland diminui no final (A13, A7), mas Chelsea segura 1-2 ou faz 1-3. Over 2.5, Chelsea vence.\nArestas: A1, A3, A4, A9, A10.\n\n**Roteiro 3: \"Sunderland surpreende e segura\" (prob 20%)**\nSunderland marca primeiro (A6) e consegue segurar a pressão (improvável pela defesa frágil). Chelsea não consegue empatar no 1º tempo. No 2º tempo, Sunderland amplia (A7) e Chelsea desconta, mas não vira. Placar 2-1 Sunderland. \nArestas: A6, A13, mas contraria A1, A4. Menos provável.\n\n**Roteiro 4: \"Jogo amarrado, poucos gols\" (prob 10%)**\nApesar da intenção, os times se estudam, 0-0 no HT. No 2º tempo, um gol define: 1-0 para Chelsea ou 1-0 Sunderland. Under 2.5.\nArestas: poucas, vai contra A3, A5, A7.\n\nAs probabilidades devem somar ~1.0. Vou ajustar: R1 40%, R2 35%, R3 15%, R4 10%.\n\nAgora, Passo 5: Board completo de mercados.\n\n## Passo 5 - BOARD DE MERCADOS\n\nPrimeiro, definir meus xG a partir da baseline ajustada.\n\nBaseline Rota B: Sunderland 0.99, Chelsea 1.37, total 2.36.\n\nAjustes:\n- A1 (Ataque Chelsea forte x defesa Sunderland frágil): +0.4 no xG Chelsea → 1.77\n- A2 (Ataque Sunderland limitado): -0.2 no xG Sunderland → 0.79 (de 0.99)\n- A3 (Intenção ambos): aumenta total? Na verdade, ambos precisam vencer, então o jogo pode ter mais gols porque os dois se expõem. Isso afeta o total, não necessariamente um lado só. Pode aumentar o xG de ambos? Sunderland se expõe mais, então pode sofrer mais (aumenta Chelsea) e também pode atacar mais (aumenta Sunderland um pouco). Vou estimar: Sunderland +0.2 (intenção), Chelsea +0.2 (intenção). \n- Mas A2 já reduziu Sunderland pelo arquétipo. A intenção pode compensar parcialmente: Sunderland em casa precisando vencer pode superar um pouco a dificuldade contra dominantes. Então, ajuste líquido: Sunderland: 0.99 (baseline) -0.2 (arquétipo) +0.2 (intenção) = 0.99. Na verdade, 0.99 é a baseline da Rota B, que já considera mando etc. O arquétipo diz que contra dominantes marca apenas 0.82, então seria 0.82. A intenção pode aumentar para 0.95? Vou usar Sunderland xG = 0.95.\n- Chelsea: 1.37 (baseline) +0.4 (defesa frágil) +0.2 (intenção) = 1.97. Mas o arquétipo Chelsea contra bloco baixo é 2.00. Então 2.00 é razoável. Vou usar Chelsea 2.00.\n- Total: 2.95. Isso é bem mais alto que 2.36. Mas vamos ver se faz sentido: Sunderland em casa toma 1.06, mas sem Ballard e contra Chelsea forte, pode tomar 2. Chelsea fora marca 1.72, com ajustes chega a 2.00. Sunderland marca 1.28 em casa, contra dominante 0.82, mas com intenção 0.95. Total 2.95 parece alto, mas o jogo tem características de over. Rota A dava 2.65. Então 2.95 é um aumento de ~25% sobre a Rota B, o que é justificável por múltiplos fatores.\n\nAjuste fino:\nSunderland: 0.95 gols esperados.\nChelsea: 2.00 gols esperados.\nTotal: 2.95.\n\nAgora, distribuição por tempo: \nBaseline da liga: 43% 1T, 57% 2T. \nSunderland: marca 63% dos gols no 2T (em casa). Chelsea: marca 58% no 2T? Vendo dados: Chelsea fora: 1ºT 0.7, 2ºT 0.84, então 55% no 2T. Sunderland em casa: 1ºT 0.32, 2ºT 0.76, então 70% no 2T (0.76/1.08 ≈ 70%). \nVamos distribuir o xG de cada time conforme seus históricos, mas ajustando pela janela de ouro (A11).\n\nSunderland xG total 0.95. Distribuição caseira: 1ºT: 30% = 0.29, 2ºT: 70% = 0.66.\nChelsea xG total 2.00. Distribuição visitante: 1ºT: 45% = 0.90 (já que marca bem no fim do 1ºT e início do 2º, mas o 1ºT tem 0.7 em 1.72 = 41%, então vou usar 45%), 2ºT: 55% = 1.10.\n\nTotal 1ºT: 1.19, 2ºT: 1.76. Total = 2.95.\n\nAgora, bandas de xG (xg_bands) para cada time, baseado nas faixas de distribuição de gols da temporada.\n\nPara Sunderland (marcar): as proporções da temporada (casa? Não, geral). A distribuição de gols marcados por faixa na temporada (por jogo): 0-15:0.05, 16-30:0.16, 31-45:0.11, 46-60:0.14, 61-75:0.27, 76-90:0.35. Soma = 1.08, que é a média. Mas queremos distribuir o xG total de 0.95 nessas proporções. Então, multiplicar 0.95 pela proporção de cada faixa na temporada: \n0-15: 0.95 * (0.05/1.08) = 0.044\n16-30: 0.95 * (0.16/1.08) = 0.141\n31-45: 0.95 * (0.11/1.08) = 0.097\n46-60: 0.95 * (0.14/1.08) = 0.123\n61-75: 0.95 * (0.27/1.08) = 0.237\n76-90: 0.95 * (0.35/1.08) = 0.308\nAjustar para que a soma dê 0.95. Vai dar aproximado. Isso é o xg_bands do Sunderland.\n\nPara Chelsea (marcar): proporções da temporada (fora? Melhor usar geral): 0-15:0.16, 16-30:0.19, 31-45:0.35, 46-60:0.35, 61-75:0.24, 76-90:0.24. Soma = 1.53? Não, a média é 1.54. Então as proporções batem. \n0-15: 2.00 * (0.16/1.54) = 0.208\n16-30: 2.00 * (0.19/1.54) = 0.247\n31-45: 2.00 * (0.35/1.54) = 0.455\n46-60: 2.00 * (0.35/1.54) = 0.455\n61-75: 2.00 * (0.24/1.54) = 0.312\n76-90: 2.00 * (0.24/1.54) = 0.312\nSoma = 1.989, ok.\n\nMas podemos suavizar com os índices de cruzamento. Como o runtime normaliza, não precisa ser exato.\n\nAgora, probabilidades de mercado. Vou usar um modelo de Poisson com os xG para calcular probs. Como não tenho planilha, farei estimativas aproximadas baseadas nos lambdas.\n\nLambda casa = 0.95, lambda fora = 2.00.\n\nUsando Poisson, podemos calcular probabilidades de 1x2, over/under, BTTS.\n\nPara simplificar, usarei uma tabela mental ou aproximação. Sei que com lambda 0.95 e 2.00, a probabilidade de vitória do Chelsea é alta.\n\nProbabilidades aproximadas (usando Poisson independente, mas depois ajustar para Dixon-Coles? O prior já era DC. Vou chutar):\n- Vitória Chelsea: ~60%\n- Empate: ~22%\n- Vitória Sunderland: ~18%\n\nOver 2.5: com total 2.95, a probabilidade é alta. Em Poisson, com média 2.95, over 2.5 é cerca de 55-60%? Vamos calcular: P(0)+P(1)+P(2). Para lambda 2.95, P(0)=0.052, P(1)=0.154, P(2)=0.227, soma=0.433, então over 2.5 = 0.567. Aprox 57%.\nBTTS: P(Sunderland marca >0) = 1 - exp(-0.95) = 0.613. P(Chelsea marca >0) = 1 - exp(-2.0) = 0.865. Prob independente = 0.613*0.865 = 0.53. Então BTTS ~53%. Mas como times não são independentes, pode ser maior. Vou usar 55%.\n\nOutros mercados:\nOver 1.5: com 2.95, é bem alto. P(0)+P(1) = 0.052+0.154=0.206, então over 1.5 = 79%.\nOver 3.5: P(0)+P(1)+P(2)+P(3) = 0.052+0.154+0.227+0.223=0.656, over 3.5 = 34%.\n\nTeam total Sunderland over 0.5: 61%, over 1.5: P(0)+P(1)=0.387+0.367? P(0)=exp(-0.95)=0.387, P(1)=0.95*exp(-0.95)=0.367, P(2)=0.174, então over 1.5 = 1 - 0.387-0.367 = 0.246 (25%).\nTeam total Chelsea over 0.5: 86.5%, over 1.5: P(0)=0.135, P(1)=0.271, over 1.5 = 0.594 (59%).\n\nHandicap: Chelsea -1: vitória por 2+ gols. Probabilidade de Chelsea vencer por 2+: P(Chelsea gols - Sunderland gols >= 2). Aproximadamente, como temos médias 2.00 e 0.95, a diferença média é 1.05. Em Poisson, a probabilidade de vitória por 2+ gols não é tão simples. Vou estimar: ~35-40%? Podemos usar a probabilidade de Chelsea fazer 2+ gols e Sunderland fazer 0 ou 1, etc. Melhor chutar: 38%.\n\nDouble chance: 1X (casa ou empate): 1 - 0.60 = 40%. 12 (casa ou fora): 0.18+0.60=78%. X2 (empate ou fora): 0.22+0.60=82%.\nDraw no bet: casa: vitória casa + empate? Não, DNB casa: se empate, devolve. Então prob = vitória casa / (vitória casa + vitória fora) assumindo que ignoramos empate? Errado. DNB casa significa aposta no time da casa, empate reembolsa. Probabilidade efetiva: P(casa) + 0.5*P(empate)? Não, a probabilidade implícita de o time da casa ganhar o DNB é a mesma que a probabilidade de vitória mais metade do empate? Na precificação, sim. Mas como pede a probabilidade, acho que é a chance de \"não perder\": ou seja, P(casa ou empate) = 40%. Mas o mercado DNB casa paga se ganhar, e devolve se empatar. Então a probabilidade de sucesso (lucro) é P(casa). A probabilidade de não perder é outra. O schema pede \"prob\" para cada selection. Para draw_no_bet home, a selection é \"home\". A probabilidade de vencer é a prob de vitória do home, mas como o empate devolve, o valor justo é calculado com P(home)/(1-P(empate)). Mas acho que a probabilidade reportada deve ser a de não perder? O schema não especifica. Em outros modelos, para DNB, usam a probabilidade de vitória. Vou usar a probabilidade de vitória: Sunderland DNB = 18%? Mas isso seria muito baixo. Normalmente, DNB home tem prob implícita igual a P(home) / (1 - P(draw)). Então: 0.18 / (1-0.22) = 0.18/0.78 = 23%. Para o Chelsea DNB: 0.60/0.78 = 77%. \nMas talvez o campo \"prob\" no JSON seja a probabilidade de sucesso da aposta, que para DNB é a chance de time vencer. Vou confirmar: em sites de aposta, a probabilidade implícita de DNB é calculada como prob_vencer / (prob_vencer + prob_derrota). Então para casa: 0.18/(0.18+0.60)=0.23. Para fora: 0.60/(0.18+0.60)=0.77. Farei assim.\n\nOdd/Even: ímpar ~50%, par ~50%. Vou chutar ímpar 52%? Como o total é 2.95, a distribuição de gols é mais uniforme. Vou manter ímpar 48%, par 52%.\n\nAgora, um_x_two: \nCasa: 18%, Empate: 22%, Fora: 60%.\n1º tempo: usando xG 1ºT: Sunderland 0.29, Chelsea 0.90, total 1.19.\nProbabilidades aproximadas:\nCasa 1ºT: P(Sunderland > Chelsea) considerando Poisson? Vou aproximar: \nLambda Sunderland 0.29, Chelsea 0.90. \nProb Sunderland ganha 1ºT: ~15%? \nEmpate 1ºT: ~45%? \nChelsea ganha 1ºT: ~40%.\n2º tempo: Sunderland 0.66, Chelsea 1.10, total 1.76.\nCasa 2ºT: 25%, Empate 30%, Fora 45%.\n\nOver25_prob: 57%.\nBtts_prob: 55%.\n\nAgora, general confidence: medium? Vou determinar no Passo 6.\n\nAgora, preencher o JSON com os valores calculados.\n\nPrimeiro, os sumários.\n\nhome summary: \"Sunderland, em casa, tem ataque limitado (0.99 xG), mas com motivação alta e desfalque importante na defesa (Ballard). Deve marcar mais no 2º tempo. Defesa frágil tende a sofrer gols.\"\naway summary: \"Chelsea, favorito, com ataque potente (2.00 xG) contra defesa frágil. Enzo Fernández e João Pedro lideram. Pode sofrer no início, mas deve dominar e marcar no fim do 1º tempo e no 2º.\"\n\ngeneral summary: \"Jogo de alta motivação, com ambos precisando vencer. Espera-se partida aberta, com chances para os dois lados, mas com claro favoritismo do Chelsea. Total esperado de 2.95 gols, com over 2.5 provável e BTTS.\"\n\nConclusões: vou listar todas as conclusões com IDs, bloco, fato, dado, direção, força. Lembrar de usar os nomes de bloco exatos: \"contexto\", \"tabela_motivacao\", \"home_gols\", \"away_gols\", \"home_estilo\", \"away_estilo\", \"home_qualidade\", \"away_qualidade\", \"home_forma\", \"away_forma\", \"home_momentum\", \"away_momentum\", \"home_faixas\", \"away_faixas\", \"home_desfalques\", \"away_desfalques\", \"cruzamento_faixa\", \"base_rate\", \"probs_mercado\", \"cruzamentos_computados\".\n\nCada conclusão tem: id, bloco, fato, dado (cópia literal de um número/frase do briefing), direcao (o que implica), forca (alta/media/baixa).\n\nVou montar a lista de conclusões com os IDs que usei (C1...C56, pulando alguns que descartei, mas preciso listar todas as conclusões que foram geradas, mesmo as descartadas? O campo `conclusoes` deve conter todas as conclusões do Passo 1. As descartadas vão em `descartadas` com o ID e motivo. Então em `conclusoes` listo todas, inclusive as que depois serão descartadas. Em `descartadas`, listo as que não foram usadas em arestas.\n\nEntão vou criar a lista completa de conclusões. Preciso garantir que os dados copiados sejam literais do briefing.\n\nVou escrever cada conclusão:\n\nC1: bloco \"contexto\", fato: \"Sunderland tem 7 dias de descanso, Chelsea 5 dias\", dado: \"Sunderland 7 dias (...) Chelsea 5 dias\", direcao: \"Pequena vantagem para Sunderland, mas diferença é ruído\", forca: \"baixa\"\nC2: contexto, \"Clima ameno sem impacto\", \"scattered clouds · 21°C\", \"neutro\", \"baixa\"\nC3: contexto, \"Vantagem de casa para Sunderland\", \"mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes\", \"favorece Sunderland, mas já está nos λ\", \"baixa\"\nC4: tabela_motivacao, \"Ambos alta motivação para vencer\", \"Sunderland: 10º, 51 pts (...) já SEGURO do rebaixamento. vaga europeia ainda matematicamente possível. → motivação: alta\", \"aumenta intensidade ofensiva de ambos\", \"alta\"\nC5: tabela_motivacao, \"Chelsea precisa vencer para garantir vaga\", \"Chelsea: 8º, 52 pts (...) precisa vencer pra travar (empate ainda deixa 2 rival vivo)\", \"força Chelsea a buscar o gol\", \"alta\"\nC6: tabela_motivacao, \"Sunderland também precisa vencer para chance de Europa\", \"Sunderland (10º, 51 pts, máx 54) pode passar em pontos — vencendo, se o Chelsea tropeçar\", \"força Sunderland ao ataque\", \"alta\"\nC7: tabela_motivacao, \"Veredito: ambos vão pra cima, jogo aberto\", \"OS DOIS PRECISAM IR PRA CIMA\", \"tende a abrir, over ganha peso\", \"alta\"\nC8: home_gols, \"Sunderland em casa: ataque moderado, volume baixo\", \"Em casa: marca 1.28 / sofre 1.06 (...) 125 SoT (3.38/j · casa 3.5/j)\", \"ataque não explosivo, depende de eficiência\", \"media\"\nC9: home_gols, \"Conversão alta do Sunderland (29%)\", \"conv 29% (aberta)\", \"eficiência pode regredir\", \"baixa\"\nC10: away_gols, \"Chelsea fora: ataque forte (1.72 g/j, 4.61 SoT/j)\", \"Fora: marca 1.72 / sofre 1.39 (...) 164 SoT (4.43/j · fora 4.61/j)\", \"Chelsea deve criar muitas chances\", \"alta\"\nC11: away_gols, \"Conversão do Chelsea também alta (30%)\", \"conv 30% (aberta)\", \"provável que marque\", \"alta\"\nC12: home_estilo, \"Sunderland sofre mais ataques perigosos do que cria\", \"ataques perigosos 44.8/55.9\", \"time é dominado territorialmente\", \"media\"\nC13: home_estilo, \"Volume de chutes do Sunderland é baixo\", \"10.1 chutes/j (7.2 na área)\", \"ataque pouco incisivo\", \"media\"\nC14: away_estilo, \"Chelsea é dominante: muitos ataques perigosos, posse alta\", \"ataques perigosos 54.5/43.7 · posse 57.8%\", \"deve controlar o jogo\", \"alta\"\nC15: away_estilo, \"Últimos 5: ataque Chelsea criou menos, mas ainda razoável\", \"Últimos 5: ataques perigosos 49.4\", \"queda recente pode ser pontual\", \"media\"\nC16: home_qualidade, \"Enzo Le Fée é o principal criador do Sunderland, em ótima forma\", \"Enzo Le Fée nota 7.07 (...) 6G+6A · 1.77 KP/j · forma 7.46↑\", \"peça-chave para criação\", \"alta\"\nC17: home_qualidade, \"Granit Xhaka contribui com assistências e passes-chave\", \"Granit Xhaka nota 7.15 (...) 1G+6A · 1.06 KP/j\", \"importante na armação\", \"media\"\nC18: home_qualidade, \"Brian Brobbey: artilheiro do time, gols no 2º tempo\", \"Brian Brobbey (...) 7G+1A · gols aos 59',66',69',71',80',90',90'\", \"pode ser decisivo saindo do banco ou como titular\", \"media\"\nC19: home_desfalques, \"D. Ballard fora: zagueiro importante, enfraquece defesa\", \"D. Ballard (...) 2 gols · 0.7 interceptações/j (~9% do time) · 5.8 duelos\", \"defesa do Sunderland mais frágil\", \"alta\"\nC20: away_qualidade, \"Enzo Fernández é o motor do Chelsea, em grande forma\", \"Enzo Fernández nota 7.28 (...) 12G+5A · 1.93 KP/j · forma 7.6↑\", \"criação e finalização de alto nível\", \"alta\"\nC21: away_qualidade, \"João Pedro é o artilheiro, finalizador perigoso\", \"João Pedro nota 7.1 (...) 17G+6A · 0.76 SoT/j\", \"referência no ataque\", \"alta\"\nC22: away_qualidade, \"Pedro Neto contribui com gols e dribles, mas ritmo incerto\", \"Pedro Neto nota 7.05 (...) 10G+8A · 1.44 dribles/j · faltou 2/5\", \"desiquilibrador se estiver em campo\", \"media\"\nC23: away_qualidade, \"Cole Palmer em baixa forma, queda em finalizações\", \"Cole Palmer nota 6.92 (...) forma 6.56↓ · 0.86 SoT/j (últ.5: 0.6↓)\", \"pode não render o esperado\", \"media\"\nC24: away_desfalques, \"Desfalques do Chelsea têm baixo impacto geral\", \"Estêvão (4% dos gols), Gittens (0% gols), Lavia (0% gols)\", \"não alteram significativamente o xG\", \"baixa\"\nC25: home_forma, \"Defesa do Sunderland muito frágil nos últimos 5 jogos\", \"últimos 5: VEEDD (...) 7 feitos / 11 sofridos · sofre 2.2↑ g/j\", \"tendência a sofrer gols\", \"alta\"\nC26: home_forma, \"Resultados recentes do Sunderland com contexto de adversários sem ambição\", \"vs Manchester United (...) adv 3º Eur-gar · você 12º salvo · @ Everton (...) adv 10º salvo\", \"vitória e empate podem não refletir força real\", \"media\"\nC27: home_forma, \"Ataque do Sunderland marcou em 4 dos últimos 5 jogos, mas com pouco volume\", \"forma: marca 1.4↑ (...) SoT 4 feito\", \"ataque não é nulo, mas depende de eficiência\", \"media\"\nC28: away_forma, \"Chelsea com forma ofensiva pobre (0.8 g/j nos últimos 5)\", \"últimos 5: VEDDD (4pts) · 4 feitos / 9 sofridos · marca 0.8↓\", \"produção ofensiva muito abaixo do normal\", \"alta\"\nC29: away_forma, \"Má fase do Chelsea atenuada por adversários difíceis (Liverpool, City)\", \"Nottingham Forest (briga-Z) · @ Liverpool (briga-top) · vs Manchester City (FA Cup) · vs Tottenham\", \"fora de casa na temporada média é 1.72, então há potencial de recuperação\", \"media\"\nC30: home_momentum, \"Sunderland pressiona no início dos jogos (0-15, 16-30)\", \"📈 pressão: 1'-15' [0 +2 +1 ...] · 16'-30' [+6 +4 +2 ...] (vs Nottingham, casa)\", \"pode criar chances cedo\", \"media\"\nC31: home_momentum, \"Defesa do Sunderland vulnerável no fim do 1º tempo\", \"⚽ gols: 36'✗ 46'✗ 43'✗ (em vários jogos) · 🛡️ defesa baixa em 31-45\", \"sofre gols nessa faixa\", \"alta\"\nC32: home_momentum, \"Baixa atividade defensiva geral do Sunderland\", \"🛡️ defesa (int+desarmes) frequentemente 1-5 por faixa\", \"não intercepta bem, permite progressão\", \"media\"\nC33: away_momentum, \"Chelsea sofre gols nos primeiros 15-30 minutos frequentemente\", \"⚽ gols: 3'✗ 2'✗ 15'✗ (vs Brighton e Nottingham)\", \"desatenção inicial pode ser punida\", \"alta\"\nC34: away_momentum, \"Chelsea cresce no 2º tempo e marca gols tardios\", \"⚽ gols: 90'✓ (vs Nottingham) · 67'✓ (vs Tottenham) · pressão alta em 76-90\", \"pode decidir no final\", \"alta\"\nC35: away_momentum, \"Defesa do Chelsea também instável, sofreu em vários jogos\", \"sofreu 9 gols em 5 jogos\", \"não é sólida, Sunderland pode marcar\", \"media\"\nC36: home_faixas, \"Sunderland marca a maioria dos gols em casa no 2º tempo (63%)\", \"1ºT 0.32/0.62 · 2ºT 0.76/0.65\", \"time de 2º tempo, especialmente 61-90\", \"alta\"\nC37: home_faixas, \"Sunderland sofre mais no fim do 1º tempo (31-45: 0.27)\", \"Sofre por faixa: 31-45: 0.27\", \"vulnerável antes do intervalo\", \"media\"\nC38: away_faixas, \"Chelsea marca bem no fim do 1º tempo e início do 2º\", \"Marca por faixa: 31-45: 0.35 · 46-60: 0.35\", \"pode marcar nessas janelas\", \"alta\"\nC39: away_faixas, \"Chelsea sofre no início (0-15: 0.30) e no fim (76-90: 0.30)\", \"Sofre por faixa: 0-15: 0.3 · 76-90: 0.3\", \"vulnerável em transições iniciais e finais\", \"alta\"\nC40: (já é C19, não duplicar) - pulei.\nC41: home_desfalques, \"Simon Moore e R. Mundle são desfalques irrelevantes\", \"Simon Moore: 0% dos gols (...) R. Mundle: 0% dos gols\", \"não impactam\", \"baixa\"\nC42: away_desfalques, \"Estêvão fora não reduz poder ofensivo do Chelsea\", \"Estêvão: 4% dos gols (...) with/without: sem ele 1.67 g/j vs 1.45\", \"time já adaptado\", \"baixa\"\nC43: away_desfalques, \"Gittens dúvida: criador secundário, mas impacto baixo\", \"Jamie Gittens: 0G+2A (...) 0.6 key passes/j\", \"se ausente, perda menor\", \"baixa\"\nC44: away_desfalques, \"Lavia dúvida: pode afetar proteção defensiva\", \"Roméo Lavia: 0.5 interceptações/j (~5% do time)\", \"defesa pode ficar um pouco exposta\", \"baixa\"\nC45: cruzamento_faixa, \"Janela de ouro Chelsea: 31-45 (índice 0.62)\", \"Chelsea atacando × Sunderland defendendo: 31-45 índice 0.62\", \"gol do Chelsea provável nessa faixa\", \"alta\"\nC46: cruzamento_faixa, \"Janela de ouro Sunderland: 61-90 (índices 0.51 e 0.65)\", \"Sunderland atacando × Chelsea defendendo: 61-75 índice 0.51, 76-90 índice 0.65\", \"gol do Sunderland provável no 2º tempo\", \"alta\"\nC47: base_rate, \"Prior Rota B: total 2.36, Chelsea favorito (44%), over 2.5 42%, BTTS 49%\", \"Rota B — SoT × conversão: Sunderland 0.99, Chelsea 1.37, total 2.36\", \"baseline para ajustes\", \"alta\"\nC48: base_rate, \"Rota A (2.65) é mais alta, mas Rota B é preferível por estabilidade\", \"Rota A — gols puros: total = 2.65\", \"cautela com over, mas evidências podem empurrar para cima\", \"media\"\nC49: probs_mercado, \"Prior empate 31% (Rota B)\", \"1x2 casa/E/fora: Rota B 25/31/44%\", \"sem ajustes, empate provável\", \"media\"\nC50: probs_mercado, \"Prior BTTS 49% (Rota B)\", \"BTTS Rota B 49%\", \"baseline neutra para BTTS\", \"media\"\nC51: probs_mercado, \"Prior over 2.5 42% (Rota B)\", \"Over 2.5 Rota B 42%\", \"ponto de partida baixo para over\", \"media\"\nC52: cruzamentos_computados, \"Chelsea contra bloco baixo marca 2.00 g/j (+0.46 acima da média)\", \"Chelsea contra bloco baixo: marca 2.00/j (...) 0.46 ACIMA da média\", \"aumenta expectativa de gols do Chelsea\", \"alta\"\nC53: cruzamentos_computados, \"Sunderland contra dominante marca apenas 0.82 g/j (-0.26)\", \"Sunderland contra dominante: marca 0.82/j (...) -0.26 ABAIXO da média\", \"reduz expectativa de gols do Sunderland\", \"alta\"\nC54: cruzamentos_computados, \"Contra-ataque do Chelsea é arma letal (índice 2.6x)\", \"CANAL ABERTO — contra-ataque: Chelsea gera 7% × Sunderland sofre 7% → índice 2.6×\", \"Chelsea pode marcar em transições\", \"alta\"\nC55: cruzamentos_computados, \"Escanteios são via perigosa para ambos (índices 1.4-1.5x)\", \"escanteio: Sunderland gera 41% × Chelsea sofre 52% → 1.5× · Chelsea gera 49% × Sunderland sofre 41% → 1.4×\", \"gols de bola parada prováveis\", \"media\"\nC56: cruzamentos_computados, \"Sunderland mata o jogo após marcar; Chelsea administra após marcar\", \"Sunderland: MATA O JOGO após marcar (Δ +1.0) · Chelsea: ADMINISTRA após marcar (Δ -1.1)\", \"comportamento pós-gol pode abrir ou fechar o jogo\", \"alta\"\n\nAgora, `blocos_sem_sinal`: preciso listar blocos que não renderam conclusão. Todos renderam, então lista vazia? Mas alguns blocos tiveram conclusões descartadas? Não, bloco sem sinal é quando o bloco inteiro não gera conclusão. Todos os blocos geraram pelo menos uma conclusão. Então `blocos_sem_sinal` deve ser array vazio.\n\nMas o protocolo diz: \"Bloco que não rende sinal entra em bloco_sem_sinal com o motivo\". No meu caso, todos renderam sinal (mesmo que depois eu tenha descartado a conclusão, o bloco gerou uma conclusão, então não é bloco sem sinal). Então array vazio.\n\nAgora, `descartadas`: conclusões que não foram usadas em nenhuma aresta, com motivo. Vou listar as que identifiquei como não usadas:\n\nC1: \"Diferença de descanso é ruído, sem impacto significativo no xG\"\nC2: \"Clima ameno sem impacto no total\"\nC3: \"Vantagem de casa já está embutida nos λ; não é fator adicional\"\nC9: \"Conversão alta é detalhe, não altera o xG além do já considerado\"\nC11: \"Similar a C10, já coberta pela força do ataque do Chelsea\"\nC13: \"Volume baixo de chutes é característica do time, já refletida no xG baixo\"\nC23: (na verdade usei C23 em A10? Vou ver: eu disse que adicionaria C23 em A10. Na A10, vou incluir C23. Então C23 é usada. Vou manter.)\nC24: \"Desfalques do Chelsea de baixo impacto, não alteram xG\"\nC27: \"Ataque marcou em 4/5 jogos, mas já considerado na forma; não é fator isolado\"\nC37: \"Vulnerabilidade no fim do 1ºT já coberta por C31 e C45\"\nC41: \"Desfalques irrelevantes, sem impacto\"\nC42: \"Estêvão fora não altera xG\"\nC43: \"Gittens dúvida com baixo impacto\"\nC44: (usei em A13)\nC48: \"Preferência pela Rota B é metodológica, não fator de jogo\"\n\nVerificar arestas e quais conclusões usei:\nA1: C10, C14, C19, C25, C31, C32\nA2: C8, C52, C53, C35, C14\nA3: C4, C5, C6, C7, C12, C14, C49, C50, C51\nA4: C19, C45, C38\nA5: C25, C26, C28, C29, C15\nA6: C30, C33, C39\nA7: C34, C36, C46, C38\nA8: C56, C5, C7\nA9: C54, C7, C12, C22\nA10: C20, C21, C22, C19, C23 (adicionei C23)\nA11: C45, C46, C36, C38\nA12: C55\nA13: C16, C17, C18, C27, C35, C44\nA15: C47, C52, C53 (na verdade eu não criei A15, mas posso criar uma aresta final de ajuste para usar C47 e C48? C47 é importante. Vou criar uma aresta A14 que liga a baseline com os ajustes? Já tenho 13 arestas. Preciso usar C47. Posso criar A14: \"Base rate Rota B é ajustada pelo arquétipo e contexto\" ligando C47, C48, C52, C53. C48 pode ser usada aí. Vou então usar C48. Assim, não descarto C48. E C47 é usada. C49, C50, C51 usei em A3. C48 usei em A14.\nEntão, adiciono A14: Liga: C47, C48, C52, C53. Leitura: Partindo da Rota B (total 2.36), aplicamos o arquétipo: Chelsea contra bloco baixo tem xG elevado (2.00), Sunderland contra dominante tem xG reduzido (0.82). A diferença entre Rotas A e B reforça a escolha da B. Efeito: xG Chelsea ajustado para cima, Sunderland para baixo, total resultante ~2.95.\n\nAjusto as arestas: total 14.\n\nAgora, verificar conclusões usadas:\nC1: descartada\nC2: descartada\nC3: descartada\nC4: A3\nC5: A3, A8\nC6: A3\nC7: A3, A8, A9\nC8: A2\nC9: descartada\nC10: A1\nC11: descartada? Não, posso usar em A1? Vou adicionar C11 em A1. A1 fica com C10, C11, C14, C19, C25, C31, C32.\nC12: A3, A9\nC13: descartada\nC14: A1, A2, A3\nC15: A5\nC16: A13\nC17: A13\nC18: A13\nC19: A1, A4, A10\nC20: A10\nC21: A10\nC22: A9, A10\nC23: A10\nC24: descartada\nC25: A1, A5\nC26: A5\nC27: A13\nC28: A5\nC29: A5\nC30: A6\nC31: A1\nC32: A1\nC33: A6\nC34: A7\nC35: A2, A13\nC36: A7, A11\nC37: descartada\nC38: A4, A7, A11\nC39: A6\nC41: descartada\nC42: descartada\nC43: descartada\nC44: A13\nC45: A4, A11\nC46: A7, A11\nC47: A14\nC48: A14\nC49: A3\nC50: A3\nC51: A3\nC52: A2, A14\nC53: A2, A14\nC54: A9\nC55: A12\nC56: A8\n\nTodas as conclusões com ID estão ou usadas ou descartadas. Perfeito.\n\nAgora, `jogadores`: lista de todos os jogadores nomeados no briefing, com nome, time (home/away) e leitura (1 frase). Já listei no Passo 2, vou transcrever de forma concisa.\n\nAgora, `arestas`: array com id, liga (array de IDs), leitura, efeito.\n\nVou escrever as 14 arestas com leitura e efeito.\n\nA1: liga: [\"C10\",\"C11\",\"C14\",\"C19\",\"C25\",\"C31\",\"C32\"], leitura: \"Ataque forte do Chelsea (1.72 g/j fora, 4.61 SoT/j) contra defesa do Sunderland enfraquecida (sem Ballard, 2.2 sofridos/j, vulnerável no fim do 1ºT e com baixa atividade defensiva) resulta em alta probabilidade de gols do Chelsea.\", efeito: \"Aumenta xG Chelsea em ~0.4-0.6 (de 1.37 para ~2.0)\"\nA2: liga: [\"C8\",\"C52\",\"C53\",\"C35\",\"C14\"], leitura: \"Sunderland tem ataque moderado (1.28 em casa), mas contra times dominantes marca apenas 0.82, e o Chelsea limita adversários (43.7 ataques perigosos). Defesa do Chelsea instável, mas Sunderland deve ter produção ofensiva abaixo da média.\", efeito: \"Reduz xG Sunderland para ~0.8-0.95\"\nA3: liga: [\"C4\",\"C5\",\"C6\",\"C7\",\"C12\",\"C14\",\"C49\",\"C50\",\"C51\"], leitura: \"Ambos precisam vencer (motivação alta), o que força o jogo aberto. Sunderland, apesar de dominado, terá que atacar; Chelsea não pode se contentar com empate. O prior de empate cai, over e BTTS sobem.\", efeito: \"Aumenta total do jogo e reduz probabilidade de empate; over 2.5 mais provável\"\nA4: liga: [\"C19\",\"C45\",\"C38\"], leitura: \"Ausência do zagueiro Ballard enfraquece a defesa do Sunderland exatamente na faixa onde o Chelsea é mais perigoso (31-45, índice 0.62, e Chelsea marca 0.35 nessa faixa).\", efeito: \"Aumenta probabilidade de gol do Chelsea no fim do 1º tempo\"\nA5: liga: [\"C25\",\"C26\",\"C28\",\"C29\",\"C15\"], leitura: \"Forma defensiva ruim do Sunderland é real (11 sofridos em 5 jogos), e a má fase ofensiva do Chelsea (0.8 g/j) foi contra adversários fortes. Contra defesa frágil, Chelsea deve voltar a marcar.\", efeito: \"Confirma que Chelsea deve ter sucesso ofensivo; xG Chelsea mantido alto\"\nA6: liga: [\"C30\",\"C33\",\"C39\"], leitura: \"Sunderland costuma pressionar no início, e o Chelsea frequentemente sofre gols nos primeiros 15-30 minutos. Isso pode resultar em gol cedo do Sunderland.\", efeito: \"Aumenta probabilidade de Sunderland marcar no 1º tempo, especialmente cedo\"\nA7: liga: [\"C34\",\"C36\",\"C38\",\"C46\"], leitura: \"Chelsea cresce no 2º tempo e marca gols tardios; Sunderland também marca a maioria de seus gols no 2º tempo (61-90). Isso sugere um 2º tempo movimentado com chances para ambos.\", efeito: \"Aumenta xG no 2º tempo; ambos podem marcar no 2º tempo\"\nA8: liga: [\"C56\",\"C5\",\"C7\"], leitura: \"Chelsea tende a administrar após marcar, mas a necessidade de vencer pode moderar esse recuo. Sunderland, após marcar, continua pressionando. Isso pode gerar mais gols após abertura do placar.\", efeito: \"Jogo pode ter gols de ambos os lados independentemente de quem saia na frente\"\nA9: liga: [\"C54\",\"C7\",\"C12\",\"C22\"], leitura: \"Contra-ataque do Chelsea é arma letal (índice 2.6x), e Sunderland, precisando vencer e já sofrendo muitos ataques perigosos, deve deixar espaços. Pedro Neto é peça chave em transições.\", efeito: \"Aumenta probabilidade de gols do Chelsea em contra-ataque\"\nA10: liga: [\"C20\",\"C21\",\"C22\",\"C19\",\"C23\"], leitura: \"Enzo Fernández e João Pedro em grande fase, contra defesa desfalcada do Sunderland. Cole Palmer em baixa pode reduzir um pouco o potencial, mas no geral o ataque do Chelsea tem qualidade para definir.\", efeito: \"Aumenta confiança no ataque do Chelsea; múltiplas ameaças\"\nA11: liga: [\"C45\",\"C46\",\"C36\",\"C38\"], leitura: \"Cruzamento de faixas indica alta probabilidade de gols do Chelsea no fim do 1º tempo e do Sunderland no 2º tempo, alinhado com os históricos de ambos.\", efeito: \"Ajuda a distribuir o xG nas bandas; 2º tempo e fim do 1º concentram gols\"\nA12: liga: [\"C55\"], leitura: \"Escanteios são via perigosa para ambos, com índices acima da média. Isso adiciona uma rota de gol que pode furar defesas.\", efeito: \"Ligeiro aumento no xG total, especialmente em jogos de pouca criação aberta\"\nA13: liga: [\"C16\",\"C17\",\"C18\",\"C27\",\"C35\",\"C44\"], leitura: \"Sunderland possui Le Fée em ótima forma, Xhaka na criação e Brobbey como arma no 2º tempo. A defesa do Chelsea tem instabilidades e possível ausência de Lavia (proteção). Sunderland pode explorar isso, especialmente em casa.\", efeito: \"Aumenta ligeiramente xG Sunderland para ~0.95, com potencial de marcar\"\nA14: liga: [\"C47\",\"C48\",\"C52\",\"C53\"], leitura: \"Partindo da Rota B (total 2.36), aplicamos o arquétipo: Chelsea contra bloco baixo tem xG elevado (2.00), Sunderland contra dominante tem xG reduzido (0.82). A diferença entre Rotas A e B reforça a escolha da B. O total ajustado é ~2.95, bem acima do prior.\", efeito: \"Estabelece o xG ajustado: Sunderland 0.95, Chelsea 2.00, total 2.95\"\n\nAgora, `roteiros`: já defini.\n\nRoteiro 1: \"Chelsea dominante, mas Sunderland reage\" (prob 0.40)\nfilme: \"Sunderland marca cedo (1-0) aproveitando desatenção do Chelsea. Chelsea empata ainda no 1º tempo (1-1). No 2º tempo, Chelsea vira (1-2), mas Sunderland busca empate no final (2-2) ou Chelsea faz mais um (1-3). Jogo aberto, over 2.5 e BTTS.\"\narestas: [\"A3\",\"A4\",\"A6\",\"A7\",\"A8\",\"A9\",\"A10\",\"A11\"]\n\nRoteiro 2: \"Chelsea resolve cedo\" (prob 0.35)\nfilme: \"Chelsea controla, não sofre gol cedo e abre o placar no fim do 1º tempo (0-1). No 2º tempo, amplia em contra-ataque (0-2). Sunderland diminui no final (1-2), mas Chelsea segura ou faz 1-3. Chelsea vence, over 2.5.\"\narestas: [\"A1\",\"A3\",\"A4\",\"A9\",\"A10\"]\n\nRoteiro 3: \"Sunderland surpreende e segura\" (prob 0.15)\nfilme: \"Sunderland marca primeiro (1-0) e, ao contrário do esperado, segura a pressão. Chelsea não consegue empatar no 1º tempo. No 2º tempo, Sunderland amplia (2-0) eChelsea desconta (2-1). Sunderland vence.\"\narestas: [\"A6\",\"A13\",\"A8\"]\n\nRoteiro 4: \"Jogo amarrado, poucos gols\" (prob 0.10)\nfilme: \"Apesar da intenção, os times se anulam. 0-0 no HT. No 2º tempo, um gol solitário decide: 1-0 para Chelsea ou Sunderland. Under 2.5.\"\narestas: [] (contraria a maioria)\n\nAgora, `mercados`: preencher as 19 linhas.\n\nVou listar cada mercado com selection, team, line, prob, variancia, valor, nota.\n\n1. 1x2 home: selection \"home\", team null, line null, prob 0.18, variancia 4, valor \"medio\" (prior 25%, minha 18%, está abaixo, mas ainda tem valor? Na verdade, valor: se minha prob é menor que o prior, é \"baixo\" ou \"nenhum\"? O valor é definido como distância entre sua prob e o prior. Se minha prob é menor, então não há valor para apostar a favor. Mas posso considerar valor se o mercado pagar mais? O campo \"valor\" é alto/medio/baixo/nenhum baseado no edge percebido. Como não temos odds de mercado, é subjetivo. Vou considerar que \"valor\" significa que minha probabilidade é maior que o prior, indicando que o mercado (representado pelo prior) está subestimando. Para home, minha prob é 18% e prior é 25%, então não há valor (minha prob < prior). Então valor \"baixo\" ou \"nenhum\". Vou usar \"nenhum\". Nota: \"Probabilidade baixa, não recomendado\".\n2. 1x2 draw: selection \"draw\", prob 0.22, variancia 4, valor \"nenhum\" (prior 31%, minha 22%), nota: \"Empate improvável com ambos precisando vencer\".\n3. 1x2 away: selection \"away\", prob 0.60, variancia 3 (favorito, mas ainda futebol), valor \"alto\" (prior 44%, minha 60%: diferença de 16pp). Nota: \"Chelsea claro favorito, subestimado pelo prior\".\n4. double_chance home_draw: selection \"home_draw\", prob 0.40 (18+22), variancia 2, valor \"baixo\" (prior 56%, minha 40%). Nota: \"Baixa probabilidade, não cobre o risco\".\n5. double_chance draw_away: selection \"draw_away\", prob 0.82 (22+60), variancia 1, valor \"medio\" (prior 75%, minha 82%). Nota: \"Muito seguro, mas odds baixas; bom para combinadas\".\n6. double_chance home_away: selection \"home_away\", prob 0.78 (18+60), variancia 2, valor \"medio\" (prior 69%, minha 78%). Nota: \"Aposta de que não dá empate; valor razoável\".\n7. draw_no_bet home: selection \"home\", team \"home\", line null, prob 0.23 (18/(1-0.22)), variancia 4, valor \"baixo\" (prior DNB casa 37%, minha 23%). Nota: \"Não recomendado\".\n8. draw_no_bet away: selection \"away\", team \"away\", line null, prob 0.77 (60/0.78), variancia 2, valor \"alto\" (prior 63%, minha 77%). Nota: \"Excelente aposta: Chelsea vence, empate devolve\".\n9. over_under over 1.5: selection \"over\", line 1.5, prob 0.79, variancia 1, valor \"medio\" (prior 70%, minha 79%). Nota: \"Muito provável, mas odds baixas\".\n10. over_under over 2.5: selection \"over\", line 2.5, prob 0.57, variancia 3, valor \"alto\" (prior 42%, minha 57%). Nota: \"Forte valor: jogo tende a ser aberto e com gols\".\n11. over_under over 3.5: selection \"over\", line 3.5, prob 0.34, variancia 4, valor \"medio\" (prior 21%, minha 34%). Nota: \"Bom valor, mas mais arriscado\".\n12. btts yes: selection \"yes\", prob 0.55, variancia 3, valor \"medio\" (prior 49%, minha 55%). Nota: \"Valor moderado; ambas defesas frágeis\".\n13. team_total home over 0.5: team \"home\", selection \"over\", line 0.5, prob 0.61, variancia 2, valor \"baixo\" (prior 63%, minha 61%). Nota: \"Sem valor, prior já alto\".\n14. team_total home over 1.5: team \"home\", selection \"over\", line 1.5, prob 0.25, variancia 4, valor \"baixo\" (prior 26%, minha 25%). Nota: \"Não recomendado\".\n15. team_total away over 0.5: team \"away\", selection \"over\", line 0.5, prob 0.86, variancia 1, valor \"medio\" (prior 75%, minha 86%). Nota: \"Altamente provável, mas odds baixas\".\n16. team_total away over 1.5: team \"away\", selection \"over\", line 1.5, prob 0.59, variancia 3, valor \"alto\" (prior 40%, minha 59%). Nota: \"Forte valor: Chelsea deve fazer pelo menos 2 gols\".\n17. handicape home -1: team \"home\", selection \"home\", line -1, prob 0.10? (Sunderland vencer por 2+ gols é muito difícil). Estimar: prob 0.05. variancia 5, valor \"baixo\". Nota: \"Improvável\".\n18. handicape away -1: team \"away\", selection \"away\", line -1, prob 0.38? (Chelsea vencer por 2+). Aproximei 38% antes. variancia 4, valor \"alto\" (prior? não temos prior de handicap, mas como o Chelsea é favorito, pode ter valor). Nota: \"Bom valor se Chelsea dominar como esperado\".\n19. odd_even odd: selection \"odd\", prob 0.48, variancia 5, valor \"nenhum\". Nota: \"Aleatório, sem edge\".\n\nPara handicap, não tenho prior, mas posso calcular: handicap -1 away significa Chelsea -1, ou seja, Chelsea vence por 2+ gols. Minha prob é ~38%.\n\nVou ajustar o handicap para o que faz sentido: no schema, \"handicap\" com \"selection\": \"home\" e \"line\": -1? Acho que \"handicap\" market com selection \"home\" e line -1 significa apostar no time da casa com handicap -1 (ou seja, casa -1). Normalmente, handicap asiático. Mas vou seguir o schema: `market: \"handicap\"`, `selection: \"home\"` ou `\"away\"`, `team: \"home\"` ou `\"away\"`, `line: -1`. Para o Chelsea, seria `handicap` `selection: \"away\"`, `team: \"away\"`, `line: -1` (Chelsea -1). Então prob de Chelsea vencer por 2+. Vou manter.\n\nAgora, `best_bet`: escolher a melhor aposta com base em valor, variância e confiança.\n\nConforme a disciplina: devo evitar 1x2 com prob <0.45, e não cravar empate como best_bet. Meu 1x2 away tem prob 0.60, então poderia ser considerado. Mas a regra diz que entre valor parecido, crave a de menor variância. Vamos analisar as opções com alto valor:\n\n- Over 2.5: prob 0.57, var 3, valor alto\n- Team_total away over 1.5: prob 0.59, var 3, valor alto\n- DNB away: prob 0.77, var 2, valor alto\n- Handicap away -1: prob 0.38, var 4, valor alto\n- 1x2 away: prob 0.60, var 3, valor alto\n\nA menor variância entre as de alto valor é DNB away (var 2). Mas DNB away tem prob alta de 0.77, mas o retorno é menor. A regra diz: entre apostas de valor parecido, crave a de menor variância. Não diz que o valor é o mesmo, mas sim \"valor parecido\". O valor aqui é subjetivo, mas posso considerar que DNB away e over 2.5 têm alto valor. DNB away é mais seguro.\n\nPorém, o protocolo também diz: \"A anti-timidez vale pro TAMANHO do xG, não pra escolher mercado arriscado: convicção no número, disciplina no mercado.\" Então devo escolher um mercado que reflita minha convicção sem ser excessivamente arriscado.\n\nA aposta em team_total away over 1.5 é boa: Chelsea precisa vencer, deve fazer gols. Over 2.5 também. DNB away é seguro, mas pode ter odds muito baixas (não tenho odds, mas é seguro). No entanto, o foco é encontrar valor. O prior do over 2.5 é 42%, minha prob é 57%, isso é um edge de 15pp. No team_total away over 1.5, prior 40%, minha 59%, edge de 19pp. No DNB away, prior 63%, minha 77%, edge de 14pp. Todos com bom edge.\n\nA variância: DNB (2) < over 2.5 (3) = team_total away over 1.5 (3). Então DNB é a mais segura. Mas o edge é um pouco menor. No entanto, a confiança pode ser alta.\n\nVamos para a refutação.\n\n## Passo 6 - REFUTAÇÃO\n\nPrimeiro, definir a aposta candidata. Vou escolher inicialmente a que me parece mais robusta: **team_total away over 1.5** (Chelsea marca 2+ gols). Edge de 19pp, alinhado com o roteiro de Chelsea dominando e defesa do Sunderland frágil. Variância 3, mas é um mercado de time, não de resultado.\n\nAgora, refutação: ataques contra essa aposta.\n\nAtaque 1: Chelsea em má fase ofensiva (C28: 0.8 g/j nos últimos 5). Se essa má fase não for apenas por adversários, o Chelsea pode continuar com dificuldade para marcar. Veredito: enfraquece, mas C29 sugere que os adversários eram fortes e a média fora de casa na temporada é alta (1.72), então a má fase pode ser circunstancial. O ataque do Chelsea tem qualidade (A10). \n\nAtaque 2: Sunderland em casa tem defesa razoável na temporada (1.06 sofridos), e Ballard fora pode não ser tão impactante se o substituto for bom. Mas C19 mostra que Ballard é importante em interceptações (9%). E a forma recente defensiva é ruim (2.2 sofridos/j). Veredito: não derruba, pois a evidência de fragilidade defensiva é forte.\n\nAtaque 3: Chelsea pode administrar se fizer 1-0 (C56), e como precisa vencer, talvez não force muito se estiver ganhando. Mas a necessidade de vencer (C5) é alta, então talvez não recue tanto. Além disso, o Sunderland se expõe, podendo dar espaços para contra-ataques (A9). Veredito: enfraquece, mas não derruba.\n\nConclusão da refutação: Nenhum ataque derruba a aposta. Os ataques enfraquecem, mas as evidências a favor são mais numerosas e fortes.\n\nAgora, aplico a regra de confiança: temos várias arestas independentes convergindo para a aposta de que o Chelsea marcará 2+ gols: A1 (ataque Chelsea vs defesa Sunderland), A3 (intenção), A5 (forma), A9 (contra-ataque), A10 (qualidade). Isso são 5 arestas. As rotas A e B do base rate? Rota A total 2.65, Rota B total 2.36. Ambas indicam Chelsea favorito e com xG suficiente para 1.5 gols? Rota B xG Chelsea 1.37, o que dá over 1.5 apenas 40% (prior). Mas com ajustes, vai para 2.00. As rotas originais não convergem totalmente, mas a Rota B é a preferida e o ajuste é bem fundamentado. Nenhum ataque foi \"derruba\" e os \"enfraquece\" têm contra-argumentos. Portanto, confiança: medium? Ou high? A regra para high: ≥3 arestas independentes convergem E nenhum ataque \"derruba\"/\"enfraquece\" com dado forte E rotas A e B apontam na mesma direção. As rotas A e B não apontam exatamente na mesma direção: Rota A total maior (2.65) indicaria mais gols, Rota B menor (2.36). Mas após ajustes, ambos subiriam. A condição \"rotas A e B apontam na mesma direção\" talvez não seja totalmente satisfeita, porque originalmente divergiam na magnitude. Mas a direção (Chelsea favorito, over 2.5 possível) é a mesma? Rota A over 2.5 49%, Rota B 42%. A direção: ambas abaixo de 50%, então não apontam para over. Isso enfraquece a confiança para high. Então confiança: medium.\n\nConfidence_regra: \"≥3 arestas independentes convergem para Chelsea marcar 2+ gols (A1, A3, A5, A9, A10), e nenhum ataque de refutação foi derrubador. Porém, as rotas A e B do base rate divergem na força do over (49% vs 42%), impedindo confiança alta. Ataques 'enfraquece' foram neutralizados por evidências mais fortes.\"\n\nVou usar confidence \"medium\".\n\nAgora, `best_bet`:\n\nmarket: \"team_total\"\nselection: \"over\"\nteam: \"away\"\nline: 1.5\nconfidence: \"medium\"\nprobability: 0.59 (59%)\nevidence_for: [\"A1\", \"A3\", \"A5\", \"A9\", \"A10\", \"C10\", \"C19\", \"C25\"] (vou listar IDs de arestas e conclusões que suportam)\nevidence_against: [\"C28\", \"C56\", \"C29\"] (má fase recente, tendência a administrar)\nanalysis: \"Chelsea deve dominar e criar muitas chances contra a defesa frágil do Sunderland, desfalcada e em má forma. A necessidade de vencer força o Chelsea a buscar gols. Apesar da má fase ofensiva recente, os adversários eram mais fortes. O Chelsea tem média de 1.72 g/j fora e, contra bloco baixo, 2.00. Com Enzo Fernández e João Pedro em boa fase, espera-se ao menos 2 gols do Chelsea. O risco é o jogo ficar amarrado ou o Chelsea desperdiçar chances, mas a evidência sugere valor.\"\n\nAgora, `drivers`: os 3 fatores que mais moveram o número:\n1. \"Arquétipo: Chelsea é muito eficaz contra blocos baixos (2.00 g/j) e Sunderland é time de posse baixa\" (C52)\n2. \"Desfalque de Ballard enfraquece a defesa do Sunderland\" (C19)\n3. \"Alta motivação de ambos, especialmente Chelsea precisando vencer\" (C5)\n\nAgora, montar o JSON final. Vou seguir a estrutura do schema.\n\nCampos:\n- home: { xg, xg_1t, xg_2t, xg_bands, summary }\n- away: similar\n- general: { total, total_1t, total_2t, over25_prob, btts_prob, one_x_two, one_x_two_1t, one_x_two_2t, confidence, confidence_regra, summary }\n- conclusoes: array\n- blocos_sem_sinal: []\n- descartadas: array\n- jogadores: array\n- arestas: array\n- roteiros: array\n- mercados: array\n- best_bet: objeto\n- refutacao: { ataques, conclusao }\n- drivers: array\n\nVou preencher cada parte com os valores calculados.\n\nxg home: 0.95\nxg_1t home: 0.29, xg_2t: 0.66\nxg_bands home: { \"0-15\": 0.04, \"16-30\": 0.14, \"31-45\": 0.10, \"46-60\": 0.12, \"61-75\": 0.24, \"76-90\": 0.31 } (arredondando)\nAway xg: 2.00\nxg_1t away: 0.90, xg_2t: 1.10\nxg_bands away: { \"0-15\": 0.21, \"16-30\": 0.25, \"31-45\": 0.45, \"46-60\": 0.45, \"61-75\": 0.31, \"76-90\": 0.31 }\n\nGeneral:\ntotal: 2.95, total_1t: 1.19, total_2t: 1.76\nover25_prob: 0.57\nbtts_prob: 0.55\none_x_two: home 0.18, draw 0.22, away 0.60\none_x_two_1t: home 0.15, draw 0.45, away 0.40\none_x_two_2t: home 0.25, draw 0.30, away 0.45\nconfidence: \"medium\"\nconfidence_regra: \"≥3 arestas independentes convergem para Chelsea marcar 2+ gols (A1, A3, A5, A9, A10), e nenhum ataque de refutação foi derrubador. Porém, as rotas A e B do base rate divergem na força do over (49% vs 42%), impedindo confiança alta. Ataques 'enfraquece' foram neutralizados por evidências mais fortes.\"\nsummary: \"Partida de alta intensidade com ambos precisando vencer. Chelsea é favorito claro, com ataque potente contra defesa frágil do Sunderland. Espera-se um jogo aberto, com mais de 2.5 gols e ambos marcando. O Chelsea deve fazer ao menos 2 gols.\"\n\nConclusoes: array com todos os objetos de conclusão. Cada um: id, bloco, fato, dado, direcao, forca.\n\nExemplo:\n{ \"id\": \"C1\", \"bloco\": \"contexto\", \"fato\": \"Sunderland com 2 dias a mais de descanso (7 vs 5), mas diferença é ruído\", \"dado\": \"Sunderland 7 dias (…) Chelsea 5 dias\", \"direcao\": \"Pequena vantagem para Sunderland, sem impacto significativo\", \"forca\": \"baixa\" }\n\nPreciso garantir que os dados sejam copiados literalmente. Vou revisar os dados copiados.\n\nContinuo no JSON.\n\nDescartadas: array de objetos com id e motivo.\n\nJogadores: array de objetos com nome, time (\"home\"/\"away\"), leitura.\n\nArestas: array de objetos com id, liga (array de strings), leitura, efeito.\n\nRoteiros: array de 3 ou 4, com nome, prob, filme, arestas.\n\nMercados: 19 objetos.\n\nBest_bet: objeto.\n\nRefutacao: ataques (array de 3 objetos com alvo, argumento, ids, veredito), e conclusao (string).\n\nDrivers: 3 strings.\n\nAgora, vou montar o JSON completo. Lembrar de usar aspas duplas e formato correto.\n\nVou escrever o JSON passo a passo.",
+  "reasoningTokens": 33136,
+  "elapsedMs": 514123,
+  "promptChars": 43703,
+  "error": null
+}

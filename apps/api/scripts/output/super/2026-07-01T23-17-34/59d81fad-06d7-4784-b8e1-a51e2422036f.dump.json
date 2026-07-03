@@ -1,0 +1,852 @@
+{
+  "matchId": "59d81fad-06d7-4784-b8e1-a51e2422036f",
+  "homeName": "Burnley",
+  "awayName": "Wolverhampton Wanderers",
+  "actual": "Burnley 1-1 Wolverhampton Wanderers (HT 0-1)",
+  "ftH": 1,
+  "ftA": 1,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Burnley x Wolverhampton Wanderers\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-24 15:00 · Rodada 38 · Liga PL\n- Local: Turf Moor, Burnley (grass)\n- Clima: broken clouds · 19.4°C (sens. 19°C) · vento 3 m/s · umidade 61% · nuvens 75% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Burnley 6 dias (último: liga, 2026-05-18) · Wolverhampton Wanderers 7 dias (último: liga, 2026-05-17)\n- Viagem do visitante: ~133 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 370 jogos): mandante 1.532 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-24)\n- Burnley: 19º, 21 pts · Wolverhampton Wanderers: 20º, 19 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Burnley: 19º, 21 pts, 1 jogo(s) restante(s) (máx possível 24 pts)\n  - já REBAIXADO matematicamente — sem objetivo de tabela.\n  - → motivação: **baixa** — NÃO precisa lutar — já rebaixado\n  - Wolverhampton Wanderers: 20º, 19 pts, 1 jogo(s) restante(s) (máx possível 22 pts)\n  - já REBAIXADO matematicamente — sem objetivo de tabela.\n  - → motivação: **baixa** — NÃO precisa lutar — já rebaixado\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Burnley (manda) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **37 marcados / 74 sofridos** em 37j · média **1 marca / 2 sofre** por jogo\n- **Em casa (18j): marca 0.94 / sofre 1.56** (17 gols) · por tempo: 1ºT 0.43/1 · 2ºT 0.57/1\n- **Finalização: 111 SoT (3/j · casa 3.11/j) · conv 32%** (aberta, −2 pên) · sofre 5.76 SoT/j (adv 32%) · 6.81 KP/j\n- **Volume: 9.2 chutes/j (5.6 na área) · 1.4 big chances/j** · posse 41.5%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 38.7/58.1 · chutes pra fora 3.2/6.4 · bloqueados 3/4.6 · de fora da área 3.5/5.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 28/58.8 · chutes pra fora 2.8/6.2 · bloqueados 3/5 · de fora da área 3.8/6\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.69**\n  - ⚠️(fora) **J. Cullen** nota **6.96** (season) · forma 6.96= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 18j\n  - **Martin Dúbravka** nota **6.89** (season) · forma 7.03= (últ.5 do time: 5.9→8.3→6.9→–→– 📈 subindo) · **faltou 2/5** · 3× MOTM · 35j\n  - **James Ward-Prowse** nota **6.86** (season) · forma 6.65↓ (últ.5 do time: 6.2→7.2→6.7→–→6.5 ➡️ estável) · **faltou 1/5** · 12j\n  - **Jaidon Anthony** nota **6.85** (season) · forma 6.66↓ (últ.5 do time: 6.4→6.8→6.9→6.8→6.4 ➡️ estável) · 1× MOTM · 37j\n  - **Zian Flemming** nota **6.82** (season) · forma 6.72= (últ.5 do time: 7.1→6.5→6.6→6.6→6.8 ➡️ estável) · 1× MOTM · 29j\n  - **Ashley Barnes** nota **6.8** (season) · forma 6.8= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 10j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DEDDD** (1pts) · **4 feitos / 11 sofridos** · marca 0.8↓ / sofre 2.2= g/j · SoT 2.6 feito / 6.2 sofrido\n- **Consistência: MARCOU em 23/37** (casa 9/18 · fora 14/19) · não-marcou 14 · clean sheet 4 · BTTS 21/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Nottingham Forest** (fora · **D 1-4**) — adv 16º briga-Z · você 19º briga-Z · seu fora até ali 1.1 marca/2.4 sofre\n- vs **Manchester City** (casa · **D 0-1**) — adv 2º Eur-gar · você 19º briga-Z · seu casa até ali 0.9 marca/1.6 sofre\n- @ **Leeds United** (fora · **D 1-3**) — adv 15º briga-Z · você 19º REBAIX. · seu fora até ali 1.1 marca/2.5 sofre\n- vs **Aston Villa** (casa · **E 2-2**) — adv 5º briga-top · você 19º REBAIX. · seu casa até ali 0.9 marca/1.5 sofre\n- @ **Arsenal** (fora · **D 0-1**) — adv 1º Eur-gar · você 19º REBAIX. · seu fora até ali 1.1 marca/2.5 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Nottingham Forest (FORA · D 1-4) — min 1→98:\n    📈 pressão (net/min): 1'-15' [-1 -1 -1 0 +1 0 -1 -1 -1 -1 -1 -1 -3 -3 -5] · 16'-30' [-5 -5 -4 -3 -3 0 -3 -2 +1 -1 -2 -4 -3 -2 -1] · 31'-45' [-1 -1 -1 -1 -5 -4 -3 -3 -1 -2 -2 -2 -3 -3 +2] · ‖INTERVALO‖ · 46'-60' [+4 +3 +2 +2 +4 +4 +1 0 -2 -4 -4 -4 -4 -3 -3] · 61'-75' [-5 -5 -9 -6 -6 0 -2 -2 -5 -5 -4 -8 +1 +1 +2] · 76'-90' [+2 -3 -3 -6 -6 -5 -3 0 0 +2 +1 +1 +2 +1 -2] · 91'+ [-2 +1 +5 +6 +4 +6 +6 -1]\n    ⚽ gols: 45'✓ 62'✗ 69'✗ 77'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **7** · 16'-30' **9** · 31'-45' **4** ‖ 46'-60' **1** · 61'-75' **5** · 76'-90' **8**\n  - vs Manchester City (CASA · D 0-1) — min 1→92:\n    📈 pressão (net/min): 1'-15' [0 0 -1 0 -1 -8 -3 -1 -8 -5 -3 -1 -1 +1 +2] · 16'-30' [0 +3 +3 -1 -3 -3 -4 -3 -5 -5 -12 -8 -10 -8 -7] · 31'-45' [-4 -4 -3 -3 -7 -6 -2 -2 -4 -6 -6 -6 -7 -7 +1] · ‖INTERVALO‖ · 46'-60' [+2 0 0 -4 -3 -1 -3 -2 -3 -3 -3 -7 -8 -6 -4] · 61'-75' [-1 -5 -5 -4 -1 -2 -2 -2 -6 -7 -7 -9 -9 -7 -7] · 76'-90' [-4 -3 -7 -7 -11 -7 -7 -11 -7 -7 -8 -8 -6 -6 -10] · 91'+ [-10 -17]\n    ⚽ gols: 5'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **4** · 31'-45' **4** ‖ 46'-60' **10** · 61'-75' **4** · 76'-90' **10**\n  - @ Leeds United (FORA · D 1-3) — min 1→99:\n    📈 pressão (net/min): 1'-15' [-3 -3 -2 -1 -1 -2 -5 -6 -4 -3 -3 -4 -4 -3 -3] · 16'-30' [-3 -1 -2 -2 -4 -3 -4 -7 -6 -4 -3 -5 -1 -1 0] · 31'-45' [-1 +1 0 +1 +4 +2 +1 -1 -1 -2 -3 +1 +1 +1 +2] · ‖INTERVALO‖ · 46'-60' [-1 +1 0 +2 0 -3 -6 -6 -11 -8 -8 -12 -9 -9 -6] · 61'-75' [-4 -5 -6 -5 -5 -5 -2 +2 +4 +1 +1 +3 +2 +2 -4] · 76'-90' [-4 -4 -10 -5 -6 -4 -2 -2 -1 -4 -6 -2 +1 0 0] · 91'+ [0 0 0 0 +2 +5 +8 +7 +4]\n    ⚽ gols: 8'✗ 52'✗ 56'✗ 71'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **10** · 31'-45' **0** ‖ 46'-60' **6** · 61'-75' **1** · 76'-90' **1**\n  - vs Aston Villa (CASA · E 2-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 0 -1 +1 +1 0 0 +1 +6 +6 +6 +7 +7 +6 +6] · 16'-30' [+1 0 -1 -2 -1 -1 -1 0 -1 0 -3 -3 0 +2 0] · 31'-45' [+2 -1 -2 -1 -5 -5 -9 -7 -8 -8 -6 -3 -7 -2 0] · ‖INTERVALO‖ · 46'-60' [-1 -1 0 0 0 0 -3 -3 -4 0 +3 +2 +1 +4 +4] · 61'-75' [+2 +1 0 +3 +3 0 0 0 0 -1 -1 -2 -3 -3 -2] · 76'-90' [-6 -6 -10 -6 -6 -6 -6 -4 -2 +2 +2 0 0 0 -2] · 91'+ [-1 -3 -1 -4 -2 -1]\n    ⚽ gols: 8'✓ 42'✗ 56'✗ 58'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **8**\n  - @ Arsenal (FORA · D 0-1) — min 1→98:\n    📈 pressão (net/min): 1'-15' [+3 +5 +4 -1 -2 -3 -2 -1 -1 -1 -3 -3 -3 -7 -6] · 16'-30' [-4 -1 +1 -1 -1 -3 -2 -3 -5 -5 -8 -4 -5 -6 -8] · 31'-45' [-8 -8 -7 -7 -5 -4 -3 -9 -6 -3 -1 -2 -2 -4 -3] · ‖INTERVALO‖ · 46'-60' [+1 +1 +1 -2 -2 0 +1 -4 -2 -2 -1 -1 -3 -4 -5] · 61'-75' [-6 -6 -2 -2 0 +1 +1 +1 +2 +1 +1 +1 0 0 0] · 76'-90' [0 0 0 -1 -2 -2 -2 -2 -1 -2 -1 -1 -5 -3 -3] · 91'+ [0 0 0 -1 -3 -2 0 +1]\n    ⚽ gols: 37'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **7** · 31'-45' **2** ‖ 46'-60' **9** · 61'-75' **2** · 76'-90' **3**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.08 · 16-30: 0.14 · 31-45: 0.22 · 46-60: 0.16 · 61-75: 0.14 · 76-90: 0.27\n- Sofre por faixa (/j): 0-15: 0.35 · 16-30: 0.16 · 31-45: 0.49 · 46-60: 0.27 · 61-75: 0.27 · 76-90: 0.46\n- 1ºT: marca 16 / sofre 37 (totais na temporada)\n\n### Desfalques de Burnley neste jogo\n- **J. Cullen** (Cruciate Ligament Tear) — 2 gols + 2 assists até a data; season: **5% dos gols** do time (11% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.06 g/j (18j) vs sem ele 0.95 g/j (19j) = −10%; finaliza **0.33 SoT/jogo** (time: 3.06 SoT/j com ele vs 2.95 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.2 interceptações/j** (~12% do time) · 1.7 desarmes/j · 3.7 duelos ganhos/j · 0.1 cruz. certos/j · 0.1 dribles certos/j · 0.7 key passes/j\n- **L. Beyer** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **Mike Tresor** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/4 gols = **0%** (≈ estável); with/without: com ele 0.67 g/j (6j) vs sem ele 1.06 g/j (31j) = +58%; finaliza **0 SoT/jogo** (time: 3.17 SoT/j com ele vs 2.97 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.2 desarmes/j · 0.2 duelos ganhos/j · 0.2 cruz. certos/j · 0 dribles certos/j · 0.2 key passes/j\n\n## Wolverhampton Wanderers (visita) — até 2026-05-24\n\n### Gols & finalização (season)\n- Total **26 marcados / 67 sofridos** em 37j · média **0.7 marca / 1.81 sofre** por jogo\n- **Fora (18j): marca 0.39 / sofre 1.83** (7 gols) · por tempo: 1ºT 0.32/0.92 · 2ºT 0.38/0.89\n- **Finalização: 120 SoT (3.24/j · fora 2.89/j) · conv 20%** (aberta, −2 pên) · sofre 4.62 SoT/j (adv 36%) · 6.95 KP/j\n- **Volume: 9.6 chutes/j (6.1 na área) · 1.4 big chances/j** · posse 43.1%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 38.6/58.1 · chutes pra fora 4/5.5 · bloqueados 2.3/3.8 · de fora da área 3.4/4.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 37.8/51.2 · chutes pra fora 5.4/5.4 · bloqueados 2.4/3.4 · de fora da área 3.4/3.6\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.71**\n  - ⚠️(fora) **Sam Johnstone** nota **6.85** (season) · forma 6.85= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 17j\n  - **José Sá ** nota **6.8** (season) · forma 6.7= (últ.5 do time: –→6.6→–→–→6.8 ⚠️ poucos jogos na janela) · **faltou 3/5** · 2× MOTM · 23j\n  - **Santiago Bueno** nota **6.79** (season) · forma 6.82= (últ.5 do time: 6.7→7→7.7→6→6.7 📉 caindo) · 2× MOTM · 33j\n  - **João Gomes** nota **6.78** (season) · forma 6.56↓ (últ.5 do time: 6.1→7.2→6.6→6.8→6.1 📉 caindo) · 1× MOTM · 40j\n  - **Jhon Arias** nota **6.77** (season) · forma 6.77= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 26j\n  - **Emmanuel Agbadou** nota **6.77** (season) · forma 6.77= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 16j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EDEDD** (2pts) · **2 feitos / 9 sofridos** · marca 0.4↓ / sofre 1.8= g/j · SoT 3 feito / 4.2 sofrido\n- **Consistência: MARCOU em 18/37** (casa 12/19 · fora 6/18) · não-marcou 19 · clean sheet 4 · BTTS 16/37\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Leeds United** (fora · **D 0-3**) — adv 15º briga-Z · você 20º briga-Z · seu fora até ali 0.4 marca/1.7 sofre\n- vs **Tottenham Hotspur** (casa · **D 0-1**) — adv 18º briga-Z · você 20º REBAIX. · seu casa até ali 1.1 marca/1.9 sofre\n- vs **Sunderland** (casa · **E 1-1**) — adv 12º · você 20º REBAIX. · seu casa até ali 1 marca/1.9 sofre\n- @ **Brighton & Hove Albion** (fora · **D 0-3**) — adv 8º salvo · você 20º REBAIX. · seu fora até ali 0.4 marca/1.8 sofre\n- vs **Fulham** (casa · **E 1-1**) — adv 11º salvo · você 20º REBAIX. · seu casa até ali 1 marca/1.8 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Leeds United (FORA · D 0-3) — min 1→102:\n    📈 pressão (net/min): 1'-15' [-1 -4 -4 0 +2 -1 0 0 -1 -5 -4 -2 -2 -3 -6] · 16'-30' [-8 -2 -2 -2 -6 -9 -7 -6 -5 -3 0 -3 +1 +5 +5] · 31'-45' [+3 +2 0 -2 -2 +2 +3 +3 +3 +6 +5 +5 +3 +2 0] · ‖INTERVALO‖ · 46'-60' [-3 +2 +1 +1 +1 +2 +4 +4 +1 0 0 +1 +2 +1 +1] · 61'-75' [-1 -1 0 +7 +7 +4 +2 0 0 0 +3 +3 +3 +2 +2] · 76'-90' [0 -1 -1 -1 -1 -1 -1 -1 -3 -3 -2 -3 -1 -1 -2] · 91'+ [-3 0 -1 0 -5 -5 -5 -3 -2 +1 -2 -1]\n    ⚽ gols: 18'✗ 20'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **3** · 31'-45' **4** ‖ 46'-60' **11** · 61'-75' **3** · 76'-90' **4**\n  - vs Tottenham Hotspur (CASA · D 0-1) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 -1 -3 -4 -4 -5 -7 -7 -5 -4 -3 -3 -4 -3 -4] · 16'-30' [-4 -5 -4 -3 -2 -1 -1 -2 -6 -4 -6 -6 -6 +2 +2] · 31'-45' [+1 -1 -2 -3 -3 -7 -7 -6 -5 -5 -5 -1 +1 +1 +1] · ‖INTERVALO‖ · 46'-60' [+6 +4 -2 +3 0 +6 +4 +3 +1 +3 +4 +2 +2 +2 +2] · 61'-75' [+2 +3 +3 +2 +2 +1 +1 -1 -1 -1 -7 -4 -4 -2 -2] · 76'-90' [0 0 +2 +1 +6 +6 +4 -3 -3 -2 -2 -8 -9 -9 -9] · 91'+ [-2 -2 -1 -3 -4 -3 -2 -2]\n    ⚽ gols: 82'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **8** · 61'-75' **6** · 76'-90' **9**\n  - vs Sunderland (CASA · E 1-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 0 0 +2 0 -2 -2 -3 -3 0 +1 +1 +1 +1 -1] · 16'-30' [-2 -5 -6 -4 -3 -9 -6 -6 -6 -6 -4 -3 -6 -6 -4] · 31'-45' [-3 -1 -1 +1 +9 +9 +6 +4 +3 +9 +7 +7 +7 +2 +5] · ‖INTERVALO‖ · 46'-60' [+2 +7 +11 +11 +12 +9 +12 +9 +5 +9 +9 +9 +6 +6 +6] · 61'-75' [+6 +7 +7 +4 +3 +5 +2 +1 -4 -4 -1 +3 +3 +2 0] · 76'-90' [-2 -4 -3 -5 -6 -12 -9 -2 +5 +5 +8 +5 +3 +4 +1] · 91'+ [+1 0 +1 +3]\n    ⚽ gols: 17'✗ 54'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **1** · 61'-75' **3** · 76'-90' **4**\n  - @ Brighton & Hove Albion (FORA · D 0-3) — min 1→97:\n    📈 pressão (net/min): 1'-15' [-3 -4 -3 -3 -4 -6 -6 -4 -3 -3 -3 -3 -3 -3 -5] · 16'-30' [-3 -1 0 +1 0 -1 -1 -4 -5 -4 -3 -3 -3 -3 -3] · 31'-45' [-3 -4 -5 -5 -4 -4 -4 -1 -5 -5 -6 -4 -3 -1 0] · ‖INTERVALO‖ · 46'-60' [-4 -6 -6 -10 -9 -8 -4 -4 +2 -1 -1 -1 -1 0 0] · 61'-75' [0 -1 0 0 -2 0 0 -5 -3 -3 -3 -3 -3 -4 -3] · 76'-90' [-4 -6 -6 -5 -7 -5 -7 -7 -9 -10 -10 -8 -10 -10 -7] · 91'+ [-7 -6 -6 -3 -1 -1 -1]\n    ⚽ gols: 1'✗ 5'✗ 86'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **11**\n  - vs Fulham (CASA · E 1-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 +3 +4 +3 +2 0 +2 +2 +4 +2 -1 -2 -7 -5 -4] · 16'-30' [-4 -1 -7 -5 0 +3 +2 +2 -3 0 +2 +1 -2 -4 -5] · 31'-45' [-3 -2 -4 -4 -6 -5 -5 -6 -6 -4 -3 -6 -5 -5 -7] · ‖INTERVALO‖ · 46'-60' [-5 -4 -4 -1 -2 0 +3 +3 +1 0 -4 -3 -3 -3 -6] · 61'-75' [-4 -2 -4 -1 +1 +1 +1 +2 +2 +1 -1 -1 +3 +1 -4] · 76'-90' [-3 -3 -1 -1 0 +2 -2 0 +3 +3 -1 +2 +2 +2 -1] · 91'+ [-1 -3 -2 -3]\n    ⚽ gols: 25'✓ 45'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **3** · 31'-45' **5** ‖ 46'-60' **6** · 61'-75' **5** · 76'-90' **5**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.05 · 16-30: 0.08 · 31-45: 0.19 · 46-60: 0.11 · 61-75: 0.08 · 76-90: 0.19\n- Sofre por faixa (/j): 0-15: 0.24 · 16-30: 0.27 · 31-45: 0.41 · 46-60: 0.11 · 61-75: 0.38 · 76-90: 0.41\n- 1ºT: marca 12 / sofre 34 (totais na temporada)\n\n### Desfalques de Wolverhampton Wanderers neste jogo\n- **E. Gonzalez Medina** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 0.7 g/j (37j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **Sam Johnstone** (Shoulder Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 0.5 g/j (12j) vs sem ele 0.8 g/j (25j) = +60%; finaliza **0 SoT/jogo** (time: 2.67 SoT/j com ele vs 3.52 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.2 desarmes/j · 0.4 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0 key passes/j\n- **Matt Doherty** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 0.64 g/j (11j) vs sem ele 0.73 g/j (26j) = +14%; finaliza **0 SoT/jogo** (time: 2.73 SoT/j com ele vs 3.46 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.6 interceptações/j** (~8% do time) · 1.5 desarmes/j · 4.1 duelos ganhos/j · 0.2 cruz. certos/j · 0.2 dribles certos/j · 0.3 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Burnley atacando × Wolverhampton Wanderers defendendo**\n| Faixa | Burnley marca/j | Wolverhampton Wanderers sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.08 | 0.24 | 0.32 |\n| 16-30 | 0.14 | 0.27 | 0.41 |\n| 31-45 | 0.22 | 0.41 | 0.63 |\n| 46-60 | 0.16 | 0.11 | 0.27 |\n| 61-75 | 0.14 | 0.38 | 0.52 |\n| 76-90 | 0.27 | 0.41 | 0.68 |\n\n**Wolverhampton Wanderers atacando × Burnley defendendo**\n| Faixa | Wolverhampton Wanderers marca/j | Burnley sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.05 | 0.35 | 0.4 |\n| 16-30 | 0.08 | 0.16 | 0.24 |\n| 31-45 | 0.19 | 0.49 | 0.68 |\n| 46-60 | 0.11 | 0.27 | 0.38 |\n| 61-75 | 0.08 | 0.27 | 0.35 |\n| 76-90 | 0.19 | 0.46 | 0.65 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Burnley: **0-15** (domínio +1) · Wolverhampton Wanderers: **46-60** (domínio -3.2). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Burnley domínio/j | Wolverhampton Wanderers domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -0.9 | -1.9 | +1 ≈ |\n| 16-30 | -2.8 | -2.9 | +0.1 ≈ |\n| 31-45 | -3 | -0.9 | -2.1 ✈️ |\n| 46-60 | -1.9 | +1.3 | -3.2 ✈️ |\n| 61-75 | -2.1 | +0.3 | -2.4 ✈️ |\n| 76-90 | -2.3 | -2.2 | -0.1 ≈ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Burnley (casa) = 1.12 · λ Wolverhampton Wanderers (fora) = 0.5 · total = 1.62\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Burnley: λ_SoT 3.27 × conv 32% → **1.05 gols**\n- Wolverhampton Wanderers: λ_SoT 4.46 × conv 20% → **0.89 gols**\n- total via SoT = 1.94\n- **Índice de volume do jogo**: λ_SoT total 7.7 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 50/35/15% | 37/35/28% |\n| Over 1.5 | 50% | 59% |\n| Over 2.5 | 22% | 31% |\n| Over 3.5 | 8% | 13% |\n| BTTS | 28% | 40% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **72%** · 12 **65%** · X2 **63%** · **Draw No Bet** casa 56% / fora 44%\n- **Placar exato (mais prováveis)**: 0-0 16% · 1-1 15% · 1-0 13% · 0-1 11%\n- **Odd/Even**: ímpar 45% / par 55% · **Multigoals**: 0-1 41% · 2-3 46% · 4+ 13%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Burnley over 0.5 **65%** / over 1.5 **28%** · Wolverhampton Wanderers over 0.5 **59%** / over 1.5 **22%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 2.71 · empate 2.88 · fora 3.52. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 370 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **26/51/23%** · 2ºT **32/44/24%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Burnley) e `away` (= Wolverhampton Wanderers), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 0.8500000238418579,
+    "xg_away": 0.550000011920929,
+    "total": 1.399999976158142,
+    "over25_prob": 0.20000000298023224,
+    "btts_prob": 0.30000001192092896,
+    "one_x_two": "{\"home\":0.38,\"draw\":0.4,\"away\":0.22}",
+    "confianca": "medium",
+    "best_bet_market": "over_under",
+    "best_bet_selection": "under",
+    "best_bet_team": null,
+    "best_bet_line": 2.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.800000011920929,
+    "reasoning_tokens": 6675
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Burnley** contra **bloco baixo** (o estilo do Wolverhampton Wanderers, posse média 43.1%): marca **1.15/j** e sofre 1.77/j em 13 jogos — **0.15 ACIMA** da média (1.00).\n- **Wolverhampton Wanderers** contra **bloco baixo** (o estilo do Burnley, posse média 41.5%): marca **0.77/j** e sofre 1.85/j em 13 jogos — na média da temporada (0.70).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — cruzamento**: Burnley gera 3% dos gols por aí × Wolverhampton Wanderers sofre 5% por aí (liga: 2%) → índice 4.1×.\n- **CANAL ABERTO — gol contra**: Burnley gera 8% dos gols por aí × Wolverhampton Wanderers sofre 5% por aí (liga: 3%) → índice 3.9×.\n- **CANAL ABERTO — falta**: Wolverhampton Wanderers gera 8% dos gols por aí × Burnley sofre 1% por aí (liga: 2%) → índice 2.9×.\n- **CANAL ABERTO — gol contra**: Wolverhampton Wanderers gera 8% dos gols por aí × Burnley sofre 3% por aí (liga: 3%) → índice 2.1×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Burnley** (21 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.0) · **MATA O JOGO após marcar** (Δ +1.9 — segue pressionando).\n- **Wolverhampton Wanderers** (22 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ -0.9) · **ADMINISTRA após marcar** (Δ -2.1 — recua).",
+  "output": {
+    "home": {
+      "xg": 0.95,
+      "xg_1t": 0.43,
+      "xg_2t": 0.52,
+      "xg_bands": {
+        "0-15": 0.075,
+        "16-30": 0.132,
+        "31-45": 0.207,
+        "46-60": 0.151,
+        "61-75": 0.132,
+        "76-90": 0.254
+      },
+      "summary": "Burnley em casa tem ataque limitado (0.94 g/j), mas contra bloco baixo apresentou leve melhora (1.15 g/j). Com ambos rebaixados, a intensidade será baixa, e o time deve criar poucas chances claras. Defensivamente, é frágil, mas o adversário é igualmente inofensivo."
+    },
+    "away": {
+      "xg": 0.45,
+      "xg_1t": 0.2,
+      "xg_2t": 0.25,
+      "xg_bands": {
+        "0-15": 0.032,
+        "16-30": 0.051,
+        "31-45": 0.122,
+        "46-60": 0.071,
+        "61-75": 0.051,
+        "76-90": 0.122
+      },
+      "summary": "Wolverhampton fora de casa é extremamente inofensivo (0.39 g/j, 2.89 SoT/j). A equipe vem de uma sequência desastrosa, com apenas 2 gols em 5 jogos, ambos em casa. Sem motivação, a tendência é passar em branco."
+    },
+    "general": {
+      "total": 1.4,
+      "total_1t": 0.63,
+      "total_2t": 0.77,
+      "over25_prob": 0.22,
+      "btts_prob": 0.25,
+      "one_x_two": {
+        "home": 0.45,
+        "draw": 0.32,
+        "away": 0.23
+      },
+      "one_x_two_1t": {
+        "home": 0.28,
+        "draw": 0.52,
+        "away": 0.2
+      },
+      "one_x_two_2t": {
+        "home": 0.35,
+        "draw": 0.45,
+        "away": 0.2
+      },
+      "confidence": "medium",
+      "confidence_regra": "Convergência de arestas (≥3) e concordância das rotas A e B indicam alta confiança, porém a falta de motivação total gera imprevisibilidade típica de fim de temporada, e o ataque do Wolves, embora fraco, pode marcar em eventual erro defensivo. Ataque 'enfraquece' não sustentado por dado forte. Assim, confiança média.",
+      "summary": "Jogo de baixíssima intensidade entre dois rebaixados. Espera-se poucas chances, com Burnley ligeiro favorito por jogar em casa, mas sem grande poder ofensivo. O mercado de menos de 0.5 gols do Wolves é a melhor oportunidade."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Descanso similar (6 vs 7 dias) e clima ameno, sem chuva ou vento forte",
+        "dado": "Burnley 6 dias, Wolves 7 dias; 19.4°C, vento 3 m/s, umidade 61%",
+        "direcao": "Neutra, sem fator de fadiga ou condição climática atípica",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Burnley rebaixado, 19º, máximo 24 pts",
+        "dado": "19º, 21 pts, já REBAIXADO matematicamente",
+        "direcao": "Motivação baixa, sem necessidade de atacar → -xG ofensivo",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "tabela_motivacao",
+        "fato": "Wolves rebaixado, 20º, máximo 22 pts",
+        "dado": "20º, 19 pts, já REBAIXADO matematicamente",
+        "direcao": "Motivação baixa, sem necessidade de atacar → -xG ofensivo",
+        "forca": "alta"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito de intenção: jogo tende a travar (ambos administram)",
+        "dado": "VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR",
+        "direcao": "Under, baixo total de gols, risco de jogo sonolento",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_gols",
+        "fato": "Ataque do Burnley fraco em casa",
+        "dado": "0.94 g/j em casa, 1.4 big chances/j, 3 SoT/j",
+        "direcao": "-xG ofensivo do mandante",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_gols",
+        "fato": "Defesa do Burnley vulnerável em casa",
+        "dado": "1.56 sofridos/j em casa, 5.76 SoT sofridos/j",
+        "direcao": "+xG adversário, mas adversário também é fraco",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "away_gols",
+        "fato": "Ataque do Wolves inoperante fora de casa",
+        "dado": "0.39 g/j fora, 2.89 SoT/j fora, 20% conversão",
+        "direcao": "-xG ofensivo visitante",
+        "forca": "alta"
+      },
+      {
+        "id": "C8",
+        "bloco": "away_gols",
+        "fato": "Defesa do Wolves sofre bastante fora, mas adversário é limitado",
+        "dado": "1.83 sofridos/j fora, 4.62 SoT sofridos/j",
+        "direcao": "Pode ceder, mas não muito dado ataque oponente limitado",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_estilo",
+        "fato": "Burnley recente ainda mais passivo que a média",
+        "dado": "Últimos 5: ataques perigosos 28/58.8, chutes pra fora 2.8/6.2",
+        "direcao": "Baixa produção ofensiva, postura defensiva frágil",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "away_estilo",
+        "fato": "Wolves também cede muitos ataques perigosos, ataque pouco produz",
+        "dado": "Últimos 5: ataques perigosos 37.8/51.2, chutes pra fora 5.4/5.4",
+        "direcao": "Jogo com pouca criação de ambos",
+        "forca": "media"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_qualidade",
+        "fato": "Goleiro Dúbravka em boa forma recente",
+        "dado": "Nota 7.03 subindo nos últimos jogos, 3× MOTM",
+        "direcao": "-xG adversário (melhor segurança defensiva)",
+        "forca": "baixa"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_qualidade",
+        "fato": "Meio-campo com Ward-Prowse e Anthony, qualidade mediana e estável",
+        "dado": "Notas ~6.85, desempenho estável, sem pico de forma",
+        "direcao": "Neutra, sem grande impacto",
+        "forca": "baixa"
+      },
+      {
+        "id": "C13",
+        "bloco": "away_qualidade",
+        "fato": "Wolves com desfalques importantes e jogadores em baixa",
+        "dado": "Johnstone, Arias, Agbadou fora; Bueno e João Gomes em queda (notas caindo)",
+        "direcao": "-xG ofensivo e +xG adversário (time enfraquecido)",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "home_forma",
+        "fato": "Burnley em péssima fase, mas adversários recentes foram fortes",
+        "dado": "Últimos 5: DEDDD (1pt), 4 gols feitos, 11 sofridos; enfrentou City, Arsenal, Villa",
+        "direcao": "Momento ruim, mas calibrado pelo nível dos rivais",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_forma",
+        "fato": "Burnley conseguiu marcar mesmo rebaixado",
+        "dado": "Marcou 2 gols no Villa e 1 no Leeds já rebaixado",
+        "direcao": "Pequena possibilidade de gol",
+        "forca": "baixa"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_forma",
+        "fato": "Wolves em fase terrível, especialmente no ataque",
+        "dado": "Últimos 5: EDEDD (2pts), 2 gols marcados, 9 sofridos",
+        "direcao": "-xG ofensivo visitante, jogo com poucos gols",
+        "forca": "alta"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_momentum",
+        "fato": "Burnley pressiona pouco, exceto no início (0-15)",
+        "dado": "Domínio +1 na faixa 0-15, negativo nas demais",
+        "direcao": "Possível pressão inicial, mas sem sustentação",
+        "forca": "baixa"
+      },
+      {
+        "id": "C18",
+        "bloco": "home_momentum",
+        "fato": "Defesa do Burnley vulnerável no fim do jogo e após intervalo",
+        "dado": "Sofreu gols nos minutos 62, 69, 77, 90 (Forest) e 42, 56 (Villa)",
+        "direcao": "+xG adversário nessas janelas",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_momentum",
+        "fato": "Wolves tem leve melhora no 2º tempo, mas em geral sofre pressão",
+        "dado": "Domínio +1.3 em 46-60, +0.3 em 61-75, mas negativo na maior parte",
+        "direcao": "Possível reação no 2ºT, mas limitada",
+        "forca": "baixa"
+      },
+      {
+        "id": "C20",
+        "bloco": "home_faixas",
+        "fato": "Burnley marca e sofre mais no fim dos tempos",
+        "dado": "Marca 0.27 em 76-90, sofre 0.46 em 76-90 e 0.49 em 31-45",
+        "direcao": "Gols tendem a ocorrer nessas janelas",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_faixas",
+        "fato": "Wolves tem picos de gols no fim dos tempos, mas volume geral baixo",
+        "dado": "Marca 0.19 em 31-45 e 76-90, sofre 0.41 nessas faixas",
+        "direcao": "Janelas de gols coincidem com Burnley",
+        "forca": "media"
+      },
+      {
+        "id": "C22",
+        "bloco": "home_desfalques",
+        "fato": "Cullen fora: baixa ofensiva já absorvida, leve perda defensiva",
+        "dado": "12% das interceptações do time; 0% dos gols recentes (ausente há 5 jogos)",
+        "direcao": "Leve -xG defensivo (sobe λ adversário)",
+        "forca": "baixa"
+      },
+      {
+        "id": "C23",
+        "bloco": "home_desfalques",
+        "fato": "Beyer e Tresor fora, ausências sem impacto",
+        "dado": "0% gols, 0 SoT, sem participação recente",
+        "direcao": "Neutra",
+        "forca": "baixa"
+      },
+      {
+        "id": "C24",
+        "bloco": "away_desfalques",
+        "fato": "Doherty fora: perda defensiva leve (8% interceptações, 1.5 desarmes/j)",
+        "dado": "0% gols, 0.6 interceptações/j, 1.5 desarmes/j",
+        "direcao": "+xG adversário (Burnley) marginal",
+        "forca": "baixa"
+      },
+      {
+        "id": "C25",
+        "bloco": "away_desfalques",
+        "fato": "Johnstone e Medina fora, ausências irrelevantes",
+        "dado": "0% gols, 0 SoT, baixo volume defensivo",
+        "direcao": "Neutra",
+        "forca": "baixa"
+      },
+      {
+        "id": "C26",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janelas de maior probabilidade de gol: 31-45 e 76-90 para ambos",
+        "dado": "Índice janela Burnley ataque: 0.63 (31-45), 0.68 (76-90); Wolves ataque: 0.68 e 0.65",
+        "direcao": "Concentrar xG nesses períodos",
+        "forca": "alta"
+      },
+      {
+        "id": "C27",
+        "bloco": "base_rate",
+        "fato": "Prior Rota B total 1.94, Burnley 1.05, Wolves 0.89; jogo de baixo total",
+        "dado": "λ total 1.94, over 2.5 31%, 1x2 37/35/28",
+        "direcao": "Under 2.5 é cenário base; leve favoritismo mandante",
+        "forca": "alta"
+      },
+      {
+        "id": "C28",
+        "bloco": "probs_mercado",
+        "fato": "Mercado precifica jogo equilibrado com viés para poucos gols",
+        "dado": "Over 2.5 31%, BTTS 40%, fair odds: casa 2.71, empate 2.88, fora 3.52",
+        "direcao": "Under e dupla chance são mercados alinhados",
+        "forca": "alta"
+      },
+      {
+        "id": "C29",
+        "bloco": "cruzamentos_computados",
+        "fato": "Burnley contra bloco baixo (Wolves) marca 1.15 g/j, ligeiramente acima da média",
+        "dado": "Arquétipo: marca 1.15/j em 13 jogos vs bloco baixo (média 1.00)",
+        "direcao": "+xG ofensivo Burnley (leve)",
+        "forca": "baixa"
+      },
+      {
+        "id": "C30",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ambos recuam ao marcar: Burnley mata jogo, Wolves administra",
+        "dado": "Burnley Δ +1.9 após marcar, Wolves Δ -2.1 após marcar",
+        "direcao": "Se gol cedo, jogo tende a esfriar ainda mais",
+        "forca": "media"
+      },
+      {
+        "id": "C31",
+        "bloco": "cruzamentos_computados",
+        "fato": "Canais abertos para cruzamento e gol contra, mas probabilidade baixa",
+        "dado": "Índice 4.1× para cruzamento Burnley, 3.9× para gol contra Burnley",
+        "direcao": "Levemente +xG para Burnley em lances específicos",
+        "forca": "baixa"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C1",
+        "motivo": "Conclusão neutra, sem fator de fadiga ou clima que mova o número."
+      },
+      {
+        "id": "C12",
+        "motivo": "Qualidade individual mediana sem impacto direto no xG ou confronto."
+      },
+      {
+        "id": "C18",
+        "motivo": "Redundante com C20 (sofrer no fim já coberto por distribuição de gols)."
+      },
+      {
+        "id": "C23",
+        "motivo": "Ausências irrelevantes, sem contribuição em gols ou volume."
+      },
+      {
+        "id": "C25",
+        "motivo": "Ausências irrelevantes, sem contribuição em gols ou volume."
+      },
+      {
+        "id": "C28",
+        "motivo": "Probabilidades de mercado já consideradas em C27; prior serve como referência."
+      },
+      {
+        "id": "C31",
+        "motivo": "Mecanismos de gol com baixa frequência (cruzamento, gol contra), impacto marginal no total."
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "J. Cullen",
+        "time": "home",
+        "leitura": "Ausência já absorvida pelo time; sem ele, o meio-campo perde um pouco de combate, mas o ataque não sente."
+      },
+      {
+        "nome": "Martin Dúbravka",
+        "time": "home",
+        "leitura": "Goleiro em alta pode segurar o ataque do Wolves, que já é frágil, reduzindo o xG contra."
+      },
+      {
+        "nome": "James Ward-Prowse",
+        "time": "home",
+        "leitura": "Meia de qualidade mediana, não deve desequilibrar, apenas mantém a posse."
+      },
+      {
+        "nome": "Jaidon Anthony",
+        "time": "home",
+        "leitura": "Atacante regular, mas sem grande volume de finalização; não é esperado que carregue o time."
+      },
+      {
+        "nome": "Zian Flemming",
+        "time": "home",
+        "leitura": "Peça de criação, mas time com baixa produção; não muda o panorama."
+      },
+      {
+        "nome": "Ashley Barnes",
+        "time": "home",
+        "leitura": "Veterano sem ritmo, deve ser opção no banco, mas não deve impactar."
+      },
+      {
+        "nome": "L. Beyer",
+        "time": "home",
+        "leitura": "Zagueiro reserva, ausência irrelevante."
+      },
+      {
+        "nome": "Mike Tresor",
+        "time": "home",
+        "leitura": "Atacante sem produção, ausência irrelevante."
+      },
+      {
+        "nome": "Sam Johnstone",
+        "time": "away",
+        "leitura": "Goleiro reserva, ausência não afeta time já acostumado com José Sá."
+      },
+      {
+        "nome": "José Sá",
+        "time": "away",
+        "leitura": "Goleiro de nível mediano, não deve salvar time de uma defesa frágil."
+      },
+      {
+        "nome": "Santiago Bueno",
+        "time": "away",
+        "leitura": "Zagueiro em má fase, tende a comprometer a já frágil defesa."
+      },
+      {
+        "nome": "João Gomes",
+        "time": "away",
+        "leitura": "Volante de combate em baixa, pode deixar espaços na frente da defesa."
+      },
+      {
+        "nome": "Jhon Arias",
+        "time": "away",
+        "leitura": "Desfalque ofensivo sem impacto claro, time já não produzia com ele."
+      },
+      {
+        "nome": "Emmanuel Agbadou",
+        "time": "away",
+        "leitura": "Zagueiro ausente, mas time já sofre muitos gols; sem ele, defesa fica ainda mais vulnerável."
+      },
+      {
+        "nome": "E. Gonzalez Medina",
+        "time": "away",
+        "leitura": "Lesionado, sem contribuição em gols, irrelevante."
+      },
+      {
+        "nome": "Matt Doherty",
+        "time": "away",
+        "leitura": "Ala com alguma contribuição defensiva, ausência tira profundidade, mas impacto limitado."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "leitura": "Ambos rebaixados e sem intenção de vencer, reduzindo a intensidade e o ímpeto ofensivo de cada lado.",
+        "efeito": "Reduz o xG total em aproximadamente 20% em relação ao prior; jogo travado e com poucas finalizações."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C5",
+          "C7",
+          "C16"
+        ],
+        "leitura": "Ataques fracos: Burnley em casa tem média de 0.94 g/j, mas Wolves fora é ainda pior (0.39 g/j) e ambos vêm de sequências péssimas.",
+        "efeito": "Diminui o xG ofensivo de cada time; Burnley cai para ~0.9, Wolves para ~0.4."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C6",
+          "C8",
+          "C13"
+        ],
+        "leitura": "Defesas vulneráveis de ambos os lados, mas adversários não possuem poder ofensivo para aproveitar; Wolves ainda mais fragilizado por desfalques e queda de rendimento.",
+        "efeito": "Burnley mantém ligeira vantagem ofensiva (sobe λ para ~0.95), Wolves permanece baixo."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C14",
+          "C15",
+          "C29"
+        ],
+        "leitura": "Apesar da má fase, Burnley enfrentou adversários fortes recentemente; contra bloco baixo (estilo Wolves) tem desempenho um pouco melhor (1.15 g/j).",
+        "efeito": "Ajuste positivo leve no xG do Burnley, mas limitado pelo momento geral."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C4",
+          "C30"
+        ],
+        "leitura": "Ambos os times tendem a recuar ao marcar: Burnley 'mata o jogo', Wolves 'administra'. Se houver gol cedo, a partida pode ficar ainda mais morna.",
+        "efeito": "Reforça o cenário de poucos gols, especialmente se o primeiro gol sair no 1º tempo."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C17",
+          "C19",
+          "C20",
+          "C21"
+        ],
+        "leitura": "Janelas de pressão (Burnley 0-15, Wolves 46-60) não coincidem totalmente com as janelas de gols (31-45 e 76-90). Isso sugere que os gols podem surgir em momentos de menor domínio.",
+        "efeito": "Distribuição do xG concentrada nos finais de cada tempo, mas com baixo volume total."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C11",
+          "C7"
+        ],
+        "leitura": "Goleiro do Burnley (Dúbravka) em boa fase contra ataque do Wolves que já é muito fraco.",
+        "efeito": "Reduz ainda mais a probabilidade de gol do Wolves, λ cai para ~0.45."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C22",
+          "C24"
+        ],
+        "leitura": "Pequenas perdas defensivas dos dois lados (Cullen fora no Burnley, Doherty fora no Wolves), mas impacto é marginal.",
+        "efeito": "xG total pode sofrer leve aumento, mas dentro da margem de erro."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C26",
+          "C20",
+          "C21"
+        ],
+        "leitura": "O cruzamento ataque x defesa mostra janelas de maior perigo nos minutos 31-45 e 76-90 para ambos os lados, alinhado com o histórico de gols de cada time.",
+        "efeito": "Concentração de gols nessas faixas; probabilidade de 0x0 no intervalo e gols no 2º tempo."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C27",
+          "C4"
+        ],
+        "leitura": "Prior da Rota B aponta total de 1.94, mas a motivação nula de ambos derruba o ritmo de jogo.",
+        "efeito": "Total ajustado para aproximadamente 1.4 gols."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C10",
+          "C9"
+        ],
+        "leitura": "Ambos os times cedem muitos ataques perigosos, mas produzem pouco ofensivamente, indicando um jogo de pouca criação e muitos erros.",
+        "efeito": "Reforça o baixo xG total e a dificuldade de construir jogadas de qualidade."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Jogo sonolento e sem gols",
+        "prob": 0.6,
+        "filme": "Com ambos rebaixados, a partida começa sem pressão. O Burnley até tenta uma leve pressão inicial (0-15), mas não cria chances claras. O Wolves se defende bem e pouco ataca. O 1º tempo termina 0x0. Na segunda etapa, o ritmo cai ainda mais; as equipes trocam passes sem agressividade. As janelas de perigo (31-45, 76-90) podem gerar alguma finalização, mas a falta de qualidade impede o gol. Placar final 0x0 ou 1x0 em lance isolado.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A5",
+          "A9"
+        ]
+      },
+      {
+        "nome": "Burnley vence apertado",
+        "prob": 0.3,
+        "filme": "Aproveitando a fragilidade defensiva do Wolves (desfalques e má fase), o Burnley consegue um gol no final do 1º tempo ou início do 2º, explorando a janela de 31-45 ou 76-90. O Wolves, incapaz de reagir, não ameaça. O goleiro Dúbravka faz uma defesa segura quando exigido. Burnley administra o resultado e vence por 1x0.",
+        "arestas": [
+          "A3",
+          "A4",
+          "A7",
+          "A9"
+        ]
+      },
+      {
+        "nome": "Wolves surpreende em jogo de erros",
+        "prob": 0.1,
+        "filme": "Em um jogo tão morno, um erro individual decide. O Wolves, em rara escapada, consegue um gol em bola parada ou falha da defesa do Burnley no fim do jogo (76-90). O Burnley tenta pressionar, mas não tem forças para empatar. Placar 0x1 ou 1x1 se o Burnley conseguir reagir.",
+        "arestas": [
+          "A8",
+          "A9"
+        ]
+      }
+    ],
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.45,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Burnley ligeiro favorito, mas jogo pode facilmente empatar."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.32,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Empate provável em jogo sem gols, mas não recomendado como aposta principal."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.23,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Wolves não deve vencer, mas o futebol é imprevisível."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.77,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Aposta segura: Burnley ou empate cobre a grande maioria dos cenários."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.55,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Dupla chance visitante perdeu valor com a motivação baixa de ambos."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.68,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Tira o empate, mas ainda cobre vitória de qualquer lado."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.66,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Burnley DNB interessante: se empatar, a aposta é devolvida."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.34,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Wolves DNB sem valor, alta probabilidade de derrota ou empate."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.41,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Menos de 1.5 gols é o cenário mais provável; over 1.5 não tem valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.22,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Jogo deve ter menos de 2.5 gols; under 2.5 é valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.05,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Over 3.5 altamente improvável."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.25,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Ambas marcam? Pouco provável, 'não' tem valor."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.61,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Burnley deve marcar? Não é garantido, mas tem boas chances."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.15,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Burnley dificilmente fará dois gols."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.36,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Wolves não deve marcar; under 0.5 visitante tem valor."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.05,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Wolves marcar dois gols é quase impossível."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.08,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Handicap -1 para Burnley sem valor."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.02,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Away -1 não faz sentido."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Ímpar/par é loteria; leve viés para par (52%)."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "under",
+      "team": "away",
+      "line": 0.5,
+      "confidence": "medium",
+      "probability": 0.64,
+      "evidence_for": [
+        "C2",
+        "C3",
+        "C4",
+        "C7",
+        "C16",
+        "A1",
+        "A2",
+        "A7"
+      ],
+      "evidence_against": [
+        "C8",
+        "C21",
+        "A3"
+      ],
+      "analysis": "Com ambos os times rebaixados e sem motivação, espera-se um jogo de pouca intensidade e raras chances de gol. O Wolverhampton, em particular, tem um ataque extremamente ineficaz fora de casa (0.39 gols/j), e enfrentará um Burnley que, apesar de frágil, conta com um goleiro em boa fase. A tendência é que o visitante passe em branco, o que torna o under 0.5 gols do Wolves uma aposta de alto valor e risco controlado."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "team_total away under 0.5",
+          "argumento": "O Wolves marcou em 18 de 37 jogos na temporada, e mesmo sendo ruim, pode achar um gol em bola parada ou erro defensivo, especialmente contra a defesa do Burnley que sofreu em 31 dos 37 jogos.",
+          "ids": [
+            "C8",
+            "C21"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total away under 0.5",
+          "argumento": "Em jogos sem pressão, times rebaixados podem atuar de forma relaxada e criar chances inesperadas; o Burnley já sofreu 11 gols nos últimos 5 jogos.",
+          "ids": [
+            "C6",
+            "C14"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total away under 0.5",
+          "argumento": "O prior de BTTS (40%) e o λ de 0.89 da Rota B sugerem que o Wolverhampton tem capacidade de marcar; minha redução para 0.45 pode ser agressiva, e a regressão à média poderia trazer um gol visitante.",
+          "ids": [
+            "C27"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "Apesar dos riscos, o péssimo momento ofensivo do Wolves, a falta de motivação e a solidez relativa do goleiro adversário tornam o under 0.5 gols visitante a aposta mais sólida, com valor significativo."
+    },
+    "drivers": [
+      "Motivação baixa de ambos os times já rebaixados (C4)",
+      "Ataque visitante inoperante fora de casa (C7)",
+      "Forma recente do Wolves com apenas 2 gols em 5 jogos (C16)"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 31,
+    "arestas": 11,
+    "jogadores": 16,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar o confronto entre Burnley e Wolverhampton Wanderers, pela 38ª rodada da Premier League, em Turf Moor. Ambas as equipes já estão rebaixadas, o que torna a motivação baixa e o jogo potencialmente travado. Preciso seguir o protocolo de análise total, extraindo conclusões de cada bloco, cruzando arestas e definindo roteiros e mercados.\n\n**Passo 1 – Varredura: conclusões por bloco**\n\nVou percorrer cada bloco e extrair de 1 a 3 conclusões, com ID sequencial, dado copiado, direção e força. Blocos sem sinal vão para `blocos_sem_sinal`.\n\n**Contexto:**\n- Data e horário: 2026-05-24 15:00, rodada 38. Nada de excepcional.\n- Clima: nuvens quebradas, 19.4°C, sem chuva ou vento forte. Sem correlação com redução de gols.\n- Descanso: Burnley 6 dias, Wolves 7 dias. Diferença mínima (1 dia), irrelevante. Sem sinal.\n- Local: Turf Moor, grama natural. Vantagem de casa normal.\n**Conclusão:**\n- C1 (contexto): Descanso similar (6 vs 7 dias) e clima ameno – sem sinal de fadiga ou condição climática atípica. Direção: neutra. Força: baixa.\n\n**Tabela_motivacao:**\n- Burnley 19º com 21 pts, Wolves 20º com 19 pts. Ambos rebaixados matematicamente.\n- VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR – pelo menos um lado não precisa atacar. Aqui ambos são rebaixados, então nenhum precisa. É o pior cenário: jogo de \"fim de feira\", zero stake real. Espera-se baixa intensidade, poucos gols, risco de jogo sonolento.\n**Conclusões:**\n- C2 (tabela_motivacao): Burnley rebaixado, 19º, sem objetivo. Motivação: baixa. Direção: reduz intensidade ofensiva, -xG.\n- C3 (tabela_motivacao): Wolves rebaixado, 20º, sem objetivo. Motivação: baixa. Direção: reduz intensidade ofensiva, -xG.\n- C4 (tabela_motivacao): Veredito de intenção “jogo tende a travar” – ambos administram, sem necessidade de vitória. Direção: under, dupla chance, baixo xG total. Força: alta.\n\n**Home_gols:**\n- Burnley marca 1/g, sofre 2/s. Em casa: 0.94 marca, 1.56 sofre.\n- SoT: 3/j, conv 32%. Volume baixo. Sofre 5.76 SoT/j, conv alta do adversário.\n- Big chances: 1.4/j. Ataque pouco criativo.\n**Conclusões:**\n- C5 (home_gols): Ataque do Burnley fraco (0.94 g/j em casa, 1.4 big chances/j, 3 SoT/j). Direção: -xG ofensivo. Força: média.\n- C6 (home_gols): Defesa vulnerável (1.56 sofridos em casa, 5.76 SoT sofridos/j). Direção: +xG adversário, mas adversário também é fraco. Força: média.\n\n**Away_gols:**\n- Wolves marca 0.7/g, sofre 1.81/g. Fora: 0.39 marca, 1.83 sofre.\n- SoT: 3.24/j, conv 20%. Fora 2.89 SoT/j. Sofre 4.62 SoT/j.\n- Big chances: 1.4/j (mesmo que Burnley). Ataque muito pobre fora.\n**Conclusões:**\n- C7 (away_gols): Wolves fora de casa é inofensivo (0.39 g/j, 2.89 SoT/j, 20% conv). Direção: -xG ofensivo visitante. Força: alta.\n- C8 (away_gols): Defesa do Wolves sofre bastante (1.83 g/j fora, 4.62 SoT/j), mas adversário mandante também é fraco. Direção: pode ceder, mas não muito dado ataque oponente limitado. Força: média.\n\n**Home_estilo:**\n- Temporada: ataques perigosos 38.7/58.1, chutes fora 3.2/6.4, bloqueados 3/4.6, de fora 3.5/5.6.\n- Últimos 5: ataques perigosos caem para 28/58.8, volume menor. Time mais retraído.\n**Conclusões:**\n- C9 (home_estilo): Burnley recente ainda mais passivo (28 ataques perigosos/j, muitos sofridos). Direção: baixa produção ofensiva, postura defensiva frágil. Força: média.\n\n**Away_estilo:**\n- Temporada: ataques perigosos 38.6/58.1 (espelho!), chutes fora 4/5.5, bloqueados 2.3/3.8.\n- Últimos 5: ataques perigosos 37.8/51.2, melhora defensiva leve, mas ataque segue ruim.\n**Conclusões:**\n- C10 (away_estilo): Wolves também cede muitos ataques perigosos, mas ataque pouco produz. Nos últimos 5, melhora defensiva (51.2 sofridos). Direção: jogo com pouca criação de ambos, mas defesa do Wolves ligeiramente menos vazada recente? Na verdade, sofreu 9 gols em 5 jogos (1.8/j), igual média. Então sem melhora significativa. Neutro? Conclusão: padrão de baixo volume ofensivo de ambos. Força: média.\n\n**Home_qualidade:**\n- Nota média 6.69. Destaques: J. Cullen (6.96) mas lesionado (fora). Martin Dúbravka 6.89, goleiro, subindo. James Ward-Prowse 6.86, estável. Jaidon Anthony 6.85, estável. Zian Flemming 6.82. Ashley Barnes 6.8 sem jogar.\n- Muitos jogadores com poucos jogos (Barnes, Cullen, etc). Time sem grandes estrelas.\n**Conclusões:**\n- C11 (home_qualidade): Goleiro Dúbravka em boa forma recente (nota 7.03, subindo) pode ajudar defensivamente. Direção: -xG adversário (melhor goleiro). Força: baixa (goleiro não transforma ataque).\n- C12 (home_qualidade): Meio-campo com Ward-Prowse e Anthony tem qualidade relativa (notas ~6.85), mas desempenho apenas estável, não explosivo. Direção: neutra, sem pico de forma. Força: baixa.\n\n**Away_qualidade:**\n- Nota média 6.71. Sam Johnstone (6.85) fora. José Sá 6.8, goleiro, poucos jogos. Santiago Bueno 6.79 caindo. João Gomes 6.78 caindo. Jhon Arias 6.77 fora. Emmanuel Agbadou 6.77 fora.\n- Vários desfalques e jogadores em baixa.\n**Conclusões:**\n- C13 (away_qualidade): Wolves sem peças importantes: Sam Johnstone (goleiro?), Jhon Arias, Agbadou fora; Bueno e João Gomes em queda de rendimento. Direção: -xG ofensivo e +xG adversário (time enfraquecido). Força: média.\n\n**Home_forma:**\n- Últimos 5: DEDDD (1pt), 4 gols marcados, 11 sofridos. SoT 2.6/6.2. Resultados contra adversários em briga (Forest, City, Leeds, Villa, Arsenal), a maioria de nível superior. Consistência: marcou em 23/37, BTTS 21/37.\n- Nos últimos 5, situação: já rebaixado em Leeds, Villa, Arsenal. Antes, briga contra Z. Time já não lutava muito, mas conseguiu marcar em alguns (Villa 2-2, Leeds 1-3).\n**Conclusões:**\n- C14 (home_forma): Burnley em péssima fase (1 ponto em 15), mas adversários recentes foram fortes (City, Arsenal, Villa). Ainda assim, levou muitos gols e produziu pouco. Direção: momento ruim, mas calibrado pelo nível dos rivais. Força: média.\n- C15 (home_forma): Burnley conseguiu marcar em jogos mesmo rebaixado (vs Villa, vs Leeds), mostrando algum poder ofensivo residual. Direção: pequena possibilidade de gol. Força: baixa.\n\n**Away_forma:**\n- Últimos 5: EDEDD (2pts), 2 gols marcados, 9 sofridos. SoT 3/4.2. Adversários: Leeds (D 0-3), Tottenham (D 0-1), Sunderland (E 1-1), Brighton (D 0-3), Fulham (E 1-1). Muitos rivais medianos/briga.\n- Já rebaixados nas últimas partidas, desempenho pífio.\n**Conclusões:**\n- C16 (away_forma): Wolves também em péssima fase, ainda pior no ataque (0.4 g/j, 2 gols em 5 jogos). Defesa até que não tão vazada (1.8/g, alinhado com média), mas ataque nulo. Direção: -xG ofensivo visitante, jogo com poucos gols. Força: alta.\n\n**Home_momentum:**\n- Curvas de pressão mostram Burnley alternando momentos de pressão e quedas. No geral, domínio líquido negativo na maioria das faixas. Janela de domínio: 0-15 (+1). Fora isso, sofre pressão.\n- Nos últimos jogos, sofreu gols em várias faixas, especialmente no final (76-90) e início do 2ºT.\n**Conclusões:**\n- C17 (home_momentum): Burnley costuma pressionar pouco, exceto no início (0-15) onde tem leve domínio (+1). Direção: possível pressão inicial, mas sem sustentação. Força: baixa.\n- C18 (home_momentum): Defesa do Burnley é vulnerável no fim do jogo (76-90) e após intervalo (46-60). Direção: +xG adversário nessas janelas. Força: média.\n\n**Away_momentum:**\n- Wolves tem domínio negativo na maioria das faixas, mas tem janela positiva em 31-45 (domínio -0.9? Na verdade a tabela cruzamento mostra: 31-45 Wolves domínio -0.9, Burnley -3.0, então Wolves relativamente melhor). Janela de domínio do Wolves: 46-60 (domínio +1.3) e 61-75 (+0.3), mas no geral, pressiona pouco.\n- Sofreu gols no início (0-15 em Brighton) e final (76-90).\n**Conclusões:**\n- C19 (away_momentum): Wolves tem leve melhora no 2º tempo, especialmente 46-60 (+1.3), mas é um time que em geral sofre pressão. Direção: possível reação no 2ºT, mas limitada. Força: baixa.\n\n**Home_faixas:**\n- Burnley marca mais no fim (76-90: 0.27/j) e no fim do 1ºT (31-45: 0.22/j). Sofre mais também no fim (76-90: 0.46/j) e no fim do 1ºT (31-45: 0.49/j).\n**Conclusões:**\n- C20 (home_faixas): Burnley sofre bastante no fim do 1º e 2º tempo; marca algum no fim. Direção: gols tendem a ocorrer nessas janelas. Força: média.\n\n**Away_faixas:**\n- Wolves marca pouco em todas faixas, mas tem picos em 31-45 (0.19) e 76-90 (0.19). Sofre mais em 31-45 (0.41) e 76-90 (0.41).\n**Conclusões:**\n- C21 (away_faixas): Wolves tem dificuldade de marcar, mas quando marca é mais no fim dos tempos. Defesa também sofre nesses períodos. Direção: janelas de gols coincidem com Burnley. Força: média.\n\n**Home_desfalques:**\n- J. Cullen fora (lesão grave). 5% gols, 11% assists. Volume de SoT similar sem ele. Defensivamente: 1.2 interceptações/j (12% do time). Baixo impacto ofensivo, mas alguma contribuição defensiva.\n- L. Beyer fora (0% gols, sem impacto).\n- Mike Tresor fora (0% gols, pouca amostra, impacto ofensivo quase nulo).\n**Conclusões:**\n- C22 (home_desfalques): Cullen é baixa relevante defensivamente (12% interceptações), mas ofensivamente já estava fora há 5 jogos (0% gols recentes). Time adaptado. Direção: leve -xG defensivo (sobe λ adversário), mas não muito. Força: baixa.\n- C23 (home_desfalques): Beyer e Tresor são ausências sem impacto (0% gols, sem volume). Direção: neutra.\n\n**Away_desfalques:**\n- E. Gonzalez Medina fora (0% gols, irrelevante).\n- Sam Johnstone fora (0% gols, goleiro?) – 0 SoT, mas defensivamente 0 interceptações, baixo impacto. With/without sugere time marca mais sem ele (0.8 vs 0.5), mas é goleiro, então não explica.\n- Matt Doherty fora (0% gols, 8% interceptações, 1.5 desarmes/j). Baixo impacto ofensivo, alguma contribuição defensiva.\n**Conclusões:**\n- C24 (away_desfalques): Doherty fora tira 8% interceptações e 1.5 desarmes/j. Impacto defensivo pequeno. Direção: +xG adversário (Burnley) marginal. Força: baixa.\n- C25 (away_desfalques): Johnstone e Medina sem impacto. Direção: neutra.\n\n**Cruzamento_faixa:**\n- Tabelas ataque x defesa: Burnley ataque x Wolves defesa: índice janela alto em 76-90 (0.68), 31-45 (0.63), 61-75 (0.52). Wolves ataque x Burnley defesa: índices altos em 31-45 (0.68) e 76-90 (0.65).\n**Conclusões:**\n- C26 (cruzamento_faixa): Janelas de maior probabilidade de gol: 31-45 e 76-90 para ambos os lados. Direção: concentrar xG nesses períodos. Força: alta (dado cruzado é forte).\n\n**Base_rate:**\n- Rota A: λ 1.62 total (1.12 Burnley, 0.5 Wolves).\n- Rota B: λ 1.94 total (1.05 Burnley, 0.89 Wolves). Rota B preferível.\n- Prior: total ~1.94, over 2.5 31%, BTTS 40%, 1x2: 37/35/28 (Rota B).\n**Conclusões:**\n- C27 (base_rate): Prior aponta jogo de baixo total (~1.94), com Burnley ligeiro favorito (37%), mas empate provável (35%). Direção: under 2.5 é o cenário base. Força: alta (dado estatístico).\n\n**Probs_mercado:**\n- Já contidos na base rate. Vou usar Rota B como prior.\n**Conclusões:**\n- C28 (probs_mercado): Mercado precifica Over 2.5 em 31%, BTTS 40%, casa 37%. Direção: under e dupla chance são mercados alinhados com o prior. Força: alta.\n\n**Cruzamentos_computados:**\n- Arquétipo: Burnley contra bloco baixo (Wolves) marca 1.15/g, ligeiramente acima da média (1.00). Wolves contra bloco baixo marca 0.77/g, na média (0.70). Isso sugere Burnley um pouco melhor ofensivamente contra esse estilo, mas Wolves não piora.\n- Mecanismo de gol: Canais abertos para cruzamento e gol contra para Burnley; falta e gol contra para Wolves. Índices altos, mas raros.\n- Dinâmica pós-gol: Burnley após marcar MATA O JOGO (Δ +1.9), Wolves após marcar ADMINISTRA (Δ -2.1). Ambos recuam ao marcar. Após sofrer, ambos neutros.\n**Conclusões:**\n- C29 (cruzamentos_computados): Burnley tem desempenho ofensivo ligeiramente acima da média vs bloco baixo (1.15 g/j). Direção: +xG ofensivo Burnley. Força: baixa (0.15 acima, amostra 13 jogos).\n- C30 (cruzamentos_computados): Ambos os times tendem a recuar quando marcam (Burnley mata jogo, Wolves administra). Direção: se alguém marcar cedo, jogo pode ficar ainda mais travado. Força: média.\n- C31 (cruzamentos_computados): Canais abertos para gols de cruzamento e gol contra: probabilidade baixa, mas podem gerar gols eventuais. Direção: levemente +xG para Burnley. Força: baixa.\n\n**Blocos sem sinal:**\n- contexto: já extraí C1, mas sem sinal forte, vou considerar como conclusão fraca, mas ainda incluída. Na verdade, o bloco contexto rendeu conclusão C1, então não vai para sem sinal.\n- home_qualidade? Já rendeu C11 e C12.\n- away_qualidade? C13.\n- home_desfalques? C22, C23.\n- away_desfalques? C24, C25.\n- Todos blocos renderam conclusões, então não haverá blocos_sem_sinal. Verificar se algum bloco realmente não rendeu: cruzamento_faixa rendeu C26, base_rate C27, probs_mercado C28, cruzamentos_computados C29-C31. Todos ok.\n\n**Passo 2 – Jogador por jogador**\n\nListar todos jogadores nomeados (em qualidade e desfalques) e dar leitura individual.\n\nBurnley:\n- J. Cullen: ausente (lesão). Volante, 12% das interceptações do time, mas já fora há 5 jogos. Time adaptado, ofensivamente sem impacto. Leitura: \"Ausência já absorvida pelo time; sem ele, o meio-campo perde um pouco de combate, mas o ataque não sente.\"\n- Martin Dúbravka: goleiro, boa forma recente, notas subindo. Pode fazer defesas importantes. Leitura: \"Goleiro em alta pode segurar o ataque do Wolves, que já é frágil, reduzindo o xG contra.\"\n- James Ward-Prowse: meia, estável, mas sem brilho. Não tem grande influência em gols. Leitura: \"Meia de qualidade mediana, não deve desequilibrar, apenas mantém a posse.\"\n- Jaidon Anthony: atacante, 1 MOTM, estável. Leitura: \"Atacante regular, mas sem grande volume de finalização; não é esperado que carregue o time.\"\n- Zian Flemming: atacante/meia, 1 MOTM, estável. Leitura: \"Peça de criação, mas time com baixa produção; não muda o panorama.\"\n- Ashley Barnes: atacante, não joga há 5 partidas, sem ritmo. Leitura: \"Veterano sem ritmo, deve ser opção no banco, mas não deve impactar.\"\n- L. Beyer: zagueiro lesionado, 0% gols, sem impacto. Leitura: \"Zagueiro reserva, ausência irrelevante.\"\n- Mike Tresor: atacante lesionado, 0% gols, sem impacto. Leitura: \"Atacante sem produção, ausência irrelevante.\"\n\nWolves:\n- Sam Johnstone: goleiro lesionado, baixo impacto. Leitura: \"Goleiro reserva, ausência não afeta time já acostumado com José Sá.\"\n- José Sá: goleiro titular, poucos jogos na janela, mas nota 6.8. Leitura: \"Goleiro de nível mediano, não deve salvar time de uma defesa frágil.\"\n- Santiago Bueno: zagueiro, 2 MOTM, mas rendimento caindo. Leitura: \"Zagueiro em má fase, tende a comprometer a já frágil defesa.\"\n- João Gomes: volante, 1 MOTM, rendimento caindo. Leitura: \"Volante de combate em baixa, pode deixar espaços na frente da defesa.\"\n- Jhon Arias: meia/atacante lesionado, 26 jogos. Leitura: \"Desfalque ofensivo importante? Dados mostram 0% gols com assists não informados. Provavelmente participava pouco. Ausência sem impacto claro.\"\n- Emmanuel Agbadou: zagueiro lesionado, 1 MOTM. Leitura: \"Zagueiro ausente, mas time já sofre muitos gols; sem ele, defesa fica ainda mais vulnerável.\"\n- E. Gonzalez Medina: lesionado, 0% gols, irrelevante.\n- Matt Doherty: ala lesionado, alguma contribuição defensiva. Leitura: \"Ala com 8% das interceptações, ausência tira profundidade defensiva, mas impacto limitado.\"\n\n**Passo 3 – Arestas: cruzamentos**\n\nPreciso de no mínimo 8 arestas, ligando conclusões.\n\nA1: (C2 + C3 + C4) → Ambos rebaixados, sem intenção de vencer. Efeito: jogo de baixa intensidade, reduz xG total em ~20% do prior. Força: alta. Liga: [C2, C3, C4]\n\nA2: (C5 + C7 + C16) → Ataques fracos: Burnley em casa 0.94 g/j, Wolves fora 0.39 g/j, ambos em má fase. Efeito: reduz xG ofensivo de cada lado. Burnley λ cai de 1.05 para ~0.8, Wolves de 0.89 para ~0.4. Força: alta. Liga: [C5, C7, C16]\n\nA3: (C6 + C8 + C13) → Defesas vulneráveis, mas adversários não aproveitam: Burnley sofre 1.56 em casa, Wolves sofre 1.83 fora. Wolves desfalcado (C13) piora defesa. Efeito: Burnley pode ter ligeira vantagem ofensiva. Sob xG Burnley para ~0.9, Wolves mantém ~0.4. Força: média. Liga: [C6, C8, C13]\n\nA4: (C14 + C15 + C29) → Burnley em má fase, mas adversários recentes eram fortes; contra bloco baixo (estilo Wolves) tem desempenho um pouco melhor (1.15 g/j). Efeito: ajuste positivo no xG do Burnley, mas limitado pela má fase geral. Força: baixa. Liga: [C14, C15, C29]\n\nA5: (C4 + C30) → Ambos recuam ao marcar. Efeito: se sair gol cedo, jogo tende a esfriar ainda mais, reduzindo gols totais no 2º tempo. Força: média. Liga: [C4, C30]\n\nA6: (C17 + C19 + C20 + C21) → Janelas de pressão e gols: Burnley melhor no 0-15 (C17), Wolves melhor no 46-60 (C19). Porém, gols saem mais em 31-45 e 76-90 (C20, C21). Cruzamento: a janela de pressão não coincide com a de gols, então pode haver gols em momentos de menor domínio, mas consistentes com a distribuição histórica. Efeito: distribuir xG conforme faixas: ~30% no 1º tempo, mas concentrado no fim do 1º/2º. Força: baixa. Liga: [C17, C19, C20, C21]\n\nA7: (C11 + C7) → Goleiro do Burnley em alta (Dúbravka) contra ataque fraco do Wolves. Efeito: reduz ainda mais o xG do Wolves, de 0.4 para ~0.3. Força: baixa. Liga: [C11, C7]\n\nA8: (C22 + C24) → Desfalques defensivos: Burnley sem Cullen (12% interceptações), Wolves sem Doherty (8% interceptações). Impactos marginais. Efeito: xG total pode subir levemente, mas dentro da margem. Força: baixa. Liga: [C22, C24]\n\nA9: (C26 + C20 + C21) → Cruzamento de faixas: janelas 31-45 e 76-90 são as mais prováveis para gols. Efeito: concentrar xG nesses períodos; 1º tempo pode ter gol, 2º tempo também. Força: alta. Liga: [C26, C20, C21]\n\nA10: (C27 + C4) → Prior Rota B total 1.94, mas motivação baixa reduz intensidade. Efeito: ajusto total para ~1.5 gols. Força: alta. Liga: [C27, C4]\n\nA11: (C10 + C9) → Ambos times cedem muitos ataques perigosos, mas produzem pouco. Efeito: jogo de pouca criação, muitos erros. xG baixo. Força: média. Liga: [C10, C9]\n\nPreciso garantir que toda conclusão foi usada em ao menos uma aresta ou descartada. Vou verificar:\n\nC1 (contexto): usada? Não diretamente. Como é neutra, posso descartar como sem impacto. Mas vou linkar em alguma aresta? Talvez na A1? A1 usa C2,C3,C4. C1 poderia ser usada para dizer que não há fator externo, mas não agrega. Vou colocar em descartadas: \"Conclusão neutra, sem fator de fadiga ou clima que mova o número.\"\n\nC2, C3, C4 usadas em A1, A5, A10.\nC5, C7, C16 em A2.\nC6, C8, C13 em A3.\nC14, C15, C29 em A4.\nC17, C19, C20, C21 em A6.\nC11, C7 em A7.\nC22, C24 em A8.\nC26, C20, C21 em A9.\nC27, C4 em A10.\nC10, C9 em A11.\n\nFalta verificar:\nC12 (qualidade Burnley neutra) → posso descartar como sem impacto.\nC18 (Burnley vulnerável no fim) → já coberta por C20? C18 fala de sofrer no fim, mas C20 já diz isso. Posso absorver ou descartar C18 como redundante. Vou para descartadas: \"Redundante com C20.\"\nC23 (Beyer e Tresor sem impacto) → descartada: \"Ausências irrelevantes.\"\nC25 (Johnstone e Medina sem impacto) → descartada: \"Ausências irrelevantes.\"\nC28 (probs_mercado) → já parte do prior, usada em A10? C27 já cobre. Poderia ser uma descartada, mas é mais um lembrete. Vou deixar como conclusão, mas não usada em aresta específica, então descartada: \"Prior já considerado em C27.\"\nC29 usada em A4.\nC30 usada em A5.\nC31 (canais abertos) → não usei em aresta. Posso fazer uma aresta? Isso é fraco. Vou descartar como \"Mecanismos de baixa probabilidade, impacto marginal.\"\nC20 usada em A6 e A9.\nC21 usada em A6 e A9.\nC26 usada em A9.\n\nAgora jogadores: todos foram lidos e estão no campo `jogadores`. Eles não geram conclusões necessariamente, mas alguns podem influenciar arestas (ex: Dúbravka em A7 foi citado). Mas a leitura individual já está feita.\n\n**Passo 4 – Roteiros**\n\nConstruir 2 a 3 roteiros prováveis com probs somando ~1.0, baseados nas arestas.\n\nRoteiro 1: \"Jogo sonolento, poucas chances\" – Prob 60%\n- Ambos times rebaixados, sem vontade de atacar (A1). Ataques fracos produzem pouco (A2). O jogo se arrasta sem emoção, com as equipes tocando bola sem agressividade. Possibilidade de 0x0 ou 1x0 magro. Gols, se houver, surgem mais no final dos tempos (A9), mas sem grande pressão. Se um time marca, o outro não tem força para reagir (A5). Placar provável: 0-0, 1-0 Burnley. Arestas: A1, A2, A5, A9.\n\nRoteiro 2: \"Burnley aproveita fragilidade defensiva do Wolves e vence apertado\" – Prob 30%\n- Apesar da má fase, Burnley em casa contra bloco baixo tem desempenho ligeiramente melhor (A4). Defesa do Wolves desfalcada (A3) e em baixa (C13) pode ceder um gol. Burnley marca um gol no 2º tempo (A9) e segura o resultado, com Wolves incapaz de reagir (A7). Placar: 1-0 ou 2-0. Arestas: A3, A4, A7, A9.\n\nRoteiro 3: \"Wolves surpreende em jogo de erros\" – Prob 10%\n- Jogo tão morno que um erro individual decide. Wolves, mesmo fraco, pode achar um gol em bola parada ou falha defensiva do Burnley (C18, C21). Mas é improvável que segure a vantagem, podendo terminar empatado se Burnley conseguir reagir. Placar: 0-1 ou 1-1. Arestas: A8, A9.\n\nEsses três cenários cobrem o leque: under total, vitória do mandante magra, zebra visitante. Soma 100%.\n\n**Passo 5 – Board completo de mercados**\n\nDefinir minhas probabilidades ajustadas (após mover o prior com evidências).\n\nPartindo do prior Rota B:\n- Total: 1.94 → ajusto para baixo devido A1 e A2: reduzo ~25%. Total ~1.5.\n- Burnley λ: 1.05 → ajusto levemente para 0.9 (A3 e A4 ajudam, mas A2 reduz). Considerando que Burnley em casa contra defesa fraca pode manter ~0.9.\n- Wolves λ: 0.89 → reduzo para 0.4 (A2 e A7). Ataque muito pobre.\n- Total ~1.3? Vou calcular melhor: Burnley 0.9, Wolves 0.4, total 1.3. Puxando um pouco para cima pela fragilidade defensiva (A3): 1.0 e 0.5? total 1.5. Vou usar 1.4 como referência.\n\nProbabilidades de mercado derivadas do meu modelo (Poisson com λ home 0.95, away 0.45):\n- 1x2: casa ~45%, empate ~32%, fora ~23% (ajustado a favor do Burnley). O prior 37/35/28, mas movi casa para cima por defesa frágil do Wolves, e fora para baixo.\n- Over 2.5: com λ 1.4, prob ~22%.\n- BTTS: com essas médias, ~28% (0.45*0.95? Não, Poisson). Vou calcular: prob Burnley marca ~61%, Wolves ~36%, BTTS ~22%? Vou usar 25% (prior já 40%, mas cortei muito). Ajustar: na verdade, com λ 0.95 e 0.45, prob Burnley marcar é 61%, Wolves 36%, BTTS = 22% se independente. Mas pode haver correção. Vou deixar 25%.\n- Team totals: Burnley over 0.5 ~61%, over 1.5 ~15%; Wolves over 0.5 ~36%, over 1.5 ~5%.\n- Dupla chance: 1X ~77%, 12 ~68%, X2 ~55%.\n- Draw No Bet: casa ~66%, fora ~34%.\n\nVou preencher as 19 linhas com essas probs, variância e valor. Para valor, comparo com o prior da Rota B (como referência de mercado, já que não temos odds). Se minha prob está distante do prior, considero valor. Por exemplo, se o prior over 2.5 é 31% e eu tenho 22%, under 2.5 tem valor. Mas não temos linhas de under explicitamente? O over 2.5 está lá; under seria o complemento. Vou avaliar valor como a diferença entre minha prob e o prior, e robustez ao roteiro.\n\nLista de mercados:\n1. 1x2 home: prob 45%, variancia 4 (1x2 é arriscado), valor: medio (prior 37%, tenho 45%). Nota: \"Burnley ligeiro favorito, mas jogo pode empatar.\"\n2. 1x2 draw: prob 32%, variancia 5 (empate é difícil de cravar), valor: baixo (próximo do prior 35%). Nota: \"Empate provável em jogo sem gols, mas não recomendado como aposta principal.\"\n3. 1x2 away: prob 23%, variancia 5, valor: medio (prior 28%, minha prob menor). Nota: \"Wolves não deve vencer, mas futebol é imprevisível.\"\n4. double_chance home_draw: prob 77%, variancia 1, valor: medio (prior 72%, melhora). Nota: \"Aposta segura: Burnley ou empate cobre 3/4 dos cenários.\"\n5. double_chance draw_away: prob 55%, variancia 2, valor: baixo (prior 63%, piorou). Nota: \"Dupla chance visitante perdeu valor com a motivação baixa.\"\n6. double_chance home_away: prob 68%, variancia 2, valor: medio (prior 65%, leve melhora). Nota: \"Tira o empate, mas ainda cobre vitória de qualquer lado.\"\n7. draw_no_bet home: prob 66%, variancia 2, valor: medio (prior 56%, subiu bem). Nota: \"Burnley DNB interessante: se empatar, devolve.\"\n8. draw_no_bet away: prob 34%, variancia 3, valor: baixo (prior 44%, caiu). Nota: \"Wolves DNB sem valor.\"\n9. over_under over 1.5: minha prob total >1.5 com λ 1.4 é ~1 - P(0) - P(1). P(0)=e^{-1.4}=0.2466, P(1)=1.4*e^{-1.4}=0.3452, soma=0.5918, então over 1.5 = 40.8%. Mas isso é baixo. Prior over 1.5 era 59% (Rota B). Minha prob 41% vs 59% → under 1.5 tem valor. Para over, valor: nenhum ou baixo? Vou avaliar over 1.5 com prob 41% e mercado talvez precifique ~59% então under é valor. Mas a linha é \"over\" e preciso dar prob do over. Vou colocar prob 41%, variancia 3, valor: baixo (mercado espera mais, mas under é o valor). Nota: \"Menos de 1.5 gols é o cenário mais provável.\"\n10. over_under over 2.5: prob 22%, variancia 3, valor: medio (prior 31%, minha prob menor → under valor). Nota: \"Jogo deve ter menos de 2.5 gols.\"\n11. over_under over 3.5: prob muito baixa (~5%), variancia 5, valor: baixo (difícil atingir). Nota: \"Over 3.5 altamente improvável.\"\n12. btts yes: prob 25%, variancia 4, valor: medio (prior 40%, minha prob bem menor → 'não' é valor). Nota: \"Ambas marcam? Pouco provável.\"\n13. team_total home over 0.5: prob 61%, variancia 1, valor: baixo (prior 65%, próximo). Nota: \"Burnley deve marcar? Não é garantido, mas tem boas chances.\"\n14. team_total home over 1.5: prob 15%, variancia 4, valor: medio? Prior 28%. Minha prob 15% → \"não\" é valor. Nota: \"Burnley dificilmente fará dois gols.\"\n15. team_total away over 0.5: prob 36%, variancia 2, valor: medio (prior 59%, grande queda → under 0.5 visitante é valor). Nota: \"Wolves não deve marcar.\"\n16. team_total away over 1.5: prob 5%, variancia 5, valor: baixo. Nota: \"Wolves marcar dois gols é quase impossível.\"\n17. handicap home -1: prob Burnley vence por 2+ gols? Com λ 0.95, improvável. Prob ~8%, variancia 5, valor: baixo. Nota: \"Handicap -1 para Burnley sem valor.\"\n18. handicap away -1: prob ~2%, variancia 5, valor: baixo. Nota: \"Away -1 não faz sentido.\"\n19. odd_even odd: prob total ímpar? Com λ 1.4, prob ímpar ~45%? Vou usar 48%. variancia 5, valor: baixo. Nota: \"Ímpar/par é loteria.\"\n\n**Passo 6 – Refutação e confiança**\n\nDisciplina de variância: escolher a aposta candidata com maior valor e menor variância.\n\n- Team_total home over 0.5: prob 61%, var 1, valor baixo? Mas é seguro. Prior 65%, então não tem muito valor. Mas é a aposta mais segura se acredito que Burnley marca.\n- Dupla chance home_draw: prob 77%, var 1, valor medio (prior 72%). Boa.\n- Draw no bet home: prob 66%, var 2, valor medio (prior 56%). Interessante.\n- Over 2.5: under é valor, mas a linha \"over 2.5\" eu daria prob 22%, então \"under 2.5\" seria a aposta, mas o mercado pede \"over\". Vou considerar que posso apostar contra o over? No board, tenho que listar over com prob. A aposta candidata pode ser \"under\" se for um mercado disponível? O schema inclui \"over_under\" com selection \"under\". Sim, posso ter selection \"under\" com line 2.5. Então posso cravar under 2.5.\n\nAnalisando: o veredito de intenção é jogo travado, ataques fracos. Under 2.5 é altamente provável. Minha prob under 2.5 = 78% (vs mercado implícito de talvez 69%? Prior 31% over, então under 69% no prior). Mas eu aumentei para 78% – valor medio. Variância: over/under 2.5 tem variancia 3 (média). Alternativa: team_total Wolves under 0.5? Prob 64% (eles não marcam). Isso teria variancia 2? Mas não está na lista padrão? O schema tem team_total over 0.5, mas posso fazer selection \"under\"? O schema diz: \"team_total\" com selection \"over\" ou \"under\"? Ver schema: selection enum: \"home\",\"draw\",\"away\",\"over\",\"under\",\"yes\",\"no\",\"home_draw\",\"draw_away\",\"home_away\",\"odd\",\"even\". Então posso colocar market \"team_total\", selection \"under\", team \"away\", line 0.5. Isso teria prob ~64%, variancia baixa (2), e valor medio (prior 59% over, então under 41% -> meu under é 64%, diferença grande). Isso parece bom.\n\nComparando under 2.5 (var 3) e under 0.5 Wolves (var 2). Regra: entre apostas de valor parecido, escolha a de menor variância. Team_total under 0.5 visitante é mais seguro que over/under 2.5? Sim, pois só depende de um time não marcar. Além disso, o Wolves tem ataque muito fraco fora (0.39 g/j), e com motivação zero, deve ser ainda pior. Arestas A2, A7 suportam. Roteiros: em todos, é provável que Wolves não marque (roteiro 1 0x0/1x0, roteiro 2 1x0, roteiro 3 talvez marque). Prob de Wolves marcar é ~36% no meu modelo, mas posso recalibrar: λ Wolves 0.45, prob marcar = 36% mesmo. Então prob de under 0.5 é 64%. Isso não é altíssimo, mas é bom. No entanto, 36% de chance de marcar ainda é relevante.\n\nOutra candidata: under 2.5 gols com 78% é mais alta? Na verdade, under 2.5 tem prob 78% (100-22=78). Isso é mais provável que os 64% do Wolves under 0.5. Mas qual a variância? Over/under 2.5 depende dos dois times, pode ter um jogo louco com vários gols mesmo sendo times ruins, mas é menos provável. A variância de mercado total é geralmente maior que team total? Varia. A escada de variância no protocolo: (1) team_total over 0.5 do lado forte. Aqui o \"lado forte\" seria Burnley? Mas não é forte. Na verdade, o protocolo fala em aposta de time específico como menor variância. Porém, team_total under 0.5 do lado fraco também é relativamente seguro, pois depende de um time não marcar. A variância pode ser baixa, mas não tão baixa quanto dupla chance, que cobre dois resultados.\n\nVou reavaliar as melhores candidatas:\n1. Dupla chance 1X (home_draw): prob 77%, var 1. Muito seguro, valor medio (prior 72%, ganho de 5%).\n2. Draw no bet home: prob 66%, var 2, valor medio (ganho 10% vs prior 56%).\n3. Under 2.5: prob 78%, var 3, valor medio (ganho 9% vs prior 69%).\n4. Wolves under 0.5: prob 64%, var 2, valor medio (ganho 23% vs prior 41%? Prior do Wolves over 0.5 era 59%, então under era 41%. Ganho enorme: 64% vs 41% = 23% de diferença). Isso parece ter muito valor.\n\nRefutação: atacar a aposta candidata. Vou escolher a de maior valor com menor variância aceitável. Wolves under 0.5: valor alto, var 2, mas prob 64% não é tão alto quanto 77% da dupla chance. O protocolo diz: entre apostas de valor parecido, menor variância. Aqui o valor é bem maior no Wolves under 0.5. Além disso, a dupla chance paga pouco (se fosse em odds, o retorno seria baixo). Como não temos odds, o valor é medido pela diferença de probabilidade. Wolves under 0.5 tem ganho de probabilidade de 23%, dupla chance 5%. A diferença é grande. Mas a variância do team total é 2 (média-baixa) vs 1 da dupla chance. O protocolo diz: \"crave SEMPRE a de MENOR variância\" entre valor parecido. Aqui o valor não é parecido; um é muito maior. Então posso escolher o de maior valor, mas devo verificar se o risco é aceitável.\n\nVou estabelecer a aposta candidata: **Wolves under 0.5 gols** (team_total away under 0.5). Ataques contra (refutação):\n- Ataque 1: O Wolves pode marcar em bola parada ou falha individual, mesmo sendo fraco. (Alvo: Wolves under 0.5). Argumento: O Wolves tem alguns gols fora (0.39/j), e em jogo de pouca pressão, pode surgir uma chance clara. Arestas: C21 (marca um pouco no final), C8 (defesa do Burnley frágil). Isso enfraquece, mas não derruba, pois a probabilidade é baixa. Veredito: enfraquece.\n- Ataque 2: Em jogos de fim de temporada sem motivação, a defesa pode relaxar e sofrer gols bobos. (Alvo: under 2.5 / under Wolves). Argumento: Burnley já sofreu 2.2 g/j nos últimos 5, e Wolves, apesar de ruim, pode se aproveitar. Porém, é um time que marcou 2 gols em 5 jogos. Enfraquece, mas não derruba.\n- Ataque 3: O prior de BTTS 40% sugere que o mercado acredita em gols dos dois lados; meu modelo pode estar subestimando o Wolves. (Alvo: Wolves under 0.5). Mas o prior veio do Poisson com λ 0.89, que eu reduzi para 0.45. Pode ser exagero? No entanto, o momento recente do Wolves é terrível (0.4 g/j geral, 0.39 fora), então a redução é justificada.\n\nNenhum ataque derruba. Veredito: nao_sustenta o suficiente para negar a aposta.\n\nAgora, verifico confiança: REGRA DE CONFIANÇA:\nHigh = ≥3 arestas independentes convergem para a aposta, e nenhum ataque \"derruba\"/\"enfraquece\" com dado forte, e rotas A e B apontam mesma direção.\nArestas que convergem para Wolves under 0.5: A2 (ataque Wolves fraco), A7 (goleiro Burnley em alta contra ataque Wolves), A1 (jogo travado, poucos gols), A5 (ao marcar, times recuam, então ainda mais difícil). Também A9 (gols concentrados, mas Wolves contribui pouco). Temos várias. Rotas A e B: Rota A total 1.62, Rota B 1.94, ambas baixas. Rota A λ Wolves 0.5, Rota B 0.89 – ambas indicam baixo poder ofensivo. Convergem. Ataques: houve enfraquece, mas com dado forte? O ataque 1 tem C21 e C8, mas não são fortes o suficiente. Acho que se enquadra em High, mas preciso ver se há \"enfraquece\" sustentado por dado forte. C8 (defesa Burnley frágil) é dado médio, mas o ataque do Wolves é tão ruim que o risco é baixo. Vou classificar confiança como **medium**? Regra: se há ataque \"enfraquece\" com dado forte, é low? Aqui não é dado forte. Medium seria se arestas em conflito sem vencedor claro. Aqui as arestas convergem, mas há alguma dúvida? A prob é 64%, ainda tem 36% de chance de falhar. Isso é uma incerteza considerável. Então talvez medium.\n\nVou analisar: as arestas apontam para pouco gol do Wolves, mas a defesa do Burnley é frágil e o jogo é de pouca pressão, o que pode levar a erros. O fato de o Wolves já estar rebaixado pode significar que jogadores estão de férias e não vão se esforçar, mas também podem jogar sem pressão e achar um gol. Há conflito? Não exatamente, mas a probabilidade de 64% não é esmagadora. A confiança pode ser medium. Vou definir como medium, e explicar a regra: \"A convergência de arestas (≥3) e a concordância das rotas A e B sugerem alta confiança, porém a ausência de motivação total pode gerar imprevisibilidade (jogo de fim de feira), e o ataque do Wolves, embora fraco, pode eventualmente marcar em falha defensiva. Diante disso, confiança média.\"\n\n**Best_bet**: então será team_total away under 0.5.\n\n**Evidências a favor**: IDs das conclusões e arestas que sustentam: C2, C3, C4, C7, C16, A1, A2, A7.\n**Evidências contra**: IDs que jogam contra: C8 (defesa Burnley frágil), C21 (Wolves marca um pouco no final), A3 (defesas vulneráveis). Coloco os ataques da refutação também.\n\n**Analysis**: Descrever o racional.\n\n**Drivers**: os 3 fatores que mais moveram o número: motivação baixa de ambos (C4), ataque visitante inofensivo (C7), forma recente péssima do Wolves (C16).\n\nAgora, preencher o restante do JSON:\n\n- home/away xG: Vou usar meus λ ajustados: home 0.95, away 0.45. xG_1t/xG_2t: dividir proporcionalmente com base nas faixas? O schema já pede xg_1t e xg_2t, e xg_bands. Vou distribuir o xG total nos tempos: 1ºT ~43%, 2ºT ~57% (baseline). Mas meus times podem ter viés. Burnley: temporada: 1ºT 0.43/g, 2ºT 0.57/g. Wolves fora: 1ºT 0.32, 2ºT 0.38? Na verdade, os dados de Wolves fora: 1ºT 0.32/0.92, 2ºT 0.38/0.89? A tabela diz \"por tempo: 1ºT 0.32/0.92 · 2ºT 0.38/0.89\". Isso é gols? Deve ser gols marcados/sofridos por tempo. Então Wolves fora: 1ºT marca 0.32, sofre 0.92; 2ºT marca 0.38, sofre 0.89. Burnley casa: 1ºT 0.43/1, 2ºT 0.57/1. Vou utilizar essas proporções para split. Burnley total 0.95: 1ºT = 0.95 * (0.43/1) = 0.41, 2ºT = 0.54. Wolves total 0.45: 1ºT = 0.45 * (0.32/0.7? A média fora é 0.39, mas os números por tempo: 1ºT 0.32, 2ºT 0.38? A soma é 0.7, mas a média fora é 0.39? Há inconsistência. A tabela diz: \"Fora (18j): marca 0.39 / sofre 1.83 (7 gols)\". 7 gols em 18j = 0.39. A divisão por tempo: 1ºT 0.32, 2ºT 0.38, total 0.7? Isso não fecha com 0.39. Provavelmente o \"por tempo\" está errado. Vou ignorar e usar a proporção da temporada geral. Burnley geral: 1ºT marca 16 em 37j = 0.43/g, 2ºT 0.57/g. Wolves geral: 1ºT marca 12 em 37j = 0.32/g, 2ºT 0.38/g. Somando 0.70, mas a média geral é 0.70 (26 gols em 37j = 0.70). Então ok. Para o jogo, vou aplicar a proporção do time no total de gols. Burnley: 0.43/1.0 = 43% no 1ºT. Wolves: 0.32/0.70 = 46% no 1ºT. Vou usar 45% no 1ºT para ambos, como aproximação.\n\nEntão: home xg = 0.95, xg_1t = 0.43 (45% de 0.95), xg_2t = 0.52. away xg = 0.45, xg_1t = 0.20, xg_2t = 0.25.\n\nBands: distribuir os xG de cada time nas faixas de 15 min. Vou usar a distribuição de gols marcados do próprio time na temporada para ratear o xG, pois é o padrão de quando marcam. Burnley: 0-15: 0.08, 16-30: 0.14, 31-45: 0.22, 46-60: 0.16, 61-75: 0.14, 76-90: 0.27. Soma = 1.01. Multiplicar pelo xG total 0.95 para achar o xG por faixa. Similar para Wolves: 0.05, 0.08, 0.19, 0.11, 0.08, 0.19, soma = 0.70. Mas o xG do Wolves é 0.45, então ajustar proprocionalmente: 0.45/0.70 = 0.643. Multiplicar cada faixa por 0.643.\n\nHome bands:\n0-15: 0.08 * 0.95 = 0.076\n16-30: 0.14 * 0.95 = 0.133\n31-45: 0.22 * 0.95 = 0.209\n46-60: 0.16 * 0.95 = 0.152\n61-75: 0.14 * 0.95 = 0.133\n76-90: 0.27 * 0.95 = 0.256 (ajustar para que soma 0.95? Normalização fica por conta do runtime)\n\nAway bands:\n0-15: 0.05 * 0.643? Na verdade, o fator = 0.45 / 0.70 = 0.643.\n0-15: 0.05 * 0.643 = 0.032\n16-30: 0.08 * 0.643 = 0.051\n31-45: 0.19 * 0.643 = 0.122\n46-60: 0.11 * 0.643 = 0.071\n61-75: 0.08 * 0.643 = 0.051\n76-90: 0.19 * 0.643 = 0.122\n\nSoma away = 0.449, ok.\n\nGeneral:\ntotal = home + away = 1.4\ntotal_1t = 0.43+0.20 = 0.63\ntotal_2t = 0.52+0.25 = 0.77\nover25_prob: com total 1.4, ~22%\nbtts_prob: 25%\none_x_two: {home: 0.45, draw: 0.32, away: 0.23} (ajustarei para somar 1? 0.45+0.32+0.23=1.00)\none_x_two_1t: calcular com xG do 1ºT. λ home 0.43, away 0.20. Probabilidades: Poisson independente? Usar Dixon-Coles? Simplificar: prob home = P(H gols > A gols) etc. Com médias baixas, empate provável. Aproximadamente: home 28%, draw 52%, away 20%. Vou colocar 28/52/20.\none_x_two_2t: λ home 0.52, away 0.25. Similar: home 35%, draw 45%, away 20%.\nconfidence: \"medium\"\nconfidence_regra: \"Convergência de arestas (≥3) e concordância das rotas A e B indicam alta confiança, porém a falta de motivação total gera imprevisibilidade típica de fim de temporada, e o ataque do Wolves, embora fraco, pode marcar em eventual erro defensivo. Ataque 'enfraquece' não sustentado por dado forte. Assim, confiança média.\"\nsummary: \"Jogo de baixíssima intensidade entre dois rebaixados. Espera-se poucas chances, com Burnley ligeiro favorito por jogar em casa, mas sem grande poder ofensivo. O mercado de menos de 0.5 gols do Wolves é a melhor oportunidade.\"\n\nConclusões: listar todas com id sequencial, bloco, fato, dado, direção, força. Já defini acima. Vou transcrever.\n\nBlocos_sem_sinal: Verificar se algum bloco realmente não teve conclusão. Contexto teve C1, então não. Todos tiveram, então array vazio.\n\nDescartadas: colocar as conclusões não usadas em arestas. C1, C12, C18, C23, C25, C28, C31. Justificar cada.\n\nJogadores: leituras já feitas.\n\nArestas: enumerar A1 a A11 (ou mais). IDs das arestas usadas nos roteiros.\n\nRoteiros: três roteiros.\n\nMercados: 19 linhas, com probs, variancia, valor, nota.\n\nBest_bet: team_total away under 0.5.\n\nRefutacao: ataques e conclusão.\n\nDrivers: três fatores.\n\nAgora vou gerar o JSON final. Cuidado para usar português no conteúdo das strings.\n\nVou ajustar algumas probabilidades para coerência. Para o mercado, preciso definir probs consistentes. Por exemplo, dupla chance e 1x2 devem somar adequadamente. Com minhas probs 1x2 (45/32/23), dupla chance 1X = 45+32=77, 12 = 45+23=68, X2 = 32+23=55. DNB home: prob Burnley vence ou empate? DNB home vence se Burnley vencer, empate devolve. Prob de Burnley vencer = 45%. Mas o cálculo justo inclui o empate. Normalmente, a prob do DNB home = prob home / (prob home + prob away)? Não, o DNB é: você ganha se o time vencer, e se empatar é void. Então a probabilidade de ganhar a aposta é P(home). Mas o valor justo da odd deve considerar a chance de void. Aqui o campo `prob` provavelmente se refere à probabilidade de a aposta ser vencedora (ou seja, P(home) para DNB home). Vou colocar 45% para DNB home? No prior do briefing, DNB casa era 56% (probabilidade implícita de o time da casa ganhar a aposta DNB? Não, o briefing diz: \"Draw No Bet casa 56% / fora 44%\" – isso são as probabilidades justas de cada lado no mercado DNB, considerando que o empate anula. Normalmente, a probabilidade implícita em DNB é P(time) / (P(time) + P(oponente)). Então, se P(home)=45%, P(away)=23%, então DNB home = 45/(45+23) = 66%. Foi o que calculei antes. Vou usar essa lógica: prob DNB home = P(home) / (1 - P(draw)) = 0.45 / 0.68 = 0.6617. O mesmo para away: 0.23/0.68 = 0.338. Então para o campo `prob` nos mercados draw_no_bet, usarei essas probabilidades implícitas, que representam a chance de ganhar a aposta desconsiderando o void. Mas o schema não especifica; vou assumir que é a probabilidade do evento ocorrer (i.e., time vence, e em caso de empate é void). Normalmente, em DNB, a aposta é vencedora se o time vencer, então prob = P(time vence). Porém, o valor justo da odd é 1 / (P(time vence) / (1 - P(empate))). Acho que o campo `prob` deve refletir a probabilidade justa para comparar com odds. No briefing, o prior de DNB casa era 56% (não 45%), então eles calcularam a probabilidade ajustada. Vou seguir esse padrão e colocar a probabilidade ajustada (P(home) / (1 - P(draw))). Assim, para meus números: P(home)=45%, P(draw)=32%, P(away)=23%. Então DNB home = 0.45 / 0.68 = 0.662; DNB away = 0.23 / 0.68 = 0.338. Vou arredondar 66% e 34%. Isso está coerente com o que o briefing fez (eles tinham 37% home, 35% draw, 28% away, DNB home 56% = 0.37/(0.37+0.28)=0.569). Ok.\n\nPara team_total, over 0.5: prob = 1 - P(0 gols). Para over 1.5: prob = 1 - P(0) - P(1). Para under 0.5: prob = P(0 gols). Então team_total away under 0.5: prob = e^{-0.45} = 0.6376 (~64%). Vou usar 64%.\n\nVerificar se algum mercado exige linha. team_total over 0.5 a linha é 0.5. handicap home -1: linha -1? O schema diz \"line\": number or null. Para handicap, line seria -1 (ou 1). Vou colocar -1 para home -1? Normalmente handicap asiático -1 significa que o time começa com -1 gol. A aposta é se o time vence por 2+ gols (ganha), por 1 (void), por 0 ou menos (perde). A prob de ganhar é P(vencer por 2+). Com λ 0.95, é baixa.\n\nodd_even: prob ímpar = soma das prob de total ímpar. Com λ 1.4, P(impar) = (1 - e^{-2*1.4})/2? A fórmula é P(ímpar) = 0.5 * (1 - e^{-2λ}). Então = 0.5 * (1 - e^{-2.8}) = 0.5 * (1 - 0.0608) = 0.5 * 0.9392 = 0.4696 (~47%). Arredondo 47%. Vou usar 48% para dar número inteiro? Tanto faz.\n\nvariancia: para team_total away under 0.5, é baixa (depende de um time não marcar). Vou colocar 2.\n\nvalor: para team_total away under 0.5: meu prob 64% vs prior 41% (under 0.5) -> valor alto.\n\nNota: \"Wolves não deve marcar, ótimo valor comparado ao mercado.\"\n\nAgora, best_bet: team_total, under, away, 0.5, confidence medium (mas posso colocar medium mesmo), probability 0.64.\n\nEvidências a favor: [C2,C3,C4,C7,C16,A1,A2,A7] etc. Evidências contra: [C8,C21,A3].\n\nAnálise: \"Com ambos os times rebaixados e sem motivação, espera-se um jogo de pouca intensidade e raras chances de gol. O Wolverhampton, em particular, tem um ataque extremamente ineficaz fora de casa (0.39 gols/j), e enfrentará um Burnley que, apesar de frágil, conta com um goleiro em boa fase. A tendência é que o visitante passe em branco, o que torna o under 0.5 gols do Wolves uma aposta de alto valor e risco controlado.\"\n\nRefutação: vou criar 3 ataques.\n\nAtaque 1: alvo = \"team_total away under 0.5\", argumento = \"O Wolves marcou em 18 de 37 jogos na temporada, e mesmo sendo ruim, pode achar um gol em bola parada ou erro defensivo, especialmente contra a defesa do Burnley que sofreu em 31 dos 37 jogos.\", ids = [C8, C21], veredito = \"enfraquece\".\nAtaque 2: alvo = \"team_total away under 0.5\", argumento = \"Em jogos sem pressão, times rebaixados podem atuar de forma relaxada e criar chances inesperadas; o Burnley já sofreu 11 gols nos últimos 5 jogos.\", ids = [C6, C14], veredito = \"enfraquece\".\nAtaque 3: alvo = \"team_total away under 0.5\", argumento = \"O prior de BTTS (40%) e o λ de 0.89 da Rota B sugerem que o Wolverhampton tem capacidade de marcar; minha redução para 0.45 pode ser agressiva, e a regressão à média poderia trazer um gol visitante.\", ids = [C27], veredito = \"nao_sustenta\" (porque o momento recente é muito ruim).\n\nConclusao refutacao: \"Apesar dos riscos, o péssimo momento ofensivo do Wolves, a falta de motivação e a solidez relativa do goleiro adversário tornam o under 0.5 gols visitante a aposta mais sólida, com valor significativo.\"\n\nDrivers: [\"Motivação baixa de ambos os times já rebaixados (C4)\", \"Ataque visitante inoperante fora de casa (C7)\", \"Forma recente do Wolves com apenas 2 gols em 5 jogos (C16)\"].\n\nAgora, montar o JSON. Cuidado com os nomes dos campos em inglês (do schema). Usar aspas duplas.\n\nVou escrever o JSON completo.",
+  "reasoningTokens": 15870,
+  "elapsedMs": 316588,
+  "promptChars": 36998,
+  "error": null
+}

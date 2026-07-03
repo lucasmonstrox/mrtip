@@ -1,0 +1,1137 @@
+{
+  "matchId": "1aef4960-5514-465b-9fd8-3bc2832b8be0",
+  "homeName": "Chelsea",
+  "awayName": "Tottenham Hotspur",
+  "actual": "Chelsea 2-1 Tottenham Hotspur (HT 1-0)",
+  "ftH": 2,
+  "ftA": 1,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Chelsea x Tottenham Hotspur\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-19 19:15 · Rodada 37 · Liga PL\n- Local: Stamford Bridge, London (grass)\n- Clima: moderate rain · 16.7°C (sens. 16.4°C) · vento 6 m/s · umidade 75% · nuvens 100% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Chelsea 3 dias (último: FA Cup Final, 2026-05-16) · Tottenham Hotspur 8 dias (último: liga, 2026-05-11)\n- Viagem do visitante: ~16 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 368 jogos): mandante 1.533 gols/jogo · visitante 1.228 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-19)\n- Chelsea: 10º, 49 pts · Tottenham Hotspur: 17º, 38 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 52 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Chelsea: 10º, 49 pts, 2 jogo(s) restante(s) (máx possível 55 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n  - Tottenham Hotspur: 17º, 38 pts, 2 jogo(s) restante(s) (máx possível 44 pts)\n  - ainda não salvo, mas **um empate NESTE jogo já garante a permanência** — tende a jogar pra não perder, não a se lançar.\n  - → motivação: **media** — contenta-se com o EMPATE — 1 ponto garante a permanência (joga pra não perder)\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Chelsea (manda) — até 2026-05-19\n\n### Gols & finalização (season)\n- Total **55 marcados / 49 sofridos** em 36j · média **1.53 marca / 1.36 sofre** por jogo\n- **Em casa (18j): marca 1.33 / sofre 1.33** (24 gols) · por tempo: 1ºT 0.69/0.64 · 2ºT 0.83/0.72\n- **Finalização: 160 SoT (4.44/j · casa 4.28/j) · conv 30%** (aberta, −7 pên) · sofre 4.22 SoT/j (adv 31%) · 10.36 KP/j\n- **Volume: 13.7 chutes/j (9.1 na área) · 2.8 big chances/j** · posse 58.2%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 55.3/43.8 · chutes pra fora 4.8/3.8 · bloqueados 4.5/2.7 · de fora da área 4.5/3.2\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 51.4/43.8 · chutes pra fora 4.2/2.8 · bloqueados 6.2/2.4 · de fora da área 5.8/2.6\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.89**\n  - **Enzo Fernández** nota **7.25** (season) · forma 7.22= (últ.5 do time: 6.6→8.3→7.6→6.6→7 📉 caindo) · 9× MOTM · 42j\n  - ⚠️(fora) **João Pedro** nota **7.1** (season) · forma 7= (últ.5 do time: –→6.7→7.4→7.2→6.7 ➡️ estável) · **faltou 1/5** · 4× MOTM · 41j\n  - **Moisés Caicedo** nota **7.08** (season) · forma 6.84↓ (últ.5 do time: 6.5→6.6→6.8→7.6→6.7 📈 subindo) · 2× MOTM · 38j\n  - **Reece James** nota **7.08** (season) · forma 6.9↓ (últ.5 do time: –→–→–→7→6.8 ⚠️ poucos jogos na janela) · **faltou 3/5** · 1× MOTM · 30j\n  - **Pedro Neto ** nota **7.04** (season) · forma 6.57↓ (últ.5 do time: 6→7→–→–→6.7 📈 subindo) · **faltou 2/5** · 3× MOTM · 42j\n  - **Alejandro Garnacho** nota **7.03** (season) · forma 6.55↓ (últ.5 do time: 6.3→6.8→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 3× MOTM · 31j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EDDDD** (1pts) · **2 feitos / 11 sofridos** · marca 0.4↓ / sofre 2.2↑ g/j · SoT 2.8 feito / 5 sofrido\n- **Consistência: MARCOU em 29/36** (casa 14/18 · fora 15/18) · não-marcou 7 · clean sheet 9 · BTTS 22/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Brighton & Hove Albion** (fora · **D 0-3**) — adv 9º salvo · você 6º briga-top · seu fora até ali 1.9 marca/1.3 sofre\n- vs **Leeds United** (casa · **V 1-0**) — 🏆 FA Cup\n- vs **Nottingham Forest** (casa · **D 1-3**) — adv 16º briga-Z · você 9º · seu casa até ali 1.4 marca/1.2 sofre\n- @ **Liverpool** (fora · **E 1-1**) — adv 4º briga-top · você 9º salvo · seu fora até ali 1.8 marca/1.4 sofre\n- vs **Manchester City** (casa · **D 0-1**) — 🏆 FA Cup\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Manchester City (CASA · D 0-3) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 -1 -2 -10 -6 -4 -2 +2 +4 +6 +4 +4 -1 0 -4] · 16'-30' [-3 -5 -6 -1 -1 -4 -6 -4 -6 -9 -7 -6 -4 0 +9] · 31'-45' [+7 +3 +1 -1 -4 -5 -5 -4 -5 -7 -6 -6 -3 -3 -3] · ‖INTERVALO‖ · 46'-60' [-2 -7 -6 -7 -7 -10 -7 -6 -5 -10 -8 -12 -7 -4 -3] · 61'-75' [-6 -4 -4 -1 -3 -1 +2 -4 -5 0 +3 +3 +3 +4 +2] · 76'-90' [+1 +1 0 0 -3 -2 -2 +5 +6 +1 -4 -6 -3 -5 -4] · 91'+ [-4 -5 -3 -2 -6 -5 -1 0]\n    ⚽ gols: 51'✗ 57'✗ 68'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **6** · 31'-45' **4** ‖ 46'-60' **2** · 61'-75' **0** · 76'-90' **8**\n  - vs Manchester United (CASA · D 0-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [+1 0 -1 -4 -1 0 -2 -1 +1 +2 +2 +4 +4 +4 +4] · 16'-30' [+3 +3 +3 +2 +1 0 0 -1 0 -1 -1 0 +1 +3 +5] · 31'-45' [+6 +7 +9 +8 +7 +3 -3 -2 +2 0 0 0 -3 -4 -2] · ‖INTERVALO‖ · 46'-60' [0 0 0 0 -2 -1 +1 +2 0 +1 +1 +7 +11 +10 +3] · 61'-75' [+1 +1 +1 +3 +2 +1 +3 +3 +2 +5 +4 +5 +11 +10 +10] · 76'-90' [+25 +20 +14 +10 +9 +8 +10 +6 +4 +4 +2 +5 +4 +25 +16] · 91'+ [+9 +7 +7 +5]\n    ⚽ gols: 43'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **2** · 31'-45' **5** ‖ 46'-60' **2** · 61'-75' **4** · 76'-90' **3**\n  - @ Brighton & Hove Albion (FORA · D 0-3) — min 1→95:\n    📈 pressão (net/min): 1'-15' [-2 -4 -4 -8 -9 -6 -7 -7 -4 -3 -3 -2 -2 -8 -7] · 16'-30' [-7 -6 -11 -11 -8 -5 -4 -4 -5 -2 0 -1 -1 -1 0] · 31'-45' [0 -3 -3 -5 -7 -7 -5 -6 -5 -1 +1 +2 +2 -2 -1] · ‖INTERVALO‖ · 46'-60' [-1 +3 +2 +1 +1 +1 +2 +4 -1 -1 +1 -4 -2 -1 -1] · 61'-75' [0 -1 -2 -1 -1 -2 -8 -10 -8 -3 -3 -5 -5 -3 -5] · 76'-90' [-4 -1 -1 0 0 +2 +4 +2 +2 0 -2 -3 -1 +1 +1] · 91'+ [-2 -3 -2 +1 0]\n    ⚽ gols: 3'✗ 56'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **1** · 31'-45' **6** ‖ 46'-60' **2** · 61'-75' **2** · 76'-90' **3**\n  - vs Nottingham Forest (CASA · D 1-3) — min 1→98:\n    📈 pressão (net/min): 1'-15' [-3 -6 -6 -3 -3 -1 0 0 -1 +1 +2 -2 -2 -1 -5] · 16'-30' [-3 -2 +1 +2 +2 +5 +8 +7 +6 +4 +4 +7 +7 +5 +5] · 31'-45' [+4 +3 +3 +2 +4 +1 +2 +6 +8 +5 +6 +5 +7 +6 +8] · ‖INTERVALO‖ · 46'-60' [+4 +4 +4 +2 +5 +5 0 0 0 -1 0 +7 +1 +2 +3] · 61'-75' [+2 +2 +2 +2 +2 +2 +2 +2 +2 +2 +6 +6 +6 +9 +10] · 76'-90' [+27 +21 +21 +21 +21 +13 +10 +10 +14 +15 +15 +13 +12 +12 +11] · 91'+ [+8 +8 +12 +12 +14 +14 +14 +11]\n    ⚽ gols: 2'✗ 15'✗ 52'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **6** · 31'-45' **1** ‖ 46'-60' **4** · 61'-75' **2** · 76'-90' **2**\n  - @ Liverpool (FORA · E 1-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 +1 +2 +1 +1 -2 -2 -1 +1 +2 0 -4 -6 -5 -5] · 16'-30' [-3 -3 -2 -2 0 0 0 -1 -1 -1 -1 +2 +6 +6 +8] · 31'-45' [+6 +8 +8 +6 +4 +5 +5 +8 +9 +10 +10 +5 +3 +1 +1] · ‖INTERVALO‖ · 46'-60' [0 -3 -3 +2 +13 +10 +6 +5 +5 +6 +1 +1 +1 -2 -4] · 61'-75' [-3 -4 -4 -2 -2 0 0 -1 -2 -6 -5 -6 -5 -6 -4] · 76'-90' [-1 +1 -1 -5 -5 -3 -2 -2 -3 -2 -3 -1 0 +4 +2] · 91'+ [+2 +2 +2 -2 +1 +3 0]\n    ⚽ gols: 6'✗ 35'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **7** · 61'-75' **4** · 76'-90' **6**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.17 · 16-30: 0.17 · 31-45: 0.36 · 46-60: 0.36 · 61-75: 0.22 · 76-90: 0.25\n- Sofre por faixa (/j): 0-15: 0.31 · 16-30: 0.14 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.22 · 76-90: 0.31\n- 1ºT: marca 25 / sofre 23 (totais na temporada)\n\n### Desfalques de Chelsea neste jogo\n- **João Pedro** (Doubtful) — 15 gols + 5 assists até a data; season: **27% dos gols** do time (36% com assists); **últimos 5 jogos do time**: participou de 1/2 gols = **50%** (↑ mais decisivo AGORA); with/without: com ele 1.62 g/j (34j) vs sem ele 0 g/j (2j) = −100%; finaliza **0.82 SoT/jogo** (time: 4.62 SoT/j com ele vs 1.5 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~2% do time) · 0.8 desarmes/j · 5.5 duelos ganhos/j · 0 cruz. certos/j · 1.1 dribles certos/j · 0.9 key passes/j\n- **Estêvão** (Unknown Injury) — 2 gols + 2 assists até a data; season: **4% dos gols** do time (7% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.45 g/j (22j) vs sem ele 1.64 g/j (14j) = +13%; finaliza **0.36 SoT/jogo** (time: 4.59 SoT/j com ele vs 4.21 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~2% do time) · 0.5 desarmes/j · 2.4 duelos ganhos/j · 0.2 cruz. certos/j · 1.3 dribles certos/j · 0.7 key passes/j\n- **Jamie Gittens** (Doubtful) — 0 gols + 2 assists até a data; season: **0% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 2.06 g/j (16j) vs sem ele 1.1 g/j (20j) = −47%; finaliza **0.13 SoT/jogo** (time: 5.56 SoT/j com ele vs 3.55 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.5 desarmes/j · 2 duelos ganhos/j · 0.3 cruz. certos/j · 0.8 dribles certos/j · 0.6 key passes/j\n- **Roméo Lavia** (Doubtful) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 1.08 g/j (12j) vs sem ele 1.75 g/j (24j) = +62%; finaliza **0 SoT/jogo** (time: 4.42 SoT/j com ele vs 4.46 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.5 interceptações/j** (~5% do time) · 0.7 desarmes/j · 1.8 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.1 key passes/j\n- **C. Wiley** (Adductor Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.53 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **M. Mudryk** (Doping Ban) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/2 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.53 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Tottenham Hotspur (visita) — até 2026-05-19\n\n### Gols & finalização (season)\n- Total **46 marcados / 55 sofridos** em 36j · média **1.28 marca / 1.53 sofre** por jogo\n- **Fora (18j): marca 1.39 / sofre 1.33** (25 gols) · por tempo: 1ºT 0.53/0.81 · 2ºT 0.75/0.72\n- **Finalização: 142 SoT (3.94/j · fora 3.89/j) · conv 32%** (aberta, −0 pên) · sofre 4.08 SoT/j (adv 35%) · 8.42 KP/j\n- **Volume: 11.3 chutes/j (7.8 na área) · 1.8 big chances/j** · posse 50.2%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 46.2/46.7 · chutes pra fora 4.2/5 · bloqueados 3.2/3.3 · de fora da área 3.6/4\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 46/40.4 · chutes pra fora 5/4.8 · bloqueados 2.6/2.8 · de fora da área 3.2/4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.76**\n  - **Cristian Romero ** nota **7.03** (season) · forma 7.1= (últ.5 do time: 7.1→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 4/5** · 2× MOTM · 23j\n  - **Pedro Porro** nota **7.01** (season) · forma 7.6↑ (últ.5 do time: 7.5→7.9→7.8→7.4→7.4 📉 caindo) · 4× MOTM · 35j\n  - **Xavi Simons ** nota **6.97** (season) · forma 6.97= (últ.5 do time: 6.6→7.6→6.7→–→– ➡️ estável) · **faltou 2/5** · 2× MOTM · 31j\n  - **João Palhinha** nota **6.91** (season) · forma 6.82= (últ.5 do time: 6.3→6.6→7.4→7.1→6.7 📈 subindo) · 3× MOTM · 34j\n  - **Richarlison** nota **6.91** (season) · forma 6.8= (últ.5 do time: 7→–→6.8→6.9→6.5 ➡️ estável) · **faltou 1/5** · 4× MOTM · 33j\n  - **Rodrigo Bentancur ** nota **6.88** (season) · forma 7.17↑ (últ.5 do time: –→7.2→7.2→7→7.3 ➡️ estável) · **faltou 1/5** · 26j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EVVED** (8pts) · **6 feitos / 5 sofridos** · marca 1.2= / sofre 1↓ g/j · SoT 4.6 feito / 2.4 sofrido\n- **Consistência: MARCOU em 29/36** (casa 15/18 · fora 14/18) · não-marcou 7 · clean sheet 8 · BTTS 22/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Sunderland** (fora · **D 0-1**) — adv 12º · você 18º briga-Z · seu fora até ali 1.5 marca/1.5 sofre\n- vs **Brighton & Hove Albion** (casa · **E 2-2**) — adv 9º · você 18º briga-Z · seu casa até ali 1.1 marca/1.8 sofre\n- @ **Wolverhampton Wanderers** (fora · **V 1-0**) — adv 20º REBAIX. · você 18º briga-Z · seu fora até ali 1.4 marca/1.4 sofre\n- @ **Aston Villa** (fora · **V 2-1**) — adv 5º briga-top · você 18º briga-Z · seu fora até ali 1.4 marca/1.4 sofre\n- vs **Leeds United** (casa · **E 1-1**) — adv 16º briga-Z · você 17º briga-Z · seu casa até ali 1.2 marca/1.8 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Sunderland (FORA · D 0-1) — min 1→101:\n    📈 pressão (net/min): 1'-15' [0 +3 +2 -2 +1 -1 -1 -2 -3 -4 -2 -1 -1 -1 -1] · 16'-30' [-1 -1 -4 -7 -7 -6 -3 -3 -3 -2 +2 +4 +3 +2 +3] · 31'-45' [-1 -2 -3 -2 -1 -1 +2 +2 +2 +1 +1 0 0 0 +3] · ‖INTERVALO‖ · 46'-60' [+4 +4 +3 +4 +3 0 0 0 -5 -4 -3 -2 -4 0 0] · 61'-75' [-3 -2 -2 -1 -1 +1 +1 +1 +1 +3 +2 +1 +4 +3 +2] · 76'-90' [+5 +3 +4 +3 -1 -4 -4 -2 -2 0 0 0 -1 -1 -10] · 91'+ [-7 -4 -3 +3 +3 +3 +3 +8 +8 +5 +4]\n    ⚽ gols: 61'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **0** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **1** · 76'-90' **5**\n  - vs Brighton & Hove Albion (CASA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 0 0 0 +1 +1 +1 0 0 0 +1 +1 0 0 +1] · 16'-30' [+1 0 0 0 0 0 +4 +2 +3 +2 +1 -1 -3 -2 -2] · 31'-45' [-5 -5 -7 -5 -5 -5 -7 -7 +1 +2 +4 +4 +10 +8 +6] · ‖INTERVALO‖ · 46'-60' [-5 -5 -4 -5 -6 -7 -2 -1 0 0 +5 +3 +2 -1 -4] · 61'-75' [-6 -4 -4 -4 -6 -6 -4 0 0 +5 +3 +1 0 0 0] · 76'-90' [-9 -4 -4 -3 +1 +4 +4 +3 +2 +2 -4 -3 -2 -4 -4] · 91'+ [-5 -3 -6 -5 -13 -13 -11 -4]\n    ⚽ gols: 39'✓ 45'✗ 77'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **5** · 31'-45' **2** ‖ 46'-60' **5** · 61'-75' **6** · 76'-90' **2**\n  - @ Wolverhampton Wanderers (FORA · V 1-0) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 +1 +3 +4 +4 +5 +7 +7 +5 +4 +3 +3 +4 +3 +4] · 16'-30' [+4 +5 +4 +3 +2 +1 +1 +2 +6 +4 +6 +6 +6 -2 -2] · 31'-45' [-1 +1 +2 +3 +3 +7 +7 +6 +5 +5 +5 +1 -1 -1 -1] · ‖INTERVALO‖ · 46'-60' [-6 -4 +2 -3 0 -6 -4 -3 -1 -3 -4 -2 -2 -2 -2] · 61'-75' [-2 -3 -3 -2 -2 0 -1 +1 +1 +1 +7 +4 +4 +2 +2] · 76'-90' [0 0 -2 -1 -6 -6 -4 +3 +3 +2 +2 +8 +9 +9 +9] · 91'+ [+2 +2 +1 +3 +4 +3 +2 +2]\n    ⚽ gols: 82'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **6** · 31'-45' **7** ‖ 46'-60' **6** · 61'-75' **5** · 76'-90' **14**\n  - @ Aston Villa (FORA · V 2-1) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 0 0 +1 +3 +2 +1 +2 +1 +1 +3 +2 +2 +2] · 16'-30' [+4 +3 +5 +4 +3 +3 +7 +5 +6 +13 +13 +13 +18 +14 +9] · 31'-45' [+5 0 -2 -1 +1 +2 +3 +3 +3 +6 +6 +7 +5 +3 +2] · ‖INTERVALO‖ · 46'-60' [+2 0 +1 +1 +1 +1 +1 +3 +2 +4 +4 +3 +3 +3 +2] · 61'-75' [0 -3 -3 -3 -3 -3 -3 -1 +1 +1 +2 -2 0 -1 -3] · 76'-90' [-1 -1 -2 -2 -3 -2 -2 -1 +2 0 -1 -2 -3 -4 -6] · 91'+ [-6 -5 -4 -6 -6 -7]\n    ⚽ gols: 12'✓ 25'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **1** · 31'-45' **7** ‖ 46'-60' **4** · 61'-75' **4** · 76'-90' **12**\n  - vs Leeds United (CASA · E 1-1) — min 1→105:\n    📈 pressão (net/min): 1'-15' [-2 -1 -1 -1 0 +3 +4 +4 +3 +3 +3 +2 +2 +5 +8] · 16'-30' [+6 +7 +4 +2 +1 -5 -4 -3 0 -2 -2 +2 +2 +5 +4] · 31'-45' [+2 +2 +4 +2 +3 +8 +9 +6 +7 +3 +2 +1 +2 +3 0] · ‖INTERVALO‖ · 46'-60' [+3 +2 +2 +1 +1 +1 +3 +2 +1 +1 0 +1 +3 +9 +5] · 61'-75' [+2 -2 -1 -1 0 0 +1 -3 -3 -3 -3 -3 -3 -6 -8] · 76'-90' [-8 -4 -3 -5 -3 -6 -3 -2 -3 -3 -2 -3 -2 -1 -1] · 91'+ [+1 +6 +8 +5 +4 +5 +4 +5 +1 -5 -7 -4 -2 -2 +3]\n    ⚽ gols: 50'✓ 74'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **9** · 16'-30' **3** · 31'-45' **6** ‖ 46'-60' **6** · 61'-75' **7** · 76'-90' **4**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.14 · 31-45: 0.28 · 46-60: 0.22 · 61-75: 0.17 · 76-90: 0.36\n- Sofre por faixa (/j): 0-15: 0.19 · 16-30: 0.08 · 31-45: 0.53 · 46-60: 0.14 · 61-75: 0.19 · 76-90: 0.39\n- 1ºT: marca 19 / sofre 29 (totais na temporada)\n\n### Desfalques de Tottenham Hotspur neste jogo\n- **Xavi Simons** (Cruciate Ligament Tear) — 2 gols + 5 assists até a data; season: **4% dos gols** do time (15% com assists); **últimos 5 jogos do time**: participou de 2/6 gols = **33%** (↑ mais decisivo AGORA); with/without: com ele 1.29 g/j (28j) vs sem ele 1.25 g/j (8j) = −3%; finaliza **0.36 SoT/jogo** (time: 3.93 SoT/j com ele vs 4 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.5 interceptações/j** (~6% do time) · 1.2 desarmes/j · 4.2 duelos ganhos/j · 0.5 cruz. certos/j · 1 dribles certos/j · 1.3 key passes/j\n- **Mohammed Kudus** (Muscle Injury) — 2 gols + 5 assists até a data; season: **4% dos gols** do time (15% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.37 g/j (19j) vs sem ele 1.18 g/j (17j) = −14%; finaliza **0.47 SoT/jogo** (time: 3.37 SoT/j com ele vs 4.59 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~3% do time) · 1.5 desarmes/j · 5.6 duelos ganhos/j · 1.5 cruz. certos/j · 2.7 dribles certos/j · 1.4 key passes/j\n- **Cristian Romero** (Muscle Injury) — 4 gols + 1 assists até a data; season: **9% dos gols** do time (11% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.26 g/j (23j) vs sem ele 1.31 g/j (13j) = +4%; finaliza **0.26 SoT/jogo** (time: 4.04 SoT/j com ele vs 3.77 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.3 interceptações/j** (~18% do time) · 2.5 desarmes/j · 6.7 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.6 key passes/j\n- **D. Solanke** (Doubtful) — 3 gols + 0 assists até a data; season: **7% dos gols** do time (7% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.2 g/j (15j) vs sem ele 1.33 g/j (21j) = +11%; finaliza **0.73 SoT/jogo** (time: 4.87 SoT/j com ele vs 3.29 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.3 interceptações/j** (~3% do time) · 1.5 desarmes/j · 4.3 duelos ganhos/j · 0 cruz. certos/j · 0.9 dribles certos/j · 0.4 key passes/j\n- **Wilson Odobert** (Unknown Injury) — 0 gols + 2 assists até a data; season: **0% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 1.38 g/j (24j) vs sem ele 1.08 g/j (12j) = −22%; finaliza **0.33 SoT/jogo** (time: 3.92 SoT/j com ele vs 4 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.5 desarmes/j · 2 duelos ganhos/j · 0.3 cruz. certos/j · 1 dribles certos/j · 0.8 key passes/j\n- **Ben Davies** (Ankle Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 0.67 g/j (3j) vs sem ele 1.33 g/j (33j) = +99%; finaliza **0.67 SoT/jogo** (time: 4 SoT/j com ele vs 3.94 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.3 interceptações/j** (~3% do time) · 1.7 desarmes/j · 3 duelos ganhos/j · 0.7 cruz. certos/j · 0 dribles certos/j · 0.3 key passes/j\n- **D. Kulusevski** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/6 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.28 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Chelsea atacando × Tottenham Hotspur defendendo**\n| Faixa | Chelsea marca/j | Tottenham Hotspur sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.17 | 0.19 | 0.36 |\n| 16-30 | 0.17 | 0.08 | 0.25 |\n| 31-45 | 0.36 | 0.53 | 0.89 |\n| 46-60 | 0.36 | 0.14 | 0.5 |\n| 61-75 | 0.22 | 0.19 | 0.41 |\n| 76-90 | 0.25 | 0.39 | 0.64 |\n\n**Tottenham Hotspur atacando × Chelsea defendendo**\n| Faixa | Tottenham Hotspur marca/j | Chelsea sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.31 | 0.42 |\n| 16-30 | 0.14 | 0.14 | 0.28 |\n| 31-45 | 0.28 | 0.19 | 0.47 |\n| 46-60 | 0.22 | 0.19 | 0.41 |\n| 61-75 | 0.17 | 0.22 | 0.39 |\n| 76-90 | 0.36 | 0.31 | 0.67 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Chelsea: **76-90** (domínio +5.2) · Tottenham Hotspur: **0-15** (domínio -3). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Chelsea domínio/j | Tottenham Hotspur domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -1.6 | +1.4 | -3 ✈️ |\n| 16-30 | -0.5 | +2.2 | -2.7 ✈️ |\n| 31-45 | +1.4 | +1.7 | -0.3 ≈ |\n| 46-60 | +0.1 | -0.1 | +0.2 ≈ |\n| 61-75 | 0 | -0.8 | +0.8 ≈ |\n| 76-90 | +4.3 | -0.9 | +5.2 🏠 |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Chelsea (casa) = 1.15 · λ Tottenham Hotspur (fora) = 1.51 · total = 2.66\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Chelsea: λ_SoT 3.82 × conv 30% → **1.15 gols**\n- Tottenham Hotspur: λ_SoT 3.96 × conv 32% → **1.27 gols**\n- total via SoT = 2.42\n- **Índice de volume do jogo**: λ_SoT total 7.8 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 27/29/44% | 32/31/37% |\n| Over 1.5 | 76% | 71% |\n| Over 2.5 | 50% | 44% |\n| Over 3.5 | 28% | 23% |\n| BTTS | 55% | 51% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **63%** · 12 **69%** · X2 **68%** · **Draw No Bet** casa 46% / fora 54%\n- **Placar exato (mais prováveis)**: 1-1 15% · 0-0 11% · 0-1 10% · 1-0 9%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 29% · 2-3 49% · 4+ 23%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Chelsea over 0.5 **68%** / over 1.5 **32%** · Tottenham Hotspur over 0.5 **72%** / over 1.5 **36%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 3.16 · empate 3.24 · fora 2.67. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 368 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **27/45/27%** · 2ºT **27/39/34%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Chelsea) e `away` (= Tottenham Hotspur), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 0.8999999761581421,
+    "xg_away": 1.100000023841858,
+    "total": 2,
+    "over25_prob": 0.3499999940395355,
+    "btts_prob": 0.4000000059604645,
+    "one_x_two": "{\"home\":0.25,\"draw\":0.35,\"away\":0.4}",
+    "confianca": "medium",
+    "best_bet_market": "double_chance",
+    "best_bet_selection": "draw_away",
+    "best_bet_team": null,
+    "best_bet_line": null,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.75,
+    "reasoning_tokens": 8223
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Chelsea** contra **equilibrado** (o estilo do Tottenham Hotspur, posse média 50.2%): marca **1.18/j** e sofre 1.09/j em 11 jogos — **-0.35 ABAIXO** da média (1.53).\n- **Tottenham Hotspur** contra **dominante** (o estilo do Chelsea, posse média 58.2%): marca **1.36/j** e sofre 1.91/j em 11 jogos — na média da temporada (1.28).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — escanteio**: Chelsea gera 47% dos gols por aí × Tottenham Hotspur sofre 44% por aí (liga: 37%) → índice 1.5×.\n- **CANAL ABERTO — escanteio**: Tottenham Hotspur gera 48% dos gols por aí × Chelsea sofre 51% por aí (liga: 37%) → índice 1.7×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Chelsea** (22 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.3) · **MATA O JOGO após marcar** (Δ +1.0 — segue pressionando).\n- **Tottenham Hotspur** (21 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ -0.3) · **MATA O JOGO após marcar** (Δ +2.8 — segue pressionando).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Chelsea**: João Pedro **15 gols** · últ.5: 1 · 0.8 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Enzo Fernández **9 gols** (2 pên) · últ.5: 1 · 0.9 SoT/j | Cole Palmer **9 gols** (5 pên) · últ.5: 0 · 0.9 SoT/j | Pedro Neto  **5 gols** · últ.5: 0 · 0.4 SoT/j | Moisés Caicedo **3 gols** · últ.5: 0 · 0.2 SoT/j\n- **Tottenham Hotspur**: Richarlison **10 gols** · últ.5: 1 · 0.8 SoT/j | João Palhinha **4 gols** · últ.5: 1 · 0.3 SoT/j | Micky van de Ven **4 gols** · últ.5: 0 · 0.2 SoT/j | Mathys Tel **4 gols** · últ.5: 1 · 0.3 SoT/j | Cristian Romero  **4 gols** · últ.5: 0 · 0.3 SoT/j ⚠️ DESFALQUE/dúvida neste jogo",
+  "realGoals": [
+    {
+      "minute": 18,
+      "side": "home",
+      "scorer": "Enzo Fernández",
+      "type": "normal"
+    },
+    {
+      "minute": 67,
+      "side": "home",
+      "scorer": "Andrey Santos",
+      "type": "normal"
+    },
+    {
+      "minute": 74,
+      "side": "away",
+      "scorer": "Richarlison",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 0.9,
+      "xg_1t": 0.41,
+      "xg_2t": 0.49,
+      "xg_bands": {
+        "0-15": 0.1,
+        "16-30": 0.1,
+        "31-45": 0.21,
+        "46-60": 0.21,
+        "61-75": 0.13,
+        "76-90": 0.15
+      },
+      "summary": "Chelsea em péssima fase (0.4 gols/j nos últimos 5), sem João Pedro (dúvida) perde poder ofensivo; em casa, xG reduzido para 0.9, com melhores janelas nos finais do 1º e 2º tempo."
+    },
+    "away": {
+      "xg": 1.35,
+      "xg_1t": 0.57,
+      "xg_2t": 0.78,
+      "xg_bands": {
+        "0-15": 0.119,
+        "16-30": 0.149,
+        "31-45": 0.298,
+        "46-60": 0.228,
+        "61-75": 0.179,
+        "76-90": 0.377
+      },
+      "summary": "Tottenham em forma melhor (1.2 gols/j nos últimos 5), mas joga por empate; ataque mantém Richarlison e explora fragilidade defensiva do Chelsea, especialmente no fim do jogo (76-90)."
+    },
+    "general": {
+      "total": 2.25,
+      "total_1t": 0.98,
+      "total_2t": 1.27,
+      "over25_prob": 0.38,
+      "btts_prob": 0.44,
+      "one_x_two": {
+        "home": 0.25,
+        "draw": 0.35,
+        "away": 0.4
+      },
+      "one_x_two_1t": {
+        "home": 0.2,
+        "draw": 0.5,
+        "away": 0.3
+      },
+      "one_x_two_2t": {
+        "home": 0.25,
+        "draw": 0.35,
+        "away": 0.4
+      },
+      "confidence": "medium",
+      "confidence_regra": "Várias arestas convergem para under 2.5 (Chelsea sem ataque, Tottenham administra, fadiga), mas há fatores contrários (defesa frágil do Chelsea, escanteios, dinâmica pós-gol). As Rotas A e B divergem sobre o total 2.5 (A>2.5, B<2.5). A convergência não é unânime, mas o cenário mais provável é under. Confiança média.",
+      "summary": "Jogo tende a ser truncado, com Tottenham satisfeito com empate e Chelsea desfalcado e em má forma. Total esperado de 2.25 gols, under 2.5 provável. BTTS improvável. Vitória do Tottenham ou empate são os resultados mais plausíveis."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Clima com chuva moderada, sem correlação com total de gols na liga",
+        "dado": "chuva moderada, 2.9 gols/j vs 2.84",
+        "direcao": "neutro, não ajusta xG",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "contexto",
+        "fato": "Descanso assimétrico: Chelsea 3 dias (final FA Cup) vs Tottenham 8 dias",
+        "dado": "Chelsea 3 dias, Tottenham 8 dias",
+        "direcao": "favorece Tottenham, Chelsea cansado especialmente no 2º tempo; -xG para Chelsea tarde",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "contexto",
+        "fato": "Viagem curta do visitante (~16 km)",
+        "dado": "16 km",
+        "direcao": "neutro, sem desgaste de viagem",
+        "forca": "baixa"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "Chelsea 10º, 49 pts, briga por vaga europeia (última vaga 52 pts)",
+        "dado": "10º, 49 pts, vaga europeia possível",
+        "direcao": "Chelsea precisa vencer, motivação alta, +xG ofensivo",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "tabela_motivacao",
+        "fato": "Tottenham 17º, 38 pts, um empate já garante permanência",
+        "dado": "17º, 38 pts, 1 ponto basta",
+        "direcao": "Tottenham joga para não perder, motivação média, administra empate, -xG ofensivo",
+        "forca": "alta"
+      },
+      {
+        "id": "C6",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR",
+        "dado": "um lado não precisa ir pra cima, Tottenham administra",
+        "direcao": "favorece under, jogo de poucos gols; não favorece goleada",
+        "forca": "alta"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_gols",
+        "fato": "Chelsea marca 1.53/j (casa 1.33) e sofre 1.36/j (casa 1.33)",
+        "dado": "marca 1.33 em casa, sofre 1.33",
+        "direcao": "ataque e defesa medianos em casa, sem destaque positivo",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_gols",
+        "fato": "Últimos 5: apenas 2 gols marcados (0.4/j) e 11 sofridos (2.2/j)",
+        "dado": "0.4 marca, 2.2 sofre nos últimos 5",
+        "direcao": "péssima forma, ataque inoperante e defesa vulnerável",
+        "forca": "alta"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_estilo",
+        "fato": "Chelsea gera muitos ataques perigosos (55.3/j), mas tem muitos chutes bloqueados (4.5/j, último 5: 6.2)",
+        "dado": "55.3 ataques perigosos, 4.5 bloqueios/j",
+        "direcao": "dominante mas com dificuldade contra defesas fechadas, pode ter volume sem efetividade",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_qualidade",
+        "fato": "Enzo Fernández (nota 7.25) e João Pedro (7.1, 15 gols, dúvida) são os destaques; time nota média 6.89",
+        "dado": "Enzo 7.25, João Pedro 7.1 (15 gols)",
+        "direcao": "dependência ofensiva de João Pedro; Enzo é o cérebro, mas forma caindo",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_forma",
+        "fato": "Últimos 5 jogos: EDDDD, 1 ponto, 2 gols marcados, 11 sofridos",
+        "dado": "1 pt em 15, -9 saldo",
+        "direcao": "momento terrível, baixa confiança, desempenho muito abaixo do potencial",
+        "forca": "alta"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_momentum",
+        "fato": "Chelsea sofreu gols no início (3', 6', 2', 15') e no 2º tempo (51', 57', 68') nos últimos jogos; defesa frágil",
+        "dado": "gols sofridos em várias janelas iniciais e finais",
+        "direcao": "defesa vulnerável cedo e no 2º tempo; propenso a sofrer gols",
+        "forca": "alta"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_momentum",
+        "fato": "Curvas de pressão mostram Chelsea com dificuldade de impor ritmo, domínio só no fim (76-90)",
+        "dado": "domínio +4.3 em 76-90, mas negativo ou neutro antes",
+        "direcao": "só cresce no fim, mas pode ser tarde; time não domina partidas inteiras",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "home_faixas",
+        "fato": "Chelsea marca mais em 31-45 (0.36/j) e 46-60 (0.36/j); sofre em 0-15 (0.31) e 76-90 (0.31)",
+        "dado": "marca 0.36 em 31-45, sofre 0.31 em 0-15",
+        "direcao": "gols tendem a sair no fim do 1º tempo e início do 2º para Chelsea; sofre no início e fim",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_desfalques",
+        "fato": "João Pedro (dúvida): 15 gols (27% do time), 0.82 SoT/j; sem ele time cai de 4.62 para 1.5 SoT/j",
+        "dado": "15 gols, 0.82 SoT/j, with/without SoT: 4.62 vs 1.5",
+        "direcao": "se ausente, ataque do Chelsea perde principal arma; xG deve ser reduzido significativamente",
+        "forca": "alta"
+      },
+      {
+        "id": "C16",
+        "bloco": "home_desfalques",
+        "fato": "Estêvão (lesão): 2 gols, 4% dos gols do time",
+        "dado": "2 gols, 4%",
+        "direcao": "impacto ofensivo mínimo, time se adaptou",
+        "forca": "baixa"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_desfalques",
+        "fato": "Jamie Gittens (dúvida): 0 gols, 0.13 SoT/j",
+        "dado": "0 gols, 0.13 SoT/j",
+        "direcao": "irrelevante ofensivamente",
+        "forca": "baixa"
+      },
+      {
+        "id": "C18",
+        "bloco": "home_desfalques",
+        "fato": "Lavia, Wiley, Mudryk: 0 gols, sem participação relevante",
+        "dado": "0% dos gols, volume baixo",
+        "direcao": "sem impacto",
+        "forca": "baixa"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_gols",
+        "fato": "Tottenham marca 1.28/j (fora 1.39) e sofre 1.53/j (fora 1.33)",
+        "dado": "fora marca 1.39, sofre 1.33",
+        "direcao": "time melhor como visitante, ataque ligeiramente acima da média",
+        "forca": "media"
+      },
+      {
+        "id": "C20",
+        "bloco": "away_gols",
+        "fato": "Últimos 5: 6 gols marcados (1.2/j), 5 sofridos (1.0/j); SoT 4.6 feito, 2.4 sofrido",
+        "dado": "1.2 marca, 1.0 sofre, SoT 4.6/2.4",
+        "direcao": "forma recente bem melhor que Chelsea, defesa sólida, ataque eficiente",
+        "forca": "alta"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_estilo",
+        "fato": "Tottenham equilibrado (posse 50.2%), ataques perigosos 46.2/j; nos últimos 5 sofreu apenas 2.4 SoT/j",
+        "dado": "posse 50.2%, 46.2 ataques perigosos",
+        "direcao": "time competitivo, defesa melhorou recentemente, sem dar muitos espaços",
+        "forca": "media"
+      },
+      {
+        "id": "C22",
+        "bloco": "away_qualidade",
+        "fato": "Romero (fora) era líder em interceptações; Palhinha e Bentancur em boa forma; Richarlison principal atacante",
+        "dado": "Romero 1.3 int/j, Palhinha forma subindo, Richarlison 10 gols",
+        "direcao": "perda de Romero enfraquece defesa, mas meio-campo forte; ataque mantém referência",
+        "forca": "alta"
+      },
+      {
+        "id": "C23",
+        "bloco": "away_forma",
+        "fato": "Últimos 5: EVVED, 8 pontos, vitórias fora contra Wolves e Aston Villa",
+        "dado": "8 pts, vitórias fora",
+        "direcao": "time aguerrido, capaz de vencer fora mesmo contra times melhores",
+        "forca": "alta"
+      },
+      {
+        "id": "C24",
+        "bloco": "away_momentum",
+        "fato": "Tottenham marca cedo (12', 25' vs Villa) e no início do 2º tempo (50' vs Leeds); defesa organizada recente",
+        "dado": "gols em 12', 25', 50'; sofreu pouco",
+        "direcao": "pode surpreender no início, pressiona bem nos primeiros 30 min",
+        "forca": "media"
+      },
+      {
+        "id": "C25",
+        "bloco": "away_faixas",
+        "fato": "Tottenham sofre mais em 31-45 (0.53/j) e 76-90 (0.39/j); marca em 76-90 (0.36/j)",
+        "dado": "sofre 0.53 em 31-45, marca 0.36 em 76-90",
+        "direcao": "vulnerável no fim do 1º tempo e fim do jogo; mas também perigoso no fim",
+        "forca": "media"
+      },
+      {
+        "id": "C26",
+        "bloco": "away_desfalques",
+        "fato": "Xavi Simons (fora): 2 gols, 5 assists, mas time sem ele marca 1.25 g/j (similar)",
+        "dado": "2 gols, 5 assists; with/without gols: 1.29 vs 1.25",
+        "direcao": "perda na criação, mas impacto moderado; time se adaptou",
+        "forca": "media"
+      },
+      {
+        "id": "C27",
+        "bloco": "away_desfalques",
+        "fato": "Cristian Romero (fora): zagueiro, 1.3 interceptações/j (18% do time), 4 gols",
+        "dado": "1.3 int/j, 18% do time",
+        "direcao": "defesa perde seu pilar, especialmente em bolas paradas; Chelsea pode explorar escanteios",
+        "forca": "alta"
+      },
+      {
+        "id": "C28",
+        "bloco": "away_desfalques",
+        "fato": "Mohammed Kudus (fora): 2 gols, 5 assists, pouca influência (time sem ele 1.18 g/j)",
+        "dado": "2 gols, 5 assists, time sem ele não sentiu",
+        "direcao": "baixo impacto ofensivo",
+        "forca": "baixa"
+      },
+      {
+        "id": "C29",
+        "bloco": "away_desfalques",
+        "fato": "Solanke (dúvida): 3 gols, 0.73 SoT/j, mas time marca até mais sem ele (1.33 g/j)",
+        "dado": "3 gols, 0.73 SoT/j; with/without gols: 1.2 vs 1.33",
+        "direcao": "ausência contornável, Richarlison mantém referência",
+        "forca": "baixa"
+      },
+      {
+        "id": "C30",
+        "bloco": "away_desfalques",
+        "fato": "Odobert, Davies, Kulusevski: fora, mas com participação mínima",
+        "dado": "0% dos gols, volume baixo",
+        "direcao": "sem impacto significativo",
+        "forca": "baixa"
+      },
+      {
+        "id": "C31",
+        "bloco": "cruzamento_faixa",
+        "fato": "Chelsea ataque x Tottenham defesa: maior índice em 31-45 (0.89) e 76-90 (0.64)",
+        "dado": "índice 0.89 em 31-45, 0.64 em 76-90",
+        "direcao": "janelas prováveis para gol do Chelsea são fim do 1º tempo e fim do jogo",
+        "forca": "alta"
+      },
+      {
+        "id": "C32",
+        "bloco": "cruzamento_faixa",
+        "fato": "Tottenham ataque x Chelsea defesa: maior índice em 76-90 (0.67) e 31-45 (0.47)",
+        "dado": "índice 0.67 em 76-90, 0.47 em 31-45",
+        "direcao": "Tottenham também perigoso no fim do jogo e no fim do 1º tempo",
+        "forca": "alta"
+      },
+      {
+        "id": "C33",
+        "bloco": "cruzamento_faixa",
+        "fato": "Cruzamento de momentum: Tottenham domina 0-15 (-3), Chelsea domina 76-90 (+5.2)",
+        "dado": "0-15: -3 ✈️; 76-90: +5.2 🏠",
+        "direcao": "Tottenham começa melhor; Chelsea cresce no fim",
+        "forca": "alta"
+      },
+      {
+        "id": "C34",
+        "bloco": "base_rate",
+        "fato": "Rota A total 2.66, Rota B total 2.42 (SoT); média ~2.5 gols",
+        "dado": "Rota A: 2.66, Rota B: 2.42",
+        "direcao": "prior de total mediano, sem tendência clara de over",
+        "forca": "alta"
+      },
+      {
+        "id": "C35",
+        "bloco": "probs_mercado",
+        "fato": "Prior Dixon-Coles (Rota B): 1x2 32/31/37, Over 2.5 44%, BTTS 51%",
+        "dado": "32/31/37, O2.5 44%, BTTS 51%",
+        "direcao": "prior equilibrado, leve favoritismo ao Tottenham, over 2.5 abaixo de 50%",
+        "forca": "alta"
+      },
+      {
+        "id": "C36",
+        "bloco": "cruzamentos_computados",
+        "fato": "Chelsea contra equilibrado (estilo Tottenham) marca 1.18/j (-0.35 abaixo da média)",
+        "dado": "marca 1.18/j em 11 jogos",
+        "direcao": "Chelsea tem desempenho pior contra times de posse equilibrada",
+        "forca": "alta"
+      },
+      {
+        "id": "C37",
+        "bloco": "cruzamentos_computados",
+        "fato": "Tottenham contra dominante (estilo Chelsea) sofre 1.91/j (acima da média) mas marca 1.36/j",
+        "dado": "sofre 1.91/j, marca 1.36/j em 11 jogos",
+        "direcao": "Tottenham cede chances a times dominantes, mas também marca",
+        "forca": "alta"
+      },
+      {
+        "id": "C38",
+        "bloco": "cruzamentos_computados",
+        "fato": "Escanteios são canal aberto para ambos: Chelsea gera 47%, Tottenham sofre 44%; Tottenham gera 48%, Chelsea sofre 51%",
+        "dado": "índice 1.5x e 1.7x em escanteios",
+        "direcao": "alta probabilidade de gols de escanteio, favorece ambos",
+        "forca": "alta"
+      },
+      {
+        "id": "C39",
+        "bloco": "cruzamentos_computados",
+        "fato": "Dinâmica pós-gol: ambos 'matam o jogo' após marcar (continuam pressionando)",
+        "dado": "Chelsea Δ +1.0, Tottenham Δ +2.8 após marcar",
+        "direcao": "se abrirem o placar, tendem a pressionar mais; pode gerar mais gols se jogo abrir",
+        "forca": "media"
+      },
+      {
+        "id": "C40",
+        "bloco": "cruzamentos_computados",
+        "fato": "Artilharia: Chelsea depende de João Pedro (15 gols, dúvida); Tottenham tem Richarlison (10), Palhinha (4) e outros",
+        "dado": "João Pedro 15 gols, Richarlison 10 gols",
+        "direcao": "Chelsea concentrado em um artilheiro (dúvida); Tottenham mais distribuído",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C1",
+        "motivo": "Clima neutro, sem correlação com total de gols na liga."
+      },
+      {
+        "id": "C3",
+        "motivo": "Viagem curta, sem impacto no desempenho."
+      },
+      {
+        "id": "C16",
+        "motivo": "Estêvão: baixo impacto ofensivo (4% dos gols), time se adaptou."
+      },
+      {
+        "id": "C17",
+        "motivo": "Jamie Gittens: 0 gols, volume baixo, irrelevante."
+      },
+      {
+        "id": "C18",
+        "motivo": "Lavia, Wiley, Mudryk: sem participação relevante em gols ou volume."
+      },
+      {
+        "id": "C26",
+        "motivo": "Xavi Simons: impacto moderado, mas time já se adaptou (gols sem ele similares)."
+      },
+      {
+        "id": "C28",
+        "motivo": "Mohammed Kudus: baixo impacto ofensivo, time sem ele não sentiu."
+      },
+      {
+        "id": "C29",
+        "motivo": "Solanke: dúvida, mas time marca até mais sem ele; ausência contornável."
+      },
+      {
+        "id": "C30",
+        "motivo": "Odobert, Davies, Kulusevski: participação mínima, sem impacto significativo."
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Enzo Fernández",
+        "time": "home",
+        "leitura": "Meia criativo, 9 gols e 0.9 SoT/j, mas forma recente caindo. Pode ser o diferencial em passes e pênaltis, mas terá dificuldade se bem marcado."
+      },
+      {
+        "nome": "João Pedro",
+        "time": "home",
+        "leitura": "Artilheiro do time (15 gols, 0.8 SoT/j). Dúvida crucial: se não jogar, o ataque do Chelsea perde finalização e volume (SoT cai 68%)."
+      },
+      {
+        "nome": "Moisés Caicedo",
+        "time": "home",
+        "leitura": "Volante de contenção, nota 7.08 e forma subindo. Essencial para neutralizar contra-ataques do Tottenham."
+      },
+      {
+        "nome": "Reece James",
+        "time": "home",
+        "leitura": "Lateral-direito de qualidade (7.08), mas com poucos jogos recentes (2/5). Se não estiver 100%, a lateral pode ser explorada."
+      },
+      {
+        "nome": "Pedro Neto",
+        "time": "home",
+        "leitura": "Ponta com 5 gols, 0.4 SoT/j, faltou 2/5 jogos. Inconstante, mas pode criar desequilíbrio; ausência parcial reduz opções."
+      },
+      {
+        "nome": "Alejandro Garnacho",
+        "time": "home",
+        "leitura": "Ponta com 3 gols, poucos jogos na janela (3/5). Não deve ser titular, impacto limitado."
+      },
+      {
+        "nome": "Estêvão",
+        "time": "home",
+        "leitura": "Meia de pouca influência (2 gols, 4% dos gols), time até marca mais sem ele. Lesão não é perda relevante."
+      },
+      {
+        "nome": "Jamie Gittens",
+        "time": "home",
+        "leitura": "0 gols, 0.13 SoT/j, volume insignificante. Sua possível ausência não afeta o time."
+      },
+      {
+        "nome": "Roméo Lavia",
+        "time": "home",
+        "leitura": "Volante sem contribuição ofensiva (0 gols, 0 SoT/j). Dúvida sem impacto."
+      },
+      {
+        "nome": "C. Wiley",
+        "time": "home",
+        "leitura": "Sem jogos na temporada, irrelevante."
+      },
+      {
+        "nome": "M. Mudryk",
+        "time": "home",
+        "leitura": "Banido, 0 jogos, não afeta."
+      },
+      {
+        "nome": "Cristian Romero",
+        "time": "away",
+        "leitura": "Zagueiro artilheiro (4 gols) e líder em interceptações (18% do time). Fora, enfraquece defesa aérea e saída de bola; Chelsea pode explorar escanteios."
+      },
+      {
+        "nome": "Pedro Porro",
+        "time": "away",
+        "leitura": "Lateral ofensivo (7.01, 4 MOTM), mas forma caindo. Pode apoiar, mas queda de ritmo é risco defensivo."
+      },
+      {
+        "nome": "Xavi Simons",
+        "time": "away",
+        "leitura": "Meia criativo com 2 gols e 5 assists, mas fora por lesão. Time já se adaptou (1.25 g/j sem ele), perda moderada."
+      },
+      {
+        "nome": "João Palhinha",
+        "time": "away",
+        "leitura": "Volante com 4 gols e forma subindo. Forte na contenção e perigoso em escanteios, especialmente sem Romero."
+      },
+      {
+        "nome": "Richarlison",
+        "time": "away",
+        "leitura": "Principal atacante (10 gols, 0.8 SoT/j). Referência ofensiva, deve ser a maior ameaça ao gol do Chelsea."
+      },
+      {
+        "nome": "Rodrigo Bentancur",
+        "time": "away",
+        "leitura": "Meia de qualidade (6.88) e forma subindo. Dá controle na saída de bola e pode ditar o ritmo no meio."
+      },
+      {
+        "nome": "Mohammed Kudus",
+        "time": "away",
+        "leitura": "Ponta com 2 gols e 5 assists, fora. Time sem ele não sentiu (1.18 g/j), ausência de baixo impacto."
+      },
+      {
+        "nome": "D. Solanke",
+        "time": "away",
+        "leitura": "Atacante de 3 gols, 0.73 SoT/j, mas dúvida. Time marca mais sem ele; Richarlison assume, sem grande perda."
+      },
+      {
+        "nome": "Wilson Odobert",
+        "time": "away",
+        "leitura": "0 gols, pouca participação. Fora, sem impacto."
+      },
+      {
+        "nome": "Ben Davies",
+        "time": "away",
+        "leitura": "Zagueiro com 1 gol, mas só 3 jogos na temporada. Ausência não afeta."
+      },
+      {
+        "nome": "D. Kulusevski",
+        "time": "away",
+        "leitura": "0 jogos, irrelevante."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C2",
+          "C4"
+        ],
+        "leitura": "Chelsea com apenas 3 dias de descanso após final da FA Cup, enquanto Tottenham teve 8 dias. Fadiga do Chelsea reduz intensidade, especialmente no 2º tempo, e favorece Tottenham, que estará mais fresco.",
+        "efeito": "xG do Chelsea cai 0.1 no 2º tempo; xG do Tottenham sobe ligeiramente. Probabilidade de Tottenham pontuar (empate ou vitória) aumenta."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C5",
+          "C6",
+          "C37"
+        ],
+        "leitura": "Tottenham joga para não perder (administra empate), mas historicamente sofre bastante contra times dominantes (1.91/j). Chelsea, mesmo em má fase, é dominante (58.2% posse) e em casa. Isso sugere que Chelsea pode criar chances, apesar do ferrolho.",
+        "efeito": "xG do Chelsea não tão baixo quanto o estilo 'administra' sugere; mantém-se próximo de 0.9, pois Tottenham cede chances a dominantes."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C7",
+          "C15",
+          "C8"
+        ],
+        "leitura": "Chelsea já vinha mal (0.4 gols/j nos últimos 5) e sem João Pedro (principal artilheiro, 27% dos gols) o ataque tende a piorar ainda mais. Volume de SoT cai de 4.62 para 1.5 sem ele.",
+        "efeito": "xG do Chelsea reduzido de 1.15 para 0.9 (queda de ~22%); probabilidade de Chelsea marcar cai de 68% para 59%."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C20",
+          "C23",
+          "C22"
+        ],
+        "leitura": "Tottenham em ascensão: 8 pts nos últimos 5, defesa sólida (1.0 gols sofridos/j, 2.4 SoT/j), e meio-campo com Palhinha e Bentancur em boa forma. Time mais confiante e organizado que o Chelsea.",
+        "efeito": "xG do Tottenham sobe de 1.27 para 1.35; maior chance de marcar e de não perder."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C19",
+          "C24",
+          "C33"
+        ],
+        "leitura": "Tottenham fora de casa marca 1.39/j, inicia bem (marcou cedo contra Aston Villa) e domina a janela 0-15 (cruzamento de momentum -3). Defesa Chelsea é frágil no início (sofreu gols precoces).",
+        "efeito": "Alta probabilidade de gol do Tottenham na faixa 0-15; xG 1º tempo do Tottenham sobe para 0.57."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C31",
+          "C25",
+          "C14"
+        ],
+        "leitura": "Chelsea marca bastante no fim do 1º tempo (0.36/j), e Tottenham sofre muito nessa faixa (0.53/j). O índice de cruzamento ataque x defesa é o mais alto (0.89).",
+        "efeito": "Provável gol do Chelsea entre 31-45 min; concentra xG nessa janela."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C27",
+          "C38",
+          "C32"
+        ],
+        "leitura": "Com Romero fora (principal interceptador e zagueiro aéreo), Tottenham fica vulnerável em escanteios, que é canal aberto para o Chelsea (índice 1.5x). Chelsea tem Enzo e outros para bolas paradas.",
+        "efeito": "Aumenta a probabilidade de gol do Chelsea em escanteios, especialmente nas janelas de pressão (31-45, 76-90)."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C36",
+          "C6"
+        ],
+        "leitura": "Chelsea contra times equilibrados (como Tottenham) tem desempenho abaixo da média (marca 1.18/j). Aliado ao jogo travado, a tendência é de produção ofensiva baixa.",
+        "efeito": "xG do Chelsea ajustado para baixo, consistente com 0.9."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C13",
+          "C24",
+          "C39"
+        ],
+        "leitura": "Ambos times tendem a pressionar após marcar ('matam o jogo'), o que poderia gerar mais gols se o placar abrir. No entanto, Tottenham satisfeito com empate pode adotar postura cautelosa se fizer 1-0. Efeito ambíguo.",
+        "efeito": "Impacto neutro no total; em caso de gol cedo, jogo pode se abrir, mas o contexto de motivação reduz esse risco."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C8",
+          "C11",
+          "C23"
+        ],
+        "leitura": "Contraste forte de momento: Chelsea em crise (1 pt em 15), Tottenham lutando e pontuando. Psicológico favorece Tottenham, que deve jogar com mais confiança e intensidade.",
+        "efeito": "xG do Tottenham sobe 0.1; probabilidade de vitória do Tottenham aumenta."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C34",
+          "C6",
+          "C2",
+          "C5"
+        ],
+        "leitura": "O jogo tende a ser de poucos gols devido à intenção de Tottenham (administra empate) e fadiga do Chelsea. O prior total é ~2.5, mas com esses fatores, o total esperado cai.",
+        "efeito": "Total de gols reduzido para 2.25; probabilidade de under 2.5 sobe para 62%."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C40",
+          "C29",
+          "C22"
+        ],
+        "leitura": "Apesar dos desfalques, Tottenham mantém Richarlison (10 gols, 0.8 SoT/j) como referência. Mesmo jogando por empate, podem marcar em contra-ataque.",
+        "efeito": "Probabilidade de Tottenham marcar pelo menos 1 gol é alta (74%)."
+      },
+      {
+        "id": "A13",
+        "liga": [
+          "C9",
+          "C21"
+        ],
+        "leitura": "Chelsea tem muitos chutes bloqueados (6.2/j nos últimos 5) e enfrenta defesa do Tottenham que melhorou recentemente (2.4 SoT sofridos). Defesa fechada deve neutralizar volume ofensivo do Chelsea.",
+        "efeito": "xG do Chelsea reduzido; menor eficácia na conversão de chances."
+      },
+      {
+        "id": "A14",
+        "liga": [
+          "C12",
+          "C33",
+          "C19"
+        ],
+        "leitura": "Chelsea sofreu gols no início em vários jogos recentes (3', 6', 2', 15'), e Tottenham começa bem (domina 0-15). Alta probabilidade de Tottenham marcar cedo.",
+        "efeito": "Aumenta a chance de gol do Tottenham no 1º tempo, especialmente na faixa 0-15."
+      },
+      {
+        "id": "A15",
+        "liga": [
+          "C13",
+          "C33",
+          "C2"
+        ],
+        "leitura": "Chelsea só costuma dominar no fim (76-90), mas com fadiga (3 dias de descanso) esse domínio pode não se traduzir em gols. Tottenham pode explorar contra-ataques nessa janela.",
+        "efeito": "xG do Chelsea no fim é menor que o indicado pelo momentum; Tottenham perigoso no contra-golpe."
+      },
+      {
+        "id": "A16",
+        "liga": [
+          "C32",
+          "C25",
+          "C12"
+        ],
+        "leitura": "Tottenham costuma marcar no fim (0.36/j em 76-90) e Chelsea sofre no fim (0.31/j). O cruzamento de faixa aponta essa como a principal janela para o visitante.",
+        "efeito": "Alta probabilidade de gol do Tottenham no final do jogo (76-90)."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Jogo travado, poucos gols (under)",
+        "prob": 0.55,
+        "filme": "Tottenham começa administrando, Chelsea tem posse mas não fura (A8, A13). Chelsea pressiona no fim do 1º tempo (A6), mas sem João Pedro, não converte (A3). 0-0 no intervalo. No 2º tempo, Chelsea cansado (A1) se lança, mas expõe defesa. Tottenham pode marcar em contra-ataque no início ou fim (A5, A16). Placar provável: 0-0 ou 0-1. Total de gols 0-1. Under 2.5 claro.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A3",
+          "A5",
+          "A6",
+          "A8",
+          "A11",
+          "A13",
+          "A16"
+        ]
+      },
+      {
+        "nome": "Chelsea marca, mas Tottenham reage",
+        "prob": 0.25,
+        "filme": "Chelsea usa escanteios e ausência de Romero para abrir o placar no fim do 1º tempo (A7). Tottenham busca empate no 2º tempo, aproveitando cansaço do Chelsea (A1, A16). Jogo termina 1-1 ou vitória magra do Chelsea se conseguir segurar. Total 2-3 gols, BTTS sim.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A6",
+          "A7",
+          "A12",
+          "A16"
+        ]
+      },
+      {
+        "nome": "Tottenham vence sem sustos",
+        "prob": 0.2,
+        "filme": "Tottenham marca cedo (A5, A14) e controla. Chelsea se desespera, mas não consegue reagir (A3, A8). Tottenham pode ampliar no fim (A16). Placar 0-2 ou 1-2. Vitória convincente do Tottenham.",
+        "arestas": [
+          "A1",
+          "A3",
+          "A5",
+          "A10",
+          "A14",
+          "A16"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Tottenham inicia forte, domina o início do jogo. Chelsea defende mal nos primeiros minutos e pode sofrer gol cedo. Boa chance de gol do Tottenham.",
+        "prob_gol": 0.25,
+        "lado": "away"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Jogo fica mais morno, Chelsea tenta propor, Tottenham se fecha. Poucas chances claras, equilíbrio.",
+        "prob_gol": 0.15,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Chelsea cresce e pressiona, aproveitando a vulnerabilidade do Tottenham nessa faixa. Principal janela para o gol do Chelsea, possivelmente em escanteio.",
+        "prob_gol": 0.3,
+        "lado": "home"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Início do 2º tempo, times voltam modificados. Chelsea cansado pode ceder espaços, Tottenham pode surpreender em contra-ataque. Momento de transição.",
+        "prob_gol": 0.2,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Jogo truncado, fadiga do Chelsea evidente. Tottenham controla sem pressa, eventuais chances em contra-ataque. Baixa probabilidade de gol.",
+        "prob_gol": 0.2,
+        "lado": "away"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Tottenham historicamente marca no fim e Chelsea sofre. Com o cansaço do Chelsea, Tottenham pode matar o jogo. Janela de maior perigo para o visitante.",
+        "prob_gol": 0.3,
+        "lado": "away"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Tottenham começa melhor e pode assustar nos primeiros 15 minutos. Chelsea, mesmo com posse, tem dificuldade para criar. A reta final do 1º tempo (31-45) é o momento de maior pressão do Chelsea, com chances de gol em escanteios ou jogadas individuais de Enzo. Placar provável no intervalo: 0-0 ou 0-1.",
+        "prob_gol": 0.35
+      },
+      "segundo": {
+        "analise": "Chelsea volta mais desgastado e pode sofrer com a intensidade do Tottenham. Se o jogo estiver empatado, Chelsea se lança, abrindo espaços. Tottenham, que costuma marcar no fim, pode decidir. A faixa 76-90 é a mais provável para gols. O cansaço e a necessidade do Chelsea podem tornar o 2º tempo mais movimentado.",
+        "prob_gol": 0.55
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Enzo Fernández",
+          "prob": 0.25,
+          "motivo": "Meia criativo, bate pênaltis, 9 gols na temporada, presença de área e finalizador em escanteios."
+        },
+        {
+          "nome": "Cole Palmer",
+          "prob": 0.2,
+          "motivo": "9 gols (5 pênaltis), especialista em bolas paradas e pênaltis, pode ser acionado mesmo sem João Pedro."
+        },
+        {
+          "nome": "Pedro Neto",
+          "prob": 0.1,
+          "motivo": "5 gols na temporada, ponta rápido, mas forma irregular e baixo volume de finalizações (0.4 SoT/j)."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Richarlison",
+          "prob": 0.35,
+          "motivo": "Principal atacante do time, 10 gols, 0.8 SoT/j, referência no contra-ataque e posicionamento."
+        },
+        {
+          "nome": "João Palhinha",
+          "prob": 0.15,
+          "motivo": "4 gols, boa forma recente, forte no jogo aéreo e chega como surpresa em escanteios."
+        },
+        {
+          "nome": "Mathys Tel",
+          "prob": 0.1,
+          "motivo": "4 gols na temporada, opção vinda do banco, pode aproveitar espaços no fim do jogo."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.25,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Chelsea em má forma, sem João Pedro, difícil vitória. Probabilidade abaixo do prior (32%)."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.35,
+        "variancia": 4,
+        "valor": "alto",
+        "nota": "Jogo travado, Tottenham administra empate. Subestimado pelo mercado (prior 31%); valor potencial."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.4,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Tottenham melhor momento, mas joga pelo empate; vitória não é garantida, porém provável."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.6,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Chelsea não perde na maioria dos cenários? Pouco provável, mas cobre empate."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.75,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Tottenham não perde: aposta segura, ainda mais com empate provável."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.65,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Cobre vitória de qualquer lado, mas empate é bem possível."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.38,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Chelsea frágil, não confiável nem excluindo empate."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.62,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "Tottenham não perde na maioria dos cenários, boa relação risco-retorno."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.65,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Apesar de jogo travado, 1.5 ainda provável, mas odd baixa e sem valor claro."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.38,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Under 2.5 é o mercado de valor: jogo com tendência a poucos gols, total esperado 2.25."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.18,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Muito improvável em jogo travado; over 3.5 é aposta arriscada."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.44,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "BTTS não tem valor claro; 'no' pode ser melhor (56%), mas não é tão seguro devido à defesa do Chelsea."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.59,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Chelsea sem João Pedro tem menos chances de marcar; under 0.5 home seria valor se odd acompanhasse prior."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.23,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Improvável Chelsea marcar 2+ gols, a menos que escanteios resolvam."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.74,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Tottenham deve marcar, mas odd baixa; sem valor claro."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.39,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Tottenham marcar 2+ gols é possível, mas não provável; valor apenas se odd alta."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": null,
+        "line": -1,
+        "prob": 0.12,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Chelsea vencer por 2+ gols é altamente improvável."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": null,
+        "line": -1,
+        "prob": 0.25,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Tottenham vencer por 2+ gols é possível, mas arriscado; melhor explorar under ou DNB."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.46,
+        "variancia": 1,
+        "valor": "nenhum",
+        "nota": "Sem viés claro; próximo de 50%."
+      }
+    ],
+    "best_bet": {
+      "market": "over_under",
+      "selection": "under",
+      "team": null,
+      "line": 2.5,
+      "confidence": "medium",
+      "probability": 0.62,
+      "evidence_for": [
+        "A11",
+        "A8",
+        "A13",
+        "A3",
+        "C6",
+        "C15",
+        "A1"
+      ],
+      "evidence_against": [
+        "A16",
+        "A5",
+        "C12",
+        "C38",
+        "A9"
+      ],
+      "analysis": "Jogo com forte tendência a ser truncado. Tottenham joga pelo empate e deve adotar postura cautelosa, enquanto Chelsea, mesmo precisando vencer, está em péssima forma e sem seu principal artilheiro (João Pedro, dúvida). A fadiga do Chelsea (3 dias de descanso vs 8) reforça a probabilidade de um jogo de baixa intensidade. O total esperado de gols é de apenas 2.25, com under 2.5 tendo 62% de chance. Riscos: escanteios são canal aberto para ambos, e a defesa do Chelsea é frágil, podendo sofrer gols mesmo sem pressão intensa do Tottenham. Além disso, se sair um gol cedo, o jogo pode se abrir. Ainda assim, o cenário mais provável é de poucos gols."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "under 2.5 gols",
+          "argumento": "Ambos times 'matam o jogo' após marcar (C39), podendo pressionar mais e gerar mais gols. Se o Tottenham abrir o placar, pode continuar atacando, e se Chelsea empatar, o jogo pode ficar lá-e-cá.",
+          "ids": [
+            "C39",
+            "A9"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "under 2.5 gols",
+          "argumento": "Defesa do Chelsea é muito frágil (C12), sofrendo gols no início e fim, e Tottenham tem boa finalização (C20). Mesmo sem se expor, o Tottenham pode marcar em contra-ataques e escanteios (C38).",
+          "ids": [
+            "C12",
+            "C20",
+            "C38",
+            "A5",
+            "A16"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "under 2.5 gols",
+          "argumento": "Chelsea precisa vencer (C4) e, se o jogo estiver 0-0 no 2º tempo, vai se lançar ao ataque, podendo sofrer gols e também marcar. A necessidade pode superar o cansaço e o ferrolho.",
+          "ids": [
+            "C4",
+            "A1"
+          ],
+          "veredito": "enfraquece"
+        }
+      ],
+      "conclusao": "Os ataques enfraquecem a confiança no under 2.5, mas não a derrubam. O contexto de intenção assimétrica, a péssima fase ofensiva do Chelsea e a fadiga são mais fortes que os riscos. A aposta under 2.5 sobrevive com confiança média."
+    },
+    "drivers": [
+      "Desfalque de João Pedro (C15) reduz drasticamente o ataque do Chelsea.",
+      "Intenção assimétrica: Tottenham satisfeito com empate (C6) trava o jogo.",
+      "Diferença de descanso (C2) favorece Tottenham e reduz ritmo no 2º tempo."
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 40,
+    "arestas": 16,
+    "jogadores": 22,
+    "mercados": 19,
+    "orfas": [
+      "C10",
+      "C35"
+    ]
+  },
+  "reasoningText": "Vou analisar o jogo Chelsea x Tottenham Hotspur seguindo o protocolo de 6 passos, começando pela varredura dos blocos de dados.\n\n**Passo 1 — VARREDURA: conclusões por bloco**\n\nVou extrair conclusões de cada bloco, numerando-as sequencialmente como C1, C2, etc., com o dado copiado do briefing, a direção e a força (alta, média, baixa).\n\n**Bloco: contexto**\n- C1: Data: 19/05/2026, Stamford Bridge, grama natural, com chuva moderada. A chuva/vento não tiveram correlação com total de gols na liga (2.9 vs 2.84), então clima não é fator relevante. Direção: neutro, não ajusta xG por clima. Força: baixa.\n- C2: Descanso: Chelsea 3 dias (jogou final da FA Cup em 16/05), Tottenham 8 dias. Assimetria grande de descanso, Chelsea cansado. Direção: favorece Tottenham, especialmente no 2º tempo; Chelsea pode ter rotação ou queda física. Força: alta.\n- C3: Viagem do visitante curta (~16 km), sem desgaste de viagem. Direção: neutro. Força: baixa.\n\n**Bloco: tabela_motivacao**\n- C4: Chelsea 10º com 49 pts, ainda pode alcançar vaga europeia (52 pts linha mínima). Motivação alta: precisa vencer para buscar Europa. Direção: Chelsea mais ofensivo, +xG. Força: alta.\n- C5: Tottenham 17º com 38 pts, zona de rebaixamento? A linha de segurança é 38 pts (17º), mas eles têm 38 pts e 2 jogos restantes. Um empate já garante permanência (pois o máximo do 18º seria... mas o briefing diz \"um empate NESTE jogo já garante a permanência\"). Então Tottenham joga para não perder, motivação média: contenta-se com empate. Direção: Tottenham mais defensivo, +under, jogo pode travar. Força: alta.\n- C6: Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR. Pelo menos um lado não precisa ir pra cima (Tottenham administra). Direção: favorece under, menor total de gols; não favorece goleada nem handicap de mando. Força: alta.\n\n**Bloco: home_gols**\n- C7: Chelsea marca 1.53/j na temporada, sofre 1.36/j. Em casa marca 1.33 e sofre 1.33 (18j). Volume: SoT 4.44/j (casa 4.28/j), conversão 30%. Sofre 4.22 SoT/j. Direção: ataque e defesa medianos; em casa, desempenho levemente pior que a média geral. Força: média.\n- C8: Nos últimos 5 jogos, Chelsea marcou apenas 2 gols (0.4/j) e sofreu 11 (2.2/j), com SoT 2.8 feito e 5 sofrido. Forma péssima. Direção: ataque em baixa, defesa vulnerável. Força: alta.\n\n**Bloco: home_estilo**\n- C9: Chelsea gera 55.3 ataques perigosos/j (casa? temporada) e sofre 43.8. Chutes pra fora 4.8, bloqueados 4.5. Nos últimos 5: ataques perigosos 51.4, bloqueios subiram para 6.2. Direção: time dominante, mas com muitos chutes bloqueados (defesas adversárias fechadas) - pode ter dificuldade contra defesa postada. Força: média.\n\n**Bloco: home_qualidade**\n- C10: Nota média do time 6.89. Enzo Fernández nota 7.25, 9 MOTM, mas forma recente caindo (7.22 na forma mas última nota 7). João Pedro (fora/dúvida) nota 7.1, 15 gols, mas dúvida. Moisés Caicedo 7.08, forma subindo. Reece James 7.08, poucos jogos. Pedro Neto 7.04, faltou 2/5. Garnacho 7.03, poucos jogos. Direção: meio-campo com Enzo e Caicedo é sólido, mas ataque depende de João Pedro (dúvida) e pontas inconsistentes. Força: alta (desfalque de João Pedro pode ser decisivo).\n\n**Bloco: home_forma**\n- C11: Últimos 5 jogos: EDDDD (1 pt), 2 gols marcados, 11 sofridos. Sequência terrível. Consistência: marcou em 29/36 jogos, clean sheet apenas 9. Direção: momento péssimo, baixa confiança. Força: alta.\n\n**Bloco: home_momentum**\n- C12: Momento dos últimos 5 jogos mostra Chelsea sofrendo gols em várias janelas: 3' (Brighton), 6' (Liverpool), 2' e 15' (Forest), 43' (United), 51', 57', 68' (City). Defesa frágil no início e no fim. No ataque, marca pouco: apenas 2 gols nos últimos 5, ambos em momentos de pressão (35' vs Liverpool, 90' vs Forest quando já perdia). Direção: defesa vulnerável cedo e no 2º tempo; ataque pouco produtivo. Força: alta.\n- C13: Observando as curvas: contra City, pressão negativa no início e no 2º tempo até 60', depois leve melhora; contra United, pressão alta no fim mas sem gol; contra Forest, pressão alta só no fim e no início sofreu gols; contra Liverpool, pressão mediana. Em casa, parece ter dificuldade de impor ritmo. Direção: Chelsea não é confiável para dominar partidas inteiras, pode sofrer em transições. Força: média.\n\n**Bloco: home_faixas**\n- C14: Chelsea marca mais nos períodos 31-45 (0.36/j) e 46-60 (0.36/j). Sofre mais em 0-15 (0.31), 76-90 (0.31). Direção: tende a marcar no final do 1º tempo e início do 2º, mas sofre no início e final do jogo. Força: média.\n\n**Bloco: home_desfalques**\n- C15: João Pedro (doubtful): principal artilheiro (15 gols, 27% dos gols do time, 0.82 SoT/j). Com ele, time marca 1.62 g/j; sem ele, 0 g/j em 2 jogos (amostra pequena, mas SoT cai de 4.62 para 1.5). Se ausente, perda ofensiva enorme. Direção: se João Pedro não jogar, ataque do Chelsea despenca; xG deve ser reduzido. Força: alta.\n- C16: Estêvão (unknown injury): 2 gols, 4% dos gols, pouca influência (time até marca mais sem ele: +13%). Direção: desfalque menor. Força: baixa.\n- C17: Jamie Gittens (doubtful): 0 gols, volume baixo (0.13 SoT/j). Time marca menos sem ele (-47%), mas é outlier. Direção: se ausente, pode afetar criação? Mas dados não sustentam grande impacto. Força: baixa.\n- C18: Outros desfalques (Lavia, Wiley, Mudryk) com participação mínima. Direção: impacto desprezível. Força: baixa.\n\n**Bloco: away_gols**\n- C19: Tottenham marca 1.28/j, sofre 1.53/j. Fora marca 1.39/j e sofre 1.33/j (melhor fora que em casa?). SoT 3.94/j (fora 3.89/j), conversão 32%. Sofre 4.08 SoT/j. Direção: ataque ligeiramente acima da média como visitante, defesa também razoável fora. Força: média.\n- C20: Últimos 5: 6 gols marcados (1.2/j), 5 sofridos (1.0/j), SoT 4.6 feito e 2.4 sofrido. Forma melhor que a do Chelsea. Direção: Tottenham em ascensão, defesa mais sólida recentemente. Força: alta.\n\n**Bloco: away_estilo**\n- C21: Tottenham tem estilo equilibrado (posse 50.2%), ataques perigosos 46.2/j, sofre 46.7. Chutes pra fora 4.2, bloqueados 3.2. Nos últimos 5: ataques perigosos 46, sofre 40.4, menos chutes bloqueados. Direção: time não é dominante, mas competitivo; defesa melhorou nos últimos jogos. Força: média.\n\n**Bloco: away_qualidade**\n- C22: Nota média 6.76. Destaques: Cristian Romero (7.03, mas fora por lesão), Pedro Porro (7.01, 4 MOTM, forma caindo), Xavi Simons (6.97, fora por lesão), João Palhinha (6.91, subindo), Richarlison (6.91, estável), Bentancur (6.88, subindo). Direção: Tottenham perde Romero e Simons, mas tem Palhinha e Bentancur em boa forma. Ataque depende de Richarlison. Força: alta.\n\n**Bloco: away_forma**\n- C23: Últimos 5: EVVED (8 pts), 6 gols marcados, 5 sofridos. Resultados: perdeu para Sunderland (fora), empatou com Brighton (casa), venceu Wolves (fora) e Aston Villa (fora), empatou com Leeds (casa). Forma irregular mas lutando contra rebaixamento. Direção: Tottenham mostrou capacidade de vencer fora contra Villa (5º), time aguerrido. Força: alta.\n\n**Bloco: away_momentum**\n- C24: Momento: contra Villa, pressionou bem nos primeiros 30 min e marcou 2 gols. Contra Leeds, marcou cedo no 2º tempo e sofreu depois. Contra Wolves, pressionou pouco mas marcou no fim. Defesa: sofreu gols em várias janelas, mas nos últimos jogos sofreu menos (1 contra Sunderland, 2 Brighton, 1 Wolves, 1 Villa, 1 Leeds). Direção: Tottenham costuma marcar no 1º tempo (12', 25' contra Villa) e também no início do 2º (50' vs Leeds). Defesa mais organizada recentemente. Força: média.\n\n**Bloco: away_faixas**\n- C25: Tottenham marca mais em 76-90 (0.36/j) e 31-45 (0.28/j). Sofre mais em 31-45 (0.53/j) e 76-90 (0.39/j). Direção: sofre bastante no fim do 1º tempo e no fim do jogo. Força: média.\n\n**Bloco: away_desfalques**\n- C26: Xavi Simons (fora): 2 gols, 5 assists, 0.36 SoT/j, participava de 33% dos gols nos últimos 5, mas time sem ele não muda muito (1.25 g/j sem vs 1.29 com). Perda na criação. Direção: impacto moderado, ataque mantém Richarlison e outros. Força: média.\n- C27: Cristian Romero (fora): zagueiro, 4 gols (escanteios), 1.3 interceptações/j (18% do time), 2.5 desarmes. Defesa perde seu principal interceptador. Direção: defesa do Tottenham mais vulnerável sem Romero, especialmente em bolas paradas. Força: alta.\n- C28: Mohammed Kudus (fora): 2 gols, 5 assists, 0.47 SoT/j, mas time sem ele até melhorou defensivamente? Sem ele, time sofre menos? Não claro, mas ofensivamente não é grande perda. Direção: impacto baixo. Força: baixa.\n- C29: Solanke (doubtful): 3 gols, 0.73 SoT/j, mas time sem ele marca mais (1.33 vs 1.2). Provavelmente substituto. Se ausente, pouco impacto. Força: baixa.\n- C30: Odobert, Davies, Kulusevski fora, mas com participação mínima. Direção: impacto baixo. Força: baixa.\n\n**Bloco: cruzamento_faixa**\n- C31: Chelsea ataque x Tottenham defesa: maior índice em 31-45 (0.89) e 76-90 (0.64). Menor em 16-30 (0.25). Direção: janelas mais prováveis de gol do Chelsea são final do 1º tempo e final do jogo. Força: alta.\n- C32: Tottenham ataque x Chelsea defesa: maior índice em 76-90 (0.67) e 31-45 (0.47). Direção: Tottenham também tem chances no fim do 1º tempo e especialmente no fim do jogo. Força: alta.\n- C33: Cruzamento de momentum: Chelsea domina 76-90 (+5.2), Tottenham domina 0-15 (domínio -3? Na verdade a tabela mostra: Chelsea 76-90 +4.3, Tottenham -0.9, cruzamento +5.2 para Chelsea). Tottenham domina 0-15 com +1.4 contra -1.6 do Chelsea, resultando -3? A tabela diz \"0-15: Chelsea -1.6, Tottenham +1.4, cruzamento -3 ✈️\". Ou seja, Tottenham tem domínio no início do jogo. Direção: Tottenham pode começar melhor; Chelsea cresce no fim. Força: alta.\n\n**Bloco: base_rate**\n- C34: Rota A (gols): total 2.66, Chelsea 1.15, Tottenham 1.51. Rota B (SoT): total 2.42, Chelsea 1.15, Tottenham 1.27. Média ~2.5 gols. Direção: prior de total mediano, sem over claro. Força: alta (base inicial).\n\n**Bloco: probs_mercado**\n- C35: Prior Dixon-Coles (Rota B): 1x2: 32/31/37, Over 2.5: 44%, BTTS: 51%. Direção: prior equilibrado, leve favoritismo ao Tottenham (37%), empate provável (31%). Força: alta.\n\n**Bloco: cruzamentos_computados**\n- C36: Arquétipo Chelsea contra equilibrado: marca 1.18/j (abaixo da média) e sofre 1.09/j. Direção: Chelsea tende a produzir menos contra times de posse equilibrada. Força: alta.\n- C37: Arquétipo Tottenham contra dominante: marca 1.36/j (na média) e sofre 1.91/j (acima da média). Direção: Tottenham sofre bastante contra times dominantes, mas também marca. Força: alta.\n- C38: Mecanismo de gol: Escanteios são canal aberto para ambos (índice 1.5x e 1.7x). Direção: alta probabilidade de gol de escanteio. Força: alta.\n- C39: Dinâmica pós-gol: Ambos times \"matam o jogo\" após marcar (seguem pressionando). Direção: se um time abrir o placar, pode haver mais gols? Mas \"matar o jogo\" pode significar controlar; dinâmica mista. Força: média.\n- C40: Artilharia: Chelsea depende de João Pedro (15 gols, mas dúvida). Outros: Enzo (9), Palmer (9), Neto (5), Caicedo (3). Tottenham: Richarlison (10), Palhinha (4), van de Ven (4), Tel (4), Romero (4 fora). Direção: artilheiros do Tottenham mais distribuídos; Chelsea concentrado em João Pedro (dúvida). Força: alta.\n\nAgora, bloco a bloco, vejo se algum não gerou conclusão e deve ir para `blocos_sem_sinal`. Contexto gerou C1-C3; tabela_motivacao C4-C6; home_gols C7-C8; home_estilo C9; home_qualidade C10; home_forma C11; home_momentum C12-C13; home_faixas C14; home_desfalques C15-C18; away_gols C19-C20; away_estilo C21; away_qualidade C22; away_forma C23; away_momentum C24; away_faixas C25; away_desfalques C26-C30; cruzamento_faixa C31-C33; base_rate C34; probs_mercado C35; cruzamentos_computados C36-C40. Todos os blocos geraram conclusões. Nenhum bloco fica sem sinal.\n\n**Passo 2 — JOGADOR POR JOGADOR**\n\nVou listar todos os jogadores nomeados no briefing (qualidade e desfalques) e dar uma leitura individual.\n\n**Chelsea:**\n- Enzo Fernández: Meio-campista criativo, 9 gols, 0.9 SoT/j, mas forma recente caindo. Contra um Tottenham que pode se postar, sua capacidade de passe em profundidade é vital, mas a queda de forma preocupa.\n- João Pedro (doubtful): Artilheiro do time com 15 gols, 0.8 SoT/j. Se não jogar, o Chelsea perde seu principal finalizador e referência ofensiva; a probabilidade de gol do Chelsea cai drasticamente (SoT do time cai de 4.62 para 1.5 sem ele). É a peça mais importante.\n- Moisés Caicedo: Volante de contenção, nota 7.08 e forma subindo. Importante para conter os contra-ataques do Tottenham; sua presença dá solidez defensiva.\n- Reece James: Lateral-direito, 7.08 de nota, mas só jogou 2 dos últimos 5. Se não estiver 100% fisicamente, a lateral pode ser explorada pelo Tottenham.\n- Pedro Neto: Ponta, 5 gols, 0.4 SoT/j, faltou 2/5 jogos. Inconstante, mas pode criar desequilíbrio; sua ausência parcial reduz opções no ataque.\n- Alejandro Garnacho: Ponta, 3 gols, 0.4 SoT/j? (não especificado), faltou 3/5. Pouco utilizado, não deve ser titular.\n- Estêvão: Meia, 2 gols, 4% dos gols, pouca influência. Mesmo se jogar, não muda o panorama ofensivo.\n- Jamie Gittens (doubtful): 0 gols, 0.13 SoT/j. Irrelevante ofensivamente; sua ausência não afeta.\n- Outros desfalques (Lavia, Wiley, Mudryk): Nenhum teve participação relevante na temporada. Irrelevantes.\n\n**Tottenham:**\n- Cristian Romero (fora): Zagueiro artilheiro (4 gols) e líder em interceptações (1.3/j, 18% do time). Sua ausência enfraquece a defesa em bolas aéreas e na saída de bola; Chelsea pode explorar isso com Enzo e escanteios.\n- Pedro Porro: Lateral-direito, 7.01, 4 MOTM, mas forma caindo. Ofensivamente contribui com cruzamentos, mas a queda de forma pode dar espaços na defesa.\n- Xavi Simons (fora): Meia criativo, 2 gols, 5 assists, 0.36 SoT/j. Sua ausência tira criatividade do meio, mas o time já se adaptou (marcou 1.25 sem ele). Impacto moderado.\n- João Palhinha: Volante, 4 gols, forma subindo. Importante na contenção e chegada na área; pode ser arma em escanteios.\n- Richarlison: Atacante, 10 gols, 0.8 SoT/j. Principal referência ofensiva, especialmente sem Romero e Simons; sua presença é crucial para o Tottenham marcar.\n- Rodrigo Bentancur: Meia, 6.88, forma subindo. Dá qualidade na saída de bola e pode controlar o meio-campo.\n- Mohammed Kudus (fora): Ponta, 2 gols, 5 assists, mas time sem ele não sentiu (1.18 g/j sem vs 1.37 com). Sua ausência é contornável.\n- D. Solanke (doubtful): Atacante, 3 gols, 0.73 SoT/j, mas time sem ele marca até mais. Se ausente, Richarlison assume a referência, sem grande perda.\n- Outros desfalques (Odobert, Davies, Kulusevski): Todos com participação mínima. Irrelevantes.\n\n**Passo 3 — ARESTAS: o cruzamento**\n\nVou construir arestas ligando conclusões. Preciso de no mínimo 8. Vou garantir que todas as conclusões sejam usadas ou descartadas.\n\nVamos agrupar conclusões por relevância e começar os cruzamentos.\n\nAresta A1: (C2 descanso assimétrico, C4 Chelsea precisa vencer) Chelsea cansado (3 dias) vs Tottenham descansado (8 dias). Chelsea precisa vencer, mas fadiga pode reduzir intensidade no 2º tempo. Efeito: xG do Chelsea cai no 2º tempo, probabilidade de Tottenham pontuar aumenta.\n\nAresta A2: (C5 Tottenham administra empate, C6 veredito trava, C37 Tottenham sofre contra dominantes) Tottenham joga por empate, mas contra dominantes sofre 1.91/j. Chelsea, mesmo em má forma, é dominante (posse 58.2%) e em casa. Efeito: Chelsea deve criar chances, apesar do ferrolho; xG do Chelsea não tão baixo quanto o estilo \"administra\" sugere porque Tottenham cede a times dominantes.\n\nAresta A3: (C7 ataque Chelsea mediano, C15 desfalque João Pedro, C8 forma ruim) Chelsea já vinha mal (0.4 gols/j nos últimos 5) e sem João Pedro (principal artilheiro, 27% dos gols) o ataque tende a piorar. Efeito: xG do Chelsea deve ser reduzido de 1.15 para próximo de 0.8 se João Pedro não jogar.\n\nAresta A4: (C20 Tottenham forma melhor, C23 resultados recentes, C22 qualidade sem Romero mas com Palhinha e Bentancur em alta) Tottenham em ascensão, defesa mais sólida (sofreu apenas 5 nos últimos 5) e meio-campo forte. Efeito: Tottenham pode segurar o Chelsea e criar chances em contra-ataque. xG do Tottenham ligeiramente acima do prior.\n\nAresta A5: (C19 Tottenham ataque fora 1.39/j, C24 momentum marca cedo, C33 Tottenham domina 0-15) Tottenham começa bem fora de casa, domina a janela 0-15. Efeito: probabilidade de gol do Tottenham no início do jogo é elevada; xG do 1º tempo do Tottenham sobe.\n\nAresta A6: (C31 janela 31-45 Chelsea ataque, C25 Tottenham sofre 31-45, C14 Chelsea marca 31-45) Chelsea marca muito no fim do 1º tempo, e Tottenham sofre bastante nessa faixa (0.53/j). Efeito: alta probabilidade de gol do Chelsea entre 31-45 min.\n\nAresta A7: (C27 desfalque Romero, C38 escanteios canal aberto, C32 Tottenham sofre 0.53 em 31-45 em parte por bolas paradas?) Romero é zagueiro artilheiro e principal interceptador, sua ausência enfraquece defesa aérea. Chelsea tem Enzo e outros para escanteios. Efeito: probabilidade de gol do Chelsea em escanteio aumenta, especialmente no fim do 1º tempo ou fim do jogo.\n\nAresta A8: (C36 Chelsea contra equilibrado marca 1.18, C6 jogo travado) Chelsea contra times equilibrados tem desempenho pior. Tottenham é equilibrado e vem para administrar. Efeito: xG do Chelsea menor que o prior (1.15), talvez próximo de 0.9.\n\nAresta A9: (C13 Chelsea momento instável, C24 Tottenham reage após sofrer? C39 dinâmica pós-gol: ambos matam jogo após marcar) Mas o dado diz que ambos seguem pressionando após marcar. Chelsea, se abrir o placar, tende a pressionar mais, o que pode gerar mais gols? Mas com desfalques, talvez não. Tottenham, se abrir, também pressiona. Efeito: se sair gol, o jogo pode abrir um pouco, mas como ambos têm razões para administrar (Chelsea cansado, Tottenham satisfeito com empate), o efeito pode ser menor. Aresta conflitante: considero efeito neutro.\n\nAresta A10: (C8 Chelsea forma ruim nos últimos 5, C11 sequência EDDDD, C23 Tottenham forma melhor) Contraste de momento: Chelsea em crise, Tottenham lutando. Efeito: psicológico favorece Tottenham, que deve jogar com mais confiança; xG do Tottenham pode ser maior.\n\nAresta A11: (C34 base rate total ~2.5, C6 veredito trava, C2 fadiga Chelsea, C5 administra) O jogo tende a ser de poucos gols devido à intenção de Tottenham e fadiga Chelsea. Efeito: total de gols deve ser menor que 2.5; under provável.\n\nAresta A12: (C40 artilharia distribuída no Tottenham, C29 Solanke dúvida mas Richarlison principal) Mesmo sem Solanke, Richarlison é capaz de marcar (10 gols, 0.8 SoT/j). Efeito: gol do Tottenham é provável, mesmo que o time jogue por empate.\n\nPreciso verificar se todas as conclusões foram usadas ou se alguma ficou órfã. Lista de C1 a C40:\n\nC1 (chuva) - neutra, pode ir para descartada? Mas posso usar em aresta? Não foi usada em nenhuma aresta. Na verdade, não há impacto, então pode ser descartada com motivo \"neutro, sem efeito no jogo\".\n\nC2 - usada em A1, A11.\n\nC3 - neutra, descartada (viagem curta, sem impacto).\n\nC4 - A1.\n\nC5 - A2, A11.\n\nC6 - A2, A8, A11.\n\nC7 - A3.\n\nC8 - A3, A10.\n\nC9 - não usada diretamente. Podemos cruzar com estilo? Vou criar mais arestas se necessário. Mas posso descartar? O bloco home_estilo: ataques perigosos, bloqueios. Pode ser relacionado com a defesa do Tottenham? Tottenham é equilibrado, defesa melhor recentemente (C21). Cruzamento: Chelsea gera muitos ataques perigosos mas tem muitos bloqueios (C9), contra defesa do Tottenham que nos últimos 5 sofreu poucos gols e teve menos bloqueios? Na verdade, nos últimos 5, Tottenham sofreu 2.4 SoT/j, o que é baixo. Defesa fechada. Isso pode reduzir xG do Chelsea. Vou criar Aresta A13: (C9 Chelsea muitos bloqueios, C21 Tottenham defesa melhorada recentemente) Chelsea tem dificuldade de converter chances porque seus chutes são bloqueados (6.2 bloqueios/j nos últimos 5), e Tottenham está com defesa sólida (2.4 SoT sofridos nos últimos 5). Efeito: xG do Chelsea menor, probabilidade de under.\n\nC9 usada em A13.\n\nC10 - usada em A3 (João Pedro dúvida) e também poderia cruzar com desfalques do Tottenham? Já usado.\n\nC11 - A10.\n\nC12 - pode ser usada com C24? Já meio que usada. C12 defesa Chelsea frágil, C24 Tottenham marca em várias janelas. Efeito: Tottenham tem chances de marcar. Já coberto por A4, A5. Mas posso fazer aresta específica: C12 defesa Chelsea sofre gols no início e fim, C25 Tottenham marca em 0-15 e 76-90? Não exatamente. Tottenham marca mais em 31-45 e 76-90. Mas C24 mostra que marcaram cedo contra Villa. Vou criar Aresta A14: (C12 Chelsea vulnerável no início, C33 Tottenham domina 0-15, C19 Tottenham ataque fora) Tottenham pode marcar no início. Efeito: probabilidade de gol do Tottenham na faixa 0-15 elevada.\n\nC13 - não usada, pode ser descartada? C13 concluiu que Chelsea não domina partidas inteiras. Isso pode ser usado com C33 (Chelsea domina 76-90) - na verdade, Chelsea só domina no fim, mas no geral não. Aresta A15: (C13 Chelsea não domina, C33 Chelsea domina 76-90, C2 Chelsea cansado) Chelsea tende a crescer no fim (momento de pressão), mas se estiver cansado, esse domínio pode não resultar em gol. Efeito: xG do Chelsea no fim pode ser menor que o indicado pelo momentum.\n\nC14 - usada em A6.\n\nC15 - A3.\n\nC16 - descartada (Estêvão, baixo impacto).\n\nC17 - descartada (Gittens, baixo impacto).\n\nC18 - descartada.\n\nC19 - A5, A14.\n\nC20 - A4.\n\nC21 - A13.\n\nC22 - A4.\n\nC23 - A4, A10.\n\nC24 - usado em A5, A14.\n\nC25 - A6.\n\nC26 - A4? Já considerado impacto moderado.\n\nC27 - A7.\n\nC28 - descartada (Kudus, baixo impacto).\n\nC29 - descartada (Solanke, baixo impacto).\n\nC30 - descartados.\n\nC31 - A6.\n\nC32 - A6? Mas também poderia ser usado para gol do Tottenham no fim. Aresta A16: (C32 Tottenham ataque x Chelsea defesa em 76-90 índice 0.67, C25 Tottenham marca 76-90, C12 Chelsea sofre 76-90) Tottenham costuma marcar no fim, e Chelsea sofre no fim. Efeito: alta probabilidade de gol do Tottenham no final do jogo.\n\nC33 - A5, A14, A15.\n\nC34 - A11.\n\nC35 - A11, prior.\n\nC36 - A8.\n\nC37 - A2.\n\nC38 - A7.\n\nC39 - A9.\n\nC40 - A12.\n\nAgora, listando conclusões não usadas: C1 (chuva neutra), C3 (viagem neutra), C13 (já usada em A15?), usei C13 em A15. C16, C17, C18 (desfalques menores), C26, C28, C29, C30 (desfalques menores) - esses posso descartar como de baixo impacto, mas preciso garantir que todo bloco teve conclusões usadas. O bloco home_desfalques teve C15, C16, C17, C18. C15 foi usada, as outras descartadas. Bloco away_desfalques: C26, C27, C28, C29, C30. C27 usada, outras descartadas. Outros blocos tiveram usadas.\n\nPreciso ver se algum bloco ficou sem nenhuma conclusão usada: home_qualidade teve C10, usada em A3 (indiretamente, pois João Pedro é mencionado em C10 e C15). C10 também fala de Enzo e Caicedo, mas não usei explicitamente. Posso considerar que C10 foi usada para contextualizar a importância de João Pedro. Melhor criar uma aresta específica? Talvez não seja necessário. Vou manter que as conclusões principais foram usadas.\n\nPara maior segurança, vou listar as descartadas formalmente com motivos.\n\nConclusões descartadas:\n- C1: clima neutro, sem impacto comprovado no total de gols.\n- C3: viagem curta, sem impacto.\n- C16: Estêvão, lesão de pouco impacto ofensivo (4% dos gols, time se adaptou).\n- C17: Jamie Gittens, 0% dos gols, volume baixo, irrelevante.\n- C18: Lavia/Wiley/Mudryk, nenhum com participação relevante.\n- C26: Xavi Simons, impacto moderado mas já considerado no contexto geral; sua ausência não muda drasticamente o time (gols sem ele similares).\n- C28: Mohammed Kudus, baixo impacto, time se adaptou.\n- C29: Solanke, dúvida mas pouco impacto (time marca mais sem ele).\n- C30: Odobert/Davies/Kulusevski, todos de baixo impacto.\n\nTambém C13? Não, foi usada.\n\n**Passo 4 — ROTEIROS**\n\nCom base nas arestas, construo 2-3 roteiros prováveis.\n\nRoteiro 1: \"Jogo travado, poucos gols\" (prob ~55%)\n- Tottenham começa administrando, Chelsea tem posse mas não consegue furar (A8, A13). Chelsea pode ter momento no fim do 1º tempo (A6), mas sem João Pedro, finalização é pobre (A3). Tottenham pode marcar em contra-ataque no início ou no fim (A5, A16). Placar provável: 0-0 ou 1-0 para Tottenham no intervalo. No 2º tempo, Chelsea cansado (A1) tenta pressão mas expõe defesa; Tottenham pode ampliar ou segurar. Total de gols baixo (0-1 gol). Under 2.5 claro.\n- Arestas: A1, A2, A3, A5, A6, A8, A11, A13, A16.\n\nRoteiro 2: \"Chelsea consegue furar, mas jogo segue tenso\" (prob ~25%)\n- Chelsea, mesmo desfalcado, usa escanteios e a ausência de Romero para marcar (A7). Pressiona no fim do 1º tempo e abre o placar (A6). Tottenham reage e busca empate, aproveitando cansaço do Chelsea (A1, A16). Jogo termina empatado 1-1 ou vitória magra do Chelsea 2-1 se conseguir mais um. Total 2-3 gols, BTTS sim.\n- Arestas: A1, A2, A6, A7, A12, A16.\n\nRoteiro 3: \"Tottenham vence sem sustos\" (prob ~20%)\n- Tottenham marca cedo (A5, A14) e Chelsea se desespera. Chelsea não consegue reagir (A3, A8). Tottenham controla e pode fazer mais um no fim (A16). Placar 0-2 ou 1-2. Vitória do Tottenham.\n- Arestas: A1, A3, A5, A10, A14, A16.\n\nSoma das probs: 55+25+20 = 100.\n\n**Passo 4b — Linha do tempo**\n\nCom base no roteiro mais provável (Roteiro 1: jogo travado, 0-0 ou 1-0 Tottenham), distribuo nos tempos e janelas.\n\n**Tempos:**\n- Primeiro tempo: Tottenham começa melhor (domínio 0-15), mas recua para administrar. Chelsea tem posse mas pouca profundidade. Aos 15-30, jogo morno. Final do 1º tempo, Chelsea pressiona (31-45) e tem sua melhor chance. Probabilidade de gol no 1º tempo: baixa, mas com chance de gol do Tottenham no início ou Chelsea no fim. Prob_gol (≥1 gol no 1ºT): ~35%.\n- Segundo tempo: Chelsea volta cansado, pode sofrer com contra-ataques. Tottenham pode marcar entre 60-75 ou 76-90 se Chelsea se expor. Se o jogo estiver 0-0, Chelsea pode se lançar mais no fim, mas com risco. Prob_gol (≥1 gol no 2ºT): ~55%.\n\n**Janelas:**\n- 0-15: Tottenham inicia forte, domínio. Chelsea defende mal no início (sofreu em várias partidas recentes). Prob_gol: 0.25, lado: away.\n- 16-30: Jogo equilibrado, Chelsea tenta propor, Tottenham se fecha. Poucas chances. Prob_gol: 0.15, lado: equilibrado.\n- 31-45: Chelsea cresce, melhor janela para marcar (0.89 índice). Time pressiona, escanteios. Prob_gol: 0.30, lado: home.\n- 46-60: Início do 2º tempo, times retornam. Chelsea cansado pode ceder espaço. Tottenham pode surpreender. Prob_gol: 0.20, lado: equilibrado.\n- 61-75: Jogo truncado, fadiga de Chelsea. Tottenham pode explorar contra-ataques. Prob_gol: 0.20, lado: away.\n- 76-90: Tottenham costuma marcar no fim (0.36/j), Chelsea sofre no fim (0.31/j), e momentum cruzado favorece Chelsea? Mas Chelsea cansado, domínio pode ser estéril. Tottenham perigoso. Prob_gol: 0.30, lado: away.\n\nObs: as prob_gol das janelas não precisam somar a 1, etc., mas devem ser coerentes com os totais. Por exemplo, soma das probs por janela pode dar ~1.4 gols no jogo, o que está alinhado com total previsto de ~1.8? Vamos ver.\n\n**Passo 4c — Marcadores**\n\nPrevejo 2-3 prováveis marcadores por time, com base no bloco de artilharia e dados.\n\n**Chelsea:**\n- Enzo Fernández: 9 gols (2 pên), 0.9 SoT/j, cobra pênaltis. Se Chelsea tiver pênalti, ele é candidato. Além disso, chega de trás. Prob: 0.25 (25%). Motivo: principal meio-campista ofensivo, bate pênaltis, presença de área.\n- Cole Palmer: 9 gols (5 pên), 0.9 SoT/j. Outro candidato a pênalti e chutes de fora. Prob: 0.20. Motivo: especialista em bolas paradas e pênaltis, mas sem João Pedro, pode ser marcado de perto.\n- Pedro Neto: 5 gols, 0.4 SoT/j. Pouco volume, mas se jogar, pode surgir em contra-ataque. Prob: 0.10. Motivo: ponta rápido, mas forma irregular e poucos chutes.\n\n**Tottenham:**\n- Richarlison: 10 gols, 0.8 SoT/j. Principal atacante. Prob: 0.35. Motivo: referência ofensiva, bom posicionamento, time joga para ele.\n- João Palhinha: 4 gols, 0.3 SoT/j, mas em forma subindo. Forte em escanteios. Prob: 0.15. Motivo: chega bem de trás e é arma em bolas paradas, especialmente sem Romero.\n- Mathys Tel: 4 gols, 0.3 SoT/j. Alternativa no ataque. Prob: 0.10. Motivo: opção vindo do banco, pode aproveitar espaços no fim.\n\n**Passo 5 — BOARD COMPLETO DE MERCADOS**\n\nAgora, com base nos xG que vou definir, preencho os mercados. Primeiro, defino meus xG (home, away, total) atualizados a partir do prior (Rota B: 1.15 e 1.27) com as evidências.\n\nEvidências:\n- Chelsea: sem João Pedro (C15) reduz xG: de 1.15 para 0.85 (queda de ~26%). Mas Chelsea em casa, precisa vencer, pode ter algum ímpeto. Arquétipo contra equilibrado marca 1.18, mas forma recente pífia (0.4/j). Vou calibrar: parto de 1.15, desconto 0.3 por desfalque João Pedro e forma, mas adiciono 0.1 por intenção (precisa vencer) e escanteios (ausência de Romero). Resultado: 0.9.\n- Tottenham: prior 1.27, mas joga por empate, o que pode reduzir ataque? Mas fora de casa marca 1.39, e contra dominantes sofre mas também marca 1.36. Então ataque não deve cair muito. Defesa Chelsea frágil (sofre 1.33 em casa, mas nos últimos 5 sofre 2.2/j). Então xG do Tottenham pode subir um pouco: de 1.27 para 1.35 (leve alta). Adiciono 0.1 por forma melhor e cansaço do Chelsea. Resultado: 1.35.\n- Total: 0.9 + 1.35 = 2.25. Arredondo para 2.3? Vou usar 2.2 para ser conservador.\n\nDistribuição por tempo: Primeiro tempo total: ~0.9 (40% dos gols? Chelsea 1ºT marca 0.69 em casa, sofre 0.64; Tottenham 1ºT marca 0.53 fora, sofre 0.81. Média daria ~1.2 gols no 1ºT, mas com jogo travado, reduzo. Vou estimar total_1t = 0.9 e total_2t = 1.3 (soma 2.2).\n\nAgora, probabilidades: uso Poisson com media 0.9 para Chelsea, 1.35 para Tottenham. Calculo rapidamente:\n- P(Chelsea gols=0) = e^{-0.9} = 0.4066, P(>=1) = 0.5934\n- P(Tottenham gols=0) = e^{-1.35} = 0.2592, P(>=1) = 0.7408\n- 1x2: P(Chelsea win) = soma de k=1 a inf de P(Chelsea=k) * P(Tottenham<k). Calculo aproximado:\n  P(Chelsea 1-0) = P(1)*P(0) = 0.3659*0.2592 ≈ 0.0948\n  P(Chelsea 2-0) = P(2)*0 = 0.1647*0.2592 ≈ 0.0427, P(2-1)=0.1647*0.350? Preciso de mais cuidado. Vou fazer uma estimativa grosseira: com médias 0.9 e 1.35, a probabilidade de Chelsea ganhar é menor que 30%, empate em torno de 28%, Tottenham 42%? No prior Rota B era 32/31/37. Ajustando com minhas médias (0.9 e 1.35), usando Poisson, Chelsea tem média menor, Tottenham maior. Isso daria vitória do Tottenham mais provável. Mas na minha análise, Tottenham joga por empate, então talvez o xG do Tottenham não se converta em gols se eles não se lançarem. Porém, xG é expectativa de gols independente da intenção; se eles criarem chances em contra-ataque, podem converter. Vou manter xG 1.35, mas na distribuição 1x2, o empate pode ser mais provável porque Chelsea em casa pode segurar. Na verdade, em Poisson, quanto maiores as médias, menor a chance de empate. Com 0.9 e 1.35, a chance de empate é em torno de 25%? Vou calcular: P(0-0)=0.4066*0.2592=0.1054; P(1-1)=0.3659*0.3499=0.1280; P(2-2)=0.1647*0.2362=0.0389; soma ~0.2723. P(Chelsea ganha): P(1-0)=0.0948, P(2-0)=0.0427, P(2-1)=0.1647*0.3499? na verdade P(Tottenham=1)= e^{-1.35}*1.35 = 0.3499, Chelsea=2=0.1647, dá 0.0576; P(3-0)=0.0494*0.2592=0.0128; etc. Soma rápida: ~0.20. P(Tottenham ganha): ~0.52. Então seria 20/27/52. Mas isso não reflete a cautela do Tottenham (baixo risco). Na realidade, o empate pode ser mais provável porque o Tottenham se contenta com empate e pode não atacar tanto se o jogo estiver empatado. O Poisson assume independência e não captura game state. Por isso, devo ajustar o 1x2 com base no roteiro, não só no xG. O roteiro principal é jogo travado, então empate é resultado bem provável. Vou usar: home 25%, draw 35%, away 40%. Isso é consistente com o fato de Tottenham não precisar vencer e Chelsea ser frágil.\n\nAgora, over25_prob: com total 2.2, P(>2.5) = 1 - P(0) - P(1) - P(2). P(0) = e^{-2.2} = 0.1108, P(1) = 2.2*0.1108 = 0.2438, P(2) = (2.2^2/2)*0.1108 = 2.42*0.1108 = 0.2681. Soma 0-2: 0.6227. Então P(>2.5) = 0.3773, ~38%. Over 1.5: P(0)+P(1) = 0.1108+0.2438=0.3546, então over 1.5 = 64.5%. BTTS: P(both) = 1 - P(Chelsea 0) - P(Tottenham 0) + P(0-0) = 1 - 0.4066 - 0.2592 + 0.1054 = 0.4396, ~44%. Com ajuste de roteiro, BTTS pode ser menor, mas mantenho 44%.\n\nPara mercados derivados, vou ajustar com base nesses números. Como puxei o total para baixo (2.2 vs 2.42), under 2.5 é valor, over 2.5 é baixo. Mas o prior Rota B já dava 44% para over 2.5, então desci para 38%. Over 1.5 ainda é provável (65%).\n\nAgora, preencho o array de mercados com 19 entradas, cada uma com prob (minha), variancia (1-5), valor (alto/medio/baixo/nenhum) comparado ao prior quando disponível, e nota.\n\nVou listar:\n\n1. 1x2 home: prob 0.25, variancia 4 (1x2 é arriscado), valor: medio (prior 32%, eu 25%, mas considerando contexto, acho que mercado talvez pague bem? Não temos odds, apenas fair odds de 3.16. Se o mercado oferecer odds maiores que 4.0, teria valor. Mas como não temos odds, avalio valor com base na diferença do prior: minha prob é menor que prior, então se o mercado seguir prior, casa estaria sobrevalorizada, então valor baixo ou nenhum para apostar em casa). Coloco valor baixo. Nota: \"Chelsea em má forma, sem João Pedro, difícil vitória.\"\n2. 1x2 draw: prob 0.35, variancia 4, valor: alto? Prior 31%, eu 35%. Empate é subestimado pelo mercado se seguir prior. Nota: \"Jogo travado, Tottenham administra empate, alta probabilidade.\"\n3. 1x2 away: prob 0.40, variancia 4, valor: medio (prior 37%, eu 40%, leve valor). Nota: \"Tottenham melhor momento, mas joga por empate; vitória não certa.\"\n4. Double chance home_draw: prob 0.60 (0.25+0.35), variancia 2, valor: medio.\n5. Double chance draw_away: prob 0.75, variancia 1, valor: baixo? (Prior 68%, eu 75%, algum valor, mas odd baixa). Nota: \"Seguro, Tottenham não perde.\"\n6. Double chance home_away: prob 0.65, variancia 2, valor: baixo.\n7. Draw no bet home: prob 0.42? Na verdade, DNB home: vitória home / (1 - prob empate) = 0.25/(0.25+0.40)=0.25/0.65=0.3846. Prior B era 46%. Então minha prob 38.5%, menor que prior. Valor baixo. Nota: \"Chelsea frágil, não confiável nem sem empate.\"\n8. Draw no bet away: prob 0.40/0.65 = 0.6154. Prior 54%. Alta. Valor medio/alto. Nota: \"Tottenham não perde na maioria dos cenários.\"\n9. Over 1.5: prob 0.65, variancia 2, valor: baixo (prior 71%, eu 65%, under tem valor). Nota: \"Jogo tende a ser truncado, mas 1.5 ainda provável.\"\n10. Over 2.5: prob 0.38, variancia 3, valor: alto (prior 44%, diferença significativa). Nota: \"Under 2.5 é o mercado de valor aqui, jogo de poucos gols.\"\n11. Over 3.5: prob 0.18, variancia 4, valor: medio (prior 23%). Nota: \"Improvável, jogo travado.\"\n12. BTTS yes: prob 0.44, variancia 3, valor: medio (prior 51%, eu mais baixo). Nota: \"BTTS tem valor no 'não', mas não é certo.\"\n13. Team total home over 0.5: prob 0.59 (P(>=1)=0.5934), variancia 2, valor: baixo? Prior 68%, eu 59%, então under 0.5 home teria valor. Nota: \"Chelsea sem João Pedro pode não marcar.\"\n14. Team total home over 1.5: prob 0.23 (P(>=2)= 1 - P(0)-P(1) = 1 - 0.4066 - 0.3659 = 0.2275), variancia 3, valor: medio.\n15. Team total away over 0.5: prob 0.74, variancia 1, valor: baixo? Prior 72%, similar. Nota: \"Tottenham deve marcar, alta probabilidade.\"\n16. Team total away over 1.5: prob 0.35 (P(>=2)= 1 - P(0)-P(1) = 1 - 0.2592 - 0.3499 = 0.3909), variancia 3, valor: medio.\n17. Handicap home -1: prob? Chelsea vencer por 2+ gols. P(Chelsea 2-0, 3-0, etc.) + P(Chelsea 3-1, ...). Com xG 0.9, probabilidade baixa, ~0.12. variancia 5, valor: baixo.\n18. Handicap away -1: similar, Tottenham por 2+ gols. xG 1.35, prob ~0.25. variancia 5, valor: medio.\n19. Odd/even: odd prob ~0.46 (prior 46%), variancia 1, valor: nenhum.\n\n**Passo 6 — REFUTAÇÃO e confiança**\n\nEscolha da candidata a best_bet: seguindo a disciplina de variância, procuro mercado de menor variância com valor. O maior valor parece estar no under 2.5 (over 2.5 prob 38% vs prior 44%, então under 2.5 prob 62%). Mas under 2.5 não está listado diretamente; o mercado correspondente é over 2.5 (seleção under). No schema, o mercado é \"over_under\" com selection \"over\" ou \"under\", e line 2.5. Então vou propor \"under 2.5\". Também há valor em BTTS no (prob 56%? meu BTTS yes é 44%, então BTTS no seria 56%). Mas BTTS no tem variância maior? Disciplina: over/under tem linha, e a linha 2.5 com margem boa (total 2.2, diferença 0.3). Over/under variância 3. Team total away over 0.5 tem prob 74%, mas valor baixo (prior 72%). Empate tem prob 35% vs 31% prior, valor alto, mas proibido cravar empate como best_bet? Regra: \"NUNCA o empate como best_bet\". Então não. Dupla chance draw_away tem prob 75% vs 68% prior, valor medio, variância 1. Pode ser boa. DNB away tem prob 61.5% vs 54%, valor medio/alto, variância 2. Handicap away -1? Não. Over 2.5 under parece bom, mas under 2.5 é arriscado porque um gol pode mudar tudo. Dupla chance é mais segura. Regra: \"Prefira under com margem ou team_total do lado que precisa\". O lado que precisa é o Chelsea, mas team_total home over 0.5 é arriscado (59%). Então talvez dupla chance draw_away ou DNB away. Mas \"em jogo com veredito de intenção ⚠️ (um lado administra), prefira under com margem ou team_total do lado que precisa\". O lado que administra é Tottenham, o que precisa é Chelsea. Team_total home over 0.5 tem prob 59% vs prior 68%, valor baixo? Na verdade, minha prob é menor que prior, então se mercado pagar como 68%, não tem valor para over. Tem valor para under 0.5 home? Isso seria aposta contra Chelsea marcar, o que faz sentido. Mas no board, o mercado é team_total over, então a seleção under 0.5 seria a aposta. Isso é team_total home under 0.5, que tem prob 41%. Prior 32%, então valor alto? Como não temos odds, não sabemos. A disciplina sugere: se o lado que precisa pode não marcar, under team_total faz sentido. Mas variância de team_total under 0.5 é baixa? É um mercado de \"home under 0.5\", equivalente a \"Chelsea não marca\". Variância: se Chelsea marcar um gol, perde. É arriscado. Prefiro under total gols.\n\nVou escolher under 2.5 gols como candidata, pois o jogo tende a travar (C6), ambos têm motivos para poucos gols: Chelsea sem ataque, Tottenham satisfeito com empate. Total prior 2.42, meu total 2.2, margem 0.22, mas diferença em prob de over 2.5: 44% vs 38%, razoável. Valor: alto. Variância: 3 (médio). Aplico disciplina: entre apostas de valor parecido, escolher menor variância. Dupla chance draw_away tem variância 1, mas valor medio? Talvez seja mais segura. Mas a regra também diz para preferir under em jogo travado. Vou definir under 2.5 como best_bet.\n\nAgora, refutação: ataques contra under 2.5.\n\nAtaque 1: Ambos times \"matam o jogo\" após marcar, mas se sair um gol cedo, o jogo pode abrir, especialmente se Chelsea precisar buscar. Os dados de dinâmica pós-gol (C39) indicam que ambos pressionam depois de marcar, o que poderia gerar mais gols, aumentando o total. Mas como Tottenham administra, se fizer 1, pode recuar? O dado diz \"MATA O JOGO após marcar (Δ +2.8 — segue pressionando)\" para Tottenham. Isso sugere que eles não tiram o pé, então under pode ser ameaçado. Veredito: enfraquece o under, mas não derruba, porque a intenção de Tottenham pode ser de controlar sem pressionar tanto; o dado de momentum é sobre os últimos 8 jogos, quando lutavam contra rebaixamento, precisavam vencer. Agora, um empate basta, podem administrar.\n\nAtaque 2: Defesa Chelsea muito frágil (C8, C12): sofreu 11 gols em 5 jogos, muitos no início e fim. Tottenham, mesmo sem se expor, pode marcar em contra-ataque. Se Chelsea fizer um gol, Tottenham pode buscar empate e o jogo abrir. Além disso, escanteios são canal aberto (C38), o que pode gerar gols inesperados. Isso joga contra under. Veredito: enfraquece, mas ainda assim o cenário mais provável é poucos gols porque Chelsea tem dificuldade ofensiva e Tottenham não precisa atacar.\n\nAtaque 3: Chelsea precisa vencer (C4), então se o jogo estiver 0-0 no 2º tempo, eles vão se lançar, podendo sofrer contra-ataques e gerando gols. Fadiga (C2) pode pesar, mas a necessidade pode superar. Isso poderia levar a um jogo mais aberto no fim, com gols. Veredito: enfraquece o under, especialmente no total de gols no 2º tempo.\n\nConclusão da refutação: Os ataques enfraquecem mas não derrubam. O under 2.5 sobrevive como aposta principal, mas com confiança reduzida (medium). Pela regra de confiança: temos arestas independentes convergindo para under (A11, A8, A13, A2, A6)? A6 é sobre gol do Chelsea, mas no contexto de jogo travado, não necessariamente over. Várias arestas apontam para baixo total: A11 (base rate e intenção), A8 (Chelsea contra equilibrado), A13 (defesas fechadas), A2 (Tottenham sofre contra dominante mas Chelsea não está bem), A3 (sem João Pedro). Também arestas contrárias: A5 (Tottenham marca), A16 (gols no fim), A7 (escanteios). Não há convergência total. As rotas A e B do base rate: Rota A total 2.66, Rota B 2.42, ambas acima de 2.5? Rota B 2.42, abaixo de 2.5. Rota A 2.66, acima. Então não apontam na mesma direção. Confiança: medium.\n\nConfidence_regra: \"Apesar de várias arestas apontarem para um jogo de poucos gols (Chelsea sem ataque, Tottenham administrando), existem fatores contrários como fragilidade defensiva do Chelsea e escanteios, e as rotas A e B divergem sobre o total 2.5 (A >2.5, B <2.5). A convergência não é unânime, mas o cenário mais provável é under. Confiança média.\"\n\nAgora, best_bet: market: \"over_under\", selection: \"under\", team: null, line: 2.5, confidence: \"medium\", probability: 0.62 (1 - 0.38), evidence_for: [IDs de conclusões/arestas que suportam under], evidence_against: [IDs contrários].\n\nEvidence_for: A11, A8, A13, C6, C15, etc. Evidence_against: A16, A5, C12.\n\nAnalysis: \"Jogo com forte tendência a ser truncado. O Tottenham se contenta com o empate e deve jogar para não perder, enquanto o Chelsea, mesmo precisando vencer, está em péssima forma e sem seu principal artilheiro João Pedro (dúvida). A fadiga do Chelsea (3 dias de descanso vs 8) também favorece um ritmo mais lento. O histórico de gols em jogos do Chelsea contra times equilibrados é baixo (1.18 marcados). Apesar da defesa do Chelsea ser frágil, o Tottenham não deve se lançar ao ataque, preferindo contra-ataques esporádicos. O total de gols esperado fica em torno de 2.2, com probabilidade de under 2.5 de 62%. Risco: escanteios e algum gol cedo podem abrir o jogo.\"\n\nAgora, vou preencher todos os campos do JSON.\n\nPrimeiro, conclusões: vou listar todas as 40, com id, bloco, fato, dado, direcao, forca. Vou abreviar os textos para caber, mas mantendo conteúdo.\n\nDepois, bloco_sem_sinal: não houve.\n\nDescartadas: C1, C3, C16, C17, C18, C26, C28, C29, C30. (9 descartadas). Motivos: \"neutro\", \"impacto baixo\", etc.\n\nJogadores: lista de todos os nomes.\n\nArestas: A1 a A16, mas uso apenas as que realmente contribuem. Vou listar as principais (8+, mas posso listar todas as 16 se quiser, mas o schema não limita). Vou colocar todas as 16 que criei.\n\nRoteiros: três roteiros com nome, prob, filme, arestas.\n\nJanelas: as 6.\n\nTempos: primeiro e segundo.\n\nMarcadores: home e away.\n\nMercados: 19 entradas.\n\nbest_bet: conforme definido.\n\nrefutacao: os 3 ataques e conclusão.\n\ndrivers: os 3 fatores principais: desfalque João Pedro (C15), intenção assimétrica (C6), fadiga/descanso (C2).\n\nAgora, preciso gerar os xG bands: distribuir os xG totais (home 0.9, away 1.35) nas faixas de 15 min de acordo com as taxas observadas. Usarei os percentuais da liga? Ou do próprio time? O schema pede xg_bands com números (não precisa somar exatamente, runtime normaliza). Vou estimar com base nos índices de cruzamento de faixa e nos dados históricos.\n\nPara Chelsea: xG 0.9. Distribuição baseada no ataque histórico (% dos gols do Chelsea): 0-15: 0.17/1.53 = 11%, 16-30: 11%, 31-45: 24%, 46-60: 24%, 61-75: 14%, 76-90: 16%. Mas isso são gols, não xG. Vou usar esses percentuais aproximadamente. Ajusto com o cruzamento de faixa (C31): os índices não são probabilidades, mas indicam força relativa. O índice maior é 31-45 (0.89), depois 76-90 (0.64), etc. Vou distribuir o 0.9 proporcionalmente aos índices? Não exato. Melhor: usar as médias de gols por faixa e depois converter para xG mantendo a forma. Como xG é expectativa, posso usar os gols como proxy, pois xG e gols têm correlação. Para Chelsea, a distribuição de gols marcados: 0-15: 0.17, 16-30: 0.17, 31-45: 0.36, 46-60: 0.36, 61-75: 0.22, 76-90: 0.25. Soma = 1.53. Então percentuais: 11.1%, 11.1%, 23.5%, 23.5%, 14.4%, 16.3%. Aplico ao xG 0.9: 0.10, 0.10, 0.21, 0.21, 0.13, 0.15. Mas devo considerar que sem João Pedro, a distribuição pode mudar? Sem ele, talvez menos gols em certas faixas? Vou manter essa distribuição padrão.\n\nPara Tottenham: xG 1.35. Distribuição de gols marcados: 0-15: 0.11, 16-30: 0.14, 31-45: 0.28, 46-60: 0.22, 61-75: 0.17, 76-90: 0.36. Soma 1.28. Percentuais: 8.6%, 10.9%, 21.9%, 17.2%, 13.3%, 28.1%. Sobre 1.35: 0.12, 0.15, 0.30, 0.23, 0.18, 0.38.\n\nAgora, xg_1t e xg_2t: Chelsea 1ºT: soma 0-45 = 0.10+0.10+0.21=0.41; 2ºT: 0.49. Tottenham 1ºT: 0.12+0.15+0.30=0.57; 2ºT: 0.78. Mas meu total_1t planejado era 0.9, total_2t 1.3. Soma 1ºT = 0.41+0.57=0.98, 2ºT=1.27. Isso está próximo. Vou ajustar ligeiramente: baixar 1ºT do Tottenham? Talvez. Vou manter esses valores e deixar o runtime normalizar.\n\nPara o general: total = 0.9+1.35=2.25, arredondo para 2.2? No campo total, posso colocar 2.25. total_1t = 0.98, total_2t = 1.27. over25_prob = 0.38, btts_prob = 0.44. one_x_two: home 0.25, draw 0.35, away 0.40. one_x_two_1t: usando probs de cada tempo com Poisson? Melhor usar os priors de 1x2 por tempo e ajustar. Prior 1ºT: 27/45/27. Com minhas médias, 1ºT total 0.98 (Chelsea 0.41, Tottenham 0.57). Calculando: P(0-0)= e^{-0.98}=0.375, P(1-0)=0.41*0.375? Na verdade, P(Chelsea=1, Tottenham=0)= e^{-0.41}*0.41 * e^{-0.57} = 0.663*0.41*0.565 ≈ 0.154? Aproximado: prob empate 1ºT alta. Vou estimar: home 0.20, draw 0.50, away 0.30. Para 2ºT: total 1.27, home 0.49, away 0.78. home 0.25, draw 0.35, away 0.40.\n\nconfidence: \"medium\", confidence_regra: texto.\n\nsummary: \"Jogo de poucos gols, com Tottenham administrando e Chelsea desfalcado. O under 2.5 é a melhor aposta, mas com riscos de gols de escanteio e fragilidade defensiva do Chelsea.\"\n\nAgora, monto o JSON.\n\nLembrando: todos os textos em português do Brasil.\n\nVou começar a estruturar.\n\nPrimeiro, conclusoes: array de objetos.\n\nVou escrever cada conclusão com os campos: id, bloco, fato, dado, direcao, forca. Exemplo:\n\n{ \"id\": \"C1\", \"bloco\": \"contexto\", \"fato\": \"Clima com chuva moderada, sem correlação com total de gols na liga\", \"dado\": \"chuva moderada, 2.9 gols/j vs 2.84\", \"direcao\": \"neutro, não ajusta xG\", \"forca\": \"baixa\" }\n\nAgora, bloco_sem_sinal: vazio? Não, alguns blocos não tiveram sinal? Na verdade, todos os blocos geraram pelo menos uma conclusão. Mas alguns blocos podem ter conclusões fracas ou neutras que foram descartadas. O campo `blocos_sem_sinal` é para blocos inteiros que não renderam conclusão. Nenhum bloco ficou sem conclusão; todos foram processados. Então array vazio.\n\nDescartadas: array com as 9 conclusões, com id e motivo.\n\nJogadores: array com objetos para cada jogador nomeado. Exemplo: { \"nome\": \"Enzo Fernández\", \"time\": \"home\", \"leitura\": \"Meio-campista criativo, 9 gols na temporada, mas forma recente em queda; crucial para furar a defesa do Tottenham, mas pode ter dificuldade se bem marcado.\" }\n\nArestas: array de objetos com id, liga (array de IDs), leitura, efeito. Ex: A1: liga [\"C2\",\"C4\"], leitura: \"Chelsea cansado (3 dias) vs Tottenham descansado (8 dias) reduz intensidade do Chelsea no 2º tempo, enquanto Chelsea precisa vencer.\", efeito: \"xG do Chelsea cai 0.1 no 2º tempo, favorece Tottenham pontuando.\"\n\nRoteiros: três.\n\nJanelas: 6, com leitura, prob_gol (número entre 0 e 1), lado.\n\nTempos: objetos.\n\nMarcadores: home e away.\n\nMercados: 19 entradas.\n\nBest_bet.\n\nRefutacao.\n\nDrivers.\n\nVou preencher cada campo com cuidado.\n\nObs: no schema, \"one_x_two\" e \"one_x_two_1t\", \"one_x_two_2t\" têm home/draw/away com prob (0 a 1).\n\nEm \"xg_bands\", as faixas devem ser strings, mas os valores números. O JSON final deve ter as chaves \"0-15\", \"16-30\", etc.\n\nNo \"best_bet\", \"market\" e \"selection\" usam enums específicos.\n\nAgora, vamos à escrita completa.",
+  "reasoningTokens": 16579,
+  "elapsedMs": 388139,
+  "promptChars": 43391,
+  "error": null
+}

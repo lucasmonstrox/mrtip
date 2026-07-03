@@ -14,7 +14,7 @@
 import { and, eq, inArray, isNotNull, or, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
-import { goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
+import { commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
 import { buildMomentum, type MomentumPoint, type TrendInput } from "../src/modules/leagues/get-match-momentum/momentum"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
@@ -89,8 +89,9 @@ const cupMatchesOf = (id: string): Row[] =>
   cupPlayed.filter((p) => p.homeTeamId === id || p.awayTeamId === id).sort((a, b) => a.date.localeCompare(b.date))
 
 // SoT + key passes por (matchId, teamId): soma dos jogadores do time naquele jogo (lineup_player),
-// indexado em memória pra usar como goalsFor/goalsAgainst. Só a season atual tem esses stats; jogos
-// sem lineup ingerido simplesmente não entram (hasSot guarda contra contar 0 como ausência de dado).
+// indexado em memória pra usar como goalsFor/goalsAgainst. As DUAS seasons de PL ingeridas têm esses stats
+// (verificado 2026-07-02 — o H2H cross-season usa); jogos sem lineup ingerido simplesmente não entram
+// (hasSot guarda contra contar 0 como ausência de dado).
 const statRows = await db
   .select({
     matchId: lineup.matchId,
@@ -155,7 +156,7 @@ for (const r of playerStatRowsAll) {
 // Contribuição direta G+A por jogador (gols exceto own + assistências), nos jogos pré-cutoff dos 2 times.
 const gaMatchIds = [...new Set([...teamMatches(home.id), ...teamMatches(away.id), ...cupMatchesOf(home.id), ...cupMatchesOf(away.id)].map((p) => p.id))]
 const gaGoalRows = gaMatchIds.length
-  ? await db.select({ playerId: goal.playerId, assistId: goal.assistId, type: goal.type, minute: goal.minute }).from(goal).where(inArray(goal.matchId, gaMatchIds))
+  ? await db.select({ matchId: goal.matchId, teamId: goal.teamId, playerId: goal.playerId, assistId: goal.assistId, type: goal.type, minute: goal.minute }).from(goal).where(inArray(goal.matchId, gaMatchIds))
   : []
 const playerGA = new Map<string, { g: number; a: number }>()
 const playerGoalMins = new Map<string, number[]>() // minuto de CADA gol do jogador (o "quando ele faz")
@@ -274,7 +275,7 @@ for (const r of teamStatRows) {
   }
   mm.set(r.teamId, r)
 }
-type TeamStatField = "shotsTotal" | "shotsInsidebox" | "shotsOutsidebox" | "shotsOffTarget" | "shotsBlocked" | "bigChancesCreated" | "dangerousAttacks" | "possession" | "tackles" | "interceptions" | "duelsWon" | "crossesAccurate" | "dribblesSuccessful"
+type TeamStatField = "shotsTotal" | "shotsInsidebox" | "shotsOutsidebox" | "shotsOffTarget" | "shotsBlocked" | "bigChancesCreated" | "dangerousAttacks" | "possession" | "tackles" | "interceptions" | "duelsWon" | "crossesAccurate" | "dribblesSuccessful" | "corners"
 // Média de um campo de match_team_stats sobre os jogos do time que têm a linha (null-safe).
 function teamStatAvg(rows: Row[], id: string, field: TeamStatField): number | null {
   const vals = rows.map((p) => teamStatsByMatch.get(p.id)?.get(id)?.[field]).filter((v): v is number => v != null)
@@ -308,6 +309,60 @@ const penaltiesAgainst = (rows: Row[], id: string): number => {
   const ids = new Set(rows.map((p) => p.id))
   return penaltyGoalRows.filter((g) => ids.has(g.matchId) && g.teamId !== id).length
 }
+
+// Origem dos gols via narração (LIG-010): a linha de commentary do gol diz se veio de escanteio,
+// falta ou contra-ataque. Pênalti sai do goal.type (o texto confunde com "penalty area"). O match
+// gol↔narração é por matchId+playerId+minuto (±2); gol sem narração vira "unknown" (não distorce o %).
+const goalCommentRows = gaMatchIds.length
+  ? await db
+      .select({ matchId: commentary.matchId, playerId: commentary.playerId, minute: commentary.minute, comment: commentary.comment })
+      .from(commentary)
+      .where(and(inArray(commentary.matchId, gaMatchIds), eq(commentary.isGoal, true)))
+  : []
+type GoalOrigin = "corner" | "free_kick" | "penalty" | "counter" | "open" | "unknown"
+const RX_CORNER = /(following|after|from)[^.]*corner kick/i
+const RX_FK = /free[- ]kick|set[- ]piece/i
+const RX_COUNTER = /counter[- ]?attack|on the (counter|break)/i
+function originOf(g: (typeof gaGoalRows)[number]): GoalOrigin {
+  if (g.type === "penalty") return "penalty"
+  const line = goalCommentRows.find(
+    (c) => c.matchId === g.matchId && c.playerId != null && c.playerId === g.playerId && Math.abs((c.minute ?? 0) - (g.minute ?? 0)) <= 2,
+  )
+  if (!line) return "unknown"
+  if (RX_CORNER.test(line.comment)) return "corner"
+  if (RX_FK.test(line.comment)) return "free_kick"
+  if (RX_COUNTER.test(line.comment)) return "counter"
+  return "open"
+}
+// Bloco "bola parada": quanto do ataque/defesa do time é bola parada (escanteio/falta/pênalti) na
+// liga, mais o volume de escanteios por jogo — alimenta team_total/BTTS quando o jogo corrido trava.
+function setPieceBlock(id: string): string {
+  const rows = teamMatches(id)
+  const ids = new Set(rows.map((p) => p.id))
+  const mine = gaGoalRows.filter((g) => ids.has(g.matchId) && g.teamId === id)
+  const theirs = gaGoalRows.filter((g) => ids.has(g.matchId) && g.teamId !== id)
+  const tally = (gs: typeof mine) => {
+    const t: Record<GoalOrigin, number> = { corner: 0, free_kick: 0, penalty: 0, counter: 0, open: 0, unknown: 0 }
+    for (const g of gs) t[originOf(g)]++
+    return t
+  }
+  const fmt = (t: Record<GoalOrigin, number>, total: number) => {
+    const sp = t.corner + t.free_kick + t.penalty
+    const pct = (n: number) => (total ? Math.round((n / total) * 100) : 0)
+    return `**${sp} de bola parada (${pct(sp)}%)** — escanteio ${t.corner} · falta ${t.free_kick} · pênalti ${t.penalty} · contra-ataque ${t.counter} · jogo corrido ${t.open}${t.unknown ? ` · sem narração ${t.unknown}` : ""}`
+  }
+  const tf = tally(mine)
+  const ta = tally(theirs)
+  const corners = teamStatForAgainst(rows, id, "corners")
+  return [
+    `- Gols marcados (${mine.length}): ${fmt(tf, mine.length)}`,
+    `- Gols sofridos (${theirs.length}): ${fmt(ta, theirs.length)}`,
+    `- Escanteios: **${corners?.made ?? 0} a favor / ${corners?.conceded ?? 0} contra por jogo** (média da liga: ${leagueCornersAvg ?? 0} por time)`,
+  ].join("\n")
+}
+const playedIdsForCorners = new Set(played.map((p) => p.id))
+const cornerVals = teamStatRows.filter((r) => playedIdsForCorners.has(r.matchId) && r.corners != null).map((r) => r.corners as number)
+const leagueCornersAvg = cornerVals.length ? +(cornerVals.reduce((s, v) => s + v, 0) / cornerVals.length).toFixed(1) : null
 
 // Gols marcados/sofridos por jogo num recorte (all/home/away) + os totais absolutos.
 function avg(rows: Row[], id: string) {
@@ -1175,6 +1230,89 @@ function contextoUltimos5(teamId: string): string {
     .join("\n")
   return `${legend}\n${lines}`
 }
+
+// ---- H2H clube×clube (MOD-006): confronto direto entre os DOIS times do jogo, com o detalhe do último ----
+// Retrospecto que a forma isolada não dá: certos pares travam (under crônico), certos times são fregueses.
+// A liga NÃO é escopada por seasonId de propósito — o banco tem 2 seasons de PL, então o jogo do turno E os
+// da season passada entram. Copas vêm do cupPlayed já em memória. Anti-vazamento: só date < CUTOFF. @feature MOD-006
+const isH2HPair = (p: Row) =>
+  (p.homeTeamId === home.id && p.awayTeamId === away.id) || (p.homeTeamId === away.id && p.awayTeamId === home.id)
+const h2hLeague = (
+  await db
+    .select()
+    .from(match)
+    .where(
+      and(
+        eq(match.leagueCode, m.leagueCode),
+        isNotNull(match.ftHome),
+        or(
+          and(eq(match.homeTeamId, home.id), eq(match.awayTeamId, away.id)),
+          and(eq(match.homeTeamId, away.id), eq(match.awayTeamId, home.id)),
+        ),
+      ),
+    )
+).filter((p) => p.date < CUTOFF && p.id !== m.id)
+const h2hMeetings = [...h2hLeague.map((p) => ({ p, cup: false })), ...cupPlayed.filter(isH2HPair).map((p) => ({ p, cup: true }))]
+  .sort((a, b) => b.p.date.localeCompare(a.p.date)) // mais recente primeiro
+  .slice(0, 6)
+// Gols do ÚLTIMO confronto com autor (goal ⋈ player) — o "quem marcou" citável do precedente.
+const lastH2H = h2hMeetings[0]?.p
+const lastH2HGoals = lastH2H
+  ? (
+      await db
+        .select({ minute: goal.minute, teamId: goal.teamId, type: goal.type, scorer: player.name })
+        .from(goal)
+        .leftJoin(player, eq(goal.playerId, player.id))
+        .where(eq(goal.matchId, lastH2H.id))
+    ).sort((a, b) => (a.minute ?? 0) - (b.minute ?? 0))
+  : []
+// Linha de UM confronto na ótica do MANDANTE ATUAL (res/placar/HT/arco/SoT/mando) — mesmo "como foi" da forma.
+function h2hLine({ p, cup }: { p: Row; cup: boolean }): string {
+  const gf = goalsFor(p, home.id), ga = goalsAgainst(p, home.id)
+  const isHome = p.homeTeamId === home.id
+  const res = gf > ga ? "Vitória" : gf < ga ? "Derrota" : "Empate"
+  const htF = isHome ? p.htHome : p.htAway, htA = isHome ? p.htAway : p.htHome
+  const htStr = htF != null && htA != null ? `, HT ${htF}-${htA}` : ""
+  let arc = ""
+  if (htF != null && htA != null) {
+    const hl = htF - htA, fl = gf - ga
+    arc =
+      hl < 0 && fl > 0 ? " 🔄 **VIRADA** (perdia no HT)"
+      : hl > 0 && fl < 0 ? " 🔻 **LEVOU A VIRADA** (vencia no HT)"
+      : hl > 0 && fl === 0 ? " 🔻 cedeu o empate (vencia no HT)"
+      : hl < 0 && fl === 0 ? " 🔺 buscou o empate (perdia no HT)"
+      : ""
+  }
+  const sotStr = hasSot(p, home.id) ? ` — SoT ${sotFor(p, home.id)}-${sotAgainst(p, home.id)}` : ""
+  const compStr = cup ? ` · 🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}` : ""
+  return `- ${p.date} · ${isHome ? "vs" : "@"} **${nameOf(isHome ? p.awayTeamId : p.homeTeamId)}** (${isHome ? "casa" : "fora"} · **${res} ${gf}-${ga}**${htStr})${arc}${sotStr}${compStr}`
+}
+// O bloco pro prompt: retrospecto agregado + 1 linha por confronto + o último DETALHADO (autores dos gols).
+function h2hBlock(): string {
+  if (!h2hMeetings.length)
+    return "- **Sem confronto direto na janela ingerida** (par inédito ou recém-promovido) — não há precedente a citar; pese só forma/estilo."
+  const v = h2hMeetings.filter(({ p }) => goalsFor(p, home.id) > goalsAgainst(p, home.id)).length
+  const d = h2hMeetings.filter(({ p }) => goalsFor(p, home.id) < goalsAgainst(p, home.id)).length
+  const e = h2hMeetings.length - v - d
+  const gfT = h2hMeetings.reduce((s, { p }) => s + goalsFor(p, home.id), 0)
+  const gaT = h2hMeetings.reduce((s, { p }) => s + goalsAgainst(p, home.id), 0)
+  const over25 = h2hMeetings.filter(({ p }) => (p.ftHome ?? 0) + (p.ftAway ?? 0) >= 3).length
+  const btts = h2hMeetings.filter(({ p }) => (p.ftHome ?? 0) >= 1 && (p.ftAway ?? 0) >= 1).length
+  const header = `**Retrospecto (${h2hMeetings.length} confronto${h2hMeetings.length > 1 ? "s" : ""} na janela ingerida, ótica do ${home.name}): ${v}V ${e}E ${d}D · gols ${gfT}-${gaT}** · over 2.5 em ${over25}/${h2hMeetings.length} · BTTS em ${btts}/${h2hMeetings.length}`
+  const lines = h2hMeetings.map(h2hLine).join("\n")
+  const goalLines = lastH2HGoals.length
+    ? lastH2HGoals
+        .map((g) => `${g.minute != null ? `${g.minute}'` : "?'"} ${g.scorer ?? "?"} (${nameOf(g.teamId)})${g.type === "own" ? " (contra)" : ""}`)
+        .join(" · ")
+    : "sem gol"
+  const last = lastH2H
+    ? `\n**Último confronto (o precedente mais parecido com ESTE jogo):** ${h2hLine(h2hMeetings[0]!).slice(2)}\n  - Gols: ${goalLines}`
+    : ""
+  const caveat =
+    "\n_Use como PRECEDENTE, não como destino: cite a DATA (técnico/elenco podem ter mudado desde então) e pese o MANDO — o jogo do turno foi na casa do outro. Par que trava (under/poucos SoT recorrentes) ou freguesia recorrente é sinal; 1 jogo isolado não é._"
+  return `${header}\n${lines}${last}${caveat}`
+}
+
 // Consistência de marcar/sofrer na season (pré-cutoff): MARCOU em X de Y (recorte casa/fora), não-marcou, clean
 // sheet, BTTS. É o que sustenta "casa marca" como aposta de baixa variância — a MÉDIA esconde, a frequência não.
 function consistencyLine(id: string): string {
@@ -1389,6 +1527,9 @@ ${awayStakes.lines.map((s) => `  - ${s}`).join("\n")}
 
 ${intentHeadline}
 
+## H2H — confronto direto ${home.name} × ${away.name} (liga 2 seasons + copas, até ${CUTOFF})
+${h2hBlock()}
+
 ## ${home.name} (manda) — até ${CUTOFF}
 
 ### Gols & finalização (season)
@@ -1414,6 +1555,9 @@ ${momentumLines(home.id)}
 
 ### Distribuição de gols por faixa (season)
 ${timingLines(homeTiming)}
+
+### Bola parada — origem dos gols (liga, season) e escanteios
+${setPieceBlock(home.id)}
 
 ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ## ${away.name} (visita) — até ${CUTOFF}
@@ -1441,6 +1585,9 @@ ${momentumLines(away.id)}
 
 ### Distribuição de gols por faixa (season)
 ${timingLines(awayTiming)}
+
+### Bola parada — origem dos gols (liga, season) e escanteios
+${setPieceBlock(away.id)}
 
 ${absBlock(`Desfalques de ${away.name} neste jogo`, awayAbs)}
 ## Cruzamento ataque × defesa por faixa de 15 min

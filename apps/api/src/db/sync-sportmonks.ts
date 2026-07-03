@@ -3,6 +3,8 @@ import { and, eq, ne } from "drizzle-orm"
 import { db } from "./client"
 import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, nationality, player, season, standing, team, venue, weather } from "./schema"
 import { matchSlug, slugify } from "./slug"
+import { roleFromGrid } from "./role-from-grid"
+import { fixtureMetaOf, ingestTvStations, preferredFootOf, type SmTvLink } from "./sync-ingest"
 import { env } from "../env"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
@@ -28,9 +30,8 @@ const LINEUP_BENCH = 12
 // shotsOnTarget (86): per-player shots on target; SUM per team rebuilds the team's SoT for the match.
 // Volume defensivo + criação por jogador (LIG-003 / tese do desfalque): tackles/interceptions/duels/
 // crosses/dribbles/big-chances-missed/passes — todos confirmados no lineups.details da PL 25/26.
-const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86,
-  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, bigChancesMissed: 581 } as const
-const STAT_IDS = Object.values(STAT).join(",")
+const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86, shotsTotal: 42, shotsOffTarget: 41, shotsBlocked: 58, duelsLost: 1491, crossesSuccessfulPct: 1533, passesAccuratePct: 1584, fouls: 56, foulsDrawn: 96, saves: 57, savesInsidebox: 104, dispossessed: 94, blockedShots: 97, clearances: 101, duelsTotal: 105, aerialsWon: 107, passesAccurate: 116, touches: 120, longBalls: 122, longBallsWon: 123, bigChancesCreated: 580, chancesCreated: 9706, aerialsTotal: 27274, aerialsLost: 27266, aerialsWonPct: 27275, tacklesWon: 27267, tacklesWonPct: 27268, duelsWonPct: 27276, passesFinalThird: 27269, longBallsWonPct: 27270, ballRecoveries: 27271, backwardPasses: 27272, possessionLost: 27273, errorsLeadToShot: 48997, lastManTackle: 583, goodHighClaim: 584, offsides: 51, captain: 40,
+  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581 } as const
 // SportMonks fixture-statistics type_ids ingeridos por time por partida (include=statistics). @feature DOS-002
 // Bloco 2 (defesa + construção): só os que o probe confirmou virem no nível-partida da PL 25/26.
 const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, shotsOffTarget: 41, shotsBlocked: 58, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34, freeKicks: 55,
@@ -100,6 +101,8 @@ type SmPlayer = {
   weight?: number
   image_path?: string
   nationality_id?: number
+  detailed_position_id?: number // preferred role (148 CB, 154 RB, 152 LW, …) — per-match role is derived from grid+formation
+  metadata?: { type_id: number; values?: unknown }[] // type_id 229 = preferred foot ("left"/"right"/"both") @feature W-057
 }
 type SmLineup = {
   team_id: number
@@ -150,6 +153,8 @@ type SmFixture = {
   statistics?: SmStatistic[]
   trends?: SmTrend[]
   weatherreport?: SmWeather | null // chave LOWERCASE no JSON (include=weatherReport, como `relatedplayer`)
+  metadata?: { type_id: number; values?: unknown }[] // 578 attendance, 572 lineup confirmed (fixtureMetaOf)
+  tvstations?: SmTvLink[] // chave LOWERCASE no JSON (include=tvStations.tvStation) @feature W-059
 }
 // SportMonks weather report (include=weatherReport): a chave no JSON vem como `weatherreport` (minúscula).
 // temperature/feels_like/wind são objetos; usamos o período "day" (~horário do jogo). `description` = condição.
@@ -379,8 +384,8 @@ async function main() {
   const byId = new Map<number, SmFixture>()
   for (const [from, to] of WINDOWS) {
     const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};lineupDetailTypes:${STAT_IDS};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
-        `&include=participants;scores;round;state;lineups.player;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport&per_page=50`,
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
+        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -451,6 +456,7 @@ async function main() {
       seasonId, // @feature LIG-008
       ...score,
       status: f.state?.developer_name ?? null,
+      ...fixtureMetaOf(f),
     }
     const [m] = await db
       .insert(match)
@@ -460,6 +466,10 @@ async function main() {
     matchIdByFixture.set(f.id, m!.id)
   }
   console.log(`matches: ${matchIdByFixture.size} written`)
+
+  // Onde assistir (W-059): catálogo de estações + vínculos por partida, logos no R2.
+  const nTv = await ingestTvStations(fixtures, matchIdByFixture)
+  console.log(`tv links: ${nTv}`)
 
   // 3b) Collect distinct players and nationalities from the lineups: starters (type_id 11) AND
   // bench (type_id 12). `starter` is later set from the type.
@@ -517,6 +527,8 @@ async function main() {
       weight: pl.weight ?? null,
       imageUrl: photoByPlayer.get(pl.id) ?? null,
       nationalityId: pl.nationality_id && countries.has(pl.nationality_id) ? pl.nationality_id : null,
+      detailedPositionId: pl.detailed_position_id ?? null,
+      preferredFoot: preferredFootOf(pl),
     }
     const [j] = await db
       .insert(player)
@@ -539,9 +551,11 @@ async function main() {
     const byTeam = new Map<number, SmLineup[]>()
     for (const l of entries) byTeam.set(l.team_id, [...(byTeam.get(l.team_id) ?? []), l])
 
+    const homeSmId = f.participants.find((p) => p.meta.location === "home")?.id
     for (const [teamSmId, players2] of byTeam) {
       const teamId = teamIdBySm.get(teamSmId)
       if (!teamId) continue
+      const isHome = teamSmId === homeSmId
       const [lu] = await db
         .insert(lineup)
         .values({ matchId, teamId, formation: formationByTeam.get(teamSmId) ?? null })
@@ -562,10 +576,17 @@ async function main() {
           position: shortPosition(l.position?.developer_name),
           starter: l.type_id === LINEUP_STARTER,
           grid: l.formation_field ?? null,
+          role: roleFromGrid(formationByTeam.get(teamSmId) ?? null, l.formation_field ?? null, isHome),
           rating: stat(STAT.rating) ?? null,
           minutesPlayed: stat(STAT.minutes) ?? null,
           keyPasses: stat(STAT.keyPasses) ?? null,
           shotsOnTarget: stat(STAT.shotsOnTarget) ?? null,
+          shotsTotal: stat(STAT.shotsTotal) ?? null,
+          shotsOffTarget: stat(STAT.shotsOffTarget) ?? null,
+          shotsBlocked: stat(STAT.shotsBlocked) ?? null,
+          duelsLost: stat(STAT.duelsLost) ?? null,
+          crossesSuccessfulPct: stat(STAT.crossesSuccessfulPct) ?? null, fouls: stat(STAT.fouls) ?? null, foulsDrawn: stat(STAT.foulsDrawn) ?? null, saves: stat(STAT.saves) ?? null, savesInsidebox: stat(STAT.savesInsidebox) ?? null, dispossessed: stat(STAT.dispossessed) ?? null, blockedShots: stat(STAT.blockedShots) ?? null, clearances: stat(STAT.clearances) ?? null, duelsTotal: stat(STAT.duelsTotal) ?? null, aerialsWon: stat(STAT.aerialsWon) ?? null, passesAccurate: stat(STAT.passesAccurate) ?? null, touches: stat(STAT.touches) ?? null, longBalls: stat(STAT.longBalls) ?? null, longBallsWon: stat(STAT.longBallsWon) ?? null, bigChancesCreated: stat(STAT.bigChancesCreated) ?? null, chancesCreated: stat(STAT.chancesCreated) ?? null, aerialsTotal: stat(STAT.aerialsTotal) ?? null, aerialsLost: stat(STAT.aerialsLost) ?? null, aerialsWonPct: stat(STAT.aerialsWonPct) ?? null, tacklesWon: stat(STAT.tacklesWon) ?? null, tacklesWonPct: stat(STAT.tacklesWonPct) ?? null, duelsWonPct: stat(STAT.duelsWonPct) ?? null, passesFinalThird: stat(STAT.passesFinalThird) ?? null, longBallsWonPct: stat(STAT.longBallsWonPct) ?? null, ballRecoveries: stat(STAT.ballRecoveries) ?? null, backwardPasses: stat(STAT.backwardPasses) ?? null, possessionLost: stat(STAT.possessionLost) ?? null, errorsLeadToShot: stat(STAT.errorsLeadToShot) ?? null, lastManTackle: stat(STAT.lastManTackle) ?? null, goodHighClaim: stat(STAT.goodHighClaim) ?? null, offsides: stat(STAT.offsides) ?? null, captain: (stat(STAT.captain) ?? 0) >= 1,
+          passesAccuratePct: stat(STAT.passesAccuratePct) ?? null,
           tackles: stat(STAT.tackles) ?? null,
           interceptions: stat(STAT.interceptions) ?? null,
           duelsWon: stat(STAT.duelsWon) ?? null,
@@ -574,6 +595,7 @@ async function main() {
           crossesAccurate: stat(STAT.crossesAccurate) ?? null,
           dribbleAttempts: stat(STAT.dribbleAttempts) ?? null,
           dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null,
+          dribbledPast: stat(STAT.dribbledPast) ?? null,
           bigChancesMissed: stat(STAT.bigChancesMissed) ?? null,
           manOfMatch: stat(STAT.motm) === 1,
         }

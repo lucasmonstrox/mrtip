@@ -1,0 +1,1064 @@
+{
+  "matchId": "55cf691d-349e-487f-8fe0-8b848497185a",
+  "homeName": "Everton",
+  "awayName": "Sunderland",
+  "actual": "Everton 1-3 Sunderland (HT 1-0)",
+  "ftH": 1,
+  "ftA": 3,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Everton x Sunderland\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-17 14:00 · Rodada 37 · Liga PL\n- Local: Hill Dickinson Stadium (grass)\n- Clima: light rain · 12.3°C (sens. 11°C) · vento 4.1 m/s · umidade 55% · nuvens 99% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Everton 7 dias (último: liga, 2026-05-10) · Sunderland 8 dias (último: liga, 2026-05-09)\n- Viagem do visitante: ~196 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 361 jogos): mandante 1.529 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-17)\n- Everton: 10º, 49 pts · Sunderland: 12º, 48 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 51 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Everton: 10º, 49 pts, 2 jogo(s) restante(s) (máx possível 55 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n  - Sunderland: 12º, 48 pts, 2 jogo(s) restante(s) (máx possível 54 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n\n🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui.\n\n## Everton (manda) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **46 marcados / 46 sofridos** em 36j · média **1.28 marca / 1.28 sofre** por jogo\n- **Em casa (18j): marca 1.39 / sofre 1.33** (25 gols) · por tempo: 1ºT 0.5/0.56 · 2ºT 0.78/0.72\n- **Finalização: 138 SoT (3.83/j · casa 4.33/j) · conv 32%** (aberta, −2 pên) · sofre 4.28 SoT/j (adv 28%) · 8.36 KP/j\n- **Volume: 11.2 chutes/j (7.7 na área) · 1.9 big chances/j** · posse 43.3%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 47.5/51.8 · chutes pra fora 3.9/5.3 · bloqueados 3.5/4.5 · de fora da área 3.5/4.7\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 46/56.8 · chutes pra fora 3.2/6.2 · bloqueados 4/5.4 · de fora da área 3.6/5.4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.87**\n  - **James Garner** nota **7.36** (season) · forma 7.08↓ (últ.5 do time: 6.7→7.3→6.9→7.2→7.3 📈 subindo) · 6× MOTM · 39j\n  - **James Tarkowski** nota **7.16** (season) · forma 7.18= (últ.5 do time: 6.9→7.1→7.2→6.3→8.4 📈 subindo) · 2× MOTM · 38j\n  - **Kiernan Dewsbury-Hall** nota **7.02** (season) · forma 6.74↓ (últ.5 do time: 7.3→7→6.9→6.4→6.1 📉 caindo) · 4× MOTM · 30j\n  - ⚠️(fora) **Jack Grealish** nota **7.01** (season) · forma 7.01= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 22j\n  - **Michael Keane** nota **7** (season) · forma 6.7↓ (últ.5 do time: –→–→6.5→6.8→6.8 📈 subindo) · **faltou 2/5** · 30j\n  - **Iliman Ndiaye** nota **6.91** (season) · forma 6.82= (últ.5 do time: 6.9→7.1→6.7→6.4→7 📉 caindo) · 32j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EEDDE** (3pts) · **9 feitos / 11 sofridos** · marca 1.8↑ / sofre 2.2↑ g/j · SoT 5.2 feito / 5 sofrido\n- **Consistência: MARCOU em 27/36** (casa 14/18 · fora 13/18) · não-marcou 9 · clean sheet 11 · BTTS 18/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Brentford** (fora · **E 2-2**) — adv 7º briga-top · você 8º · seu fora até ali 1.1 marca/1.1 sofre\n- vs **Liverpool** (casa · **D 1-2**) — adv 5º briga-top · você 10º · seu casa até ali 1.3 marca/1.2 sofre\n- @ **West Ham United** (fora · **D 1-2**) — adv 17º briga-Z · você 10º salvo · seu fora até ali 1.1 marca/1.1 sofre\n- vs **Manchester City** (casa · **E 3-3**) — adv 2º Eur-gar · você 11º · seu casa até ali 1.3 marca/1.2 sofre\n- @ **Crystal Palace** (fora · **E 2-2**) — adv 15º briga-Z · você 10º salvo · seu fora até ali 1.1 marca/1.2 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Brentford (FORA · E 2-2) — min 1→94:\n    📈 pressão (net/min): 1'-15' [+2 +1 +1 -4 -2 -1 -3 -5 -3 0 +1 +1 -3 -4 -3] · 16'-30' [+1 +1 0 0 0 -2 0 0 0 +3 +2 +6 +6 +2 +2] · 31'-45' [+2 +2 +1 +1 0 -3 -2 -3 -5 -10 -8 -5 0 0 -1] · ‖INTERVALO‖ · 46'-60' [-1 -1 -1 -1 -5 -3 -5 -8 -9 -6 -8 -3 -4 -4 -3] · 61'-75' [-2 -2 +3 0 0 +2 +3 +1 -1 -3 -1 -3 -2 +4 +4] · 76'-90' [+4 +1 -2 -2 +1 +6 +4 +2 +3 +4 +4 +4 +2 +2 +4] · 91'+ [+4 +8 +3 0]\n    ⚽ gols: 3'✗ 26'✓ 76'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **3** · 31'-45' **6** ‖ 46'-60' **3** · 61'-75' **3** · 76'-90' **6**\n  - vs Liverpool (CASA · D 1-2) — min 1→102:\n    📈 pressão (net/min): 1'-15' [0 0 0 +2 0 +5 +3 +2 -1 -2 +1 +1 +1 +2 +2] · 16'-30' [+3 +3 +3 +1 +2 +2 -2 -2 -2 +6 +6 +10 +10 +12 +2] · 31'-45' [0 0 0 -1 -1 +1 +3 +3 +3 -2 -1 -5 -5 -6 -7] · ‖INTERVALO‖ · 46'-60' [-6 -7 -6 -4 -4 -3 -2 0 -1 +4 +4 +4 +4 +2 +2] · 61'-75' [+1 -2 -1 0 -2 +1 +1 +2 +6 +5 +5 +5 +5 +3 +6] · 76'-90' [+5 +3 +3 +2 +3 0 0 0 -2 -2 -2 -2 -2 -1 0] · 91'+ [0 0 0 0 0 +1 -1 -3 -3 -4 -8 -5]\n    ⚽ gols: 29'✗ 54'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **8** · 16'-30' **5** · 31'-45' **4** ‖ 46'-60' **6** · 61'-75' **5** · 76'-90' **8**\n  - @ West Ham United (FORA · D 1-2) — min 1→100:\n    📈 pressão (net/min): 1'-15' [0 -1 0 0 +5 +5 +5 +7 +9 +6 +2 +2 -1 +1 0] · 16'-30' [-4 -4 -4 -5 -9 -7 -6 -6 -8 -5 -5 +2 0 0 0] · 31'-45' [-1 -1 0 0 0 +5 +3 +5 +5 +3 +3 +3 +1 0 -2] · ‖INTERVALO‖ · 46'-60' [-11 -11 -8 -8 -6 -7 -7 -14 -11 -9 -26 -19 -13 -9 -9] · 61'-75' [-14 -14 -9 -6 -6 -4 -3 -3 -2 -1 0 0 -2 -1 +6] · 76'-90' [+7 +5 +5 +12 +13 +13 +10 +10 +6 +6 +7 +7 +3 +6 +3] · 91'+ [+3 +4 +4 -4 -4 -3 0 0 +2 +1]\n    ⚽ gols: 51'✗ 88'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **8** · 31'-45' **4** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **1**\n  - vs Manchester City (CASA · E 3-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 -1 0 -2 -2 0 -6 -6 -6 -6 -13 -10 -11 -8 -5] · 16'-30' [-8 -8 -12 -13 -16 -13 -10 -8 -5 -4 -1 +3 0 0 0] · 31'-45' [+1 +5 +5 +1 0 0 -2 -3 -3 -3 -9 -6 -6 -6 -2] · ‖INTERVALO‖ · 46'-60' [-9 -5 -3 -4 -4 -4 -3 -2 -1 0 0 0 -2 -2 -3] · 61'-75' [0 0 0 +1 +6 +2 0 +3 +6 +3 -4 -2 +3 +3 0] · 76'-90' [-2 -3 -3 -1 -19 -14 -4 -4 -8 -4 -3 -6 -5 -4 -4] · 91'+ [-6 -5 -3 -4 -5 -6]\n    ⚽ gols: 43'✗ 68'✓ 73'✓ 81'✓ 83'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **5** · 61'-75' **2** · 76'-90' **10**\n  - @ Crystal Palace (FORA · E 2-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 +2 +9 +10 +10 +10 +10 +5 +3 0 0 -2 -1 -1 -2] · 16'-30' [-1 -5 -2 -5 -5 -5 -4 -3 -2 0 +2 +2 +1 +5 +2] · 31'-45' [+2 -2 +1 -3 -3 -2 -15 -12 -12 -12 -5 -4 -3 +2 +3] · ‖INTERVALO‖ · 46'-60' [+4 +2 +2 +3 -4 -3 -3 -3 -3 +1 +6 +5 +3 -1 -1] · 61'-75' [-1 -1 +3 +1 0 -1 -1 -8 -29 -24 -18 -18 -12 -9 -6] · 76'-90' [0 -6 -6 -2 -3 -3 -7 -5 -6 -6 -5 -8 -6 -4 -5] · 91'+ [-3 -1 +1 +4 +4 +2]\n    ⚽ gols: 6'✓ 34'✗ 47'✓ 77'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **4** · 31'-45' **0** ‖ 46'-60' **4** · 61'-75' **5** · 76'-90' **5**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.19 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.17 · 76-90: 0.42\n- Sofre por faixa (/j): 0-15: 0.11 · 16-30: 0.25 · 31-45: 0.19 · 46-60: 0.17 · 61-75: 0.19 · 76-90: 0.36\n- 1ºT: marca 18 / sofre 20 (totais na temporada)\n\n### Desfalques de Everton neste jogo\n- **Jack Grealish** (Foot surgery) — 2 gols + 6 assists até a data; season: **4% dos gols** do time (17% com assists); **últimos 5 jogos do time**: participou de 0/9 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.2 g/j (20j) vs sem ele 1.38 g/j (16j) = +15%; finaliza **0.4 SoT/jogo** (time: 3.1 SoT/j com ele vs 4.75 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.6 interceptações/j** (~7% do time) · 1.1 desarmes/j · 5.3 duelos ganhos/j · 0.5 cruz. certos/j · 1.1 dribles certos/j · 2 key passes/j\n- **Idrissa Gueye** (Muscle Injury) — 2 gols + 3 assists até a data; season: **4% dos gols** do time (11% com assists); **últimos 5 jogos do time**: participou de 1/9 gols = **11%** (≈ estável); with/without: com ele 1.2 g/j (25j) vs sem ele 1.45 g/j (11j) = +21%; finaliza **0.28 SoT/jogo** (time: 3.8 SoT/j com ele vs 3.91 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.8 desarmes/j · 3.8 duelos ganhos/j · 0.3 cruz. certos/j · 0.3 dribles certos/j · 0.5 key passes/j\n- **J. Branthwaite** (Hamstring Injury) — 1 gols + 0 assists até a data; season: **2% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/9 gols = **0%** (≈ estável); with/without: com ele 1.6 g/j (10j) vs sem ele 1.15 g/j (26j) = −28%; finaliza **0.2 SoT/jogo** (time: 5.1 SoT/j com ele vs 3.35 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.3 desarmes/j · 4.4 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0.3 key passes/j\n\n## Sunderland (visita) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **37 marcados / 46 sofridos** em 36j · média **1.03 marca / 1.28 sofre** por jogo\n- **Fora (18j): marca 0.78 / sofre 1.5** (14 gols) · por tempo: 1ºT 0.33/0.61 · 2ºT 0.69/0.67\n- **Finalização: 122 SoT (3.39/j · fora 3.28/j) · conv 27%** (aberta, −4 pên) · sofre 4.67 SoT/j (adv 26%) · 7.03 KP/j\n- **Volume: 10.2 chutes/j (7.2 na área) · 1.7 big chances/j** · posse 44.7%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 44.9/56.3 · chutes pra fora 3.9/5.5 · bloqueados 3/4.5 · de fora da área 3/5.2\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 53/45.6 · chutes pra fora 4.4/4.6 · bloqueados 4.2/3.2 · de fora da área 4.4/4.4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.79**\n  - **Granit Xhaka** nota **7.15** (season) · forma 7.34↑ (últ.5 do time: 7.5→6.5→6.9→8→7.8 📈 subindo) · 3× MOTM · 34j\n  - **Enzo Le Fée** nota **7.04** (season) · forma 7.28↑ (últ.5 do time: 7.5→8.2→6.3→6.7→7.7 📉 caindo) · 5× MOTM · 38j\n  - **Nordi Mukiele** nota **6.99** (season) · forma 6.9= (últ.5 do time: 7.4→6.3→6.2→7.4→7.2 📈 subindo) · 1× MOTM · 33j\n  - **Robin Roefs** nota **6.97** (season) · forma 6.8↓ (últ.5 do time: 8.4→5.8→5.2→7.6→7 ➡️ estável) · 3× MOTM · 35j\n  - **Omar Alderete** nota **6.88** (season) · forma 6.66↓ (últ.5 do time: 7→6.1→6.2→6.8→7.2 📈 subindo) · 2× MOTM · 33j\n  - ⚠️(fora) **D. Ballard** nota **6.86** (season) · forma 5.63↓ (últ.5 do time: –→6.4→6.1→4.4→– 📉 caindo) · **faltou 2/5** · 1× MOTM · 31j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EEDDV** (5pts) · **5 feitos / 10 sofridos** · marca 1= / sofre 2↑ g/j · SoT 3.8 feito / 5.6 sofrido\n- **Consistência: MARCOU em 23/36** (casa 13/18 · fora 10/18) · não-marcou 13 · clean sheet 11 · BTTS 16/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Tottenham Hotspur** (casa · **V 1-0**) — adv 18º briga-Z · você 12º · seu casa até ali 1.5 marca/0.9 sofre\n- @ **Aston Villa** (fora · **D 3-4**) — adv 4º briga-top · você 11º · seu fora até ali 0.6 marca/1.4 sofre\n- vs **Nottingham Forest** (casa · **D 0-5**) — adv 16º briga-Z · você 11º · seu casa até ali 1.4 marca/0.9 sofre\n- @ **Wolverhampton Wanderers** (fora · **E 1-1**) — adv 20º REBAIX. · você 12º · seu fora até ali 0.8 marca/1.5 sofre\n- vs **Manchester United** (casa · **E 0-0**) — adv 3º Eur-gar · você 12º salvo · seu casa até ali 1.4 marca/1.1 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Tottenham Hotspur (CASA · V 1-0) — min 1→101:\n    📈 pressão (net/min): 1'-15' [0 -3 -2 +2 -1 +1 +1 +2 +3 +4 +2 +1 +1 +1 +1] · 16'-30' [+1 +1 +4 +7 +7 +6 +3 +3 +3 +2 -2 -4 -3 -2 -3] · 31'-45' [+1 +2 +3 +2 +1 +1 -2 -2 -2 -1 -1 0 0 0 -3] · ‖INTERVALO‖ · 46'-60' [-4 -4 -3 -4 -3 0 0 0 +5 +4 +3 +2 +4 0 0] · 61'-75' [+3 +2 +2 +1 +1 0 0 0 0 -3 -2 -1 -4 -3 -2] · 76'-90' [-5 -3 -4 -3 +1 +4 +4 +2 +2 0 0 0 +1 +1 +10] · 91'+ [+7 +4 +3 -3 -3 -3 -3 -8 -8 -5 -4]\n    ⚽ gols: 61'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **2** · 31'-45' **5** ‖ 46'-60' **4** · 61'-75' **5** · 76'-90' **11**\n  - @ Aston Villa (FORA · D 3-4) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -3 -7 -2 +1 +4 +4 +3 +5 +7 +7 +5 +5 +5 +2] · 16'-30' [-2 -6 -6 -7 -4 -2 -2 -3 -3 -1 -3 -2 0 +3 +5] · 31'-45' [+3 +3 +5 +3 +1 -4 -7 -6 -3 -2 0 +1 +3 +1 -1] · ‖INTERVALO‖ · 46'-60' [-4 -7 -6 -4 -2 -1 0 +1 +2 +3 -3 -8 -6 -5 -3] · 61'-75' [-2 -3 -3 -4 -7 -3 -3 +1 +2 +2 +2 +2 +1 +2 +5] · 76'-90' [+4 +5 +3 +3 +3 +1 -3 -6 -4 -3 +3 +5 +5 +3 +3] · 91'+ [+3 +2 -2 -4 -4 -3 -3]\n    ⚽ gols: 2'✗ 9'✓ 36'✗ 46'✗ 86'✓ 87'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **5** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **5**\n  - vs Nottingham Forest (CASA · D 0-5) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 +2 +1 -1 +1 +7 +8 +9 +6 +3 0 -1 0 +1 +6] · 16'-30' [+6 +4 +2 +3 +1 0 -3 -5 -4 -1 0 0 -5 -4 -4] · 31'-45' [-4 -8 -7 -6 -7 -5 -4 -6 -4 +1 +1 0 0 +2 +3] · ‖INTERVALO‖ · 46'-60' [+3 +2 +2 0 -1 -1 0 -1 0 +2 +2 +6 +7 +5 +7] · 61'-75' [+7 +9 +9 +9 +15 +11 +7 +3 +2 +3 0 0 +1 +4 +3] · 76'-90' [+5 +4 +4 +5 +6 +6 +10 +11 +9 +10 +8 +12 +10 +7 +5] · 91'+ [+6 +6 +17 +9 +4 +1]\n    ⚽ gols: 17'✗ 31'✗ 34'✗ 37'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **3** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **3**\n  - @ Wolverhampton Wanderers (FORA · E 1-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 0 0 -2 0 +2 +2 +3 +3 0 -1 -1 -1 -1 +1] · 16'-30' [+2 +5 +6 +4 +3 +9 +6 +6 +6 +6 +4 +3 +6 +6 +4] · 31'-45' [+3 +1 +1 -1 -9 -9 -6 -4 -3 -9 -6 -6 -6 -2 -5] · ‖INTERVALO‖ · 46'-60' [-2 -7 -11 -11 -12 -9 -12 -9 -5 -9 -9 -9 -6 -6 -6] · 61'-75' [-6 -7 -7 -4 -3 -5 -2 -1 +4 +4 +1 -3 -3 -2 0] · 76'-90' [+2 +4 +3 +5 +6 +12 +9 +2 -5 -5 -8 -5 -3 -4 -1] · 91'+ [-1 0 -1 -3]\n    ⚽ gols: 17'✓ 54'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **4** · 76'-90' **1**\n  - vs Manchester United (CASA · E 0-0) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 -1 0 0 +4 +5 +3 +5 +8 +1 +1 +3 +4 +3 +2] · 16'-30' [+1 +1 +2 +8 +8 +5 +2 +1 +2 +2 +3 +2 +1 -5 -3] · 31'-45' [+1 +1 +1 +7 +7 +8 +8 +5 +6 +8 +5 +3 +2 +2 +1] · ‖INTERVALO‖ · 46'-60' [-3 0 +1 0 -3 -5 -10 -6 -6 -4 -4 -4 -3 -3 -2] · 61'-75' [-2 -1 -1 +2 +2 +2 +2 +1 +1 0 +3 +1 +2 +3 +3] · 76'-90' [+2 0 0 0 0 0 0 +1 0 -1 -1 +1 +3 +3 +3] · 91'+ [-2 -5 -5 -7]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **5** · 31'-45' **3** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **2**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.06 · 16-30: 0.17 · 31-45: 0.11 · 46-60: 0.11 · 61-75: 0.28 · 76-90: 0.31\n- Sofre por faixa (/j): 0-15: 0.22 · 16-30: 0.14 · 31-45: 0.25 · 46-60: 0.19 · 61-75: 0.25 · 76-90: 0.22\n- 1ºT: marca 12 / sofre 22 (totais na temporada)\n\n### Desfalques de Sunderland neste jogo\n- **D. Ballard** (Red Card Suspension) — 2 gols + 0 assists até a data; season: **5% dos gols** do time (5% com assists); **últimos 5 jogos do time**: participou de 0/5 gols = **0%** (≈ estável); with/without: com ele 1.07 g/j (29j) vs sem ele 0.86 g/j (7j) = −20%; finaliza **0.31 SoT/jogo** (time: 3.41 SoT/j com ele vs 3.29 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.7 interceptações/j** (~9% do time) · 1.1 desarmes/j · 5.8 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.6 key passes/j\n- **B. Traoré** (Knee Injury) — 1 gols + 0 assists até a data; season: **3% dos gols** do time (3% com assists); **últimos 5 jogos do time**: participou de 0/5 gols = **0%** (≈ estável); with/without: com ele 1.17 g/j (12j) vs sem ele 0.96 g/j (24j) = −18%; finaliza **0.5 SoT/jogo** (time: 2.67 SoT/j com ele vs 3.75 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.2 interceptações/j** (~3% do time) · 0.9 desarmes/j · 3.5 duelos ganhos/j · 0.1 cruz. certos/j · 1.2 dribles certos/j · 0.7 key passes/j\n- **R. Mundle** (Doubtful) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/5 gols = **0%** (≈ estável); with/without: com ele 0.93 g/j (14j) vs sem ele 1.09 g/j (22j) = +17%; finaliza **0.14 SoT/jogo** (time: 3.5 SoT/j com ele vs 3.32 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.4 desarmes/j · 1.7 duelos ganhos/j · 0.1 cruz. certos/j · 0.5 dribles certos/j · 0.1 key passes/j\n- **Simon Moore** (Broken Hand) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/5 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.03 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Everton atacando × Sunderland defendendo**\n| Faixa | Everton marca/j | Sunderland sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.22 | 0.33 |\n| 16-30 | 0.19 | 0.14 | 0.33 |\n| 31-45 | 0.19 | 0.25 | 0.44 |\n| 46-60 | 0.19 | 0.19 | 0.38 |\n| 61-75 | 0.17 | 0.25 | 0.42 |\n| 76-90 | 0.42 | 0.22 | 0.64 |\n\n**Sunderland atacando × Everton defendendo**\n| Faixa | Sunderland marca/j | Everton sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.06 | 0.11 | 0.17 |\n| 16-30 | 0.17 | 0.25 | 0.42 |\n| 31-45 | 0.11 | 0.19 | 0.3 |\n| 46-60 | 0.11 | 0.17 | 0.28 |\n| 61-75 | 0.28 | 0.19 | 0.47 |\n| 76-90 | 0.31 | 0.36 | 0.67 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Everton: **31-45** (domínio -1) · Sunderland: **16-30** (domínio -2.4). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Everton domínio/j | Sunderland domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | +0.1 | +1.8 | -1.7 ✈️ |\n| 16-30 | -1.3 | +1.1 | -2.4 ✈️ |\n| 31-45 | -1.6 | -0.6 | -1 ≈ |\n| 46-60 | -3.7 | -2.5 | -1.2 ≈ |\n| 61-75 | -1.7 | +0.7 | -2.4 ✈️ |\n| 76-90 | -0.2 | +1.4 | -1.6 ✈️ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Everton (casa) = 1.36 · λ Sunderland (fora) = 0.85 · total = 2.21\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Everton: λ_SoT 5.17 × conv 32% → **1.65 gols**\n- Sunderland: λ_SoT 3.53 × conv 27% → **0.95 gols**\n- total via SoT = 2.6\n- **Índice de volume do jogo**: λ_SoT total 8.7 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 47/31/22% | 52/28/20% |\n| Over 1.5 | 66% | 75% |\n| Over 2.5 | 38% | 48% |\n| Over 3.5 | 18% | 26% |\n| BTTS | 44% | 51% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **80%** · 12 **72%** · X2 **48%** · **Draw No Bet** casa 72% / fora 28%\n- **Placar exato (mais prováveis)**: 1-1 13% · 1-0 11% · 2-0 10% · 2-1 10%\n- **Odd/Even**: ímpar 47% / par 53% · **Multigoals**: 0-1 25% · 2-3 48% · 4+ 26%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Everton over 0.5 **81%** / over 1.5 **49%** · Sunderland over 0.5 **61%** / over 1.5 **25%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 1.91 · empate 3.63 · fora 4.96. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 361 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **38/47/15%** · 2ºT **43/34/23%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Everton) e `away` (= Sunderland), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). **Os dois PRECISAM ir pra cima** → concentre MAIS massa nas faixas TARDIAS (`\"61-75\"`/`\"76-90\"`): fadiga + desespero simultâneos empurram o gol pro fim. Mas o lado que estiver PERSEGUINDO (vai perdendo) converte PIOR no fim (chute apressado) — não infle demais o `\"76-90\"` DELE além do baseline. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.75,
+    "xg_away": 1.149999976158142,
+    "total": 2.9000000953674316,
+    "over25_prob": 0.5799999833106995,
+    "btts_prob": 0.6000000238418579,
+    "one_x_two": "{\"home\":0.52,\"draw\":0.26,\"away\":0.22}",
+    "confianca": "medium",
+    "best_bet_market": "team_total",
+    "best_bet_selection": "over",
+    "best_bet_team": "home",
+    "best_bet_line": 1.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.6000000238418579,
+    "reasoning_tokens": 5660
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Everton** contra **bloco baixo** (o estilo do Sunderland, posse média 44.7%): marca **1.46/j** e sofre 0.92/j em 13 jogos — **0.18 ACIMA** da média (1.28).\n- **Sunderland** contra **bloco baixo** (o estilo do Everton, posse média 43.3%): marca **1.23/j** e sofre 1.08/j em 13 jogos — **0.20 ACIMA** da média (1.03).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — cruzamento**: Everton gera 2% dos gols por aí × Sunderland sofre 9% por aí (liga: 2%) → índice 6.4×.\n- **CANAL ABERTO — contra-ataque**: Everton gera 7% dos gols por aí × Sunderland sofre 7% por aí (liga: 5%) → índice 2.4×.\n- **CANAL ABERTO — falta**: Sunderland gera 3% dos gols por aí × Everton sofre 5% por aí (liga: 2%) → índice 3.5×.\n- **CANAL ABERTO — jogada construída**: Sunderland gera 19% dos gols por aí × Everton sofre 29% por aí (liga: 20%) → índice 1.5×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Everton** (27 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.6 nos 10min seguintes) · **ADMINISTRA após marcar** (Δ -1.2 — recua).\n- **Sunderland** (20 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.0) · **MATA O JOGO após marcar** (Δ +1.6 — segue pressionando).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Everton**: Beto **9 gols** · últ.5: 3 · 0.5 SoT/j | Kiernan Dewsbury-Hall **8 gols** · últ.5: 2 · 0.5 SoT/j | Thierno Barry **8 gols** · últ.5: 2 · 0.4 SoT/j | Iliman Ndiaye **6 gols** (2 pên) · últ.5: 0 · 0.7 SoT/j | Michael Keane **3 gols** · últ.5: 0 · 0.2 SoT/j\n- **Sunderland**: Brian Brobbey **6 gols** · últ.5: 0 · 0.6 SoT/j | Wilson Isidor **5 gols** · últ.5: 1 · 0.5 SoT/j | Enzo Le Fée **4 gols** (3 pên) · últ.5: 0 · 0.3 SoT/j | Chemsdine Talbi **4 gols** · últ.5: 0 · 0.4 SoT/j | Nordi Mukiele **3 gols** · últ.5: 2 · 0.1 SoT/j",
+  "realGoals": [
+    {
+      "minute": 43,
+      "side": "home",
+      "scorer": "Merlin Röhl",
+      "type": "normal"
+    },
+    {
+      "minute": 59,
+      "side": "away",
+      "scorer": "Brian Brobbey",
+      "type": "normal"
+    },
+    {
+      "minute": 81,
+      "side": "away",
+      "scorer": "Enzo Le Fée",
+      "type": "normal"
+    },
+    {
+      "minute": 90,
+      "side": "away",
+      "scorer": "Wilson Isidor",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 1.75,
+      "xg_1t": 0.65,
+      "xg_2t": 1.1,
+      "xg_bands": {
+        "0-15": 0.12,
+        "16-30": 0.18,
+        "31-45": 0.22,
+        "46-60": 0.22,
+        "61-75": 0.3,
+        "76-90": 0.71
+      },
+      "summary": "Everton em casa, precisando vencer, deve propor jogo e criar volume, especialmente no 2ºT. Defesa desfalcada preocupa."
+    },
+    "away": {
+      "xg": 1.15,
+      "xg_1t": 0.35,
+      "xg_2t": 0.8,
+      "xg_bands": {
+        "0-15": 0.05,
+        "16-30": 0.2,
+        "31-45": 0.1,
+        "46-60": 0.1,
+        "61-75": 0.3,
+        "76-90": 0.4
+      },
+      "summary": "Sunderland visita com desfalques defensivos, mas com potencial ofensivo no 1ºT e reta final. Deve marcar ao menos um gol."
+    },
+    "general": {
+      "total": 2.9,
+      "total_1t": 1,
+      "total_2t": 1.9,
+      "over25_prob": 0.55,
+      "btts_prob": 0.56,
+      "one_x_two": {
+        "home": 0.5,
+        "draw": 0.24,
+        "away": 0.26
+      },
+      "one_x_two_1t": {
+        "home": 0.42,
+        "draw": 0.36,
+        "away": 0.22
+      },
+      "one_x_two_2t": {
+        "home": 0.48,
+        "draw": 0.26,
+        "away": 0.26
+      },
+      "confidence": "medium",
+      "confidence_regra": "Arestas independentes convergem para a aposta principal e as rotas A/B apontam na mesma direção; contudo, um ataque de refutação baseado no histórico de Sunderland fora enfraquece com dado forte, impedindo 'high'.",
+      "summary": "Jogo de alta motivação, ambos precisando vencer. Everton favorito, mas defesas frágeis sugerem gols. Aposta de valor: Sunderland marca ao menos um gol."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Clima (light rain, vento 4.1 m/s) não afeta total.",
+        "dado": "nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga",
+        "direcao": "neutro",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "contexto",
+        "fato": "Descanso equilibrado (7 vs 8 dias); diferença irrelevante.",
+        "dado": "diferença de 1-2 dias é ruído",
+        "direcao": "neutro",
+        "forca": "baixa"
+      },
+      {
+        "id": "C3",
+        "bloco": "contexto",
+        "fato": "Mando de casa favorece Everton no resultado (1x2).",
+        "dado": "mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no resultado (1x2) mais que no total",
+        "direcao": "favorece Everton no 1x2",
+        "forca": "media"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "Ambos precisam vencer; jogo tende a abrir.",
+        "dado": "VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA (nenhum se contenta com empate) → o jogo tende a ABRIR.",
+        "direcao": "over, ambos marcam",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_gols",
+        "fato": "Everton em casa tem volume ofensivo acima da média (4.33 SoT/j), mas defesa vaza (1.33 sofridos/j).",
+        "dado": "Em casa: marca 1.39 / sofre 1.33 · SoT 4.33/j",
+        "direcao": "tendência a jogos com gols em casa",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_gols",
+        "fato": "Everton cresce no 2ºT, especialmente na reta final (0.42 gols/j na faixa 76-90).",
+        "dado": "76-90: 0.42 marca/j (season)",
+        "direcao": "força ofensiva no fim do jogo",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_estilo",
+        "fato": "Everton sofre muitos ataques perigosos (56.8 nos últ.5), mas também gera (46).",
+        "dado": "Últimos 5: ataques perigosos 46/56.8",
+        "direcao": "jogo com volume de ataques, propenso a gols",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_qualidade",
+        "fato": "Garner e Tarkowski em boa forma; Dewsbury-Hall em queda; Grealish fora (adaptado).",
+        "dado": "Nota média do time: 6.87; Garner 7.36↑; Tarkowski 7.16↑; Dewsbury-Hall 7.02↓",
+        "direcao": "ofensivamente depende de Garner/Dewsbury-Hall; queda deste último reduz criação",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_desfalques",
+        "fato": "Ausência de Grealish não reduz ataque; time marca mais sem ele (+15%).",
+        "dado": "with/without: com ele 1.2 g/j vs sem ele 1.38 g/j",
+        "direcao": "neutro para ataque, time já adaptado",
+        "forca": "baixa"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_forma",
+        "fato": "Everton em má fase (3 pts em 5), mas marcando em quase todos os jogos em casa (14/18) e sofrendo muito (2.2 g/j nos últ.5).",
+        "dado": "Últimos 5: EEDDE, 3pts, 9 feitos / 11 sofridos; consistência marca 14/18 casa",
+        "direcao": "defesa frágil, ataque funcional",
+        "forca": "alta"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_forma",
+        "fato": "Adversários recentes de qualidade (Brentford 7º, Liverpool 5º, Man City 2º).",
+        "dado": "seu casa até ali 1.3 marca/1.2 sofre",
+        "direcao": "desempenho pode estar subestimado",
+        "forca": "media"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_momentum",
+        "fato": "Everton desmorona ao sofrer gol (Δ -1.6) e recua após marcar (Δ -1.2).",
+        "dado": "DESMORONA ao sofrer gol (Δ momentum -1.6) · ADMINISTRA após marcar (Δ -1.2)",
+        "direcao": "vulnerável a sofrer sequência se tomar o primeiro; se marcar, tende a administrar mal",
+        "forca": "alta"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_momentum",
+        "fato": "Everton tem dificuldade em dominar, mas consegue marcar no 2ºT (vários gols após 60').",
+        "dado": "gols: vs Liverpool 54', vs Man City 68' 73' 81'...",
+        "direcao": "gols tendem a vir mais tarde",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "home_faixas",
+        "fato": "Everton tem pico de gols na janela 76-90 (0.42/j, +0.25 acima da média da liga).",
+        "dado": "76-90: 0.42 (muito acima da média da liga de 26%)",
+        "direcao": "fortíssimo no fim do jogo",
+        "forca": "alta"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_faixas",
+        "fato": "Everton também sofre muitos gols no fim (76-90: 0.36/j).",
+        "dado": "76-90: 0.36 (maior índice também)",
+        "direcao": "reta final é a mais movimentada, com gols para ambos os lados",
+        "forca": "alta"
+      },
+      {
+        "id": "C16",
+        "bloco": "home_desfalques",
+        "fato": "Gueye e Branthwaite fora: somam ~26% das interceptações do time.",
+        "dado": "Gueye: 1.1 interceptações/j (13% do time); Branthwaite: 1.1 interceptações/j (13% do time)",
+        "direcao": "defesa mais frágil, facilita ataque do Sunderland",
+        "forca": "media"
+      },
+      {
+        "id": "C17",
+        "bloco": "home_desfalques",
+        "fato": "Ausência de Gueye e Branthwaite enfraquece transição defensiva e proteção à área.",
+        "dado": "Gueye: 1.8 desarmes/j; Branthwaite: 1.3 desarmes/j",
+        "direcao": "aumento do xG adversário",
+        "forca": "media"
+      },
+      {
+        "id": "C18",
+        "bloco": "away_gols",
+        "fato": "Sunderland fora tem ataque pouco produtivo (0.78 g/j), mas volume razoável (3.28 SoT/j). Defesa sofre 1.5 g/j.",
+        "dado": "Fora: marca 0.78 / sofre 1.5 · SoT 3.28/j",
+        "direcao": "visitante frágil defensivamente, mas com potencial para marcar",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_gols",
+        "fato": "Sunderland cresce ofensivamente no 2ºT (61-75 e 76-90), mas sofre em ambos os tempos.",
+        "dado": "Distribuição: 61-75: 0.28, 76-90: 0.31",
+        "direcao": "gols do Sunderland mais prováveis no 2ºT",
+        "forca": "media"
+      },
+      {
+        "id": "C20",
+        "bloco": "away_estilo",
+        "fato": "Sunderland melhorou ofensivamente nos últ.5 (53 ataques perigosos vs 44.9).",
+        "dado": "Últimos 5: ataques perigosos 53/45.6",
+        "direcao": "melhora na criação recente",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_qualidade",
+        "fato": "Xhaka, Mukiele, Alderete em boa forma; Enzo Le Fée em queda; Ballard fora.",
+        "dado": "Nota média 6.79; Xhaka 7.15↑; Enzo Le Fée 7.04↓",
+        "direcao": "ataque com potencial, defesa enfraquecida",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "away_desfalques",
+        "fato": "Ausência de Ballard (defesa) reduz solidez.",
+        "dado": "with/without: com ele 1.07 g/j vs sem 0.86 g/j (amostra pequena)",
+        "direcao": "facilita ataque do Everton",
+        "forca": "media"
+      },
+      {
+        "id": "C23",
+        "bloco": "away_qualidade",
+        "fato": "Enzo Le Fée é peça central (gols, pênaltis), mas forma irregular.",
+        "dado": "4 gols (3 pên), forma 7.28 em queda",
+        "direcao": "se render abaixo, ataque do Sunderland sofre",
+        "forca": "media"
+      },
+      {
+        "id": "C24",
+        "bloco": "away_forma",
+        "fato": "Sunderland em má fase (5 pts em 15), marcando pouco (1 gol/j) e sofrendo muito (2/j).",
+        "dado": "Últimos 5: EEDDV, 5pts, 5 feitos / 10 sofridos; marca 1= / sofre 2↑",
+        "direcao": "ataque inconsistente, defesa frágil",
+        "forca": "alta"
+      },
+      {
+        "id": "C25",
+        "bloco": "away_forma",
+        "fato": "Resultados recentes contra adversários de baixo e alto nível, mostrando inconsistência.",
+        "dado": "vs Forest: D 0-5 (casa); vs Wolves: E 1-1; vs Man Utd: E 0-0",
+        "direcao": "imprevisível, mas frágil defensivamente",
+        "forca": "media"
+      },
+      {
+        "id": "C26",
+        "bloco": "away_momentum",
+        "fato": "Sunderland tem resiliência: neutro ao sofrer (Δ 0.0) e mata o jogo ao marcar (Δ +1.6).",
+        "dado": "neutro ao sofrer; MATA O JOGO após marcar (+1.6)",
+        "direcao": "capacidade de reagir ou manter vantagem",
+        "forca": "alta"
+      },
+      {
+        "id": "C27",
+        "bloco": "away_momentum",
+        "fato": "Sunderland tende a começar bem (0-15: domínio +1.8) e pressiona na janela 16-30.",
+        "dado": "curva: 0-15: +1.8; 16-30: domínio -2.4 a favor Sunderland",
+        "direcao": "primeiros 30 minutos perigosos para o Everton",
+        "forca": "media"
+      },
+      {
+        "id": "C28",
+        "bloco": "away_faixas",
+        "fato": "Sunderland marca majoritariamente no 2ºT (61-90), mas também tem pico secundário em 16-30.",
+        "dado": "Marca/j: 16-30: 0.17; 61-75: 0.28; 76-90: 0.31",
+        "direcao": "gols prováveis no 2ºT ou início do 1ºT",
+        "forca": "media"
+      },
+      {
+        "id": "C29",
+        "bloco": "away_faixas",
+        "fato": "Sunderland sofre gols principalmente no final do 1ºT (31-45: 0.25) e meio do 2ºT (61-75: 0.25).",
+        "dado": "Sofre/j: 31-45: 0.25; 61-75: 0.25",
+        "direcao": "vulnerabilidade nessas janelas",
+        "forca": "media"
+      },
+      {
+        "id": "C30",
+        "bloco": "away_desfalques",
+        "fato": "Ballard (suspenso) é baixa defensiva mais relevante; Traoré e outros menos impactantes.",
+        "dado": "Ballard: 0.7 interceptações/j (9% time), 1.1 desarmes/j",
+        "direcao": "defesa do Sunderland enfraquecida",
+        "forca": "alta"
+      },
+      {
+        "id": "C31",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janela 76-90 é a mais provável para gol do Everton (índice 0.64).",
+        "dado": "Everton ataque x Sunderland defesa: 76-90: 0.64",
+        "direcao": "gol do Everton no fim",
+        "forca": "alta"
+      },
+      {
+        "id": "C32",
+        "bloco": "cruzamento_faixa",
+        "fato": "Janela 76-90 também é crítica para gol do Sunderland (índice 0.67).",
+        "dado": "Sunderland ataque x Everton defesa: 76-90: 0.67",
+        "direcao": "reta final com muitos gols potenciais",
+        "forca": "alta"
+      },
+      {
+        "id": "C33",
+        "bloco": "base_rate",
+        "fato": "Prior de gols via Rota B é 2.6 (Everton 1.65, Sunderland 0.95), indicando jogo com tendência a gols.",
+        "dado": "Rota B: λ Everton 1.65, λ Sunderland 0.95, total 2.6",
+        "direcao": "lambda acima da média da liga",
+        "forca": "alta"
+      },
+      {
+        "id": "C34",
+        "bloco": "base_rate",
+        "fato": "Probs Rota B: 1x2 52/28/20, BTTS 51%, Over 2.5 48%.",
+        "dado": "Mercados derivados: casa 52%, BTTS 51%, over 2.5 48%",
+        "direcao": "base para probs iniciais",
+        "forca": "alta"
+      },
+      {
+        "id": "C35",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ambos times performam acima da média contra bloco baixo (Everton +0.18, Sunderland +0.20).",
+        "dado": "Everton contra bloco baixo: marca 1.46/j (+0.18); Sunderland: marca 1.23/j (+0.20)",
+        "direcao": "indica mais gols do que o normal no confronto",
+        "forca": "alta"
+      },
+      {
+        "id": "C36",
+        "bloco": "cruzamentos_computados",
+        "fato": "Everton pode explorar cruzamentos: gera 2% por aí, Sunderland sofre 9% (índice 6.4×).",
+        "dado": "CANAL ABERTO — cruzamento: índice 6.4×",
+        "direcao": "bolas aéreas perigosas para o Everton",
+        "forca": "alta"
+      },
+      {
+        "id": "C37",
+        "bloco": "cruzamentos_computados",
+        "fato": "Sunderland pode criar em jogadas construídas: gera 19%, Everton sofre 29% (índice 1.5×).",
+        "dado": "jogada construída: Sunderland 19% × Everton sofre 29% → 1.5×",
+        "direcao": "Sunderland deve gerar chances nesse fundamento",
+        "forca": "media"
+      },
+      {
+        "id": "C38",
+        "bloco": "cruzamentos_computados",
+        "fato": "Cenário perigoso para Everton se sofrer primeiro: desmorona; Sunderland mata o jogo ao marcar.",
+        "dado": "Everton DESMORONA ao sofrer; Sunderland MATA O JOGO após marcar.",
+        "direcao": "se Sunderland abrir placar, pode controlar ou ampliar",
+        "forca": "alta"
+      },
+      {
+        "id": "C39",
+        "bloco": "cruzamentos_computados",
+        "fato": "Beto (9g, 3 nos últ.5) e Dewsbury-Hall (8g) lideram o ataque do Everton; Sunderland com Brobbey (6g, jejum).",
+        "dado": "Artilharia: Beto 9g, últ.5:3; Dewsbury-Hall 8g; Sunderland: Brobbey 6g, últ.5:0",
+        "direcao": "Everton tem atacantes mais goleadores e em melhor momento",
+        "forca": "media"
+      }
+    ],
+    "blocos_sem_sinal": [
+      {
+        "bloco": "probs_mercado",
+        "motivo": "Informações já cobertas pelo base_rate; sem sinal adicional."
+      }
+    ],
+    "descartadas": [
+      {
+        "id": "C1",
+        "motivo": "Clima sem correlação com total; neutro e não utilizado em arestas."
+      },
+      {
+        "id": "C9",
+        "motivo": "Ausência de Grealish já precificada e sem efeito direcional; neutra."
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "James Garner",
+        "time": "home",
+        "leitura": "Principal articulador do Everton, em boa forma; sua presença é vital para furar bloco baixo do Sunderland."
+      },
+      {
+        "nome": "James Tarkowski",
+        "time": "home",
+        "leitura": "Líder defensivo, importante para conter bolas aéreas do Sunderland; sua consistência dá solidez à zaga."
+      },
+      {
+        "nome": "Kiernan Dewsbury-Hall",
+        "time": "home",
+        "leitura": "Segundo maior goleador do time, mas rendimento caindo; sua capacidade de infiltração é arma chave, mas pode não render o esperado."
+      },
+      {
+        "nome": "Jack Grealish",
+        "time": "home",
+        "leitura": "Ausência já absorvida; time marca mais sem ele, então sua falta não desorganiza o ataque."
+      },
+      {
+        "nome": "Michael Keane",
+        "time": "home",
+        "leitura": "Zagueiro experiente, mas forma em baixa; sua lentidão pode ser explorada em contra-ataques."
+      },
+      {
+        "nome": "Iliman Ndiaye",
+        "time": "home",
+        "leitura": "Em jejum, mas é opção de velocidade; pode ser decisivo saindo do banco se o jogo abrir."
+      },
+      {
+        "nome": "Idrissa Gueye",
+        "time": "home",
+        "leitura": "Desfalque defensivo importante: sem ele, o meio-campo perde combatividade, facilitando a transição do Sunderland."
+      },
+      {
+        "nome": "J. Branthwaite",
+        "time": "home",
+        "leitura": "Baixa na zaga: time perde altura e interceptações; defesa mais vulnerável a jogadas aéreas e bolas paradas."
+      },
+      {
+        "nome": "Granit Xhaka",
+        "time": "away",
+        "leitura": "Cérebro do Sunderland, em grande fase; sua visão de jogo e passes longos podem acionar contra-ataques."
+      },
+      {
+        "nome": "Enzo Le Fée",
+        "time": "away",
+        "leitura": "Principal arma de criação e pênaltis, mas inconsistente; se inspirar, pode decidir, mas tendência é jogo apagado."
+      },
+      {
+        "nome": "Nordi Mukiele",
+        "time": "away",
+        "leitura": "Em boa fase ofensiva, sobe bem ao ataque; pode surpreender em jogadas de bola parada."
+      },
+      {
+        "nome": "Robin Roefs",
+        "time": "away",
+        "leitura": "Goleiro confiável, mas sofre muitos gols fora de casa; será testado pelo volume do Everton."
+      },
+      {
+        "nome": "Omar Alderete",
+        "time": "away",
+        "leitura": "Zagueiro em ascensão, importante na defesa; terá trabalho com os atacantes do Everton."
+      },
+      {
+        "nome": "D. Ballard",
+        "time": "away",
+        "leitura": "Desfalque crucial na zaga; sem ele, a defesa perde organização e altura, favorecendo o jogo aéreo do Everton."
+      },
+      {
+        "nome": "B. Traoré",
+        "time": "away",
+        "leitura": "Pouca influência ofensiva e defensiva; ausência de baixo impacto."
+      },
+      {
+        "nome": "R. Mundle",
+        "time": "away",
+        "leitura": "Jogador de pouca participação; mesmo se jogar, não muda o cenário."
+      },
+      {
+        "nome": "Simon Moore",
+        "time": "away",
+        "leitura": "Goleiro reserva, sem impacto."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C5",
+          "C6",
+          "C14",
+          "C29",
+          "C30",
+          "C31"
+        ],
+        "leitura": "Everton em casa tem volume ofensivo (4.33 SoT/j) e pico de gols no fim (76-90). Sunderland sofre gols no final do 1ºT e meio do 2ºT, e está desfalcado na zaga (Ballard). O cruzamento de faixas mostra índice altíssimo para o Everton na reta final (0.64).",
+        "efeito": "Aumenta xG do Everton, especialmente no 2ºT. Gol do Everton provável após 60', com ênfase em 76-90."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C19",
+          "C27",
+          "C28",
+          "C15",
+          "C17",
+          "C16",
+          "C32"
+        ],
+        "leitura": "Sunderland marca mais no 2ºT (61-90) e também tem pico em 16-30. Everton sofre muitos gols no fim (76-90: 0.36) e está sem Gueye e Branthwaite (interceptações). O momentum do Sunderland mostra pressão inicial (16-30) e no 2ºT. O índice de cruzamento é alto para Sunderland em 16-30 e 76-90.",
+        "efeito": "Aumenta xG do Sunderland, com chances de marcar no primeiro tempo (16-30) e no fim. BTTS provável."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C4",
+          "C10",
+          "C24",
+          "C34"
+        ],
+        "leitura": "Ambos precisam vencer (jogo aberto). Everton marca em quase todo jogo em casa (14/18) mas sofre muito; Sunderland fora sofre 1.5 g/j e marca em 10/18. O prior Rota B já aponta over 2.5 48% e BTTS 51%, e a intenção reforça tendência de gols.",
+        "efeito": "Sobe over 2.5 e BTTS acima do prior. Jogo tende a ter gols de ambos os lados."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C4",
+          "C17",
+          "C30",
+          "C3"
+        ],
+        "leitura": "Ambos precisam atacar, mas defesas estão desfalcadas: Everton sem Gueye/Branthwaite, Sunderland sem Ballard. Mando de casa favorece Everton no resultado, mas defesas frágeis aumentam gols.",
+        "efeito": "Reforça over e BTTS. Everton ligeiramente mais provável de vencer, mas com defesa exposta."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C17",
+          "C27",
+          "C38"
+        ],
+        "leitura": "Everton desfalcado na contenção (Gueye) e zaga (Branthwaite). Sunderland começa bem (momentum 16-30 positivo) e, se marcar primeiro, mata o jogo (Δ +1.6), enquanto Everton desmorona ao sofrer. Cenário de Sunderland abrir placar cedo.",
+        "efeito": "Aumenta probabilidade de Sunderland marcar primeiro e controlar o jogo. Risco para aposta em Everton."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C30",
+          "C5",
+          "C14",
+          "C35"
+        ],
+        "leitura": "Sunderland sem Ballard (zagueiro) enfrenta Everton que, contra bloco baixo, marca 1.46 g/j (acima da média) e tem pico de gols no fim. Ataque do Everton deve superar defesa frágil.",
+        "efeito": "Aumenta xG do Everton; team total over 1.5 com mais chances."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C10",
+          "C11",
+          "C24",
+          "C25"
+        ],
+        "leitura": "Everton enfrentou times fortes recentemente e somou poucos pontos, mas marcou gols; Sunderland perdeu feio para Forest e não marcou contra United. Forma ruim de ambos pode ser contextualizada por adversários difíceis. Everton em casa tende a render melhor.",
+        "efeito": "Não reduz drasticamente xG; mantém expectativa de gols."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C12",
+          "C13",
+          "C26",
+          "C27",
+          "C33"
+        ],
+        "leitura": "Everton desmorona ao sofrer, Sunderland se mantém estável. No entanto, Everton tem pico de gols no 2ºT. Se o jogo chegar empatado no fim, Everton cresce. Se Sunderland sair na frente, Everton pode sofrer mais. O lambda prior (2.6) já é alto, e as dinâmicas sugerem mais gols.",
+        "efeito": "Reforça over 2.5 e cenários de múltiplos gols."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C8",
+          "C23",
+          "C36",
+          "C37"
+        ],
+        "leitura": "Everton depende de Dewsbury-Hall (em queda) e Garner; Sunderland de Enzo Le Fée (irregular). Everton pode explorar cruzamentos (índice 6.4); Sunderland sofre 9% por cruzamento. Sunderland pode criar em jogadas construídas (índice 1.5). As peças-chave não estão em grande momento, o que pode limitar a efetividade, mas os canais existem.",
+        "efeito": "Mantém expectativa de gols, mas com possível desperdício. Não reduz xG."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C2",
+          "C4"
+        ],
+        "leitura": "Ambos descansados (7 e 8 dias), sem fadiga. Intenção alta de ambos. Sem vantagem física para nenhum lado.",
+        "efeito": "Neutro, mas permite intensidade total."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C35",
+          "C33",
+          "C36"
+        ],
+        "leitura": "Ambos times têm desempenho acima da média contra bloco baixo. Everton especificamente pode explorar cruzamentos. O prior 2.6 pode ser elevado para cerca de 2.9 considerando esses fatores.",
+        "efeito": "Sobe xG total para ~2.9, over 2.5 se torna mais provável."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C39",
+          "C8",
+          "C23",
+          "C30"
+        ],
+        "leitura": "Beto (9g, 3 nos últ.5) em boa fase enfrenta zaga desfalcada do Sunderland. Dewsbury-Hall em queda, mas ainda perigoso. Sunderland depende de Brobbey (em jejum) e Isidor. Everton tem vantagem nos goleadores.",
+        "efeito": "Aumenta probabilidade de gol de Beto e do Everton."
+      },
+      {
+        "id": "A13",
+        "liga": [
+          "C7",
+          "C17"
+        ],
+        "leitura": "Everton já sofre muitos ataques perigosos (56.8 nos últ.5) e está desfalcado na defesa; defesa ainda mais sobrecarregada.",
+        "efeito": "Sobe xG adversário."
+      },
+      {
+        "id": "A14",
+        "liga": [
+          "C20",
+          "C24"
+        ],
+        "leitura": "Sunderland melhorou ofensivamente nos últ.5 (53 ataques perigosos vs 44.9), mas resultados ruins. Há potencial ofensivo não convertido.",
+        "efeito": "Mantém xG do Sunderland apesar dos resultados."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Everton impõe volume e vence",
+        "prob": 0.45,
+        "filme": "Everton começa pressionando, mas sem sucesso imediato. Sunderland se defende bem, mas sofre com bolas aéreas. No 2ºT, o volume do Everton cresce, e a defesa do Sunderland cede. Gol do Everton entre 60-80 minutos. Sunderland, precisando, se lança ao ataque, sofre contra-ataque. Everton vence por 2-1 ou 3-1.",
+        "arestas": [
+          "A1",
+          "A3",
+          "A4",
+          "A6",
+          "A11",
+          "A12"
+        ]
+      },
+      {
+        "nome": "Sunderland surpreende e controla",
+        "prob": 0.3,
+        "filme": "Sunderland começa melhor, aproveita desfalques do Everton e marca primeiro (15-30 min). Everton desmorona ao sofrer, e Sunderland controla com posse e contra-ataques. Everton tenta reagir no 2ºT, mas Sunderland amplia ou segura. Placar final: Sunderland vence 2-1 ou empate 2-2 se Everton reagir.",
+        "arestas": [
+          "A2",
+          "A5",
+          "A8",
+          "A10"
+        ]
+      },
+      {
+        "nome": "Empate com gols, aberto até o fim",
+        "prob": 0.25,
+        "filme": "Jogo equilibrado, ambos criam chances. Everton abre placar no 2ºT, Sunderland empata rapidamente (resiliência). Fim de jogo com pressão dos dois lados, mas ninguém desempata. 2-2 ou 1-1.",
+        "arestas": [
+          "A3",
+          "A4",
+          "A8",
+          "A10"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Início estudado; Everton busca controle, Sunderland se fecha. Poucas finalizações.",
+        "prob_gol": 0.08,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Sunderland cresce, Everton pode ser apanhado em contra-ataque. Janela com chances para ambos.",
+        "prob_gol": 0.18,
+        "lado": "away"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Everton pressiona no fim do 1ºT, mas sem eficiência.",
+        "prob_gol": 0.14,
+        "lado": "home"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Após intervalo, jogo pode abrir. Everton volta mais agressivo.",
+        "prob_gol": 0.18,
+        "lado": "home"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Everton mantém pressão; defesa do Sunderland falha. Gol do Everton provável.",
+        "prob_gol": 0.22,
+        "lado": "home"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Reta final explosiva: ambos marcam historicamente, defesas cansadas. Muitos gols.",
+        "prob_gol": 0.3,
+        "lado": "equilibrado"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Everton inicia tentando impor ritmo, mas Sunderland é organizado defensivamente. O jogo pode ser truncado, com poucas chances claras. Sunderland, em contra-ataque, tem potencial nos primeiros 30 minutos. Tendência de poucos gols no 1ºT. Mais provável 0-0 ou 1-0 Everton nos acréscimos.",
+        "prob_gol": 0.55
+      },
+      "segundo": {
+        "analise": "O jogo se define no 2ºT. Everton, precisando vencer, empurra o Sunderland e cria volume. A entrada de substitutos ofensivos e a perda de organização defensiva do Sunderland abrem espaços. Sunderland também ameaça em transições. Placar provável no intervalo: 0-0 ou 1-0. No 2ºT, Everton marca entre 60-75, Sunderland reage e empata ou sofre mais. Total de gols no 2ºT: 2 ou mais.",
+        "prob_gol": 0.8
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Beto",
+          "prob": 0.4,
+          "motivo": "Artilheiro do time (9g), 3 nos últ.5, boa forma; enfrenta zaga desfalcada do Sunderland; presença de área."
+        },
+        {
+          "nome": "Kiernan Dewsbury-Hall",
+          "prob": 0.25,
+          "motivo": "8g na temporada, 2 nos últ.5; mesmo em queda, é segundo goleador e aparece bem na área."
+        },
+        {
+          "nome": "Thierno Barry",
+          "prob": 0.2,
+          "motivo": "8g na temporada, 2 nos últ.5; opção de velocidade; pode marcar em contra-ataque no 2ºT."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Brian Brobbey",
+          "prob": 0.3,
+          "motivo": "Principal atacante (6g), apesar de jejum; referência no ataque, terá chances contra defesa frágil do Everton."
+        },
+        {
+          "nome": "Wilson Isidor",
+          "prob": 0.2,
+          "motivo": "5g, 1 nos últ.5; atacante móvel, pode explorar espaços nas costas da zaga."
+        },
+        {
+          "nome": "Nordi Mukiele",
+          "prob": 0.15,
+          "motivo": "Defensor em fase artilheira (2g nos últ.5), perigo em bolas paradas contra defesa que perdeu altura (Branthwaite)."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.5,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Everton favorito, mas defesa frágil torna aposta arriscada."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.24,
+        "variancia": 5,
+        "valor": "nenhum",
+        "nota": "Empate improvável com ambos precisando vencer."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.26,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Sunderland pode surpreender com defesa do Everton desfalcada."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.74,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Cobertura alta, mas prior já elevado."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.5,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Chance razoável de Sunderland não perder."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.76,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Aposta em não dar empate, boa em jogo aberto."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": "home",
+        "line": null,
+        "prob": 0.74,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Everton não perder."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": "away",
+        "line": null,
+        "prob": 0.5,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Sunderland DNB com valor significativo, dado o cenário de ambos se lançarem e defesas frágeis."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.78,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Linha muito provável, pouco valor."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.55,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Over 2.5 com valor razoável, consistente com jogo aberto."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.33,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Linha alta, mas cenário de 4+ gols possível."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.56,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Ambos marcam é provável, mas não garantido."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.83,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Everton deve marcar, pouco valor."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.52,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Everton marcar 2+ tem chance, mas linha arriscada."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.68,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Sunderland deve marcar, valor decente."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.32,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Sunderland 2+ gols possível se jogo abrir."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.24,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Everton por 2+ gols improvável, mas possível com defesa fraca do Sunderland."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.09,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Sunderland por 2+ muito improvável."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.51,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Ímpar ligeiramente favorito, mas essencialmente aleatório."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "over",
+      "team": "away",
+      "line": 0.5,
+      "confidence": "medium",
+      "probability": 0.68,
+      "evidence_for": [
+        "A2",
+        "A4",
+        "A5",
+        "A8"
+      ],
+      "evidence_against": [
+        "C24",
+        "C18"
+      ],
+      "analysis": "Sunderland deve marcar: enfrenta defesa do Everton desfalcada (Gueye, Branthwaite) e tem picos ofensivos em janelas específicas (16-30, 61-90). Ambos os times precisam vencer, abrindo o jogo. Apesar de inconsistente fora, o contexto e os desfalques elevam a probabilidade de gol para 68%, gerando valor em relação ao prior. Baixa variância e alinhamento com os roteiros tornam essa a melhor aposta."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "team_total away over 0.5",
+          "argumento": "Sunderland fora de casa marca em apenas 10/18 jogos (56%), histórico que contrasta com a probabilidade elevada de 68%.",
+          "ids": [
+            "C24",
+            "C18"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "team_total away over 0.5",
+          "argumento": "Everton pode fazer um jogo defensivo sólido em casa, especialmente com Tarkowski, anulando o ataque do Sunderland.",
+          "ids": [
+            "C3",
+            "C5"
+          ],
+          "veredito": "nao_sustenta"
+        },
+        {
+          "alvo": "team_total away over 0.5",
+          "argumento": "Se Everton abrir o placar cedo, Sunderland pode desanimar e não marcar, reduzindo o ímpeto ofensivo.",
+          "ids": [
+            "C12"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "A aposta sobrevive aos ataques; o ataque 1 enfraquece, mas as evidências de contexto (desfalques, intenção) mantêm a probabilidade elevada. Nenhum ataque derruba a aposta."
+    },
+    "drivers": [
+      "Motivação bilateral alta (ambos precisam vencer)",
+      "Desfalques defensivos de ambos os lados (Gueye, Branthwaite, Ballard)",
+      "Picos de gols nas janelas finais e histórico de ambos sofrerem/marcarem após 75'"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 19,
+    "blocosSemSinal": 1,
+    "blocosFaltando": [],
+    "conclusoes": 39,
+    "arestas": 14,
+    "jogadores": 17,
+    "mercados": 19,
+    "orfas": [
+      "C21",
+      "C22"
+    ]
+  },
+  "reasoningText": "Vou analisar o confronto Everton x Sunderland, seguindo o protocolo de 6 passos descrito na Parte 1, utilizando os dados da Parte 2 para extrair conclusões, construir arestas, roteiros e, finalmente, preencher a saída JSON exigida. A análise será em português do Brasil, com todos os campos textuais nesse idioma.\n\n---\n\n**PASSO 1 — VARREDURA: conclusões por bloco**\n\nPercorrendo cada bloco do briefing, extraio de 1 a 3 conclusões com ID sequencial, dado copiado literalmente, direção, força e bloco. Blocos que não gerarem sinal entram em `blocos_sem_sinal`. Todos os IDs serão usados no Passo 3 ou descartados.\n\n---\n\n**Bloco: contexto**\n\n- Fato: Data 2026-05-17, rodada 37, PL, local Hill Dickinson Stadium, clima light rain 12.3°C, vento 4.1 m/s, umidade 55%, nuvens 99%. \n- Dado: \"nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga\"\n- Conclusão C1: Clima não afeta total de gols; sem correlação na liga. Direção: neutro. Força: baixa (apenas confirmação de ruído).\n\n- Fato: Descanso: Everton 7 dias, Sunderland 8 dias (último jogo liga). Viagem visitante ~196 km.\n- Dado: \"diferença de 1-2 dias é ruído\"\n- Conclusão C2: Descanso equilibrado, diferença de 1 dia irrelevante; sem impacto significativo. Direção: neutro. Força: baixa.\n\n- Fato: \"Vantagem de casa (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no resultado (1x2) mais que no total\"\n- Conclusão C3: Mando de casa favorece resultado do Everton; em jogo de stake alto, fator casa aperta mais. Direção: favorece Everton no 1x2. Força: média (inerente, já embutido nos λ, mas reforça o lado mandante).\n\n**Bloco: tabela_motivacao**\n\n- Fato: Everton 10º, 49 pts; Sunderland 12º, 48 pts. Ambos matematicamente possíveis vagas europeias (última vaga 51 pts, 8º). Ambos \"PRECISAM LUTAR\".\n- Dado: \"VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA (nenhum se contenta com empate) → o jogo tende a ABRIR.\"\n- Conclusão C4: Motivação alta bilateral; ambos precisam atacar, jogo tende a ser aberto. Direção: over, ambos marcam. Força: alta (veredito de intenção explícito).\n\n**Bloco: home_gols (Everton)**\n\n- Fato: Em casa, Everton marca 1.39 g/j (25 gols em 18j), sofre 1.33 g/j. Total 1.28/1.28 na temporada.\n- Dado: \"SoT 3.83/j (casa 4.33/j) · conv 32%\"\n- Conclusão C5: Everton em casa tem volume ofensivo acima da média (4.33 SoT/j vs 3.83 geral), mas defesa vaza (1.33 sofridos/j). Direção: tendência a jogos com gols em casa. Força: média.\n\n- Fato: Em casa, 1ºT marca 0.5/j, 2ºT 0.78/j; sofre 1ºT 0.56/j, 2ºT 0.72/j.\n- Dado: \"Distribuição de gols: 76-90: 0.42 marca/j (season)\".\n- Conclusão C6: Everton cresce no 2ºT, especialmente na reta final (0.42 gols/j na faixa 76-90, muito acima da média da liga de 26%). Direção: força ofensiva no fim do jogo. Força: média (anomalia de timing relevante).\n\n**Bloco: home_estilo (Everton)**\n\n- Fato: Temporada: ataques perigosos 47.5/51.8, chutes pra fora 3.9/5.3, bloqueados 3.5/4.5.\n- Dado: \"Últimos 5: ataques perigosos 46/56.8, chutes pra fora 3.2/6.2, bloqueados 4/5.4\"\n- Conclusão C7: Everton sofre muitos ataques perigosos (56.8 nos últ.5, pior que a média), mas também gera (46). Defesa pressionada. Direção: jogo com volume de ataques, propenso a gols. Força: média.\n\n**Bloco: home_qualidade (Everton)**\n\n- Fato: James Garner nota 7.36, forma 7.08 (subindo); James Tarkowski 7.16, forma 7.18 (subindo); Kiernan Dewsbury-Hall 7.02, mas forma 6.74 (caindo); Jack Grealish fora; Michael Keane 7.0, forma 6.7.\n- Dado: \"Nota média do time: 6.87\"\n- Conclusão C8: Everton tem pilares em Garner e Tarkowski em boa forma, mas Dewsbury-Hall em queda. Grealish (lesão) já estava fora, time adaptado. Direção: ofensivamente depende de Garner e Dewsbury-Hall; queda deste último pode reduzir criação. Força: média (desfalque de Grealish já precificado, forma mista).\n\n- Fato: Jack Grealish participou de 0/9 gols nos últimos 5 jogos, mas tem histórico de 6 assists.\n- Dado: \"with/without: com ele 1.2 g/j (20j) vs sem ele 1.38 g/j (16j) = +15%\"\n- Conclusão C9: Ausência de Grealish não reduz ataque; time marca mais sem ele (1.38 vs 1.2). Direção: neutro para ataque, time já adaptado. Força: baixa (pequena amostra, mas direção contraintuitiva).\n\n**Bloco: home_forma (Everton)**\n\n- Fato: Últimos 5: EEDDE, 3pts, 9 feitos / 11 sofridos, marca 1.8↑ / sofre 2.2↑ g/j.\n- Dado: \"Consistência: MARCOU em 27/36 (casa 14/18)\"\n- Conclusão C10: Everton em má fase (3 pts em 5), mas marcando em quase todos os jogos em casa (14/18). Sofre muito (2.2 g/j nos últ.5). Direção: defesa frágil, ataque funcional. Força: alta (resultados recentes ruins, mas volume de gols alto).\n\n- Fato: Adversários recentes: Brentford (7º), Liverpool (5º), West Ham (17º), Man City (2º), Crystal Palace (15º).\n- Dado: \"seu casa até ali 1.3 marca/1.2 sofre\" (nos jogos em casa)\n- Conclusão C11: Forma recente é contra adversários de qualidade (exceto West Ham e Palace, ambos brigando contra Z-3). Resultados ruins, mas esperado. Direção: desempenho pode estar subestimado. Força: média.\n\n**Bloco: home_momentum (Everton)**\n\n- Fato: Momentum minuto a minuto mostra pressão negativa em várias janelas, mas com picos.\n- Dado: Exemplos: vs Man City, pressão -19 no 61-75; vs Liverpool, defesa ativa (8 interceptações/desarmes nos primeiros 15). No geral, time desmorona ao sofrer gol (Δ -1.6).\n- Conclusão C12: Everton desmorona ao sofrer gol (Δ -1.6 nos 10min após); após marcar, recua (Δ -1.2). Direção: vulnerável a sofrer sequência de gols se tomar o primeiro; se marcar, tende a administrar mal. Força: alta (dinâmica pós-gol clara).\n\n- Fato: Janela de domínio: 31-45 tem domínio -1 (o menos negativo dos últimos 5). Reta final (76-90) tem alguns momentos positivos.\n- Dado: \"gols: vs Liverpool 54', vs Man City 68' 73' 81'...\"\n- Conclusão C13: Everton tem dificuldade em dominar, mas consegue marcar no 2ºT (vários gols após 60'). Direção: gols tendem a vir mais tarde. Força: média.\n\n**Bloco: home_faixas (Everton)**\n\n- Fato: Marca por faixa: 0-15:0.11, 16-30:0.19, 31-45:0.19, 46-60:0.19, 61-75:0.17, 76-90:0.42.\n- Dado: \"76-90: 0.42\" (muito acima da média da liga de 26%).\n- Conclusão C14: Everton tem pico de gols na janela 76-90 (0.42/j, +0.25 acima da média da liga). Direção: fortíssimo no fim do jogo. Força: alta (anomalia).\n\n- Fato: Sofre por faixa: 0-15:0.11, 16-30:0.25, 31-45:0.19, 46-60:0.17, 61-75:0.19, 76-90:0.36.\n- Dado: \"76-90: 0.36\" (maior índice também).\n- Conclusão C15: Everton também sofre muitos gols no fim (76-90: 0.36/j, +0.10 vs liga). Direção: reta final é a mais movimentada, com gols para ambos os lados. Força: alta.\n\n**Bloco: home_desfalques (Everton)**\n\n- Fato: Jack Grealish (Foot surgery), Idrissa Gueye (Muscle), J. Branthwaite (Hamstring).\n- Dado: Grealish: 4% gols, 0.4 SoT/j, 0.6 interceptações/j. Gueye: 4% gols, 1.1 interceptações/j (13% do time), 1.8 desarmes/j. Branthwaite: 2% gols, 1.1 interceptações/j (13% do time), 1.3 desarmes/j.\n- Conclusão C16: Desfalques defensivos importantes (Gueye e Branthwaite somam ~26% das interceptações do time). Gueye e Branthwaite fora → defesa mais frágil. Direção: facilita ataque do Sunderland. Força: média (Branthwaite já ausente em vários jogos recentes, with/without mostra time sofre mais sem ele? Dados: com Branthwaite 1.6 g/j em 10j, sem 1.15 g/j em 26j – curioso, time sofre menos sem ele? Provável ruído, mas volume defensivo sai).\n\n- Dado: Gueye: 1.1 interceptações/j (13% do time), 1.8 desarmes/j. Branthwaite: 1.1 interceptações/j, 1.3 desarmes/j.\n- Conclusão C17: Ausência de Gueye e Branthwaite enfraquece a transição defensiva e proteção à área. Direção: aumento do xG adversário. Força: média (soma-se ao fato de Everton já sofrer bastante).\n\n**Bloco: away_gols (Sunderland)**\n\n- Fato: Fora de casa, Sunderland marca 0.78 g/j (14 gols em 18j), sofre 1.5 g/j. Total: 1.03/1.28.\n- Dado: \"SoT 3.39/j (fora 3.28/j) · conv 27%\"\n- Conclusão C18: Sunderland fora tem ataque pouco produtivo (0.78 g/j), mas volume razoável (3.28 SoT/j). Defesa sofre bem mais fora (1.5 g/j). Direção: time visitante frágil defensivamente, mas com potencial para marcar. Força: média.\n\n- Fato: Fora, 1ºT marca 0.33/j, 2ºT 0.69/j; sofre 1ºT 0.61/j, 2ºT 0.67/j.\n- Dado: \"Distribuição: 61-75: 0.28, 76-90: 0.31\" (fora, marca mais no 2ºT)\n- Conclusão C19: Sunderland cresce ofensivamente no 2ºT (61-75 e 76-90), mas sofre em ambos os tempos. Direção: espera-se gols do Sunderland mais tarde. Força: média.\n\n**Bloco: away_estilo (Sunderland)**\n\n- Fato: Temporada: ataques perigosos 44.9/56.3; últ.5: 53/45.6 (melhor ataque perigoso e menos sofrido).\n- Dado: \"Últimos 5: ataques perigosos 53/45.6, chutes pra fora 4.4/4.6, bloqueados 4.2/3.2\"\n- Conclusão C20: Sunderland melhorou ofensivamente nos últ.5 (53 ataques perigosos vs 44.9 na temporada), e reduziu ataques sofridos (45.6 vs 56.3). Direção: forma recente aponta melhora na criação. Força: média.\n\n**Bloco: away_qualidade (Sunderland)**\n\n- Fato: Granit Xhaka nota 7.15, forma 7.34 (subindo); Enzo Le Fée 7.04, forma 7.28 (caindo); Nordi Mukiele 6.99, forma 6.9 (subindo); Omar Alderete 6.88, forma 6.66 (subindo). D. Ballard (fora) nota 6.86, forma 5.63 (caindo).\n- Dado: \"Nota média do time: 6.79\"\n- Conclusão C21: Sunderland tem jogadores-chave em boa forma (Xhaka, Mukiele, Alderete), mas Enzo Le Fée (principal armador, 5 MOTM) em queda. Defesa desfalcada de Ballard (suspenso). Direção: ataque com potencial, defesa enfraquecida. Força: alta (desfalque de Ballard no setor defensivo).\n\n- Fato: D. Ballard: 2 gols, 5% gols, 0.7 interceptações/j (9% time), 1.1 desarmes/j.\n- Dado: \"with/without: com ele 1.07 g/j (29j) vs sem ele 0.86 g/j (7j) = -20%\"\n- Conclusão C22: Ausência de Ballard (defesa) reduz solidez; time sofre mais sem ele? (com ele 1.07 g/j, sem 0.86 – paradoxal, mas amostra pequena). Provável que defesa piore. Direção: facilita ataque do Everton. Força: média.\n\n- Fato: Enzo Le Fée: 4 gols (3 pên), forma 7.28 mas em queda (últ.5: 7.5→8.2→6.3→6.7→7.7). É o principal criador e batedor de pênaltis.\n- Conclusão C23: Enzo Le Fée é peça central no ataque (gols e pênaltis), mas forma recente irregular. Sunderland depende dele para criação. Direção: se render abaixo, ataque do Sunderland sofre. Força: média.\n\n**Bloco: away_forma (Sunderland)**\n\n- Fato: Últimos 5: EEDDV, 5pts, 5 feitos / 10 sofridos, marca 1= / sofre 2↑ g/j.\n- Dado: \"Consistência: MARCOU em 23/36 (fora 10/18)\"\n- Conclusão C24: Sunderland em má fase (5 pts em 15), marcando pouco (1 gol/j) e sofrendo muito (2/j). Fora, marca em apenas 10/18 jogos. Direção: ataque inconsistente fora, defesa frágil. Força: alta.\n\n- Fato: Adversários recentes: Tottenham (18º, briga-Z), Aston Villa (4º), Nottm Forest (16º, briga-Z), Wolverhampton (20º, REBAIX.), Man United (3º).\n- Dado: \"vs Nottm Forest: D 0-5 em casa; vs Wolves: E 1-1 fora; vs Man Utd: E 0-0 casa\"\n- Conclusão C25: Forma recente é contra times de baixo ou alto nível; derrota acachapante para Forest (0-5) e vitória sobre Spurs (1-0) mostram inconsistência. Direção: time imprevisível, mas frágil defensivamente. Força: média.\n\n**Bloco: away_momentum (Sunderland)**\n\n- Fato: Momentum: Sunderland \"MATA O JOGO após marcar\" (Δ +1.6) e neutro ao sofrer (Δ 0.0).\n- Dado: \"Após marcar, segue pressionando (+1.6); ao sofrer, não desmorona.\"\n- Conclusão C26: Sunderland tem resiliência: ao sofrer, não piora; se marcar, mantém ímpeto. Direção: capacidade de reagir ou manter vantagem. Força: alta (dinâmica pós-gol oposta à do Everton).\n\n- Fato: Janela de domínio: 16-30 domínio -2.4 (a favor do Sunderland); 61-75 domínio -2.4.\n- Dado: \"curva: Aston Villa (9' gol), Wolves (17' gol)\": Sunderland marca cedo em vários jogos.\n- Conclusão C27: Sunderland tende a começar bem (0-15: domínio +1.8) e pressiona na janela 16-30. Direção: primeiros 30 minutos perigosos para o Everton. Força: média.\n\n**Bloco: away_faixas (Sunderland)**\n\n- Fato: Marca por faixa: 0-15:0.06, 16-30:0.17, 31-45:0.11, 46-60:0.11, 61-75:0.28, 76-90:0.31.\n- Dado: \"61-75: 0.28, 76-90: 0.31\" (picos no 2ºT).\n- Conclusão C28: Sunderland marca majoritariamente no 2ºT (61-90), mas também tem pico secundário em 16-30. Direção: gols do Sunderland prováveis no 2ºT ou início do 1ºT. Força: média.\n\n- Fato: Sofre por faixa: 0-15:0.22, 16-30:0.14, 31-45:0.25, 46-60:0.19, 61-75:0.25, 76-90:0.22.\n- Dado: \"31-45: 0.25, 61-75: 0.25\" (picos de sofrimento).\n- Conclusão C29: Sunderland sofre gols principalmente no final do 1ºT (31-45) e meio do 2ºT (61-75). Direção: vulnerabilidade nessas janelas. Força: média.\n\n**Bloco: away_desfalques (Sunderland)**\n\n- Fato: D. Ballard (Red Card Suspension), B. Traoré (Knee Injury), R. Mundle (Doubtful), Simon Moore (Broken Hand).\n- Dado: Ballard: 0.7 interceptações/j (9% do time), 1.1 desarmes/j; Traoré: 0.2 interceptações/j, 0.9 desarmes/j; Mundle: irrelevante; Moore: goleiro reserva.\n- Conclusão C30: Desfalques defensivos: Ballard (titular, suspenso) é a baixa mais relevante; Traoré tem pouco impacto defensivo; Mundle e Moore irrelevantes. Direção: defesa do Sunderland enfraquecida. Força: alta (Ballard fora).\n\n**Bloco: cruzamento_faixa**\n\n- Fato: Tabela \"Everton atacando × Sunderland defendendo\": índices mais altos 31-45 (0.44), 61-75 (0.42) e 76-90 (0.64).\n- Dado: \"76-90: 0.64 (Everton marca 0.42, Sunderland sofre 0.22) – muito alto\"\n- Conclusão C31: Janela 76-90 é a mais provável para gol do Everton, alinhado ao pico de marcação do Everton e sofrimento do Sunderland. Direção: gol do Everton no fim. Força: alta.\n\n- Fato: Tabela \"Sunderland atacando × Everton defendendo\": índices: 16-30 (0.42), 61-75 (0.47), 76-90 (0.67 – Sunderland marca 0.31, Everton sofre 0.36).\n- Dado: \"76-90: 0.67 (muito alto)\"\n- Conclusão C32: Janela 76-90 também é crítica para gol do Sunderland. Direção: reta final com muitos gols potenciais. Força: alta.\n\n**Bloco: base_rate**\n\n- Fato: Rota A (gols): λ total 2.21 (casa 1.36, fora 0.85). Rota B (SoT×conv): λ total 2.6 (casa 1.65, fora 0.95).\n- Dado: \"Se A e B divergirem, prefira B (volume é mais estável)\"\n- Conclusão C33: Prior de gols via Rota B é 2.6, mercado over 2.5 implícito 48% (Rota B). Direção: jogo com tendência a gols (lambda acima da média da liga). Força: alta (âncora numérica).\n\n- Fato: Mercados derivados Rota B: 1x2 52/28/20; BTTS 51%; Over 2.5 48%; Everton over 0.5 81%, over 1.5 49%; Sunderland over 0.5 61%.\n- Conclusão C34: Everton favorito (52%), ambos marcam provável (51%), total sugere 2-3 gols. Direção: base para probs iniciais. Força: alta.\n\n**Bloco: probs_mercado** (já incorporado no base_rate, sem conclusão extra)\n\n**Bloco: cruzamentos_computados**\n\n- Fato: Arquétipo: Everton contra bloco baixo (Sunderland) marca 1.46/j e sofre 0.92/j em 13 jogos; Sunderland contra bloco baixo (Everton) marca 1.23/j e sofre 1.08/j em 13 jogos.\n- Dado: \"Everton: 0.18 acima da média (1.28); Sunderland: 0.20 acima da média (1.03).\"\n- Conclusão C35: Ambos os times performam acima da média contra bloque baixo. Direção: indica mais gols do que o normal neste confronto. Força: alta (cruzamento de estilos).\n\n- Fato: Mecanismo de gol: canal cruzamento Everton (2% dos gols) × Sunderland sofre 9% por cruzamento → índice 6.4×. Contra-ataque Everton (7%) × Sunderland sofre 7% → 2.4×.\n- Dado: \"CANAL ABERTO — cruzamento: índice 6.4×\"\n- Conclusão C36: Everton pode explorar cruzamentos contra defesa do Sunderland (Sunderland sofre 9% dos gols por cruzamento, muito acima da liga). Direção: bolas aéreas perigosas para o Everton. Força: alta.\n\n- Fato: Sunderland gera 19% gols por jogada construída, Everton sofre 29% por esse canal (liga 20%). Índice 1.5×.\n- Dado: \"jogada construída: Sunderland 19% × Everton sofre 29% → 1.5×\"\n- Conclusão C37: Sunderland pode criar perigo em jogadas trabalhadas, explorando defesa do Everton que sofre acima da média nesse canal. Direção: Sunderland deve gerar chances nesse fundamento. Força: média.\n\n- Fato: Dinâmica pós-gol: Everton desmorona ao sofrer (Δ -1.6), administra mal após marcar (Δ -1.2); Sunderland neutro ao sofrer (Δ 0.0) e mata o jogo ao marcar (Δ +1.6).\n- Dado: \"Everton DESMORONA ao sofrer; Sunderland MATA O JOGO após marcar.\"\n- Conclusão C38: Cenário perigoso para Everton se sofrer primeiro; Sunderland tem mentalidade forte. Direção: se Sunderland abrir placar, pode controlar ou ampliar. Força: alta.\n\n- Fato: Artilharia: Everton: Beto 9g, Dewsbury-Hall 8g, Barry 8g, Ndiaye 6g (2 pên). Sunderland: Brobbey 6g, Isidor 5g, Le Fée 4g (3 pên), Talbi 4g, Mukiele 3g.\n- Dado: \"Beto 9 gols, últ.5: 3, 0.5 SoT/j; Dewsbury-Hall 8 gols, últ.5: 2, 0.5 SoT/j.\"\n- Conclusão C39: Beto é o principal atacante do Everton, em boa fase (3 nos últ.5). Dewsbury-Hall também contribui. Sunderland depende de Brobbey (6g, mas 0 nos últ.5) e Isidor (5g, 1 últ.5). Direção: Everton tem atacantes mais goleadores e em melhor momento. Força: média.\n\n---\n\n**Lista completa de conclusões (C1 a C39)**. Blocos que não geraram conclusão: `probs_mercado` (já coberto pelo base_rate). Vou incluir em `blocos_sem_sinal`? A instrução: \"Bloco que não rende sinal entra em `blocos_sem_sinal` com o motivo\". `probs_mercado` é essencialmente o mesmo que `base_rate`, mas está listado separadamente no schema. Como `base_rate` já gerou conclusões, `probs_mercado` pode ser considerado sem sinal adicional, pois suas informações são as mesmas. Colocarei em `blocos_sem_sinal`.\n\n---\n\n**PASSO 2 — JOGADOR POR JOGADOR**\n\nJogadores nomeados no briefing (qualidade individual e desfalques de ambos os times):\n\n**Everton:**\n- James Garner: Meio-campista, nota 7.36, forma subindo. É o motor do time, provável criador de chances. `leitura: \"Principal articulador do Everton, em boa forma; sua presença é vital para furar bloco baixo do Sunderland.\"`\n- James Tarkowski: Zagueiro, nota 7.16, forma estável. `leitura: \"Líder defensivo, importante para conter bolas aéreas do Sunderland; sua consistência dá solidez à zaga.\"`\n- Kiernan Dewsbury-Hall: Meia, 8 gols, mas forma em queda. `leitura: \"Segundo maior goleador do time, mas rendimento caindo; sua capacidade de infiltração é arma chave, mas pode não render o esperado.\"`\n- Jack Grealish: Fora (cirurgia). `leitura: \"Ausência já absorvida; time marca mais sem ele, então sua falta não desorganiza o ataque.\"`\n- Michael Keane: Zagueiro, nota 7.0, forma 6.7, faltou 2/5. `leitura: \"Zagueiro experiente, mas forma em baixa; sua lentidão pode ser explorada em contra-ataques.\"`\n- Iliman Ndiaye: Atacante, 6 gols (2 pên), forma 6.82, 0 gols nos últ.5. `leitura: \"Em jejum, mas é opção de velocidade; pode ser decisivo saindo do banco se o jogo abrir.\"`\n- Idrissa Gueye: Fora (lesão muscular). `leitura: \"Desfalque defensivo importante: sem ele, o meio-campo perde combatividade, facilitando a transição do Sunderland.\"`\n- J. Branthwaite: Fora (lesão). `leitura: \"Baixa na zaga: time perde altura e interceptações; defesa mais vulnerável a jogadas aéreas e bolas paradas.\"`\n\n**Sunderland:**\n- Granit Xhaka: Meio-campista, nota 7.15, forma subindo. `leitura: \"Cérebro do Sunderland, em grande fase; sua visão de jogo e passes longos podem acionar contra-ataques.\"`\n- Enzo Le Fée: Meia-atacante, 4 gols (3 pên), forma irregular. `leitura: \"Principal arma de criação e pênaltis, mas inconsistente; se inspirar, pode decidir, mas tendência é jogo apagado.\"`\n- Nordi Mukiele: Defensor/ala, nota 6.99, forma subindo, 3 gols (2 nos últ.5). `leitura: \"Em boa fase ofensiva, sobe bem ao ataque; pode surpreender em jogadas de bola parada.\"`\n- Robin Roefs: Goleiro, nota 6.97, forma estável. `leitura: \"Goleiro confiável, mas sofre muitos gols fora de casa; será testado pelo volume do Everton.\"`\n- Omar Alderete: Zagueiro, nota 6.88, forma subindo. `leitura: \"Zagueiro em ascensão, importante na defesa; terá trabalho com os atacantes do Everton.\"`\n- D. Ballard: Fora (suspenso). `leitura: \"Desfalque crucial na zaga; sem ele, a defesa perde organização e altura, favorecendo o jogo aéreo do Everton.\"`\n- B. Traoré: Fora (lesão). `leitura: \"Pouca influência ofensiva e defensiva; ausência de baixo impacto.\"`\n- R. Mundle: Dúvida. `leitura: \"Jogador de pouca participação; mesmo se jogar, não muda o cenário.\"`\n- Simon Moore: Fora. `leitura: \"Goleiro reserva, sem impacto.\"`\n\n---\n\n**PASSO 3 — ARESTAS: cruzamentos**\n\nConstruo no mínimo 8 arestas, ligando conclusões por ID, com leitura e efeito. Garanto que toda conclusão do Passo 1 seja usada ou descartada.\n\nA1: Ataque Everton (C5, C6, C14) × Defesa Sunderland (C29, C30) + Janela (C31)\nLiga: [C5, C6, C14, C29, C30, C31]\nLeitura: Everton em casa tem volume ofensivo (4.33 SoT/j) e pico de gols no fim (76-90). Sunderland sofre gols no final do 1ºT e meio do 2ºT, e está desfalcado na zaga (Ballard). O cruzamento de faixas mostra índice altíssimo para o Everton na reta final (0.64).\nEfeito: Aumenta xG do Everton, especialmente no 2ºT. Gol do Everton provável após 60', com ênfase em 76-90.\n\nA2: Ataque Sunderland (C19, C27, C28) × Defesa Everton (C15, C17) + Desfalques (C16, C17) + Janela (C32)\nLiga: [C19, C27, C28, C15, C17, C16, C32]\nLeitura: Sunderland marca mais no 2ºT (61-90) e também tem pico em 16-30. Everton sofre muitos gols no fim (76-90: 0.36) e está sem Gueye e Branthwaite (interceptações). O momentum do Sunderland mostra pressão inicial (16-30) e no 2ºT. O índice de cruzamento é alto para Sunderland em 16-30 e 76-90.\nEfeito: Aumenta xG do Sunderland, com chances de marcar no primeiro tempo (16-30) e no fim. BTTS provável.\n\nA3: Intenção de tabela (C4) × Estilo/Forma dos times (C10, C24, C34)\nLiga: [C4, C10, C24, C34]\nLeitura: Ambos precisam vencer (jogo aberto). Everton marca em quase todo jogo em casa (14/18) mas sofre muito; Sunderland fora sofre 1.5 g/j e marca em 10/18. O prior Rota B já aponta over 2.5 48% e BTTS 51%, e a intenção reforça tendência de gols.\nEfeito: Sobe over 2.5 e BTTS acima do prior. Jogo tende a ter gols de ambos os lados.\n\nA4: Intenção (C4) × Desfalques defensivos (C17, C30) × Mando (C3)\nLiga: [C4, C17, C30, C3]\nLeitura: Ambos precisam atacar, mas defesas estão desfalcadas: Everton sem Gueye/Branthwaite, Sunderland sem Ballard. Mando de casa favorece Everton no resultado, mas defesas frágeis aumentam gols.\nEfeito: Reforça over e BTTS. Everton ligeiramente mais provável de vencer, mas com defesa exposta.\n\nA5: Desfalque Everton (C17) × Janela de pressão Sunderland (C27) × Dinâmica pós-gol (C38)\nLiga: [C17, C27, C38]\nLeitura: Everton desfalcado na contenção (Gueye) e zaga (Branthwaite). Sunderland começa bem (momentum 16-30 positivo) e, se marcar primeiro, mata o jogo (Δ +1.6), enquanto Everton desmorona ao sofrer. Cenário de Sunderland abrir placar cedo.\nEfeito: Aumenta probabilidade de Sunderland marcar primeiro e controlar o jogo. Risco para aposta em Everton.\n\nA6: Desfalque Sunderland (C30) × Volume ofensivo Everton (C5, C14) + Arquétipo (C35)\nLiga: [C30, C5, C14, C35]\nLeitura: Sunderland sem Ballard (zagueiro) enfrenta Everton que, contra bloco baixo, marca 1.46 g/j (acima da média) e tem pico de gols no fim. Ataque do Everton deve superar defesa frágil.\nEfeito: Aumenta xG do Everton; team total over 1.5 com mais chances.\n\nA7: Forma recente dos times (C10, C24) × Qualidade dos adversários (C11, C25)\nLiga: [C10, C11, C24, C25]\nLeitura: Everton enfrentou times fortes recentemente e somou poucos pontos, mas marcou gols; Sunderland perdeu feio para Forest e não marcou contra United. Forma ruim de ambos pode ser contextualizada por adversários difíceis. Everton em casa tende a render melhor.\nEfeito: Não reduz drasticamente xG; mantém expectativa de gols.\n\nA8: Momentum comparado (C12, C13, C26, C27) + Base rate (C33)\nLiga: [C12, C13, C26, C27, C33]\nLeitura: Everton desmorona ao sofrer, Sunderland se mantém estável. No entanto, Everton tem pico de gols no 2ºT. Se o jogo chegar empatado no fim, Everton cresce. Se Sunderland sair na frente, Everton pode sofrer mais. O lambda prior (2.6) já é alto, e as dinâmicas sugerem mais gols.\nEfeito: Reforça over 2.5 e cenários de múltiplos gols.\n\nA9: Qualidade individual (C8, C23) × Canal de gols (C36, C37)\nLiga: [C8, C23, C36, C37]\nLeitura: Everton depende de Dewsbury-Hall (em queda) e Garner; Sunderland de Enzo Le Fée (irregular). Everton pode explorar cruzamentos (índice 6.4) devido à defesa alta? Sunderland sofre 9% por cruzamento. Sunderland pode criar em jogadas construídas (índice 1.5). As peças-chave não estão em grande momento, o que pode limitar a efetividade, mas os canais existem.\nEfeito: Mantém expectativa de gols, mas com possível desperdício. Não reduz xG.\n\nA10: Descanso (C2) × Intenção (C4)\nLiga: [C2, C4]\nLeitura: Ambos descansados (7 e 8 dias), sem fadiga. Intenção alta de ambos. Sem vantagem física para nenhum lado.\nEfeito: Neutro, mas permite intensidade total.\n\nA11: Arquétipo (C35) × Base rate (C33) × Mecanismo de gols (C36)\nLiga: [C35, C33, C36]\nLeitura: Ambos times têm desempenho acima da média contra bloco baixo. Everton especificamente pode explorar cruzamentos. O prior 2.6 pode ser elevado para cerca de 2.8-3.0 considerando esses fatores.\nEfeito: Sobe xG total para ~2.9, over 2.5 se torna mais provável.\n\nA12: Artilharia (C39) × Forma dos atacantes (C8, C23) × Desfalques (C30)\nLiga: [C39, C8, C23, C30]\nLeitura: Beto (9g, 3 nos últ.5) em boa fase enfrenta zaga desfalcada do Sunderland. Dewsbury-Hall em queda, mas ainda perigoso. Sunderland depende de Brobbey (em jejum) e Isidor. Everton tem vantagem nos goleadores.\nEfeito: Aumenta probabilidade de gol de Beto e do Everton.\n\n---\n\n**Verificação de cobertura das conclusões**: \nC1 (clima): usada? Não diretamente em nenhuma aresta, mas é descartável por ser neutra. Vai para `descartadas`.\nC2 (descanso): usada em A10.\nC3 (mando): usada em A4.\nC4 (intenção): A3, A4, A10.\nC5 (home_gols volume): A1, A6.\nC6 (home gols 2ºT): A1, A6, A8.\nC7 (home estilo): nenhuma aresta explicitamente? Vou criar A13 ou ver se é usada: não, apenas C7 fala de sofrer ataques perigosos, mas já está implícito em C10 (forma sofre muito) e C15. Posso usá-la em aresta com C17? Ataques perigosos sofridos + desfalques = mais pressão. Crio A13: Liga [C7, C17]. Leitura: Everton já sofre muitos ataques perigosos (56.8 nos últ.5) e está desfalcado na defesa; defesa ainda mais sobrecarregada. Efeito: sobe xG adversário. Ok.\nC8: usada em A9, A12.\nC9: usada? Grealish ausência sem impacto. Pode ser descartada ou usada em algo: C9 é neutra para ataque, então não direciona. Vou descartar (já que não contribui para movimento).\nC10: usada em A3, A7.\nC11: usada em A7.\nC12: A5, A8.\nC13: A8.\nC14: A1, A6.\nC15: A1, A2.\nC16: A2, A5.\nC17: A2, A5, A13.\nC18: usada? C18 fala de Sunderland fora ataque pouco produtivo, mas volume razoável. Já usado em A2 implicitamente (C19, C27, C28 cobrem marcação). Pode ser incorporada em A2. OK.\nC19: A2.\nC20: não usada? C20 fala da melhora nos últ.5. Posso criar A14: Liga [C20, C24]. Leitura: Sunderland melhorou ofensivamente nos últ.5 (53 ataques perigosos vs 44.9), mas resultados ruins. Há potencial ofensivo não convertido. Efeito: mantém xG do Sunderland apesar dos resultados. Bom.\nC21: usada? C21 fala de jogadores em boa forma, mas Enzo em queda. Pode entrar em A9, A12 (forma individual). OK.\nC22: usada em A6 (desfalque Ballard).\nC23: A9, A12.\nC24: A3, A7.\nC25: A7.\nC26: A5, A8.\nC27: A2, A5.\nC28: A2.\nC29: A1.\nC30: A1, A2, A4, A6, A12.\nC31: A1.\nC32: A2.\nC33: A8, A11.\nC34: A3 (base rate já usado), pode ser referência.\nC35: A6, A11.\nC36: A9, A11.\nC37: A9.\nC38: A5, A8.\nC39: A12.\n\nConclusões não usadas: C1, C9. Serão descartadas com motivo.\n\nArestas criadas: A1 a A14. atende ao mínimo de 8.\n\n---\n\n**PASSO 4 — ROTEIROS: o filme com ramificação**\n\nTrês roteiros prováveis, somando ~1.0. Citarei arestas.\n\n**Roteiro 1: \"Everton impõe volume e vence\" (prob 0.45)**\nFilme: Everton começa pressionando, mas sem sucesso imediato. Sunderland se defende bem, mas sofre com bolas aéreas. No 2ºT, o volume do Everton cresce, e a defesa do Sunderland cede. Gol do Everton entre 60-80 minutos. Sunderland, precisando, se lança ao ataque, sofre contra-ataque. Everton vence por 2-1 ou 3-1.\nArestas: A1, A3, A4, A6, A11, A12.\n\n**Roteiro 2: \"Sunderland surpreende e controla\" (prob 0.30)**\nFilme: Sunderland começa melhor, aproveita desfalques do Everton e marca primeiro (15-30 min). Everton desmorona ao sofrer, e Sunderland controla com posse e contra-ataques. Everton tenta reagir no 2ºT, mas Sunderland amplia ou segura. Placar final: Sunderland vence 2-1 ou empate 2-2 se Everton reagir.\nArestas: A2, A5, A8, A10.\n\n**Roteiro 3: \"Empate com gols, aberto até o fim\" (prob 0.25)**\nFilme: Jogo equilibrado, ambos criam chances. Everton abre placar no 2ºT, Sunderland empata rapidamente (resiliência). Fim de jogo com pressão dos dois lados, mas ninguém desempata. 2-2 ou 1-1.\nArestas: A3, A4, A8, A10.\n\n---\n\n**PASSO 4b — LINHA DO TEMPO: previsão temporal completa**\n\nBaseado no roteiro mais provável (Roteiro 1, 45% de prob), mas incorporando elementos dos outros.\n\n**PRIMEIRO TEMPO**\nAnálise: Everton inicia tentando impor ritmo, mas Sunderland é organizado defensivamente (mesmo sem Ballard). O jogo pode ser truncado, com poucas chances claras. Sunderland, em contra-ataque, tem potencial nos primeiros 30 minutos. A tendência é de poucos gols no 1ºT: Everton tem dificuldade de marcar cedo (apenas 0.11 na faixa 0-15), e Sunderland sofre menos nessa faixa. No entanto, entre 16-30, Sunderland já sofreu gols e tem pico de marcação; Everton também pode sofrer. O mais provável é 0-0 ou 1-0 para o Everton nos acréscimos.\n`prob_gol` (P(≥1 gol no 1ºT)): 0.55 (ligeiramente acima da média da liga de 43% porque ambos podem sofrer gols cedo).\n\n**JANELAS (6 faixas de 15 min):**\n0-15: Início estudado; Everton busca controle, Sunderland se fecha. Poucas finalizações. `prob_gol`: 0.08, `lado`: equilibrado.\n16-30: Sunderland cresce, Everton pode ser apanhado em contra-ataque. Janela com chances para ambos. `prob_gol`: 0.18, `lado`: away (Sunderland).\n31-45: Everton pressiona no fim do 1ºT, mas sem eficiência. `prob_gol`: 0.14, `lado`: home.\n46-60: Após intervalo, jogo pode abrir. Everton volta mais agressivo. `prob_gol`: 0.18, `lado`: home.\n61-75: Everton mantém pressão; defesa do Sunderland falha. Gol do Everton provável. `prob_gol`: 0.22, `lado`: home.\n76-90: Reta final explosiva: ambos marcam historicamente, defesas cansadas. Muitos gols. `prob_gol`: 0.30, `lado`: equilibrado, com leve pendor home.\n\n**SEGUNDO TEMPO**\nAnálise: O jogo se define no 2ºT. Everton, precisando vencer, empurra o Sunderland e cria volume. A entrada de substitutos ofensivos e a perda de organização defensiva do Sunderland (desfalque de Ballard) abrem espaços. Sunderland também ameaça em transições. Placar provável no intervalo: 0-0 ou 1-0. No 2ºT, Everton marca entre 60-75, Sunderland reage e empata ou sofre mais. Total de gols no 2ºT: 2 ou mais. `prob_gol`: 0.80.\n\n---\n\n**PASSO 4c — MARCADORES**\n\n**Everton:**\n- Beto: `prob` 0.40, `motivo`: Artilheiro do time (9g), 3 nos últ.5, boa forma; enfrenta zaga desfalcada do Sunderland; presença de área.\n- Kiernan Dewsbury-Hall: `prob` 0.25, `motivo`: 8g na temporada, 2 nos últ.5; mesmo em queda, é segundo goleador e aparece bem na área.\n- Thierno Barry: `prob` 0.20, `motivo`: 8g na temporada, 2 nos últ.5; opção de velocidade; pode marcar em contra-ataque no 2ºT.\n\n**Sunderland:**\n- Brian Brobbey: `prob` 0.30, `motivo`: Principal atacante (6g), apesar de jejum; referência no ataque, terá chances contra defesa frágil do Everton.\n- Wilson Isidor: `prob` 0.20, `motivo`: 5g, 1 nos últ.5; atacante móvel, pode explorar espaços nas costas da zaga.\n- Nordi Mukiele: `prob` 0.15, `motivo`: Defensor em fase artilheira (2g nos últ.5), perigo em bolas paradas contra defesa que perdeu altura (Branthwaite).\n\n---\n\n**PASSO 5 — BOARD COMPLETO DE MERCADOS**\n\nPreencho 19 linhas com probs coerentes com meus xG, 1x2 e roteiros. Base: xG total ~2.9 (Rota B 2.6 + ajustes). xG Everton 1.8, Sunderland 1.1 (ajustados para: Everton +0.15 por ataque vs defesa desfalcada, Sunderland +0.15 por defesa Everton desfalcada, intenção +0.1 cada, total 2.6 → 3.0, arredondando para 2.9). Vou usar xG home 1.75, away 1.15, total 2.9. 1x2 probabilidades: ajusto o prior 52/28/20 para cerca de 50/25/25? Na verdade, com ambos se lançando, o empate fica menos provável, então home sobe, away sobe mais, draw cai. Assim: 1x2: home 53%, draw 23%, away 24% (soma 100). Vou refinar: usando simulação simples: lambda home 1.75, away 1.15. Probabilidades 1x2 via Poisson: vitória home ~50%, draw ~23%, vit away ~27% (aproximado, sem Dixon-Coles, mas ajustado). Adotarei: home 50%, draw 24%, away 26% (coerente com o jogo aberto). BTTS: com lambdas 1.75 e 1.15, P(BTTS) = (1-P0_home)*(1-P0_away) = (1-exp(-1.75))*(1-exp(-1.15)) = (1-0.1738)*(1-0.3166) = 0.8262*0.6834 = 0.564 ≈ 56%. Over 2.5: P(>2.5) = 1 - P(0) - P(1) - P(2). Lambda total 2.9. P(0)=0.055, P(1)=0.160, P(2)=0.232, soma 0.447, então P(>2.5)=0.553 ≈ 55%. Over 1.5: P(>1.5)=1-P(0)-P(1)=1-0.055-0.160=0.785 ≈ 78%. Over 3.5: 1-P(0)-P(1)-P(2)-P(3). P(3)=0.224, soma 0.671, então 0.329 ≈ 33%. Team totals: home over 0.5: 1-exp(-1.75)=82.6% ≈ 83%. home over 1.5: 1 - P(0) - P(1) = 1 - 0.1738 - (1.75*0.1738)=1 -0.1738 -0.304 = 0.522 ≈ 52%. away over 0.5: 1-exp(-1.15)=1-0.3166=68.3% ≈ 68%. away over 1.5: 1 - P(0) - P(1) = 1 -0.3166 - (1.15*0.3166)=1-0.3166-0.364=0.319 ≈ 32%.\n\nAjuste fino: bet 1x2: home 50, draw 24, away 26. Dupla chance: 1X 74, 12 76, X2 50. DNB home: prob de home ganha + 0.5*empate? Aproximadamente: home DNB = prob home ganha / (prob home + prob away) nesse mercado. Usualmente, DNB home = 1x2 home + 0.5*draw? Não, é a prob de não perder. Então home DNB = prob home + prob draw = 74%. away DNB = 50%. Odd/even: total gols 2.9, P(par) ~48%? Normalmente distribuição Poisson com média 2.9 tem ligeiro viés par? Vou calcular: P(0)=0.055, P(1)=0.160, P(2)=0.232, P(3)=0.224, P(4)=0.162, P(5)=0.094, P(6)=0.045. Soma pares: 0.055+0.232+0.162+0.045=0.494 (49.4%), ímpares: 0.160+0.224+0.094=0.478+... falta complemento: total 1-0.055-0.160-0.232-0.224-0.162-0.094-0.045 = resto. Melhor aproximar 49% par, 51% ímpar. Mas a referência do prior era 47% ímpar / 53% par. Vou usar 49% par, 51% ímpar, mas o mercado odd_even apostaria em ímpar? Enfim, preencherei com 49% odd? Na verdade \"odd\" aposta em número ímpar de gols. P(ímpar) ≈ 51%. Usarei odd 51%, even 49% (mas a linha é só odd_even com seleção odd ou even, então colocarei a prob de odd). Preencho: odd 51%.\n\nHandicap: home -1: significa que Everton vence por 2+ gols. P(vitória por 2+). Com lambda home 1.75, away 1.15, usando Skellam? Simplificadamente, probabilidade de Everton vencer por 2+ é P(home - away >=2). Podemos usar simulação ou aproximação: modelando gols como Poisson, a diferença segue distribuição Skellam. P(diff >=2) = soma sobre k>=2 de P(diff=k). P(diff=2) = sum_i P(home=i+2)*P(away=i). Calcular: P(home=2)=0.268 (1.75^2*e^-1.75/2=0.268), P(away=0)=0.317, produto=0.085; P(home=3)=0.156, P(away=1)=0.364, 0.057; P(home=4)=0.068, P(away=2)=0.210, 0.014; P(home=5)=0.024, P(away=3)=0.080, 0.002; P(home=6)=0.007, P(away=4)=0.023, 0.000; soma ~0.158. Para diff>2, adicionamos P(diff>=3). P(diff=3): P(home=3)=0.156, P(away=0)=0.317, 0.049; P(home=4)=0.068, P(away=1)=0.364, 0.025; P(home=5)=0.024, P(away=2)=0.210, 0.005; P(home=6)=0.007, P(away=3)=0.080, 0.0006; soma ~0.0796. P(diff>=2) = P(diff=2)+P(diff>=3) ≈ 0.158+0.080 = 0.238 ≈ 24%. Então handicap -1: 24%. Away -1: Sunderland vencer por 2+, similar, lambda away 1.15, home 1.75. P(away - home >=2). Home favorito, então prob baixa. Calculemos: P(away=2)=0.210, P(home=0)=0.174, 0.0365; P(away=3)=0.080, P(home=1)=0.304, 0.0243; P(away=4)=0.023, P(home=2)=0.268, 0.0062; soma 0.067. P(diff>=3): P(away=3)=0.080, P(home=0)=0.174, 0.0139; P(away=4)=0.023, P(home=1)=0.304, 0.0070; P(away=5)=0.005, P(home=2)=0.268, 0.0014; soma 0.0223. Total P(away -1) ≈ 0.089 ≈ 9%.\n\nAgora atribuo variancia e valor para cada linha, além de nota. Comparo minhas probs com o prior do briefing (Rota B) para determinar valor (alto/medio/baixo). Mas o prior do briefing é meu ponto de partida; como movi os números com evidências, a diferença entre minha prob e o prior indica o valor que vejo. No entanto, o campo `valor` deve refletir se há valor na aposta em relação ao mercado implícito? O briefing não fornece odds de mercado, apenas fair odds no-vig. A instrução: \"valor (alto/medio/baixo/nenhum — distância entre a SUA prob e o prior Poisson do briefing quando existir, + robustez ao roteiro)\". Então usarei como referência o prior Rota B. Se minha prob é maior que prior, valor alto? Na verdade, isso indica que acredito que o evento é mais provável do que a média sugere. Se eu apostaria nisso, o valor é a diferença. Vou adotar: se minha prob é significativamente maior (ex: >10 pontos percentuais) que o prior, valor alto; se diferença moderada (5-10pp), médio; se pequena ou negativa, baixo ou nenhum. Também considero a robustez ao roteiro (se a aposta se mantém em vários cenários). E variancia de 1 a 5, onde 1 é mais segura (ex: team total over 0.5 do lado forte), 5 mais arriscada (1x2, handicap).\n\nPreencho o array `mercados`:\n\n1. `1x2` home: prob 50% (prior 52% → minha prob menor? pois prior 52%, eu 50%. Na verdade, o prior Rota B é 52% home, eu ajustei para 50% porque o jogo aberto favorece mais gols, mas pode beneficiar também o visitante. Mas o valor seria baixo ou nenhum, pois estou até um pouco abaixo do prior. Var 4, valor baixo. Nota: \"Everton favorito, mas defesa frágil torna aposta arriscada.\"\n2. `1x2` draw: prob 24% (prior 28% → minha prob menor, sem valor). Var 5, valor nenhum. Nota: \"Empate improvável com ambos precisando vencer.\"\n3. `1x2` away: prob 26% (prior 20% → minha prob maior, +6pp). Valor medio, var 5. Nota: \"Sunderland pode surpreender com defesa do Everton desfalcada.\"\n4. `double_chance` home_draw: prob 74% (prior 80% → menor). Var 2, valor baixo. Nota: \"Cobertura alta, mas prior já elevado.\"\n5. `double_chance` draw_away: prob 50% (prior 48% → ligeiramente maior). Var 3, valor baixo. Nota: \"Chance razoável de Sunderland não perder.\"\n6. `double_chance` home_away: prob 76% (prior 72% → +4pp, médio). Var 2, valor médio. Nota: \"Aposta em não dar empate, boa em jogo aberto.\"\n7. `draw_no_bet` home: prob 74% (prior 72% → +2pp, baixo). Var 2, valor baixo. Nota: \"Everton não perder.\"\n8. `draw_no_bet` away: prob 50% (prior 28% → +22pp, alto). Var 3, valor alto. Nota: \"Sunderland DNB com valor significativo, dado o cenário de ambos se lançarem e defesas frágeis.\"\n9. `over_under` over 1.5: prob 78% (prior 75% → +3pp, baixo). Var 1, valor baixo. Nota: \"Linha muito provável, pouco valor.\"\n10. `over_under` over 2.5: prob 55% (prior 48% → +7pp, médio). Var 3, valor médio. Nota: \"Over 2.5 com valor razoável, consistente com jogo aberto.\"\n11. `over_under` over 3.5: prob 33% (prior 26% → +7pp, médio). Var 4, valor médio. Nota: \"Linha alta, mas cenário de 4+ gols possível.\"\n12. `btts` yes: prob 56% (prior 51% → +5pp, médio). Var 3, valor médio. Nota: \"Ambos marcam é provável, mas não garantido.\"\n13. `team_total` home over 0.5: prob 83% (prior 81% → +2pp, baixo). Var 1, valor baixo. Nota: \"Everton deve marcar, pouco valor.\"\n14. `team_total` home over 1.5: prob 52% (prior 49% → +3pp, baixo). Var 2, valor baixo. Nota: \"Everton marcar 2+ tem chance, mas linha arriscada.\"\n15. `team_total` away over 0.5: prob 68% (prior 61% → +7pp, médio). Var 2, valor médio. Nota: \"Sunderland deve marcar, valor decente.\"\n16. `team_total` away over 1.5: prob 32% (prior 25% → +7pp, médio). Var 4, valor médio. Nota: \"Sunderland 2+ gols possível se jogo abrir.\"\n17. `handicap` home -1: prob 24% (prior não informado, mas implícito baixo; valor médio?). Var 5, valor médio (se ganhar, bom prêmio). Nota: \"Everton por 2+ gols improvável, mas possível com defesa fraca do Sunderland.\"\n18. `handicap` away -1: prob 9% (valor baixo). Var 5, valor baixo. Nota: \"Sunderland por 2+ muito improvável.\"\n19. `odd_even` odd: prob 51% (prior 47% ímpar, +4pp). Var ?? Não sei, vou colocar var 3, valor médio. Nota: \"Ímpar ligeiramente favorito, mas essencialmente aleatório.\"\n\n---\n\n**PASSO 6 — REFUTAÇÃO e confiança por REGRA**\n\nDisciplina de variância: procuro a aposta de maior valor com menor variância. Observo o board: maior valor está em DNB away (valor alto, +22pp, var 3), team_total away over 0.5 (valor médio, +7pp, var 2), over 2.5 (médio, var 3). Lembrando da regra: \"PROIBIDO cravar 1x2 com a sua própria prob < 0.45 (e NUNCA o empate como best_bet) enquanto existir dupla chance/DNB/team_total com valor\". O DNB away tem prob 50% (boa), é uma dupla chance de \"away não perde\" (empate ou vitória). Verifico: a aposta \"DNB away\" significa que ganha se Sunderland vence, empate devolve aposta. Prob de Sunderland vencer é 26%, empate 24% → DNB aciona 50% das vezes, mas paga apenas se vencer. Fair odds implícita: 1/0.26 = 3.85, então DNB odds seria algo como 2.85? Na verdade DNB away paga apenas na vitória, então odds = 1/(prob vitória) * (1 - empate)? Não, o cálculo exato: DNB away odds = (1 - prob home) / prob away? DNB away é uma aposta onde se Sunderland vence, ganha; empate, push; derrota, perde. O payoff esperado = prob_away * (odds-1) - prob_home * 1. Fair odds seria odds = (prob_home / prob_away) + 1? Modelo: para justa, prob_away*(odds-1) = prob_home => odds = prob_home/prob_away + 1 = 0.50/0.26 +1 = 2.92. Então DNB away fair odds 2.92. Se eu acho que prob_away é 26%, é justo. Mas o valor está em achar que o mercado subestima a prob de away+draw? Eu tenho 50% para não perder, mas o mercado provavelmente tem odds para DNB away que implícita prob de vitória do Sunderland. Sem odds, não posso calcular EV. A instrução diz \"crave SEMPRE a de MENOR variância\" entre apostas de valor parecido. Vamos ver a segurança: team_total away over 0.5: Sunderland marca 68% das vezes, var 2. Essa é mais segura. Over 2.5: 55%, var 3. DNB away: 50% de push+vitória, mas arriscado. team_total away over 0.5 parece melhor: baixa variância, valor médio.\n\nMas a regra anti-timidez: \"A anti-timidez vale pro TAMANHO do xG, não pra escolher mercado arriscado: convicção no número, disciplina no mercado.\" Então posso escolher uma aposta de gol com confiança. Verifico se há uma aposta que se destaca: home team total over 1.5? 52% prob, var 2, mas valor baixo (3pp). Over 2.5: 55% prob, var 3, valor médio (+7pp). BTTS: 56%, var 3, valor médio 5pp. Over 2.5 tem mais valor? Vou comparar over 2.5 com team_total away over 0.5: over 2.5 é var 3, team_total var 2. A diferença de valor: team_total +7pp, over 2.5 +7pp, valores similares. Pela escada, team_total over 0.5 é nível 1 (mais seguro), over_under é nível 3. Portanto, team_total away over 0.5 é preferível por menor variância. Mas precisamos ver o roteiro: Sunderland marcar parece provável em quase todos os cenários. No roteiro 1, Everton vence, mas Sunderland marca? No roteiro 1, Sunderland pode marcar em contra-ataque. No roteiro 2 e 3, Sunderland marca. Então team_total away over 0.5 é robusto. Porém, a aposta \"best_bet\" deve ser a melhor no geral, com análise. Talvez o DNB away tenha muito valor, mas a regra diz para priorizar menor variância. A prob 68% é alta o suficiente para ter confiança.\n\nAnalisando os drivers: os principais fatores são: ambos precisam vencer (abre jogo), defesas desfalcadas (Gueye/Branthwaite e Ballard), e o histórico de gols no fim (janelas 76-90). Isso suporta gols de ambos. Para Sunderland marcar: tem picos de gols no 2ºT e início, e enfrenta defesa frágil. Meu xG away 1.15 implica over 0.5 de 68%. O prior era 61%, então subi devido a desfalques e intenção. Arefa: A5 mostra Sunderland pode marcar primeiro, A2 mostra chances em 16-30 e 76-90. A3 e A4 suportam BTTS. Parece consistente.\n\nVou considerar team_total away over 0.5 como candidata, mas também over 2.5 é tentador. Pela regra, entre duas com +7pp, escolho a de menor var: team_total away over 0.5 (var 2) vs over 2.5 (var 3). Var 2 é menor, então team_total away.\n\nAgora, refutação: atacar a aposta \"team_total away over 0.5\".\n\nAtaque 1: Sunderland fora de casa marca em apenas 10/18 jogos (56% na prática, não 68%). Apesar do modelo subir para 68%, o histórico recente mostra dificuldade (marcou em 2 dos últimos 5 jogos? Não, nos últimos 5: 5 gols em 5 jogos, mas foram distribuídos: 1 vs Spurs, 3 vs Villa, 0 vs Forest, 1 vs Wolves, 0 vs Man Utd. Marcou em 3/5, mas foram adversários variados. O ataque é inconsistente. IDs contra: C24 (má fase, marca 1 gol/j), C18 (fora 0.78 g/j). Veredito: enfraquece, mas não derruba, pois o modelo já considera a média e os ajustes.\n\nAtaque 2: Everton pode surpreender e fazer um jogo forte defensivamente, especialmente em casa, com a torcida. Apesar dos desfalques, Tarkowski é líder. IDs contra: C3 (mando de casa), C5 (defesa em casa sofre 1.33, mas é média; em alguns jogos recentes sofreu menos? contra Man City 3, Liverpool 2, mas contra West Ham 2). Não há indicação de defesa sólida. Veredito: enfraquece, mas o peso das evidências de gols sofridos é maior.\n\nAtaque 3: Se o Everton abrir o placar cedo e Sunderland desanimar? O roteiro pode ser de Everton controlando sem sofrer. ID: C12 (Everton administra mal após marcar, mas pode ser que sofra mesmo). Veredito: nao_sustenta, pois o cenário mais provável é jogo aberto.\n\nConclusão da refutação: nenhum ataque derruba a aposta; há argumentos contra, mas não fortes o suficiente para mudar a direção. Portanto, mantenho team_total away over 0.5.\n\nConfiança: aplico a regra:\n- high: ≥3 arestas independentes convergem e ataques não derrubam e rotas A/B apontam na mesma direção.\nQuais arestas convergem para team_total away over 0.5? A2 (ataque Sunderland × defesa Everton), A4 (intenção + desfalques), A5 (Sunderland marca primeiro), A8 (momentum). São mais de 3. Rota A (gols) tinha λ away 0.85, Rota B 0.95, ambas acima de 0.5 consistentemente (over 0.5 implícito ~60%). Meu número é 1.15, então as rotas base já apontavam. Assim, confiança high? Mas tenho que ver se há arestas conflitantes. A5 sugere Sunderland pode marcar, mas também há risco de não marcar. No entanto, a maioria das arestas suporta. O ataque \"enfraquece\" do ataque 1 (Sunderland fora inconsistente) não é forte o suficiente para reduzir a high. A confiança high requer também que nenhum ataque tenha \"derruba\" ou \"enfraquece\" com dado forte. O ataque 1 tem dado forte (marca em 56% dos jogos fora), mas meu modelo sobe para 68% justamente pelos fatores. Ainda assim, é um sinal de cautela. Mas a regra diz \"enfraquece\" sustentado por dado forte? O ataque 1 é \"enfraquece\", e o dado é o fato de só marcar em 10/18 fora. Isso é um dado forte? É histórico factual. Mas o modelo não é só histórico; ele incorpora contexto. Ainda assim, pode ser considerado um enfraquecimento. Portanto, confiança pode cair para medium. Vou avaliar: se há um ataque \"enfraquece\" com dado forte, é medium. O dado \"marca em 10/18 fora\" é forte. Então confiança: medium. A regra completa: \"low = arestas em conflito direto sem vencedor claro, OU um ataque 'enfraquece' sustentado por dado forte.\" Neste caso, há um ataque enfraquece com dado forte? O ataque 1 usou C24 e C18, que são fatos concretos. Mas as arestas A2, A4, A5 usam outros fatos que contrapõem. Há conflito? As arestas em si não estão em conflito; elas mostram que, apesar do histórico, os fatores contextuais elevam a probabilidade. Ainda assim, o dado forte pode gerar dúvida. Como o protocolo pede para ser conservador na confiança, classifico como medium. Mas vou reavaliar: o ataque 1 é \"Sunderland fora marca em 56% dos jogos\". Isso é a taxa base. Meu modelo ajusta para 68%, um aumento de 12pp com base em evidências. O dado é forte, mas não \"derruba\", e minhas evidências são também fortes. Talvez a confiança seja high mesmo, porque as arestas convergem e as rotas base apontam na mesma direção (over 0.5 away é bem provável). O ataque 1 não contradiz diretamente a convergência; é apenas um contraponto. Seguindo a definição de high: \"≥3 arestas independentes convergem pra aposta E nenhum ataque ficou em 'derruba'/'enfraquece' com dado forte E as rotas A e B do base rate apontam na mesma direção.\" O ataque 1 foi classificado como \"enfraquece\", e se considerarmos o dado \"marca em 56% fora\" como forte, então a confiança seria medium. Para evitar excesso de otimismo, vou considerar que o histórico de 56% é um dado forte o suficiente para tornar o ataque \"enfraquece\" válido. Portanto, confiança medium. No campo `confidence_regra` descrevo: \"Arestas convergem (A2,A4,A5,A8) e rotas A/B indicam over 0.5 away provável, mas histórico de Sunderland fora (marca em 10/18) é um contraponto que enfraquece, sem derrubar. Logo, medium.\"\n\n---\n\n**FINALIZANDO OS CAMPOS**\n\nPreencho todas as seções conforme schema.\n\n`home` e `away`:\nHome xg: 1.75, xg_1t: 0.65 (distribuição 37% antes do intervalo? Everton marca 0.5 em casa no 1ºT pela temporada, mas sobe com contexto? Vou manter 0.65 para primeiro tempo, 1.10 para segundo). xg_bands: usando distribuição dos gols e ajustes. Vamos lá: xg total home 1.75. Bandas: 0-15: 0.10, 16-30: 0.20, 31-45: 0.20, 46-60: 0.25, 61-75: 0.35, 76-90: 0.65 (soma 1.75). Para away: xg 1.15. Bandas: 0-15: 0.10, 16-30: 0.25, 31-45: 0.10, 46-60: 0.10, 61-75: 0.25, 76-90: 0.35 (soma 1.15). Ajuste fino: garanto que reflitam os picos de cada time e o cruzamento. Everton: pico em 76-90 (0.65 é 37% do total, coerente com 0.42 gols/j original em média 1.28, então novo total 1.75, banda 76-90 proporcional: 0.42/1.28*1.75 ≈ 0.57, mas como há ênfase, posso dar 0.60). Ajusto: 0-15:0.10, 16-30:0.15, 31-45:0.20, 46-60:0.20, 61-75:0.25, 76-90:0.60 (total 1.50? Preciso de 1.75. 0.10+0.15+0.20+0.20+0.25+0.60 = 1.50. Aumento: 0-15:0.12, 16-30:0.18, 31-45:0.22, 46-60:0.22, 61-75:0.30, 76-90:0.71 (1.75). Para away: Sunderland picos 16-30 e 61-75/76-90. 1.15 total: 0-15:0.05, 16-30:0.20, 31-45:0.10, 46-60:0.10, 61-75:0.30, 76-90:0.40 (1.15). Vou manter essas.\n\n`summary` home: \"Everton em casa, precisando vencer, deve propor jogo e criar volume, especialmente no 2ºT. Defesa desfalcada preocupa.\"\n`summary` away: \"Sunderland visita com desfalques defensivos, mas com potencial ofensivo no 1ºT e reta final. Deve marcar ao menos um gol.\"\n\n`general`:\ntotal: 2.9 (1.75+1.15)\ntotal_1t: 1.0 (ajuste: soma 1ºT home 0.65, away 0.35, total 1.0)\ntotal_2t: 1.9 (home 1.10, away 0.80)\nover25_prob: 55%\nbtts_prob: 56%\none_x_two: home 50, draw 24, away 26\none_x_two_1t: ajuste do prior (38/47/15) movido pelo fato de Sunderland começar bem? O prior 1ºT era 38/47/15. Com jogo aberto, empate 1ºT pode ser menos provável? Ajusto: home 40, draw 38, away 22 (soma 100). one_x_two_2t: prior 43/34/23; ajusto home 45, draw 28, away 27 (refletindo Everton crescendo, mas Sunderland também). Vou usar: 1ºT: home 42, draw 36, away 22; 2ºT: home 48, draw 26, away 26.\nconfidence: medium\nconfidence_regra: \"Arestas independentes (A2, A4, A5, A8) convergem para team_total away over 0.5, e rotas A/B base apontam na mesma direção; porém, ataque de refutação baseado no histórico de Sunderland fora (marca em 10/18) enfraquece com dado forte, impedindo 'high'.\"\nsummary: \"Jogo de alta motivação, ambos precisando vencer. Everton favorito, mas defesas frágeis sugerem gols. Aposta de valor: Sunderland marca ao menos um gol.\"\n\n`conclusoes`: array com todas as 39 conclusões, cada uma como objeto com id, bloco, fato, dado, direção, forca. (Preencherei no JSON, aqui apenas listo; vou gerar todas na resposta.)\n\n`blocos_sem_sinal`: [ { bloco: \"probs_mercado\", motivo: \"Informações já cobertas pelo base_rate; sem sinal adicional.\" } ]\n\n`descartadas`: [ { id: \"C1\", motivo: \"Clima sem correlação com total; neutro e não utilizado em arestas.\" }, { id: \"C9\", motivo: \"Ausência de Grealish já precificada e sem efeito direcional; neutra.\" } ]\n\n`jogadores`: array com todos os nomeados, cada um com nome, time, leitura. Já listei acima.\n\n`arestas`: as 14 arestas, cada uma com id, liga (array de IDs), leitura, efeito.\n\n`roteiros`: os 3 roteiros descritos, com nome, prob, filme, arestas (array de IDs das arestas que os sustentam). Ex: Roteiro1 arestas: [\"A1\",\"A3\",\"A4\",\"A6\",\"A11\",\"A12\"] etc.\n\n`janelas`: 6 janelas na ordem, com leitura, prob_gol (de 0 a 1, probabilidade de gol naquela faixa) e lado. Preencho conforme análise do Passo 4b. prob_gol somará mais de 1, mas é normal, pois são probabilidades independentes. Os valores que defini: 0-15: 0.08, 16-30: 0.18, 31-45: 0.14, 46-60: 0.18, 61-75: 0.22, 76-90: 0.30. Probabilidades não somam 1, são chances de ao menos um gol na faixa. OK.\n\n`tempos`: primeiro e segundo com análise e prob_gol (P(≥1 gol no tempo)). 1ºT: 0.55, 2ºT: 0.80.\n\n`marcadores`: já listados com nome, prob, motivo para home e away.\n\n`mercados`: as 19 linhas conforme calculado.\n\n`best_bet`: escolhida \"team_total\" away over 0.5. Preencho campos:\n- market: \"team_total\"\n- selection: \"over\"\n- team: \"away\"\n- line: 0.5\n- confidence: \"medium\"\n- probability: 0.68\n- evidence_for: [\"A2\",\"A4\",\"A5\",\"A8\"] (IDs das arestas que suportam)\n- evidence_against: [\"C24\",\"C18\"] (conclusões que levantam dúvida)\n- analysis: \"Sunderland deve marcar: enfrenta defesa do Everton desfalcada (Gueye, Branthwaite) e tem picos ofensivos em janelas específicas (16-30, 61-90). Ambos os times precisam vencer, abrindo o jogo. Apesar de inconsistente fora, o contexto e os desfalques elevam a probabilidade de gol para 68%, gerando valor em relação ao prior. Baixa variância e alinhamento com os roteiros tornam essa a melhor aposta.\"\n\n`refutacao`: ataques conforme acima, cada um com alvo (best_bet), argumento, ids (conclusões/arestas que atacam), veredito. Conclusao: \"A aposta sobrevive aos ataques; o ataque 1 enfraquece, mas as evidências de contexto (desfalques, intenção) mantêm a probabilidade elevada. Nenhum ataque derruba a aposta.\"\n\n`drivers`: os 3 fatores que mais moveram o número: \"Motivação bilateral alta (ambos precisam vencer)\", \"Desfalques defensivos de ambos os lados (Gueye, Branthwaite, Ballard)\", \"Picos de gols nas janelas finais e histórico de ambos sofrerem/marcarem após 75'\".\n\nAgora, monto o JSON completo, respeitando os tipos e enums.\n\nVerificações finais:\n- Todos os campos obrigatórios estão presentes.\n- Textos em português do Brasil.\n- IDs das conclusões e arestas batem.\n- `xg_bands` são 6 números por time.\n- `blocos_sem_sinal` com bloco e motivo.\n- `descartadas` com id e motivo.\n- `jogadores` com todos os jogadores listados (notei que alguns podem estar faltando: Simon Moore, R. Mundle, B. Traoré, já incluídos. Incluo todos.)\n- `arestas` no mínimo 8, com IDs strings (\"C1\", etc.) em `liga`.\n- `roteiros` com arestas array strings.\n- `janelas` exatamente 6, na ordem, com `faixa` string como \"0-15\", etc., `leitura`, `prob_gol` number, `lado` enum.\n- `tempos` com `analise` string e `prob_gol` number.\n- `marcadores` com home array e away array.\n- `mercados` 19 objetos com os campos exatos.\n- `best_bet` com campos, `team` \"away\", `line` 0.5.\n- `refutacao` com array `ataques` (2-3) e `conclusao`.\n- `drivers` array de 3 strings.\n\nCertifico-me de que `one_x_two` e variantes têm três chaves numéricas, somando 100 (ou próximo). As probabilidades podem não somar exatamente 100 devido a arredondamentos, mas no JSON vou colocar números que somem 100% (ex: 50, 24, 26 => 100; 42, 36, 22 => 100; 48, 26, 26 => 100). ok.\n\n`confidence` no general: coloco \"medium\", pois a média das confianças? Mas o campo `confidence` do general se refere ao nível de confiança geral da análise, não da aposta. Deve ser \"medium\" também, alinhado com a best_bet e refutação. Coloco \"medium\". `confidence_regra` descrevo a regra: \"Confiança geral baseada na confluência de arestas e dados, mas com moderação devido a inconsistências históricas do Sunderland fora.\"\n\n`general.summary`: um resumo do jogo e aposta.\n\nTudo pronto.\n\nVou gerar o JSON.",
+  "reasoningTokens": 20361,
+  "elapsedMs": 391401,
+  "promptChars": 39870,
+  "error": null
+}

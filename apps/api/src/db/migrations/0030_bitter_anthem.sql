@@ -1,0 +1,1 @@
+ALTER TABLE "lineup_player" DROP COLUMN "shots_blocked_by";

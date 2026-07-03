@@ -1,0 +1,940 @@
+{
+  "matchId": "8f6e078a-81aa-497c-a2cc-3e849d2bf507",
+  "homeName": "Leeds United",
+  "awayName": "Brighton & Hove Albion",
+  "actual": "Leeds United 1-0 Brighton & Hove Albion (HT 0-0)",
+  "ftH": 1,
+  "ftA": 0,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Leeds United x Brighton & Hove Albion\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-17 14:00 · Rodada 37 · Liga PL\n- Local: Elland Road, Leeds (grass)\n- Clima: broken clouds · 13.8°C (sens. 12.4°C) · vento 4.5 m/s · umidade 46% · nuvens 76% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Leeds United 6 dias (último: liga, 2026-05-11) · Brighton & Hove Albion 8 dias (último: liga, 2026-05-09)\n- Viagem do visitante: ~340 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 361 jogos): mandante 1.529 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-17)\n- Leeds United: 14º, 44 pts · Brighton & Hove Albion: 7º, 53 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 51 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Leeds United: 14º, 44 pts, 2 jogo(s) restante(s) (máx possível 50 pts)\n  - já SEGURO do rebaixamento.\n  - sem alvo continental alcançável.\n  - → motivação: **baixa** — NÃO precisa lutar — já seguro e sem alvo alcançável\n  - Brighton & Hove Albion: 7º, 53 pts, 2 jogo(s) restante(s) (máx possível 59 pts)\n  - já SEGURO do rebaixamento.\n  - Champions ainda matematicamente possível.\n  - distância de saldo p/ a vaga: empata em pontos com o 5º e precisa **virar 1 de saldo** (+10 vs +10) em 2 jogo(s) — viável\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga de Champions\n  - disputa pela vaga (7º): o Brighton & Hove Albion **precisa vencer** pra travar (empate ainda deixa 3 rival vivo). Quem ainda ameaça → Brentford (8º, 51 pts, máx 57) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Chelsea (9º, 49 pts, máx 55) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Everton (10º, 49 pts, máx 55) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Fulham (11º, 48 pts, máx 54) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar; Sunderland (12º, 48 pts, máx 54) pode **passar em pontos** — vencendo, se o Brighton & Hove Albion tropeçar\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Leeds United (manda) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **48 marcados / 53 sofridos** em 36j · média **1.33 marca / 1.47 sofre** por jogo\n- **Em casa (18j): marca 1.56 / sofre 1.17** (28 gols) · por tempo: 1ºT 0.67/0.44 · 2ºT 0.67/1.03\n- **Finalização: 149 SoT (4.14/j · casa 4.67/j) · conv 28%** (aberta, −6 pên) · sofre 4.14 SoT/j (adv 32%) · 8.81 KP/j\n- **Volume: 12.7 chutes/j (8.7 na área) · 2.5 big chances/j** · posse 45.7%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 44.2/50.9 · chutes pra fora 5/4.6 · bloqueados 3.6/3.7 · de fora da área 4/4.1\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 42.4/55.2 · chutes pra fora 5.4/4.4 · bloqueados 3.4/4.6 · de fora da área 3.6/3.4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.82**\n  - **Anton Stach** nota **7.21** (season) · forma 7.2= (últ.5 do time: –→–→7→8→6.6 📉 caindo) · **faltou 2/5** · 5× MOTM · 32j\n  - **Ethan Ampadu** nota **7** (season) · forma 7= (últ.5 do time: 6.8→7→7→6.7→7.5 ➡️ estável) · 2× MOTM · 38j\n  - **Sean Longstaff** nota **7** (season) · forma 6.8↓ (últ.5 do time: 6.6→7.1→–→6.9→6.6 ➡️ estável) · **faltou 1/5** · 1× MOTM · 24j\n  - **Jaka Bijol** nota **7** (season) · forma 7.02= (últ.5 do time: 6.9→6.9→6.7→7.2→7.4 📈 subindo) · 2× MOTM · 29j\n  - **James Justin** nota **6.91** (season) · forma 7.12↑ (últ.5 do time: 8.2→6.8→6.3→7.1→7.2 📉 caindo) · 29j\n  - ⚠️(fora) **Pascal Struijk** nota **6.89** (season) · forma 6.78= (últ.5 do time: 7.6→7.2→5.9→6.1→7.1 📉 caindo) · 36j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EVEVV** (11pts) · **11 feitos / 5 sofridos** · marca 2.2↑ / sofre 1↓ g/j · SoT 5.4 feito / 4.8 sofrido\n- **Consistência: MARCOU em 25/36** (casa 13/18 · fora 12/18) · não-marcou 11 · clean sheet 7 · BTTS 22/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Wolverhampton Wanderers** (casa · **V 3-0**) — adv 20º briga-Z · você 15º briga-Z · seu casa até ali 1.4 marca/1.3 sofre\n- @ **AFC Bournemouth** (fora · **E 2-2**) — adv 9º salvo · você 15º briga-Z · seu fora até ali 1.1 marca/1.8 sofre\n- @ **Chelsea** (fora · **D 0-1**) — 🏆 FA Cup\n- vs **Burnley** (casa · **V 3-1**) — adv 19º REBAIX. · você 15º briga-Z · seu casa até ali 1.5 marca/1.2 sofre\n- @ **Tottenham Hotspur** (fora · **E 1-1**) — adv 17º briga-Z · você 16º briga-Z · seu fora até ali 1.1 marca/1.8 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Manchester United (FORA · V 2-1) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 +1 +4 +5 +7 +5 +4 +4 +3 +3 0 -4 -4 -3 -2] · 16'-30' [-4 -3 -5 -3 -2 -1 +2 +5 +6 +2 +2 0 +3 +6 +7] · 31'-45' [+4 +2 +3 +3 0 -4 -4 -6 -3 -4 -4 -1 -2 -2 +1] · ‖INTERVALO‖ · 46'-60' [+2 +4 -3 -1 -4 -8 -6 -5 -4 -4 -4 -2 -2 0 +2] · 61'-75' [+3 +4 +3 +2 -2 -4 -3 -3 -9 -4 -6 +8 +8 +8 +11] · 76'-90' [+11 -3 +3 +2 +4 +4 +3 +1 -1 +1 -7 -1 +1 +2 +1] · 91'+ [0 -2 -1 -2 -3 -2]\n    ⚽ gols: 5'✓ 29'✓ 69'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **7** · 31'-45' **4** ‖ 46'-60' **2** · 61'-75' **1** · 76'-90' **3**\n  - vs Wolverhampton Wanderers (CASA · V 3-0) — min 1→102:\n    📈 pressão (net/min): 1'-15' [+1 +4 +4 0 -2 +1 0 0 +1 +5 +4 +2 +2 +3 +6] · 16'-30' [+8 +2 +2 +2 +6 +9 +7 +6 +5 +3 0 +3 -1 -5 -5] · 31'-45' [-3 -2 0 +2 +2 -2 -3 -3 -3 -6 -5 -5 -3 -2 0] · ‖INTERVALO‖ · 46'-60' [+3 -2 -1 -1 -1 -2 -4 -4 -1 0 0 -1 -2 -1 -1] · 61'-75' [+1 +1 0 -7 -7 -4 -2 0 0 0 -3 -3 -3 -2 -2] · 76'-90' [0 +1 +1 +1 +1 +1 +1 +1 +3 +3 +2 +3 +2 +2 +2] · 91'+ [+3 0 +1 0 +5 +5 +5 +3 +2 -1 +2 +1]\n    ⚽ gols: 18'✓ 20'✓ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **6** ‖ 46'-60' **2** · 61'-75' **6** · 76'-90' **4**\n  - @ AFC Bournemouth (FORA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [+1 +3 +1 +1 -3 -1 -2 -3 -1 -3 -2 -3 0 +1 -2] · 16'-30' [-2 -1 +2 +2 +2 -1 -2 -3 -3 -3 +2 0 -2 +1 +1] · 31'-45' [-1 -5 -6 -6 -7 -9 -5 -5 -2 -2 0 +1 -7 -7 -4] · ‖INTERVALO‖ · 46'-60' [+1 0 0 0 +1 0 -2 -1 -4 -7 -12 -12 -7 -9 -6] · 61'-75' [-9 -6 -1 -1 -2 +1 +1 +3 +6 +7 +7 +5 +6 +3 -3] · 76'-90' [-3 -7 -9 -4 -6 -7 -3 -2 -1 -2 -6 -7 -3 -5 -5] · 91'+ [-8 -33 -21 -14 -9 -6 -2 -2]\n    ⚽ gols: 60'✗ 68'✓ 85'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **8** · 16'-30' **5** · 31'-45' **4** ‖ 46'-60' **1** · 61'-75' **3** · 76'-90' **7**\n  - vs Burnley (CASA · V 3-1) — min 1→99:\n    📈 pressão (net/min): 1'-15' [+3 +3 +2 +1 +1 +2 +5 +6 +4 +3 +3 +4 +4 +3 +3] · 16'-30' [+3 +1 +2 +2 +4 +3 +4 +7 +6 +4 +3 +5 +1 +1 0] · 31'-45' [+1 -1 0 -1 -4 -2 -1 +1 +1 +2 +3 -1 -1 -1 -2] · ‖INTERVALO‖ · 46'-60' [+1 0 0 -2 0 +3 +6 +6 +11 +8 +8 +12 +9 +9 +6] · 61'-75' [+4 +5 +6 +5 +5 +5 +2 -2 -4 -1 0 -3 -2 -2 +4] · 76'-90' [+4 +4 +10 +5 +6 +4 +2 +2 +1 +4 +6 +2 -1 0 0] · 91'+ [0 0 0 0 -2 -5 -8 -7 -4]\n    ⚽ gols: 8'✓ 52'✓ 56'✓ 71'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **1** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **4**\n  - @ Tottenham Hotspur (FORA · E 1-1) — min 1→105:\n    📈 pressão (net/min): 1'-15' [+2 +1 +1 +1 0 -3 -4 -4 -3 -3 -3 -2 -2 -5 -8] · 16'-30' [-6 -7 -4 -2 -1 +5 +4 +3 0 +2 +2 -2 -2 -5 -4] · 31'-45' [-2 -2 -4 -2 -3 -8 -9 -6 -7 -3 -2 -1 -2 -3 0] · ‖INTERVALO‖ · 46'-60' [-3 -2 -2 -1 -1 -1 -3 -2 -1 -1 0 -1 -3 -9 -5] · 61'-75' [-2 +2 +1 +1 0 0 -1 +3 +3 +3 +3 +3 +3 +6 +8] · 76'-90' [+8 +4 +3 +5 +3 +6 +3 +2 +3 +3 +2 +3 +2 +1 +1] · 91'+ [-1 -6 -8 -5 -4 -5 -4 -5 -1 +5 +7 +4 +2 +2 -3]\n    ⚽ gols: 50'✗ 74'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **9** · 16'-30' **2** · 31'-45' **6** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **7**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.19 · 16-30: 0.17 · 31-45: 0.31 · 46-60: 0.19 · 61-75: 0.25 · 76-90: 0.22\n- Sofre por faixa (/j): 0-15: 0.11 · 16-30: 0.19 · 31-45: 0.14 · 46-60: 0.31 · 61-75: 0.31 · 76-90: 0.42\n- 1ºT: marca 24 / sofre 16 (totais na temporada)\n\n### Desfalques de Leeds United neste jogo\n- **Noah Okafor** (Calf Injury) — 8 gols + 1 assists até a data; season: **17% dos gols** do time (19% com assists); **últimos 5 jogos do time**: participou de 5/11 gols = **45%** (↑ mais decisivo AGORA); with/without: com ele 1.61 g/j (28j) vs sem ele 0.38 g/j (8j) = −76%; finaliza **0.54 SoT/jogo** (time: 4.39 SoT/j com ele vs 3.25 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.4 interceptações/j** (~4% do time) · 0.8 desarmes/j · 3.1 duelos ganhos/j · 0.3 cruz. certos/j · 1.4 dribles certos/j · 0.7 key passes/j\n- **Jayden Bogle** (Doubtful) — 1 gols + 3 assists até a data; season: **2% dos gols** do time (8% com assists); **últimos 5 jogos do time**: participou de 2/11 gols = **18%** (↑ mais decisivo AGORA); with/without: com ele 1.3 g/j (33j) vs sem ele 1.67 g/j (3j) = +28%; finaliza **0.12 SoT/jogo** (time: 4.12 SoT/j com ele vs 4.33 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.9 desarmes/j · 4 duelos ganhos/j · 0.5 cruz. certos/j · 0.5 dribles certos/j · 0.6 key passes/j\n- **Ilia Gruev** (Unknown Injury) — 0 gols + 3 assists até a data; season: **0% dos gols** do time (6% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.52 g/j (23j) vs sem ele 1 g/j (13j) = −34%; finaliza **0.04 SoT/jogo** (time: 3.96 SoT/j com ele vs 4.46 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.7 interceptações/j** (~7% do time) · 1 desarmes/j · 2.3 duelos ganhos/j · 0.2 cruz. certos/j · 0.3 dribles certos/j · 0.5 key passes/j\n- **Pascal Struijk** (Hip Injury) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (≈ estável); with/without: com ele 1.33 g/j (33j) vs sem ele 1.33 g/j (3j) = −0%; finaliza **0.18 SoT/jogo** (time: 4.24 SoT/j com ele vs 3 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~10% do time) · 1.1 desarmes/j · 5.1 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.4 key passes/j\n- **Gabriel Gudmundsson** (Doubtful) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (≈ estável); with/without: com ele 1.34 g/j (32j) vs sem ele 1.25 g/j (4j) = −7%; finaliza **0.09 SoT/jogo** (time: 4.03 SoT/j com ele vs 5 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~10% do time) · 2 desarmes/j · 5.6 duelos ganhos/j · 0.7 cruz. certos/j · 1.2 dribles certos/j · 0.7 key passes/j\n- **Facundo Buonanotte** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (≈ estável); with/without: com ele 0.5 g/j (2j) vs sem ele 1.38 g/j (34j) = +176%; finaliza **0 SoT/jogo** (time: 2.5 SoT/j com ele vs 4.24 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.5 interceptações/j** (~5% do time) · 0 desarmes/j · 0.5 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0 key passes/j\n\n## Brighton & Hove Albion (visita) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **52 marcados / 42 sofridos** em 36j · média **1.44 marca / 1.17 sofre** por jogo\n- **Fora (18j): marca 1.22 / sofre 1.39** (22 gols) · por tempo: 1ºT 0.56/0.64 · 2ºT 0.89/0.53\n- **Finalização: 169 SoT (4.69/j · fora 4.17/j) · conv 29%** (aberta, −3 pên) · sofre 4 SoT/j (adv 26%) · 9.64 KP/j\n- **Volume: 12.9 chutes/j (8.5 na área) · 2.4 big chances/j** · posse 53.8%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 53.2/44.8 · chutes pra fora 4.9/4.9 · bloqueados 3.4/2.9 · de fora da área 4.4/3.4\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 58.6/29.6 · chutes pra fora 4.4/3.8 · bloqueados 3/2 · de fora da área 3/2\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.85**\n  - **Jason Steele** nota **7.46** (season) · forma 7.46= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 5j\n  - **Pascal Groß** nota **7.16** (season) · forma 7.28= (últ.5 do time: 7.5→7.7→7.6→6.3→7.3 📉 caindo) · 1× MOTM · 19j\n  - **Jan Paul van Hecke** nota **7.03** (season) · forma 6.94= (últ.5 do time: 7→7→7.4→6→7.3 📉 caindo) · 2× MOTM · 38j\n  - **Olivier Boscagli** nota **6.98** (season) · forma 7.02= (últ.5 do time: 7.6→6.8→7.2→6.5→– 📉 caindo) · **faltou 1/5** · 17j\n  - **H. Howell** nota **6.97** (season) · forma 6.97= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 6j\n  - **Lewis Dunk** nota **6.95** (season) · forma 8.1↑ (últ.5 do time: –→–→–→–→8.1 ⚠️ poucos jogos na janela) · **faltou 4/5** · 1× MOTM · 31j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: VDVEV** (10pts) · **11 feitos / 5 sofridos** · marca 2.2↑ / sofre 1= g/j · SoT 5.6 feito / 3.6 sofrido\n- **Consistência: MARCOU em 29/36** (casa 15/18 · fora 14/18) · não-marcou 7 · clean sheet 10 · BTTS 21/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Burnley** (fora · **V 2-0**) — adv 19º briga-Z · você 10º · seu fora até ali 1.1 marca/1.3 sofre\n- @ **Tottenham Hotspur** (fora · **E 2-2**) — adv 18º briga-Z · você 9º · seu fora até ali 1.2 marca/1.3 sofre\n- vs **Chelsea** (casa · **V 3-0**) — adv 6º briga-top · você 9º salvo · seu casa até ali 1.5 marca/1.1 sofre\n- @ **Newcastle United** (fora · **D 1-3**) — adv 15º briga-Z · você 6º briga-top · seu fora até ali 1.2 marca/1.3 sofre\n- vs **Wolverhampton Wanderers** (casa · **V 3-0**) — adv 20º REBAIX. · você 8º salvo · seu casa até ali 1.6 marca/1 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Burnley (FORA · V 2-0) — min 1→96:\n    📈 pressão (net/min): 1'-15' [+1 +1 +2 +1 +3 +5 +3 +2 +4 +2 +2 -6 -5 -5 -4] · 16'-30' [-3 -4 -4 0 0 +3 +3 +3 +10 +8 +8 +7 +3 -1 -6] · 31'-45' [-6 -4 0 0 +1 +2 +1 +1 +1 +1 +2 +2 +2 +4 +3] · ‖INTERVALO‖ · 46'-60' [+10 +7 +1 -12 -9 -6 -6 -4 0 -1 -2 -2 -4 -5 -8] · 61'-75' [-4 -4 -1 +2 +3 +4 +4 +2 +1 +1 0 -2 -3 0 -1] · 76'-90' [0 +1 +1 0 -25 -24 -18 -13 -8 -6 -4 -3 -3 +1 0] · 91'+ [+1 +2 +2 +1 -1 -3]\n    ⚽ gols: 43'✓ 89'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **6** · 31'-45' **4** ‖ 46'-60' **10** · 61'-75' **5** · 76'-90' **10**\n  - @ Tottenham Hotspur (FORA · E 2-2) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 0 0 0 -1 -1 -1 0 0 0 -1 -1 0 0 -1] · 16'-30' [-1 0 0 0 0 0 -4 -2 -3 -2 -1 +1 +3 +2 +2] · 31'-45' [+5 +5 +7 +5 +5 +5 +7 +7 -1 -2 -4 -4 -10 -8 -6] · ‖INTERVALO‖ · 46'-60' [+5 +5 +4 +5 +6 +7 +2 +1 0 0 -5 -3 -2 +1 +4] · 61'-75' [+6 +4 +4 +4 +6 +6 +4 0 0 -5 -3 -1 0 0 0] · 76'-90' [+9 +4 +4 +3 -1 -4 -4 -3 -2 -2 +4 +3 +2 +4 +4] · 91'+ [+5 +3 +6 +5 +13 +13 +11 +4]\n    ⚽ gols: 39'✗ 45'✓ 77'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **4** · 31'-45' **0** ‖ 46'-60' **7** · 61'-75' **3** · 76'-90' **6**\n  - vs Chelsea (CASA · V 3-0) — min 1→95:\n    📈 pressão (net/min): 1'-15' [+2 +4 +4 +8 +9 +6 +7 +7 +4 +3 +3 +2 +2 +8 +7] · 16'-30' [+7 +6 +11 +11 +8 +5 +4 +4 +5 +2 0 +1 +1 +1 0] · 31'-45' [0 +3 +3 +5 +7 +7 +5 +6 +5 +1 -1 -2 -2 +2 +1] · ‖INTERVALO‖ · 46'-60' [+1 -3 -2 -1 -1 -1 -2 -4 +1 +1 -1 +4 +2 +1 +1] · 61'-75' [0 +1 +2 +1 +1 +2 +8 +10 +8 +3 +3 +5 +5 +3 +5] · 76'-90' [+4 +1 +1 0 0 -2 -4 -2 -2 0 +2 +3 +1 -1 -1] · 91'+ [+2 +3 +2 -1 0]\n    ⚽ gols: 3'✓ 56'✓ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **5** · 61'-75' **3** · 76'-90' **3**\n  - @ Newcastle United (FORA · D 1-3) — min 1→97:\n    📈 pressão (net/min): 1'-15' [-1 +4 +5 +6 +4 +8 +5 +5 +4 +5 +2 -3 -3 -2 -2] · 16'-30' [+2 +2 +2 +3 +2 +2 +3 +2 -3 -3 -3 -1 +1 +1 +1] · 31'-45' [-1 -7 -6 +1 +1 +3 +4 +2 +2 0 0 0 0 +2 +3] · ‖INTERVALO‖ · 46'-60' [+3 +7 +5 +4 +4 +7 +7 +5 +3 +5 +5 +4 +3 +4 +4] · 61'-75' [+4 +4 +8 +6 +6 +7 +5 +1 0 0 +1 0 -3 -2 +2] · 76'-90' [+2 +6 +5 +4 +3 +3 +3 +1 -1 +2 +2 +6 +4 +9 +10] · 91'+ [+5 +1 +1 -3 -5 -6 -6]\n    ⚽ gols: 12'✗ 24'✗ 61'✓ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **2** · 61'-75' **2** · 76'-90' **3**\n  - vs Wolverhampton Wanderers (CASA · V 3-0) — min 1→97:\n    📈 pressão (net/min): 1'-15' [+3 +4 +3 +3 +4 +6 +6 +4 +3 +3 +3 +3 +3 +3 +5] · 16'-30' [+3 +1 0 -1 0 +1 +1 +4 +5 +4 +3 +3 +3 +3 +3] · 31'-45' [+3 +4 +5 +5 +4 +4 +4 +1 +5 +5 +6 +4 +3 +1 0] · ‖INTERVALO‖ · 46'-60' [+4 +6 +6 +10 +9 +8 +4 +4 -2 +1 +1 +1 +1 0 0] · 61'-75' [0 +1 0 0 +2 0 0 +5 +3 +3 +3 +3 +3 +4 +3] · 76'-90' [+4 +6 +6 +5 +7 +5 +7 +7 +9 +10 +10 +8 +10 +10 +7] · 91'+ [+7 +6 +6 +3 +1 +1 +1]\n    ⚽ gols: 1'✓ 5'✓ 86'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **2** · 61'-75' **5** · 76'-90' **3**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.25 · 16-30: 0.11 · 31-45: 0.19 · 46-60: 0.19 · 61-75: 0.25 · 76-90: 0.44\n- Sofre por faixa (/j): 0-15: 0.17 · 16-30: 0.22 · 31-45: 0.25 · 46-60: 0.11 · 61-75: 0.14 · 76-90: 0.28\n- 1ºT: marca 20 / sofre 23 (totais na temporada)\n\n### Desfalques de Brighton & Hove Albion neste jogo\n- **Mats Wieffer** (Doubtful) — 2 gols + 3 assists até a data; season: **4% dos gols** do time (10% com assists); **últimos 5 jogos do time**: participou de 2/11 gols = **18%** (↑ mais decisivo AGORA); with/without: com ele 1.52 g/j (25j) vs sem ele 1.27 g/j (11j) = −16%; finaliza **0.28 SoT/jogo** (time: 4.88 SoT/j com ele vs 4.27 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1 interceptações/j** (~12% do time) · 2.6 desarmes/j · 5.4 duelos ganhos/j · 0.2 cruz. certos/j · 0.4 dribles certos/j · 0.8 key passes/j\n- **Kaoru Mitoma** (Unknown Injury) — 3 gols + 1 assists até a data; season: **6% dos gols** do time (8% com assists); **últimos 5 jogos do time**: participou de 1/11 gols = **9%** (≈ estável); with/without: com ele 1.36 g/j (25j) vs sem ele 1.64 g/j (11j) = +21%; finaliza **0.52 SoT/jogo** (time: 4.56 SoT/j com ele vs 5 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.4 interceptações/j** (~5% do time) · 0.7 desarmes/j · 3.3 duelos ganhos/j · 0.3 cruz. certos/j · 1.1 dribles certos/j · 1.2 key passes/j\n- **Stefanos Tzimas** (Cruciate Ligament Tear) — 1 gols + 1 assists até a data; season: **2% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (≈ estável); with/without: com ele 1.89 g/j (9j) vs sem ele 1.3 g/j (27j) = −31%; finaliza **0.11 SoT/jogo** (time: 4.89 SoT/j com ele vs 4.63 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.3 desarmes/j · 0.6 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.7 key passes/j\n- **A. Webster** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/11 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.44 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Leeds United atacando × Brighton & Hove Albion defendendo**\n| Faixa | Leeds United marca/j | Brighton & Hove Albion sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.19 | 0.17 | 0.36 |\n| 16-30 | 0.17 | 0.22 | 0.39 |\n| 31-45 | 0.31 | 0.25 | 0.56 |\n| 46-60 | 0.19 | 0.11 | 0.3 |\n| 61-75 | 0.25 | 0.14 | 0.39 |\n| 76-90 | 0.22 | 0.28 | 0.5 |\n\n**Brighton & Hove Albion atacando × Leeds United defendendo**\n| Faixa | Brighton & Hove Albion marca/j | Leeds United sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.25 | 0.11 | 0.36 |\n| 16-30 | 0.11 | 0.19 | 0.3 |\n| 31-45 | 0.19 | 0.14 | 0.33 |\n| 46-60 | 0.19 | 0.31 | 0.5 |\n| 61-75 | 0.25 | 0.31 | 0.56 |\n| 76-90 | 0.44 | 0.42 | 0.86 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Leeds United: **16-30** (domínio -0.7) · Brighton & Hove Albion: **31-45** (domínio -3.9). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Leeds United domínio/j | Brighton & Hove Albion domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | +0.7 | +2.3 | -1.6 ✈️ |\n| 16-30 | +1.1 | +1.8 | -0.7 ≈ |\n| 31-45 | -2.3 | +1.6 | -3.9 ✈️ |\n| 46-60 | -0.9 | +1.4 | -2.3 ✈️ |\n| 61-75 | +0.8 | +2 | -1.2 ≈ |\n| 76-90 | -0.4 | +1.6 | -2 ✈️ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Leeds United (casa) = 1.42 · λ Brighton & Hove Albion (fora) = 1.16 · total = 2.58\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Leeds United: λ_SoT 4.43 × conv 28% → **1.24 gols**\n- Brighton & Hove Albion: λ_SoT 3.61 × conv 29% → **1.05 gols**\n- total via SoT = 2.29\n- **Índice de volume do jogo**: λ_SoT total 8 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 41/29/29% | 39/32/29% |\n| Over 1.5 | 74% | 68% |\n| Over 2.5 | 48% | 40% |\n| Over 3.5 | 26% | 20% |\n| BTTS | 54% | 48% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **71%** · 12 **68%** · X2 **61%** · **Draw No Bet** casa 57% / fora 43%\n- **Placar exato (mais prováveis)**: 1-1 15% · 0-0 12% · 1-0 11% · 0-1 9%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 32% · 2-3 49% · 4+ 20%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Leeds United over 0.5 **71%** / over 1.5 **35%** · Brighton & Hove Albion over 0.5 **65%** / over 1.5 **28%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 2.57 · empate 3.15 · fora 3.4. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 361 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **34/45/20%** · 2ºT **29/41/30%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Leeds United) e `away` (= Brighton & Hove Albion), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 0.8999999761581421,
+    "xg_away": 1.2999999523162842,
+    "total": 2.190000057220459,
+    "over25_prob": 0.3799999952316284,
+    "btts_prob": 0.4300000071525574,
+    "one_x_two": "{\"home\":0.3,\"draw\":0.32,\"away\":0.38}",
+    "confianca": "medium",
+    "best_bet_market": "double_chance",
+    "best_bet_selection": "draw_away",
+    "best_bet_team": null,
+    "best_bet_line": null,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.699999988079071,
+    "reasoning_tokens": 9520
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Leeds United** contra **dominante** (o estilo do Brighton & Hove Albion, posse média 53.8%): marca **1.09/j** e sofre 2.27/j em 11 jogos — **-0.24 ABAIXO** da média (1.33).\n- **Brighton & Hove Albion** contra **bloco baixo** (o estilo do Leeds United, posse média 45.7%): marca **1.33/j** e sofre 0.60/j em 15 jogos — na média da temporada (1.44).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — falta**: Leeds United gera 4% dos gols por aí × Brighton & Hove Albion sofre 5% por aí (liga: 2%) → índice 5.7×.\n- **CANAL ABERTO — gol contra**: Leeds United gera 2% dos gols por aí × Brighton & Hove Albion sofre 8% por aí (liga: 3%) → índice 1.5×.\n- **CANAL ABERTO — cruzamento**: Brighton & Hove Albion gera 2% dos gols por aí × Leeds United sofre 7% por aí (liga: 2%) → índice 3.9×.\n- **CANAL ABERTO — falta**: Brighton & Hove Albion gera 2% dos gols por aí × Leeds United sofre 5% por aí (liga: 2%) → índice 2.6×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Leeds United** (17 gols medidos, últimos 8 jogos): neutro ao sofrer (Δ 0.9) · neutro após marcar (Δ -0.2).\n- **Brighton & Hove Albion** (21 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -2.1 nos 10min seguintes) · **MATA O JOGO após marcar** (Δ +2.3 — segue pressionando).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Leeds United**: Dominic Calvert-Lewin **13 gols** (4 pên) · últ.5: 3 · 1.0 SoT/j | Noah Okafor **8 gols** · últ.5: 4 · 0.5 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Lukas Nmecha **6 gols** (2 pên) · últ.5: 0 · 0.6 SoT/j | Anton Stach **5 gols** · últ.5: 1 · 0.5 SoT/j | Brenden Aaronson **4 gols** · últ.5: 0 · 0.5 SoT/j\n- **Brighton & Hove Albion**: Danny Welbeck **13 gols** (1 pên) · últ.5: 1 · 0.8 SoT/j | Diego Gómez **5 gols** · últ.5: 0 · 0.5 SoT/j | Jack Hinshelwood **4 gols** · últ.5: 3 · 0.6 SoT/j | Kaoru Mitoma **3 gols** · últ.5: 1 · 0.5 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Yankuba Minteh **3 gols** · últ.5: 1 · 0.3 SoT/j",
+  "realGoals": [
+    {
+      "minute": 90,
+      "side": "home",
+      "scorer": "Dominic Calvert-Lewin",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 0.85,
+      "xg_1t": 0.38,
+      "xg_2t": 0.47,
+      "xg_bands": {
+        "0-15": 0.1,
+        "16-30": 0.08,
+        "31-45": 0.2,
+        "46-60": 0.12,
+        "61-75": 0.15,
+        "76-90": 0.2
+      },
+      "summary": "Leeds com motivação baixa, desfalcado ofensivamente (Okafor) e defensivamente, deve ter produção ofensiva limitada contra defesa sólida do Brighton. Espera-se menos de 1 gol marcado."
+    },
+    "away": {
+      "xg": 1.35,
+      "xg_1t": 0.6,
+      "xg_2t": 0.75,
+      "xg_bands": {
+        "0-15": 0.2,
+        "16-30": 0.15,
+        "31-45": 0.25,
+        "46-60": 0.2,
+        "61-75": 0.25,
+        "76-90": 0.3
+      },
+      "summary": "Brighton com necessidade de vitória, estilo dominante e ataque eficiente contra defesa enfraquecida do Leeds. Deve criar volume suficiente para marcar ao menos um gol, com bons picos no início e final do jogo."
+    },
+    "general": {
+      "total": 2.2,
+      "total_1t": 0.98,
+      "total_2t": 1.22,
+      "over25_prob": 0.38,
+      "btts_prob": 0.45,
+      "one_x_two": {
+        "home": 0.3,
+        "draw": 0.32,
+        "away": 0.38
+      },
+      "one_x_two_1t": {
+        "home": 0.25,
+        "draw": 0.45,
+        "away": 0.3
+      },
+      "one_x_two_2t": {
+        "home": 0.25,
+        "draw": 0.4,
+        "away": 0.35
+      },
+      "confidence": "high",
+      "confidence_regra": "≥3 arestas independentes (A1, A2, A5, A7) sustentam que Brighton marcará ao menos um gol; rotas A e B do base rate apontam para >65%; nenhum ataque refutatório com dado forte contrapõe.",
+      "summary": "Jogo assimétrico: Leeds sem objetivos e desfalcado, Brighton lutando por Champions. Espera-se domínio do visitante, com gols prováveis, mas placar tende a ser controlado (2x0, 2x1). Prior de under 2.5 se mantém, com total baixo. Vitória do Brighton é o resultado mais provável, mas empate não está descartado."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Descanso balanceado sem assimetria",
+        "dado": "Leeds 6 dias, Brighton 8 dias; diferença de 2 dias é ruído",
+        "direcao": "neutro para xG total",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "contexto",
+        "fato": "Vantagem de casa",
+        "dado": "Média mandante 1.53, visitante 1.23; fator casa histórico",
+        "direcao": "ligeira vantagem para Leeds no 1x2",
+        "forca": "media"
+      },
+      {
+        "id": "C3",
+        "bloco": "tabela_motivacao",
+        "fato": "Motivação assimétrica: Leeds sem stake, Brighton precisa vencer",
+        "dado": "Leeds 14º com 44pts, seguro; Brighton 7º com 53pts, briga por Champions",
+        "direcao": "aumenta ataque e intensidade do Brighton; Leeds pode administrar",
+        "forca": "alta"
+      },
+      {
+        "id": "C4",
+        "bloco": "tabela_motivacao",
+        "fato": "Veredito de intenção: JOGO TENDE A TRAVAR",
+        "dado": "Pelo menos um lado não precisa ir pra cima; prefira under ou team_total do lado que precisa",
+        "direcao": "viés para under 2.5 e aposta segura no Brighton O0.5",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_gols",
+        "fato": "Leeds em casa tem ataque mediano e defesa relativamente sólida",
+        "dado": "Casa: 1.56 gols marcados, 1.17 sofridos em 18 jogos",
+        "direcao": "volume ofensivo suficiente, mas defesa caseira contida",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_estilo",
+        "fato": "Estilo defensivamente exposto",
+        "dado": "50.9 ataques perigosos sofridos/j; pior nos últimos 5 (55.2)",
+        "direcao": "defesa vulnerável a ataques constantes",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_qualidade",
+        "fato": "Qualidade individual modesta",
+        "dado": "Nota média 6.82; Stach caindo, Bijol subindo, sem estrelas",
+        "direcao": "ataque sem referência de elite",
+        "forca": "media"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_forma",
+        "fato": "Forma recente inflada por adversários fracos",
+        "dado": "Últimos 5: EVEVV contra times em crise (Wolves, Burnley, Tottenham, Bournemouth)",
+        "direcao": "desempenho pode não se repetir contra defesa forte do Brighton",
+        "forca": "alta"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_forma",
+        "fato": "Consistência de marcar, mas poucas clean sheets",
+        "dado": "Marcou em 25/36 jogos; apenas 7 clean sheets",
+        "direcao": "propenso a sofrer gols",
+        "forca": "baixa"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_momentum",
+        "fato": "Pressiona cedo em casa, mas sofre no 2º tempo",
+        "dado": "Curvas de momentum mostram pressão no início e queda após 60'",
+        "direcao": "janela de gol para adversário é após o intervalo",
+        "forca": "media"
+      },
+      {
+        "id": "C12",
+        "bloco": "home_faixas",
+        "fato": "Sofre mais gols no 2º tempo, especialmente 76-90",
+        "dado": "Sofre 0.31 em 46-60, 0.31 em 61-75, 0.42 em 76-90",
+        "direcao": "defesa piora no fim do jogo",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_desfalques",
+        "fato": "Okafor fora: perda ofensiva significativa",
+        "dado": "8 gols, 17% dos gols, 45% nos últimos 5; SoT cai de 4.39 para 3.25 sem ele",
+        "direcao": "reduz xG do Leeds, especialmente no 1º tempo",
+        "forca": "alta"
+      },
+      {
+        "id": "C14",
+        "bloco": "home_desfalques",
+        "fato": "Múltiplos desfalques defensivos (Struijk, Gruev, Bogle/Gudmundsson dúvidas)",
+        "dado": "Perda de ~30% das interceptações/desarmes do time",
+        "direcao": "aumenta xG do Brighton, defesa mais frágil",
+        "forca": "alta"
+      },
+      {
+        "id": "C15",
+        "bloco": "away_gols",
+        "fato": "Ataque do Brighton fora de casa é mediano",
+        "dado": "1.22 gols marcados fora, 4.17 SoT/j",
+        "direcao": "não é um ataque visitante arrasador, mas suficiente contra defesa fraca",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_estilo",
+        "fato": "Estilo dominante, especialmente recente",
+        "dado": "58.6 ataques perigosos/j nos últimos 5; 53.2 na temporada",
+        "direcao": "controla posse e dita ritmo",
+        "forca": "alta"
+      },
+      {
+        "id": "C17",
+        "bloco": "away_qualidade",
+        "fato": "Qualidade individual superior, com Groß e Dunk em alta",
+        "dado": "Nota média 6.85; Groß 7.16 (criação), Dunk 8.1 no último jogo",
+        "direcao": "superioridade no meio-campo e defesa",
+        "forca": "media"
+      },
+      {
+        "id": "C18",
+        "bloco": "away_forma",
+        "fato": "Forma recente sólida, mas contra adversários fracos",
+        "dado": "VDVEV (10pts), 11 marcados, 5 sofridos; adversários como Burnley, Wolves, Tottenham",
+        "direcao": "desempenho pode ser inflada",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_momentum",
+        "fato": "Pressão inicial, reage após marcar, mas desmorona ao sofrer",
+        "dado": "Curvas mostram gols cedo (0-15); Δ +2.3 após marcar, Δ -2.1 ao sofrer",
+        "direcao": "crucial marcar primeiro; vulnerabilidade se sofrer gol",
+        "forca": "alta"
+      },
+      {
+        "id": "C20",
+        "bloco": "away_faixas",
+        "fato": "Marca mais no início (0-15) e no fim (76-90)",
+        "dado": "0.25 e 0.44 gols/j nessas faixas; sofre mais 31-45 e 76-90",
+        "direcao": "janelas de gol alinhadas com fraqueza do Leeds",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "away_desfalques",
+        "fato": "Mitoma fora: perda de criatividade",
+        "dado": "3 gols, 1 assist, 1.2 KP/j; time sem ele até produz mais gols (ruído)",
+        "direcao": "pequena redução no xG, mas Brighton tem alternativas",
+        "forca": "baixa"
+      },
+      {
+        "id": "C22",
+        "bloco": "away_desfalques",
+        "fato": "Wieffer dúvida: perda defensiva no meio",
+        "dado": "12% das interceptações do time, 2.6 desarmes/j",
+        "direcao": "se ausente, aumenta chance de Leeds marcar em transições",
+        "forca": "media"
+      },
+      {
+        "id": "C23",
+        "bloco": "cruzamento_faixa",
+        "fato": "Cruzamento de faixas: janela crítica Brighton 76-90 (índice 0.86)",
+        "dado": "Brighton ataque x Leeds defesa: 76-90 soma 0.86; Leeds sofre 0.42 nessa faixa",
+        "direcao": "alta probabilidade de gol do Brighton no fim do jogo",
+        "forca": "alta"
+      },
+      {
+        "id": "C24",
+        "bloco": "base_rate",
+        "fato": "Base rate (Rota B) aponta total baixo (2.29)",
+        "dado": "SoT: Leeds 1.24, Brighton 1.05, total 2.29",
+        "direcao": "jogo tende a ter poucos gols (under 2.5)",
+        "forca": "alta"
+      },
+      {
+        "id": "C25",
+        "bloco": "probs_mercado",
+        "fato": "Mercado inicial: 1x2 equilibrado, under 2.5 40%",
+        "dado": "Rota B: casa 39%, empate 32%, fora 29%; over 2.5 40%",
+        "direcao": "âncora para ajustes; leve favoritismo ao Leeds, mas under prevalece",
+        "forca": "alta"
+      },
+      {
+        "id": "C26",
+        "bloco": "cruzamentos_computados",
+        "fato": "Leeds sofre muito contra times dominantes",
+        "dado": "Contra dominantes (posse >53%): sofre 2.27 g/j, marca 1.09",
+        "direcao": "Brighton encaixa como dominante; Leeds deve sofrer gols",
+        "forca": "alta"
+      },
+      {
+        "id": "C27",
+        "bloco": "cruzamentos_computados",
+        "fato": "Brighton defende bem contra blocos baixos",
+        "dado": "Contra bloco baixo: sofre 0.60 g/j, marca 1.33",
+        "direcao": "deve controlar e sofrer pouco",
+        "forca": "alta"
+      },
+      {
+        "id": "C28",
+        "bloco": "cruzamentos_computados",
+        "fato": "Dinâmica pós-gol: Brighton desmorona ao sofrer, mas mata após marcar",
+        "dado": "Δ -2.1 ao sofrer gol; Δ +2.3 após marcar",
+        "direcao": "primeiro gol dita o rumo do jogo; Brighton favorito a abrir placar",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C5",
+        "motivo": "Informação genérica já incorporada no base rate e prior de mercado."
+      },
+      {
+        "id": "C10",
+        "motivo": "Dado de consistência BTTS não agrega aresta específica, coberto por outros fatores."
+      },
+      {
+        "id": "C18",
+        "motivo": "Forma recente do Brighton já foi considerada em arestas de estilo e motivação."
+      },
+      {
+        "id": "C20",
+        "motivo": "Substituído pelo cruzamento de faixas (C23), mais específico."
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Anton Stach",
+        "time": "home",
+        "leitura": "Meia mais criativo do Leeds, mas forma caiu; será anulado pela pressão alta do Brighton e terá dificuldade para armar jogadas."
+      },
+      {
+        "nome": "Ethan Ampadu",
+        "time": "home",
+        "leitura": "Volante defensivo estável, importante para conter Groß e transições; terá trabalho excessivo com desfalques ao redor."
+      },
+      {
+        "nome": "Sean Longstaff",
+        "time": "home",
+        "leitura": "Meia de ligação, ausente em 1/5, não é decisivo; pouca influência no ataque."
+      },
+      {
+        "nome": "Jaka Bijol",
+        "time": "home",
+        "leitura": "Zagueiro em ascensão, será testado por Welbeck; com Struijk fora, assume liderança, mas pode sofrer."
+      },
+      {
+        "nome": "James Justin",
+        "time": "home",
+        "leitura": "Lateral com nota em queda; enfrentará pontas rápidos do Brighton e pode ser ponto frágil na defesa."
+      },
+      {
+        "nome": "Pascal Struijk",
+        "time": "home",
+        "leitura": "Zagueiro titular fora; sua ausência tira 10% de interceptações e liderança defensiva, expondo ainda mais a zaga."
+      },
+      {
+        "nome": "Noah Okafor",
+        "time": "home",
+        "leitura": "Artilheiro em excelente fase (4 gols nos últimos 5) está fora; perda crucial, representa 45% dos gols recentes, sem ele o ataque perde mobilidade e finalização."
+      },
+      {
+        "nome": "Jayden Bogle",
+        "time": "home",
+        "leitura": "Lateral dúvida; se fora, lado direito perde 13% de interceptações, facilitando avanços do Brighton por ali."
+      },
+      {
+        "nome": "Ilia Gruev",
+        "time": "home",
+        "leitura": "Meia defensivo fora; sem ele, proteção ao meio-campo cai, abrindo espaços para Groß."
+      },
+      {
+        "nome": "Gabriel Gudmundsson",
+        "time": "home",
+        "leitura": "Lateral dúvida; baixo impacto ofensivo, mas defensivamente contribui com 10% de interceptações; sua falta deixa lateral vulnerável."
+      },
+      {
+        "nome": "Facundo Buonanotte",
+        "time": "home",
+        "leitura": "Meia com apenas 2 jogos, 0% dos gols; irrelevante para o confronto."
+      },
+      {
+        "nome": "Jason Steele",
+        "time": "away",
+        "leitura": "Goleiro com poucos jogos na temporada, nota alta mas amostra pequena; não deve ser diferencial."
+      },
+      {
+        "nome": "Pascal Groß",
+        "time": "away",
+        "leitura": "Cérebro do Brighton, 7.16 de nota; enfrentará meio-campo desfalcado e terá espaço para ditar o ritmo e criar chances."
+      },
+      {
+        "nome": "Jan Paul van Hecke",
+        "time": "away",
+        "leitura": "Zagueiro titular, boa nota mas forma caindo; terá que lidar com Calvert-Lewin, mas com apoio de Dunk."
+      },
+      {
+        "nome": "Olivier Boscagli",
+        "time": "away",
+        "leitura": "Zagueiro/meia reserva, pouco utilizado; não deve influenciar."
+      },
+      {
+        "nome": "H. Howell",
+        "time": "away",
+        "leitura": "Atacante com poucos jogos; se acionado, oferece velocidade, mas sem histórico de impacto."
+      },
+      {
+        "nome": "Lewis Dunk",
+        "time": "away",
+        "leitura": "Zagueiro experiente em alta (nota 8.1 no último jogo); crucial para neutralizar o ataque do Leeds e líder defensivo."
+      },
+      {
+        "nome": "Mats Wieffer",
+        "time": "away",
+        "leitura": "Meia defensivo dúvida; se ausente, Brighton perde 12% de interceptações, expondo mais a defesa a contra-ataques."
+      },
+      {
+        "nome": "Kaoru Mitoma",
+        "time": "away",
+        "leitura": "Ponta criativo fora; sua ausência reduz dribles e profundidade, mas Brighton já mostrou adaptação (marcou mais sem ele, embora isso possa ser ruído)."
+      },
+      {
+        "nome": "Stefanos Tzimas",
+        "time": "away",
+        "leitura": "Atacante reserva fora, 1 gol; sem impacto real, baixa minutagem."
+      },
+      {
+        "nome": "A. Webster",
+        "time": "away",
+        "leitura": "Zagueiro sem minutos na temporada; ausência irrelevante."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C3",
+          "C4",
+          "C24",
+          "C26",
+          "C27"
+        ],
+        "leitura": "Brighton precisa vencer e enfrenta um Leeds que não tem motivação, tendendo a se fechar. Brighton é eficaz contra blocos baixos (sofre 0.60) e Leeds é frágil contra dominantes (sofre 2.27). O base rate já sugere total baixo (2.29), mas a intenção reforça o under. Expectativa de vitória controlada do Brighton.",
+        "efeito": "Reduz total para ~2.20, xG Brighton sobe para 1.35, xG Leeds cai para 0.85; favorece under 2.5 e vitória do Brighton."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C14",
+          "C16",
+          "C23"
+        ],
+        "leitura": "Com defesa desfalcada (perda de ~30% de interceptações), Leeds sofrerá com volume ofensivo do Brighton (58.6 ataques perigosos recentes). A janela 76-90 é crítica: Leeds sofre 0.42, Brighton marca 0.44, cruzamento com índice 0.86.",
+        "efeito": "Concentração de gols do Brighton no 2º tempo, especialmente após 75'; aumenta probabilidade de Brighton over 1.5 team total."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C13",
+          "C26",
+          "C9"
+        ],
+        "leitura": "Sem Okafor (45% de participação recente nos gols), Leeds perde sua principal arma. Historicamente, contra dominantes já possui média baixa (1.09). Brighton defende bem contra blocos baixos (0.60 sofridos). Forma recente do Leeds foi contra times fracos.",
+        "efeito": "xG do Leeds cai para 0.85; chance de clean sheet do Brighton sobe; under 2.5 fortalecido."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C28",
+          "C11",
+          "C3"
+        ],
+        "leitura": "Brighton desmorona ao sofrer gol (Δ -2.1) e Leeds costuma pressionar no início em casa. Esse contraste cria risco de jogo aberto se Leeds marcar primeiro. Mas Brighton, quando marca, tende a ampliar (Δ +2.3) e controlar.",
+        "efeito": "Cenário mais provável é Brighton abrir e controlar; mas se Leeds abrir, o jogo pode ter mais gols. Ajuste marginal para cima na variância, mas sem mudar total médio."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C7",
+          "C14",
+          "C15",
+          "C17"
+        ],
+        "leitura": "Brighton tem superioridade individual com Groß (criação) e Dunk (defesa). Leeds tem qualidade inferior e desfalques defensivos. O ataque do Brighton fora (4.17 SoT/j) deve criar o suficiente para marcar em defesa frágil.",
+        "efeito": "Confirma xG Brighton em ~1.35; probabilidade de Brighton marcar 2 gols é razoável (35%)."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C1",
+          "C3",
+          "C2"
+        ],
+        "leitura": "Sem cansaço (descanso similar), ambos podem jogar em máxima intensidade. A motivação superior do Brighton e o fator casa do Leeds se anulam parcialmente. Brighton leva vantagem mental e técnica.",
+        "efeito": "Neutro para total, ligeira vantagem para Brighton no 1x2 (38% vitória)."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C12",
+          "C23"
+        ],
+        "leitura": "As janelas onde Leeds mais sofre (46-60 e 76-90) coincidem com as de maior produção do Brighton no cruzamento (46-60: 0.50; 76-90: 0.86). O gol do Brighton é mais provável no 2º tempo.",
+        "efeito": "Aumenta xG do Brighton no 2º tempo (0.75) e probabilidade de over 0.5 no 2º tempo."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C25",
+          "C4",
+          "C13",
+          "C14"
+        ],
+        "leitura": "O prior de mercado (1x2 39/32/29, over 2.5 40%) já indicava jogo equilibrado e tendendo a under. Com desfalques do Leeds reduzindo seu ataque e a intenção do jogo travando, o under ganha força.",
+        "efeito": "Movemos 1x2: Brighton 38%, Draw 32%, Leeds 30%; over 2.5 cai de 40% para 38%."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C13",
+          "C17",
+          "C26",
+          "C27",
+          "C7"
+        ],
+        "leitura": "Calvert-Lewin, artilheiro do Leeds, enfrenta zaga sólida do Brighton (Dunk, Van Hecke) e perdeu seu parceiro Okafor. Welbeck, do Brighton, enfrenta defesa desfalcada e lenta. Probabilidades de marcar se invertem.",
+        "efeito": "Welbeck com alta probabilidade de gol (35%); Calvert-Lewin com baixa (20%), apesar de ser o principal."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C21",
+          "C14"
+        ],
+        "leitura": "A ausência de Mitoma reduz o poder de drible e criação pelos lados, justamente onde Leeds está mais frágil (laterais desfalcados). Porém, Brighton ainda tem opções como Diego Gómez e Minteh. O impacto é atenuado.",
+        "efeito": "Pequena redução no xG do Brighton (de 1.35 para 1.30?), mas não o suficiente para mudar a tendência geral."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C22",
+          "C13",
+          "C14"
+        ],
+        "leitura": "Se Wieffer (dúvida) não jogar, Brighton perde 12% de interceptações, abrindo espaço para contra-ataques de um Leeds desfalcado ofensivamente. O efeito é marginal porque Leeds não tem armas.",
+        "efeito": "Leve aumento no xG do Leeds (0.85 -> 0.90) se Wieffer ausente, mas mantém baixo."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Controle silencioso",
+        "prob": 0.55,
+        "filme": "Brighton impõe seu estilo dominante desde o início, trocando passes e desgastando o Leeds. Conseguem um gol no 1º tempo (provavelmente entre 31-45), recuam um pouco, e controlam o jogo. No 2º tempo, administram e marcam mais um em contra-ataque no final (76-90), com Leeds se expondo. Placar típico: 0x2.",
+        "arestas": [
+          "A1",
+          "A2",
+          "A5",
+          "A7",
+          "A8"
+        ]
+      },
+      {
+        "nome": "Susto e reação",
+        "prob": 0.25,
+        "filme": "Leeds consegue um gol cedo (aproveitando pressão inicial) e Brighton sente o golpe (desmorona). O jogo fica aberto, com Brighton se lançando e Leeds ameaçando em contra-ataque. Brighton empata ainda no 1º tempo ou início do 2º, e vira com gols no 2º tempo. Placar: 2x1 para Brighton.",
+        "arestas": [
+          "A4",
+          "A6",
+          "A9",
+          "A11"
+        ]
+      },
+      {
+        "nome": "Ferrolho frustrante",
+        "prob": 0.2,
+        "filme": "Leeds se fecha bem, Brighton não consegue furar a retranca e sente falta de criatividade (Mitoma fora). Jogo morno, poucas chances, com possibilidade de 0x0 ou até gol de bola parada do Leeds. Placar: 0x0 ou 1x0 Leeds.",
+        "arestas": [
+          "A3",
+          "A10",
+          "A8"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Brighton inicia pressionando, Leeds resguardado. Chance de gol do visitante em início avassalador, mas Leeds também pode surpreender. Probabilidade moderada de gol.",
+        "prob_gol": 0.2,
+        "lado": "away"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Jogo mais cadenciado, Brighton mantém posse, Leeds tenta encaixar contra-ataque. Menor probabilidade de gol.",
+        "prob_gol": 0.15,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Melhor janela do Leeds no ataque e pior do Brighton na defesa; historicamente Leeds marca aqui. Brighton também oferece perigo. Maior chance de gol no 1º tempo.",
+        "prob_gol": 0.3,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Volta do intervalo: se Brighton estiver em vantagem, recua; Leeds tenta crescer, mas é frágil contra-ataque. Possibilidade de gol em transição.",
+        "prob_gol": 0.2,
+        "lado": "away"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Leeds começa a se expor mais, abrindo espaços. Brighton explora com velocidade. Janela perigosa para gols do visitante.",
+        "prob_gol": 0.25,
+        "lado": "away"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Janela crítica: Leeds sofre muitos gols no fim, e Brighton marca muito nela. Com jogo físico no fim, gol do Brighton é muito provável.",
+        "prob_gol": 0.35,
+        "lado": "away"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Brighton deve ditar a posse e pressionar desde o apito inicial. Leeds, sem Okafor e com meio-campo desfalcado, terá dificuldade para criar, mas historicamente marca mais na reta final do 1º tempo. A defesa do Leeds, mesmo frágil, em casa pode segurar os primeiros 30 minutos. Espera-se um gol do Brighton antes do intervalo, mas não está descartado um 0x0 se a retranca funcionar. Probabilidade de ao menos um gol no 1º tempo: 60%.",
+        "prob_gol": 0.6
+      },
+      "segundo": {
+        "analise": "Com o cansaço e a necessidade de vitória, Brighton aumenta a pressão no 2º tempo, especialmente se o placar estiver adverso. Leeds, se estiver perdendo, pode se abrir, facilitando contra-ataques. A defesa do Leeds cai muito após os 60 minutos, e Brighton tem histórico de marcar no fim. Probabilidade de gol no 2º tempo é ainda maior, especialmente após 75'. Espera-se que o 2º tempo tenha mais gols que o 1º.",
+        "prob_gol": 0.75
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Dominic Calvert-Lewin",
+          "prob": 0.2,
+          "motivo": "Artilheiro do time com 13 gols (4 pênaltis) e 1.0 SoT/j; enfrenta zaga sólida, mas é a principal referência ofensiva. Sem Okafor, terá mais responsabilidade, mas também mais marcação."
+        },
+        {
+          "nome": "Anton Stach",
+          "prob": 0.1,
+          "motivo": "Meia com 5 gols, 0.5 SoT/j; pode aparecer como elemento surpresa em chutes de longa distância ou bolas paradas."
+        },
+        {
+          "nome": "Lukas Nmecha",
+          "prob": 0.08,
+          "motivo": "Segundo atacante com 6 gols (2 pên), 0.6 SoT/j; deve entrar no decorrer do jogo e pode ser opção em caso de necessidade de gol."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Danny Welbeck",
+          "prob": 0.35,
+          "motivo": "Artilheiro do Brighton com 13 gols e 0.8 SoT/j; experiente, com boa movimentação, enfrenta defesa lenta e desfalcada. Grande chance de marcar."
+        },
+        {
+          "nome": "Jack Hinshelwood",
+          "prob": 0.2,
+          "motivo": "Meia em excelente fase com 3 gols nos últimos 5 jogos; aparece bem na área e deve se aproveitar do espaço no meio-campo desfalcado do Leeds."
+        },
+        {
+          "nome": "Diego Gómez",
+          "prob": 0.15,
+          "motivo": "Atacante versátil com 5 gols na temporada; embora não marque nos últimos 5, pode explorar a defesa cansada no 2º tempo."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.3,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Leeds sem motivação e desfalcado; vitória improvável."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.32,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Empate é resultado possível se o ferrolho funcionar, mas Brighton pressionará muito."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.38,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Brighton favorito, com qualidade e motivação; odds podem estar justas."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.62,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Cobre empate e vitória do Leeds; probabilidade menor que o prior (71%), sem valor."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.7,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Cobre Brighton e empate, alinhado ao roteiro mais provável; boa segurança."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.68,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Elimina empate, mas probabilidade similar ao prior (68%), sem valor."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.3,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Leeds dificilmente vencerá; DNB reduz risco, mas ainda é improvável."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.38,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Brighton favorito; empate anula, mas risco de empate é significativo."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.65,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Provável que tenha ao menos 2 gols; linha baixa, mas com under 2.5 provável, over 1.5 é ok."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.38,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Jogo tende a travar; under 2.5 tem valor claro, mas over é contra a tendência."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.15,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Goleada improvável; linha alta sem apelo."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.45,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Leeds pode não marcar; Brighton deve marcar, mas ambos marcarem é menos provável."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.55,
+        "variancia": 1,
+        "valor": "medio",
+        "nota": "Leeds pode marcar, mas risco de 0 é elevado; odds podem refletir."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.15,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Leeds dificilmente fará 2 gols."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.75,
+        "variancia": 1,
+        "valor": "alto",
+        "nota": "Brighton deve marcar ao menos um gol; alta probabilidade."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.35,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Brighton pode marcar dois, mas não é certo; odds podem oferecer valor."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": null,
+        "line": -1,
+        "prob": 0.08,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Leeds não deve vencer, handicap -1 é furada."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": null,
+        "line": -1,
+        "prob": 0.2,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Brighton pode vencer por 2, mas risco de 1 gol de diferença é alto."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Mercado de sorte, evite."
+      }
+    ],
+    "best_bet": {
+      "market": "team_total",
+      "selection": "over",
+      "team": "away",
+      "line": 0.5,
+      "confidence": "high",
+      "probability": 0.75,
+      "evidence_for": [
+        "C3",
+        "C4",
+        "C14",
+        "C16",
+        "C23",
+        "A1",
+        "A2",
+        "A5",
+        "A7"
+      ],
+      "evidence_against": [
+        "C21",
+        "A10",
+        "A3"
+      ],
+      "analysis": "O Brighton precisa vencer para seguir na briga pela Champions e enfrenta um Leeds sem motivação e com múltiplos desfalques, especialmente defensivos. O ataque do Brighton, mesmo sem Mitoma, é superior e conta com Welbeck e Hinshelwood em boa fase. A defesa do Leeds, que já sofre com times dominantes (2.27 g/j), está ainda mais frágil sem Struijk e outros. As janelas de gol (especialmente 76-90) coincidem com o momento de maior vulnerabilidade do Leeds. A probabilidade do Brighton marcar ao menos um gol é de 75%, significativamente acima do prior de 65%. O mercado team_total over 0.5 é de baixíssima variância e oferece segurança mesmo em cenários de jogo travado. Riscos incluem um dia inspirado da defesa do Leeds ou falta de eficiência do Brighton, mas as evidências convergem para o gol visitante."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "Brighton team_total over 0.5",
+          "argumento": "Leeds em casa tem média de apenas 1.17 gols sofridos, e pode se fechar ainda mais com um jogo sem importância, anulando o ataque do Brighton.",
+          "ids": [
+            "C5",
+            "C4"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Brighton team_total over 0.5",
+          "argumento": "A ausência de Mitoma reduz a criatividade e pode fazer o Brighton ter dificuldade para furar a retranca, como já aconteceu em outros jogos fora.",
+          "ids": [
+            "C21",
+            "A10"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Brighton team_total over 0.5",
+          "argumento": "Se o Leeds marcar primeiro, o Brighton pode se abalar e não conseguir reagir, ficando sem gols.",
+          "ids": [
+            "C28",
+            "A4"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "Nenhum ataque derruba a aposta. O primeiro enfraquece levemente, pois a defesa do Leeds em casa não é de todo ruim, mas os desfalques e a qualidade do Brighton tornam o gol visitante muito provável. A aposta sobrevive como a de menor variância e alto valor relativo."
+    },
+    "drivers": [
+      "Motivação assimétrica: Brighton precisa vencer, Leeds não tem nada em jogo.",
+      "Desfalques defensivos do Leeds (Struijk, Gruev, possivelmente Bogle) e ofensivo (Okafor).",
+      "Histórico de Leeds contra times dominantes (sofre 2.27 g/j) e de Brighton contra blocos baixos (sofre 0.60)."
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 27,
+    "arestas": 11,
+    "jogadores": 21,
+    "mercados": 19,
+    "orfas": [
+      "C6",
+      "C19"
+    ]
+  },
+  "reasoningText": "Vou analisar o confronto entre Leeds United e Brighton & Hove Albion, seguindo o protocolo de 6 passos. Preciso extrair todas as conclusões do briefing, construir arestas, definir roteiros, linha do tempo, marcadores, mercado completo, best bet e refutação. A saída deve estar em JSON conforme schema, todos os textos em português do Brasil.\n\nVou começar pelo **Passo 1 — VARREDURA**, lendo cada bloco e anotando conclusões com ID sequencial.\n\n**Blocos:**\n- contexto\n- tabela_motivacao\n- home_gols\n- home_estilo\n- home_qualidade\n- home_forma\n- home_momentum\n- home_faixas\n- home_desfalques\n- away_gols\n- away_estilo\n- away_qualidade\n- away_forma\n- away_momentum\n- away_faixas\n- away_desfalques\n- cruzamento_faixa\n- base_rate\n- probs_mercado\n- cruzamentos_computados\n\nVou listar cada bloco e suas conclusões. Depois, Passo 2: jogadores, Passo 3: arestas, etc.\n\n---\n\n### **Bloco 1: Contexto**\n- Data: 17/05/2026, Elland Road, clima nublado, temperatura amena, vento moderado. \n- Descanso: Leeds 6 dias, Brighton 8 dias. Viagem de ~340 km para o Brighton.\n- Fadiga: diferença de 2 dias é pequena, sem sinal claro. Ambos descansaram bem, sem jogos no meio da semana. A nota de fadiga diz que \"diferença de 1-2 dias é ruído\". Portanto, sem assimetria relevante.\n- Média da liga: mandante 1.53, visitante 1.23. Vantagem de casa já embutida.\n- **Conclusão C1**: Descanso balanceado (6 vs 8 dias) sem assimetria de fadiga relevante (ruído). Direção: neutro para xG total, sem ajuste por cansaço. Força: baixa (é contexto básico).\n- **Conclusão C2**: Vantagem de casa em Elland Road, mas o Leeds é mandante fraco? Ver outros dados. Direção: favorece ligeiramente o Leeds no 1x2, mas precisa de qualidade para ser favorito. Força: média (fator casa tradicional).\n\n### **Bloco 2: Tabela e motivação**\n- Leeds 14º, 44 pts, seguro, sem alvo continental alcançável. Motivação baixa: \"já SEGURO do rebaixamento. sem alvo continental alcançável.\"\n- Brighton 7º, 53 pts, briga por Champions (5º lugar, 59 pts). Distância de 6 pontos para o 5º com 2 jogos: precisa vencer as duas e torcer. Saldo: empata em pontos e precisa virar 1 de saldo (+10 vs +10) – viável. Motivação alta: \"PRECISA LUTAR — briga por vaga de Champions\".\n- VEREDITO DE INTENÇÃO: \"ASSIMÉTRICA / JOGO TENDE A TRAVAR\". Um lado (Leeds) não precisa ir pra cima, tende a administrar/afrouxar. Brighton precisa vencer, mas enfrentará ferrolho? O veredito alerta para subestimar over/goleada; prefere under ou team_total do lado que precisa.\n- Disputa pela vaga: vários times podem ultrapassar Brighton se ele tropeçar. Brighton precisa vencer para travar vaga.\n- **Conclusão C3**: Motivação assimétrica: Leeds sem stake (baixa), Brighton com alta necessidade de vitória (briga por Champions). Direção: aumenta ataque do Brighton e risco de jogo travado se Leeds estacionar o ônibus. Força: alta (define a dinâmica do jogo).\n- **Conclusão C4**: Veredito de intenção \"ASSIMÉTRICA / JOGO TENDE A TRAVAR\" indica cautela com over e handicap, preferindo under ou mercado de menor variância. Direção: viés para under 2.5 e team_total Brighton over 0.5. Força: alta (regra histórica de acerto).\n\n### **Bloco 3: home_gols (Leeds United)**\n- Temporada: 48 marcados (1.33/j), 53 sofridos (1.47/j). Em casa: 1.56 marcados, 1.17 sofridos. \n- Volume: 4.14 SoT/j (casa 4.67), conversão 28%. Sofre 4.14 SoT/j (adv 32%). KP 8.81/j. \n- Big chances: 2.5/j. Posse: 45.7%.\n- Conclusão sobre ataque: mediano, ligeiramente abaixo da média da liga (1.53). Em casa, melhor defesa (1.17 sofre), mas ataque similar.\n- SoT: 4.67 em casa, volume ok.\n- **Conclusão C5**: Leeds em casa tem ataque de 1.56 g/j (mediano) e defesa de 1.17 g/j (ligeiramente acima da média). SoT em casa acima da média da liga (4.67 vs 4.14). Direção: volume ofensivo suficiente para marcar, mas defesa caseira relativamente sólida. Força: média.\n\n### **Bloco 4: home_estilo (Leeds United)**\n- Temporada: ataques perigosos 44.2/50.9 (feito/sofrido). Chutes pra fora 5/4.6, bloqueados 3.6/3.7, de fora 4/4.1.\n- Últimos 5: ataques perigosos 42.4/55.2 (piora defensiva). Chutes pra fora 5.4/4.4, bloqueados 3.4/4.6.\n- Estilo: parece sofrer mais ataques perigosos que cria. Pior nos últimos 5.\n- **Conclusão C6**: Estilo defensivamente exposto: sofre mais ataques perigosos que cria, especialmente nos últimos 5 (55.2 sofridos). Direção: defesa vulnerável a ataques, consistente com os gols sofridos (1.47/j). Força: média.\n\n### **Bloco 5: home_qualidade (Leeds United)**\n- Nota média: 6.82. Destaques: Anton Stach (7.21, forma caindo, 5 MOTM), Ethan Ampadu (7.0, estável), Sean Longstaff (7.0, estável, faltou 1/5), Jaka Bijol (7.0, subindo), James Justin (6.91, caindo), Pascal Struijk (6.89, caindo, fora).\n- Desfalques já listados, mas aqui foca na forma individual.\n- **Conclusão C7**: Qualidade individual modesta (nota média 6.82). Anton Stach é o melhor, mas forma caiu; Bijol está subindo. Ampadu estável. Sem grandes estrelas. Direção: ataque sem referência de elite, pode ter dificuldade contra defesa organizada. Força: média.\n- **Conclusão C8**: Pascal Struijk fora (nota 6.89, mas participação defensiva relevante: 0.9 int/j, 5.1 duelos ganhos/j). Sua ausência reduz solidez defensiva. Direção: defesa do Leeds mais frágil. Força: alta (desfalque importante, confirmado).\n\n### **Bloco 6: home_forma (Leeds United)**\n- Últimos 5: EVEVV (11 pts), 11 gols marcados, 5 sofridos. Boa forma recente.\n- Mas adversários: Wolverhampton (20º briga-Z), Burnley (19º REBAIX.), Tottenham (17º briga-Z), Bournemouth (9º salvo), Chelsea (FA Cup). Adversários fracos ou desinteressados.\n- Consistência: marcou em 25/36 jogos, clean sheet 7, BTTS 22/36.\n- **Conclusão C9**: Forma recente enganosa: 3 vitórias e 2 empates contra times fracos ou em crise. Volume ofensivo bom (2.2 g/j), mas contra defesas frágeis. Direção: desempenho pode ser inflado; enfrentará defesa mais forte (Brighton). Força: alta (contexto dos adversários).\n- **Conclusão C10**: Consistência de marcar: marcou em 69% dos jogos, mas apenas 7 clean sheets. Time propenso a sofrer gols. Direção: BTTS provável? Cuidado, mas aqui a motivação pode mudar. Força: baixa (dado geral).\n\n### **Bloco 7: home_momentum (Leeds United)**\n- Curvas de pressão nos últimos 5 jogos. Preciso cruzar com o adversário, mas por enquanto extrair padrão.\n- Analisando as curvas: \n  - vs Wolverhampton (casa): pressão alta no início, gols aos 18' e 20', depois administrou. Defesa ativa no 1º tempo.\n  - @ Bournemouth: sofreu pressão, gols sofridos aos 60', 85', mas marcou 68' e 90'. Defesa vulnerável no fim.\n  - vs Burnley: pressão no início, gol 8', depois domínio no 2º tempo, gols 52', 56', sofreu 71'.\n  - @ Tottenham: sofreu 50', marcou 74', defesa ativa no início e fim.\n- Padrão: Leeds tende a começar bem em casa, mas sofre gols no 2º tempo (especialmente após 60'). A defesa tem atividade alta no início, mas cai depois.\n- **Conclusão C11**: Momentum: em casa, Leeds pressiona cedo (gols nos primeiros 30 min) e depois cede campo, sofrendo gols no 2º tempo (60'+). Direção: janela de gol para o Brighton é após o intervalo. Força: média.\n\n### **Bloco 8: home_faixas (Leeds United)**\n- Marca por faixa: 0.19, 0.17, 0.31, 0.19, 0.25, 0.22. Pico no fim do 1º tempo (31-45).\n- Sofre por faixa: 0.11, 0.19, 0.14, 0.31, 0.31, 0.42. Pico no 2º tempo, especialmente 76-90.\n- 1ºT: marca 24, sofre 16. 2ºT: marca 24, sofre 37.\n- **Conclusão C12**: Leeds sofre mais gols no 2º tempo (especialmente 46-60 e 76-90). Marca distribuído, mas melhor no fim do 1º tempo. Direção: consistente com momentum, defesa piora após intervalo. Força: média.\n\n### **Bloco 9: home_desfalques (Leeds United)**\n- Lista: Noah Okafor (fora, 8 gols, 17% dos gols, 45% nos últimos 5! Mas with/without de gols não confiável, SoT estável: 4.39 com, 3.25 sem. Okafor é perda ofensiva significativa, especialmente na forma recente. Ele tem 0.54 SoT/j. Também 0.4 int/j, mas mais criador: 0.7 key passes, 1.4 dribles. Ausência reduz criatividade e finalização).\n- Jayden Bogle (dúvida, 1 gol, 3 assists. Volume defensivo: 1.1 int/j (13% do time), 1.9 desarmes, 4 duelos. Se fora, defesa perde interceptações).\n- Ilia Gruev (fora, 0 gols, 3 assists. Volume: 0.7 int/j, 1 desarme. Perda moderada).\n- Pascal Struijk (fora, 0 gols, 1 assist. Defesa: 0.9 int/j (10%), 1.1 desarmes, 5.1 duelos. Perda defensiva relevante).\n- Gabriel Gudmundsson (dúvida, 0 gols, 0 assists. Defesa: 0.9 int/j, 2 desarmes, 5.6 duelos. Se fora, perda defensiva).\n- Facundo Buonanotte (fora, irrelevante).\n- **Conclusão C13**: Desfalques ofensivos: Noah Okafor (artilheiro em forma) fora é perda grande no ataque, especialmente nos últimos jogos (45% de participação). Volume de SoT cai. Direção: reduz xG do Leeds, especialmente no 1º tempo onde ele poderia pressionar. Força: alta.\n- **Conclusão C14**: Desfalques defensivos: Struijk, Gruev, possivelmente Bogle e Gudmundsson, todos com volume de interceptações/desarmes. Defesa perde ~30% de sua capacidade de interceptação (somando percentuais). Direção: aumenta xG do Brighton, especialmente em transições e bolas paradas. Força: alta.\n\n### **Bloco 10: away_gols (Brighton)**\n- Temporada: 52 marcados (1.44/j), 42 sofridos (1.17/j). Fora: 1.22 marcados, 1.39 sofridos.\n- Volume: 4.69 SoT/j (fora 4.17), conv 29%. Sofre 4 SoT/j (adv 26%), KP 9.64.\n- Big chances: 2.4/j. Posse: 53.8%.\n- **Conclusão C15**: Brighton tem ataque ligeiramente acima da média (1.44), mas fora de casa cai (1.22). Defesa fora é pior (1.39). Volume de SoT alto (4.69), mas fora apenas 4.17. Direção: visitante não é tão forte ofensivamente, mas defesa visitante é frágil. Força: média.\n\n### **Bloco 11: away_estilo (Brighton)**\n- Temporada: ataques perigosos 53.2/44.8 (feito/sofrido). Chutes pra fora 4.9/4.9, bloqueados 3.4/2.9, de fora 4.4/3.4.\n- Últimos 5: ataques perigosos 58.6/29.6 (domínio claro), chutes pra fora 4.4/3.8, bloqueados 3/2, de fora 3/2.\n- Estilo: dominante, especialmente nos últimos 5, com alta criação de ataques e baixa concessão.\n- **Conclusão C16**: Estilo dominante do Brighton, especialmente recente: cria muitos ataques perigosos (58.6) e limita adversário (29.6). Direção: deve controlar a posse e ditar o ritmo, pressionando a defesa do Leeds. Força: alta.\n\n### **Bloco 12: away_qualidade (Brighton)**\n- Nota média: 6.85. Destaques: Jason Steele (7.46, mas só 5 jogos, faltou 5/5 – goleiro?), Pascal Groß (7.16, caindo), Jan Paul van Hecke (7.03, caindo), Olivier Boscagli (6.98), H. Howell (6.97, poucos jogos), Lewis Dunk (6.95, mas subindo, 8.1 no último jogo).\n- Steele é goleiro, não influencia ataque. Groß é meia criativo. Van Hecke zagueiro. Dunk é zagueiro experiente, em boa forma.\n- **Conclusão C17**: Qualidade individual do Brighton é superior à do Leeds, com Groß na criação e defesa com Dunk em alta. Steele não é diferencial (poucos jogos). Direção: criação de chances deve ser eficiente; defesa sólida com Van Hecke e Dunk. Força: média.\n\n### **Bloco 13: away_forma (Brighton)**\n- Últimos 5: VDVEV (10 pts), 11 marcados, 5 sofridos. Boa forma.\n- Adversários: Burnley (19º, briga-Z), Tottenham (18º, briga-Z), Chelsea (6º, briga-top), Newcastle (15º, briga-Z), Wolverhampton (20º, REBAIX.). Também maioria fracos, exceto Chelsea (vitória 3-0) e derrota para Newcastle (3-1). \n- Vitória sobre Chelsea em casa foi impressionante, derrota para Newcastle fora.\n- Consistência: marcou em 29/36 (81%), 10 clean sheets, BTTS 21/36.\n- **Conclusão C18**: Forma recente do Brighton é sólida, com destaque para vitória sobre Chelsea. Ataque funcionando (2.2 g/j) e defesa também (1.0 g/j sofridos). Mas adversários fracos na maioria. Contra Newcastle, sofreu 3 gols fora. Direção: Brighton é favorito, mas sua defesa visitante pode sofrer. Força: alta.\n\n### **Bloco 14: away_momentum (Brighton)**\n- Curvas de pressão nos últimos 5. \n- vs Burnley: pressão moderada, gol 43' e 89'. Defesa alta no 2º tempo.\n- @ Tottenham: jogo equilibrado, sofreu 39', marcou 45', sofreu 77', marcou 90'. Reação após sofrer.\n- vs Chelsea: domínio total, gol 3', 56', 90'. Pressão alta início.\n- @ Newcastle: sofreu 12', 24', marcou 61', sofreu 90'. Pressão alta após sofrer gols.\n- vs Wolverhampton: domínio, gols 1', 5', 86'. Pressão inicial forte.\n- Padrão: Brighton começa jogos com pressão, especialmente em casa. Fora de casa, pode sofrer gols cedo (Newcastle, Tottenham), mas reage. \n- **Conclusão C19**: Momentum: Brighton tem pressão inicial forte (gols antes dos 15 min em 2 dos últimos 5) e reage bem após sofrer (Δ +2.3 após marcar, mas desmorona ao sofrer? A dinâmica pós-gol diz: \"DESMORONA ao sofrer gol\" – Δ -2.1. Isso é um sinal de vulnerabilidade mental). Direção: se sofrer primeiro, pode se abalar; se marcar primeiro, controla. Força: alta.\n\n### **Bloco 15: away_faixas (Brighton)**\n- Marca: 0.25, 0.11, 0.19, 0.19, 0.25, 0.44. Pico no início (0-15) e no fim (76-90).\n- Sofre: 0.17, 0.22, 0.25, 0.11, 0.14, 0.28. Pico no fim do 1º tempo (31-45) e no fim do jogo (76-90).\n- 1ºT: marca 20, sofre 23. 2ºT: marca 32, sofre 19.\n- **Conclusão C20**: Brighton marca mais no 1º e no fim, sofre mais no fim do 1º tempo e fim do 2º. Consistente com sua pressão inicial e reação. Direção: janela de gol para Brighton: início e fim do jogo. Janela de sofrer: final do 1º tempo e final do 2º. Força: média.\n\n### **Bloco 16: away_desfalques (Brighton)**\n- Mats Wieffer (dúvida, 2 gols, 3 assists. Volume: 1 int/j (12%), 2.6 desarmes, 5.4 duelos. Se fora, perde presença defensiva e alguma criação (0.8 KP)).\n- Kaoru Mitoma (fora, 3 gols, 1 assist. 0.52 SoT/j, 1.2 KP, 1.1 dribles. Perda ofensiva, mas time se adaptou? With/without: 1.36 g/j com, 1.64 sem – estranho, mas pode ser ruído. Ele é desfalque, mas não essencial).\n- Stefanos Tzimas (fora, 1 gol, 1 assist, pouco volume, improvável impacto).\n- A. Webster (fora, 0 gols, 0 assists, sem jogos, irrelevante).\n- **Conclusão C21**: Desfalque ofensivo: Mitoma fora reduz criatividade e dribles, mas Brighton tem alternativas (Diego Gómez, outros). Impacto moderado. Direção: pequena redução no xG do Brighton. Força: baixa.\n- **Conclusão C22**: Desfalque defensivo: Wieffer em dúvida, se fora, perde 12% de interceptações e desarmes, enfraquecendo meio-campo defensivo. Direção: aumenta chance de Leeds marcar em transições. Força: média.\n\n### **Bloco 17: cruzamento_faixa (ataque x defesa por faixa)**\n- Tabelas fornecidas. Índices janela são a soma de marca/j do ataque e sofre/j da defesa adversária. \n- Leeds ataque x Brighton defesa:\n  - 0-15: 0.36, 16-30: 0.39, 31-45: 0.56, 46-60: 0.30, 61-75: 0.39, 76-90: 0.50.\n- Brighton ataque x Leeds defesa:\n  - 0-15: 0.36, 16-30: 0.30, 31-45: 0.33, 46-60: 0.50, 61-75: 0.56, 76-90: 0.86.\n- **Conclusão C23**: Janela mais provável para gol do Leeds: 31-45 (índice 0.56) e 76-90 (0.50). Para o Brighton: 76-90 (0.86!) e 61-75 (0.56), e também 46-60 (0.50). Direção: Brighton deve explorar o final do jogo, quando Leeds mais sofre. Leeds pode marcar no final do 1º tempo. Força: alta (cruzamento direto).\n\n### **Bloco 18: base_rate (rotas A e B)**\n- Rota A (gols): total 2.58, λ Leeds 1.42, λ Brighton 1.16.\n- Rota B (SoT×conv): total 2.29, λ Leeds 1.24, λ Brighton 1.05.\n- Índice de volume: λ SoT total 8 vs média liga 8.5 → na média.\n- Prefira B (mais estável). Partimos de total ~2.29, com Leeds 1.24 e Brighton 1.05.\n- **Conclusão C24**: Base rate inicial: total 2.29 (Rota B), ligeiramente abaixo do over 2.5 (40% prob). Leeds favorito leve (39% vitória). Direção: jogo tende a ter poucos gols (under 2.5). Força: alta (prior estatístico).\n\n### **Bloco 19: probs_mercado (Poisson corrigido)**\n- 1x2: 39/32/29 (B). Over 2.5: 40%. BTTS: 48%. \n- Team totals: Leeds over 0.5 71%, over 1.5 35%; Brighton over 0.5 65%, over 1.5 28%.\n- Fair odds no-vig: casa 2.57, empate 3.15, fora 3.4.\n- **Conclusão C25**: Mercado inicial sugere jogo equilibrado, com leve favoritismo ao Leeds (casa). Empate provável (32%). Over 2.5 abaixo de 50%. Direção: under 2.5 tem valor implícito? A conferir após ajustes. Força: alta (âncora).\n\n### **Bloco 20: cruzamentos_computados (sinais pré-cruzados)**\n- Arquétipo: Leeds contra dominante (estilo Brighton) marca 1.09 e sofre 2.27 em 11 jogos – muito pior que sua média. Brighton contra bloco baixo (estilo Leeds) marca 1.33 e sofre 0.60 em 15 jogos – na média de ataque, defesa muito melhor.\n- Mecanismo de gol: canais abertos em falta e gol contra. Nada muito gritante.\n- Dinâmica pós-gol: Brighton \"desmorona ao sofrer gol\" (Δ -2.1) e \"mata o jogo após marcar\" (Δ +2.3). Leeds é neutro.\n- Artilharia: lista de artilheiros para posterior análise de marcadores.\n- **Conclusão C26**: Leeds tem desempenho muito pior contra times dominantes (sofre 2.27/j, marca 1.09). Direção: enfrentando Brighton dominante, expectativa de que Leeds sofra gols e produza pouco. Força: alta.\n- **Conclusão C27**: Brighton contra blocos baixos mantém ataque (1.33) e defesa excelente (0.60). Direção: Brighton deve controlar o jogo e sofrer pouco. Força: alta.\n- **Conclusão C28**: Dinâmica pós-gol: Brighton vulnerável ao sofrer (desmorona), mas se marcar primeiro, tende a ampliar. Leeds é neutro. Direção: o primeiro gol é crucial; se Brighton sair na frente, jogo pode ficar controlado; se Leeds abrir, Brighton pode se abalar. Força: alta.\n\n---\n\nAgora, **Passo 2 — JOGADOR POR JOGADOR**. Todo jogador nomeado nos blocos de qualidade e desfalques.\n\n**Leeds:**\n- Anton Stach: Meio-campista, melhor nota do time (7.21), mas forma caiu (6.6 no último jogo). Ainda assim, é o motor ofensivo com 5 gols e 5 MOTM. Contra um Brighton que pressiona, sua capacidade de manter posse será testada; se anulado, Leeds perde criatividade.\n- Ethan Ampadu: Nota 7, estável. Volante defensivo, importante para conter Groß e transições. Sua presença é necessária para evitar que Brighton domine o meio.\n- Sean Longstaff: Nota 7, mas esteve fora em 1/5. Meia de ligação, 1 MOTM. Se jogar, oferece passes, mas não é decisivo.\n- Jaka Bijol: Zagueiro, nota 7, subindo. Será testado por Welbeck e pressão alta. Boa fase pode ajudar a segurar.\n- James Justin: Lateral, nota 6.91, caindo. Enfrentará pontas do Brighton; defesa pode sofrer.\n- Pascal Struijk: Zagueiro fora. Sua ausência tira líder defensivo e força Bijol a assumir mais responsabilidade. Desfalque importante.\n- Noah Okafor: Atacante fora. Artilheiro em forma (4 nos últimos 5) e principal referência. Sem ele, ataque perde mobilidade e finalização; Calvert-Lewin e Nmecha terão que suprir, mas Okafor era o diferencial recente.\n- Jayden Bogle: Lateral dúvida. Se ausente, lado direito perde 13% de interceptações; pode ser explorado por Brighton.\n- Ilia Gruev: Meia defensivo fora. Perda de 7% de interceptações, reduz proteção à defesa.\n- Gabriel Gudmundsson: Lateral dúvida. Baixo impacto ofensivo, mas defensivamente útil (10% int). Se fora, lado esquerdo frágil.\n- Facundo Buonanotte: Meia fora, mas irrelevante (0% dos gols, 0 SoT, apenas 2 jogos).\n\n**Brighton:**\n- Jason Steele: Goleiro, nota 7.46 mas só 5 jogos. Pouca influência na previsão, mas é seguro? Não muda dinâmica.\n- Pascal Groß: Meia, nota 7.16, caindo. Cérebro do time, 19 jogos, 1 MOTM. Contra defesa desfalcada do Leeds, pode ditar o ritmo e criar chances.\n- Jan Paul van Hecke: Zagueiro, nota 7.03, caindo. Líder defensivo, enfrentará Calvert-Lewin. Bom nos duelos, mas queda de forma preocupa.\n- Olivier Boscagli: Zagueiro/meia, nota 6.98, caindo, faltou 1/5. Pouco impacto, rotação.\n- H. Howell: Atacante? Nota 6.97, 6 jogos. Pouca amostra, mas se jogar, é opção ofensiva com velocidade.\n- Lewis Dunk: Zagueiro, nota 6.95, mas última forma 8.1 (1 jogo na janela). Experiente, em alta, crucial para segurar o ataque do Leeds.\n- Mats Wieffer: Meia defensivo dúvida. Se fora, meio-campo perde 12% de interceptações e 2.6 desarmes/j; Groß terá que trabalhar mais defensivamente.\n- Kaoru Mitoma: Ponta fora. 3 gols, 1 assist, driblador. Sem ele, Brighton perde profundidade e 1.2 KP/j; substituto (Diego Gómez? Minteh?) é menos criativo.\n- Stefanos Tzimas: Atacante fora, 1 gol, baixo volume. Não fará falta.\n- A. Webster: Zagueiro fora, sem minutos. Nenhum impacto.\n\n---\n\n**Passo 3 — ARESTAS: cruzamento de conclusões.** Preciso de no mínimo 8, cada uma ligando ≥2 conclusões pelo ID.\n\n**Possíveis arestas:**\n\n1. **A1: Motivação assimétrica + Desempenho contra estilo + Base rate** \n   - Liga: C3 (Brighton precisa vencer), C4 (jogo tende a travar), C24 (base rate total 2.29), C26 (Leeds sofre contra dominantes), C27 (Brighton defende bem contra bloco baixo).\n   - Leitura: Brighton precisa vencer contra um Leeds sem stake, mas que tende a estacionar o ônibus. Brighton é eficaz contra blocos baixos (sofre 0.60) e Leeds é frágil contra dominantes (sofre 2.27). O total base já é baixo (2.29). Com motivação alta do Brighton e defesa boa contra bloco baixo, espera-se um jogo controlado pelo visitante, mas com poucos gols.\n   - Efeito: Reduz ainda mais o total (under 2.5 favorecido) e aumenta a probabilidade de vitória do Brighton, mas com margem pequena (1 ou 2 gols). Ajuste: total cai para ~2.0, xG Brighton sobe ligeiramente (1.2→1.3), xG Leeds cai (1.24→0.8).\n\n2. **A2: Desfalques defensivos do Leeds + Estilo dominante do Brighton + Janela de gols**\n   - Liga: C14 (Leeds perde ~30% interceptações), C16 (Brighton cria muitos ataques), C23 (Brighton janela 76-90 índice 0.86).\n   - Leitura: Com defesa desfalcada, Leeds sofrerá mais com o volume ofensivo do Brighton. A janela crítica é o final do jogo, quando Leeds historicamente sofre (0.42 sofridos 76-90) e Brighton marca (0.44). Some-se o cansaço e a pressão por vitória, Brighton deve marcar ao menos um gol no 2º tempo, provavelmente após 75'.\n   - Efeito: Aumenta xG do Brighton no 2º tempo (concentração de gols), e probabilidade de Brighton over 1.5 team total (aumenta de 28% para 35%).\n\n3. **A3: Desfalque ofensivo do Leeds (Okafor) + Arquétipo contra dominantes + Forma inflada**\n   - Liga: C13 (Okafor fora, 45% participação recente), C26 (Leeds marca 1.09 contra dominantes), C9 (forma recente contra fracos).\n   - Leitura: Sem Okafor, Leeds perde sua principal arma ofensiva recente. Contra times dominantes, já tem média baixa (1.09). Brighton defende bem contra blocos baixos (0.60 sofridos). Portanto, expectativa de Leeds marcar é baixa (provavelmente 0.6-0.8 gols). O ataque fica dependente de Calvert-Lewin (13 gols, mas 4 pênaltis) e Stach.\n   - Efeito: Reduz xG do Leeds significativamente, favorecendo under 2.5 e Brighton clean sheet (aumenta prob de não sofrer).\n\n4. **A4: Dinâmica pós-gol do Brighton + Momentum inicial do Leeds + Intenção**\n   - Liga: C28 (Brighton desmorona ao sofrer, mata após marcar), C11 (Leeds pressiona cedo em casa), C3 (Brighton precisa vencer).\n   - Leitura: Se o Leeds conseguir um gol cedo (aproveitando sua pressão inicial em casa), o Brighton pode se abalar (Δ -2.1) e o jogo pode ficar aberto. Mas se o Brighton marcar primeiro (provável, dado seu início forte também, veja C19), tende a controlar e ampliar. Isso cria dois cenários possíveis. Como o Brighton é mais forte, o mais provável é que marque primeiro e controle.\n   - Efeito: A probabilidade de o jogo ter mais de 2.5 gols depende de quem marca primeiro. Se Brighton marcar cedo, pode ser um 2-0 ou 2-1 (over 2.5 possível). Se Leeds marcar, Brighton pode reagir e o jogo pode ficar maluco. No geral, a dinâmica sugere que o jogo pode ter gols se o placar for movimentado, mas a tendência é o controle do Brighton.\n\n5. **A5: Qualidade individual Brighton (Groß, Dunk) vs Defesa desfalcada Leeds + SoT volume**\n   - Liga: C17 (Groß criativo, Dunk em alta), C14 (defesa Leeds fraca), C15 (Brighton SoT 4.17 fora).\n   - Leitura: Groß terá espaço para criar contra um meio-campo desfalcado (Gruev fora, Bogle dúvida). Dunk em alta ajudará a neutralizar Calvert-Lewin. O volume de SoT do Brighton (4.17 fora) deve converter em ao menos 1 gol, dada a defesa frágil do Leeds (sofre 4.14 SoT/j, conv 32% do adversário).\n   - Efeito: Confirma xG Brighton ~1.3-1.5, com boa chance de marcar 2 gols.\n\n6. **A6: Descanso balanceado + Intenção + Fator casa**\n   - Liga: C1 (sem fadiga), C3 (Brighton precisa), C2 (fator casa).\n   - Leitura: Sem cansaço, ambos podem jogar em intensidade máxima. Brighton não terá desvantagem física. O fator casa pode ajudar o Leeds a não ser dominado totalmente, mas como não tem stake, pode não se esforçar tanto. A intenção do Brighton deve prevalecer.\n   - Efeito: Neutro para total, ligeira vantagem mental para Brighton.\n\n7. **A7: Distribuição de gols Leeds sofre + Cruzamento faixa Brighton ataque**\n   - Liga: C12 (Leeds sofre mais 46-60 e 76-90), C23 (Brighton ataque 76-90 índice 0.86, 61-75 0.56, 46-60 0.50).\n   - Leitura: As janelas de maior sofrimento do Leeds coincidem com as de maior produção do Brighton (especialmente 76-90, mas também 61-75 e 46-60). Isso sugere que o Brighton deve marcar no 2º tempo, provavelmente mais de um gol.\n   - Efeito: Aumenta probabilidade de Brighton marcar 2+ gols e de gols no 2º tempo. xG 2º tempo > 1º tempo.\n\n8. **A8: Prior de mercado (Rota B) + Veredito de intenção + Desfalques**\n   - Liga: C25 (1x2 equilibrado, under 2.5 40%), C4 (jogo tende a travar), C13/C14 (desfalques Leeds reduzem ataque, aumentam defesa adversária).\n   - Leitura: O prior já indicava under 2.5. Com a intenção assimétrica e desfalques que prejudicam mais o ataque do Leeds, o under ganha força. A vitória do Brighton (29% prior) parece subestimada; com ajustes, sobe para ~35-40%.\n   - Efeito: Movemos 1x2: Brighton sobe para 35%, Draw 30%, Leeds 35% (equilibrado). Total cai para ~2.0.\n\n9. **A9: Artilharia e desfalques: Calvert-Lewin (Leeds) e Welbeck (Brighton) + Defesas**\n   - Liga: C13 (Okafor fora, Calvert-Lewin principal), C17 (Dunk em alta, Van Hecke), C26/C27.\n   - Leitura: Calvert-Lewin é a esperança de gol do Leeds, mas enfrenta zaga sólida do Brighton (Dunk em alta, Van Hecke). Welbeck tem 13 gols, boa mobilidade, enfrenta defesa desfalcada e lenta. Welbeck deve ter chances claras.\n   - Efeito: Probabilidade de Welbeck marcar alta; Calvert-Lewin baixa. Isso impacta team totals e marcadores.\n\n10. **A10: Desfalque Mitoma vs. defesa Leeds lateral**\n    - Liga: C21 (Mitoma fora), C14 (laterais Leeds desfalcados: Bogle e Gudmundsson dúvidas).\n    - Leitura: A ausência de Mitoma reduz o poder de drible e criação pelos lados, exatamente onde Leeds está mais frágil (laterais). Isso pode diminuir um pouco o potencial de gols do Brighton, mas ainda há outras armas (Diego Gómez, Minteh). O impacto é atenuado porque Leeds já está vulnerável.\n    - Efeito: Pequena redução no xG do Brighton (de 1.3 para 1.2, talvez). Mas não o suficiente para mudar a tendência.\n\n---\n\nVou garantir que cada conclusão do Passo 1 seja usada em ao menos uma aresta ou descartada. Revisão:\n\nConclusões:\nC1 (descanso) → usada em A6.\nC2 (fator casa) → A6, A8 (implícito).\nC3 (motivação) → A1, A4, A6.\nC4 (veredito) → A1, A8.\nC5 (home gols) → não usada diretamente, mas implícita em A3? Vou criar uma aresta ou descartar. Posso descartar por ser muito genérica e absorvida por outras.\nC6 (home estilo exposto) → usada em A2 (estilo dominante Brighton), A7 (sofre gols).\nC7 (qualidade modesta) → implícita em A3, A5.\nC8 (Struijk fora) → usada em C14, arestas A2, A5.\nC9 (forma inflada) → A3.\nC10 (consistência BTTS) → não usada, descartar (muito genérico).\nC11 (momentum Leeds) → A4.\nC12 (faixas sofre Leeds) → A7.\nC13 (Okafor fora) → A3, A9.\nC14 (desfalques defensivos) → A2, A5, A10.\nC15 (away gols) → A5.\nC16 (estilo dominante Brighton) → A2, A5.\nC17 (qualidade Brighton) → A5, A9.\nC18 (forma Brighton) → implícita em várias, mas não aresta específica. Posso linkar com A1? Já está. Ou descartar (usada indiretamente).\nC19 (momentum Brighton) → A4.\nC20 (faixas Brighton) → A7 (cruzamento com Leeds).\nC21 (Mitoma fora) → A10.\nC22 (Wieffer dúvida) → não usei explicitamente. Posso criar aresta: Wieffer dúvida → defesa Brighton perde interceptações → Leeds pode ter mais chances em transições? Mas Leeds não tem ataque forte. Vou incluir em A8 ou descartar. Melhor criar aresta A11: Desfalque Wieffer + Ataque Leeds enfraquecido = pequeno aumento para Leeds, mas compensado. Mas para não deixar órfã, posso ligar C22 com C13? Vou adicionar à A5 ou fazer uma nova: \n**A11**: C22 (Wieffer dúvida, perda defensiva) + C13 (Leeds sem Okafor) = se Wieffer não jogar, Brighton perde proteção no meio, mas Leeds sem Okafor não deve explorar tão bem. Efeito neutro ou leve aumento para Leeds (0.8→0.9). \nC23 (cruzamento faixa) → A2, A7.\nC24 (base rate) → A1.\nC25 (probs mercado) → A8.\nC26 (Leeds contra dominante) → A1, A3.\nC27 (Brighton contra bloco) → A1, A3.\nC28 (dinâmica pós-gol) → A4.\n\nAgora, descartar conclusões não usadas: C5, C10, C18, C20? C5 (home gols) é absorvida em C24/25, não precisa de aresta própria. C10 (BTTS consistência) não foi usada em nenhuma aresta, posso descartar. C18 (forma Brighton) não foi explicitada, mas está no pano de fundo da análise; para cumprir a regra, ou crio aresta ou descarto. Como já tenho várias, posso descartar C5, C10, C18, C20? C20 (faixas Brighton) foi usada em A7? Sim, indiretamente com C23. C23 já usa os dados de faixa de ambos, então C20 está representada. C18 está implícita em A1 e A5, mas não tem ID. Para ser estrito, se não houver aresta com o ID, preciso colocar em descartadas com motivo. Vou listar as descartadas depois.\n\n**Blocos sem sinal**: \n- Contexto: C1 e C2 foram gerados, então não é sem sinal.\n- Tabela_motivacao: C3 e C4, ok.\n- Home_gols: C5 gerada, mas pode ser considerada sem sinal se não usada? Vou manter como conclusão, mas se não usada, vai para descartadas.\nMelhor: alguns blocos geram conclusões que depois podem ser descartadas se não forem usadas em arestas. Isso é permitido. O importante é que cada conclusão ou está em aresta ou em descartadas. Blocos que não geraram conclusão alguma (sem_sinal) são aqueles em que não encontrei nenhum fato relevante. Por exemplo, não tive bloco realmente sem sinal, pois todos tinham algo. Mas alguns podem ser irrelevantes? O próprio bloco \"contexto\" gerou C1 e C2, então ok.\n\nRevisando: Home_estilo gerou C6 (usada), Home_qualidade C7 (usada indiretamente?), C8 (usada). Away_gols C15 (usada). Away_estilo C16 (usada). Away_qualidade C17 (usada). Away_forma C18 (não usada diretamente). Away_momentum C19 (usada). Away_faixas C20 (não usada diretamente, mas C23 usou tabela, não a C20 em si). Vou descartar C18 e C20 com motivo: \"dado geral já coberto por other conclusões\".\n\n**Descartadas:**\n- C5: \"Leeds em casa tem ataque mediano e defesa sólida\" → motivo: Informação redundante com base rate e prior de mercado; não adiciona nova aresta.\n- C10: \"Leeds propenso a BTTS\" → motivo: Muito genérico e influenciado pela motivação; não utilizado em aresta específica.\n- C18: \"Forma recente do Brighton sólida, mas adversários fracos\" → motivo: Já considerado implicitamente nas arestas de motivação e estilo (A1, A5).\n- C20: \"Distribuição de gols do Brighton por faixa\" → motivo: Substituído pelo cruzamento de faixas (C23), que é mais específico.\n\nOutras? C7 (qualidade modesta) foi usada em A5? Não exatamente. Vou ver: A5 usa C17 (qualidade Brighton) e C14 (defesa Leeds), mas não C7 explicitamente. Posso adicionar C7 a uma aresta ou descartar. A3 menciona ataque do Leeds, mas C7 é sobre indivíduos. Posso criar uma aresta ligando C7 e C13: \"Sem Okafor e com qualidade individual baixa, Leeds depende de Calvert-Lewin e Stach, mas enfrentam defesa sólida (C27)\". Já tenho A9 que fala de Calvert-Lewin. A9 liga C13, C17, C26, C27. Vou incluir C7 na A9 para usar. Ajusto a lista de IDs da A9: C7, C13, C17, C26, C27. Ok.\n\nC8 (Struijk fora) já está em C14, então ok.\n\nC15 (away gols) usada em A5.\n\nFalta C12? Foi usada em A7. C11 em A4. C6 em A2.\n\nC21 em A10, C22 em A11 (criada). C25 em A8, C24 em A1. C28 em A4. C2 em A6. C1 em A6.\n\nAgora, criar A11: C22 (Wieffer dúvida) + C13 (Leeds sem Okafor) + C5? Não, melhor: C22 e C14 (defesa Leeds também frágil) → A11: Com Wieffer potencialmente fora, Brighton perde proteção defensiva, mas Leeds também está desfalcado ofensivamente (C13) e defensivamente (C14). O resultado líquido é um pequeno aumento na chance de Leeds marcar em contra-ataque, mas ainda limitado. Efeito: xG Leeds sobe ligeiramente (0.8→0.85). Vou incluir C13 e C14 e C22.\n\nA11: Liga [C13, C14, C22]. Leitura: A ausência de Wieffer abre espaço no meio-campo do Brighton, mas os desfalques ofensivos de Leeds (Okafor) e a defesa desfalcada de ambos os lados tornam o jogo potencialmente mais aberto, porém com baixa qualidade finalizadora de Leeds. Efeito: pequeno aumento no xG do Leeds, mas sem grande impacto no total.\n\nAgora, verificar C7: vou colocar em A5 ou A9? A5 é sobre qualidade Brighton vs defesa Leeds. Posso criar A12: C7 (qualidade baixa Leeds) + C17 (qualidade alta Brighton) → superioridade individual do Brighton deve prevalecer, especialmente no meio-campo. Mas já está implícito. Para evitar órfã, coloco C7 na A5. A5 já tem C17, C14, C15. Adiciono C7: \"Enquanto Brighton tem Groß e Dunk em boa fase, Leeds depende de Stach e Ampadu, mas com qualidade inferior e desfalques, o desequilíbrio é claro.\" Então A5 fica: [C7, C14, C15, C17].\n\nAgora sim, todas as conclusões estão vinculadas a alguma aresta. Vou listar as conclusões com IDs, verificar cada uma:\n\nC1: used in A6.\nC2: used in A6.\nC3: used in A1, A4, A6.\nC4: used in A1, A8.\nC5: descartada (motivo: redundante).\nC6: used in A2.\nC7: used in A5.\nC8: (não tenho C8 separada, pois C8 foi \"Pascal Struijk fora\" mas eu agrupei em C14? Na verdade, na extração, eu separei: C8 foi sobre Struijk? Olhando meu texto: eu escrevi \"Conclusão C8: Pascal Struijk fora (nota 6.89...\". Depois em desfalques, C13 e C14. C8 e C14 são redundantes. Ajuste: no bloco home_qualidade, eu tinha C7 e C8. Mas desfalques depois geraram C13, C14. Para evitar duplicação, vou unificar: a conclusão sobre Struijk está em C14 (desfalques). Portanto, na lista de conclusões do Passo 1, vou remover C8 ou renumerar. Vou refazer a numeração das conclusões para evitar confusão. Melhor: manter a lista como fiz, mas garantir que cada ID seja único e usado. Vou reescrever a lista de conclusões numeradas sequencialmente conforme aparecem nos blocos:\n\nBloco contexto: C1, C2.\nBloco tabela_motivacao: C3, C4.\nBloco home_gols: C5 -> descartada.\nBloco home_estilo: C6 (sofre ataques perigosos)\nBloco home_qualidade: C7 (qualidade modesta), C8 (Struijk fora) – mas Struijk também está em desfalques. Para não duplicar, em home_qualidade a conclusão é sobre notas e forma, e Struijk é citado como fora, mas a análise de impacto fica para desfalques. Vou ajustar: em home_qualidade, conclusão C7: \"Qualidade individual modesta, com Stach caindo, Bijol subindo\". C8: não preciso, pois desfalques terão conclusão própria. Então excluo C8 daqui. Ficamos com C7 em home_qualidade.\nBloco home_forma: C9 (forma inflada), C10 (consistência BTTS) -> descartada.\nBloco home_momentum: C11 (pressão cedo, sofre 2ºT)\nBloco home_faixas: C12 (sofre mais 2ºT)\nBloco home_desfalques: C13 (Okafor fora), C14 (desfalques defensivos múltiplos)\nBloco away_gols: C15 (ataque Brighton fora mediano)\nBloco away_estilo: C16 (dominante)\nBloco away_qualidade: C17 (qualidade alta, Groß/Dunk)\nBloco away_forma: C18 (forma sólida) -> descartada.\nBloco away_momentum: C19 (pressão inicial, reage, mas desmorona ao sofrer)\nBloco away_faixas: C20 (marca início e fim) -> descartada (substituída por C23)\nBloco away_desfalques: C21 (Mitoma fora), C22 (Wieffer dúvida)\nBloco cruzamento_faixa: C23 (janelas altas para ambos)\nBloco base_rate: C24 (total 2.29, under)\nBloco probs_mercado: C25 (1x2 equilibrado, under)\nBloco cruzamentos_computados: C26 (Leeds sofre contra dominantes), C27 (Brighton defesa boa contra bloco), C28 (dinâmica pós-gol Brighton)\n\nTotal conclusões: C1 a C28, mas algumas descartadas (C5, C10, C18, C20). As restantes são 24 conclusões usadas.\n\nAgora, garantir que cada uma das usadas tenha uma aresta correspondente. Vou mapear:\n\nC1: A6\nC2: A6\nC3: A1, A4, A6\nC4: A1, A8\nC6: A2\nC7: A5\nC9: A3\nC11: A4\nC12: A7\nC13: A3, A9, A11 (e A3, etc)\nC14: A2, A5, A10, A11\nC15: A5\nC16: A2, A5\nC17: A5, A9\nC19: A4\nC21: A10\nC22: A11\nC23: A2, A7\nC24: A1\nC25: A8\nC26: A1, A3, A9\nC27: A1, A3, A9\nC28: A4\n\nFaltou C8? Não existe C8 nessa lista. C8 da numeração original foi removida. Ok.\n\nPreciso de no mínimo 8 arestas, tenho 11 (A1 a A11). Vou listá-las formalmente para a saída.\n\nAgora, **Passo 4 — ROTEIROS**.\n\n**Roteiro 1: \"Controle silencioso\" (Brighton vence por 1-2 gols, jogo amarrado)**\n- Probabilidade: 55%\n- Descrição: Brighton impõe seu estilo dominante desde o início, trocando passes e desgastando o Leeds. Leeds, sem motivação, se fecha e tenta esporádicos contra-ataques. Brighton marca um gol no 1º tempo (aproveitando pressão inicial ou erro defensivo), recua um pouco, e controla. No 2º tempo, administra e pode marcar mais um em contra-ataque no final (Leeds se abrindo). Placar provável: 0x2 ou 1x2.\n- Arestas que sustentam: A1, A2, A5, A7, A8.\n- Cascata: Brighton marca primeiro → Leeds é obrigado a sair, mas sem forças → Brighton amplia em contra-ataque → jogo morto. \n- Se Leeds marcar primeiro (improvável): ver Roteiro 2.\n\n**Roteiro 2: \"Susto e reação\" (Leeds marca cedo, mas Brighton reage e vira)**\n- Probabilidade: 25%\n- Descrição: Leeds, jogando em casa, consegue um gol em jogada isolada (Calvert-Lewin) no 1º tempo. Brighton, que desmorona ao sofrer (C28), sente o golpe, mas como precisa vencer, se lança desordenadamente, e o jogo fica aberto. Brighton consegue empatar ainda no 1º tempo ou início do 2º, e depois pressiona até virar. Placar: 2x1 ou 1x2.\n- Arestas: A4, A6, A9, A11 (se Wieffer fora, mais espaço para Leeds).\n- Cascata: Leeds marca → Brighton se desorganiza → Leeds pode ampliar em contra-ataque, mas defesa frágil cede empate → Brighton cresce e vira com gols no 2º tempo.\n\n**Roteiro 3: \"Ferrolho e 0x0 frustrante\" (Brighton não fura)**\n- Probabilidade: 20%\n- Descrição: Leeds, mesmo desinteressado, se posta bem defensivamente e consegue segurar o ataque do Brighton, que sente falta de Mitoma e não consegue furar. O jogo fica morno, com poucas chances, e termina 0x0 ou 1x0 para Leeds (gol em bola parada). \n- Arestas: A3 (Leeds sem ataque), A10 (Brighton perde criatividade), A8 (under).\n- Cascata: Brighton pressiona, mas sem eficácia. Leeds se segura e pode achar um gol em rara escapada.\n\nProbabilidades somam 1.0 (55+25+20).\n\n**Roteiro vencedor**: Roteiro 1 (Controle silencioso) é o mais provável pela convergência de fatores (motivação, estilo, desfalques).\n\n**Passo 4b — LINHA DO TEMPO**\n\nCom base no Roteiro 1:\n\n**Tempos - primeiro**: análise do 1º tempo.\n- Brighton deve ditar a posse (53.8% vs 45.7% de Leeds), com ataques perigosos (58.6 nos últimos 5). Leeds, sem Okafor, terá dificuldade para criar. A defesa Leeds, desfalcada, tentará se segurar, mas Brighton tem pressão inicial (gols em 0-15 em 2 de 5 jogos). A janela 31-45 é onde Leeds marca (0.31) e Brighton sofre (0.25), mas com ataque Leeds enfraquecido, é mais provável que Brighton marque no final do 1º tempo (31-45) ou início. O placar provável no intervalo: 0x1 ou 0x0.\n- Prob_gol 1ºT: probabilidade de ≥1 gol no 1º tempo: considerando xG do Brighton ~0.6-0.7 no 1º tempo e Leeds ~0.3, a prob de gol é alta. Pelo menos 60%.\n\n**Tempos - segundo**: análise do 2º tempo.\n- Com o jogo controlado, Brighton administra, mas Leeds pode se arriscar mais se estiver perdendo. Brighton tem histórico de marcar no fim (76-90: 0.44) e Leeds sofre nessa faixa (0.42). Fadiga não é fator, então Brighton manterá intensidade. Se ainda estiver 0x1, Brighton pode ampliar em contra-ataque. Se 0x0, Brighton pressionará mais. Prob_gol 2ºT: alta, ≥1 gol no 2º tempo ~70%.\n- Prob_gol total do jogo: ~2.0 xG, então over 1.5 provável, over 2.5 possível, mas não garantido.\n\n**Janelas** (6 faixas, cada uma com leitura, prob_gol e lado):\n\n- **0-15**: Brighton começa pressionando, Leeds se resguarda. Possibilidade de gol do Brighton (C19, C23). Prob_gol: 20%. Lado: away.\n- **16-30**: Jogo equilibrado, Brighton mantém posse, Leeds tenta sair. Baixa probabilidade de gol. Prob_gol: 15%. Lado: equilibrado.\n- **31-45**: Leeds costuma marcar nessa faixa, mas sem Okafor, menor efetividade. Brighton também pode aproveitar bolas paradas. Janela com mais chances. Prob_gol: 30%. Lado: equilibrado (mas ligeiro away).\n- **46-60**: Após intervalo, Brighton pode recuar se estiver vencendo. Leeds tenta crescer, mas é perigoso nos contra-ataques. Prob_gol: 20%. Lado: home? Na verdade, Brighton é perigoso no contra-ataque. Vou por away.\n- **61-75**: Leeds se expõe, Brighton explora espaços. Alta probabilidade de gol do Brighton (C23). Prob_gol: 25%. Lado: away.\n- **76-90**: Janela crítica: Leeds sofre 0.42, Brighton marca 0.44. Com jogo definido ou pressionando, gol do Brighton é muito provável. Prob_gol: 35%. Lado: away.\n\nProbabilidades de gol por janela devem ser coerentes com xg_bands. Depois eu ajusto xg_bands no JSON.\n\n**Passo 4c — MARCADORES**\n\n**Home (Leeds)**:\n1. Dominic Calvert-Lewin: 13 gols (4 pên), 1.0 SoT/j, últ.5: 3 gols. Principal referência, mas enfrenta zaga sólida. Prob: 20%. Motivo: \"Artilheiro do time, finalizador nato; mas sem Okafor, receberá menos passes e terá que lutar sozinho contra Dunk e Van Hecke.\"\n2. Anton Stach: 5 gols, 0.5 SoT/j. Meia que chega de trás. Prob: 10%. Motivo: \"Meia com boa chegada, pode aparecer como elemento surpresa em chutes de longa distância.\"\n3. Lukas Nmecha: 6 gols (2 pên), 0.6 SoT/j. Prob: 8%. Motivo: \"Segundo atacante, mas sem Okafor pode ter mais minutos; será opção se Leeds precisar de gol.\"\n\n**Away (Brighton)**:\n1. Danny Welbeck: 13 gols (1 pên), 0.8 SoT/j, últ.5: 1 gol. Experiente, enfrentará defesa desfalcada. Prob: 35%. Motivo: \"Artilheiro do Brighton, com boa movimentação; enfrenta zaga lenta e desfalcada de Leeds, deve ter chances claras.\"\n2. Jack Hinshelwood: 4 gols, 0.6 SoT/j, últ.5: 3 gols (em boa fase). Prob: 20%. Motivo: \"Meia em grande fase, marcou 3 nos últimos 5; aparece bem na área e pode se aproveitar de espaço no meio-campo desfalcado do Leeds.\"\n3. Pascal Groß: 1 gol? Na verdade, não listado nos artilheiros, mas é criador. Vou colocar Diego Gómez: 5 gols, 0.5 SoT/j, últ.5: 0, mas pode ser opção. Vou escolher Yankuba Minteh: 3 gols, 0.3 SoT/j. Melhor: Hinshelwood está em alta. Coloco também Danny Welbeck e Jack Hinshelwood. E um terceiro: Diego Gómez ou Pascal Groß? Groß não aparece nos artilheiros, mas pode marcar. No texto de artilharia, Brighton tem: Welbeck, Gómez, Hinshelwood, Mitoma (fora), Minteh. Então: Welbeck (35%), Hinshelwood (20%), Diego Gómez (15%): \"Atacante versátil, embora não marque nos últimos 5, tem 5 gols na temporada e pode explorar espaços.\"\n\n**Passo 5 — BOARD COMPLETO DE MERCADOS**\n\nPreciso preencher 19 linhas com probs, variância, valor e nota.\n\nAntes, definir minhas probs ajustadas:\n\nxG ajustado:\n- Leeds: 0.85 (análise: casa 1.24 base, mas -Okafor, -contra dominante, -motivação → reduzo para ~0.85)\n- Brighton: 1.35 (base 1.05, +motivação, +defesa Leeds desfalcada, +estilo dominante, mas -Mitoma → aumento para 1.35)\n- Total: 2.20\n- 1x2: Leeds 30%, Draw 32%, Brighton 38% (prior B: 39/32/29, movi Brighton para cima, Leeds para baixo)\n- Over 2.5: ~35% (base 40%, reduzi devido veredito de intenção e menor xG total)\n- BTTS: ~45% (base 48%, Leeds pode não marcar)\n- Team totals: Leeds O0.5: 55% (base 71%, reduzi); O1.5: 15%. Brighton O0.5: 75% (base 65%, subiu); O1.5: 35% (base 28%, subiu).\n\nAgora, as 19 linhas:\n\n1. 1x2 home: prob 30%, variancia 4 (1x2 tem variancia alta), valor: baixo (prior 39%, minha prob menor, mas odds de mercado não dadas, então assumo sem valor claro). Nota: \"Leeds sem motivação e desfalcado, vitória improvável.\"\n2. 1x2 draw: prob 32%, variancia 4, valor: medio? (prior 32%, então neutro). Nota: \"Empate é resultado possível dado o ferrolho, mas Brighton pressionará; odds podem oferecer valor se altas.\"\n3. 1x2 away: prob 38%, variancia 4, valor: medio/alto? (prior 29%, então teve aumento de 9pp). Nota: \"Brighton com motivação e qualidade superior; favorito, mas odds não devem ser altas.\"\n4. double_chance home_draw: prob 62% (30+32), variancia 2, valor: baixo (prior 71%, então caiu). Nota: \"Cobre empate e vitória do Leeds, mas Brighton é favorito, então odds podem não compensar.\"\n5. double_chance draw_away: prob 70% (32+38), variancia 2, valor: medio (prior 61%, então subiu 9pp). Nota: \"Cobre Brighton e empate, alinhado com roteiro provável; boa segurança.\"\n6. double_chance home_away: prob 68% (30+38), variancia 2, valor: baixo (prior 68%, neutro). Nota: \"Cobre os dois times, eliminando empate; sem valor aparente.\"\n7. draw_no_bet home: prob 48% (30 / (30+32)? Na verdade, Draw No Bet home = vitória do Leeds, se empate devolve aposta, então prob implícita = prob home / (prob home + prob away) = 30/(30+38)=44%? Mas o schema pede prob da seleção? Aqui selection é \"home\" em draw_no_bet, então a prob é a chance de ganhar sem considerar empate. Melhor usar a prob condicional: vitória do Leeds = 30%, então prob do DNB home é 30% (pois o empate é devolvido). Na verdade, a probabilidade de ganhar a aposta DNB home é a probabilidade de vitória do Leeds. O valor justo seria 30%. Vou colocar prob = 30%. Variancia 3. Valor baixo. Nota: \"Leeds não deve vencer, mas DNB reduz risco; ainda assim, baixa probabilidade.\"\n   - Nota: o schema tem market \"draw_no_bet\" e selection \"home\" ou \"away\". A prob deve ser a chance de ganhar a aposta (ou seja, vitória do time). Vou colocar prob condizente com meu 1x2.\n8. draw_no_bet away: prob 38% (vitória Brighton), variancia 3, valor medio (subiu). Nota: \"Brighton favorito, mas empate ainda seria perda; probabilidade moderada.\"\n9. over_under over 1.5: prob 70%? com total 2.20, over 1.5 deve ser ~75%? Vou calcular: média 2.20, Poisson: P(over1.5)=1 - P(0) - P(1). P(0)=e^{-2.2}=0.1108, P(1)=2.2*0.1108=0.2438, soma 0.3546, então over1.5=0.6454. Aproximadamente 65%. Vou usar 65%. Variancia 2. valor: medio? (prior 68%, então leve queda). Nota: \"Linha baixa, mas jogo pode ser travado; ainda assim, mais provável que tenha pelo menos 2 gols.\"\n10. over_under over 2.5: prob 35% (já defini). variancia 3, valor: alto? (prior 40%, então caiu, mas se mercado precificar acima de 40%, há valor no under. Mas aqui estou avaliando over, então valor seria baixo). Nota: \"Jogo tende a ter poucos gols; over 2.5 é arriscado.\"\n11. over_under over 3.5: prob 15% (aprox, Poisson com 2.2: P(4+)=1-poisson.cdf(3)=1-0.819=0.181, então ~18%. Vou usar 15% para ser conservador). variancia 4, valor: baixo. Nota: \"Improvável goleada; linha alta.\"\n12. btts yes: prob 45% (Leeds pode não marcar). variancia 3, valor: medio (prior 48%, leve queda). Nota: \"Leeds sem Okafor pode ficar em branco; Brighton deve marcar, mas não garante BTTS.\"\n13. team_total home over 0.5: prob 55% (base 71%, ajustei para baixo). variancia 1, valor: alto se mercado der mais que 55%? Nota: \"Leeds pode não marcar; linha baixa, mas risco.\"\n14. team_total home over 1.5: prob 15%. variancia 3, valor: baixo. Nota: \"Difícil Leeds marcar 2 gols sem Okafor e contra defesa sólida.\"\n15. team_total away over 0.5: prob 75%. variancia 1, valor: medio/alto (base 65%, subiu). Nota: \"Brighton deve marcar pelo menos um gol; alta probabilidade.\"\n16. team_total away over 1.5: prob 35%. variancia 3, valor: medio (base 28%, subiu). Nota: \"Brighton pode marcar dois gols, mas não é certo; odds provavelmente boas.\"\n17. handicap home -1: prob de Leeds vencer por 2+ gols? Muito baixa, ~8%. variancia 5, valor: baixo. Nota: \"Leeds não deve ganhar, muito menos por 2 gols.\"\n18. handicap away -1: prob de Brighton vencer por 2+ gols? ~20%. variancia 5, valor: medio? (base provavelmente baixa). Nota: \"Brighton pode vencer por margem de 2 gols, mas handicap -1 é arriscado.\"\n19. odd_even odd: prob ímpar? Total 2.20: distribuição de gols, prob de total ímpar ~50%? No prior, odd era 46% (par 54%). Com total 2.20, a distribuição não é tão diferente. Vou manter ~48%. variancia 5 (mercado de sorte), valor: baixo. Nota: \"Mercado de pura sorte; não recomendado.\"\n\n**Nota sobre variancia**: 1 (mais segura) a 5 (mais arriscada). Team_total over 0.5 é a mais segura (1). Over/under 1.5 é 2. Over 2.5 é 3. Handicap/odd even é 5.\n\n**Passo 6 — REFUTAÇÃO e Best Bet**\n\nCandidata a best bet: Olhando o board, onde vejo valor e baixa variância?\n\n- Brighton team total over 0.5: prob 75%, variancia 1, valor medio/alto (prior 65%). É uma aposta segura, mas provavelmente odds baixas (1.30-1.40). Ainda assim, se houver valor, é a mais segura.\n- Brighton team total over 1.5: prob 35%, variancia 3, valor medio (subiu de 28%). Odds podem ser atrativas (>2.50).\n- Over 1.5 gols: prob 65%, variancia 2, valor medio (prior 68%, mas em jogos assim, under é favorecido, então over 1.5 pode não ser valor).\n- Draw no bet away: prob 38%, mas odds de 38% seriam ~2.63. Se mercado oferecer mais, pode ter valor. Mas variancia 3.\n- Double chance draw_away: prob 70%, variancia 2, valor medio.\n\nVou escolher **Brighton team total over 0.5** como a mais segura, mas talvez sem valor se as odds forem muito baixas. Como não tenho odds reais, devo escolher a que tem maior valor esperado teórico. O protocolo diz: \"cravar o melhor mercado — nunca 'passa'\". E \"entre apostas de valor parecido, crave sempre a de MENOR variância\". Vou considerar que team total over 0.5 tem valor porque subiu 10pp do prior, e o prior já era 65%. Se mercado oferecer 1.40 (prob implícita 71%), ainda há valor. A variancia é 1. É a escolha mais sharp.\n\nMas o veredito de intenção diz para preferir under ou team total do lado que precisa. Brighton precisa vencer, então team total over 0.5 deles faz sentido. Além disso, a dinâmica de \"jogo tende a travar\" pode tornar o over total arriscado, mas o time que precisa ainda deve marcar.\n\nBest bet: market = \"team_total\", selection = \"over\", team = \"away\", line = 0.5, confidence = \"medium\" ou \"high\"? Vou avaliar a confiança pela regra.\n\nPrimeiro, refutação: atacar a aposta \"Brighton team total over 0.5\".\n\n**Ataques:**\n1. A defesa do Leeds, apesar de desfalcada, em casa tem média de 1.17 sofridos, e o ataque do Brighton fora tem média de 1.22. Pode ser que Brighton não marque? Mas a probabilidade é alta. No entanto, a amostra é pequena e o Leeds pode jogar fechado. (Enfraquece? Leve).\n2. O histórico de Brighton contra blocos baixos é de sofrer pouco e marcar 1.33. Mas em alguns jogos contra times fechados, pode não marcar (ex.: 0x0). Porém, a motivação é alta. O ataque pode falhar. (enfraquece).\n3. Se Wieffer e Mitoma estiverem fora, o ataque pode perder criatividade. Mas ainda tem Welbeck e outros. O Leeds pode conseguir um clean sheet improvável. (enfraquece).\n\nNenhum ataque é forte o suficiente para derrubar, pois a probabilidade é alta (75%). Mas pode enfraquecer a confiança.\n\n**Regra de confiança**: \n- ≥3 arestas independentes convergem para a aposta? Sim: A2 (Brighton marca no 2º tempo), A5 (superioridade individual), A7 (janelas de gol), A1 (necessidade de vitória). \n- As rotas A e B do base rate apontam na mesma direção? Brighton over 0.5: rota A (gols) λ 1.16, prob ~70%? Poisson: 1 - e^{-1.16} = 1 - 0.313 = 68.7%. Rota B (SoT) λ 1.05, prob = 1 - e^{-1.05} = 65%. Ambas acima de 65%. Direção similar.\n- Nenhum ataque derruba ou enfraquece com dado forte. Os ataques são plausíveis, mas não fortes. Portanto, confiança: medium? Ou high? Vou checar: \"high\" se ≥3 arestas independentes E nenhum ataque \"derruba\"/\"enfraquece\" com dado forte E rotas A e B mesma direção. Aqui, as arestas convergem, as rotas convergem, os ataques são fracos. Então confiança poderia ser high. Mas a aposta é de baixa variância e quase certa, então naturalmente high. Contudo, futebol sempre tem risco. Vou classificar como \"high\" e explicar a regra.\n\nConfidence_regra: \"≥3 arestas independentes (A1, A2, A5, A7) sustentam que Brighton marcará ao menos um gol; rotas A e B base apontam para >65% de probabilidade; nenhum ataque com dado forte contrapõe.\"\n\nAgora, **best_bet analysis**: descrevo o roteiro esperado, evidências, risco.\n\n**Evidências for**: A1 (motivação), A2 (defesa Leeds frágil + janelas), A5 (qualidade superior), A7 (cruzamento faixas), C14, C15, C23.\n\n**Evidências against**: A10 (Mitoma fora), A3 (Leeds pode se fechar bem), risco de 0x0.\n\n**Análise**: \"Com Brighton precisando vencer para seguir na briga pela Champions e Leeds sem objetivos, o visitante deve controlar o jogo e criar chances. A defesa do Leeds, desfalcada e historicamente frágil contra times dominantes, sofreu gols em 75% dos jogos como mandante. Brighton tem 81% de jogos marcando na temporada e seu ataque, mesmo sem Mitoma, conta com Welbeck e Hinshelwood em boa fase. A probabilidade de Brighton marcar ao menos um gol é estimada em 75%, significativamente acima do prior de 65%. O mercado de team total over 0.5 é de baixíssima variância e oferece valor se as odds estiverem acima de 1.33.\"\n\n**Mercados**: vou incluir no array todos os 19.\n\n**Drivers**: os 3 fatores que mais moveram o número: 1) Motivação assimétrica (Brighton precisa, Leeds não) - C3; 2) Desfalques defensivos do Leeds (C14) e ofensivo (C13); 3) Desempenho histórico contra estilos (C26 e C27).\n\nAgora, montar a resposta JSON. Vou garantir que todos os textos estejam em português do Brasil.\n\n**Observações**:\n- Os campos `xg`, `xg_1t`, `xg_2t`, `xg_bands` devem ser numéricos.\n- `one_x_two` etc: probabilidades em decimal (0-1).\n- `jogadores`: vou listar cada um com nome, time e leitura.\n- `blocos_sem_sinal`: se algum bloco não gerou conclusão, listar. No meu caso, todos geraram algo, então array vazio? Ou alguns podem ser considerados sem sinal? O bloco \"contexto\" gerou conclusões, então não. Vou deixar array vazio.\n- `descartadas`: as conclusões descartadas com motivo: C5, C10, C18, C20.\n- `arestas`: preciso do campo `id`, `liga` (array de strings), `leitura`, `efeito`.\n- `roteiros`: `nome`, `prob` (soma 1), `filme` (descrição), `arestas` (array de IDs).\n- `janelas`: 6 faixas com `faixa`, `leitura`, `prob_gol` (probabilidade de gol naquela faixa específica, não acumulada), `lado`. As `prob_gol` podem não somar com total, mas devem refletir a chance de gol em cada 15 min. Vou estimar: \n  - 0-15: 0.20 (20% de chance de gol)\n  - 16-30: 0.15\n  - 31-45: 0.30\n  - 46-60: 0.20\n  - 61-75: 0.25\n  - 76-90: 0.35\n  Soma = 1.45? Isso não é um problema, pois são probabilidades independentes? Na verdade, `prob_gol` deve ser a probabilidade de ocorrer **pelo menos um gol** naquela faixa. A soma pode ser maior que 1, ok. Mas preciso que sejam coerentes com o xG total? Vou calcular com base no xG de 2.20. Se distribuo o xG pelas faixas conforme os índices, e converto para prob de gol usando Poisson por faixa. Mas para simplificar, vou manter essas estimativas, que parecem razoáveis. Depois, no JSON, posso ajustar para que as `xg_bands` reflitam a distribuição do xG. O schema pede `xg_bands` no `home` e `away`, onde cada faixa tem o xG esperado do time naquela faixa. Vou definir:\n  - Home xg_bands: baseado no xG total de 0.85, distribuo: 0-15: 0.10; 16-30: 0.08; 31-45: 0.20; 46-60: 0.12; 61-75: 0.15; 76-90: 0.20. (Soma 0.85)\n  - Away xg_bands: xG total 1.35: 0-15: 0.20; 16-30: 0.15; 31-45: 0.25; 46-60: 0.20; 61-75: 0.25; 76-90: 0.30. (Soma 1.35)\n\nEntão, no `home`, `xg` = 0.85, `xg_1t` = 0.38 (0.10+0.08+0.20), `xg_2t` = 0.47 (0.12+0.15+0.20). `away`: `xg` = 1.35, `xg_1t` = 0.60 (0.20+0.15+0.25), `xg_2t` = 0.75 (0.20+0.25+0.30).\n\nNo `general`, `total` = 2.20, `total_1t` = 0.98, `total_2t` = 1.22. `over25_prob`: com total 2.20, P(>2.5): usando Poisson com λ=2.2: P(0)=0.1108, P(1)=0.2438, P(2)=0.2681. P(>2.5)=1 - (0.1108+0.2438+0.2681)=0.3773 → 38%. Vou usar 38%. `btts_prob`: probabilidade de ambos marcarem: P(Leeds marca)*P(Brighton marca) assume independência? P(Leeds>0) = 1 - e^{-0.85} = 1 - 0.4274 = 0.5726 (57%). P(Brighton>0) = 1 - e^{-1.35} = 1 - 0.2592 = 0.7408 (74%). Prob independência = 0.5726*0.7408=0.424 (42%). Mas na prática, a correlação é levemente positiva? Prior era 48%. Vou ajustar para 45% (já que Leeds pode não marcar, e jogo travado). \n\n`one_x_two`: home 0.30, draw 0.32, away 0.38 (soma 1.0). `one_x_two_1t`: preciso das probs para o 1º tempo. Com xG 1ºT de 0.98 total (Leeds 0.38, Brighton 0.60). Vou calcular usando Poisson independente para cada time no 1ºT? Mas o correto seria usar uma distribuição bivariada, mas para simplificar, faço: prob 1x2 1ºT = prob de cada resultado no intervalo. Posso estimar com base no xG. Por exemplo, P(Leeds ganha 1ºT) = P(Leeds gols > Brighton gols) usando Skellam. Mas é complexo. O schema pede um número. Vou usar o prior do briefing: 1ºT 34/45/20% (Rota B). Como ajustei para favorecer Brighton, vou modificar: home 25%, draw 45%, away 30%. `one_x_two_2t`: mesmo racional: home 25%, draw 40%, away 35%. (Ajuste fino).\n\n`confidence`: \"medium\" (depois da refutação, mas como não teve ataque forte, poderia ser high, mas a aposta é team total over 0.5 que é quase certa, então high). Vou decidir \"high\".\n\n`confidence_regra`: texto explicando a regra.\n\n`conclusoes`: array de objetos com id, bloco, fato, dado, direcao, forca.\n\n`jogadores`: array com nome, time, leitura.\n\n`blocos_sem_sinal`: array vazio.\n\n`descartadas`: array com ids e motivos.\n\n`arestas`: array.\n\n`roteiros`: 3 roteiros.\n\n`janelas`: 6.\n\n`tempos`: objetos.\n\n`marcadores`: home e away arrays.\n\n`mercados`: 19 linhas.\n\n`best_bet`: objeto.\n\n`refutacao`: ataques e conclusão.\n\n`drivers`: array de strings com os 3 drivers.\n\nAgora, vou escrever o JSON. Cuidado com as aspas e formatação.\n\nVou estruturar o JSON completo. Como é longo, serei organizado.\n\n**Observação sobre o schema**: o campo `one_x_two` etc deve ter probs (números entre 0 e 1). `over25_prob` também.\n\n`btts_prob`: número.\n\n`confidence`: \"high\", \"medium\", \"low\".\n\n`confidence_regra`: string.\n\nNos `conclusoes`, `bloco` deve ser um dos valores do enum. Vou usar os nomes exatos: \"contexto\", \"tabela_motivacao\", \"home_gols\", \"home_estilo\", \"home_qualidade\", \"home_forma\", \"home_momentum\", \"home_faixas\", \"home_desfalques\", \"away_gols\", \"away_estilo\", \"away_qualidade\", \"away_forma\", \"away_momentum\", \"away_faixas\", \"away_desfalques\", \"cruzamento_faixa\", \"base_rate\", \"probs_mercado\", \"cruzamentos_computados\".\n\n`forca`: \"alta\", \"media\", \"baixa\".\n\n`direcao`: string.\n\n`fato`: resumo do fato.\n\n`dado`: cópia do dado do briefing.\n\nVou criar cada conclusão:\n\nC1: contexto, \"Descanso balanceado (6 vs 8 dias) sem assimetria de fadiga\", \"Leeds 6 dias, Brighton 8 dias, diferença de 2 dias é ruído\", \"neutro para xG total\", \"baixa\".\nC2: contexto, \"Vantagem de casa em Elland Road\", \"Média mandante 1.53, visitante 1.23, fator casa favorece mandante\", \"ligeira vantagem para Leeds no 1x2\", \"media\".\nC3: tabela_motivacao, \"Motivação assimétrica: Leeds sem stake, Brighton precisa vencer\", \"Leeds 14º com 44pts, seguro, sem alvo; Brighton 7º com 53pts, briga por Champions, precisa vencer\", \"aumenta ataque do Brighton e risco de jogo travado\", \"alta\".\nC4: tabela_motivacao, \"Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR\", \"pelo menos um lado NÃO precisa ir pra cima → prefira UNDER ou mercado de menor variância\", \"viés para under 2.5 e team_total Brighton over 0.5\", \"alta\".\nC5: home_gols, \"Leeds em casa tem ataque mediano e defesa sólida\", \"marca 1.56/j, sofre 1.17/j em 18 jogos\", \"volume ofensivo suficiente, mas defesa caseira relativamente sólida\", \"media\" (depois descartada)\nC6: home_estilo, \"Estilo defensivamente exposto, especialmente nos últimos 5\", \"ataques perigosos sofridos 50.9/j temporada, 55.2 nos últimos 5\", \"defesa vulnerável a ataques\", \"media\"\nC7: home_qualidade, \"Qualidade individual modesta, sem estrelas\", \"nota média do time 6.82; Stach 7.21 caindo, Bijol 7.0 subindo\", \"ataque sem referência de elite\", \"media\"\nC8: (remover, pois redundante) – vou pular numeração para não confundir. Na verdade, vou manter C1 a C28 sem pular, mas C8 não existe. Vou apenas listar as conclusões numeradas como aparecem, mas sem C8. No meu texto original, C8 era sobre Struijk, mas depois integrei em C14. Então a lista final de conclusões a serem usadas é: C1, C2, C3, C4, C6, C7, C9, C11, C12, C13, C14, C15, C16, C17, C19, C21, C22, C23, C24, C25, C26, C27, C28. (E as descartadas C5, C10, C18, C20). Isso dá 23 conclusões usadas. Para não confundir, no JSON, vou criar cada conclusão com seu ID original, mesmo que algumas não existam. Mas o schema diz que `conclusoes` é um array de objetos. Vou incluir todas as que eu listei, inclusive as descartadas? Não, as descartadas vão para o campo `descartadas`. Então `conclusoes` terá apenas as conclusões efetivamente extraídas e usadas ou não? O protocolo: \"De CADA bloco extraia 1 a 3 conclusões\". Depois, \"toda conclusão do Passo 1 é usada em ≥1 aresta OU vai para descartadas\". Então no array `conclusoes` devo incluir TODAS as conclusões extraídas, independentemente de terem sido usadas ou descartadas. Depois, as que não foram usadas em arestas, listo em `descartadas` com motivo. Isso garante que nada fica órfão. Então vou incluir todas as conclusões que eu escrevi (C1 a C28, exceto a C8 que eu não tenho). Mas preciso ter cuidado para não ter IDs duplicados ou faltantes. Melhor: vou refazer a numeração sequencial de 1 a 28 (mas com a C8 vazia? Não). Vou criar um array com todas as conclusões que realmente redigi, numerando-as C1, C2, C3, C4, C5, C6, C7, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28. Isso dá 27 conclusões (pulei C8). Vou manter essa numeração. Não há problema pular.\n\nAssim, no JSON, cada conclusão tem id: \"C1\", \"C2\", etc.\n\nAs descartadas: C5, C10, C18, C20.\n\nAgora, as arestas referenciam esses IDs.\n\nVou escrever o JSON.\n\n**Nota sobre o campo `xg_bands`**: o schema pede um objeto com as 6 faixas e a soma pode ser normalizada pelo runtime. Vou colocar valores aproximados como acima.\n\n**`jogadores`**: listar todos os nomeados.\n\n**`mercados`**: preencher como array de objetos.\n\n**`best_bet`**: definir `market`, `selection`, `team` (away), `line` (0.5), `confidence`, `probability`, `evidence_for` (array de IDs), `evidence_against`, `analysis`.\n\n**`refutacao`**: ataques e conclusão.\n\n**`drivers`**: 3 strings.\n\nVou começar a escrever o JSON agora, em português.\n\nVerificar campos obrigatórios: `home`, `away`, `general`, `conclusoes`, `blocos_sem_sinal`, `descartadas`, `jogadores`, `arestas`, `roteiros`, `janelas`, `tempos`, `marcadores`, `mercados`, `best_bet`, `refutacao`, `drivers`.\n\nTodos os campos devem estar presentes.\n\nVou gerar o JSON. Como é grande, tomarei cuidado com vírgulas e colchetes.\n\n```json\n{\n  \"home\": {\n    \"xg\": 0.85,\n    \"xg_1t\": 0.38,\n    \"xg_2t\": 0.47,\n    \"xg_bands\": {\n      \"0-15\": 0.10,\n      \"16-30\": 0.08,\n      \"31-45\": 0.20,\n      \"46-60\": 0.12,\n      \"61-75\": 0.15,\n      \"76-90\": 0.20\n    },\n    \"summary\": \"Leeds com motivação baixa, desfalcado ofensivamente (Okafor) e defensivamente, deve ter produção ofensiva limitada contra defesa sólida do Brighton. Espera-se menos de 1 gol marcado.\"\n  },\n  \"away\": {\n    \"xg\": 1.35,\n    \"xg_1t\": 0.60,\n    \"xg_2t\": 0.75,\n    \"xg_bands\": {\n      \"0-15\": 0.20,\n      \"16-30\": 0.15,\n      \"31-45\": 0.25,\n      \"46-60\": 0.20,\n      \"61-75\": 0.25,\n      \"76-90\": 0.30\n    },\n    \"summary\": \"Brighton com necessidade de vitória, estilo dominante e ataque eficiente contra defesa enfraquecida do Leeds. Deve criar volume suficiente para marcar ao menos um gol, com bons picos no início e final do jogo.\"\n  },\n  \"general\": {\n    \"total\": 2.20,\n    \"total_1t\": 0.98,\n    \"total_2t\": 1.22,\n    \"over25_prob\": 0.38,\n    \"btts_prob\": 0.45,\n    \"one_x_two\": {\n      \"home\": 0.30,\n      \"draw\": 0.32,\n      \"away\": 0.38\n    },\n    \"one_x_two_1t\": {\n      \"home\": 0.25,\n      \"draw\": 0.45,\n      \"away\": 0.30\n    },\n    \"one_x_two_2t\": {\n      \"home\": 0.25,\n      \"draw\": 0.40,\n      \"away\": 0.35\n    },\n    \"confidence\": \"high\",\n    \"confidence_regra\": \"≥3 arestas independentes (A1, A2, A5, A7) sustentam que Brighton marcará ao menos um gol; rotas A e B do base rate apontam para >65%; nenhum ataque refutatório com dado forte contrapõe.\",\n    \"summary\": \"Jogo assimétrico: Leeds sem objetivos e desfalcado, Brighton lutando por Champions. Espera-se domínio do visitante, com gols prováveis, mas placar tende a ser controlado (2x0, 2x1). Prior de under 2.5 se mantém, com total baixo. Vitória do Brighton é o resultado mais provável, mas empate não está descartado.\"\n  },\n  \"conclusoes\": [\n    {\"id\": \"C1\", \"bloco\": \"contexto\", \"fato\": \"Descanso balanceado sem assimetria\", \"dado\": \"Leeds 6 dias, Brighton 8 dias; diferença de 2 dias é ruído\", \"direcao\": \"neutro para xG total\", \"forca\": \"baixa\"},\n    {\"id\": \"C2\", \"bloco\": \"contexto\", \"fato\": \"Vantagem de casa\", \"dado\": \"Média mandante 1.53, visitante 1.23; fator casa histórico\", \"direcao\": \"ligeira vantagem para Leeds no 1x2\", \"forca\": \"media\"},\n    {\"id\": \"C3\", \"bloco\": \"tabela_motivacao\", \"fato\": \"Motivação assimétrica: Leeds sem stake, Brighton precisa vencer\", \"dado\": \"Leeds 14º com 44pts, seguro; Brighton 7º com 53pts, briga por Champions\", \"direcao\": \"aumenta ataque e intensidade do Brighton; Leeds pode administrar\", \"forca\": \"alta\"},\n    {\"id\": \"C4\", \"bloco\": \"tabela_motivacao\", \"fato\": \"Veredito de intenção: JOGO TENDE A TRAVAR\", \"dado\": \"Pelo menos um lado não precisa ir pra cima; prefira under ou team_total do lado que precisa\", \"direcao\": \"viés para under 2.5 e aposta segura no Brighton O0.5\", \"forca\": \"alta\"},\n    {\"id\": \"C5\", \"bloco\": \"home_gols\", \"fato\": \"Leeds em casa tem ataque mediano e defesa relativamente sólida\", \"dado\": \"Casa: 1.56 gols marcados, 1.17 sofridos em 18 jogos\", \"direcao\": \"volume ofensivo suficiente, mas defesa caseira contida\", \"forca\": \"media\"},\n    {\"id\": \"C6\", \"bloco\": \"home_estilo\", \"fato\": \"Estilo defensivamente exposto\", \"dado\": \"50.9 ataques perigosos sofridos/j; pior nos últimos 5 (55.2)\", \"direcao\": \"defesa vulnerável a ataques constantes\", \"forca\": \"media\"},\n    {\"id\": \"C7\", \"bloco\": \"home_qualidade\", \"fato\": \"Qualidade individual modesta\", \"dado\": \"Nota média 6.82; Stach caindo, Bijol subindo, sem estrelas\", \"direcao\": \"ataque sem referência de elite\", \"forca\": \"media\"},\n    {\"id\": \"C9\", \"bloco\": \"home_forma\", \"fato\": \"Forma recente inflada por adversários fracos\", \"dado\": \"Últimos 5: EVEVV contra times em crise (Wolves, Burnley, Tottenham, Bournemouth)\", \"direcao\": \"desempenho pode não se repetir contra defesa forte do Brighton\", \"forca\": \"alta\"},\n    {\"id\": \"C10\", \"bloco\": \"home_forma\", \"fato\": \"Consistência de marcar, mas poucas clean sheets\", \"dado\": \"Marcou em 25/36 jogos; apenas 7 clean sheets\", \"direcao\": \"propenso a sofrer gols\", \"forca\": \"baixa\"},\n    {\"id\": \"C11\", \"bloco\": \"home_momentum\", \"fato\": \"Pressiona cedo em casa, mas sofre no 2º tempo\", \"dado\": \"Curvas de momentum mostram pressão no início e queda após 60'\", \"direcao\": \"janela de gol para adversário é após o intervalo\", \"forca\": \"media\"},\n    {\"id\": \"C12\", \"bloco\": \"home_faixas\", \"fato\": \"Sofre mais gols no 2º tempo, especialmente 76-90\", \"dado\": \"Sofre 0.31 em 46-60, 0.31 em 61-75, 0.42 em 76-90\", \"direcao\": \"defesa piora no fim do jogo\", \"forca\": \"media\"},\n    {\"id\": \"C13\", \"bloco\": \"home_desfalques\", \"fato\": \"Okafor fora: perda ofensiva significativa\", \"dado\": \"8 gols, 17% dos gols, 45% nos últimos 5; SoT cai de 4.39 para 3.25 sem ele\", \"direcao\": \"reduz xG do Leeds, especialmente no 1º tempo\", \"forca\": \"alta\"},\n    {\"id\": \"C14\", \"bloco\": \"home_desfalques\", \"fato\": \"Múltiplos desfalques defensivos (Struijk, Gruev, Bogle/Gudmundsson dúvidas)\", \"dado\": \"Perda de ~30% das interceptações/desarmes do time\", \"direcao\": \"aumenta xG do Brighton, defesa mais frágil\", \"forca\": \"alta\"},\n    {\"id\": \"C15\", \"bloco\": \"away_gols\", \"fato\": \"Ataque do Brighton fora de casa é mediano\", \"dado\": \"1.22 gols marcados fora, 4.17 SoT/j\", \"direcao\": \"não é um ataque visitante arrasador, mas suficiente contra defesa fraca\", \"forca\": \"media\"},\n    {\"id\": \"C16\", \"bloco\": \"away_estilo\", \"fato\": \"Estilo dominante, especialmente recente\", \"dado\": \"58.6 ataques perigosos/j nos últimos 5; 53.2 na temporada\", \"direcao\": \"controla posse e dita ritmo\", \"forca\": \"alta\"},\n    {\"id\": \"C17\", \"bloco\": \"away_qualidade\", \"fato\": \"Qualidade individual superior, com Groß e Dunk em alta\", \"dado\": \"Nota média 6.85; Groß 7.16 (criação), Dunk 8.1 no último jogo\", \"direcao\": \"superioridade no meio-campo e defesa\", \"forca\": \"media\"},\n    {\"id\": \"C18\", \"bloco\": \"away_forma\", \"fato\": \"Forma recente sólida, mas contra adversários fracos\", \"dado\": \"VDVEV (10pts), 11 marcados, 5 sofridos; adversários como Burnley, Wolves, Tottenham\", \"direcao\": \"desempenho pode ser inflada\", \"forca\": \"media\"},\n    {\"id\": \"C19\", \"bloco\": \"away_momentum\", \"fato\": \"Pressão inicial, reage após marcar, mas desmorona ao sofrer\", \"dado\": \"Curvas mostram gols cedo (0-15); Δ +2.3 após marcar, Δ -2.1 ao sofrer\", \"direcao\": \"crucial marcar primeiro; vulnerabilidade se sofrer gol\", \"forca\": \"alta\"},\n    {\"id\": \"C20\", \"bloco\": \"away_faixas\", \"fato\": \"Marca mais no início (0-15) e no fim (76-90)\", \"dado\": \"0.25 e 0.44 gols/j nessas faixas; sofre mais 31-45 e 76-90\", \"direcao\": \"janelas de gol alinhadas com fraqueza do Leeds\", \"forca\": \"media\"},\n    {\"id\": \"C21\", \"bloco\": \"away_desfalques\", \"fato\": \"Mitoma fora: perda de criatividade\", \"dado\": \"3 gols, 1 assist, 1.2 KP/j; time sem ele até produz mais gols (ruído)\", \"direcao\": \"pequena redução no xG, mas Brighton tem alternativas\", \"forca\": \"baixa\"},\n    {\"id\": \"C22\", \"bloco\": \"away_desfalques\", \"fato\": \"Wieffer dúvida: perda defensiva no meio\", \"dado\": \"12% das interceptações do time, 2.6 desarmes/j\", \"direcao\": \"se ausente, aumenta chance de Leeds marcar em transições\", \"forca\": \"media\"},\n    {\"id\": \"C23\", \"bloco\": \"cruzamento_faixa\", \"fato\": \"Cruzamento de faixas: janela crítica Brighton 76-90 (índice 0.86)\", \"dado\": \"Brighton ataque x Leeds defesa: 76-90 soma 0.86; Leeds sofre 0.42 nessa faixa\", \"direcao\": \"alta probabilidade de gol do Brighton no fim do jogo\", \"forca\": \"alta\"},\n    {\"id\": \"C24\", \"bloco\": \"base_rate\", \"fato\": \"Base rate (Rota B) aponta total baixo (2.29)\", \"dado\": \"SoT: Leeds 1.24, Brighton 1.05, total 2.29\", \"direcao\": \"jogo tende a ter poucos gols (under 2.5)\", \"forca\": \"alta\"},\n    {\"id\": \"C25\", \"bloco\": \"probs_mercado\", \"fato\": \"Mercado inicial: 1x2 equilibrado, under 2.5 40%\", \"dado\": \"Rota B: casa 39%, empate 32%, fora 29%; over 2.5 40%\", \"direcao\": \"âncora para ajustes; leve favoritismo ao Leeds, mas under prevalece\", \"forca\": \"alta\"},\n    {\"id\": \"C26\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"Leeds sofre muito contra times dominantes\", \"dado\": \"Contra dominantes (posse >53%): sofre 2.27 g/j, marca 1.09\", \"direcao\": \"Brighton encaixa como dominante; Leeds deve sofrer gols\", \"forca\": \"alta\"},\n    {\"id\": \"C27\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"Brighton defende bem contra blocos baixos\", \"dado\": \"Contra bloco baixo: sofre 0.60 g/j, marca 1.33\", \"direcao\": \"deve controlar e sofrer pouco\", \"forca\": \"alta\"},\n    {\"id\": \"C28\", \"bloco\": \"cruzamentos_computados\", \"fato\": \"Dinâmica pós-gol: Brighton desmorona ao sofrer, mas mata após marcar\", \"dado\": \"Δ -2.1 ao sofrer gol; Δ +2.3 após marcar\", \"direcao\": \"primeiro gol dita o rumo do jogo; Brighton favorito a abrir placar\", \"forca\": \"alta\"}\n  ],\n  \"blocos_sem_sinal\": [],\n  \"descartadas\": [\n    {\"id\": \"C5\", \"motivo\": \"Informação genérica já incorporada no base rate e prior de mercado.\"},\n    {\"id\": \"C10\", \"motivo\": \"Dado de consistência BTTS não agrega aresta específica, coberto por outros fatores.\"},\n    {\"id\": \"C18\", \"motivo\": \"Forma recente do Brighton já foi considerada em arestas de estilo e motivação.\"},\n    {\"id\": \"C20\", \"motivo\": \"Substituído pelo cruzamento de faixas (C23), mais específico.\"}\n  ],\n  \"jogadores\": [\n    {\"nome\": \"Anton Stach\", \"time\": \"home\", \"leitura\": \"Meia mais criativo do Leeds, mas forma caiu; será anulado pela pressão alta do Brighton e terá dificuldade para armar jogadas.\"},\n    {\"nome\": \"Ethan Ampadu\", \"time\": \"home\", \"leitura\": \"Volante defensivo estável, importante para conter Groß e transições; terá trabalho excessivo com desfalques ao redor.\"},\n    {\"nome\": \"Sean Longstaff\", \"time\": \"home\", \"leitura\": \"Meia de ligação, ausente em 1/5, não é decisivo; pouca influência no ataque.\"},\n    {\"nome\": \"Jaka Bijol\", \"time\": \"home\", \"leitura\": \"Zagueiro em ascensão, será testado por Welbeck; com Struijk fora, assume liderança, mas pode sofrer.\"},\n    {\"nome\": \"James Justin\", \"time\": \"home\", \"leitura\": \"Lateral com nota em queda; enfrentará pontas rápidos do Brighton e pode ser ponto frágil na defesa.\"},\n    {\"nome\": \"Pascal Struijk\", \"time\": \"home\", \"leitura\": \"Zagueiro titular fora; sua ausência tira 10% de interceptações e liderança defensiva, expondo ainda mais a zaga.\"},\n    {\"nome\": \"Noah Okafor\", \"time\": \"home\", \"leitura\": \"Artilheiro em excelente fase (4 gols nos últimos 5) está fora; perda crucial, representa 45% dos gols recentes, sem ele o ataque perde mobilidade e finalização.\"},\n    {\"nome\": \"Jayden Bogle\", \"time\": \"home\", \"leitura\": \"Lateral dúvida; se fora, lado direito perde 13% de interceptações, facilitando avanços do Brighton por ali.\"},\n    {\"nome\": \"Ilia Gruev\", \"time\": \"home\", \"leitura\": \"Meia defensivo fora; sem ele, proteção ao meio-campo cai, abrindo espaços para Groß.\"},\n    {\"nome\": \"Gabriel Gudmundsson\", \"time\": \"home\", \"leitura\": \"Lateral dúvida; baixo impacto ofensivo, mas defensivamente contribui com 10% de interceptações; sua falta deixa lateral vulnerável.\"},\n    {\"nome\": \"Facundo Buonanotte\", \"time\": \"home\", \"leitura\": \"Meia com apenas 2 jogos, 0% dos gols; irrelevante para o confronto.\"},\n    {\"nome\": \"Jason Steele\", \"time\": \"away\", \"leitura\": \"Goleiro com poucos jogos na temporada, nota alta mas amostra pequena; não deve ser diferencial.\"},\n    {\"nome\": \"Pascal Groß\", \"time\": \"away\", \"leitura\": \"Cérebro do Brighton, 7.16 de nota; enfrentará meio-campo desfalcado e terá espaço para ditar o ritmo e criar chances.\"},\n    {\"nome\": \"Jan Paul van Hecke\", \"time\": \"away\", \"leitura\": \"Zagueiro titular, boa nota mas forma caindo; terá que lidar com Calvert-Lewin, mas com apoio de Dunk.\"},\n    {\"nome\": \"Olivier Boscagli\", \"time\": \"away\", \"leitura\": \"Zagueiro/meia reserva, pouco utilizado; não deve influenciar.\"},\n    {\"nome\": \"H. Howell\", \"time\": \"away\", \"leitura\": \"Atacante com poucos jogos; se acionado, oferece velocidade, mas sem histórico de impacto.\"},\n    {\"nome\": \"Lewis Dunk\", \"time\": \"away\", \"leitura\": \"Zagueiro experiente em alta (nota 8.1 no último jogo); crucial para neutralizar o ataque do Leeds e líder defensivo.\"},\n    {\"nome\": \"Mats Wieffer\", \"time\": \"away\", \"leitura\": \"Meia defensivo dúvida; se ausente, Brighton perde 12% de interceptações, expondo mais a defesa a contra-ataques.\"},\n    {\"nome\": \"Kaoru Mitoma\", \"time\": \"away\", \"leitura\": \"Ponta criativo fora; sua ausência reduz dribles e profundidade, mas Brighton já mostrou adaptação (marcou mais sem ele, embora isso possa ser ruído).\"},\n    {\"nome\": \"Stefanos Tzimas\", \"time\": \"away\", \"leitura\": \"Atacante reserva fora, 1 gol; sem impacto real, baixa minutagem.\"},\n    {\"nome\": \"A. Webster\", \"time\": \"away\", \"leitura\": \"Zagueiro sem minutos na temporada; ausência irrelevante.\"}\n  ],\n  \"arestas\": [\n    {\n      \"id\": \"A1\",\n      \"liga\": [\"C3\", \"C4\", \"C24\", \"C26\", \"C27\"],\n      \"leitura\": \"Brighton precisa vencer e enfrenta um Leeds que não tem motivação, tendendo a se fechar. Brighton é eficaz contra blocos baixos (sofre 0.60) e Leeds é frágil contra dominantes (sofre 2.27). O base rate já sugere total baixo (2.29), mas a intenção reforça o under. Expectativa de vitória controlada do Brighton.\",\n      \"efeito\": \"Reduz total para ~2.20, xG Brighton sobe para 1.35, xG Leeds cai para 0.85; favorece under 2.5 e vitória do Brighton.\"\n    },\n    {\n      \"id\": \"A2\",\n      \"liga\": [\"C14\", \"C16\", \"C23\"],\n      \"leitura\": \"Com defesa desfalcada (perda de ~30% de interceptações), Leeds sofrerá com volume ofensivo do Brighton (58.6 ataques perigosos recentes). A janela 76-90 é crítica: Leeds sofre 0.42, Brighton marca 0.44, cruzamento com índice 0.86.\",\n      \"efeito\": \"Concentração de gols do Brighton no 2º tempo, especialmente após 75'; aumenta probabilidade de Brighton over 1.5 team total.\"\n    },\n    {\n      \"id\": \"A3\",\n      \"liga\": [\"C13\", \"C26\", \"C9\"],\n      \"leitura\": \"Sem Okafor (45% de participação recente nos gols), Leeds perde sua principal arma. Historicamente, contra dominantes já possui média baixa (1.09). Brighton defende bem contra blocos baixos (0.60 sofridos). Forma recente do Leeds foi contra times fracos.\",\n      \"efeito\": \"xG do Leeds cai para 0.85; chance de clean sheet do Brighton sobe; under 2.5 fortalecido.\"\n    },\n    {\n      \"id\": \"A4\",\n      \"liga\": [\"C28\", \"C11\", \"C3\"],\n      \"leitura\": \"Brighton desmorona ao sofrer gol (Δ -2.1) e Leeds costuma pressionar no início em casa. Esse contraste cria risco de jogo aberto se Leeds marcar primeiro. Mas Brighton, quando marca, tende a ampliar (Δ +2.3) e controlar.\",\n      \"efeito\": \"Cenário mais provável é Brighton abrir e controlar; mas se Leeds abrir, o jogo pode ter mais gols. Ajuste marginal para cima na variância, mas sem mudar total médio.\"\n    },\n    {\n      \"id\": \"A5\",\n      \"liga\": [\"C7\", \"C14\", \"C15\", \"C17\"],\n      \"leitura\": \"Brighton tem superioridade individual com Groß (criação) e Dunk (defesa). Leeds tem qualidade inferior e desfalques defensivos. O ataque do Brighton fora (4.17 SoT/j) deve criar o suficiente para marcar em defesa frágil.\",\n      \"efeito\": \"Confirma xG Brighton em ~1.35; probabilidade de Brighton marcar 2 gols é razoável (35%).\"\n    },\n    {\n      \"id\": \"A6\",\n      \"liga\": [\"C1\", \"C3\", \"C2\"],\n      \"leitura\": \"Sem cansaço (descanso similar), ambos podem jogar em máxima intensidade. A motivação superior do Brighton e o fator casa do Leeds se anulam parcialmente. Brighton leva vantagem mental e técnica.\",\n      \"efeito\": \"Neutro para total, ligeira vantagem para Brighton no 1x2 (38% vitória).\"\n    },\n    {\n      \"id\": \"A7\",\n      \"liga\": [\"C12\", \"C23\"],\n      \"leitura\": \"As janelas onde Leeds mais sofre (46-60 e 76-90) coincidem com as de maior produção do Brighton no cruzamento (46-60: 0.50; 76-90: 0.86). O gol do Brighton é mais provável no 2º tempo.\",\n      \"efeito\": \"Aumenta xG do Brighton no 2º tempo (0.75) e probabilidade de over 0.5 no 2º tempo.\"\n    },\n    {\n      \"id\": \"A8\",\n      \"liga\": [\"C25\", \"C4\", \"C13\", \"C14\"],\n      \"leitura\": \"O prior de mercado (1x2 39/32/29, over 2.5 40%) já indicava jogo equilibrado e tendendo a under. Com desfalques do Leeds reduzindo seu ataque e a intenção do jogo travando, o under ganha força.\",\n      \"efeito\": \"Movemos 1x2: Brighton 38%, Draw 32%, Leeds 30%; over 2.5 cai de 40% para 38%.\"\n    },\n    {\n      \"id\": \"A9\",\n      \"liga\": [\"C13\", \"C17\", \"C26\", \"C27\", \"C7\"],\n      \"leitura\": \"Calvert-Lewin, artilheiro do Leeds, enfrenta zaga sólida do Brighton (Dunk, Van Hecke) e perdeu seu parceiro Okafor. Welbeck, do Brighton, enfrenta defesa desfalcada e lenta. Probabilidades de marcar se invertem.\",\n      \"efeito\": \"Welbeck com alta probabilidade de gol (35%); Calvert-Lewin com baixa (20%), apesar de ser o principal.\"\n    },\n    {\n      \"id\": \"A10\",\n      \"liga\": [\"C21\", \"C14\"],\n      \"leitura\": \"A ausência de Mitoma reduz o poder de drible e criação pelos lados, justamente onde Leeds está mais frágil (laterais desfalcados). Porém, Brighton ainda tem opções como Diego Gómez e Minteh. O impacto é atenuado.\",\n      \"efeito\": \"Pequena redução no xG do Brighton (de 1.35 para 1.30?), mas não o suficiente para mudar a tendência geral.\"\n    },\n    {\n      \"id\": \"A11\",\n      \"liga\": [\"C22\", \"C13\", \"C14\"],\n      \"leitura\": \"Se Wieffer (dúvida) não jogar, Brighton perde 12% de interceptações, abrindo espaço para contra-ataques de um Leeds desfalcado ofensivamente. O efeito é marginal porque Leeds não tem armas.\",\n      \"efeito\": \"Leve aumento no xG do Leeds (0.85 -> 0.90) se Wieffer ausente, mas mantém baixo.\"\n    }\n  ],\n  \"roteiros\": [\n    {\n      \"nome\": \"Controle silencioso\",\n      \"prob\": 0.55,\n      \"filme\": \"Brighton impõe seu estilo dominante desde o início, trocando passes e desgastando o Leeds. Conseguem um gol no 1º tempo (provavelmente entre 31-45), recuam um pouco, e controlam o jogo. No 2º tempo, administram e marcam mais um em contra-ataque no final (76-90), com Leeds se expondo. Placar típico: 0x2.\",\n      \"arestas\": [\"A1\", \"A2\", \"A5\", \"A7\", \"A8\"]\n    },\n    {\n      \"nome\": \"Susto e reação\",\n      \"prob\": 0.25,\n      \"filme\": \"Leeds consegue um gol cedo (aproveitando pressão inicial) e Brighton sente o golpe (desmorona). O jogo fica aberto, com Brighton se lançando e Leeds ameaçando em contra-ataque. Brighton empata ainda no 1º tempo ou início do 2º, e vira com gols no 2º tempo. Placar: 2x1 para Brighton.\",\n      \"arestas\": [\"A4\", \"A6\", \"A9\", \"A11\"]\n    },\n    {\n      \"nome\": \"Ferrolho frustrante\",\n      \"prob\": 0.20,\n      \"filme\": \"Leeds se fecha bem, Brighton não consegue furar a retranca e sente falta de criatividade (Mitoma fora). Jogo morno, poucas chances, com possibilidade de 0x0 ou até gol de bola parada do Leeds. Placar: 0x0 ou 1x0 Leeds.\",\n      \"arestas\": [\"A3\", \"A10\", \"A8\"]\n    }\n  ],\n  \"janelas\": [\n    {\"faixa\": \"0-15\", \"leitura\": \"Brighton inicia pressionando, Leeds resguardado. Chance de gol do visitante em início avassalador, mas Leeds também pode surpreender. Probabilidade moderada de gol.\", \"prob_gol\": 0.20, \"lado\": \"away\"},\n    {\"faixa\": \"16-30\", \"leitura\": \"Jogo mais cadenciado, Brighton mantém posse, Leeds tenta encaixar contra-ataque. Menor probabilidade de gol.\", \"prob_gol\": 0.15, \"lado\": \"equilibrado\"},\n    {\"faixa\": \"31-45\", \"leitura\": \"Melhor janela do Leeds no ataque e pior do Brighton na defesa; historicamente Leeds marca aqui. Brighton também oferece perigo. Maior chance de gol no 1º tempo.\", \"prob_gol\": 0.30, \"lado\": \"equilibrado\"},\n    {\"faixa\": \"46-60\", \"leitura\": \"Volta do intervalo: se Brighton estiver em vantagem, recua; Leeds tenta crescer, mas é frágil contra-ataque. Possibilidade de gol em transição.\", \"prob_gol\": 0.20, \"lado\": \"away\"},\n    {\"faixa\": \"61-75\", \"leitura\": \"Leeds começa a se expor mais, abrindo espaços. Brighton explora com velocidade. Janela perigosa para gols do visitante.\", \"prob_gol\": 0.25, \"lado\": \"away\"},\n    {\"faixa\": \"76-90\", \"leitura\": \"Janela crítica: Leeds sofre muitos gols no fim, e Brighton marca muito nela. Com jogo físico no fim, gol do Brighton é muito provável.\", \"prob_gol\": 0.35, \"lado\": \"away\"}\n  ],\n  \"tempos\": {\n    \"primeiro\": {\n      \"analise\": \"Brighton deve ditar a posse e pressionar desde o apito inicial. Leeds, sem Okafor e com meio-campo desfalcado, terá dificuldade para criar, mas historicamente marca mais na reta final do 1º tempo. A defesa do Leeds, mesmo frágil, em casa pode segurar os primeiros 30 minutos. Espera-se um gol do Brighton antes do intervalo, mas não está descartado um 0x0 se a retranca funcionar. Probabilidade de ao menos um gol no 1º tempo: 60%.\",\n      \"prob_gol\": 0.60\n    },\n    \"segundo\": {\n      \"analise\": \"Com o cansaço e a necessidade de vitória, Brighton aumenta a pressão no 2º tempo, especialmente se o placar estiver adverso. Leeds, se estiver perdendo, pode se abrir, facilitando contra-ataques. A defesa do Leeds cai muito após os 60 minutos, e Brighton tem histórico de marcar no fim. Probabilidade de gol no 2º tempo é ainda maior, especialmente após 75'. Espera-se que o 2º tempo tenha mais gols que o 1º.\",\n      \"prob_gol\": 0.75\n    }\n  },\n  \"marcadores\": {\n    \"home\": [\n      {\"nome\": \"Dominic Calvert-Lewin\", \"prob\": 0.20, \"motivo\": \"Artilheiro do time com 13 gols (4 pênaltis) e 1.0 SoT/j; enfrenta zaga sólida, mas é a principal referência ofensiva. Sem Okafor, terá mais responsabilidade, mas também mais marcação.\"},\n      {\"nome\": \"Anton Stach\", \"prob\": 0.10, \"motivo\": \"Meia com 5 gols, 0.5 SoT/j; pode aparecer como elemento surpresa em chutes de longa distância ou bolas paradas.\"},\n      {\"nome\": \"Lukas Nmecha\", \"prob\": 0.08, \"motivo\": \"Segundo atacante com 6 gols (2 pên), 0.6 SoT/j; deve entrar no decorrer do jogo e pode ser opção em caso de necessidade de gol.\"}\n    ],\n    \"away\": [\n      {\"nome\": \"Danny Welbeck\", \"prob\": 0.35, \"motivo\": \"Artilheiro do Brighton com 13 gols e 0.8 SoT/j; experiente, com boa movimentação, enfrenta defesa lenta e desfalcada. Grande chance de marcar.\"},\n      {\"nome\": \"Jack Hinshelwood\", \"prob\": 0.20, \"motivo\": \"Meia em excelente fase com 3 gols nos últimos 5 jogos; aparece bem na área e deve se aproveitar do espaço no meio-campo desfalcado do Leeds.\"},\n      {\"nome\": \"Diego Gómez\", \"prob\": 0.15, \"motivo\": \"Atacante versátil com 5 gols na temporada; embora não marque nos últimos 5, pode explorar a defesa cansada no 2º tempo.\"}\n    ]\n  },\n  \"mercados\": [\n    {\"market\": \"1x2\", \"selection\": \"home\", \"team\": null, \"line\": null, \"prob\": 0.30, \"variancia\": 4, \"valor\": \"baixo\", \"nota\": \"Leeds sem motivação e desfalcado; vitória improvável.\"},\n    {\"market\": \"1x2\", \"selection\": \"draw\", \"team\": null, \"line\": null, \"prob\": 0.32, \"variancia\": 4, \"valor\": \"medio\", \"nota\": \"Empate é resultado possível se o ferrolho funcionar, mas Brighton pressionará muito.\"},\n    {\"market\": \"1x2\", \"selection\": \"away\", \"team\": null, \"line\": null, \"prob\": 0.38, \"variancia\": 4, \"valor\": \"medio\", \"nota\": \"Brighton favorito, com qualidade e motivação; odds podem estar justas.\"},\n    {\"market\": \"double_chance\", \"selection\": \"home_draw\", \"team\": null, \"line\": null, \"prob\": 0.62, \"variancia\": 2, \"valor\": \"baixo\", \"nota\": \"Cobre empate e vitória do Leeds; probabilidade menor que o prior (71%), sem valor.\"},\n    {\"market\": \"double_chance\", \"selection\": \"draw_away\", \"team\": null, \"line\": null, \"prob\": 0.70, \"variancia\": 2, \"valor\": \"medio\", \"nota\": \"Cobre Brighton e empate, alinhado ao roteiro mais provável; boa segurança.\"},\n    {\"market\": \"double_chance\", \"selection\": \"home_away\", \"team\": null, \"line\": null, \"prob\": 0.68, \"variancia\": 2, \"valor\": \"baixo\", \"nota\": \"Elimina empate, mas probabilidade similar ao prior (68%), sem valor.\"},\n    {\"market\": \"draw_no_bet\", \"selection\": \"home\", \"team\": null, \"line\": null, \"prob\": 0.30, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"Leeds dificilmente vencerá; DNB reduz risco, mas ainda é improvável.\"},\n    {\"market\": \"draw_no_bet\", \"selection\": \"away\", \"team\": null, \"line\": null, \"prob\": 0.38, \"variancia\": 3, \"valor\": \"medio\", \"nota\": \"Brighton favorito; empate anula, mas risco de empate é significativo.\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 1.5, \"prob\": 0.65, \"variancia\": 2, \"valor\": \"medio\", \"nota\": \"Provável que tenha ao menos 2 gols; linha baixa, mas com under 2.5 provável, over 1.5 é ok.\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 2.5, \"prob\": 0.38, \"variancia\": 3, \"valor\": \"alto\", \"nota\": \"Jogo tende a travar; under 2.5 tem valor claro, mas over é contra a tendência.\"},\n    {\"market\": \"over_under\", \"selection\": \"over\", \"team\": null, \"line\": 3.5, \"prob\": 0.15, \"variancia\": 4, \"valor\": \"baixo\", \"nota\": \"Goleada improvável; linha alta sem apelo.\"},\n    {\"market\": \"btts\", \"selection\": \"yes\", \"team\": null, \"line\": null, \"prob\": 0.45, \"variancia\": 3, \"valor\": \"medio\", \"nota\": \"Leeds pode não marcar; Brighton deve marcar, mas ambos marcarem é menos provável.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"home\", \"line\": 0.5, \"prob\": 0.55, \"variancia\": 1, \"valor\": \"medio\", \"nota\": \"Leeds pode marcar, mas risco de 0 é elevado; odds podem refletir.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"home\", \"line\": 1.5, \"prob\": 0.15, \"variancia\": 3, \"valor\": \"baixo\", \"nota\": \"Leeds dificilmente fará 2 gols.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"away\", \"line\": 0.5, \"prob\": 0.75, \"variancia\": 1, \"valor\": \"alto\", \"nota\": \"Brighton deve marcar ao menos um gol; alta probabilidade.\"},\n    {\"market\": \"team_total\", \"selection\": \"over\", \"team\": \"away\", \"line\": 1.5, \"prob\": 0.35, \"variancia\": 3, \"valor\": \"medio\", \"nota\": \"Brighton pode marcar dois, mas não é certo; odds podem oferecer valor.\"},\n    {\"market\": \"handicap\", \"selection\": \"home\", \"team\": null, \"line\": -1, \"prob\": 0.08, \"variancia\": 5, \"valor\": \"baixo\", \"nota\": \"Leeds não deve vencer, handicap -1 é furada.\"},\n    {\"market\": \"handicap\", \"selection\": \"away\", \"team\": null, \"line\": -1, \"prob\": 0.20, \"variancia\": 5, \"valor\": \"medio\", \"nota\": \"Brighton pode vencer por 2, mas risco de 1 gol de diferença é alto.\"},\n    {\"market\": \"odd_even\", \"selection\": \"odd\", \"team\": null, \"line\": null, \"prob\": 0.48, \"variancia\": 5, \"valor\": \"baixo\", \"nota\": \"Mercado de sorte, evite.\"}\n  ],\n  \"best_bet\": {\n    \"market\": \"team_total\",\n    \"selection\": \"over\",\n    \"team\": \"away\",\n    \"line\": 0.5,\n    \"confidence\": \"high\",\n    \"probability\": 0.75,\n    \"evidence_for\": [\"C3\", \"C4\", \"C14\", \"C15\", \"C16\", \"C23\", \"C24\", \"C25\", \"A1\", \"A2\", \"A5\", \"A7\"],\n    \"evidence_against\": [\"C21\", \"A10\", \"A3\"],\n    \"analysis\": \"O Brighton precisa vencer para seguir na briga pela Champions e enfrenta um Leeds sem motivação e com múltiplos desfalques, especialmente defensivos. O ataque do Brighton, mesmo sem Mitoma, é superior e conta com Welbeck e Hinshelwood em boa fase. A defesa do Leeds, que já sofre com times dominantes (2.27 g/j), está ainda mais frágil sem Struijk e outros. As janelas de gol (especialmente 76-90) coincidem com o momento de maior vulnerabilidade do Leeds. A probabilidade do Brighton marcar ao menos um gol é de 75%, significativamente acima do prior de 65%. O mercado team_total over 0.5 é de baixíssima variância e oferece segurança mesmo em cenários de jogo travado. Riscos incluem um dia inspirado da defesa do Leeds ou falta de eficiência do Brighton, mas as evidências convergem para o gol visitante.\"\n  },\n  \"refutacao\": {\n    \"ataques\": [\n      {\n        \"alvo\": \"Brighton team_total over 0.5\",\n        \"argumento\": \"Leeds em casa tem média de apenas 1.17 gols sofridos, e pode se fechar ainda mais com um jogo sem importância, anulando o ataque do Brighton.\",\n        \"ids\": [\"C5\", \"C4\"],\n        \"veredito\": \"enfraquece\"\n      },\n      {\n        \"alvo\": \"Brighton team_total over 0.5\",\n        \"argumento\": \"A ausência de Mitoma reduz a criatividade e pode fazer o Brighton ter dificuldade para furar a retranca, como já aconteceu em outros jogos fora.\",\n        \"ids\": [\"C21\", \"A10\"],\n        \"veredito\": \"enfraquece\"\n      },\n      {\n        \"alvo\": \"Brighton team_total over 0.5\",\n        \"argumento\": \"Se o Leeds marcar primeiro, o Brighton pode se abalar e não conseguir reagir, ficando sem gols.\",\n        \"ids\": [\"C28\", \"A4\"],\n        \"veredito\": \"nao_sustenta\"\n      }\n    ],\n    \"conclusao\": \"Nenhum ataque derruba a aposta. O primeiro enfraquece levemente, pois a defesa do Leeds em casa não é de todo ruim, mas os desfalques e a qualidade do Brighton tornam o gol visitante muito provável. A aposta sobrevive como a de menor variância e alto valor relativo.\"\n  },\n  \"drivers\": [\n    \"Motivação assimétrica: Brighton precisa vencer, Leeds não tem nada em jogo.\",\n    \"Desfalques defensivos do Leeds (Struijk, Gruev, possivelmente Bogle) e ofensivo (Okafor).\",\n    \"Histórico de Leeds contra times dominantes (sofre 2.27 g/j) e de Brighton contra blocos baixos (sofre 0.60).\"\n  ]\n}\n```\n\nRevisão: alguns campos, como `confidence_regra`, pedem string. Já está.\n\nVerificar se todos os campos obrigatórios estão presentes: `home`, `away`, `general`, `conclusoes`, `blocos_sem_sinal`, `descartadas`, `jogadores`, `arestas`, `roteiros`, `janelas`, `tempos`, `marcadores`, `mercados`, `best_bet`, `refutacao`, `drivers`. Sim.\n\nOs arrays `mercados` têm 19 itens, ok.\n\n`best_bet` tem `evidence_for` e `evidence_against` como arrays de strings.\n\n`refutacao.ataques` tem `alvo`, `argumento`, `ids`, `veredito`.\n\n`drivers` 3 itens.\n\nAgora, validar se as somas de `xg_bands` conferem com `xg_1t` e `xg_2t`. Não há validação estrita, o runtime normaliza, então pode manter aproximado.\n\nNota sobre `one_x_two_2t`: probs 25/40/35 somam 100%. Ok.\n\n`btts_prob`: 45%, ok.\n\n`over25_prob`: 38%, ok.\n\n`total_1t`: 0.98, `total_2t`: 1.22, total 2.20. Bate.\n\nTudo certo.\n\nAgora, enviar o JSON.",
+  "reasoningTokens": 31847,
+  "elapsedMs": 522982,
+  "promptChars": 43627,
+  "error": null
+}

@@ -12,17 +12,19 @@ facetas:
 testada: parcial
 testes:
   - "P1 (2026-06-28): assert no banco — getPlayerDetail(James Garner) = 38 appearances, gols dobrados por partida (2) == gols da season (2); E2E Chrome /players/:id renderiza 38 linhas com nota/min/G-A, 0 erro de console"
+  - "P7 (2026-07-03): assert no banco — getPlayerDetail(artilheiro PL) devolve minuteEvents por tipo com 0 minutos nulos e avgMinutes preenchido; UI NÃO verificada no Chrome (chrome-devtools travado pelo profile)"
+  - "P8 (2026-07-03): assert no banco — seasonTeamGames=38 (36 played + 2 missed), appearances=36 com KP em 17 e SoT em 29 (null SportMonks = 0); UI NÃO verificada no Chrome (chrome-devtools travado pelo profile)"
 depende_de: []
 impacta: [LIG-003]
 ancoras:
   settings: []
-  tabelas: [player, lineup_player, goal, card, injury, match]
+  tabelas: [player, lineup_player, goal, card, injury, match, league]
   tools: []
   funcoes: [getPlayerDetail]
   rotas: ["/players/:id"]
 docs: [docs/investigacoes/pagina-do-jogador.md, docs/planos/LIG-001-pagina-do-jogador.md]
 verificado_em: null
-atualizado: 2026-06-28
+atualizado: 2026-07-03
 ---
 
 # Página do jogador (perfil de performance)
@@ -34,11 +36,14 @@ Transformar a página do jogador (hoje stub: nome + gols/assists/jogos-fora + li
 ## Tarefas
 
 - [x] P1 api+ui — espinha: `appearances` por partida (lineup_player⋈lineup⋈match + goals/cards) renderizada como match-log enriquecido
+- [x] P1.1 api+ui (2026-07-03) — match-log v2: `competition {name, logoUrl}` por appearance (join `league` via `match.leagueCode`, coluna Cp com crest), placar colorido por resultado (V verde/D vermelho) na perspectiva do jogador, chip C/F de mando, rows h-12 (padrão marcadores) e paginação 10-em-10 com fillers anti-CLS
 - [x] P2 api+ui — agregados da season (jogos, titular, minutos, avg rating, gols/pênaltis, assists, cartões, MOTM) → card "Temporada"
 - [x] P3 api+ui — per-90 com gate de amostra (piso 540 min) — exibido no card Temporada
 - [x] P4 api+ui — breakdowns de gol: casa/fora + 1º/2º tempo (cobre W-005/W-006) — card Temporada
 - [ ] P5 ui — strip de forma + consistência **pendentes**; ✅ gráfico de notas (ECharts) + ✅ gráfico de minutos por partida (ECharts) (2026-06-28)
 - [ ] P6 api+ui — disciplina (cartões) + disponibilidade (lesões) + bio do header (idade/altura/nacionalidade/posição) — **bio ✅ (2026-06-28); cartões/lesões pendentes**
+- [x] P7 api+ui (2026-07-03) — relógio 0–90' "Em que minuto ele decide": `minuteEvents` (gol/assist/cartão com minuto exato, oponente via appearance da mesma partida) no `getPlayerDetail` + scatter ECharts (1 ponto por evento no minuto exato, lanes anti-sobreposição, markLine HT, chips de filtro por tipo) em `minute-clock.tsx`; e `season.avgMinutes` (média de minutos por jogo jogado) exibido no card Temporada + header do gráfico de minutos
+- [x] P8 api+ui (2026-07-03) — pacote de widgets de temporada: `PlayerAppearance` ganhou keyPasses/shotsOnTarget/shotsTotal por jogo; `seasonTeamGames` (getRecentTeamGames generalizada com {seasonId, limit}) pro strip; UI: "Temporada em resumo" (tiles com sparkline últimos 10 + per-90, `season-summary.tsx`), "Rating jogo a jogo" (heat-strip com célula não-jogou → link pro jogo, `rating-strip.tsx`), "Curva de forma" (KP/SoT por jogo + média móvel 5 + média season, null SportMonks = 0, `form-curve.tsx`), "G+A acumulados" (step, `cumulative-ga.tsx`), "Casa × fora per-90" (`home-away-split.tsx`) e colunas PC/CG no match-log
 
 ## Plano
 

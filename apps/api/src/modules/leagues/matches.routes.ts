@@ -12,6 +12,7 @@ import { getMatch } from "./get-match/get-match.service"
 import { matchMomentum } from "./get-match-momentum/get-match-momentum.service"
 import { getPrognosis } from "./get-prognosis/get-prognosis.service"
 import { matchScorers } from "./get-scorers/get-scorers.service"
+import { matchStatistics } from "./get-statistics/get-statistics.service"
 
 // `id` is validated as a uuid AT THE EDGE: a malformed id becomes 422 before reaching the service —
 // without it, the Postgres `uuid` column would blow up with "invalid input syntax" (→ 500). A
@@ -57,6 +58,10 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/scorers", ({ params }) => matchScorers(params.id), {
     params: paramId,
     detail: { summary: "Top scorers (goals + assists) of each team over the season" },
+  })
+  .get("/:id/statistics", ({ params }) => matchStatistics(params.id), {
+    params: paramId,
+    detail: { summary: "Team-level match statistics of both teams (ball possession today; more to come)" },
   })
   .get("/:id/momentum", ({ params }) => matchMomentum(params.id), {
     params: paramId,

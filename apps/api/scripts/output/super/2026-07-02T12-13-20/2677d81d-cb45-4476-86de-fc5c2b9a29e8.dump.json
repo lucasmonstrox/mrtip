@@ -1,0 +1,1159 @@
+{
+  "matchId": "2677d81d-cb45-4476-86de-fc5c2b9a29e8",
+  "homeName": "Aston Villa",
+  "awayName": "Liverpool",
+  "actual": "Aston Villa 4-2 Liverpool (HT 1-0)",
+  "ftH": 4,
+  "ftA": 2,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Aston Villa x Liverpool\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-15 19:00 · Rodada 37 · Liga PL\n- Local: Villa Park, Birmingham (grass)\n- Clima: light rain · 11.6°C (sens. 10.1°C) · vento 5.2 m/s · umidade 50% · nuvens 100% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Aston Villa 5 dias (último: liga, 2026-05-10) · Liverpool 6 dias (último: liga, 2026-05-09)\n- Viagem do visitante: ~125 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 360 jogos): mandante 1.522 gols/jogo · visitante 1.225 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-15)\n- Aston Villa: 5º, 59 pts · Liverpool: 4º, 59 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 51 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Aston Villa: 5º, 59 pts, 2 jogo(s) restante(s) (máx possível 65 pts)\n  - já SEGURO do rebaixamento.\n  - Champions ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga de Champions\n  - disputa pela vaga (5º): o Aston Villa **precisa vencer** pra travar (empate ainda deixa 1 rival vivo). Quem ainda ameaça → AFC Bournemouth (6º, 55 pts, máx 61) pode **passar em pontos** — vencendo, se o Aston Villa tropeçar; Brighton & Hove Albion (7º, 53 pts, máx 59) empata em pontos mas está **+6 de saldo** (+10 vs +4) — só passa se o Aston Villa perder por muito E ele vencer por muito (virar -6)\n  - Liverpool: 4º, 59 pts, 2 jogo(s) restante(s) (máx possível 65 pts)\n  - já SEGURO do rebaixamento.\n  - Champions ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga de Champions\n  - disputa pela vaga (4º): o Liverpool **precisa vencer** pra travar (empate ainda deixa 2 rival vivo). Quem ainda ameaça → Aston Villa (5º, 59 pts, máx 65) pode **passar em pontos** — vencendo, se o Liverpool tropeçar; AFC Bournemouth (6º, 55 pts, máx 61) pode **passar em pontos** — vencendo, se o Liverpool tropeçar; Brighton & Hove Albion (7º, 53 pts, máx 59) empata em pontos mas está **-2 de saldo** (+10 vs +12) — só passa se o Liverpool perder por muito E ele vencer por muito (virar 2)\n\n🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui.\n\n## Aston Villa (manda) — até 2026-05-15\n\n### Gols & finalização (season)\n- Total **50 marcados / 46 sofridos** em 36j · média **1.39 marca / 1.28 sofre** por jogo\n- **Em casa (18j): marca 1.56 / sofre 1.11** (28 gols) · por tempo: 1ºT 0.56/0.61 · 2ºT 0.83/0.67\n- **Finalização: 161 SoT (4.47/j · casa 4.78/j) · conv 31%** (aberta, −0 pên) · sofre 4.53 SoT/j (adv 28%) · 9.75 KP/j\n- **Volume: 12.7 chutes/j (7.9 na área) · 2.2 big chances/j** · posse 54%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 49.8/45.3 · chutes pra fora 4.6/4.4 · bloqueados 3.8/3.9 · de fora da área 4.7/4.3\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 43.6/36.4 · chutes pra fora 5.4/3.4 · bloqueados 2.6/3.6 · de fora da área 4.8/5.4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.78**\n  - **Youri Tielemans** nota **7.16** (season) · forma 7.12= (últ.5 do time: 7.3→7.2→7.3→6.6→7.2 📉 caindo) · 2× MOTM · 24j\n  - **Douglas Luiz** nota **7** (season) · forma 6.77↓ (últ.5 do time: 6.6→–→6.8→–→6.9 📈 subindo) · **faltou 2/5** · 1× MOTM · 12j\n  - ⚠️(fora) **A. Mvom Onana** nota **6.96** (season) · forma 7= (últ.5 do time: 7.4→6.6→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 25j\n  - **John McGinn** nota **6.91** (season) · forma 7.22↑ (últ.5 do time: 7.4→7.3→7.2→–→7 📉 caindo) · **faltou 1/5** · 2× MOTM · 30j\n  - **Emiliano Martínez** nota **6.9** (season) · forma 6.93= (últ.5 do time: –→6.8→7.3→6.5→7.1 📉 caindo) · **faltou 1/5** · 2× MOTM · 32j\n  - **Boubacar Kamara** nota **6.9** (season) · forma 6.9= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 20j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EDDVE** (5pts) · **8 feitos / 9 sofridos** · marca 1.6↑ / sofre 1.8↑ g/j · SoT 4.2 feito / 5.6 sofrido\n- **Consistência: MARCOU em 26/36** (casa 14/18 · fora 12/18) · não-marcou 10 · clean sheet 9 · BTTS 20/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Nottingham Forest** (fora · **E 1-1**) — adv 16º briga-Z · você 4º briga-top · seu fora até ali 1.3 marca/1.5 sofre\n- vs **Sunderland** (casa · **V 4-3**) — adv 11º · você 4º briga-top · seu casa até ali 1.4 marca/0.9 sofre\n- @ **Fulham** (fora · **D 0-1**) — adv 12º · você 4º briga-top · seu fora até ali 1.3 marca/1.4 sofre\n- vs **Tottenham Hotspur** (casa · **D 1-2**) — adv 18º briga-Z · você 5º briga-top · seu casa até ali 1.6 marca/1.1 sofre\n- @ **Burnley** (fora · **E 2-2**) — adv 19º REBAIX. · você 5º briga-top · seu fora até ali 1.2 marca/1.4 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Nottingham Forest (FORA · E 1-1) — min 1→93:\n    📈 pressão (net/min): 1'-15' [-1 -3 -2 0 +2 +4 +1 -4 -5 -4 -2 -3 -3 -2 -3] · 16'-30' [+1 +2 +1 0 +3 +4 +4 +4 +3 +2 +2 +2 +1 0 -3] · 31'-45' [-3 0 0 0 +2 +3 +2 -2 -16 -14 -7 -9 -8 -6 -7] · ‖INTERVALO‖ · 46'-60' [-7 -5 -5 -6 -2 0 0 -1 0 0 +3 +3 0 -24 -16] · 61'-75' [-11 -7 -9 -3 -2 -1 +4 -5 -4 -5 -5 -5 -4 -3 -5] · 76'-90' [-2 -8 -8 -3 -1 0 +1 +1 +3 +5 +9 +7 +6 +5 +4] · 91'+ [+3 +3 +1]\n    ⚽ gols: 23'✓ 38'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **4** · 61'-75' **3** · 76'-90' **3**\n  - vs Sunderland (CASA · V 4-3) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 +3 +7 +2 -1 -4 -4 -3 -5 -7 -7 -5 -5 -5 -2] · 16'-30' [+2 +6 +6 +7 +4 +2 +2 +3 +3 +1 +3 +2 0 -3 -5] · 31'-45' [-3 -3 -5 -3 -1 +4 +7 +6 +3 +2 0 -1 -3 -1 +1] · ‖INTERVALO‖ · 46'-60' [+4 +7 +6 +4 +2 +1 0 -1 -2 -3 +3 +8 +6 +5 +3] · 61'-75' [+2 +3 +3 +4 +7 +3 +3 -1 -2 -2 -2 -2 -1 -2 -5] · 76'-90' [-4 -5 -3 -3 -3 -1 +3 +6 +4 +3 -3 -5 -5 -3 -3] · 91'+ [-3 -2 +2 +4 +4 +3 +3]\n    ⚽ gols: 2'✓ 9'✗ 36'✓ 46'✓ 86'✗ 87'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **5** · 61'-75' **1** · 76'-90' **2**\n  - @ Fulham (FORA · D 0-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 -2 -6 -4 -2 0 -2 -1 +1 0 -2 0 -1 -1 -1] · 16'-30' [-1 0 0 0 -1 -2 -2 +2 +1 -1 -1 -5 -4 -3 -3] · 31'-45' [-1 -2 -2 -1 +1 +1 0 0 -1 -3 -3 -2 -9 -8 -4] · ‖INTERVALO‖ · 46'-60' [-1 0 +1 +1 -1 -3 -2 -1 0 +1 0 0 -1 +1 +1] · 61'-75' [+4 +4 +7 +7 +4 +3 +3 +2 +4 +6 +6 +11 +7 +6 +4] · 76'-90' [+3 +3 +2 +2 +3 +2 +2 +24 +20 +17 +13 +7 +5 +2 0] · 91'+ [-1 0 0 0]\n    ⚽ gols: 43'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **3** · 31'-45' **0** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **4**\n  - vs Tottenham Hotspur (CASA · D 1-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 -1 0 0 -1 -3 -2 -1 -2 -1 -1 -3 -2 -2 -2] · 16'-30' [-4 -3 -5 -4 -3 -3 -7 -5 -6 -13 -13 -13 -18 -14 -9] · 31'-45' [-5 0 +2 +1 -1 -2 -3 -3 -3 -6 -6 -7 -5 -3 -2] · ‖INTERVALO‖ · 46'-60' [-2 0 -1 -1 -1 -1 -1 -3 -2 -4 -3 -3 -3 -3 -2] · 61'-75' [0 +3 +3 +3 +3 +3 +3 +1 -1 -1 -2 +2 0 +1 +3] · 76'-90' [+1 +1 +2 +2 +3 +2 +2 +1 -2 0 +1 +2 +3 +4 +6] · 91'+ [+6 +5 +4 +6 +6 +7]\n    ⚽ gols: 12'✗ 25'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **4** · 61'-75' **3** · 76'-90' **6**\n  - @ Burnley (FORA · E 2-2) — min 1→96:\n    📈 pressão (net/min): 1'-15' [-1 0 +1 -1 -1 0 0 -1 -6 -6 -6 -7 -7 -6 -6] · 16'-30' [-1 0 +1 +2 +1 +1 +1 0 +1 0 +3 +3 0 -2 0] · 31'-45' [-2 +1 +2 +1 +5 +5 +9 +7 +8 +8 +6 +3 +7 +2 0] · ‖INTERVALO‖ · 46'-60' [+1 +1 0 0 0 0 +3 +3 +4 0 -3 -2 -1 -4 -4] · 61'-75' [-2 -1 0 -3 -3 0 0 0 0 +1 +1 +2 +3 +3 +2] · 76'-90' [+6 +6 +10 +7 +6 +6 +6 +4 +2 -2 -2 0 0 0 +2] · 91'+ [+1 +3 +1 +4 +2 +1]\n    ⚽ gols: 8'✗ 42'✓ 56'✓ 58'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **0** · 31'-45' **0** ‖ 46'-60' **3** · 61'-75' **4** · 76'-90' **9**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.17 · 31-45: 0.28 · 46-60: 0.25 · 61-75: 0.22 · 76-90: 0.36\n- Sofre por faixa (/j): 0-15: 0.25 · 16-30: 0.11 · 31-45: 0.25 · 46-60: 0.25 · 61-75: 0.19 · 76-90: 0.22\n- 1ºT: marca 20 / sofre 22 (totais na temporada)\n\n### Desfalques de Aston Villa neste jogo\n- **A. Mvom Onana** (Calf Injury) — 2 gols + 0 assists até a data; season: **4% dos gols** do time (4% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (≈ estável); with/without: com ele 1.58 g/j (24j) vs sem ele 1 g/j (12j) = −37%; finaliza **0.29 SoT/jogo** (time: 4.96 SoT/j com ele vs 3.5 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1 interceptações/j** (~16% do time) · 2 desarmes/j · 5 duelos ganhos/j · 0 cruz. certos/j · 0.3 dribles certos/j · 0.3 key passes/j\n- **A. da Rocha dos Santos** (Muscle Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (≈ estável); with/without: com ele 0.67 g/j (3j) vs sem ele 1.45 g/j (33j) = +116%; finaliza **0 SoT/jogo** (time: 3.67 SoT/j com ele vs 4.55 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.3 interceptações/j** (~4% do time) · 0 desarmes/j · 1 duelos ganhos/j · 0 cruz. certos/j · 0.7 dribles certos/j · 0 key passes/j\n- **Harvey Elliott** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/8 gols = **0%** (≈ estável); with/without: com ele 1 g/j (4j) vs sem ele 1.44 g/j (32j) = +44%; finaliza **0 SoT/jogo** (time: 3.25 SoT/j com ele vs 4.63 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0 desarmes/j · 0.8 duelos ganhos/j · 0.3 cruz. certos/j · 0 dribles certos/j · 0.3 key passes/j\n\n## Liverpool (visita) — até 2026-05-15\n\n### Gols & finalização (season)\n- Total **60 marcados / 48 sofridos** em 36j · média **1.67 marca / 1.33 sofre** por jogo\n- **Fora (18j): marca 1.5 / sofre 1.61** (27 gols) · por tempo: 1ºT 0.67/0.44 · 2ºT 1/0.89\n- **Finalização: 164 SoT (4.56/j · fora 4/j) · conv 36%** (aberta, −1 pên) · sofre 3.97 SoT/j (adv 31%) · 12.06 KP/j\n- **Volume: 15.3 chutes/j (9.9 na área) · 2.7 big chances/j** · posse 59.3%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 59.5/42.3 · chutes pra fora 5.8/4.3 · bloqueados 5/3.2 · de fora da área 5.3/3.9\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 46.6/40.4 · chutes pra fora 4.4/5.2 · bloqueados 3.6/3.4 · de fora da área 4.6/3.6\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.88**\n  - **Dominik Szoboszlai** nota **7.4** (season) · forma 7.34= (últ.5 do time: 7.7→6.9→6.4→8.4→7.3 📈 subindo) · 7× MOTM · 38j\n  - **Cody Gakpo** nota **7.08** (season) · forma 7.04= (últ.5 do time: 7.1→7.9→6.6→7.1→6.5 📉 caindo) · 3× MOTM · 37j\n  - **Virgil van Dijk ** nota **7.06** (season) · forma 6.94= (últ.5 do time: 7.7→7.1→6.6→6.6→6.7 📉 caindo) · 2× MOTM · 40j\n  - **Ryan Gravenberch** nota **7.05** (season) · forma 6.86↓ (últ.5 do time: 6.7→6.7→6.3→7.2→7.4 📈 subindo) · 2× MOTM · 37j\n  - **Florian Wirtz** nota **7.05** (season) · forma 7.17= (últ.5 do time: 7.5→7→7.2→7→– ➡️ estável) · **faltou 1/5** · 3× MOTM · 35j\n  - ⚠️(fora) **Hugo Ekitiké** nota **6.99** (season) · forma 6.99= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 4× MOTM · 32j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: EDVVV** (10pts) · **10 feitos / 6 sofridos** · marca 2↑ / sofre 1.2= g/j · SoT 4.4 feito / 4.8 sofrido\n- **Consistência: MARCOU em 32/36** (casa 16/18 · fora 16/18) · não-marcou 4 · clean sheet 10 · BTTS 24/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- vs **Fulham** (casa · **V 2-0**) — adv 9º · você 5º briga-top · seu casa até ali 1.8 marca/1.1 sofre\n- @ **Everton** (fora · **V 2-1**) — adv 10º · você 5º briga-top · seu fora até ali 1.4 marca/1.6 sofre\n- vs **Crystal Palace** (casa · **V 3-1**) — adv 13º · você 5º briga-top · seu casa até ali 1.8 marca/1.1 sofre\n- @ **Manchester United** (fora · **D 2-3**) — adv 3º briga-top · você 4º briga-top · seu fora até ali 1.5 marca/1.5 sofre\n- vs **Chelsea** (casa · **E 1-1**) — adv 9º salvo · você 4º briga-top · seu casa até ali 1.9 marca/1.1 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - vs Fulham (CASA · V 2-0) — min 1→93:\n    📈 pressão (net/min): 1'-15' [+2 +2 +1 +2 +5 +5 +3 +4 +6 +4 +3 +6 +5 +9 +7] · 16'-30' [+12 +8 +6 +2 +6 +7 +9 +11 +10 +9 +8 +7 +5 +2 0] · 31'-45' [+1 0 -4 -4 -6 -6 -4 -1 -1 +1 +4 +4 +4 +4 +3] · ‖INTERVALO‖ · 46'-60' [-1 -1 -5 -7 -5 -1 +2 +7 +5 +6 +8 +6 +3 +3 -2] · 61'-75' [-3 -3 -5 -2 -4 -3 -8 -6 -5 -1 -2 -4 -2 +2 +4] · 76'-90' [+9 +9 +5 +2 +2 0 -1 -1 0 -3 -4 -8 -8 -10 -9] · 91'+ [-8 -7 -7]\n    ⚽ gols: 36'✓ 40'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **0** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **5** · 61'-75' **5** · 76'-90' **8**\n  - @ Everton (FORA · V 2-1) — min 1→102:\n    📈 pressão (net/min): 1'-15' [0 0 0 -1 0 -5 -3 -2 +1 +2 -1 -1 -1 -2 -2] · 16'-30' [-3 -3 -3 -1 -2 -2 +2 +2 +2 -6 -6 -10 -10 -12 -2] · 31'-45' [0 0 0 +1 +1 -1 -3 -3 -3 +2 +1 +5 +5 +6 +7] · ‖INTERVALO‖ · 46'-60' [+6 +7 +6 +4 +4 +3 +2 0 +1 -4 -4 -4 -4 -1 -2] · 61'-75' [-1 +2 +1 0 +2 -1 -1 -2 -6 -5 -5 -5 -5 -3 -6] · 76'-90' [-5 -3 -3 -2 -3 0 0 0 +2 +2 +2 +2 +2 +1 0] · 91'+ [0 0 0 0 0 -1 +1 +3 +3 +4 +8 +5]\n    ⚽ gols: 29'✓ 54'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **1** · 31'-45' **8** ‖ 46'-60' **4** · 61'-75' **2** · 76'-90' **4**\n  - vs Crystal Palace (CASA · V 3-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -2 -4 0 -1 -1 +5 +5 +5 +2 -3 -10 -10 -7 -4] · 16'-30' [-2 -2 -4 -3 -2 -3 -2 -4 -2 -2 -1 -1 -1 +1 +1] · 31'-45' [+3 +5 +3 +2 +2 +8 +7 +8 +4 +4 -1 -1 -2 -2 -3] · ‖INTERVALO‖ · 46'-60' [-6 -3 -4 -3 0 -3 -2 +1 +1 +1 +4 +2 +2 +2 +2] · 61'-75' [+3 +2 +3 +2 +2 +2 +4 +6 +6 +6 +2 +1 -6 -6 -6] · 76'-90' [-6 -4 -3 -2 -1 -1 -24 -16 -14 -14 -9 -9 -9 -4 -4] · 91'+ [-4 -3 -3 -3 -3 +1 +2]\n    ⚽ gols: 35'✓ 40'✓ 71'✗ 90'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **1** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **2** · 61'-75' **3** · 76'-90' **3**\n  - @ Manchester United (FORA · D 2-3) — min 1→96:\n    📈 pressão (net/min): 1'-15' [0 -1 -1 0 -3 -7 -6 -4 -4 +3 +2 +1 +2 -5 -5] · 16'-30' [-5 -5 +1 +2 +5 +5 +5 +5 +7 +6 +4 +3 +3 +3 +2] · 31'-45' [-1 -2 -1 -1 -2 0 0 +1 +1 -1 +4 0 -1 -2 -1] · ‖INTERVALO‖ · 46'-60' [+1 -4 -3 +1 +2 +2 +2 +1 0 0 +5 +2 +1 -1 0] · 61'-75' [-1 -2 0 +5 +5 +3 +2 +3 +14 +11 +8 +5 -4 -4 -2] · 76'-90' [-1 -2 -4 -3 -1 0 +1 +3 +8 +9 +6 +5 +4 +5 +3] · 91'+ [+2 +2 0 +3 +3 +3]\n    ⚽ gols: 6'✗ 14'✗ 47'✓ 56'✓ 77'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **5** · 31'-45' **0** ‖ 46'-60' **6** · 61'-75' **1** · 76'-90' **3**\n  - vs Chelsea (CASA · E 1-1) — min 1→97:\n    📈 pressão (net/min): 1'-15' [0 -1 -2 -1 -1 +2 +2 +1 -1 -2 0 +4 +6 +5 +5] · 16'-30' [+3 +3 +3 +2 0 0 0 +1 +1 +1 +1 -2 -6 -6 -8] · 31'-45' [-6 -8 -8 -6 -4 -5 -5 -8 -9 -10 -10 -5 -3 -1 -1] · ‖INTERVALO‖ · 46'-60' [0 +3 +3 -2 -13 -10 -6 -5 -5 -6 -1 -1 -1 +2 +4] · 61'-75' [+3 +4 +4 +2 +2 0 0 +1 +2 +6 +5 +6 +5 +6 +4] · 76'-90' [+1 -1 +1 +5 +5 +3 +2 +2 +3 +2 +3 +1 0 -4 -2] · 91'+ [-2 -2 -2 +2 -1 -3 0]\n    ⚽ gols: 6'✓ 35'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **1** · 31'-45' **2** ‖ 46'-60' **4** · 61'-75' **3** · 76'-90' **5**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.11 · 16-30: 0.14 · 31-45: 0.42 · 46-60: 0.31 · 61-75: 0.17 · 76-90: 0.53\n- Sofre por faixa (/j): 0-15: 0.19 · 16-30: 0.08 · 31-45: 0.17 · 46-60: 0.22 · 61-75: 0.22 · 76-90: 0.44\n- 1ºT: marca 24 / sofre 16 (totais na temporada)\n\n### Desfalques de Liverpool neste jogo\n- **Hugo Ekitiké** (Unknown Injury) — 11 gols + 4 assists até a data; season: **18% dos gols** do time (25% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (↓ menos decisivo / time se adaptou); with/without: com ele 1.68 g/j (28j) vs sem ele 1.63 g/j (8j) = −3%; finaliza **0.68 SoT/jogo** (time: 4.86 SoT/j com ele vs 3.5 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.1 interceptações/j** (~1% do time) · 0.4 desarmes/j · 3.3 duelos ganhos/j · 0.1 cruz. certos/j · 1.4 dribles certos/j · 0.8 key passes/j\n- **Alexander Isak** (Doubtful) — 3 gols + 1 assists até a data; season: **5% dos gols** do time (7% com assists); **últimos 5 jogos do time**: participou de 1/10 gols = **10%** (≈ estável); with/without: com ele 1.64 g/j (14j) vs sem ele 1.68 g/j (22j) = +2%; finaliza **0.43 SoT/jogo** (time: 4.29 SoT/j com ele vs 4.73 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.5 desarmes/j · 1.2 duelos ganhos/j · 0 cruz. certos/j · 0.1 dribles certos/j · 0.1 key passes/j\n- **Wataru Endo** (Broken Ankle) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 2.38 g/j (8j) vs sem ele 1.46 g/j (28j) = −39%; finaliza **0 SoT/jogo** (time: 5.13 SoT/j com ele vs 4.39 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.9 desarmes/j · 2.3 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0.1 key passes/j\n- **Jeremie Frimpong** (Doubtful) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 1.7 g/j (20j) vs sem ele 1.63 g/j (16j) = −4%; finaliza **0.1 SoT/jogo** (time: 4.95 SoT/j com ele vs 4.06 sem — volume mais estável que gols)\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.3 interceptações/j** (~4% do time) · 0.6 desarmes/j · 2.9 duelos ganhos/j · 0.6 cruz. certos/j · 0.9 dribles certos/j · 0.7 key passes/j\n- **S. Bajcetic Maquieira** (Unknown Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/10 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 1.67 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Aston Villa atacando × Liverpool defendendo**\n| Faixa | Aston Villa marca/j | Liverpool sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.19 | 0.3 |\n| 16-30 | 0.17 | 0.08 | 0.25 |\n| 31-45 | 0.28 | 0.17 | 0.45 |\n| 46-60 | 0.25 | 0.22 | 0.47 |\n| 61-75 | 0.22 | 0.22 | 0.44 |\n| 76-90 | 0.36 | 0.44 | 0.8 |\n\n**Liverpool atacando × Aston Villa defendendo**\n| Faixa | Liverpool marca/j | Aston Villa sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.11 | 0.25 | 0.36 |\n| 16-30 | 0.14 | 0.11 | 0.25 |\n| 31-45 | 0.42 | 0.25 | 0.67 |\n| 46-60 | 0.31 | 0.25 | 0.56 |\n| 61-75 | 0.17 | 0.19 | 0.36 |\n| 76-90 | 0.53 | 0.22 | 0.75 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Aston Villa: **76-90** (domínio +3.3) · Liverpool: **0-15** (domínio -2.2). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Aston Villa domínio/j | Liverpool domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -2 | +0.2 | -2.2 ✈️ |\n| 16-30 | -0.9 | +0.7 | -1.6 ✈️ |\n| 31-45 | -1 | -0.6 | -0.4 ≈ |\n| 46-60 | -0.7 | 0 | -0.7 ≈ |\n| 61-75 | +0.6 | +0.5 | +0.1 ≈ |\n| 76-90 | +2.4 | -0.9 | +3.3 🏠 |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Aston Villa (casa) = 1.65 · λ Liverpool (fora) = 1.36 · total = 3.01\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Aston Villa: λ_SoT 4.32 × conv 31% → **1.34 gols**\n- Liverpool: λ_SoT 4.49 × conv 36% → **1.62 gols**\n- total via SoT = 2.96\n- **Índice de volume do jogo**: λ_SoT total 8.8 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 43/27/30% | 30/27/43% |\n| Over 1.5 | 82% | 81% |\n| Over 2.5 | 58% | 57% |\n| Over 3.5 | 36% | 34% |\n| BTTS | 61% | 61% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **57%** · 12 **73%** · X2 **70%** · **Draw No Bet** casa 42% / fora 58%\n- **Placar exato (mais prováveis)**: 1-1 13% · 1-2 9% · 2-1 8% · 0-1 7%\n- **Odd/Even**: ímpar 47% / par 53% · **Multigoals**: 0-1 19% · 2-3 47% · 4+ 34%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Aston Villa over 0.5 **74%** / over 1.5 **39%** · Liverpool over 0.5 **80%** / over 1.5 **48%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 3.31 · empate 3.68 · fora 2.35. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 44% dos gols saem no 1º tempo / 56% no 2º (sobre 360 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **25/42/32%** · 2ºT **29/33/38%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Aston Villa) e `away` (= Liverpool), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). **Os dois PRECISAM ir pra cima** → concentre MAIS massa nas faixas TARDIAS (`\"61-75\"`/`\"76-90\"`): fadiga + desespero simultâneos empurram o gol pro fim. Mas o lado que estiver PERSEGUINDO (vai perdendo) converte PIOR no fim (chute apressado) — não infle demais o `\"76-90\"` DELE além do baseline. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 1.5,
+    "xg_away": 1.7000000476837158,
+    "total": 3.200000047683716,
+    "over25_prob": 0.6499999761581421,
+    "btts_prob": 0.699999988079071,
+    "one_x_two": "{\"home\":0.33,\"draw\":0.25,\"away\":0.42}",
+    "confianca": "medium",
+    "best_bet_market": "over_under",
+    "best_bet_selection": "over",
+    "best_bet_team": null,
+    "best_bet_line": 2.5,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.6499999761581421,
+    "reasoning_tokens": 5456
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Aston Villa** contra **dominante** (o estilo do Liverpool, posse média 59.3%): marca **1.50/j** e sofre 1.88/j em 8 jogos — na média da temporada (1.39).\n- **Liverpool** contra **dominante** (o estilo do Aston Villa, posse média 54.0%): marca **1.00/j** e sofre 1.11/j em 9 jogos — **-0.67 ABAIXO** da média (1.67).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — falta**: Aston Villa gera 6% dos gols por aí × Liverpool sofre 2% por aí (liga: 2%) → índice 3.3×.\n- **CANAL ABERTO — pênalti**: Aston Villa gera 35% dos gols por aí × Liverpool sofre 40% por aí (liga: 32%) → índice 1.4×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Aston Villa** (28 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -2.0 nos 10min seguintes) · neutro após marcar (Δ -0.6).\n- **Liverpool** (24 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.3 nos 10min seguintes) · neutro após marcar (Δ 0.7).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Aston Villa**: Ollie Watkins **12 gols** · últ.5: 3 · 0.9 SoT/j | Morgan Rogers **9 gols** · últ.5: 1 · 0.9 SoT/j | Emiliano Buendía **6 gols** · últ.5: 1 · 0.4 SoT/j | John McGinn **4 gols** · últ.5: 0 · 0.4 SoT/j | Donyell Malen **4 gols** · últ.5: 0 · 0.4 SoT/j\n- **Liverpool**: Hugo Ekitiké **11 gols** · últ.5: 0 · 0.7 SoT/j ⚠️ DESFALQUE/dúvida neste jogo | Cody Gakpo **7 gols** · últ.5: 1 · 0.6 SoT/j | Mohamed Salah **7 gols** (1 pên) · últ.5: 2 · 0.7 SoT/j | Dominik Szoboszlai **6 gols** · últ.5: 1 · 0.6 SoT/j | Ryan Gravenberch **5 gols** · últ.5: 1 · 0.4 SoT/j\n\n### Setores — onde o jogo se ganha (formação provável + grid real: miolo × miolo e produção por corredor × lado fraco do rival)\n- **Formações prováveis (moda últ.5)**: Aston Villa 4-2-3-1 × Liverpool 4-2-3-1 → meios pareados (5v5) — decide-se nos corredores e nos duelos. (Formação declarada ≠ real: hipótese, não lei.)\n- **Aston Villa atacando**: 40% da criação nasce pela **esquerda** (Lucas Digne (50), Ian Maatsen (28)) × corredor direita do Liverpool defendido por Curtis Jones (nota 6.9 últ.5) + Jeremie Frimpong (nota 6.8 últ.5) ⚠️ DESFALQUE. Centro: 21%.\n- **Liverpool atacando**: 40% da criação nasce pela **direita** (Dominik Szoboszlai (82), Mohamed Salah (53)) × corredor esquerda do Aston Villa defendido por Ian Maatsen (nota 6.4 últ.5) + Lucas Digne (nota 6.7 últ.5). Centro: 27%.\n\n### Duplas de gol — quem serve quem (assistente → marcador na temporada; desfalque numa ponta quebra a dupla)\n- **Aston Villa**: Morgan Rogers → Emiliano Buendía **2x** | Morgan Rogers → Ollie Watkins **2x** | Ollie Watkins → Morgan Rogers **2x** | Lucas Digne → Ollie Watkins **2x**\n- **Liverpool**: Dominik Szoboszlai → Virgil van Dijk  **3x** | Ryan Gravenberch → Hugo Ekitiké **2x** (⚠️ Hugo Ekitiké DESFALQUE) | Hugo Ekitiké → Cody Gakpo **2x** (⚠️ Hugo Ekitiké DESFALQUE (a fonte seca)) | Cody Gakpo → Mohamed Salah **2x**\n\n### Expectativa por jogador — xSoT e xG do XI provável (taxa/90 × minutos esperados × defesa do rival; conversão encolhida pra liga)\n- **Aston Villa** vs Liverpool (arquétipo do rival: dominante · rival cede 0.95× o SoT da liga · rival perde 6% do volume defensivo (desarme+interceptação) com S. Bajcetic Maquieira, Hugo Ekitiké, Wataru Endo, Alexander Isak, Jeremie Frimpong fora): λ bottom-up do XI **1.25 xG** vs top-down 1.42 gols/j (XI cobre 63% dos gols da season — o resto é banco). Desfalques fora do XI: Amadou Onana, Alysson, Harvey Elliott.\n  - **Ollie Watkins** (F, 74min esp.): xG **0.37** → **P(marca) 31%** · xSoT 1.04 → P(1+ SoT) 65% · conv 37% (12 gols/35j) · xKP 0.57 · fatores: arquétipo +25% [1.87 SoT/90 contra dominante (578min) vs 1.08 geral]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Morgan Rogers** (M, 88min esp.): xG **0.23** → **P(marca) 21%** · xSoT 0.61 → P(1+ SoT) 46% · conv 33% (10 gols/36j) · xKP 1.25 · fatores: arquétipo -25% [0.51 SoT/90 contra dominante (712min) vs 0.87 geral]; casa +9% [0.95 SoT/90 em casa vs 0.87 geral]; forma -10% [rating últ.3 6.4 vs season 6.9]; canal +17% [60% dos gols dele: pênalti — rival sofre 1.3× a liga aí]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Ross Barkley** (M, 66min esp.): xG **0.18** → **P(marca) 16%** · xSoT 0.55 → P(1+ SoT) 42% · conv 36% (3 gols/19j) · xKP 0.67 · fatores: arquétipo -3% [0.87 SoT/90 contra dominante (104min) vs 1.00 geral]; casa -15% [0.75 SoT/90 em casa vs 1.00 geral]; forma -5% [rating últ.3 6.5 vs season 6.8]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **John McGinn** (M, 82min esp.): xG **0.16** → **P(marca) 15%** · xSoT 0.36 → P(1+ SoT) 30% · conv 38% (4 gols/28j) · xKP 1.82 · fatores: arquétipo -25% [0.23 SoT/90 contra dominante (387min) vs 0.44 geral]; casa +15% [0.58 SoT/90 em casa vs 0.44 geral]; forma +7% [rating últ.3 7.2 vs season 6.9]; canal +22% [100% dos gols dele: pênalti — rival sofre 1.3× a liga aí]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Matty Cash** (D, 88min esp.): xG **0.14** → **P(marca) 13%** · xSoT 0.40 → P(1+ SoT) 33% · conv 32% (3 gols/33j) · xKP 1.02 · fatores: arquétipo +25% [0.55 SoT/90 contra dominante (493min) vs 0.31 geral]; casa +15% [0.37 SoT/90 em casa vs 0.31 geral]; forma -7% [rating últ.3 6.6 vs season 6.9]; canal +12% [67% dos gols dele: pênalti — rival sofre 1.3× a liga aí]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Tyrone Mings** (D, 90min esp.): xG **0.06** → **P(marca) 6%** · xSoT 0.29 → P(1+ SoT) 25% · conv 23% (0 gols/16j) · xKP 0.41 · fatores: arquétipo +25% [0.46 SoT/90 contra dominante (196min) vs 0.22 geral]; casa +15% [0.41 SoT/90 em casa vs 0.22 geral]; forma -6% [rating últ.3 6.4 vs season 6.7]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Youri Tielemans** (M, 87min esp.): xG **0.06** → **P(marca) 5%** · xSoT 0.33 → P(1+ SoT) 28% · conv 17% (0 gols/23j) · xKP 1.60 · fatores: casa +15% [0.43 SoT/90 em casa vs 0.31 geral]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Ian Maatsen** (D, 62min esp.): xG **0.04** → **P(marca) 4%** · xSoT 0.20 → P(1+ SoT) 18% · conv 19% (0 gols/28j) · xKP 0.81 · fatores: arquétipo +25% [0.41 SoT/90 contra dominante (442min) vs 0.30 geral]; casa -15% [0.10 SoT/90 em casa vs 0.30 geral]; forma -5% [rating últ.3 6.4 vs season 6.6]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Ezri Konsa** (D, 90min esp.): xG **0.02** → **P(marca) 2%** · xSoT 0.07 → P(1+ SoT) 7% · conv 26% (0 gols/33j) · xKP 0.14 · fatores: arquétipo +25% [0.13 SoT/90 contra dominante (720min) vs 0.06 geral]; forma -6% [rating últ.3 6.6 vs season 6.8]; volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Emiliano Martínez** (G, 90min esp.): xG **0.00** → **P(marca) 0%** · xSoT 0.00 → P(1+ SoT) 0% · conv 34% (0 gols/31j) · xKP 0.06 · fatores: volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n  - **Victor Lindelöf** (D, 85min esp.): xG **0.00** → **P(marca) 0%** · xSoT 0.00 → P(1+ SoT) 0% · conv 34% (0 gols/15j) · xKP 0.20 · fatores: volume cedido -5% [rival cede 3.94 SoT/j vs liga 4.17]\n- **Liverpool** vs Aston Villa (arquétipo do rival: dominante · rival cede 1.06× o SoT da liga · rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora): λ bottom-up do XI **1.14 xG** vs top-down 1.72 gols/j (XI cobre 63% dos gols da season — o resto é banco). ⚠️ λ-XI bem ABAIXO do ritmo do time — desfalque/rotação tirou produção do XI ou o rival cede pouco. Desfalques fora do XI: S. Bajcetic Maquieira, Hugo Ekitiké, Wataru Endo, Alexander Isak, Jeremie Frimpong.\n  - **Dominik Szoboszlai** (M, 90min esp.): xG **0.21** → **P(marca) 19%** · xSoT 0.73 → P(1+ SoT) 52% · conv 30% (6 gols/34j) · xKP 1.87 · fatores: arquétipo +25% [0.78 SoT/90 contra dominante (803min) vs 0.62 geral]; fora -15% [0.41 SoT/90 fora vs 0.62 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Cody Gakpo** (M, 86min esp.): xG **0.21** → **P(marca) 19%** · xSoT 0.54 → P(1+ SoT) 42% · conv 37% (8 gols/34j) · xKP 1.92 · fatores: arquétipo -25% [0.42 SoT/90 contra dominante (646min) vs 0.73 geral]; forma -8% [rating últ.3 6.7 vs season 7.1]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Mohamed Salah** (M, 80min esp.): xG **0.20** → **P(marca) 18%** · xSoT 0.54 → P(1+ SoT) 42% · conv 39% (7 gols, 1 pên/25j) · xKP 2.06 · fatores: arquétipo -25% [0.35 SoT/90 contra dominante (514min) vs 0.74 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Florian Wirtz** (M, 83min esp.): xG **0.14** → **P(marca) 13%** · xSoT 0.42 → P(1+ SoT) 35% · conv 31% (5 gols/31j) · xKP 2.02 · fatores: arquétipo -25% [0.31 SoT/90 contra dominante (577min) vs 0.65 geral]; fora -15% [0.56 SoT/90 fora vs 0.65 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Ryan Gravenberch** (M, 65min esp.): xG **0.11** → **P(marca) 11%** · xSoT 0.29 → P(1+ SoT) 25% · conv 39% (5 gols/34j) · xKP 0.58 · fatores: arquétipo +17% [0.44 SoT/90 contra dominante (810min) vs 0.38 geral]; fora -15% [0.24 SoT/90 fora vs 0.38 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Virgil van Dijk ** (D, 90min esp.): xG **0.11** → **P(marca) 10%** · xSoT 0.31 → P(1+ SoT) 27% · conv 32% (4 gols/36j) · xKP 0.39 · fatores: arquétipo -25% [0.00 SoT/90 contra dominante (810min) vs 0.36 geral]; fora +15% [0.50 SoT/90 fora vs 0.36 geral]; forma -10% [rating últ.3 6.6 vs season 7.1]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Andrew Robertson** (D, 81min esp.): xG **0.05** → **P(marca) 5%** · xSoT 0.16 → P(1+ SoT) 15% · conv 34% (1 gols/23j) · xKP 1.24 · fatores: arquétipo -25% [0.00 SoT/90 contra dominante (207min) vs 0.25 geral]; fora -15% [0.18 SoT/90 fora vs 0.25 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Alexis Mac Allister** (M, 60min esp.): xG **0.05** → **P(marca) 5%** · xSoT 0.19 → P(1+ SoT) 17% · conv 24% (2 gols/35j) · xKP 0.69 · fatores: arquétipo -25% [0.24 SoT/90 contra dominante (761min) vs 0.40 geral]; fora -15% [0.23 SoT/90 fora vs 0.40 geral]; forma +3% [rating últ.3 7.0 vs season 6.8]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Curtis Jones** (M, 81min esp.): xG **0.04** → **P(marca) 4%** · xSoT 0.25 → P(1+ SoT) 22% · conv 17% (0 gols/32j) · xKP 0.93 · fatores: arquétipo -12% [0.26 SoT/90 contra dominante (346min) vs 0.31 geral]; fora -8% [0.28 SoT/90 fora vs 0.31 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Ibrahima Konaté** (D, 87min esp.): xG **0.02** → **P(marca) 2%** · xSoT 0.06 → P(1+ SoT) 6% · conv 34% (1 gols/34j) · xKP 0.19 · fatores: arquétipo -25% [0.00 SoT/90 contra dominante (739min) vs 0.09 geral]; fora -15% [0.06 SoT/90 fora vs 0.09 geral]; volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]\n  - **Giorgi Mamardashvili** (G, 79min esp.): xG **0.00** → **P(marca) 0%** · xSoT 0.00 → P(1+ SoT) 0% · conv 34% (0 gols/9j) · xKP 0.00 · fatores: volume cedido +6% [rival cede 4.42 SoT/j vs liga 4.17]; desfalque def. rival +4% [rival perde 9% do volume defensivo (desarme+interceptação) com Amadou Onana, Alysson, Harvey Elliott fora]",
+  "realGoals": [
+    {
+      "minute": 42,
+      "side": "home",
+      "scorer": "Morgan Rogers",
+      "type": "normal"
+    },
+    {
+      "minute": 52,
+      "side": "away",
+      "scorer": "Virgil van Dijk ",
+      "type": "normal"
+    },
+    {
+      "minute": 57,
+      "side": "home",
+      "scorer": "Ollie Watkins",
+      "type": "normal"
+    },
+    {
+      "minute": 73,
+      "side": "home",
+      "scorer": "Ollie Watkins",
+      "type": "normal"
+    },
+    {
+      "minute": 89,
+      "side": "home",
+      "scorer": "John McGinn",
+      "type": "normal"
+    },
+    {
+      "minute": 90,
+      "side": "away",
+      "scorer": "Virgil van Dijk ",
+      "type": "normal"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 1.5,
+      "xg_1t": 0.55,
+      "xg_2t": 0.95,
+      "xg_bands": {
+        "0-15": 0.17,
+        "16-30": 0.14,
+        "31-45": 0.25,
+        "46-60": 0.26,
+        "61-75": 0.24,
+        "76-90": 0.44
+      },
+      "summary": "Villa em casa, com necessidade de vitória, deve propor jogo. Ataque funcional (1.56 g/j em casa), mas defesa desfalcada de Onana. Tendência a marcar no fim (76-90) e sofrer no início. Dependência de Watkins e bolas paradas."
+    },
+    "away": {
+      "xg": 1.7,
+      "xg_1t": 0.74,
+      "xg_2t": 0.96,
+      "xg_bands": {
+        "0-15": 0.21,
+        "16-30": 0.14,
+        "31-45": 0.39,
+        "46-60": 0.32,
+        "61-75": 0.21,
+        "76-90": 0.43
+      },
+      "summary": "Liverpool favorito técnico, mas sem seu artilheiro Ekitiké. Ataque ainda forte com Salah e Szoboszlai, explorando lado direito frágil do Villa. Defesa sofre fora (1.61 g/j), mas deve criar bastante. Momento de boa forma (10 pts nos últimos 5)."
+    },
+    "general": {
+      "total": 3.2,
+      "total_1t": 1.29,
+      "total_2t": 1.91,
+      "over25_prob": 0.62,
+      "btts_prob": 0.64,
+      "one_x_two": {
+        "home": 0.36,
+        "draw": 0.25,
+        "away": 0.39
+      },
+      "one_x_two_1t": {
+        "home": 0.28,
+        "draw": 0.38,
+        "away": 0.34
+      },
+      "one_x_two_2t": {
+        "home": 0.35,
+        "draw": 0.27,
+        "away": 0.38
+      },
+      "confidence": "medium",
+      "confidence_regra": "Medium: mais de 3 arestas convergem para over (intenção, momentum, dinâmica pós-gol), mas o desempenho histórico do Liverpool contra dominantes (C20) e o desfalque de Ekitiké (C8) enfraquecem a convicção, sem derrubar.",
+      "summary": "Jogo decisivo pela Champions, com ambos precisando vencer. Espera-se um confronto aberto, com chances para os dois lados. Liverpool tem leve favoritismo técnico, mas desfalques importantes (Ekitiké) e a força do Villa em casa equilibram. Tendência de gols, especialmente no segundo tempo."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Descanso similar (~5-6 dias), sem assimetria de fadiga.",
+        "dado": "Aston Villa 5 dias, Liverpool 6 dias; diferença de 1 dia é ruído.",
+        "direcao": "Neutra, não altera xG.",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Ambos com 59 pts, brigando por Champions. Precisam vencer.",
+        "dado": "Villa 5º, Liverpool 4º; veredito de intenção: OS DOIS PRECISAM IR PRA CIMA.",
+        "direcao": "Favorece over, BTTS, jogo aberto.",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "home_gols",
+        "fato": "Villa em casa: ataque funcional (1.56 g/j, 4.78 SoT/j), defesa sólida (1.11 sofridos).",
+        "dado": "Marca 1.56, sofre 1.11; SoT 4.78/j, conv 31%.",
+        "direcao": "Base para xG mandante, sem surpresa.",
+        "forca": "media"
+      },
+      {
+        "id": "C4",
+        "bloco": "away_gols",
+        "fato": "Liverpool fora: ataque produtivo (1.5 g/j, 4 SoT/j, conv 36%), mas defesa sofre bastante (1.61 g/j).",
+        "dado": "Marca 1.5, sofre 1.61; SoT 4/j, conv 36%.",
+        "direcao": "Base para xG visitante, defesa vulnerável.",
+        "forca": "media"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_estilo",
+        "fato": "Estilo recente do Villa: menos ataques perigosos (-12%), mas mantém volume de chutes.",
+        "dado": "Últ.5: ataques perigosos 43.6 vs 49.8 season; chutes pra fora 5.4 vs 4.6.",
+        "direcao": "Leve viés de baixa no ataque recente.",
+        "forca": "baixa"
+      },
+      {
+        "id": "C6",
+        "bloco": "away_estilo",
+        "fato": "Liverpool recente: menos volume ofensivo (ataques perigosos -22%), mas eficiência se mantém.",
+        "dado": "Últ.5: ataques perigosos 46.6 vs 59.5 season; bloqueados 3.6 vs 5.",
+        "direcao": "Leve viés de baixa no volume, mas qualidade.",
+        "forca": "baixa"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_qualidade",
+        "fato": "Villa tem McGinn e Tielemans em boa forma, mas Onana fora (volante importante) enfraquece meio.",
+        "dado": "McGinn nota 7.22↑; Onana fora (nota 6.96, 1 int/j).",
+        "direcao": "Impacto negativo na solidez defensiva.",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "away_qualidade",
+        "fato": "Liverpool sem Ekitiké (artilheiro, 18% dos gols) perde poder de fogo, mas Szoboszlai e Salah mantêm ameaça.",
+        "dado": "Ekitiké 11 gols, 25% participação; Szoboszlai nota 7.4.",
+        "direcao": "Reduz xG do Liverpool.",
+        "forca": "alta"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_forma",
+        "fato": "Villa instável defensivamente (9 sofridos em 5), mas marca consistentemente (8 gols em 5).",
+        "dado": "Últ.5: EDDVE, 8 marcados, 9 sofridos.",
+        "direcao": "Favorece BTTS e over.",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "away_forma",
+        "fato": "Liverpool em boa fase (10 pts em 15), ataque marcando sempre, defesa sofrendo pouco.",
+        "dado": "Últ.5: EDVVV, 10 marcados, 6 sofridos.",
+        "direcao": "Favoritismo ligeiro do Liverpool.",
+        "forca": "media"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_momentum",
+        "fato": "Villa sofre no começo, pressiona no fim (76-90, +3.3 domínio), mas é vulnerável após sofrer gol.",
+        "dado": "Janela 76-90 domínio +3.3; Δ momentum -2 ao sofrer.",
+        "direcao": "Gols prováveis no fim, risco de descontrole se sofrer cedo.",
+        "forca": "alta"
+      },
+      {
+        "id": "C12",
+        "bloco": "away_momentum",
+        "fato": "Liverpool inconsistente no início, mas perigoso no meio do 1ºT e final.",
+        "dado": "Curvas variadas; alguns jogos sofre cedo.",
+        "direcao": "Pode sofrer cedo, mas reage.",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "home_faixas",
+        "fato": "Villa concentra gols no fim (76-90: 0.36) e no intervalo (31-45: 0.28); defesa frágil no início (0-15: 0.25).",
+        "dado": "Marca 0.36 no 76-90; sofre 0.25 no 0-15.",
+        "direcao": "Janelas 31-45 e 76-90 quentes para gols.",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_faixas",
+        "fato": "Liverpool decide no fim (76-90: 0.53) e no fim do 1ºT (31-45: 0.42); defesa sofre no fim.",
+        "dado": "Marca 0.53 no 76-90; sofre 0.44 no 76-90.",
+        "direcao": "Janela 76-90 muito quente para gols.",
+        "forca": "media"
+      },
+      {
+        "id": "C15",
+        "bloco": "home_desfalques",
+        "fato": "Villa sem Onana perde proteção no meio (1 int/j, 16% do time), defesa mais exposta.",
+        "dado": "Onana: 1 interceptação/j, 16% do time; with/without gols cai, mas SoT estável.",
+        "direcao": "Aumenta xG do Liverpool.",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_desfalques",
+        "fato": "Liverpool sem Ekitiké (artilheiro) e possivelmente sem Isak/Frimpong; ataque enfraquecido, especialmente em gols.",
+        "dado": "Ekitiké: 11 gols, 18% dos gols; Isak dúvida, Frimpong dúvida.",
+        "direcao": "Reduz xG do Liverpool.",
+        "forca": "alta"
+      },
+      {
+        "id": "C17",
+        "bloco": "cruzamento_faixa",
+        "fato": "Faixas 31-45 e 76-90 são as mais propensas a gols, com índices altos de ambos os lados.",
+        "dado": "Índices combinados: 31-45 (1.12), 76-90 (1.55).",
+        "direcao": "Distribuir xG nessas faixas.",
+        "forca": "alta"
+      },
+      {
+        "id": "C18",
+        "bloco": "base_rate",
+        "fato": "Base rate (SoT): total ~2.96, com Liverpool ligeiramente favorito (1.62 vs 1.34).",
+        "dado": "Rota B: Villa 1.34, Liverpool 1.62, total 2.96.",
+        "direcao": "Ponto de partida para xG.",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "probs_mercado",
+        "fato": "Mercado implícito vê Liverpool favorito (43%), over 2.5 em 57%, BTTS 61%.",
+        "dado": "1x2: 30/27/43; over 2.5 57%; BTTS 61%.",
+        "direcao": "Prior para atualizar.",
+        "forca": "media"
+      },
+      {
+        "id": "C20",
+        "bloco": "cruzamentos_computados",
+        "fato": "Villa sofre mais contra dominantes (1.88 sofridos), enquanto Liverpool marca menos contra dominantes (1.00); conflito entre estilo e intenção.",
+        "dado": "Villa sofre 1.88; Liverpool marca 1.00 contra dominante.",
+        "direcao": "Sugere potencial de menos gols em jogos de estilo similar.",
+        "forca": "media"
+      },
+      {
+        "id": "C21",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ambos desmoronam ao sofrer gol: jogo pode ter sequências de gols.",
+        "dado": "Δ momentum: Villa -2, Liverpool -1.3 ao sofrer.",
+        "direcao": "Aumenta chance de over se houver gol cedo.",
+        "forca": "alta"
+      },
+      {
+        "id": "C22",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ataque do Liverpool pela direita (Szoboszlai/Salah) enfrenta lado esquerdo frágil do Villa (Maatsen nota 6.4).",
+        "dado": "Liverpool 40% direita; Maatsen rating 6.4 últ.5.",
+        "direcao": "Aumenta xG do Liverpool por aquele corredor.",
+        "forca": "alta"
+      },
+      {
+        "id": "C23",
+        "bloco": "cruzamentos_computados",
+        "fato": "Villa depende de pênaltis (35% dos gols) e Liverpool sofre muitos pênaltis (40%); possível pênalti no jogo.",
+        "dado": "Villa gera 35% pênalti, Liverpool sofre 40% pênalti.",
+        "direcao": "Aumenta ligeiramente chance de gol do Villa.",
+        "forca": "media"
+      },
+      {
+        "id": "C24",
+        "bloco": "cruzamentos_computados",
+        "fato": "XI do Liverpool tem λ bottom-up baixo (1.14) vs top-down (1.72) devido a desfalques; produção pode vir do banco.",
+        "dado": "XI λ 1.14 vs time 1.72; desfalques Ekitiké, Isak, etc.",
+        "direcao": "Risco de subestimar ataque se reservas contribuírem.",
+        "forca": "baixa"
+      },
+      {
+        "id": "C25",
+        "bloco": "cruzamentos_computados",
+        "fato": "XI do Villa tem λ 1.25 vs top-down 1.42, menos queda; ataque mais distribuído.",
+        "dado": "XI λ 1.25 vs time 1.42.",
+        "direcao": "Ataque do Villa menos dependente de estrelas.",
+        "forca": "baixa"
+      }
+    ],
+    "blocos_sem_sinal": [],
+    "descartadas": [
+      {
+        "id": "C18",
+        "motivo": "Usado como ponto de partida numérico, não gerou aresta independente."
+      },
+      {
+        "id": "C19",
+        "motivo": "Referência de prior de mercado, incorporado nos ajustes sem aresta própria."
+      },
+      {
+        "id": "C24",
+        "motivo": "Informação contextual sobre XI do Liverpool, já incluída indiretamente nos ajustes de xG."
+      },
+      {
+        "id": "C25",
+        "motivo": "Informação contextual sobre XI do Villa, já considerada na distribuição de xG."
+      }
+    ],
+    "jogadores": [
+      {
+        "nome": "Youri Tielemans",
+        "time": "home",
+        "leitura": "Tielemans em leve queda de forma, mas segue como maestro; contribui mais com passes-chave (1.6 KP/j) do que com finalização."
+      },
+      {
+        "nome": "Douglas Luiz",
+        "time": "home",
+        "leitura": "Douglas Luiz retornando, ainda buscando ritmo; importante na transição, mas não deve ter grande impacto ofensivo."
+      },
+      {
+        "nome": "John McGinn",
+        "time": "home",
+        "leitura": "McGinn é o motor do Villa, com boa presença ofensiva e chegada na área; pode ser perigoso em bolas paradas."
+      },
+      {
+        "nome": "Emiliano Martínez",
+        "time": "home",
+        "leitura": "Martínez é garantia de defesas importantes, mas não pode evitar gols se a defesa expuser."
+      },
+      {
+        "nome": "Boubacar Kamara",
+        "time": "home",
+        "leitura": "Kamara sem ritmo, não deve ser utilizado; sua ausência é menos sentida com Onana fora."
+      },
+      {
+        "nome": "A. Mvom Onana",
+        "time": "home",
+        "leitura": "Onana fora: Villa perde seu principal volante de contenção, aumentando a fragilidade defensiva contra o meio-campo criativo do Liverpool."
+      },
+      {
+        "nome": "A. da Rocha dos Santos",
+        "time": "home",
+        "leitura": "Defensor reserva com pouca participação, ausência sem impacto significativo."
+      },
+      {
+        "nome": "Harvey Elliott",
+        "time": "home",
+        "leitura": "Meia ofensivo sem minutos relevantes, desfalque irrelevante para o Villa."
+      },
+      {
+        "nome": "Dominik Szoboszlai",
+        "time": "away",
+        "leitura": "Szoboszlai é o cérebro do Liverpool, em grande fase; principal criador (1.87 KP/j) e finalizador, deve ditar o jogo pelo lado direito."
+      },
+      {
+        "nome": "Cody Gakpo",
+        "time": "away",
+        "leitura": "Gakpo em leve queda de rendimento, mas ainda perigoso; tende a aparecer no ataque, mas pode ser menos efetivo."
+      },
+      {
+        "nome": "Virgil van Dijk",
+        "time": "away",
+        "leitura": "Van Dijk, apesar da leve queda, é a referência defensiva; importante nas bolas aéreas ofensivas (3 gols em dupla com Szoboszlai)."
+      },
+      {
+        "nome": "Ryan Gravenberch",
+        "time": "away",
+        "leitura": "Gravenberch em ascensão, oferece chegada ao ataque; pode ser elemento surpresa."
+      },
+      {
+        "nome": "Florian Wirtz",
+        "time": "away",
+        "leitura": "Wirtz é o segundo articulador, com boa visão de jogo; sua criatividade pode desequilibrar."
+      },
+      {
+        "nome": "Hugo Ekitiké",
+        "time": "away",
+        "leitura": "Ekitiké fora: grande baixa, Liverpool perde seu principal finalizador e referência no ataque; força Gakpo e Salah a assumirem mais responsabilidade."
+      },
+      {
+        "nome": "Alexander Isak",
+        "time": "away",
+        "leitura": "Isak dúvida: se ausente, reduz opções ofensivas no banco; se joga, não deve estar 100%."
+      },
+      {
+        "nome": "Wataru Endo",
+        "time": "away",
+        "leitura": "Endo fora: volante de contenção, sua ausência pode expor mais a defesa, mas não é titular absoluto."
+      },
+      {
+        "nome": "Jeremie Frimpong",
+        "time": "away",
+        "leitura": "Frimpong dúvida: se fora, lado direito defensivo fica com Curtis Jones, que é meia adaptado, fragilizando a marcação contra o ataque esquerdo do Villa."
+      },
+      {
+        "nome": "S. Bajcetic Maquieira",
+        "time": "away",
+        "leitura": "Jogador irrelevante, sem impacto na partida."
+      }
+    ],
+    "previsoes_jogadores": [
+      {
+        "nome": "Ollie Watkins",
+        "time": "home",
+        "x_sot": 1.04,
+        "x_gols": 0.45,
+        "prob_marca": 0.36,
+        "prob_sot1": 0.65,
+        "x_kp": 0.57,
+        "leitura": "Watkins deve ser o alvo principal, recebendo em profundidade; espera-se ao menos uma finalização perigosa, com boa chance de marcar."
+      },
+      {
+        "nome": "Morgan Rogers",
+        "time": "home",
+        "x_sot": 0.61,
+        "x_gols": 0.28,
+        "prob_marca": 0.25,
+        "prob_sot1": 0.46,
+        "x_kp": 1.25,
+        "leitura": "Rogers flutua entre linhas e aparece na área; seu instinto de oportunista pode render um gol, especialmente em rebotes."
+      },
+      {
+        "nome": "Ross Barkley",
+        "time": "home",
+        "x_sot": 0.55,
+        "x_gols": 0.2,
+        "prob_marca": 0.18,
+        "prob_sot1": 0.42,
+        "x_kp": 0.67,
+        "leitura": "Barkley tende a arriscar de média distância; pode surpreender com chutes de fora, mas não é aposta certa."
+      },
+      {
+        "nome": "John McGinn",
+        "time": "home",
+        "x_sot": 0.36,
+        "x_gols": 0.18,
+        "prob_marca": 0.17,
+        "prob_sot1": 0.3,
+        "x_kp": 1.82,
+        "leitura": "McGinn chega bem de trás e é perigoso em escanteios/faltas; seu volume de passes-chave pode gerar assistências."
+      },
+      {
+        "nome": "Matty Cash",
+        "time": "home",
+        "x_sot": 0.4,
+        "x_gols": 0.14,
+        "prob_marca": 0.13,
+        "prob_sot1": 0.33,
+        "x_kp": 1.02,
+        "leitura": "Cash pode avançar, mas deve ter cautela contra o ataque rival; improvável marcar."
+      },
+      {
+        "nome": "Tyrone Mings",
+        "time": "home",
+        "x_sot": 0.29,
+        "x_gols": 0.06,
+        "prob_marca": 0.06,
+        "prob_sot1": 0.25,
+        "x_kp": 0.41,
+        "leitura": "Mings é ameaça em escanteios, mas baixa probabilidade."
+      },
+      {
+        "nome": "Youri Tielemans",
+        "time": "home",
+        "x_sot": 0.33,
+        "x_gols": 0.08,
+        "prob_marca": 0.07,
+        "prob_sot1": 0.28,
+        "x_kp": 1.6,
+        "leitura": "Tielemans pode arriscar de longe, mas seu foco é armar; finaliza pouco."
+      },
+      {
+        "nome": "Ian Maatsen",
+        "time": "home",
+        "x_sot": 0.2,
+        "x_gols": 0.04,
+        "prob_marca": 0.04,
+        "prob_sot1": 0.18,
+        "x_kp": 0.81,
+        "leitura": "Maatsen sobe pouco, focando em defender Szoboszlai; sem expectativa ofensiva."
+      },
+      {
+        "nome": "Ezri Konsa",
+        "time": "home",
+        "x_sot": 0.07,
+        "x_gols": 0.02,
+        "prob_marca": 0.02,
+        "prob_sot1": 0.07,
+        "x_kp": 0.14,
+        "leitura": "Zagueiro de contenção, praticamente nulo no ataque."
+      },
+      {
+        "nome": "Emiliano Martínez",
+        "time": "home",
+        "x_sot": 0,
+        "x_gols": 0,
+        "prob_marca": 0,
+        "prob_sot1": 0,
+        "x_kp": 0.06,
+        "leitura": "Goleiro, sem participação ofensiva."
+      },
+      {
+        "nome": "Victor Lindelöf",
+        "time": "home",
+        "x_sot": 0,
+        "x_gols": 0,
+        "prob_marca": 0,
+        "prob_sot1": 0,
+        "x_kp": 0.2,
+        "leitura": "Zagueiro reserva, sem ameaça ofensiva."
+      },
+      {
+        "nome": "Dominik Szoboszlai",
+        "time": "away",
+        "x_sot": 0.73,
+        "x_gols": 0.28,
+        "prob_marca": 0.24,
+        "prob_sot1": 0.52,
+        "x_kp": 1.87,
+        "leitura": "Szoboszlai deve comandar o ataque, finalizar de média distância e servir companheiros; altamente provável que participe de gol."
+      },
+      {
+        "nome": "Cody Gakpo",
+        "time": "away",
+        "x_sot": 0.54,
+        "x_gols": 0.24,
+        "prob_marca": 0.21,
+        "prob_sot1": 0.42,
+        "x_kp": 1.92,
+        "leitura": "Gakpo atuará mais centralizado na ausência de Ekitiké; deve ter oportunidades como referência."
+      },
+      {
+        "nome": "Mohamed Salah",
+        "time": "away",
+        "x_sot": 0.54,
+        "x_gols": 0.25,
+        "prob_marca": 0.22,
+        "prob_sot1": 0.42,
+        "x_kp": 2.06,
+        "leitura": "Salah é o definidor, costuma crescer em jogos importantes; enfrenta Maatsen frágil, deve levar vantagem."
+      },
+      {
+        "nome": "Florian Wirtz",
+        "time": "away",
+        "x_sot": 0.42,
+        "x_gols": 0.15,
+        "prob_marca": 0.14,
+        "prob_sot1": 0.35,
+        "x_kp": 2.02,
+        "leitura": "Wirtz ditará o ritmo com passes, sua finalização é secundária."
+      },
+      {
+        "nome": "Ryan Gravenberch",
+        "time": "away",
+        "x_sot": 0.29,
+        "x_gols": 0.13,
+        "prob_marca": 0.12,
+        "prob_sot1": 0.25,
+        "x_kp": 0.58,
+        "leitura": "Gravenberch pode infiltrar na área; tem faro de gol, mas não é volume."
+      },
+      {
+        "nome": "Virgil van Dijk",
+        "time": "away",
+        "x_sot": 0.31,
+        "x_gols": 0.12,
+        "prob_marca": 0.1,
+        "prob_sot1": 0.27,
+        "x_kp": 0.39,
+        "leitura": "Van Dijk é arma em escanteios; com a defesa do Villa frágil, pode marcar de cabeça."
+      },
+      {
+        "nome": "Andrew Robertson",
+        "time": "away",
+        "x_sot": 0.16,
+        "x_gols": 0.05,
+        "prob_marca": 0.05,
+        "prob_sot1": 0.15,
+        "x_kp": 1.24,
+        "leitura": "Lateral de apoio, cruzamentos perigosos, mas pouca finalização."
+      },
+      {
+        "nome": "Alexis Mac Allister",
+        "time": "away",
+        "x_sot": 0.19,
+        "x_gols": 0.05,
+        "prob_marca": 0.05,
+        "prob_sot1": 0.17,
+        "x_kp": 0.69,
+        "leitura": "Volante de contenção, pouco presente no ataque."
+      },
+      {
+        "nome": "Curtis Jones",
+        "time": "away",
+        "x_sot": 0.25,
+        "x_gols": 0.04,
+        "prob_marca": 0.04,
+        "prob_sot1": 0.22,
+        "x_kp": 0.93,
+        "leitura": "Improvisado na direita, foco defensivo, sem ameaça ofensiva."
+      },
+      {
+        "nome": "Ibrahima Konaté",
+        "time": "away",
+        "x_sot": 0.06,
+        "x_gols": 0.02,
+        "prob_marca": 0.02,
+        "prob_sot1": 0.06,
+        "x_kp": 0.19,
+        "leitura": "Zagueiro, raramente finaliza."
+      },
+      {
+        "nome": "Giorgi Mamardashvili",
+        "time": "away",
+        "x_sot": 0,
+        "x_gols": 0,
+        "prob_marca": 0,
+        "prob_sot1": 0,
+        "x_kp": 0,
+        "leitura": "Goleiro, sem expectativa ofensiva."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C3",
+          "C4",
+          "C17"
+        ],
+        "leitura": "Ataque do Villa em casa (1.56) contra defesa do Liverpool fora (sofre 1.61), com faixa 76-90 quente (índice 0.8). Villa deve gerar chances, especialmente no fim.",
+        "efeito": "Aumenta xG do Villa para ~1.5, com concentração no 2ºT."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C4",
+          "C15",
+          "C22"
+        ],
+        "leitura": "Ataque do Liverpool (1.5 fora, SoT 4/j) contra defesa do Villa sem Onana (exposta) e lado esquerdo frágil (Maatsen 6.4). Szoboszlai e Salah devem explorar esse corredor.",
+        "efeito": "Mantém xG do Liverpool elevado (~1.7) apesar do desfalque de Ekitiké."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C2",
+          "C5",
+          "C6",
+          "C9",
+          "C10"
+        ],
+        "leitura": "Ambos precisam vencer (C2), o que deve elevar o volume ofensivo, mesmo com estilos recentes mais contidos. Villa marca e sofre; Liverpool em boa fase.",
+        "efeito": "Total de gols acima da média, over 2.5 provável."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C8",
+          "C16",
+          "C15",
+          "C24"
+        ],
+        "leitura": "Ekitiké fora reduz o poder de fogo do Liverpool, mas Szoboszlai e Salah podem suprir. Defesa do Villa sem Onana sobe o λ do Liverpool. O XI do Liverpool tem λ baixo, mas reservas podem entrar.",
+        "efeito": "xG do Liverpool cai menos que o esperado; xG do Villa sobe pela defesa enfraquecida do Liverpool? Pequeno ajuste positivo para o Villa."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C9",
+          "C10"
+        ],
+        "leitura": "Forma recente: Villa irregular contra adversários variados, Liverpool consistente. Qualidade dos oponentes do Liverpool era maior (Chelsea, United).",
+        "efeito": "Liverpool ligeiramente favorito, mas não esmagador."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C11",
+          "C12",
+          "C13",
+          "C14"
+        ],
+        "leitura": "Momentum: Villa pressiona no fim (76-90 +3.3), Liverpool sofre no fim (sofre 0.44). Ambos têm histórico de gols nos minutos finais, criando uma janela de alta probabilidade.",
+        "efeito": "Concentra gols no 76-90, podendo definir o over."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C1",
+          "C2"
+        ],
+        "leitura": "Sem assimetria de fadiga, a intenção prevalece. Ambos descansados e motivados.",
+        "efeito": "Neutro, não altera xG."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C7",
+          "C8",
+          "C16",
+          "C22"
+        ],
+        "leitura": "Individualidades: McGinn e Tielemans criativos, mas Onana fora. Szoboszlai (7.4) é o destaque, com Salah e Gakpo. Desfalque de Ekitiké pesa, mas qualidade do Liverpool ainda superior.",
+        "efeito": "Jogo equilibrado, leve vantagem Liverpool."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C23"
+        ],
+        "leitura": "Villa gera muitos gols de pênalti (35%), e Liverpool sofre pênaltis (40%). Probabilidade de pênalti no jogo é elevada, favorecendo o Villa.",
+        "efeito": "Aumenta ligeiramente o xG do Villa (cada pênalti ~0.79 xG)."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C2",
+          "C21",
+          "C9",
+          "C10"
+        ],
+        "leitura": "Ambos desmoronam ao sofrer gol (C21). Com necessidade de vitória (C2), um gol pode desencadear uma sequência, ampliando o total.",
+        "efeito": "Reforça over 2.5 e BTTS."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C20",
+          "C2"
+        ],
+        "leitura": "Historicamente, Liverpool contra dominantes marca pouco (1.00) e sofre pouco (1.11). No entanto, a motivação atual (C2) pode anular esse padrão.",
+        "efeito": "Ambíguo: tendência de menos gols, mas necessidade de vitória pode romper."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C15",
+          "C3"
+        ],
+        "leitura": "Sem Onana, Villa perde 16% das interceptações, facilitando a construção do Liverpool. Isso aumenta a probabilidade de o Liverpool criar chances claras.",
+        "efeito": "Pequeno aumento no xG do Liverpool."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Aberto e decidido no detalhe",
+        "prob": 0.45,
+        "filme": "Jogo começa estudado, com Liverpool controlando posse, mas Villa perigoso em contra-ataques. Primeiro gol sai em transição no 1ºT, talvez do Liverpool (Salah ou Szoboszlai). Villa reage e empata antes do intervalo. 2ºT começa morno, mas na reta final (76-90) o jogo se incendeia: ambos precisam vencer, se lançam. Villa pressiona e pode virar, ou Liverpool acha o gol da vitória. Placar final 2-1 ou 2-2.",
+        "arestas": [
+          "A3",
+          "A6",
+          "A10"
+        ]
+      },
+      {
+        "nome": "Liverpool controla e vence",
+        "prob": 0.3,
+        "filme": "Liverpool impõe seu jogo, explorando o lado direito contra Maatsen. Salah e Szoboszlai infernizam. Villa sente falta de Onana e sofre gol cedo (0-15). Liverpool faz 2 a 0 ainda no 1ºT. Villa tenta reagir, mas expõe defesa e Liverpool amplia no contra-ataque. Placar 2-0 ou 3-1.",
+        "arestas": [
+          "A2",
+          "A5",
+          "A12"
+        ]
+      },
+      {
+        "nome": "Villa surpreende em casa",
+        "prob": 0.25,
+        "filme": "Villa começa pressionando, aproveita fator casa e possível pênalti. Liverpool desfalcado não encontra ritmo. Villa marca primeiro em jogada de bola parada ou pênalti. Liverpool precisa se abrir, e Villa amplia em contra-ataque. Placar 2-0 ou 2-1 Villa.",
+        "arestas": [
+          "A1",
+          "A9",
+          "A6"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Início cauteloso, ambos estudando. Liverpool com mais posse, mas poucas chances claras. Índice combinado baixo (0.66). Prob_gol 0.09, ligeira vantagem Liverpool.",
+        "prob_gol": 0.09,
+        "lado": "away"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Jogo começa a aquecer, Liverpool pressiona mais. Vulnerabilidade defensiva do Villa aparece. Índice 0.50, mas momentum Liverpool pode gerar chances. Prob_gol 0.12.",
+        "prob_gol": 0.12,
+        "lado": "away"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Janela quente (índice 1.12). Ambos marcam bastante aqui. Espera-se gol, provavelmente do Liverpool, mas Villa também ameaça. Prob_gol 0.22.",
+        "prob_gol": 0.22,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Início do 2ºT, ritmo menor, times se reorganizando. Índice 1.03. Após intervalo, tende a ser mais morno. Prob_gol 0.14.",
+        "prob_gol": 0.14,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Crescimento de pressão. Villa se lança mais precisando resultado. Índice 0.80. Prob_gol 0.18, com Villa ligeiramente melhor.",
+        "prob_gol": 0.18,
+        "lado": "home"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Explosão final. Índice 1.55, o mais alto. Ambos pressionam, fadiga, desespero. Maior probabilidade de gol. Prob_gol 0.30, ambos podem marcar.",
+        "prob_gol": 0.3,
+        "lado": "equilibrado"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Começo estudado, com Liverpool ligeiramente superior devido à qualidade técnica. Villa deve se postar de forma compacta, tentando explorar contra-ataques. A defesa Villa sem Onana pode sofrer com infiltrações de Szoboszlai. Espera-se ao menos um gol no 1ºT, provavelmente do Liverpool, mas Villa tem capacidade de reação.",
+        "prob_gol": 0.78
+      },
+      "segundo": {
+        "analise": "O jogo deve se decidir no 2ºT, especialmente nos minutos finais. Com o placar provavelmente empatado ou em vantagem mínima, ambos precisarão se expor. A fadiga e os desfalques defensivos abrirão espaços. A maior probabilidade de gols está entre 76-90. Espera-se um 2ºT mais movimentado, com pelo menos 2 gols.",
+        "prob_gol": 0.85
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Ollie Watkins",
+          "prob": 0.36,
+          "motivo": "Artilheiro do Villa (12 gols, 3 nos últ.5), 0.9 SoT/j. Enfrenta defesa que sofre pênaltis, e ele é referência no ataque."
+        },
+        {
+          "nome": "Morgan Rogers",
+          "prob": 0.25,
+          "motivo": "Segundo artilheiro (9 gols), oportunista, aparece bem na área. Dupla com Watkins."
+        },
+        {
+          "nome": "John McGinn",
+          "prob": 0.17,
+          "motivo": "Em ótima forma (rating 7.22), chega de trás e é perigoso em bolas paradas."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Dominik Szoboszlai",
+          "prob": 0.24,
+          "motivo": "Principal jogador do Liverpool (7 MOTM, 6 gols), finaliza de média distância e em boa fase."
+        },
+        {
+          "nome": "Mohamed Salah",
+          "prob": 0.22,
+          "motivo": "Decisivo (7 gols, 2 nos últ.5), explorará lado frágil do Villa. Especialista em jogos grandes."
+        },
+        {
+          "nome": "Cody Gakpo",
+          "prob": 0.21,
+          "motivo": "Referência na ausência de Ekitiké (7 gols), deve ter chances como centroavante improvisado."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.36,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Villa tem valor em casa, mas inconsistência defensiva gera risco."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.25,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Empate plausível, mas ambos precisam vencer, então menor probabilidade."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.39,
+        "variancia": 4,
+        "valor": "nenhum",
+        "nota": "Favorito, mas sem valor (prior 43%). Desfalque de Ekitiké reduz confiança."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.61,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Cobre o Villa não perder, cenário provável com fator casa."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.64,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Seguro, mas baixo valor; Liverpool favorito, mas empate não surpreenderia."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.75,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Muito provável, mas odds baixas. Bom para múltiplas."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Villa com segurança do empate, valor decente contra um Liverpool desfalcado."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.52,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Liverpool ligeiramente favorito, mas sem grande margem."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.83,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Muito provável, mas odds muito baixas."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.62,
+        "variancia": 3,
+        "valor": "medio",
+        "nota": "Boa probabilidade com valor (prior 57%). Roteiro de jogo aberto sustenta."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.4,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Valor se jogo explodir, mas arriscado."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.64,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Ambos marcam provável, mas BTTS tem variância alta; pequeno valor (prior 61%)."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.78,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Villa deve marcar, mas odd baixa. Aposta segura."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.44,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Villa over 1.5 com valor (prior 39%), mas requer boa atuação."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.82,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Liverpool muito provável de marcar, mas sem valor."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.51,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Leve valor (prior 48%), mas desfalques geram incerteza."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": "home",
+        "line": -1,
+        "prob": 0.15,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Villa vencer por 2+ é improvável, mas possível em casa."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": "away",
+        "line": -1,
+        "prob": 0.18,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Liverpool por 2+ tem chance baixa, especialmente sem Ekitiké."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.47,
+        "variancia": 5,
+        "valor": "nenhum",
+        "nota": "Ímpar com leve desvio do par, mas essencialmente aleatório."
+      }
+    ],
+    "best_bet": {
+      "market": "over_under",
+      "selection": "over",
+      "team": null,
+      "line": 2.5,
+      "confidence": "medium",
+      "probability": 0.62,
+      "evidence_for": [
+        "C2",
+        "C9",
+        "C10",
+        "C13",
+        "C14",
+        "C17",
+        "C21",
+        "A3",
+        "A6",
+        "A10"
+      ],
+      "evidence_against": [
+        "C20",
+        "C8"
+      ],
+      "analysis": "Com ambos os times precisando vencer para garantir vaga na Champions, a tendência é de um jogo aberto. O Villa, mesmo em casa com defesa sólida, está sem Onana e sofreu em jogos recentes. O Liverpool, apesar do desfalque de Ekitiké, ainda tem armas ofensivas (Szoboszlai, Salah) e enfrentará uma defesa fragilizada. As faixas de maior incidência de gols (31-45 e 76-90) e a dinâmica de 'desmoronar ao sofrer' aumentam a probabilidade de múltiplos gols. O total esperado de 3.2 xG dá uma margem sobre a linha de 2.5. Riscos: o histórico de confrontos entre estilos dominantes (C20) mostrar menos gols e a ausência do artilheiro do Liverpool podem limitar o placar, mas a motivação deve prevalecer."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "Over 2.5 gols",
+          "argumento": "Desempenho histórico do Liverpool contra times dominantes mostra média de apenas 1.00 gol marcado e 1.11 sofrido (C20), sugerindo jogo de poucos gols.",
+          "ids": [
+            "C20"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Over 2.5 gols",
+          "argumento": "Ausência de Ekitiké reduz poder ofensivo do Liverpool (C8), podendo limitar gols do visitante.",
+          "ids": [
+            "C8"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Over 2.5 gols",
+          "argumento": "Apesar da intenção, o Villa em casa tem defesa sólida (1.11 sofridos, C3), e o Liverpool fora não é tão avassalador, podendo resultar em um jogo mais truncado que o esperado.",
+          "ids": [
+            "C3",
+            "C4"
+          ],
+          "veredito": "nao_sustenta"
+        }
+      ],
+      "conclusao": "Os ataques enfraquecem a aposta em over 2.5, mas não a derrubam. A necessidade de vitória de ambos e as evidências de momentum e faixas de gol mantêm o over como a melhor opção de valor com risco controlado."
+    },
+    "drivers": [
+      "Intenção de tabela: ambos precisam vencer, abrindo o jogo.",
+      "Desfalque de Ekitiké: reduz xG do Liverpool, mas mantém equilíbrio.",
+      "Concentração de gols no fim (76-90) e dinâmica pós-gol: favorece múltiplos gols."
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 0,
+    "blocosFaltando": [],
+    "conclusoes": 25,
+    "arestas": 12,
+    "jogadores": 18,
+    "mercados": 19,
+    "orfas": []
+  },
+  "reasoningText": "Vou analisar o jogo Aston Villa x Liverpool pela rodada 37 da Premier League. O Villa Park em Birmingham recebe uma partida decisiva para a briga pela Champions League. Ambos os times têm 59 pontos, com o Villa em 5º e o Liverpool em 4º, ambos com chances matemáticas de classificação. O veredito de intenção é claro: os dois times precisam ir para cima, o que tende a abrir o jogo.\n\nInicio pelo Passo 1: Varredura dos blocos. Extraio conclusões de cada bloco, com ID, dado e direção. Blocos que não gerarem sinal entram em `blocos_sem_sinal` com motivo.\n\n**Bloco: contexto**\n- Data e local: jogo em casa do Villa, grama natural, clima chuvoso. Chuva já não reduz gols nessa liga, então sem impacto.\n- Descanso: Villa 5 dias, Liverpool 6 dias. Diferença de 1 dia é ruído; ambos tiveram descanso semelhante. Sem assimetria real de fadiga. Conclusão C1: \"Descanso similar (~5-6 dias), sem assimetria de fadiga que mova o número; jogo de alta intensidade esperado.\" Direção: neutra, não altera xG. Força: baixa.\n\n**Bloco: tabela_motivacao**\n- Ambos com 59 pts, brigando por Champions. Villa precisa vencer para travar; empate ainda deixa Bournemouth vivo. Liverpool idem. Veredito: os dois precisam ir para cima. Isso tende a abrir o jogo, aumentar o total de gols e beneficiar o over. Conclusão C2: \"Ambos têm motivação alta e precisam vencer; veredito de intenção: OS DOIS PRECISAM IR PRA CIMA.\" Direção: favorece over, BTTS, jogo aberto. Força: alta.\n\n**Bloco: home_gols (Aston Villa)**\n- Villa marca em casa 1.56 g/j, sofre 1.11. Total em casa: 1.56+1.11=2.67. Volume de SoT feito: 4.78/j, conversão 31%. SoT sofrido: 4.53/j. Dados OK, sem grandes desvios. Conclusão C3: \"Villa em casa: ataque funcional (1.56 g/j, 4.78 SoT/j), defesa sólida (1.11 sofridos).\" Direção: base para xG mandante, sem surpresa.\n\n**Bloco: away_gols (Liverpool)**\n- Liverpool fora: marca 1.5, sofre 1.61. Total fora: 3.11. SoT feito: 4/j, conversão 36%. SoT sofrido: 3.97/j. Ataque forte, defesa vulnerável fora. Conclusão C4: \"Liverpool fora: ataque produtivo (1.5 g/j, 4 SoT/j, conv 36%), mas defesa sofre bastante (1.61 g/j).\" Direção: base para xG visitante.\n\n**Bloco: home_estilo**\n- Villa nos últimos 5: ataques perigosos caíram (43.6 vs 49.8 na temporada), chutes pra fora aumentaram, bloqueados diminuíram. Ofensividade ligeiramente reduzida, mas jogos recentes contra adversários variados. Conclusão C5: \"Estilo recente do Villa: menos ataques perigosos (-12%), mas mantém volume de chutes perigosos.\" Direção: leve viés de baixa no ataque, mas sem força para mover muito.\n\n**Bloco: away_estilo**\n- Liverpool últimos 5: ataques perigosos caíram (46.6 vs 59.5), chutes pra fora diminuíram, bloqueados também. Ofensividade reduzida em relação à temporada, mas ainda alta. Conclusão C6: \"Liverpool recente: menos volume ofensivo (ataques perigosos -22%), mas eficiência se mantém.\" Direção: leve viés de baixa no ataque, mas time ainda é perigoso.\n\n**Bloco: home_qualidade**\n- Nota média 6.78. Destaques: Tielemans 7.16 (estável, mas caindo), McGinn 7.22 (boa forma), Martinez 6.93. Douglas Luiz faltou 2/5, Onana fora (já desfalcado). Conclusão C7: \"Villa tem McGinn e Tielemans em boa forma, mas Onana fora (volante importante) enfraquece meio.\" Direção: leve impacto negativo na solidez defensiva.\n\n**Bloco: away_qualidade**\n- Nota média 6.88. Szoboszlai 7.4 (7 MOTM, forma subindo), Gakpo 7.08 (caindo), van Dijk 7.06, Gravenberch 7.05, Wirtz 7.05. Ekitiké fora (4 MOTM, artilheiro). Desfalque de Ekitiké é significativo: 11 gols, 25% das participações. Conclusão C8: \"Liverpool sem Ekitiké (artilheiro, 18% dos gols) perde poder de fogo, mas Szoboszlai e Salah mantêm ameaça.\" Direção: reduz xG do Liverpool.\n\n**Bloco: home_forma**\n- Últimos 5: EDDVE, 5 pts, 8 gols marcados, 9 sofridos. Forma irregular, mas marcaram em todos os jogos, exceto um? Marcaram em 4/5, sofreram em todos. Conclusão C9: \"Villa instável defensivamente (9 sofridos em 5), mas marca consistentemente (8 gols em 5).\" Direção: favorece BTTS e over.\n\n**Bloco: away_forma**\n- Últimos 5: EDVVV, 10 pts, 10 marcados, 6 sofridos. Boa forma, ataque funcionando, defesa ok. Marcaram em todos os jogos? Sim, marcaram em todos os 5. Conclusão C10: \"Liverpool em boa fase (10 pts em 15), ataque marcando sempre, defesa sofrendo pouco.\" Direção: base para favoritismo ligeiro do Liverpool.\n\n**Bloco: home_momentum**\n- Padrão: Villa costuma sofrer no início (1-15), cresce no intervalo (31-45), pressão no fim (76-90). Janela de domínio: 76-90 (+3.3). Reação a gols: desmorona ao sofrer. Conclusão C11: \"Villa sofre no começo, pressiona no fim (76-90), mas é vulnerável após sofrer gol.\" Direção: gols no fim prováveis, risco de descontrole se sofrer cedo.\n\n**Bloco: away_momentum**\n- Liverpool: domínio variável, mas sofre gols cedo (0-15) em alguns jogos, pressão no meio do 1ºT, e fim de jogo irregular. Janela de domínio: nenhuma clara, mas 0-15 teve -2.2 no cruzamento. Conclusão C12: \"Liverpool inconsistente no início, mas perigoso no meio do 1ºT e final.\" Direção: pode sofrer cedo, mas reage.\n\n**Bloco: home_faixas**\n- Villa marca mais: 76-90 (0.36), 31-45 (0.28), 46-60 (0.25). Sofre mais: 0-15 (0.25), 31-45 (0.25), 46-60 (0.25). Conclusão C13: \"Villa concentra gols no fim do jogo e no intervalo; defesa frágil no início.\" Direção: janelas 31-45 e 76-90 quentes para gols.\n\n**Bloco: away_faixas**\n- Liverpool marca mais: 76-90 (0.53), 31-45 (0.42), 46-60 (0.31). Sofre mais: 76-90 (0.44), 46-60 (0.22). Conclusão C14: \"Liverpool também decide no fim (76-90) e no fim do 1ºT; defesa sofre no fim.\" Direção: janela 76-90 muito quente.\n\n**Bloco: home_desfalques**\n- Onana fora (volante, 1 interceptação/j, 16% do time); da Rocha (zagueiro/lateral, irrelevante); Elliott (meia, irrelevante). Onana é o mais relevante: sem ele, Villa sofre mais? with/without: com ele 1.58 g/j, sem ele 1 g/j — na verdade, marca menos sem ele, mas sofre? Não tem dado direto de gols sofridos, mas ele contribuía com interceptações. A defesa perde um pouco de proteção. Conclusão C15: \"Villa sem Onana perde proteção no meio (1 int/j, 16% do time), defesa mais exposta.\" Direção: aumenta xG do Liverpool.\n\n**Bloco: away_desfalques**\n- Ekitiké (artilheiro, 11 gols, 4 assists), Isak (dúvida, 3 gols), Endo (volante, 0 gols), Frimpong (dúvida, ala), Bajcetic (irrelevante). Ekitiké é o principal: sem ele, Liverpool perde 18% dos gols e 25% das participações. Isak e Frimpong dúvidas afetam profundidade. Endo ausente: volante com 0.9 desarmes/j. Conclusão C16: \"Liverpool sem Ekitiké (artilheiro) e possivelmente sem Isak/Frimpong; ataque enfraquecido, especialmente em gols.\" Direção: reduz xG do Liverpool, mas ainda tem Salah, Gakpo, Szoboszlai.\n\n**Bloco: cruzamento_faixa**\n- Tabelas de ataque x defesa: Villa atacando: índice máximo 0.8 na faixa 76-90 (Villa marca 0.36, Liverpool sofre 0.44). Liverpool atacando: índice máximo 0.75 na faixa 76-90 (Liverpool marca 0.53, Villa sofre 0.22) e 0.67 na 31-45. Janelas 31-45 e 76-90 concentram perigo. Conclusão C17: \"Faixas 31-45 (1ºT) e 76-90 (2ºT) são as mais propensas a gols, com índices altos de ambos os lados.\" Direção: distribuir xG nessas faixas.\n\n**Bloco: base_rate**\n- Rota A: total 3.01 (Villa 1.65, Liverpool 1.36). Rota B: total 2.96 (Villa 1.34, Liverpool 1.62). Prefiro Rota B por ser baseada em SoT, mais estável. O total base é ~2.96, com Villa 1.34 e Liverpool 1.62. Conclusão C18: \"Base rate (SoT): total ~2.96, com Liverpool ligeiramente favorito (1.62 vs 1.34).\" Direção: ponto de partida.\n\n**Bloco: probs_mercado**\n- Probabilidades Dixon-Coles: 1x2: 30/27/43 (Rota B). Over 2.5: 57%. BTTS: 61%. Team totals: Villa over 0.5 74%, over 1.5 39%; Liverpool over 0.5 80%, over 1.5 48%. Conclusão C19: \"Mercado implícito vê Liverpool favorito (43%), over 2.5 em 57%, BTTS 61%.\" Direção: prior para atualizar.\n\n**Bloco: cruzamentos_computados**\n- Arquétipo: Villa contra dominante marca 1.50, sofre 1.88 (acima da média de sofrer? Temporada sofre 1.28, mas em casa sofre 1.11; aqui sofre 1.88, bem mais). Liverpool contra dominante marca 1.00, sofre 1.11 (ambos abaixo da média). Liverpool tem desempenho pior contra times dominantes, o que é curioso já que Villa também é dominante? Villa tem 54% de posse, considerado dominante. Então Liverpool contra times de posse similar sofre menos e marca menos. Isso sugere um jogo mais truncado? Mas o veredito de intenção diz que ambos vão pra cima. Pode haver um conflito: o estilo de jogo pode ser mais controlado, mas a necessidade de vencer abre.\n\n- Mecanismo de gol: Villa gera 6% em falta (índice 3.3x) e 35% em pênalti (1.4x). Liverpool sofre muitos gols de pênalti? Sofre 40% de pênalti, alto. Villa tem atacantes que cavam pênaltis? Watkins, Rogers. É um fator a considerar.\n\n- Dinâmica pós-gol: ambos desmoronam ao sofrer. Isso indica que se um time marca, pode haver uma sequência de gols. Importante para roteiros.\n\n- Artilharia: Villa: Watkins (12), Rogers (9), Buendía (6). Liverpool: Ekitiké (11, fora), Gakpo (7), Salah (7), Szoboszlai (6).\n\n- Setores: Villa ataca pela esquerda (Digne/Maatsen) vs lado direito do Liverpool com Curtis Jones e Frimpong (dúvida). Liverpool ataca pela direita (Szoboszlai/Salah) vs esquerda do Villa com Maatsen e Digne (notas baixas). Isso favorece o ataque do Liverpool pelo lado direito.\n\n- Duplas de gol: algumas quebradas por desfalques (Ekitiké).\n\n- Expectativa por jogador: já fornece xG individuais. Villa XI soma 1.25, Liverpool XI soma 1.14. Mas o top-down de Villa era 1.42 e Liverpool 1.72, indicando que os XIs têm menos produção que a média do time (banco contribui).\n\nConclusões desse bloco: C20: \"Villa sofre mais contra dominantes (1.88 sofridos), enquanto Liverpool marca menos contra dominantes (1.00); conflito entre estilo e intenção.\" C21: \"Ambos desmoronam ao sofrer gol: jogo pode ter sequências de gols.\" C22: \"Ataque do Liverpool pela direita (Szoboszlai/Salah) enfrenta lado esquerdo frágil do Villa (Maatsen nota 6.4, Digne 6.7).\" C23: \"Villa depende de pênaltis (35% dos gols) e Liverpool sofre muitos pênaltis (40%); possível pênalti no jogo.\" C24: \"XI do Liverpool tem λ bottom-up baixo (1.14) vs top-down (1.72) devido a desfalques; produção pode vir do banco.\" C25: \"XI do Villa tem λ 1.25 vs top-down 1.42, menos queda; ataque mais distribuído.\"\n\n**Passo 2: Jogador por jogador**\nListo todos os nomeados no briefing (qualidade individual e desfalques) e faço leitura.\n\n**Aston Villa:**\n- Youri Tielemans: Meia criativo, forma caindo mas ainda nota alta. Deve ditar ritmo, mas pouco volume de finalização. Leitura: \"Tielemans em leve queda de forma, mas segue como maestro; contribui mais com passes-chave (1.6 KP/j) do que com finalização.\"\n- Douglas Luiz: Perdeu ritmo (2/5 jogos), forma subindo mas ainda inconsistente. Leitura: \"Douglas Luiz retornando, ainda buscando ritmo; importante na transição, mas não deve ter grande impacto ofensivo.\"\n- John McGinn: Em ótima forma (7.22), pilar do meio. Leitura: \"McGinn é o motor do Villa, com boa presença ofensiva e chegada na área; pode ser perigoso em bolas paradas.\"\n- Emiliano Martínez: Goleiro, seguro, mas sofre com defesa instável. Leitura: \"Martínez é garantia de defesas importantes, mas não pode evitar gols se a defesa expuser.\"\n- Boubacar Kamara: Poucos jogos, fora de forma. Leitura: \"Kamara sem ritmo, não deve ser utilizado; sua ausência é menos sentida com Onana fora.\"\n- Amadou Onana (desfalque): Volante defensivo, importante na contenção. Sua ausência expõe a defesa. Leitura: \"Onana fora: Villa perde seu principal volante de contenção, aumentando a fragilidade defensiva contra o meio-campo criativo do Liverpool.\"\n- Alysson (desfalque? Nome aparece como \"A. da Rocha dos Santos\" e \"Harvey Elliott\"? No briefing, desfalques do Villa incluem A. da Rocha dos Santos e Harvey Elliott. Alysson? Não, o nome \"Alysson\" aparece nos desfalques do Villa? Revisar: desfalques do Villa listados: A. Mvom Onana, A. da Rocha dos Santos, Harvey Elliott. O nome \"Alysson\" aparece nos fatores de desfalque defensivo do rival, mas não como jogador. Provavelmente \"A. da Rocha dos Santos\" é Alysson? Mas o texto diz \"A. da Rocha dos Santos\" e \"Harvey Elliott\" no Villa? Harvey Elliott é jogador do Liverpool na realidade, mas aqui parece estar no Villa? Pode ser um erro de base, mas tratarei como está. De qualquer forma, são desfalques menores: A. da Rocha dos Santos (0 gols, 0% dos gols, 0.3 interceptações) e Harvey Elliott (0 gols, irrelevante). Farei leituras breves: \"A. da Rocha dos Santos: defensor reserva, ausência sem impacto.\" \"Harvey Elliott: meia ofensivo com pouco uso, ausência não afeta.\"\n\n**Liverpool:**\n- Dominik Szoboszlai: Melhor jogador, 7 MOTM, forma subindo. Leitura: \"Szoboszlai é o cérebro do Liverpool, em grande fase; principal criador (1.87 KP/j) e finalizador, deve ditar o jogo pelo lado direito.\"\n- Cody Gakpo: Nota alta, mas forma caindo. Leitura: \"Gakpo em leve queda de rendimento, mas ainda perigoso; tende a aparecer no ataque, mas pode ser menos efetivo.\"\n- Virgil van Dijk: Zagueiro pilar, forma caindo. Leitura: \"Van Dijk, apesar da leve queda, é a referência defensiva; importante nas bolas aéreas ofensivas (3 gols em dupla com Szoboszlai).\"\n- Ryan Gravenberch: Meia versátil, forma subindo. Leitura: \"Gravenberch em ascensão, oferece chegada ao ataque; pode ser elemento surpresa.\"\n- Florian Wirtz: Meia criativo, estável. Leitura: \"Wirtz é o segundo articulador, com boa visão de jogo; sua criatividade pode desequilibrar.\"\n- Hugo Ekitiké (desfalque): Artilheiro, 11 gols. Leitura: \"Ekitiké fora: grande baixa, Liverpool perde seu principal finalizador e referência no ataque; força Gakpo e Salah a assumirem mais responsabilidade.\"\n- Alexander Isak (dúvida): Atacante, 3 gols. Leitura: \"Isak dúvida: se ausente, reduz opções ofensivas no banco; se joga, não deve estar 100%.\"\n- Wataru Endo (desfalque): Volante, 0 gols. Leitura: \"Endo fora: volante de contenção, sua ausência pode expor mais a defesa, mas não é titular absoluto.\"\n- Jeremie Frimpong (dúvida): Ala, 0 gols, 1 assist. Leitura: \"Frimpong dúvida: se fora, lado direito defensivo fica com Curtis Jones, que é meia adaptado, fragilizando a marcação contra o ataque esquerdo do Villa.\"\n- S. Bajcetic Maquieira: irrelevante.\n\n**Passo 2b: Previsão por jogador**\nAncorado nos dados do bloco \"Expectativa por jogador\", movo com evidências do roteiro (jogo aberto, ambos precisando vencer). Como o jogo tende a ser aberto, pode haver mais volume ofensivo. Para o Villa, a necessidade de vencer em casa pode aumentar o ímpeto. Para o Liverpool, mesmo com desfalques, precisam atacar. Ajusto levemente para cima os xG dos principais atacantes, mas mantendo coerência com os limites.\n\n**Aston Villa:**\n- Ollie Watkins: xG 0.37, P(marca) 31%, xSoT 1.04, P(SoT1) 65%, xKP 0.57. Jogo aberto, Villa em casa, Watkins é o homem-gol. Aumento xG para 0.45, P(marca) para 36% (dado que pode ter mais chances). Leitura: \"Watkins deve ser o alvo principal, recebendo em profundidade; espera-se ao menos uma finalização perigosa, com boa chance de marcar.\"\n- Morgan Rogers: xG 0.23, P(marca) 21%, xSoT 0.61, P(SoT1) 46%, xKP 1.25. Também se beneficia do jogo aberto, aumenta xG para 0.28, P(marca) 25%. Leitura: \"Rogers flutua entre linhas e aparece na área; seu instinto de oportunista pode render um gol, especialmente em rebotes.\"\n- Ross Barkley: xG 0.18, P(marca) 16%, xSoT 0.55. Pequeno ajuste para 0.20, P(marca) 18%. Leitura: \"Barkley tende a arriscar de média distância; pode surpreender com chutes de fora, mas não é aposta certa.\"\n- John McGinn: xG 0.16, P(marca) 15%, xSoT 0.36, xKP 1.82. Motor do time, ajuste para 0.18, P(marca) 17%. Leitura: \"McGinn chega bem de trás e é perigoso em escanteios/faltas; seu volume de passes-chave pode gerar assistências.\"\n- Matty Cash: xG 0.14, P(marca) 13%. Lateral ofensivo, mas enfrenta defesa forte; mantenho. Leitura: \"Cash pode avançar, mas deve ter cautela contra o ataque rival; improvável marcar.\"\n- Tyrone Mings: xG 0.06, P(marca) 6%. Zagueiro, bola aérea, mantenho. Leitura: \"Mings é ameaça em escanteios, mas baixa probabilidade.\"\n- Youri Tielemans: xG 0.06, P(marca) 5%. Aumenta para 0.08, P(marca) 7% pois pode chutar de fora. Leitura: \"Tielemans pode arriscar de longe, mas seu foco é armar.\"\n- Ian Maatsen: xG 0.04, P(marca) 4%. Lateral, ofensivo, mas baixo volume. Leitura: \"Maatsen sobe pouco, focando em defender Szoboszlai.\"\n- Ezri Konsa: xG 0.02, P(marca) 2%. Zagueiro, irrelevante.\n- Emiliano Martínez: 0.\n- Victor Lindelöf: 0. (Nota: Lindelöf no Villa? Provavelmente erro de base, mas tratarei como zagueiro reserva.)\n\n**Liverpool:**\n- Dominik Szoboszlai: xG 0.21, P(marca) 19%, xSoT 0.73, xKP 1.87. Principal arma, jogo aberto favorece, aumento xG para 0.28, P(marca) 24%. Leitura: \"Szoboszlai deve comandar o ataque, finalizar de média distância e servir companheiros; altamente provável que participe de gol.\"\n- Cody Gakpo: xG 0.21, P(marca) 19%, xSoT 0.54. Forma em queda, mas referência sem Ekitiké; ajuste leve para 0.24, P(marca) 21%. Leitura: \"Gakpo atuará mais centralizado na ausência de Ekitiké; deve ter oportunidades como referência.\"\n- Mohamed Salah: xG 0.20, P(marca) 18%, xSoT 0.54. Experiente, decisivo; jogo grande, aumenta para 0.25, P(marca) 22%. Leitura: \"Salah é o definidor, costuma crescer em jogos importantes; enfrenta Maatsen frágil, deve levar vantagem.\"\n- Florian Wirtz: xG 0.14, P(marca) 13%, xSoT 0.42. Criador, menos finalizador; mantenho xG 0.15, P(marca) 14%. Leitura: \"Wirtz ditará o ritmo com passes, sua finalização é secundária.\"\n- Ryan Gravenberch: xG 0.11, P(marca) 11%, xSoT 0.29. Surpresa, ajuste para 0.13, P(marca) 12%. Leitura: \"Gravenberch pode infiltrar na área; tem faro de gol, mas não é volume.\"\n- Virgil van Dijk: xG 0.11, P(marca) 10%. Bola parada, ajuste para 0.12. Leitura: \"Van Dijk é arma em escanteios; com a defesa do Villa frágil, pode marcar de cabeça.\"\n- Andrew Robertson: xG 0.05, P(marca) 5%. Lateral de apoio.\n- Alexis Mac Allister: xG 0.05, P(marca) 5%. Volante, pouca presença ofensiva.\n- Curtis Jones: xG 0.04, P(marca) 4%. Meia adaptado à direita, defensivo.\n- Ibrahima Konaté: xG 0.02, zagueiro.\n- Giorgi Mamardashvili: 0.\n\nNota: A soma dos xG dos jogadores não precisa bater exatamente com o xG do time, mas deve ser próxima. O xG do time será definido no Passo 5, e os xG individuais são expectativas.\n\n**Passo 3: Arestas**\nConstruo no mínimo 8 arestas ligando as conclusões.\n\n**A1: Ataque home vs defesa away** — liga C3 e C4 e C17. Villa em casa ataque 1.56, Liverpool fora sofre 1.61. Liverpool defesa vazada fora, Villa deve criar chances. Índice na faixa 76-90 alto (0.8). Efeito: xG do Villa aumentado, especialmente no fim.\n\n**A2: Ataque away vs defesa home** — liga C4, C15, C22. Liverpool ataque forte (1.5 fora), mas sem Ekitiké reduz poder, porém lado direito forte contra esquerda frágil do Villa (Maatsen nota 6.4). Defesa do Villa sem Onana mais exposta. Efeito: xG do Liverpool mantido alto apesar do desfalque, explorando corredor.\n\n**A3: Intenção de tabela x estilo/forma** — liga C2, C5, C6, C9, C10. Ambos precisam vencer, o que deve elevar o volume ofensivo. Villa em forma irregular mas marca, Liverpool em boa fase. Efeito: total de gols acima da média, over 2.5 provável.\n\n**A4: Desfalque x volume próprio e do adversário** — liga C8, C16, C15. Ekitiké fora reduz gols do Liverpool, mas Szoboszlai e Salah podem suprir. Onana fora expõe defesa do Villa. Efeito: xG do Liverpool cai menos que o esperado, xG do Villa sobe pela defesa enfraquecida do Liverpool? Na verdade Liverpool não tem desfalques defensivos graves (Endo e Frimpong dúvida). Frimpong dúvida afeta defesa direita. Então xG do Villa pode subir um pouco.\n\n**A5: Forma recente x qualidade dos adversários** — liga C9, C10. Villa enfrentou adversários como Burnley (rebaixado) e Tottenham (briga Z), resultados ruins. Liverpool enfrentou Chelsea e United, resultados mistos. Forma do Liverpool é mais sólida. Efeito: Liverpool ligeiramente favorito, mas não esmagador.\n\n**A6: Momentum home x momentum away** — liga C11, C12. Villa pressiona no fim (76-90), Liverpool sofre gols no fim. Liverpool também pressiona no fim? Seus dados de momentum no fim variam, mas na curva cruzada, Villa domina o fim. Janela 76-90 é quente. Efeito: gols no fim prováveis, com Villa podendo marcar.\n\n**A7: Fadiga/descanso x intenção** — liga C1, C2. Sem assimetria real, ambos descansados, então a intenção prevalece. Efeito: neutro.\n\n**A8: Qualidade individual x desfalques** — liga C7, C8, C16, C22. Villa sem Onana perde contenção, mas McGinn e Tielemans criam. Liverpool sem Ekitiké, mas Szoboszlai excelente. Salah e Gakpo experientes. Efeito: jogo equilibrado, com leve vantagem para o Liverpool pelas individualidades.\n\n**A9: Cruzamento de canais** — liga C23. Villa depende de pênaltis, Liverpool sofre pênaltis. Possibilidade de pênalti favorece xG do Villa. Efeito: aumenta ligeiramente a chance de gol do Villa.\n\n**A10: Dinâmica pós-gol** — liga C21. Ambos desmoronam ao sofrer: se alguém marcar, o jogo pode explodir em gols. Efeito: over 2.5 e BTTS favorecidos.\n\n**A11: Estilo dominante vs dominante** — liga C20. Liverpool tem mau desempenho contra times dominantes (marca 1.00, sofre 1.11), enquanto Villa sofre mais contra dominantes (1.88). No geral, sugere um jogo de menos gols? Mas a intenção pode sobrepor. Efeito ambíguo: tendência de menos gols, mas necessidade de vencer pode anular.\n\n**A12: Desfalque defensivo x ataque** — liga C15, C3. Villa sem Onana: perde 1 interceptação/jogo (16%). Isso pode aumentar o volume de passes do Liverpool. Efeito: xG do Liverpool sobe um pouco.\n\n**Conclusões órfãs:** Algumas conclusões podem não ser usadas diretamente, mas verificarei. C18 (base rate) é usada como ponto de partida, não em aresta específica. C19 (probs mercado) também é referência. C24 e C25 (XI lambdas) são informativas. Coloco em descartadas com justificativa se não usadas em arestas.\n\n**Passo 4: Roteiros**\nDefino 2-3 roteiros prováveis com probabilidades.\n\n**Roteiro 1: \"Aberto e decidido no detalhe\" (prob 45%)**\nJogo começa estudado, com Liverpool controlando posse, mas Villa perigoso em contra-ataques. Primeiro gol sai em transição no 1ºT, talvez do Liverpool (Salah ou Szoboszlai). Villa reage e empata antes do intervalo. 2ºT começa morno, mas na reta final (76-90) o jogo se incendeia: ambos precisam vencer, se lançam. Villa pressiona e pode virar, ou Liverpool acha o gol da vitória. Placar final 2-1 ou 2-2. Over 2.5 gols, BTTS.\nSustentado por: A3 (intenção), A6 (momentum fim), A10 (desmoronam), C17 (faixas quentes).\n\n**Roteiro 2: \"Liverpool controla e vence\" (prob 30%)**\nLiverpool impõe seu jogo, explorando o lado direito contra Maatsen. Salah e Szoboszlai infernizam. Villa sente falta de Onana e sofre gol cedo (0-15). Liverpool faz 2 a 0 ainda no 1ºT. Villa tenta reagir, mas expõe defesa e Liverpool amplia no contra-ataque. Placar 2-0 ou 3-1. Over 2.5, Liverpool vence.\nSustentado por: A2 (lado direito frágil), C10 (boa forma Liverpool), C15 (defesa Villa exposta).\n\n**Roteiro 3: \"Villa surpreende em casa\" (prob 25%)**\nVilla começa pressionando, aproveita fator casa. Liverpool desfalcado não encontra ritmo. Villa marca primeiro em jogada de bola parada ou pênalti. Liverpool precisa se abrir, e Villa amplia em contra-ataque. Placar 2-0 ou 2-1 Villa. Over 2.5, Villa vence.\nSustentado por: A1 (ataque Villa em casa), A9 (pênalti), C13 (gols no fim), momento Villa.\n\n**Passo 4b: Linha do tempo**\nAncoragem nas faixas de cruzamento. Índices somados por faixa (Villa atacando + Liverpool atacando):\n0-15: 0.3+0.36=0.66\n16-30: 0.25+0.25=0.50\n31-45: 0.45+0.67=1.12\n46-60: 0.47+0.56=1.03\n61-75: 0.44+0.36=0.80\n76-90: 0.8+0.75=1.55\n\nNormalizando para distribuição de gols: soma total 0.66+0.50+1.12+1.03+0.80+1.55 = 5.66. Probabilidade de gol em cada faixa (como proporção do total): 0-15: 11.7%, 16-30: 8.8%, 31-45: 19.8%, 46-60: 18.2%, 61-75: 14.1%, 76-90: 27.4%. Essa é a base, que modulo com momentum e roteiro.\n\nRoteiro mais provável: Roteiro 1 (45%). Com base nele, construo a linha do tempo:\n\n**1ºT:**\n- **0-15**: Início cauteloso, ambos estudando. Liverpool pode ter mais posse, mas poucas chances claras. Índice base: 11.7% dos gols, mas com cautela inicial, reduzo um pouco: prob_gol 0.09. Lado: equilibrado, talvez Liverpool ligeira vantagem.\n- **16-30**: Jogo começa a aquecer, Liverpool pressiona mais. Vulnerabilidade defensiva do Villa aparece. Índice base 8.8%, mas com ataque Liverpool, prob_gol 0.12. Lado: Liverpool.\n- **31-45**: Janela quente na base (19.8%), ambos marcam bastante aqui. Expectativa de gol, talvez do Liverpool, mas Villa também pode marcar. prob_gol 0.22. Lado: equilibrado, mas pendendo Liverpool.\n\n**Intervalo: 1-1 ou 1-0 Liverpool.** Ajusto o 2ºT com game-state.\n\n**2ºT:**\n- **46-60**: Início do 2ºT, ritmo menor, times se reorganizando. Índice base 18.2%, mas após intervalo tende a ser mais morno. prob_gol 0.14. Lado: equilibrado.\n- **61-75**: Crescimento de pressão. Villa pode se lançar mais precisando resultado. Índice base 14.1%, mas com necessidade, prob_gol 0.18. Lado: Villa.\n- **76-90**: Explosão final. Índice base 27.4% já alto, com ambos pressionando, fadiga, desespero. Janela com maior probabilidade de gol. prob_gol 0.30. Lado: ambos, mas Villa empurrado pela torcida.\n\n**Tempos:**\n- **primeiro**: Análise: Começo estudado, com Liverpool ligeiramente superior devido à qualidade técnica. Villa deve se postar de forma compacta, tentando explorar contra-ataques. A defesa Villa sem Onana pode sofrer com infiltrações de Szoboszlai. Espera-se ao menos um gol no 1ºT, provavelmente do Liverpool, mas Villa tem capacidade de reação. prob_gol: 0.75 (probabilidade de ≥1 gol no 1ºT). Cálculo: a partir dos xG do 1ºT. Total 1ºT base ~1.3 (44% de 2.96). Com ajuste para cima, estimo 1.5 gols no 1ºT. Poisson P(≥1) = 1 - P(0) = 1 - e^{-1.5} = 1 - 0.223 = 0.777, arredondo 0.78. Mas como temos faixas, a soma das prob_gol das faixas do 1ºT não é a prob do tempo porque não são independentes? Tratarei prob_gol como a probabilidade de ocorrer gol naquela faixa, consistente com xG_1t. Definirei depois.\n\n- **segundo**: Análise: O jogo deve se decidir no 2ºT, especialmente nos minutos finais. Com o placar provavelmente empatado ou em vantagem mínima, ambos precisarão se expor. A fadiga e os desfalques defensivos abrirão espaços. A maior probabilidade de gols está entre 76-90. Espera-se um 2ºT mais movimentado, com pelo menos 2 gols. prob_gol: 0.85.\n\n*Nota: As prob_gol das janelas serão definidas como a probabilidade de ocorrer ao menos 1 gol naquela faixa. Elas devem ser coerentes com as xg_bands e os totais por tempo. Como o runtime normaliza, farei uma distribuição estimada.*\n\nPara o cálculo, parto do total de xG ajustado (Passo 5). Total do jogo: estimo 3.1 gols (subindo da base 2.96 pela intenção). Distribuo entre tempos: 44% 1ºT = 1.36, 56% 2ºT = 1.74. Ajuste: 1.4 e 1.7.\n\nAgora, as xg_bands: distribuo o xG de cada time pelas faixas conforme índices normalizados e roteiro.\n\nPara Villa (xg total ~1.5? Aguarde, definirei xG no Passo 5). Farei agora.\n\n**Passo 5: Board de mercados**\nPreciso definir meus xG, 1x2, etc., a partir da base Rota B (2.96, Villa 1.34, Liverpool 1.62) e mover com evidências.\n\nFatores para ajuste:\n- Intenção (ambos precisam vencer): +0.2 total (0.1 cada)\n- Desfalque Ekitiké: -0.25 para Liverpool (mas ajusto menos porque outros cobrem)\n- Desfalque Onana: +0.1 para Liverpool (defesa Villa pior)\n- Fator casa: já incluso, mas em jogo de pressão, Villa pode ter +0.1\n- Estilo: conflitante, mas prevalece intenção.\n- Mecanismo pênalti: +0.05 para cada? Pequeno.\n\nAjustes:\nVilla: 1.34 + 0.15 (intenção e casa e pênalti) = 1.49 ~ 1.5\nLiverpool: 1.62 - 0.10 (Ekitiké) + 0.10 (defesa Villa exposta) + 0.05 (intenção) = 1.67 ~ 1.7\nTotal: 3.2\n\nArredondo: Villa 1.5, Liverpool 1.7, Total 3.2.\n\n1x2: a partir dos xG, uso simulação de Poisson. Com médias 1.5 e 1.7, calculo probabilidades de resultado.\n- Probabilidades exatas: lambda casa 1.5, fora 1.7.\nVitória casa: soma de P(casa > fora). Aproximadamente, empate ~24%, casa ~35%, fora ~41%? Vou calcular via Dixon-Coles ou aproximação. Como temos o prior Dixon-Coles (30/27/43), ajusto. Meu xG maior que base (3.2 vs 2.96), então over 2.5 aumenta. Aumentar total pode afetar 1x2: mais gols geralmente reduzem empate? Não necessariamente. Mas como ambos marcam, empate ainda provável.\n\nUsando Poisson independente: P(empate) = soma_k P(k,k). Para lambda 1.5 e 1.7, P(0,0)= e^{-3.2}=0.0408, P(1,1)= 1.5*1.7*0.0408 = 0.104, etc. Somando, dá ~22%. Vitória casa: P(X>Y) ~ 38%, fora ~40%. Arredondo: 38/22/40. Mas o prior Dixon-Coles já corrige empate para cima (27% na base). Então meu empate deve ser ~25%. Ajusto: 36/25/39.\n\nVou usar: home 36%, draw 25%, away 39%. As odds justas: 2.78, 4.00, 2.56.\n\nProbabilidades de mercado:\n1. 1x2 home: 36%\n2. 1x2 draw: 25%\n3. 1x2 away: 39%\n4. double_chance home_draw: 36+25=61%\n5. double_chance draw_away: 25+39=64%\n6. double_chance home_away: 36+39=75%\n7. draw_no_bet home: 36/(36+39)=48%\n8. draw_no_bet away: 39/(36+39)=52%\n\nOver/Under: com total 3.2, Poisson P(>2.5) = 1 - P(0) - P(1) - P(2). P(0)=0.0408, P(1) = (3.2)*0.0408=0.1306, P(2) = (3.2^2/2)*0.0408 = 0.2089. Soma = 0.3803, então over 2.5 = 0.6197 ~62%. Over 1.5: 1 - P(0) - P(1) = 0.8286 ~83%. Over 3.5: 1 - P(0)-P(1)-P(2)-P(3). P(3)= (3.2^3/6)*0.0408=0.2228, então over 3.5 = 1 - 0.6031 = 0.3969 ~40%.\n\nBTTS: calculado como (1 - P(casa 0)) * (1 - P(fora 0)). P(casa 0) = e^{-1.5} = 0.2231, P(fora 0)= e^{-1.7}=0.1827. BTTS = (1-0.2231)*(1-0.1827) = 0.7769*0.8173 = 0.635 ~64%.\n\nTeam totals: Villa over 0.5: 1 - 0.2231 = 0.7769 ~78%. Villa over 1.5: 1 - P(0) - P(1) = 1 - 0.2231 - (1.5*0.2231)= 1 - 0.5578 = 0.4422 ~44%.\nLiverpool over 0.5: 1 - 0.1827 = 0.8173 ~82%. Liverpool over 1.5: 1 - P(0) - P(1) = 1 - 0.1827 - (1.7*0.1827)= 1 - 0.4933 = 0.5067 ~51%.\n\nHandicap: home -1 (ou seja, Villa vence por 2+): probabilidade de vitória do Villa por 2+ gols. Posso calcular com Poisson: P(X - Y >=2). Estimativa ~15%. Away -1 (Liverpool por 2+): P(Y - X >=2) ~18%.\n\nOdd/even: ímpar ~47% (padrão).\n\nPara variância, sigo a escada: team totals over 0.5 são os mais seguros (1), over 1.5 (2), handicap (3), over/under (3-4), 1x2 (4), BTTS (5). Valor: comparando minhas probs com as do prior. Prior over 2.5 era 57%, meu é 62%: valor baixo/médio. Prior BTTS 61%, meu 64%: baixo. Prior 1x2: meu é próximo? Prior 30/27/43. Meu 36/25/39. Apostar no Villa (home) tem valor? Prior dizia 30%, eu digo 36%, então valor. No away, prior 43%, eu 39%, sem valor. Então home tem valor.\n\nMelhores apostas candidatas: Villa ou empate? Empate é arriscado. Prefiro team total Villa over 0.5 (78%, prior 74%, valor baixo mas seguro). Ou double chance home_draw (61% vs prior 57%, valor baixo). Ou over 2.5. Como o veredito é \"ambos precisam ir pra cima\", over 2.5 é coerente, mas a linha está colada no meu total (3.2, over 2.5 prob 62%). Para ter margem, over 2.5 é ok. Over 1.5 é muito provável (83%), mas menos valor. Over 3.5 (40%) é alternativo.\n\nDisciplina de variância: team total over 0.5 do lado forte. Qual lado é forte? Liverpool é favorito (39%), mas seu over 0.5 é 82%. Villa over 0.5 é 78%. Villa over 0.5 tem valor maior (78% vs prior 74%). Mas ambos são seguros. Pela escada, team total over 0.5 é nível 1. Seria uma aposta muito conservadora, mas sharp não \"passa\". No entanto, o jogo pede algo mais agressivo? O protocolo diz: \"a anti-timidez vale pro TAMANHO do xG, não pra escolher mercado arriscado: convicção no número, disciplina no mercado.\" Posso ter alta convicção no over 2.5? Vejamos a refutação.\n\n**Passo 6: Refutação**\nCandidata: Over 2.5 gols. Probabilidade 62%, prior 57%. Valor presente, mas não enorme. Variância: over 2.5 é nível 3-4? Over/under é moderado. Mas a linha está próxima do total (3.2). Em jogos com total próximo de 3, over 2.5 tem risco de terminar exatamente 2 gols (2-0, 1-1). A chance de exatamente 2 gols é P(2) = 0.2089 (21%). Então 21% de perder. E se for 3, ganha. Margem não é folgada.\n\nOutra candidata: BTTS @ 64% (prior 61%). BTTS é nível 5, mas aqui é provável. Porém, o jogo pode ter um 2-0 ou 1-0 se um time dominar. Chance de um time não marcar: Villa não marcar: P(0) = 0.223 (22%), Liverpool não marcar: 0.183 (18%). BTTS falha se qualquer um não marcar, então prob de falha = 1 - 0.64 = 36%. Ainda é mais arriscado que over 2.5? Sim.\n\nOutra: Double chance home_draw (61% vs prior 57%): seguro, variância 2. Villa não perder é provável? Liverpool fora tem dificuldades? Vila em casa é forte. Mas o prior apontava apenas 57% para 1X. Minha leitura deu 61%, valor pequeno.\n\nQue tal Villa over 1.5 gols? Villa marca em casa 1.56, mas meu xG 1.5. Over 1.5 do Villa: probabilidade 44%. Prior era 39%, então valor bom. Mas variância mais alta.\n\nConsiderando a regra de confiança: se ≥3 arestas independentes convergem e nenhum ataque derruba, posso cravar high. Para over 2.5, várias arestas convergem: A3 (intenção), A6 (momentum), A10 (desmoronam). Mas há a aresta A11 que sugere menos gols em jogos entre dominantes (Liverpool marca 1.00, sofre 1.11). Isso enfraquece. Também o desfalque de Ekitiké reduz gols. A defesa do Villa em casa é sólida (1.11), e a do Liverpool fora sofre muito (1.61), então gols podem vir. Pesa mais a intenção.\n\nAtaques contra over 2.5:\n1. (derruba? enfraquece?) \"Liverpool contra times dominantes tem desempenho de poucos gols (marca 1.00, sofre 1.11) em 9 jogos\" (C20). Isso indica que o jogo pode ser mais truncado, com menos chances claras. Força: média, pois a motivação atual é diferente da média da temporada. Veredito: enfraquece, mas não derruba, porque a necessidade de vencer pode anular o estilo.\n2. \"Desfalque de Ekitiké tira poder de fogo do Liverpool (18% dos gols)\" (C8). Isso pode reduzir os gols do jogo. Veredito: enfraquece.\n3. \"Villa em casa tem defesa sólida (1.11 sofridos), e Liverpool fora sofre muito (1.61), sugerindo que o Villa pode marcar, mas o Liverpool pode não corresponder.\" Na verdade, Liverpool fora sofre 1.61, então gols do Villa são prováveis. Mas o ataque do Liverpool pode ser contido? O Villa sem Onana pode sofrer. Isso não é um ataque forte ao over.\n\nNenhum ataque é \"derruba\", então a confiança pode ser medium (pois há enfraquecimento). Aplicando regra: high exige ≥3 arestas independentes e nenhum ataque \"derruba\" ou \"enfraquece\" com dado forte. Aqui temos enfraquecimento com dado forte (desempenho contra dominantes, desfalque). Então fico com medium.\n\nAposto no over 2.5? Ainda posso escolher algo mais seguro. O protocolo diz para preferir menor variância com valor. Team total over 0.5 do Liverpool tem prob 82% (prior 80%), valor muito baixo. Double chance home_draw: 61%. Talvez o melhor equilíbrio entre valor e segurança seja handicap asiático? O board pede handicap -1, que é variância 3. Villa +1? Ou away -1? Não, isso é arriscado.\n\nVou optar pelo **Over 2.5 gols** como best_bet, com confiança média, destacando evidências e riscos. Mas poderia ser também BTTS, mas over 2.5 é mais direto. No entanto, se o jogo terminar 1-1, over 2.5 perde, mas BTTS ganha. A chance de 1-1 é plausível (meu cálculo de Poisson: P(1,1) = (1.5*1.7)*e^{-3.2} = 2.55*0.0408 = 0.104 ~10.4%). Então 10% de chance de perder over 2.5 mas ganhar BTTS. Over 2.5 perde em 0-0, 1-0, 2-0, 1-1, 0-1, 0-2. Soma dessas probabilidades é 38%. BTTS perde se qualquer um não marcar (36%). São similares. Over 2.5 é um pouco mais provável (62% vs 64%), mas a diferença é pequena. Na dúvida, sigo com over 2.5 pois é um mercado mais tradicional e a leitura de jogo aberto favorece mais gols.\n\nBest bet: Over 2.5 gols, confiança medium, probabilidade 62%.\n\nEvidências a favor: C2 (intenção), C9 (Villa sofre), C10 (Liverpool marca), C13/C14 (faixas de gol), C17 (cruzamento faixas quentes), A3, A6, A10.\nEvidências contra: C20 (estilo dominante com menos gols), C8 (Ekitiké fora), possível retranca se um time sair na frente? Mas como ambos precisam, mesmo saindo atrás devem atacar.\n\n**Passo 6 (confiança por regra):** confidence_regra: \"Medium: mais de 3 arestas convergem para over (intenção, momentum, dinâmica pós-gol), mas o desempenho histórico do Liverpool contra dominantes (C20) e o desfalque de Ekitiké (C8) enfraquecem a convicção, sem derrubar.\"\n\n**Conclusões descartadas?** Algumas conclusões podem não ter sido usadas em arestas. Listarei: C18 (base rate) usada como âncora, não em aresta, mas não foi descartada, foi usada para ancorar números. C19 (probs mercado) igual. C24 e C25 (XI lambdas) foram consideradas, mas não formam aresta direta. Coloco em descartadas com motivo \"usado como referência numérica, não gerou aresta independente\".\n\n**Blocos sem sinal:** \"contexto\" gerou C1, que tem sinal? C1 foi \"sem assimetria\", direção neutra, então não move, mas é conclusão. Pode ir para blocos_sem_sinal? O bloco contexto em si rendeu uma conclusão (C1) que era neutra, mas não foi usada em aresta? Usei C1 em A7 (fadiga), então foi usada. Então não é sem sinal.\n\nReviso: todos os blocos geraram pelo menos uma conclusão. Os que poderiam não gerar: \"home_desfalques\" e \"away_desfalques\" geraram. \"cruzamento_faixa\" gerou. \"base_rate\" gerou. \"probs_mercado\" gerou. \"cruzamentos_computados\" gerou várias. Ok.\n\n**Jogadores:** já listei.\n\n**Arestas:** listei 12, todas com IDs das conclusões.\n\n**Roteiros:** 3, com probs.\n\n**Janelas e tempos:** construídos.\n\n**Mercados:** preencho as 19 linhas.\n\n**Best bet:** over 2.5.\n\nAgora, monto o JSON conforme schema.\n\nAtento aos campos: `xg_bands` são as distribuições de xG por faixa para cada time. Não preciso que somem exatamente o xG, pois o runtime normaliza. Distribuo conforme índices e roteiro.\n\nPara Villa (xg 1.5):\nDistribuição baseada nos índices de ataque do Villa (soma dos índices de ataque 0.3+0.25+0.45+0.47+0.44+0.8 = 2.71), normalizo para 1.5:\n0-15: 0.3/2.71 * 1.5 = 0.166\n16-30: 0.25/2.71 * 1.5 = 0.138\n31-45: 0.45/2.71 * 1.5 = 0.249\n46-60: 0.47/2.71 * 1.5 = 0.260\n61-75: 0.44/2.71 * 1.5 = 0.243\n76-90: 0.8/2.71 * 1.5 = 0.443\n\nPara Liverpool (xg 1.7):\nÍndices de ataque: 0.36+0.25+0.67+0.56+0.36+0.75 = 2.95\n0-15: 0.36/2.95 * 1.7 = 0.207\n16-30: 0.25/2.95 * 1.7 = 0.144\n31-45: 0.67/2.95 * 1.7 = 0.386\n46-60: 0.56/2.95 * 1.7 = 0.323\n61-75: 0.36/2.95 * 1.7 = 0.207\n76-90: 0.75/2.95 * 1.7 = 0.432\n\nAjuste com intuição: Villa deve ter mais no fim, Liverpool no intervalo. Os números acima refletem.\n\nPara o total por tempo: soma 1ºT (0-15+16-30+31-45) = Villa 0.553, Liverpool 0.737 => total 1.29. 2ºT = 1.5+1.7 - 1.29 = 1.91. Isso dá ~40% 1ºT, 60% 2ºT, próximo do baseline 44/56, mas com mais gols no 2ºT pela necessidade.\n\n`xg_bands` para casa e fora devem ser preenchidos com as distribuições. O runtime normaliza, então posso colocar esses valores ou aproximar.\n\nEm `general`, `total` 3.2, `total_1t` 1.3, `total_2t` 1.9. `over25_prob` 62%, `btts_prob` 64%. `one_x_two`: 36/25/39. `one_x_two_1t`: a partir da distribuição de gols no 1ºT. Uso base do prior: 1ºT casa/E/fora 25/42/32. Mas com meus xG do 1ºT (Villa 0.55, Liverpool 0.74), probabilidades Poisson: P(casa > fora) ~? Simulo: com médias 0.55 e 0.74. Empate ~38%, casa ~28%, fora ~34%. Ajusto para coerência: 28/38/34. `one_x_two_2t`: médias Villa 0.95, Liverpool 0.96. Empate ~27%, casa ~35%, fora ~38%. No geral, meu full time é 36/25/39, então o 2ºT precisa refletir isso. Vou ajustar `one_x_two_2t` para fazer sentido com full time. Como full time combina 1ºT e 2ºT, não é simples soma. Usarei simulação aproximada. Mas para o JSON, não preciso de consistência perfeita entre tempos, pois são previsões separadas.\n\n`confidence`: \"medium\" (depois de aplicar regra). `confidence_regra`: \"Medium: mais de 3 arestas convergem para over (intenção, momentum, dinâmica pós-gol), mas o desempenho histórico do Liverpool contra dominantes (C20) e o desfalque de Ekitiké (C8) enfraquecem a convicção, sem derrubar.\"\n\n`summary` geral: \"Jogo decisivo pela Champions, com ambos precisando vencer. Espera-se um confronto aberto, com chances para os dois lados. Liverpool tem leve favoritismo técnico, mas desfalques importantes (Ekitiké) e a força do Villa em casa equilibram. Tendência de gols, especialmente no segundo tempo.\"\n\nAgora, `conclusoes` com todas as C1...C25, `blocos_sem_sinal` (se houver), `descartadas`, `jogadores` (leitura), `previsoes_jogadores` (com números), `arestas`, `roteiros`, `janelas`, `tempos`, `marcadores`, `mercados`, `best_bet`, `refutacao`, `drivers`.\n\nVou gerar o JSON.\n\n**Marcadores**: Dos dados de previsão, os maiores P(marca) são: Villa: Ollie Watkins (36%), Morgan Rogers (25%), John McGinn (17%). Liverpool: Dominik Szoboszlai (24%), Mohamed Salah (22%), Cody Gakpo (21%). Escolho 2-3 de cada.\n\n**Refutação**: ataques contra best_bet Over 2.5:\n- Ataque 1: \"Desempenho histórico do Liverpool contra times dominantes mostra média de apenas 1.00 gol marcado e 1.11 sofrido (C20), sugerindo jogo de poucos gols.\" Conclusão C20, veredito: enfraquece.\n- Ataque 2: \"Ausência de Ekitiké reduz poder ofensivo do Liverpool (C8), podendo limitar gols do visitante.\" Veredito: enfraquece.\n- Ataque 3: \"Apesar da intenção, o Villa em casa tem defesa sólida (1.11 sofridos, C3), e o Liverpool fora não é tão avassalador, podendo resultar em um jogo mais truncado que o esperado.\" Veredito: nao_sustenta (pois o Villa sem Onana e precisando vencer deve se expor).\nConclusão da refutação: \"Os ataques enfraquecem, mas não derrubam a aposta. A necessidade de vitória de ambos deve sobrepor os estilos defensivos, mantendo o over como aposta de valor.\"\n\n**Drivers**: \n1. Intenção de tabela (ambos precisam vencer)\n2. Desfalque de Ekitiké (reduz ataque Liverpool, mas equilibra)\n3. Momentum e faixas de gol concentradas no fim (76-90)\n\n**Arestas**: verificar se todas as conclusões foram usadas em ao menos uma aresta ou estão em descartadas.\n\nConclusões:\nC1 usada em A7\nC2 em A3, A10, etc.\nC3 em A1\nC4 em A2\nC5 em A3 (talvez fraca, mas ok)\nC6 em A3\nC7 em A8, A12\nC8 em A4, A8, etc.\nC9 em A3, A10\nC10 em A3, A5\nC11 em A6, A10\nC12 em A6\nC13 em A6, etc.\nC14 em A6\nC15 em A2, A4, A12 (usada)\nC16 em A4, A8, etc.\nC17 em A1, A2, etc.\nC18 base rate (não usei em aresta, mas é âncora) -> descartada: \"Usado como ponto de partida numérico, não gerou cruzamento.\"\nC19 probs mercado -> descartada: \"Referência de prior, não gera aresta independente.\"\nC20 em A11 (usada)\nC21 em A10\nC22 em A2, A8\nC23 em A9\nC24 em A4? C24 é \"XI do Liverpool tem λ bottom-up baixo\", usei indiretamente ao ajustar xG, mas para aresta, posso ligar a A4 dizendo que desfalques reduzem XI, mas banco compensa. Vou incluir na aresta A4.\nC25 similar, descartarei ou usarei. Melhor usar para não ter órfã. Em A1, posso mencionar que XI do Villa cobre 63% dos gols, indicando distribuição. Usei? Não explicitamente. Posso criar aresta extra ou colocar em descartadas com motivo \"informação contextual sobre contribuição do XI, já incluída nos ajustes de xG\".\n\nPara não ter muitas descartadas, posso criar aresta A13: \"XI lambdas vs top-down\" ligando C24 e C25, mas não é crucial. Deixarei algumas descartadas justificadamente.\n\nRevisão final: o JSON está extenso, mas devo produzir tudo.\n\nSobre os nomes dos jogadores: manter como no briefing. \"Victor Lindelöf\" aparece no Villa, mas é zagueiro do Man Utd. Provavelmente erro, mas seguirei.\n\nNo campo `jogadores`, incluir TODOS os nomeados: Tielemans, Douglas Luiz, Onana (desfalque), McGinn, Martinez, Kamara, A. da Rocha dos Santos, Harvey Elliott. Do Liverpool: Szoboszlai, Gakpo, van Dijk, Gravenberch, Wirtz, Ekitiké, Isak, Endo, Frimpong, Bajcetic. Isso são muitos, mas ok.\n\n`previsoes_jogadores` deve conter os do XI provável. O XI provável não está explicitamente listado com todos os nomes, mas o bloco \"Expectativa por jogador\" lista os membros do XI (provavelmente). Incluo todos os listados ali: do Villa: Watkins, Rogers, Barkley, McGinn, Cash, Mings, Tielemans, Maatsen, Konsa, Martinez, Lindelöf. Do Liverpool: Szoboszlai, Gakpo, Salah, Wirtz, Gravenberch, van Dijk, Robertson, Mac Allister, Jones, Konaté, Mamardashvili. Esses são 11 de cada.\n\nOs goleiros têm xG 0, manter 0.\n\nAgora, escrevo o JSON. Lembrar de usar aspas duplas.\n\nVamos lá.",
+  "reasoningTokens": 15603,
+  "elapsedMs": 437468,
+  "promptChars": 54732,
+  "error": null
+}

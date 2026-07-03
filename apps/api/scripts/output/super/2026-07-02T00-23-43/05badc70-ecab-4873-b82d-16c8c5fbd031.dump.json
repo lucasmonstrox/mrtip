@@ -1,0 +1,957 @@
+{
+  "matchId": "05badc70-ecab-4873-b82d-16c8c5fbd031",
+  "homeName": "Wolverhampton Wanderers",
+  "awayName": "Fulham",
+  "actual": "Wolverhampton Wanderers 1-1 Fulham (HT 1-1)",
+  "ftH": 1,
+  "ftA": 1,
+  "current": {
+    "prompt_text": "# Prognóstico de expected goals — Wolverhampton Wanderers x Fulham\n\n**IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS.** Todo o texto, inclusive o seu raciocínio interno (thinking), deve ser em português do Brasil.\n\n---\n\n**PARTE 1 · COMO RACIOCINAR** — o método abaixo é COMO você pensa. Os dados do jogo vêm na Parte 2.\n\n## Você\nO **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro. Seu edge é método, frieza e **EVIDÊNCIA** — mas você conhece a verdade que separa o sharp do robô: **estatística é PREVISÃO, não destino.** O Poisson, o xG, o λ são uma *taxa-base* (a melhor hipótese a priori) e são **cegos ao que o jogo VAI virar** — não sabem que um 0-1 obriga o perdedor a se lançar, que um time que precisa de pontos atropela quando o rival afrouxa, que o jogo tem *roteiro*. O número é seu **ponto de partida, nunca o veredito.** Em cima dele entra a sua leitura — o \"feeling\" do apostador, que aqui **NÃO é achismo**: é ler a intenção, o roteiro provável e a assimetria do confronto, **cada passo amarrado a um dado deste briefing**. Você busca **valor** (não certeza), dimensiona o risco e **crava o melhor mercado** — inclusive handicap e total-do-time quando capturam o cenário melhor que o O/U do jogo —, calibrando a **confiança** à margem real (nunca \"passa\", nunca regride pro meio por covardia).\n\n## Como raciocinar — em GRAFO, não em linha reta (Graph of Thoughts)\nNão despeje uma lista linear; construa um **grafo de raciocínio**:\n1. **Nós** — isole os fatores em jogo: base rate, **intenção de cada time**, desfalques, estilo (volume/finalização), forma recente, mando, fadiga, clima.\n2. **Arestas — CRUZE (o passo que mais importa)**: número isolado não prevê nada; o que prevê é o **confronto**. Conecte ataque de A × defesa de B (e o inverso); intenção × estilo; desfalque × volume; forma × base rate. Para CADA métrica ofensiva de um time, cruze com a defensiva correspondente do outro.\n3. **Peso por evidência** — um nó ou aresta só move o número se tiver evidência **nomeada e quantificada** nos dados abaixo. Sem dado concreto, não mexe na âncora. Diga sempre direção E tamanho.\n4. **Síntese** — convirja os nós + o **roteiro do jogo** (você o monta na seção a seguir) num veredito único. O Poisson é o seu prior; o roteiro é o que o ATUALIZA. Quando dois fatores se contradizem, declare qual vence e por quê — e quando o roteiro contraria a média, **siga o roteiro**, com o dado que o sustenta na mão.\n\n## Use TUDO o que está no briefing — dado não-comentado é dado desperdiçado\nO briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem \"viver no prompt\". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.\n- **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.\n- **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.\n- Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o `xg`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.\nSuas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.\n\n## Intenção dos times — leia ANTES dos números (é o que mais move um jogo)\nPela tabela/stakes abaixo, crave o que CADA time quer NESTE jogo específico:\n- **Joga pra GANHAR** (precisa de pontos) → ataca e se expõe atrás → **+xG, +over**, menos solidez.\n- **Contenta-se com o EMPATE** (1 ponto já garante o objetivo, ou empatar fora já é bom resultado) → controla, joga pra não perder → **−xG, −over**.\n- **NÃO está nem aí** (já classificado, já rebaixado, ou sem alvo alcançável) → afrouxa a intensidade → **−xG do jogo todo** e leitura mais ruidosa.\n**Stake assimétrico** (um precisa muito, o outro não) é o sinal mais forte do tabuleiro — pese a direção com convicção. Quando a assimetria é forte E o estilo/desfalques confirmam, o jogo costuma ser **UNILATERAL**: o time que precisa pode marcar BEM acima do seu xG médio (uma goleada não é exceção quando o rival afrouxa). **Calibre a magnitude, não só a direção**: não ancore tímido na média — deixe o xG do time dominante fugir da base rate quando os fatores convergem, e não force um under só porque o total \"costuma\" ser baixo.\n\n## Roteiro do jogo — projete o FILME, não só a foto (é aqui que mora o feeling)\nA estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem ramificações. ANTES de cravar números, escreva os **2-3 roteiros mais prováveis** e, em cada um, a **cascata condicional** (o que cada gol DESENCADEIA):\n- **Quem provavelmente marca primeiro?** (pela intenção + assimetria ataque×defesa). E então: o que o OUTRO é obrigado a fazer? Time que vai perdendo e precisa de pontos se lança → o jogo escancara → total e handicap SOBEM. Favorito que faz 2-0 cedo pode ADMINISTRAR — mas **CUIDADO: administrar NÃO é sinônimo de jogo morto**. Recuar e comprimir a defesa **AUMENTA o risco de sofrer** (evidência de tracking, sobretudo num 1-0 tardio de azarão que se tranca): o líder é encurralado, cede escanteio/bola parada e o gol pode sair — pra ELE (contra-ataque, o líder marca ~53% dos gols nesse cenário) OU contra. NÃO empurre under automático só porque \"o favorito administra\"; o over pode se sustentar justamente pela pressão do perseguidor + a fragilidade da vantagem de 1 gol (cai em ~37% dos jogos).\n- **Ramifique dos DOIS lados (seja simétrico):** roteiros que ABREM (perseguição, dois times que precisam, defesa que vaza fora) E roteiros que FECHAM (um se contenta com empate e o outro sem fôlego; favorito que mata e poupa; jogo amarrado de poucas chances). Não force over nem under — deixe o roteiro mais provável mandar.\n- **O placar muda as taxas, e o Poisson é CEGO a isso** (trata cada time como taxa fixa e independente, os dois eventos descorrelacionados). Você não: se o roteiro provável é de perseguição, o total real fica ACIMA do Poisson; se é de controle/administração, ABAIXO.\n- **Cada roteiro AMARRADO a um dado** (\"toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante\"). Sem dado que o sustente, é achismo — descarte.\n- **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).\n\n## Método numérico\n**PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:\n- **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu `over25_prob`, `btts_prob` e `one_x_two` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque \"o total costuma ser baixo\". Só fique colado no prior quando NÃO há fator nem roteiro claro.\n- **SoT é o sinal de VOLUME primário** — 3× mais denso que gols, logo menos ruído. Use gols para a CONVERSÃO (gols/SoT) e como checagem. Onde as rotas divergem, confie mais no SoT (a diferença é finalização que regride à conversão do time).\n- **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.\n- O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).\n- O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).\n- Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.\n\n---\n\n**PARTE 2 · OS DADOS DO JOGO** — analise e tire UMA CONCLUSÃO de CADA seção abaixo (cada `##` e cada `###`). O que você não comentar, você desperdiçou. É daqui que sai o veredito.\n\n## Contexto\n- Data: 2026-05-17 14:00 · Rodada 37 · Liga PL\n- Local: Molineux Stadium, Wolverhampton (grass)\n- Clima: light rain · 12.8°C (sens. 11.6°C) · vento 5.3 m/s · umidade 55% · nuvens 100% (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)\n- Descanso: Wolverhampton Wanderers 8 dias (último: liga, 2026-05-09) · Fulham 8 dias (último: liga, 2026-05-09)\n- Viagem do visitante: ~180 km\n- **Descanso / fadiga** (números acima — a nota \"(último: …)\" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.\n- Média da liga (pré-jogo, 361 jogos): mandante 1.529 gols/jogo · visitante 1.227 gols/jogo\n- **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +0.3 gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.\n\n## Tabela e motivação (pré-jogo — recomputada só com jogos antes de 2026-05-17)\n- Wolverhampton Wanderers: 20º, 18 pts · Fulham: 11º, 48 pts\n- Linhas: segurança (sair do Z) 38 pts (17º) · Champions 59 pts (5º) · última vaga europeia 51 pts (8º)\n- **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:\n  - Wolverhampton Wanderers: 20º, 18 pts, 2 jogo(s) restante(s) (máx possível 24 pts)\n  - já REBAIXADO matematicamente — sem objetivo de tabela.\n  - → motivação: **baixa** — NÃO precisa lutar — já rebaixado\n  - Fulham: 11º, 48 pts, 2 jogo(s) restante(s) (máx possível 54 pts)\n  - já SEGURO do rebaixamento.\n  - vaga europeia ainda matematicamente possível.\n  - → motivação: **alta** — PRECISA LUTAR — briga por vaga europeia\n\n⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico.\n\n## Wolverhampton Wanderers (manda) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **25 marcados / 66 sofridos** em 36j · média **0.69 marca / 1.83 sofre** por jogo\n- **Em casa (18j): marca 1 / sofre 1.83** (18 gols) · por tempo: 1ºT 0.31/0.92 · 2ºT 0.39/0.92\n- **Finalização: 117 SoT (3.25/j · casa 3.61/j) · conv 20%** (aberta, −2 pên) · sofre 4.61 SoT/j (adv 37%) · 6.92 KP/j\n- **Volume: 9.5 chutes/j (6.1 na área) · 1.3 big chances/j** · posse 43.5%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 38.8/58 · chutes pra fora 3.9/5.5 · bloqueados 2.4/3.8 · de fora da área 3.4/4.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 40.6/47.2 · chutes pra fora 5.4/5.8 · bloqueados 3/3.6 · de fora da área 3.6/3.4\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.71**\n  - ⚠️(fora) **Sam Johnstone** nota **6.85** (season) · forma 6.85= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 17j\n  - **José Sá ** nota **6.8** (season) · forma 6.45↓ (últ.5 do time: 6.3→–→6.6→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 2× MOTM · 22j\n  - **João Gomes** nota **6.8** (season) · forma 6.54↓ (últ.5 do time: 6→6.1→7.2→6.6→6.8 📈 subindo) · 1× MOTM · 39j\n  - **Santiago Bueno** nota **6.79** (season) · forma 6.7= (últ.5 do time: 6.1→6.7→7→7.7→6 📈 subindo) · 2× MOTM · 32j\n  - **André** nota **6.77** (season) · forma 6.62= (últ.5 do time: 6.6→6.9→6.5→6.9→6.2 ➡️ estável) · 2× MOTM · 37j\n  - **Jhon Arias** nota **6.77** (season) · forma 6.77= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 26j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DEDDD** (1pts) · **1 feitos / 12 sofridos** · marca 0.2↓ / sofre 2.4↑ g/j · SoT 3 feito / 4.6 sofrido\n- **Consistência: MARCOU em 17/36** (casa 11/18 · fora 6/18) · não-marcou 19 · clean sheet 4 · BTTS 15/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **West Ham United** (fora · **D 0-4**) — adv 18º briga-Z · você 20º briga-Z · seu fora até ali 0.5 marca/1.5 sofre\n- @ **Leeds United** (fora · **D 0-3**) — adv 15º briga-Z · você 20º briga-Z · seu fora até ali 0.4 marca/1.7 sofre\n- vs **Tottenham Hotspur** (casa · **D 0-1**) — adv 18º briga-Z · você 20º REBAIX. · seu casa até ali 1.1 marca/1.9 sofre\n- vs **Sunderland** (casa · **E 1-1**) — adv 12º · você 20º REBAIX. · seu casa até ali 1 marca/1.9 sofre\n- @ **Brighton & Hove Albion** (fora · **D 0-3**) — adv 8º salvo · você 20º REBAIX. · seu fora até ali 0.4 marca/1.8 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ West Ham United (FORA · D 0-4) — min 1→94:\n    📈 pressão (net/min): 1'-15' [-1 +1 +2 +5 +3 0 0 +2 +1 +1 0 0 0 -2 -2] · 16'-30' [+4 +2 -1 -3 -2 +1 +1 0 -1 -3 -1 0 -1 -3 -5] · 31'-45' [-2 +1 +2 -1 +1 +2 +4 -1 -1 -4 -3 -3 -5 -5 -5] · ‖INTERVALO‖ · 46'-60' [-5 -5 -6 -4 0 +1 +2 +2 +2 -1 -1 0 -2 -1 0] · 61'-75' [0 +1 +1 -2 -4 -2 -2 -3 -5 0 +1 +1 +2 +2 +3] · 76'-90' [+3 +5 +5 +3 +3 +3 +2 +1 -5 -3 -7 -8 -3 +1 +2] · 91'+ [+1 +1 +2 +4]\n    ⚽ gols: 42'✗ 66'✗ 68'✗ 83'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **5** · 31'-45' **5** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **3**\n  - @ Leeds United (FORA · D 0-3) — min 1→102:\n    📈 pressão (net/min): 1'-15' [-1 -4 -4 0 +2 -1 0 0 -1 -5 -4 -2 -2 -3 -6] · 16'-30' [-8 -2 -2 -2 -6 -9 -7 -6 -5 -3 0 -3 +1 +5 +5] · 31'-45' [+3 +2 0 -2 -2 +2 +3 +3 +3 +6 +5 +5 +3 +2 0] · ‖INTERVALO‖ · 46'-60' [-3 +2 +1 +1 +1 +2 +4 +4 +1 0 0 +1 +2 +1 +1] · 61'-75' [-1 -1 0 +7 +7 +4 +2 0 0 0 +3 +3 +3 +2 +2] · 76'-90' [0 -1 -1 -1 -1 -1 -1 -1 -3 -3 -2 -3 -1 -1 -2] · 91'+ [-3 0 -1 0 -5 -5 -5 -3 -2 +1 -2 -1]\n    ⚽ gols: 18'✗ 20'✗ 90'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **3** · 31'-45' **4** ‖ 46'-60' **11** · 61'-75' **3** · 76'-90' **4**\n  - vs Tottenham Hotspur (CASA · D 0-1) — min 1→98:\n    📈 pressão (net/min): 1'-15' [0 -1 -3 -4 -4 -5 -7 -7 -5 -4 -3 -3 -4 -3 -4] · 16'-30' [-4 -5 -4 -3 -2 -1 -1 -2 -6 -4 -6 -6 -6 +2 +2] · 31'-45' [+1 -1 -2 -3 -3 -7 -7 -6 -5 -5 -5 -1 +1 +1 +1] · ‖INTERVALO‖ · 46'-60' [+6 +4 -2 +3 0 +6 +4 +3 +1 +3 +4 +2 +2 +2 +2] · 61'-75' [+2 +3 +3 +2 +2 +1 +1 -1 -1 -1 -7 -4 -4 -2 -2] · 76'-90' [0 0 +2 +1 +6 +6 +4 -3 -3 -2 -2 -8 -9 -9 -9] · 91'+ [-2 -2 -1 -3 -4 -3 -2 -2]\n    ⚽ gols: 82'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **4** · 31'-45' **5** ‖ 46'-60' **8** · 61'-75' **6** · 76'-90' **9**\n  - vs Sunderland (CASA · E 1-1) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 0 0 +2 0 -2 -2 -3 -3 0 +1 +1 +1 +1 -1] · 16'-30' [-2 -5 -6 -4 -3 -9 -6 -6 -6 -6 -4 -3 -6 -6 -4] · 31'-45' [-3 -1 -1 +1 +9 +9 +6 +4 +3 +9 +7 +7 +7 +2 +5] · ‖INTERVALO‖ · 46'-60' [+2 +7 +11 +11 +12 +9 +12 +9 +5 +9 +9 +9 +6 +6 +6] · 61'-75' [+6 +7 +7 +4 +3 +5 +2 +1 -4 -4 -1 +3 +3 +2 0] · 76'-90' [-2 -4 -3 -5 -6 -12 -9 -2 +5 +5 +8 +5 +3 +4 +1] · 91'+ [+1 0 +1 +3]\n    ⚽ gols: 17'✗ 54'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **2** · 31'-45' **2** ‖ 46'-60' **1** · 61'-75' **3** · 76'-90' **4**\n  - @ Brighton & Hove Albion (FORA · D 0-3) — min 1→97:\n    📈 pressão (net/min): 1'-15' [-3 -4 -3 -3 -4 -6 -6 -4 -3 -3 -3 -3 -3 -3 -5] · 16'-30' [-3 -1 0 +1 0 -1 -1 -4 -5 -4 -3 -3 -3 -3 -3] · 31'-45' [-3 -4 -5 -5 -4 -4 -4 -1 -5 -5 -6 -4 -3 -1 0] · ‖INTERVALO‖ · 46'-60' [-4 -6 -6 -10 -9 -8 -4 -4 +2 -1 -1 -1 -1 0 0] · 61'-75' [0 -1 0 0 -2 0 0 -5 -3 -3 -3 -3 -3 -4 -3] · 76'-90' [-4 -6 -6 -5 -7 -5 -7 -7 -9 -10 -10 -8 -10 -10 -7] · 91'+ [-7 -6 -6 -3 -1 -1 -1]\n    ⚽ gols: 1'✗ 5'✗ 86'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **4** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **3** · 61'-75' **2** · 76'-90' **11**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.06 · 16-30: 0.06 · 31-45: 0.19 · 46-60: 0.11 · 61-75: 0.08 · 76-90: 0.19\n- Sofre por faixa (/j): 0-15: 0.25 · 16-30: 0.28 · 31-45: 0.39 · 46-60: 0.11 · 61-75: 0.39 · 76-90: 0.42\n- 1ºT: marca 11 / sofre 33 (totais na temporada)\n\n### Desfalques de Wolverhampton Wanderers neste jogo\n- **E. Gonzalez Medina** (Knee Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/1 gols = **0%** (≈ estável); with/without: com ele 0 g/j (0j) vs sem ele 0.69 g/j (36j) = −0%  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n- **Sam Johnstone** (Shoulder Injury) — 0 gols + 0 assists até a data; season: **0% dos gols** do time (0% com assists); **últimos 5 jogos do time**: participou de 0/1 gols = **0%** (≈ estável); with/without: com ele 0.5 g/j (12j) vs sem ele 0.79 g/j (24j) = +58%; finaliza **0 SoT/jogo** (time: 2.67 SoT/j com ele vs 3.54 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0 interceptações/j** (~0% do time) · 0.2 desarmes/j · 0.4 duelos ganhos/j · 0 cruz. certos/j · 0 dribles certos/j · 0 key passes/j\n\n## Fulham (visita) — até 2026-05-17\n\n### Gols & finalização (season)\n- Total **44 marcados / 50 sofridos** em 36j · média **1.22 marca / 1.39 sofre** por jogo\n- **Fora (18j): marca 0.89 / sofre 1.67** (16 gols) · por tempo: 1ºT 0.44/0.58 · 2ºT 0.78/0.81\n- **Finalização: 132 SoT (3.67/j · fora 3.44/j) · conv 30%** (aberta, −4 pên) · sofre 4.06 SoT/j (adv 32%) · 9.14 KP/j\n- **Volume: 12.5 chutes/j (8.5 na área) · 1.6 big chances/j** · posse 51.4%\n\n### Estilo (feito/sofrido por jogo)\n- **Temporada** (feito/sofrido por jogo): ataques perigosos 46.6/48.9 · chutes pra fora 4.8/4.4 · bloqueados 4.1/3.5 · de fora da área 3.9/3.6\n- **Últimos 5** (feito/sofrido por jogo): ataques perigosos 43/47.6 · chutes pra fora 4.6/6 · bloqueados 6.2/3 · de fora da área 4.8/3.6\n\n### Qualidade individual (notas · season vs forma)\n- **Nota média do time (todas comps): 6.84**\n  - **Harry Wilson** nota **7.15** (season) · forma 6.76↓ (últ.5 do time: 7→6.6→6.9→6.6→6.7 ➡️ estável) · 4× MOTM · 37j\n  - **Harrison Reed** nota **7.06** (season) · forma 6.5↓ (últ.5 do time: –→–→–→6.5→– ⚠️ poucos jogos na janela) · **faltou 4/5** · 1× MOTM · 13j\n  - **Jorge Cuenca** nota **7.02** (season) · forma 7.02= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 18j\n  - **Alex Iwobi** nota **7** (season) · forma 7.05= (últ.5 do time: 7.3→6.8→–→–→– ⚠️ poucos jogos na janela) · **faltou 3/5** · 3× MOTM · 31j\n  - **Kenny Tete** nota **6.91** (season) · forma 6.91= (últ.5 do time: –→–→–→–→– ⚠️ poucos jogos na janela) · **faltou 5/5** · 1× MOTM · 23j\n  - **Raúl Jiménez** nota **6.91** (season) · forma 6.68↓ (últ.5 do time: 6.7→6.6→6.8→6.6→– ➡️ estável) · **faltou 1/5** · 1× MOTM · 41j\n\n### Forma & contexto (últimos 5 — cada resultado justificado)\n- **Forma (momento) — últimos 5: DDVED** (4pts) · **1 feitos / 6 sofridos** · marca 0.2↓ / sofre 1.2= g/j · SoT 2.6 feito / 4.8 sofrido\n- **Consistência: MARCOU em 25/36** (casa 15/18 · fora 10/18) · não-marcou 11 · clean sheet 8 · BTTS 19/36\n_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._\n- @ **Liverpool** (fora · **D 0-2**) — adv 5º briga-top · você 9º · seu fora até ali 1.1 marca/1.7 sofre\n- @ **Brentford** (fora · **E 0-0**) — adv 7º briga-top · você 12º · seu fora até ali 1 marca/1.7 sofre\n- vs **Aston Villa** (casa · **V 1-0**) — adv 4º briga-top · você 12º · seu casa até ali 1.7 marca/1.2 sofre\n- @ **Arsenal** (fora · **D 0-3**) — adv 1º Eur-gar · você 10º salvo · seu fora até ali 0.9 marca/1.6 sofre\n- vs **AFC Bournemouth** (casa · **D 0-1**) — adv 6º briga-top · você 11º salvo · seu casa até ali 1.6 marca/1.1 sofre\n\n### Momentum minuto a minuto (últimos 5)\n(NET na ótica do time: + pressiona / - sofre; magnitude = intensidade · minutos por faixa de 15 · **‖INTERVALO‖** = fim do 1ºT · após 90' é acréscimo. A linha **⚽** traz o minuto de cada gol (**✓**=ele marcou / **✗**=sofreu) — CRUZE com a curva: gol durante SURTO de pressão = pressão PRODUTIVA (sabe converter quando bate); gol sofrido numa QUEDA longa = vulnerável sob pressão. A linha **🛡️** é a atividade DEFENSIVA (interceptações+desarmes) por faixa de 15' (alta = o time defendendo/sob pressão ali) — defende MUITO numa faixa E sofre gol nela = **não segura**; defende pouco e não sofre = controla. Cruze também mandante × visitante: a janela onde um pressiona e o outro afunda é onde sai gol.)\n  - @ Liverpool (FORA · D 0-2) — min 1→93:\n    📈 pressão (net/min): 1'-15' [-1 -2 -1 -2 -5 -5 -3 -4 -6 -4 -3 -6 -5 -9 -7] · 16'-30' [-12 -8 -6 -2 -6 -7 -9 -11 -10 -9 -8 -7 -5 -1 0] · 31'-45' [-1 0 +4 +4 +6 +6 +4 +1 +1 -1 -4 -4 -4 -4 -3] · ‖INTERVALO‖ · 46'-60' [+1 +1 +5 +7 +5 +1 -2 -7 -5 -6 -8 -6 -3 -3 +2] · 61'-75' [+3 +3 +5 +2 +4 +3 +8 +6 +5 +1 +2 +4 +2 -2 -4] · 76'-90' [-9 -9 -5 -2 -2 0 +1 +1 0 +3 +4 +8 +8 +10 +9] · 91'+ [+8 +7 +7]\n    ⚽ gols: 36'✗ 40'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **3** · 16'-30' **6** · 31'-45' **5** ‖ 46'-60' **7** · 61'-75' **5** · 76'-90' **6**\n  - @ Brentford (FORA · E 0-0) — min 1→95:\n    📈 pressão (net/min): 1'-15' [-1 -1 -1 0 0 -1 -1 -2 -1 -4 -2 +1 -3 -2 -3] · 16'-30' [-6 -6 -6 -4 -1 -1 -5 -5 -4 -5 -2 0 +3 +3 +6] · 31'-45' [+7 +6 +4 +3 +10 +7 +6 +4 +2 -2 -1 -2 0 0 +1] · ‖INTERVALO‖ · 46'-60' [-2 -1 -2 -2 0 +1 +2 +1 +1 +2 +2 -2 -2 -1 -1] · 61'-75' [-3 -5 -4 -2 -5 -5 -8 -6 -8 -5 -5 -4 -3 -2 -4] · 76'-90' [-4 -4 -1 -1 -1 -2 -1 +1 -1 -1 -2 +1 0 0 -4] · 91'+ [-3 -3 -7 -5 -3]\n    ⚽ gols: —\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **2** · 31'-45' **3** ‖ 46'-60' **3** · 61'-75' **3** · 76'-90' **3**\n  - vs Aston Villa (CASA · V 1-0) — min 1→94:\n    📈 pressão (net/min): 1'-15' [0 +2 +6 +4 +2 0 +2 +1 -1 0 +2 0 +1 +1 +1] · 16'-30' [+1 0 0 0 +1 +2 +2 -2 -1 +1 +1 +5 +4 +3 +3] · 31'-45' [+1 +2 +2 +1 -1 -1 0 0 +1 +3 +3 +2 +9 +8 +4] · ‖INTERVALO‖ · 46'-60' [+1 0 -1 -1 +1 +3 +2 +1 0 -1 0 0 +1 -1 -1] · 61'-75' [-4 -4 -7 -7 -4 -3 -3 -2 -4 -6 -6 -10 -7 -6 -4] · 76'-90' [-3 -3 -2 -2 -3 -2 -2 -24 -20 -17 -13 -7 -5 -2 0] · 91'+ [+1 0 0 0]\n    ⚽ gols: 43'✓\n    🛡️ defesa (interceptações+desarmes): 1'-15' **6** · 16'-30' **5** · 31'-45' **7** ‖ 46'-60' **4** · 61'-75' **3** · 76'-90' **6**\n  - @ Arsenal (FORA · D 0-3) — min 1→93:\n    📈 pressão (net/min): 1'-15' [+1 -3 -2 +3 +1 -2 -4 -5 -3 -7 -5 -4 -3 -4 -4] · 16'-30' [-3 -3 -3 -5 -5 -5 -4 -4 -6 -6 -5 -10 -12 -10 -13] · 31'-45' [-23 -14 -8 -5 -3 +1 +1 +1 -16 -17 -17 -12 -9 -8 -7] · ‖INTERVALO‖ · 46'-60' [-13 -8 -4 0 0 +6 +1 -3 -2 -2 -3 -5 -7 -5 -4] · 61'-75' [-3 -7 -2 0 -1 -1 -2 -1 0 +1 +2 +5 +8 +6 +5] · 76'-90' [+4 +4 +4 +4 0 -2 -6 -5 -4 -4 -3 -1 -1 0 +1] · 91'+ [0 0 -1]\n    ⚽ gols: 9'✗ 40'✗ 45'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **5** · 16'-30' **5** · 31'-45' **2** ‖ 46'-60' **8** · 61'-75' **0** · 76'-90' **7**\n  - vs AFC Bournemouth (CASA · D 0-1) — min 1→95:\n    📈 pressão (net/min): 1'-15' [-1 -1 -1 +1 0 +1 +1 +1 +5 +2 +1 0 +1 +2 0] · 16'-30' [+3 +3 +3 +3 +2 +1 0 0 0 -1 -1 -2 0 +3 +3] · 31'-45' [+5 +4 -1 0 0 -2 -2 -1 +5 +5 +5 +5 +5 +6 +6] · ‖INTERVALO‖ · 46'-60' [+6 +5 +6 +5 +3 +3 +2 +2 -1 -1 0 0 -5 -7 -7] · 61'-75' [-4 -4 -4 0 0 +18 +14 +14 +13 +11 +11 +11 +10 +10 +13] · 76'-90' [+12 +8 +8 +8 +2 +1 +1 +1 -1 -2 -2 -1 +1 +2 +2] · 91'+ [+2 +1 -1 -1 +2]\n    ⚽ gols: 53'✗\n    🛡️ defesa (interceptações+desarmes): 1'-15' **2** · 16'-30' **4** · 31'-45' **3** ‖ 46'-60' **4** · 61'-75' **1** · 76'-90' **8**\n\n### Distribuição de gols por faixa (season)\n- Marca por faixa (/j): 0-15: 0.17 · 16-30: 0.06 · 31-45: 0.22 · 46-60: 0.17 · 61-75: 0.25 · 76-90: 0.36\n- Sofre por faixa (/j): 0-15: 0.03 · 16-30: 0.25 · 31-45: 0.31 · 46-60: 0.36 · 61-75: 0.11 · 76-90: 0.33\n- 1ºT: marca 16 / sofre 21 (totais na temporada)\n\n### Desfalques de Fulham neste jogo\n- **Ryan Sessegnon** (Muscle Injury) — 3 gols + 1 assists até a data; season: **7% dos gols** do time (9% com assists); **últimos 5 jogos do time**: participou de 1/1 gols = **100%** (↑ mais decisivo AGORA); with/without: com ele 1.26 g/j (27j) vs sem ele 1.11 g/j (9j) = −12%; finaliza **0.15 SoT/jogo** (time: 3.89 SoT/j com ele vs 3 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **0.9 interceptações/j** (~10% do time) · 1.8 desarmes/j · 2.9 duelos ganhos/j · 0.2 cruz. certos/j · 0.3 dribles certos/j · 0.5 key passes/j\n- **Joachim Andersen** (Red Card Suspension) — 0 gols + 1 assists até a data; season: **0% dos gols** do time (2% com assists); **últimos 5 jogos do time**: participou de 0/1 gols = **0%** (≈ estável); with/without: com ele 1.24 g/j (33j) vs sem ele 1 g/j (3j) = −19%; finaliza **0.12 SoT/jogo** (time: 3.58 SoT/j com ele vs 4.67 sem — volume mais estável que gols)  ⚠️ with/without de GOLS NÃO confiável (sem contribuição direta ou amostra pequena) — olhe o de SoT\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): **1.1 interceptações/j** (~13% do time) · 1.4 desarmes/j · 4.3 duelos ganhos/j · 0.2 cruz. certos/j · 0.2 dribles certos/j · 0.2 key passes/j\n\n## Cruzamento ataque × defesa por faixa de 15 min\nOnde o ataque de um e a defesa do outro coincidem em alta, é a janela onde o gol tende a sair. Use pra distribuir o xG pelos tempos.\n\n**Wolverhampton Wanderers atacando × Fulham defendendo**\n| Faixa | Wolverhampton Wanderers marca/j | Fulham sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.06 | 0.03 | 0.09 |\n| 16-30 | 0.06 | 0.25 | 0.31 |\n| 31-45 | 0.19 | 0.31 | 0.5 |\n| 46-60 | 0.11 | 0.36 | 0.47 |\n| 61-75 | 0.08 | 0.11 | 0.19 |\n| 76-90 | 0.19 | 0.33 | 0.52 |\n\n**Fulham atacando × Wolverhampton Wanderers defendendo**\n| Faixa | Fulham marca/j | Wolverhampton Wanderers sofre/j | índice janela |\n|---|---|---|---|\n| 0-15 | 0.17 | 0.25 | 0.42 |\n| 16-30 | 0.06 | 0.28 | 0.34 |\n| 31-45 | 0.22 | 0.39 | 0.61 |\n| 46-60 | 0.17 | 0.11 | 0.28 |\n| 61-75 | 0.25 | 0.39 | 0.64 |\n| 76-90 | 0.36 | 0.42 | 0.78 |\n\n### Cruzamento de MOMENTUM (fluxo minuto-a-minuto dos últimos 5, já cruzado pra você)\nA curva de momentum foi digerida e CRUZADA em código — não precisa cruzar 90 pontos na mão, use a conclusão abaixo (quem domina cada janela) junto com o cruzamento de gols acima.\n\n**Janela de gol provável pela curva de momentum** — Wolverhampton Wanderers: **46-60** (domínio +2.2) · Fulham: **76-90** (domínio -1.3). Cruze com o timing de gols e com a intenção: se a janela de quem PRECISA do gol coincide com a fraqueza do outro, é ali que o gol tende a sair.\n\n| Faixa | Wolverhampton Wanderers domínio/j | Fulham domínio/j | cruzamento |\n|---|---|---|---|\n| 0-15 | -1.9 | -1.2 | -0.7 ≈ |\n| 16-30 | -2.8 | -2.5 | -0.3 ≈ |\n| 31-45 | -0.2 | -0.2 | 0 ≈ |\n| 46-60 | +1.5 | -0.7 | +2.2 🏠 |\n| 61-75 | +0.3 | +0.3 | 0 ≈ |\n| 76-90 | -2.1 | -0.8 | -1.3 ≈ |\n\n## Base rate (ponto de partida — duas rotas independentes; devem convergir)\n**Rota A — gols puros** (Poisson força ataque×defesa de GOLS, por mando):\n- λ Wolverhampton Wanderers (casa) = 1.09 · λ Fulham (fora) = 1.33 · total = 2.42\n\n**Rota B — SoT × conversão** (volume de finalização via Poisson, depois × conversão do time — menos ruído):\n- Wolverhampton Wanderers: λ_SoT 3.74 × conv 20% → **0.75 gols**\n- Fulham: λ_SoT 3.9 × conv 30% → **1.17 gols**\n- total via SoT = 1.92\n- **Índice de volume do jogo**: λ_SoT total 7.6 vs média da liga 8.5 SoT → na média\n- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.\n\n## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)\n| Mercado | Rota A (gols) | Rota B (SoT×conv) |\n|---|---|---|\n| 1x2 casa/E/fora | 29/31/40% | 22/34/44% |\n| Over 1.5 | 71% | 59% |\n| Over 2.5 | 44% | 30% |\n| Over 3.5 | 23% | 13% |\n| BTTS | 50% | 38% |\n\n**Mercados derivados do MESMO grid corrigido** (Rota B — já coerentes entre si; use como prior destes mercados):\n- **Dupla chance**: 1X **56%** · 12 **66%** · X2 **78%** · **Draw No Bet** casa 33% / fora 67%\n- **Placar exato (mais prováveis)**: 0-0 16% · 0-1 15% · 1-1 15% · 0-2 10%\n- **Odd/Even**: ímpar 46% / par 54% · **Multigoals**: 0-1 41% · 2-3 46% · 4+ 13%\n- **Team totals** (marginais do λ da Rota B — a prob de CADA time marcar; base do `team_total`): Wolverhampton Wanderers over 0.5 **53%** / over 1.5 **17%** · Fulham over 0.5 **69%** / over 1.5 **33%**\n- **Fair odds no-vig (1x2, calculadas pelo grid — não pelo mercado)**: casa 4.56 · empate 2.94 · fora 2.27. São PROBABILIDADE JUSTA, não veredito de valor (sem odds do mercado ingeridas não há EV/CLV — não prometa \"aposta certa\").\n- ⚠️ O grid Dixon-Coles JÁ corrige o empate pra cima (o Poisson independente o subestima). **O empate / dupla chance é pick LEGÍTIMO** quando o prior aqui aponta — NÃO o rebaixe por covardia; num jogo travado de poucos gols o X costuma ser o de MENOR variância com valor.\n\n**Baseline da liga (1ºT/2ºT):** 43% dos gols saem no 1º tempo / 57% no 2º (sobre 361 jogos jogados). Use como referência pra dizer se um time é ANÔMALO no timing (o padrão da literatura é ~44/56 — 2º tempo mais goleador por fadiga/game-state).\n**Baseline por faixa de 15min (% dos gols da liga):** 0-15: 12% · 16-30: 11% · 31-45: 21% · 46-60: 15% · 61-75: 16% · 76-90: 26%. É a curva NORMAL — compare o timing de cada time (bloco \"Distribuição de gols por faixa\") contra ela; desvio grande (marca/sofre muito mais que a liga numa janela) é o sinal de onde o gol tende a sair NESTE jogo.\n\n**1x2 por tempo** (λ da Rota B repartido pela proporção de gols de cada tempo — ÂNCORA de `one_x_two_1t`/`one_x_two_2t`): 1ºT casa/E/fora **20/54/26%** · 2ºT **19/42/40%**.\nSão as probabilidades que o volume IMPLICA — seu **prior**, não a resposta. Seus `over25_prob`, `btts_prob` e `one_x_two` **partem** destes números (Rota B principal) e então você os **MOVE pelo roteiro + fator nomeado** (motivação, desfalque, fadiga, mando, perseguição), dizendo direção e tamanho. Se o roteiro mais provável contraria a média, **siga o roteiro** (com o dado na mão). Sem fator nem roteiro, fique no prior — nunca regrida pro meio por covardia.\n\n---\n\n**PARTE 3 · SUA SAÍDA**\n\n## Saída exigida (objeto tipado — validado pelo runtime). Campos em INGLÊS; só os textos (`summary`, `analysis`) em português.\n**Por time** — `home` (= Wolverhampton Wanderers) e `away` (= Fulham), cada um com:\n- `xg` (total), `xg_1t`, `xg_2t` e **`xg_bands`** = o xG nas 6 faixas de 15 min (`\"0-15\"`,`\"16-30\"`,`\"31-45\"`,`\"46-60\"`,`\"61-75\"`,`\"76-90\"`). Dê a distribuição APROXIMADA pelo cruzamento ataque×defesa por faixa — **NÃO gaste raciocínio conferindo a soma**: o runtime normaliza as bands pra somar `xg` (e o 1ºT = 3 primeiras).\n  - **FORMA da curva (não só o total):** parta do baseline da liga (~44% no 1ºT / 56% no 2ºT, pico em `\"76-90\"`). Sem os dois empurrando, siga o baseline; um jogo travado/administrado NÃO tem o surto tardio — não force massa no fim. Mata-mata/decisão/derby REDUZ o 1ºT (share ~35-39%, cautela tática).\n- `summary` (PT) = leitura CURTA daquele time (1-2 frases): motivação de tabela, desfalque que pesa, mando, e como isso move o xG dele.\n\n**Geral** (`general`) — agregados do jogo:\n- `total`, `total_1t`, `total_2t`, `over25_prob`, `btts_prob`.\n- **1x2 (home/draw/away)** em 3 recortes: `one_x_two` (jogo 90min), `one_x_two_1t` (1º tempo), `one_x_two_2t` (2º tempo isolado). PARTA dos priors \"1x2 por tempo\" acima e mova pelo roteiro / fator nomeado.\n- `confidence` ∈ {low, medium, high} e `summary` (PT) = 1 parágrafo do jogo + a maior incerteza.\n\nNo topo: `drivers` = os 3 fatores (frases em PT) que mais moveram o número.\n\n**`best_bet`** — a sua leitura de APOSTADOR (a DECISÃO, em campos SEPARADOS; **não** escreva o nome do time, ele sai de `selection`/`team`):\n- `market`: `\"1x2\"` | `\"over_under\"` | `\"btts\"` | `\"handicap\"` | `\"team_total\"` | `\"double_chance\"` | `\"draw_no_bet\"` | `\"odd_even\"` — crave SEMPRE o de **maior valor**, o que o ROTEIRO mais favorece. **`double_chance`/`draw_no_bet`** são as opções de MENOR variância pra proteger um lado ou bancar o empate/azarão sólido — use os priors de \"Mercados derivados\" acima (já saem do grid Dixon-Coles corrigido) — **OBRIGATÓRIO escolher um mercado; NUNCA \"passar\"/\"sem aposta\". Mesmo no jogo mais imprevisível existe o mercado de MENOR risco; é esse que você crava.** **Em jogo assimétrico, handicap ou total-do-time costumam pagar MAIS que o O/U do jogo**: se o mandante atropela mas o visitante pode marcar de bola parada, \"mandante `handicap` -1\" ou \"mandante `team_total` over 1.5\" captura o cenário sem depender do total exato. NÃO se ancore por default no O/U 2.5. **MENOR variância**: quando o mandante MARCA em casa com alta frequência (vide Consistência) E o visitante está DESENGAJADO (nada em jogo na tabela), `team_total` over 0.5/1.5 do mandante ganha sem depender de vitória (que um empate nega) NEM de BTTS (que depende do visitante desinteressado marcar) — costuma ser a leitura mais segura.\n- **⛔ ANTI-REFLEXO DE OVER/UNDER (regra dura):** `over_under` NÃO é o default. Antes de cravá-lo, PERGUNTE: o mercado de RESULTADO/menor-variância não paga melhor aqui? **Se o empate do grid Dixon-Coles está alto (≥ ~30%) e o jogo é equilibrado/de poucos gols (λ total baixo), o pick de valor costuma ser `double_chance` (1X/X2), `draw_no_bet`, ou o próprio EMPATE — NÃO o under reflexo.** Um jogo 1-1/0-0 provável é onde a dupla chance e o empate ganham; cravar \"under 2.5\" ali joga fora o valor do resultado. Só vá de `over_under` quando o TOTAL for de fato a leitura de maior valor (roteiro de gols claro), não por hábito.\n- **DISCIPLINA DE VARIÂNCIA (regra de escolha — aplique ANTES de cravar):** entre mercados de valor parecido, crave SEMPRE o de MENOR variância. Do mais seguro ao mais arriscado: **(1)** `team_total` over 0.5 (\"time marca\" — ganha com UM gol; a trava quando o time marca com alta frequência no mando, vide Consistência) → **(2)** `double_chance` (1X/X2 — ganha em DOIS dos três resultados; a trava pra bancar favorito sólido OU proteger contra o empate num jogo equilibrado) · `draw_no_bet` (empate devolve a aposta — risco menor que 1x2) · `team_total` over 1.5 ou `handicap` de favorito claro (dependem de UM time, não do placar exato) → **(3)** `over_under` — **a LINHA é a alavanca de variância; NÃO fique preso no 2.5.** xG 2.3 → \"under 3.5\" é quase trava (margem enorme), \"under 2.5\" é apertado; xG 3.2 → \"over 2.5\" tem folga, \"over 1.5\" é mais seguro ainda. Escolha a linha (1.5, 2, 2.5, 3, 3.5…) com MARGEM real pro xG; linha colada no xG (margem < 0.3) é cara-ou-coroa → afaste a linha ou troque de mercado → **(4)** `1x2` (o empate nega; só com vitória nítida) → **(5)** `btts` é o MAIS ARRISCADO (depende dos DOIS marcarem). **NUNCA aposte `btts` quando um lado está DESENGAJADO** (já salvo / sem alvo / rebaixado) — ele é o elo fraco que pode não marcar (é assim que se perde BTTS num 1-0; prefira \"o lado forte marca\" via `team_total`). A **anti-timidez é sobre o TAMANHO do xG** (não ancore tímido na média), **NÃO sobre escolher o mercado mais arriscado**: convicção na leitura, DISCIPLINA no mercado.\n- **COERÊNCIA com a INTENÇÃO (a aposta NÃO pode contradizer seu próprio roteiro):** se você leu que um time **administra / se contenta com o empate / já está garantido** — mesmo jogando EM CASA —, **NÃO banque o `team_total` ALTO dele** (over 1.5+): time satisfeito marca pra se garantir (no MÁXIMO over 0.5), NÃO pra golear. `team_total` over 1.5 é só pra time que PRECISA de gols (motivado, indo pra cima). Do mesmo jeito, não banque over agressivo num jogo que você mesmo descreveu como administrado/morno pelos dois lados. Se a aposta brigar com o roteiro, a aposta está errada — não o roteiro.\n- **SIGA O \"VEREDITO DE INTENÇÃO\" (banner no bloco de motivação) — foi o filtro que MAIS separou acerto de erro no backtest:**\n  - **🔥 os dois precisam ir pra cima** (nenhum se contenta com empate) → o jogo abre; over / handicap de quem ataca / `team_total` over 1.5 ganham peso — é o cenário onde a aposta de gol acerta.\n  - **⚠️ assimétrica / trava** (≥1 lado administra, está garantido, rebaixado, sem alvo, ou **\"empate basta\"**) → **NÃO** crave over alto, goleada, nem handicap de mando por inércia estatística. O lado que PRECISA muitas vezes **não fura o ferrolho** (vira 1-0 / 1-1) e quem administra segura o jogo. Prefira **under** (numa linha com margem) OU o mercado de **MENOR variância**: `team_total` over 0.5 do lado que precisa, ou `1x2`/dupla-chance do lado motivado JOGANDO EM CASA — **nunca** banque o favorito motivado pra GOLEAR quem só defende (é a perda clássica). Aqui **rebaixe a confiança pra no máximo `medium`**.\n- `selection`: 1x2 → `\"home\"`/`\"draw\"`/`\"away\"` · over_under → `\"over\"`/`\"under\"` · btts → `\"yes\"`/`\"no\"` · **handicap** → o time bancado `\"home\"`/`\"away\"` · **team_total** → `\"over\"`/`\"under\"` · **double_chance** → `\"home_draw\"` (1X) / `\"draw_away\"` (X2) / `\"home_away\"` (12) · **draw_no_bet** → o time bancado `\"home\"`/`\"away\"` · **odd_even** → `\"odd\"`/`\"even\"`.\n- `team`: SÓ em `team_total` — de qual time é o total (`\"home\"`/`\"away\"`); `null` nos demais mercados.\n- `line`: over_under → **a linha que melhor casa com o xG e a variância (1.5, 2, 2.5, 3, 3.5… — NÃO se limite a 2.5)** · handicap → o hcap do time bancado (-1, -1.5, +1) · team_total → linha de gols do time (0.5, 1.5…) · `null` em 1x2/btts.\n- `confidence`: `\"low\"` | `\"medium\"` | `\"high\"` · `probability`: sua prob (0-1) do evento.\n- `analysis` (PT): análise COMPLETA e profissional — não um resumo. Comece pelo **ROTEIRO esperado** (o filme do jogo + a cascata condicional), junte o que sustenta a aposta (mando, motivação, momento/forma, desfalques, volume/conversão) e o que pode virar contra (o risco). **Sempre crave o melhor mercado**; se o edge for fino, escolha mesmo assim com `confidence` baixa, explicando a margem. **NUNCA** escreva na análise que é melhor \"não apostar\", \"evitar\", \"passar\" ou \"esperar\" — a saída tem SEMPRE uma recomendação concreta e acionável.\n\n---\n⚠️ LEMBRETE FINAL (idioma): escreva TODO o seu raciocínio interno (o grafo de raciocínio / thinking) em **PORTUGUÊS do Brasil**, desde a PRIMEIRA palavra. Comece o raciocínio com algo como \"Vou analisar...\". Não pense em inglês em nenhum momento. A resposta final também 100% em português.\n",
+    "xg_home": 0.550000011920929,
+    "xg_away": 1.350000023841858,
+    "total": 1.899999976158142,
+    "over25_prob": 0.30000001192092896,
+    "btts_prob": 0.3100000023841858,
+    "one_x_two": "{\"home\":0.18,\"draw\":0.34,\"away\":0.48}",
+    "confianca": "medium",
+    "best_bet_market": "double_chance",
+    "best_bet_selection": "draw_away",
+    "best_bet_team": null,
+    "best_bet_line": null,
+    "best_bet_confidence": "medium",
+    "best_bet_probability": 0.8199999928474426,
+    "reasoning_tokens": 14343
+  },
+  "digest": "### Arquétipo — desempenho contra o ESTILO do adversário de hoje (jogos-espelho por posse; NÃO é a média geral)\n- **Wolverhampton Wanderers** contra **equilibrado** (o estilo do Fulham, posse média 51.4%): marca **0.45/j** e sofre 1.64/j em 11 jogos — **-0.24 ABAIXO** da média (0.69).\n- **Fulham** contra **bloco baixo** (o estilo do Wolverhampton Wanderers, posse média 43.5%): marca **1.27/j** e sofre 0.87/j em 15 jogos — na média da temporada (1.22).\n\n### Mecanismo de gol — canal (classificado do lance): como um GERA × como o outro SOFRE (baseline = liga)\n- **CANAL ABERTO — cruzamento**: Wolverhampton Wanderers gera 4% dos gols por aí × Fulham sofre 2% por aí (liga: 2%) → índice 2.3×.\n- **CANAL ABERTO — pênalti**: Wolverhampton Wanderers gera 44% dos gols por aí × Fulham sofre 33% por aí (liga: 32%) → índice 1.5×.\n- **CANAL ABERTO — gol contra**: Fulham gera 7% dos gols por aí × Wolverhampton Wanderers sofre 5% por aí (liga: 3%) → índice 3.2×.\n\n### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)\n- **Wolverhampton Wanderers** (22 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.2 nos 10min seguintes) · **ADMINISTRA após marcar** (Δ -1.2 — recua).\n- **Fulham** (12 gols medidos, últimos 8 jogos): **DESMORONA ao sofrer gol** (Δ momentum -1.1 nos 10min seguintes) · neutro após marcar (Δ 0.1).\n\n### Artilharia — quem faz os gols de cada time (season · últimos 5 · volume · pênaltis · desfalque)\n- **Wolverhampton Wanderers**: Rodrigo Gomes **3 gols** · últ.5: 0 · 0.3 SoT/j | Santiago Bueno **3 gols** · últ.5: 1 · 0.2 SoT/j | Tolu Arokodare **3 gols** · últ.5: 0 · 0.5 SoT/j | Hee-chan Hwang **2 gols** (1 pên) · últ.5: 0 · 0.3 SoT/j | Ladislav Krejci **2 gols** · últ.5: 0 · 0.4 SoT/j\n- **Fulham**: Harry Wilson **10 gols** · últ.5: 0 · 0.7 SoT/j | Raúl Jiménez **9 gols** (4 pên) · últ.5: 0 · 0.6 SoT/j | Alex Iwobi **4 gols** · últ.5: 0 · 0.4 SoT/j | Emile Smith Rowe **3 gols** · últ.5: 0 · 0.3 SoT/j | Ryan Sessegnon **3 gols** · últ.5: 1 · 0.1 SoT/j ⚠️ DESFALQUE/dúvida neste jogo",
+  "realGoals": [
+    {
+      "minute": 25,
+      "side": "home",
+      "scorer": "Mateus Mané",
+      "type": "normal"
+    },
+    {
+      "minute": 45,
+      "side": "away",
+      "scorer": "Antonee Robinson",
+      "type": "penalty"
+    }
+  ],
+  "output": {
+    "home": {
+      "xg": 0.5,
+      "xg_1t": 0.2,
+      "xg_2t": 0.3,
+      "xg_bands": {
+        "0-15": 0.03,
+        "16-30": 0.05,
+        "31-45": 0.12,
+        "46-60": 0.15,
+        "61-75": 0.05,
+        "76-90": 0.1
+      },
+      "summary": "Wolverhampton já rebaixado, sem motivação, ataque fraco (0.69 gols/j) e defesa frágil (1.83 sofridos/j). Em casa, marca 1.0 gol/j mas sofre quase 2. Deve ter dificuldades contra o Fulham."
+    },
+    "away": {
+      "xg": 1.5,
+      "xg_1t": 0.6,
+      "xg_2t": 0.9,
+      "xg_bands": {
+        "0-15": 0.15,
+        "16-30": 0.15,
+        "31-45": 0.3,
+        "46-60": 0.15,
+        "61-75": 0.3,
+        "76-90": 0.45
+      },
+      "summary": "Fulham briga por vaga europeia, precisa vencer. Ataque mediano, mas enfrenta defesa frágil. Contra blocos baixos, tem bom desempenho (marca 1.27, sofre 0.87). Deve controlar o jogo e criar chances, especialmente no 2º tempo."
+    },
+    "general": {
+      "total": 2,
+      "total_1t": 0.8,
+      "total_2t": 1.2,
+      "over25_prob": 0.32,
+      "btts_prob": 0.31,
+      "one_x_two": {
+        "home": 0.12,
+        "draw": 0.26,
+        "away": 0.62
+      },
+      "one_x_two_1t": {
+        "home": 0.1,
+        "draw": 0.5,
+        "away": 0.4
+      },
+      "one_x_two_2t": {
+        "home": 0.12,
+        "draw": 0.28,
+        "away": 0.6
+      },
+      "confidence": "medium",
+      "confidence_regra": "Aplicada regra high: ≥3 arestas convergem (A2, A4, A13) e rotas A/B apontam favoritismo ao Fulham; nenhum ataque derruba. No entanto, forma recente ruim do Fulham e veredito de intenção 'tende a travar' introduzem incerteza, rebaixando para medium.",
+      "summary": "Jogo com favoritismo do Fulham, que precisa vencer. Wolverhampton frágil e desmotivado. Tendência de vitória visitante, mas sem goleada. Dupla chance X2 é a aposta de valor com variância controlada."
+    },
+    "conclusoes": [
+      {
+        "id": "C1",
+        "bloco": "contexto",
+        "fato": "Descanso igual (8 dias) e viagem curta (~180 km)",
+        "dado": "Ambos jogaram pela última vez em 09/05; sem assimetria de descanso",
+        "direcao": "Neutro – sem impacto direto no xG ou desempenho físico",
+        "forca": "baixa"
+      },
+      {
+        "id": "C2",
+        "bloco": "tabela_motivacao",
+        "fato": "Wolverhampton já rebaixado matematicamente",
+        "dado": "20º, 18 pts, máx possível 24 pts – sem objetivo de tabela",
+        "direcao": "Motivação baixa, tende a menor intensidade defensiva e ofensiva",
+        "forca": "alta"
+      },
+      {
+        "id": "C3",
+        "bloco": "tabela_motivacao",
+        "fato": "Fulham briga por vaga europeia",
+        "dado": "11º, 48 pts, máx possível 54 pts – vaga europeia matematicamente possível",
+        "direcao": "Motivação alta, precisa vencer, tende a propor jogo e atacar mais",
+        "forca": "alta"
+      },
+      {
+        "id": "C4",
+        "bloco": "home_gols",
+        "fato": "Ataque fraco e defesa frágil do Wolverhampton",
+        "dado": "Marca 0.69 g/j (xG 0.75), sofre 1.83 g/j (4.61 SoT sofridos/j) na temporada",
+        "direcao": "Time com baixo poder ofensivo e alta exposição defensiva",
+        "forca": "alta"
+      },
+      {
+        "id": "C5",
+        "bloco": "home_estilo",
+        "fato": "Wolverhampton é dominado na maioria dos jogos",
+        "dado": "Sofre 58 ataques perigosos/j, cria apenas 38.8/j; chutes bloqueados 2.4 vs 3.8 sofridos",
+        "direcao": "Time pressionado, cede volume ofensivo ao adversário",
+        "forca": "media"
+      },
+      {
+        "id": "C6",
+        "bloco": "home_qualidade",
+        "fato": "Nota média baixa do elenco (6.71), goleiro José Sá em má fase",
+        "dado": "Nota média 6.71; José Sá forma 6.45↓ nos últimos 5 jogos",
+        "direcao": "Falta de qualidade individual, especialmente no gol, agrava fragilidade defensiva",
+        "forca": "media"
+      },
+      {
+        "id": "C7",
+        "bloco": "home_qualidade",
+        "fato": "Peças ofensivas pouco produtivas",
+        "dado": "Principais artilheiros têm 3 gols cada (Rodrigo Gomes, Bueno, Arokodare) e baixo volume de SoT",
+        "direcao": "Ataque não tem jogador capaz de decidir ou criar chances consistentes",
+        "forca": "media"
+      },
+      {
+        "id": "C8",
+        "bloco": "home_forma",
+        "fato": "Forma recente péssima: 1 gol marcado e 12 sofridos nos últimos 5 jogos",
+        "dado": "Últimos 5: DEDDD, 1pt, 1 GP, 12 GC; não marcou em 3 dos 5 jogos",
+        "direcao": "Momento de total desorganização, sem confiança e sem produção ofensiva",
+        "forca": "alta"
+      },
+      {
+        "id": "C9",
+        "bloco": "home_momentum",
+        "fato": "Pico de pressão no início do 2º tempo, mas domínio geral negativo",
+        "dado": "Domínio médio +1.5 na faixa 46-60 (últimos 5); desmorona ao sofrer gol (Δ -1.2)",
+        "direcao": "Tende a reagir brevemente após o intervalo, mas sofre com desestabilização se sofrer gol",
+        "forca": "media"
+      },
+      {
+        "id": "C10",
+        "bloco": "home_faixas",
+        "fato": "Gols marcados concentrados no final dos tempos; sofre gols consistentemente",
+        "dado": "Marca 0.19/j em 31-45 e 76-90; sofre 0.39+ em 31-45, 61-75 e 76-90",
+        "direcao": "Vulnerável em várias janelas, especialmente no final do 1ºT e durante todo o 2ºT",
+        "forca": "media"
+      },
+      {
+        "id": "C11",
+        "bloco": "home_desfalques",
+        "fato": "Desfalques sem impacto relevante",
+        "dado": "E. Gonzalez Medina (0% gols) e Sam Johnstone (goleiro reserva, 0 SoT/j) fora",
+        "direcao": "Nenhum desfalque altera o volume ofensivo ou defensivo do time",
+        "forca": "baixa"
+      },
+      {
+        "id": "C12",
+        "bloco": "away_gols",
+        "fato": "Fulham tem ataque mediano e defesa mediana, mas desempenho fora é pior",
+        "dado": "Marca 1.22 g/j (xG 1.17), sofre 1.39 g/j; fora: marca 0.89, sofre 1.67",
+        "direcao": "Time com potencial ofensivo moderado, mas defesa visitante frágil",
+        "forca": "media"
+      },
+      {
+        "id": "C13",
+        "bloco": "away_estilo",
+        "fato": "Estilo equilibrado, ligeira vantagem em ataques perigosos",
+        "dado": "46.6 ataques perigosos/j vs 48.9 sofridos; posse média 51.4%",
+        "direcao": "Time que consegue controlar parcialmente o jogo, sem impor domínio absoluto",
+        "forca": "media"
+      },
+      {
+        "id": "C14",
+        "bloco": "away_qualidade",
+        "fato": "Harry Wilson é o principal nome ofensivo, Raúl Jiménez a referência no ataque",
+        "dado": "Wilson: 10 gols, 4 MOTM, forma 6.76↓; Jiménez: 9 gols (4 pên), forma 6.68↓",
+        "direcao": "Dupla ofensiva capaz de decidir, mesmo em leve baixa de forma",
+        "forca": "alta"
+      },
+      {
+        "id": "C15",
+        "bloco": "away_qualidade",
+        "fato": "Vários jogadores com minutagem recente baixa ou voltando de lesão",
+        "dado": "Harrison Reed (1/5 jogos), Jorge Cuenca (0/5), Alex Iwobi (2/5), Kenny Tete (0/5)",
+        "direcao": "Time pode estar sem entrosamento ideal ou ritmo de jogo em algumas posições",
+        "forca": "media"
+      },
+      {
+        "id": "C16",
+        "bloco": "away_forma",
+        "fato": "Forma recente ruim ofensivamente, mas contra adversários fortes",
+        "dado": "Últimos 5: DDVED, apenas 1 gol marcado; adversários: Liverpool, Brentford, Aston Villa, Arsenal, Bournemouth (todos top 8)",
+        "direcao": "Seca de gols pode ser circunstancial; contra defesa frágil, tende a voltar a marcar",
+        "forca": "media"
+      },
+      {
+        "id": "C17",
+        "bloco": "away_momentum",
+        "fato": "Fulham cresce no final do jogo (76-90) e também desmorona ao sofrer gol",
+        "dado": "Janela de maior domínio relativo: 76-90 (cruzamento +1.3); dinâmica pós-gol: sofrer → Δ -1.1",
+        "direcao": "Time que pode decidir no final, mas mentalmente frágil se sofrer primeiro",
+        "forca": "media"
+      },
+      {
+        "id": "C18",
+        "bloco": "away_faixas",
+        "fato": "Ataque mais perigoso no último quarto do jogo; defesa sofre no início do 2º tempo",
+        "dado": "Marca 0.36/j em 76-90, 0.25/j em 61-75; sofre 0.36/j em 46-60",
+        "direcao": "Tende a definir o jogo no final, mas pode ser surpreendido na volta do intervalo",
+        "forca": "media"
+      },
+      {
+        "id": "C19",
+        "bloco": "away_desfalques",
+        "fato": "Desfalques de Sessegnon (ofensivo) e Andersen (defensivo) têm impacto moderado",
+        "dado": "Sessegnon: 3 gols, 100% participação nos gols recentes (1 gol); Andersen: 13% interditações do time, suspenso",
+        "direcao": "Perda ofensiva perde profundidade; perda defensiva enfraquece zaga, mas Fulham tem substitutos",
+        "forca": "media"
+      },
+      {
+        "id": "C20",
+        "bloco": "cruzamento_faixa",
+        "fato": "Maiores índices de perigo para o Fulham são no final do jogo e para o Wolverhampton no início do 2ºT",
+        "dado": "Índices: Fulham atacando em 76-90 = 0.78, Wolverhampton atacando em 46-60 = 0.47",
+        "direcao": "Distribuição temporal dos gols favorece gols no 2º tempo, especialmente do Fulham no final",
+        "forca": "alta"
+      },
+      {
+        "id": "C21",
+        "bloco": "base_rate",
+        "fato": "Prior de xG total ~1.92 (Rota B), com Fulham favorito",
+        "dado": "Rota B: λ casa 0.75, λ fora 1.17, total 1.92; volume de SoT total 7.6 (na média da liga)",
+        "direcao": "Jogo com baixo volume de finalização, Fulham ligeiramente superior",
+        "forca": "media"
+      },
+      {
+        "id": "C22",
+        "bloco": "probs_mercado",
+        "fato": "Mercado vê Fulham favorito, mas com alta chance de empate e under 2.5",
+        "dado": "Rota B: 1x2 22/34/44; over 2.5 30%; BTTS 38%; team total fora over 0.5 69%",
+        "direcao": "Prior indica jogo equilibrado com tendência a poucos gols",
+        "forca": "alta"
+      },
+      {
+        "id": "C23",
+        "bloco": "cruzamentos_computados",
+        "fato": "Fulham tem bom desempenho contra blocos baixos; Wolverhampton piora contra equilibrados",
+        "dado": "Fulham vs bloco baixo: marca 1.27/j, sofre 0.87/j (15j); Wolverhampton vs equilibrado: marca 0.45/j, sofre 1.64/j (11j)",
+        "direcao": "Confronto tático favorece o Fulham, que deve controlar e sofrer pouco",
+        "forca": "alta"
+      },
+      {
+        "id": "C24",
+        "bloco": "cruzamentos_computados",
+        "fato": "Pênaltis são um canal aberto, mas de baixa previsibilidade",
+        "dado": "Wolverhampton gera 44% dos gols assim (1.5x vs Fulham sofre 33%); liga: 32%",
+        "direcao": "Possibilidade de pênalti pode aumentar gols, mas não é base para previsão principal",
+        "forca": "baixa"
+      },
+      {
+        "id": "C25",
+        "bloco": "cruzamentos_computados",
+        "fato": "Ambos os times desmoronam ao sofrer gol, mas Fulham é neutro ao marcar",
+        "dado": "Wolverhampton ao sofrer: Δ -1.2; Fulham ao sofrer: Δ -1.1; Fulham ao marcar: Δ 0.1",
+        "direcao": "Se Fulham marcar primeiro, Wolverhampton tende a piorar; se sofrer primeiro, Fulham pode sentir",
+        "forca": "media"
+      },
+      {
+        "id": "C26",
+        "bloco": "cruzamentos_computados",
+        "fato": "Artilheiros: Wilson e Jiménez são as principais ameaças; Wolverhampton não tem goleador destacado",
+        "dado": "Wilson: 10 gols, Jiménez: 9 gols; Wolverhampton: 3 artilheiros com 3 gols cada",
+        "direcao": "Desigualdade ofensiva clara, Fulham com muito mais poder de fogo",
+        "forca": "alta"
+      }
+    ],
+    "blocos_sem_sinal": [
+      {
+        "bloco": "contexto",
+        "motivo": "Descanso igual (8 dias) e clima sem correlação com total de gols na liga – sem sinal direcional para o jogo"
+      },
+      {
+        "bloco": "home_desfalques",
+        "motivo": "Desfalques irrelevantes: Gonzalez Medina (0% gols) e Johnstone (reserva, 0 SoT/j) – não alteram volume ofensivo ou defensivo"
+      }
+    ],
+    "descartadas": [],
+    "jogadores": [
+      {
+        "nome": "Sam Johnstone",
+        "time": "home",
+        "leitura": "Goleiro reserva lesionado; já não vinha sendo titular (José Sá tem mais jogos). Ausência não altera a defesa."
+      },
+      {
+        "nome": "José Sá",
+        "time": "home",
+        "leitura": "Titular em má fase (nota 6.45 nos últimos 5 jogos). A fragilidade defensiva do time passa por ele, mas é vítima do sistema."
+      },
+      {
+        "nome": "João Gomes",
+        "time": "home",
+        "leitura": "Meio-campista em leve recuperação (nota subindo para 6.8), mas sem impacto ofensivo (0 gols). Pode ajudar na transição."
+      },
+      {
+        "nome": "Santiago Bueno",
+        "time": "home",
+        "leitura": "Zagueiro artilheiro (3 gols) e em boa forma recente (nota 6.7 subindo). Ameaça em bolas paradas, uma das poucas armas ofensivas."
+      },
+      {
+        "nome": "André",
+        "time": "home",
+        "leitura": "Volante de contenção, estável (nota 6.77), mas sem criatividade. Não deve alterar o desequilíbrio do meio-campo."
+      },
+      {
+        "nome": "Jhon Arias",
+        "time": "home",
+        "leitura": "Ausente nos últimos 5 jogos; provavelmente fora dos planos ou lesionado. Ausência irrelevante para este jogo."
+      },
+      {
+        "nome": "E. Gonzalez Medina",
+        "time": "home",
+        "leitura": "Lesionado, sem participação em gols ou volume estatístico. Desfalque sem impacto."
+      },
+      {
+        "nome": "Rodrigo Gomes",
+        "time": "home",
+        "leitura": "Atacante com 3 gols na temporada, mas nenhum nos últimos 5 jogos. Baixo volume de finalização (0.3 SoT/j). Pouco provável marcar."
+      },
+      {
+        "nome": "Tolu Arokodare",
+        "time": "home",
+        "leitura": "Atacante com 3 gols, 0.5 SoT/j, mas também em jejum recente. Ligeiramente mais volume que os companheiros, mas ainda insuficiente."
+      },
+      {
+        "nome": "Hee-chan Hwang",
+        "time": "home",
+        "leitura": "2 gols (1 de pênalti), 0 nos últimos 5. Baixa produção, não deve ser diferencial."
+      },
+      {
+        "nome": "Ladislav Krejci",
+        "time": "home",
+        "leitura": "Zagueiro com 2 gols, ameaça aérea. Pode contribuir em escanteios, mas dependente de bola parada."
+      },
+      {
+        "nome": "Harry Wilson",
+        "time": "away",
+        "leitura": "Principal artilheiro do Fulham (10 gols). Forma ligeiramente abaixo (6.76), mas enfrentou defesas fortes. Contra a frágil zaga do Wolverhampton, é o candidato mais provável a marcar."
+      },
+      {
+        "nome": "Harrison Reed",
+        "time": "away",
+        "leitura": "Meia com alta nota (7.06), mas só atuou 1 dos últimos 5 jogos. Se disponível, não estará em ritmo ideal."
+      },
+      {
+        "nome": "Jorge Cuenca",
+        "time": "away",
+        "leitura": "Zagueiro com boa nota (7.02), mas não jogou os últimos 5 jogos. Provavelmente fora por lesão, ausência não impacta diretamente."
+      },
+      {
+        "nome": "Alex Iwobi",
+        "time": "away",
+        "leitura": "Criativo (4 gols, 3 MOTM), mas ausente em 3 dos últimos 5 jogos. Se jogar, adiciona qualidade na criação; incógnita física."
+      },
+      {
+        "nome": "Kenny Tete",
+        "time": "away",
+        "leitura": "Lateral com nota 6.91, mas sem minutagem recente (0/5). Provável desfalque, sua ausência já está incorporada."
+      },
+      {
+        "nome": "Raúl Jiménez",
+        "time": "away",
+        "leitura": "Centroavante com 9 gols (4 pênaltis), referência ofensiva. Forma em leve queda (6.68), mas qualidade para decidir contra defesa fraca."
+      },
+      {
+        "nome": "Ryan Sessegnon",
+        "time": "away",
+        "leitura": "Desfalque por lesão. Vinha sendo decisivo (participou do único gol recente), mas volume ofensivo total baixo (3 gols, 0.1 SoT/j). Perda de profundidade."
+      },
+      {
+        "nome": "Joachim Andersen",
+        "time": "away",
+        "leitura": "Zagueiro suspenso, responsável por 13% das interceptações do time. Desfalque importante na defesa, mas o Wolverhampton não deve conseguir explorar muito."
+      }
+    ],
+    "arestas": [
+      {
+        "id": "A1",
+        "liga": [
+          "C4",
+          "C12",
+          "C19"
+        ],
+        "leitura": "Ataque frágil do Wolverhampton (0.75 xG) contra defesa do Fulham que sofre gols fora (1.67) e perde Andersen (13% interditações). Mesmo assim, o Wolverhampton é muito fraco para aproveitar totalmente.",
+        "efeito": "Leve aumento no xG do Wolverhampton (0.75 → 0.50? Na verdade, redução devido ao arquétipo). Ajuste: redução para 0.50 considerando o pior desempenho contra equilibrados."
+      },
+      {
+        "id": "A2",
+        "liga": [
+          "C12",
+          "C4",
+          "C16",
+          "C5",
+          "C25"
+        ],
+        "leitura": "Ataque do Fulham (1.17 xG) enfrenta defesa frágil do Wolverhampton (1.83 sofridos, 4.61 SoT/j) e que desmorona ao sofrer gol. Após jogos contra defesas fortes, o Fulham encontra alívio.",
+        "efeito": "Aumento significativo no xG do Fulham (1.17 → 1.50), impulsionando total do jogo."
+      },
+      {
+        "id": "A3",
+        "liga": [
+          "C2",
+          "C8",
+          "C9"
+        ],
+        "leitura": "Wolverhampton rebaixado, sem motivação e em péssima forma, desmorona ao sofrer gol. Tendência a ceder espaços e gols se o Fulham marcar primeiro.",
+        "efeito": "Aumenta probabilidade de vitória do Fulham e de placar com mais de um gol de diferença."
+      },
+      {
+        "id": "A4",
+        "liga": [
+          "C3",
+          "C13",
+          "C16",
+          "C23"
+        ],
+        "leitura": "Fulham precisa vencer e historicamente tem bom desempenho contra blocos baixos (marca 1.27, sofre 0.87). Enfrentar um Wolverhampton retrancado não é novidade; tende a controlar o jogo.",
+        "efeito": "Reforça favoritismo do Fulham e reduz risco de derrota, sustentando dupla chance X2."
+      },
+      {
+        "id": "A5",
+        "liga": [
+          "C19",
+          "C14"
+        ],
+        "leitura": "Sessegnon fora, mas Wilson e Jiménez seguem como principais armas. A perda de Sessegnon não compromete o ataque principal.",
+        "efeito": "Leve redução na profundidade ofensiva, mas sem impacto significativo no xG total do Fulham."
+      },
+      {
+        "id": "A6",
+        "liga": [
+          "C19",
+          "C9",
+          "C10"
+        ],
+        "leitura": "Andersen suspenso abre brecha na zaga do Fulham, justamente na faixa em que o Wolverhampton costuma ter seu pico de pressão (46-60). Se o Wolverhampton conseguir impor volume ali, pode explorar.",
+        "efeito": "Pequena chance de gol do Wolverhampton no início do 2ºT, mas a falta de qualidade limita a conversão em perigo real."
+      },
+      {
+        "id": "A7",
+        "liga": [
+          "C16",
+          "C8"
+        ],
+        "leitura": "Má forma recente do Fulham (1 gol em 5 jogos) é relativizada pela dificuldade dos adversários (todos top 8). Contra um Wolverhampton que sofreu 12 gols em 5 jogos, a tendência é regressão positiva.",
+        "efeito": "Reduz o peso da má forma e sustenta a expectativa de gols do Fulham."
+      },
+      {
+        "id": "A8",
+        "liga": [
+          "C9",
+          "C17",
+          "C20",
+          "C18"
+        ],
+        "leitura": "Wolverhampton tem pico 46-60, mas Fulham cresce em 76-90. O jogo pode ser decidido no final, quando o Wolverhampton desmorona e o Fulham marca seus gols (índice 0.78).",
+        "efeito": "Concentra a probabilidade de gols do Fulham no último quarto do jogo, aumentando a chance de gols no 2º tempo."
+      },
+      {
+        "id": "A9",
+        "liga": [
+          "C1",
+          "C2",
+          "C3"
+        ],
+        "leitura": "Sem assimetria de descanso, o fator físico é neutro. A motivação do Fulham pode compensar qualquer cansaço acumulado.",
+        "efeito": "Nenhum ajuste no xG por fadiga; a diferença de motivação já foi capturada em outras arestas."
+      },
+      {
+        "id": "A10",
+        "liga": [
+          "C14",
+          "C15",
+          "C19",
+          "C6",
+          "C7"
+        ],
+        "leitura": "Qualidade individual do Fulham (Wilson, Jiménez) é muito superior à do Wolverhampton (sem destaques). Desfalques do Fulham não tiram suas principais peças.",
+        "efeito": "Reforça a probabilidade de vitória do Fulham e de gol(s) visitante(s)."
+      },
+      {
+        "id": "A11",
+        "liga": [
+          "C2",
+          "C3"
+        ],
+        "leitura": "Wolverhampton sem objetivo pode jogar com menos pressão, mas sua fragilidade natural o impede de transformar isso em perigo. Fulham precisa vencer, então não deve relaxar.",
+        "efeito": "A assimetria motivacional favorece o Fulham, mas não a ponto de gerar goleada, devido ao estilo de jogo viajante do Fulham (média de 0.89 gols fora)."
+      },
+      {
+        "id": "A12",
+        "liga": [
+          "C22",
+          "A2"
+        ],
+        "leitura": "Prior de mercado subestima a fragilidade do Wolverhampton: over 2.5 em 30% é baixo considerando o aumento do xG do Fulham. Mas o total ainda é limitado pelo ataque fraco do mandante.",
+        "efeito": "Justifica over 2.5 com probabilidade levemente superior (32%), mas não o suficiente para ser aposta principal."
+      },
+      {
+        "id": "A13",
+        "liga": [
+          "C23"
+        ],
+        "leitura": "Fulham contra bloco baixo tem boa produção ofensiva (1.27) e solidez defensiva (0.87). Wolverhampton contra equilibrado é ainda pior que sua média.",
+        "efeito": "Forte evidência de que o Fulham controlará o jogo e terá vantagem clara."
+      },
+      {
+        "id": "A14",
+        "liga": [
+          "C24"
+        ],
+        "leitura": "Pênaltis são um fator aleatório que pode adicionar gols, mas não é base sólida para previsão.",
+        "efeito": "Ignorado na construção do xG; mantido como risco residual."
+      },
+      {
+        "id": "A15",
+        "liga": [
+          "C25"
+        ],
+        "leitura": "Se o Fulham marcar primeiro, o Wolverhampton desmorona, o que pode abrir espaço para mais gols. Se sofrer primeiro, o Fulham também sente, mas o Wolverhampton dificilmente marcará.",
+        "efeito": "Aumenta ligeiramente a probabilidade de o Fulham fazer mais de 1 gol, mas reduz a chance de reação do Wolverhampton."
+      },
+      {
+        "id": "A16",
+        "liga": [
+          "C26"
+        ],
+        "leitura": "Wilson e Jiménez são os marcadores mais prováveis, coerente com a distribuição de xG do Fulham.",
+        "efeito": "Usado para prever marcadores, não altera xG total."
+      }
+    ],
+    "roteiros": [
+      {
+        "nome": "Fulham controla e vence por 1-0 ou 2-0",
+        "prob": 0.5,
+        "filme": "Fulham dita o ritmo desde o início, com posse de bola e ataques organizados. Wolverhampton retrancado, tentando segurar o 0-0. O gol visitante sai no final do 1º tempo (31-45), após pressão crescente. No 2º tempo, Wolverhampton esboça reação (46-60), mas não converte. Fulham administra e pode fazer o segundo em contra-ataque no final (76-90). Placar final: 0-1 ou 0-2.",
+        "arestas": [
+          "A2",
+          "A3",
+          "A4",
+          "A8",
+          "A13",
+          "A15"
+        ]
+      },
+      {
+        "nome": "Jogo truncado e empate com gols",
+        "prob": 0.35,
+        "filme": "Fulham encontra dificuldades para furar a retranca do Wolverhampton. O primeiro tempo termina 0-0. No início do 2º tempo, Wolverhampton surpreende em bola parada e faz 1-0 (46-60). Fulham reage e empata no final (76-90), mas não consegue a virada. Placar final: 1-1.",
+        "arestas": [
+          "A1",
+          "A6",
+          "A10",
+          "A12"
+        ]
+      },
+      {
+        "nome": "Goleada do Fulham",
+        "prob": 0.15,
+        "filme": "Fulham marca cedo (antes dos 15 min) e Wolverhampton desmorona completamente. O jogo fica aberto, e o Fulham empilha chances, fazendo 2 a 3 gols. Placar final: 0-3.",
+        "arestas": [
+          "A2",
+          "A3",
+          "A15"
+        ]
+      }
+    ],
+    "janelas": [
+      {
+        "faixa": "0-15",
+        "leitura": "Início estudado, Fulham com mais posse, mas sem chances claras. Wolverhampton todo atrás.",
+        "prob_gol": 0.16,
+        "lado": "away"
+      },
+      {
+        "faixa": "16-30",
+        "leitura": "Fulham aumenta intensidade, Wolverhampton se defende bem até então, mas cede escanteios.",
+        "prob_gol": 0.18,
+        "lado": "away"
+      },
+      {
+        "faixa": "31-45",
+        "leitura": "Pressão do Fulham atinge pico; defesa do Wolverhampton sofre gols nesta faixa. Momento mais provável para o gol visitante no 1º tempo.",
+        "prob_gol": 0.34,
+        "lado": "away"
+      },
+      {
+        "faixa": "46-60",
+        "leitura": "Wolverhampton volta melhor, tenta pressionar. Defesa do Fulham é vulnerável aqui, e o Wolverhampton pode criar chances, mas falta qualidade.",
+        "prob_gol": 0.26,
+        "lado": "equilibrado"
+      },
+      {
+        "faixa": "61-75",
+        "leitura": "Jogo mais equilibrado, com o Fulham controlando e buscando o contra-ataque. Chance de gol para ambos, mas maior para o Fulham.",
+        "prob_gol": 0.3,
+        "lado": "away"
+      },
+      {
+        "faixa": "76-90",
+        "leitura": "Wolverhampton cansado, Fulham cresce e explora espaços. Janela de maior perigo para o Fulham, com alta probabilidade de gol.",
+        "prob_gol": 0.42,
+        "lado": "away"
+      }
+    ],
+    "tempos": {
+      "primeiro": {
+        "analise": "Fulham deve propor o jogo desde o início, com maior posse e volume ofensivo. Wolverhampton se fecha, buscando algum contra-ataque ou bola parada. A defesa do Wolverhampton é frágil e costuma sofrer no final do 1º tempo. A probabilidade de um gol antes do intervalo é moderada (55%), provavelmente do Fulham. Se o gol sair, o jogo pode ficar mais controlado; se não, o intervalo será de ajustes.",
+        "prob_gol": 0.55
+      },
+      "segundo": {
+        "analise": "O Wolverhampton tende a voltar com ímpeto no início do 2º tempo, mas sem poder ofensivo real. O Fulham, se estiver vencendo, administrará; se estiver empatando ou perdendo, aumentará a pressão. A tendência é que o Fulham domine o último quarto do jogo, quando o Wolverhampton desmorona fisicamente. A probabilidade de gol no 2º tempo é alta (70%), e o Fulham é o lado mais provável de marcar.",
+        "prob_gol": 0.7
+      }
+    },
+    "marcadores": {
+      "home": [
+        {
+          "nome": "Santiago Bueno",
+          "prob": 0.15,
+          "motivo": "Zagueiro artilheiro (3 gols), boa forma recente e ameaça em bolas paradas, principal arma ofensiva do time."
+        },
+        {
+          "nome": "Tolu Arokodare",
+          "prob": 0.1,
+          "motivo": "Atacante com 3 gols na temporada e 0.5 SoT/j, mas em jejum recente. Pode aproveitar algum rebote."
+        },
+        {
+          "nome": "Rodrigo Gomes",
+          "prob": 0.08,
+          "motivo": "Atacante com 3 gols, baixo volume de finalização (0.3 SoT/j). Depende de chance clara."
+        }
+      ],
+      "away": [
+        {
+          "nome": "Harry Wilson",
+          "prob": 0.4,
+          "motivo": "Principal artilheiro do Fulham (10 gols), enfrenta a defesa mais frágil da liga. Deve finalizar bastante."
+        },
+        {
+          "nome": "Raúl Jiménez",
+          "prob": 0.35,
+          "motivo": "Centroavante com 9 gols (4 pênaltis), referência no ataque. Chance de pênalti também o favorece."
+        },
+        {
+          "nome": "Alex Iwobi",
+          "prob": 0.2,
+          "motivo": "Criativo com 4 gols, se estiver disponível. Pode aparecer como elemento surpresa na área."
+        }
+      ]
+    },
+    "mercados": [
+      {
+        "market": "1x2",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.12,
+        "variancia": 4,
+        "valor": "medio",
+        "nota": "Probabilidade baixa e condizente com fragilidade do Wolverhampton. Algum valor em relação ao prior (22%), mas muito arriscado."
+      },
+      {
+        "market": "1x2",
+        "selection": "draw",
+        "team": null,
+        "line": null,
+        "prob": 0.26,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Probabilidade real menor que o prior (34%). O Fulham deve vencer, então empate não oferece valor."
+      },
+      {
+        "market": "1x2",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.62,
+        "variancia": 4,
+        "valor": "alto",
+        "nota": "Grande diferença para o prior (44%). Opção com alto valor, mas variância 4. Preferir mercados mais seguros."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_draw",
+        "team": null,
+        "line": null,
+        "prob": 0.38,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Probabilidade baixa; o Wolverhampton dificilmente pontua. Valor baixo."
+      },
+      {
+        "market": "double_chance",
+        "selection": "draw_away",
+        "team": null,
+        "line": null,
+        "prob": 0.88,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "Combinação de alta probabilidade (88%) e grande valor sobre o prior (78%). A aposta mais segura com valor."
+      },
+      {
+        "market": "double_chance",
+        "selection": "home_away",
+        "team": null,
+        "line": null,
+        "prob": 0.74,
+        "variancia": 2,
+        "valor": "medio",
+        "nota": "Cobre vitória de qualquer lado, mas o empate é um risco real. Valor mediano."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "home",
+        "team": null,
+        "line": null,
+        "prob": 0.162,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Probabilidade muito baixa, sem valor aparente."
+      },
+      {
+        "market": "draw_no_bet",
+        "selection": "away",
+        "team": null,
+        "line": null,
+        "prob": 0.838,
+        "variancia": 3,
+        "valor": "alto",
+        "nota": "Alta probabilidade e grande valor sobre o prior (67%). Alternativa interessante anti-empate."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 1.5,
+        "prob": 0.59,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Praticamente igual ao prior (59%). Sem valor diferencial."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 2.5,
+        "prob": 0.32,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Leve valor (32% vs 30% prior), mas muito próximo do limiar. Pouco edge."
+      },
+      {
+        "market": "over_under",
+        "selection": "over",
+        "team": null,
+        "line": 3.5,
+        "prob": 0.14,
+        "variancia": 3,
+        "valor": "baixo",
+        "nota": "Probabilidade baixa, similar ao prior (13%). Sem apelo."
+      },
+      {
+        "market": "btts",
+        "selection": "yes",
+        "team": null,
+        "line": null,
+        "prob": 0.31,
+        "variancia": 4,
+        "valor": "baixo",
+        "nota": "Minha probabilidade (31%) é menor que o prior (38%), indicando falta de valor no 'sim'."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 0.5,
+        "prob": 0.39,
+        "variancia": 1,
+        "valor": "baixo",
+        "nota": "Probabilidade de o Wolverhampton marcar é baixa e abaixo do prior (53%). Não apostar."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "home",
+        "line": 1.5,
+        "prob": 0.09,
+        "variancia": 2,
+        "valor": "baixo",
+        "nota": "Extremamente improvável que o Wolverhampton faça 2 gols. Valor baixo."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 0.5,
+        "prob": 0.78,
+        "variancia": 1,
+        "valor": "alto",
+        "nota": "Alta segurança: Fulham deve marcar pelo menos 1 gol. Probabilidade bem acima do prior (69%)."
+      },
+      {
+        "market": "team_total",
+        "selection": "over",
+        "team": "away",
+        "line": 1.5,
+        "prob": 0.44,
+        "variancia": 2,
+        "valor": "alto",
+        "nota": "Boa chance de o Fulham fazer 2 gols. Diferença relevante para o prior (33%)."
+      },
+      {
+        "market": "handicap",
+        "selection": "home",
+        "team": null,
+        "line": -1,
+        "prob": 0.025,
+        "variancia": 5,
+        "valor": "baixo",
+        "nota": "Missão quase impossível. Sem valor."
+      },
+      {
+        "market": "handicap",
+        "selection": "away",
+        "team": null,
+        "line": -1,
+        "prob": 0.35,
+        "variancia": 5,
+        "valor": "medio",
+        "nota": "Algum valor, mas variância máxima. Preferir team_total over 1.5 se quiser exposição a placar de 2+."
+      },
+      {
+        "market": "odd_even",
+        "selection": "odd",
+        "team": null,
+        "line": null,
+        "prob": 0.48,
+        "variancia": 3,
+        "valor": "nenhum",
+        "nota": "Probabilidade padrão (~50%). Nenhum edge."
+      }
+    ],
+    "best_bet": {
+      "market": "double_chance",
+      "selection": "draw_away",
+      "team": null,
+      "line": null,
+      "confidence": "medium",
+      "probability": 0.88,
+      "evidence_for": [
+        "A2",
+        "A4",
+        "A13",
+        "C23",
+        "C2",
+        "C3"
+      ],
+      "evidence_against": [
+        "C16",
+        "C25",
+        "C24"
+      ],
+      "analysis": "Aposta dupla chance 'Fulham ou Empate' combina alta probabilidade (88%) com variância controlada (2) e valor significativo sobre o prior (78%). O Fulham precisa vencer, enfrenta um Wolverhampton frágil, desmotivado e rebaixado. O arquétipo favorece o Fulham contra blocos baixos, e o momento do Wolverhampton é desastroso. O principal risco é uma vitória improvável do Wolverhampton, que exigiria um apagão completo do Fulham, algo que as evidências não sustentam. A má forma recente do Fulham é contextualizada por adversários fortes, e a qualidade ofensiva de Wilson e Jiménez deve prevalecer."
+    },
+    "refutacao": {
+      "ataques": [
+        {
+          "alvo": "Dupla chance X2",
+          "argumento": "Wolverhampton pode marcar primeiro e explorar desmoronamento do Fulham ao sofrer gol (C25). Se fizer 1-0 e se fechar, a dupla chance falha.",
+          "ids": [
+            "C25",
+            "A6"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Dupla chance X2",
+          "argumento": "Fulham está em seca ofensiva (1 gol em 5 jogos). Se não marcar, o Wolverhampton pode segurar o 0-0 ou vencer por 1-0.",
+          "ids": [
+            "C16"
+          ],
+          "veredito": "enfraquece"
+        },
+        {
+          "alvo": "Dupla chance X2",
+          "argumento": "Veredito de intenção 'jogo tende a travar' sugere que o Fulham pode não conseguir furar a retranca, e o Wolverhampton, mesmo fraco, pode arrancar um empate sem gols.",
+          "ids": [
+            "C2",
+            "C3"
+          ],
+          "veredito": "enfraquece"
+        }
+      ],
+      "conclusao": "Nenhum ataque derruba a aposta. O cenário de vitória do Wolverhampton é extremamente improvável diante de sua fragilidade atual. A seca de gols do Fulham é mitigada pela queda de qualidade do adversário. O veredito de intenção foi incorporado à análise, mantendo a dupla chance X2 como aposta de valor com risco controlado."
+    },
+    "drivers": [
+      "Fragilidade defensiva e desmotivação do Wolverhampton (já rebaixado)",
+      "Necessidade de vitória do Fulham e seu bom desempenho contra blocos baixos",
+      "Qualidade individual superior do Fulham, especialmente com Wilson e Jiménez"
+    ]
+  },
+  "cov": {
+    "blocosCobertos": 20,
+    "blocosSemSinal": 2,
+    "blocosFaltando": [],
+    "conclusoes": 26,
+    "arestas": 16,
+    "jogadores": 19,
+    "mercados": 19,
+    "orfas": [
+      "C11",
+      "C21"
+    ]
+  },
+  "reasoningText": "Vou analisar o confronto entre Wolverhampton Wanderers e Fulham pela 37ª rodada da Premier League, seguindo o protocolo de 6 passos.\n\n**Passo 1: Varredura**\n\n**Bloco: contexto**\n- Data: 17/05/2026, Molineux, grama natural, chuva leve, 12.8°C. Condições climáticas não correlacionadas com total de gols na liga (2.9 vs 2.84). \n- Descanso: ambos 8 dias (último jogo 09/05). Sem assimetria de descanso – sem efeito relevante.\n- Conclusão: C1 (contexto): Ambos com 8 dias de descanso, sem assimetria significativa de fadiga. Viagem curta (~180 km). Nenhum impacto direto no xG.\n\n**Bloco: tabela_motivacao**\n- Wolverhampton: 20º, 18 pts, já rebaixado matematicamente. Motivação baixa – não precisa lutar.\n- Fulham: 11º, 48 pts, seguro do rebaixamento, mas vaga europeia ainda matematicamente possível. Motivação alta – precisa lutar.\n- Veredito de intenção: ASSIMÉTRICA / JOGO TENDE A TRAVAR. Pelo menos um lado não precisa ir pra cima (Wolverhampton já rebaixado, Fulham pode administrar dependendo do cenário? Na verdade, Fulham precisa vencer para buscar vaga europeia, então o lado que PRECISA é o Fulham, o Wolverhampton é o que não tem nada a perder. Isso pode abrir espaços, mas o veredito indica cautela com over/goleada.\n- Conclusão: C2 (tabela_motivacao): Wolverhampton já rebaixado, motivação baixa. Fulham briga por vaga europeia, motivação alta. Veredito: jogo tende a travar, mas Fulham tem mais a buscar.\n- Conclusão: C3 (tabela_motivacao): Fulham precisa vencer; Wolverhampton sem pressão pode jogar solto, mas sem intensidade defensiva total? A motivação do Fulham pode aumentar seu xG ofensivo, mas a falta de objetivo do Wolverhampton pode reduzir o xG total? Na verdade, times já rebaixados costumam ter desempenho pior, sofrendo mais gols. Mas o veredito \"tende a travar\" sugere cautela. Vou considerar que o Fulham terá mais volume, mas o Wolverhampton pode ser frágil.\n\n**Bloco: home_gols**\n- Wolverhampton: 25 gols marcados em 36j (0.69/j), 66 sofridos (1.83/j). Em casa: 1 gol marcado? Diz \"marca 1 / sofre 1.83\" – estranho, parece erro, mas os dados: em casa 18j, marca 1? Vamos ver: total season 25 gols, o briefing diz \"Em casa (18j): marca 1 / sofre 1.83 (18 gols)\". Isso indicaria que marcaram apenas 1 gol em casa? Isso é extremamente baixo. Provavelmente é um erro de digitação: deve ser média de 1 gol por jogo? Mas ele escreveu \"marca 1 / sofre 1.83 (18 gols)\". Se sofre 1.83 em 18j, total sofrido = 33 gols. Mas diz (18 gols) – inconsistente. Vou assumir que \"marca 1\" significa média de 1 gol marcado por jogo em casa? Olhando os dados: total 25 gols, casa 11/18 jogos com gols? A média de gols marcados em casa provavelmente é 1.0? Vamos checar: se em 18 jogos em casa marcaram 18 gols, média 1.0. Sofreram 33 gols? Mas o texto diz \"marca 1 / sofre 1.83 (18 gols)\" – o (18 gols) parece se referir aos gols marcados? Confuso. Vou usar os dados de gols por faixa etc. Na seção \"Gols & finalização (season)\", diz \"Em casa (18j): marca 1 / sofre 1.83 (18 gols)\" – provavelmente \"marca 1\" é a média? E \"(18 gols)\" é o total de gols marcados em casa? 18 gols em 18 jogos = 1.0 por jogo. Sofre 1.83 por jogo, total 33 sofridos. Mas a conta não fecha com os totais: 25 marcados no total, se 18 em casa, então 7 fora. Sofridos 66 total, se 33 em casa, 33 fora. OK. Então média casa: 1.0 marcados, 1.83 sofridos. Por tempo: 1ºT 0.31/0.92, 2ºT 0.39/0.92. \n- Volume: 117 SoT (3.25/j, casa 3.61/j), conv 20%. Sofre 4.61 SoT/j, adv 37% conv. \n- Conclusão: C4 (home_gols): Wolverhampton tem ataque fraco (0.69 gols/j, 0.75 xG via SoT), defesa muito frágil (1.83 sofridos/j, 4.61 SoT sofridos/j). Em casa, marca 1.0 gol/j mas sofre 1.83. Volume de finalização baixo (3.25 SoT/j).\n\n**Bloco: home_estilo**\n- Ataques perigosos: 38.8/58 (feito/sofrido). Chutes pra fora 3.9/5.5, bloqueados 2.4/3.8. \n- Últimos 5: ataques perigosos 40.6/47.2 (melhorou? Sofreu menos ataques perigosos). \n- Conclusão: C5 (home_estilo): Wolverhampton é pressionado (sofre muitos ataques perigosos, 58/j), cria pouco (38.8). Nos últimos 5, sofreu menos ataques perigosos (47.2), mas ainda assim é dominado.\n\n**Bloco: home_qualidade**\n- Nota média 6.71. Jogadores: Sam Johnstone (fora, 6.85), José Sá (6.8, forma 6.45↓), João Gomes (6.8, forma 6.54↓ mas subindo), Santiago Bueno (6.79, forma 6.7=, subindo), André (6.77, estável), Jhon Arias (fora, 6.77).\n- Conclusão: C6 (home_qualidade): Nota média baixa (6.71). Goleiros: Johnstone fora, José Sá em má forma (6.45). João Gomes e Santiago Bueno em leve alta. Ausência de Jhon Arias (não jogou últimos 5) – provavelmente não é titular. \n- Conclusão: C7 (home_qualidade): Time não tem grandes destaques; peças ofensivas pouco produtivas.\n\n**Bloco: home_forma**\n- Últimos 5: DEDDD, 1 ponto, 1 gol marcado, 12 sofridos. Péssima forma.\n- Consistência: marcou em 17/36 jogos. Não marcou em 19. Clean sheets 4. BTTS 15/36.\n- Situação dos adversários: todos eram jogos importantes (West Ham e Leeds brigando contra Z-3, Tottenham idem, Sunderland meio-tabela, Brighton salvo). Wolverhampton já rebaixado na maioria desses jogos.\n- Conclusão: C8 (home_forma): Forma recente horrível: 1 gol em 5 jogos, 12 sofridos. Ataque inoperante, defesa exposta. Jogos contra adversários com motivação similar ou maior.\n\n**Bloco: home_momentum**\n- Curvas mostram padrão de pressão negativa na maioria dos jogos. Destaques: contra Sunderland (CASA), surto positivo no início do 2º tempo (46-60) com domínio +2.2? Na verdade, a tabela de cruzamento de momentum mostra que o Wolverhampton tem domínio médio de +1.5 na faixa 46-60? Vamos ver a tabela: \"46-60: +1.5\". Isso é a média dos últimos 5? O texto diz \"Janela de gol provável pela curva de momentum — Wolverhampton Wanderers: 46-60 (domínio +2.2)\". Esse +2.2 é o cruzamento (diferença entre domínio do Wolverhampton e do Fulham naquela faixa). O domínio individual do Wolverhampton em 46-60 é +1.5. Então eles costumam ter um pico de pressão no início do 2º tempo. \n- Por outro lado, a defesa deles é muito ativa em várias faixas, mas sofrem gols mesmo assim. \n- Dinâmica pós-gol: DESMORONA ao sofrer gol (Δ -1.2), ADMINISTRA após marcar (Δ -1.2). \n- Conclusão: C9 (home_momentum): Wolverhampton costuma ter pico de pressão no início do 2º tempo (46-60). Mas, em geral, é dominado. Ao sofrer gol, desmorona; ao marcar, recua.\n\n**Bloco: home_faixas**\n- Marca mais no final do 1ºT (31-45: 0.19/j) e no final do jogo (76-90: 0.19/j). Sofre gols o jogo todo, especialmente 31-45 (0.39), 61-75 (0.39), 76-90 (0.42).\n- Conclusão: C10 (home_faixas): Wolverhampton marca pouco, mas seus gols se concentram no final dos tempos. Sofre gols consistentemente, com picos no final do 1ºT e durante todo o 2ºT.\n\n**Bloco: home_desfalques**\n- E. Gonzalez Medina (Knee): 0 gols, 0 assists, sem impacto.\n- Sam Johnstone (Shoulder): goleiro, fora. Sem contribuição ofensiva. Defensivamente: 0 interceptações/j, baixo volume defensivo? Provavelmente é goleiro reserva. José Sá é o titular? Johnstone tem 17j, Sá 22j. Johnstone fora não deve mudar muito, porque Sá já jogou mais. \n- Conclusão: C11 (home_desfalques): Lesões de Gonzalez Medina (irrelevante) e Johnstone (goleiro reserva, sem grande impacto). Nenhum desfalque importante.\n\n**Bloco: away_gols**\n- Fulham: 44 gols em 36j (1.22/j), 50 sofridos (1.39/j). Fora: 0.89 marcados, 1.67 sofridos. \n- Volume: 132 SoT (3.67/j, fora 3.44/j), conv 30%. Sofre 4.06 SoT/j, adv 32% conv.\n- Conclusão: C12 (away_gols): Fulham tem ataque mediano (1.22 gols/j, 1.17 xG via SoT), defesa também mediana (1.39 sofridos/j). Fora de casa, marca menos (0.89) e sofre mais (1.67). Volume de SoT razoável (3.44 fora).\n\n**Bloco: away_estilo**\n- Ataques perigosos: 46.6/48.9. Chutes pra fora 4.8/4.4, bloqueados 4.1/3.5.\n- Últimos 5: ataques perigosos 43/47.6 (leve queda).\n- Conclusão: C13 (away_estilo): Fulham tem estilo equilibrado, com ligeira vantagem em ataques perigosos. Não é um time avassalador, mas também não é frágil.\n\n**Bloco: away_qualidade**\n- Nota média 6.84. Destaques: Harry Wilson (7.15, forma 6.76↓ estável), Harrison Reed (7.06, mas faltou 4/5), Jorge Cuenca (7.02, faltou 5/5), Alex Iwobi (7.00, faltou 3/5), Kenny Tete (6.91, faltou 5/5), Raúl Jiménez (6.91, forma 6.68↓).\n- Conclusão: C14 (away_qualidade): Harry Wilson é o principal nome (10 gols, 4 MOTM), mesmo em forma ligeiramente abaixo. Raúl Jiménez principal atacante (9 gols). Vários jogadores com poucos jogos recentes (Reed, Cuenca, Iwobi, Tete) – possível desfalque ou reserva? Provavelmente alguns são titulares ausentes. Mas o briefing não lista todos como desfalques; apenas Sessegnon e Andersen estão em \"Desfalques\". Então esses outros podem estar disponíveis mas com pouca forma recente.\n- Conclusão: C15 (away_qualidade): Time com algumas peças-chave em forma incerta ou voltando de lesão (Iwobi, Reed). Mas ainda tem Wilson e Jiménez como referências.\n\n**Bloco: away_forma**\n- Últimos 5: DDVED, 4 pontos, 1 gol marcado, 6 sofridos. Forma ruim, com apenas 1 gol em 5 jogos.\n- Consistência: marcou em 25/36 jogos. \n- Adversários recentes: Liverpool (fora), Brentford (fora), Aston Villa (casa V 1-0), Arsenal (fora D 0-3), Bournemouth (casa D 0-1). Todos adversários de parte alta da tabela, exceto Brentford (7º). Então forma ruim pode ser influenciada pela qualidade dos adversários.\n- Conclusão: C16 (away_forma): Fulham vem de sequência muito difícil, o que explica em parte a seca de gols (1 gol em 5 jogos). No entanto, a defesa sofreu 6 gols nesses 5 jogos, mostrando certa solidez contra times fortes (exceto Arsenal). O ataque enfrentou defesas fortes.\n\n**Bloco: away_momentum**\n- Curvas mostram padrões variados. Destaque: contra Bournemouth, surto ofensivo no 61-75 (domínio +18). Mas no geral, momentum irregular.\n- Na tabela de cruzamento: Fulham domínio/j: 76-90: -1.3 (negativo, mas o cruzamento é -1.3, ou seja, eles têm domínio negativo, mas o Wolverhampton tem -2.1, então a diferença é +0.8 para o Fulham? Na verdade, a tabela mostra \"Fulham domínio/j: 76-90: -0.8\" e \"cruzamento: -1.3 ≈\". O texto diz \"Janela de gol provável pela curva de momentum — Fulham: 76-90 (domínio -1.3)\". Isso é confuso. O cruzamento de momentum mostra que na faixa 76-90, o Wolverhampton tem -2.1 e Fulham -0.8, então o Fulham está menos pior, mas ainda assim ambos negativos. A janela de gol provável para o Fulham seria quando o domínio deles é maior que o do adversário. Na tabela, a maior diferença a favor do Fulham é em 61-75? Vamos ver: 61-75: Wolverhampton +0.3, Fulham +0.3, empate. 46-60: Wolverhampton +1.5, Fulham -0.7, vantagem Wolverhampton. 76-90: Wolverhampton -2.1, Fulham -0.8, diferença +1.3 para Fulham? Sim, é isso que o texto indica: \"Fulham: 76-90 (domínio -1.3)\" provavelmente é o valor líquido do cruzamento? O texto da seção \"Cruzamento de MOMENTUM\" diz: \"Janela de gol provável pela curva de momentum — Wolverhampton Wanderers: 46-60 (domínio +2.2) · Fulham: 76-90 (domínio -1.3).\" Então para o Fulham, a janela é 76-90 com domínio -1.3? Isso não faz sentido ser domínio do Fulham, mas sim o valor do cruzamento (diferença). Talvez o sinal: Wolverhampton -2.1, Fulham -0.8, cruzamento = (-0.8) - (-2.1) = +1.3 para Fulham? Então o domínio relativo do Fulham é +1.3, mas o texto escreveu \"-1.3\". Provavelmente erro de sinal. Consideremos que o Fulham tende a ser melhor no final do jogo (76-90), quando o Wolverhampton cai muito.\n- Dinâmica pós-gol: DESMORONA ao sofrer gol (Δ -1.1), neutro após marcar (Δ 0.1).\n- Conclusão: C17 (away_momentum): Fulham tende a crescer no final do jogo (76-90), enquanto Wolverhampton desmorona. Fulham também desmorona ao sofrer gol, o que pode ser explorado se o Wolverhampton marcar primeiro (improvável).\n\n**Bloco: away_faixas**\n- Fulham marca mais no final do 2ºT (76-90: 0.36/j) e 61-75 (0.25/j). Sofre mais no início do 2ºT (46-60: 0.36) e final (76-90: 0.33).\n- Conclusão: C18 (away_faixas): Ataque do Fulham é mais perigoso no último quarto do jogo. Defesa sofre gols no início do 2ºT, o que coincide com o pico do Wolverhampton (46-60).\n\n**Bloco: away_desfalques**\n- Ryan Sessegnon: 3 gols, 1 assist. Participou de 100% dos gols nos últimos 5 (1 gol em 1 gol do time). Mas o time só marcou 1 gol nos últimos 5, então a amostra é minúscula. Ele tem 7% dos gols na temporada. É desfalque ofensivo, mas não principal. Defensivamente: 0.9 interceptações/j (10% do time), alguma contribuição defensiva. \n- Joachim Andersen: zagueiro, 0 gols, 1 assist. 13% das interceptações do time. Desfalque defensivo importante? Olhando volume: 1.1 interceptações/j, 1.4 desarmes/j. É um defensor com participação razoável. With/without: com ele 1.24 g/j do time, sem ele 1 gol em 3 jogos, mas amostra pequena. SoT com ele 3.58, sem ele 4.67 (talvez indique que sem ele o time finaliza mais? Estranho). Provavelmente é titular, mas a defesa do Fulham pode sentir falta.\n- Conclusão: C19 (away_desfalques): Desfalques de Sessegnon (ofensivo, mas não principal) e Andersen (defensivo, pode enfraquecer a zaga). Andersen é suspenso, então é baixa confirmada. Impacto moderado na defesa.\n\n**Bloco: cruzamento_faixa**\n- Tabelas de ataque vs defesa: \n  - Wolverhampton atacando: maior índice em 76-90 (0.52) e 31-45 (0.50). Menor em 0-15 (0.09).\n  - Fulham atacando: maior índice em 76-90 (0.78) e 61-75 (0.64). \n- Isso reforça que o final do jogo é propenso a gols, especialmente do Fulham.\n- Conclusão: C20 (cruzamento_faixa): Janelas de maior perigo: 76-90 para ambos, mas especialmente para o Fulham (0.78). 31-45 também é perigoso para o Fulham (0.61). Wolverhampton tem chance em 46-60 (0.47) e 76-90 (0.52).\n\n**Bloco: base_rate**\n- Rota A (gols): λ total 2.42 (casa 1.09, fora 1.33)\n- Rota B (SoT): λ total 1.92 (casa 0.75, fora 1.17)\n- Prefira B: volume mais estável. xG total ~1.92.\n- Conclusão: C21 (base_rate): Prior de xG total ~1.92 (Rota B), com Fulham favorito (1.17 a 0.75). Jogo de baixo volume de finalização comparado à média da liga (7.6 vs 8.5 SoT).\n\n**Bloco: probs_mercado**\n- 1x2 (Rota B): casa 22%, empate 34%, fora 44%. \n- Over 1.5: 59%, Over 2.5: 30%, BTTS: 38%.\n- Team totals: Wolverhampton over 0.5: 53%, over 1.5: 17%; Fulham over 0.5: 69%, over 1.5: 33%.\n- Conclusão: C22 (probs_mercado): Mercado vê Fulham como favorito (44%), com alta chance de empate (34%). Jogo tende a ter menos de 2.5 gols (70% under 2.5 na Rota B). BTTS baixo (38%). \n\n**Bloco: cruzamentos_computados**\n- Arquétipo: Wolverhampton contra equilibrado (Fulham): marca 0.45/j, sofre 1.64/j em 11 jogos. Abaixo da média. Fulham contra bloco baixo (Wolverhampton): marca 1.27/j, sofre 0.87/j em 15 jogos. Dentro da média.\n- Conclusão: C23 (cruzamentos_computados): Wolverhampton tem desempenho pior contra times de posse equilibrada (como Fulham). Fulham mantém desempenho contra blocos baixos, marcando 1.27 e sofrendo apenas 0.87. Isso sugere que o Fulham deve controlar o jogo e sofrer pouco.\n- Mecanismos: Pênalti é canal aberto (1.5x), gol contra também (3.2x). Cruzamento pouco relevante.\n- Conclusão: C24 (cruzamentos_computados): Pênaltis podem ser um fator (Wolverhampton gera 44% dos gols assim, Fulham sofre 33%). Mas volumes baixos.\n- Dinâmica pós-gol: ambos desmoronam ao sofrer gol. Wolverhampton recua ao marcar, Fulham fica neutro. Se o Fulham marcar primeiro, o Wolverhampton pode desmoronar e sofrer mais gols.\n- Conclusão: C25 (cruzamentos_computados): Se o Fulham abrir o placar, o Wolverhampton tende a piorar, possibilitando mais gols. Mas se o Wolverhampton marcar primeiro (improvável), tende a recuar e pode segurar um empate ou vitória? Mas o Fulham também desmorona ao sofrer, então poderia virar.\n- Artilharia: Wolverhampton: Rodrigo Gomes (3), Bueno (3), Arokodare (3). Fulham: Wilson (10), Jiménez (9), Iwobi (4). Sessegnon (3) fora.\n- Conclusão: C26 (cruzamentos_computados): Artilheiros: Wilson e Jiménez são as principais ameaças do Fulham. Wolverhampton não tem um goleador de destaque.\n\n**Passo 2: Jogador por jogador**\nListo todos os nomeados no briefing e dou leitura:\n\n**Wolverhampton:**\n- Sam Johnstone (goleiro, fora): Goleiro reserva, sem impacto ofensivo. Sua ausência não muda o sistema defensivo, pois José Sá é o titular. \n- José Sá (goleiro): Em má forma (nota 6.45 nos últimos jogos), mas isso é relativo para goleiro. A defesa do Wolverhampton é frágil independentemente.\n- João Gomes (meio-campo): Nota 6.8, forma subindo (6.54→6.8). Pode ajudar na transição, mas time é fraco.\n- Santiago Bueno (zagueiro): Nota 6.79, forma subindo. Artilheiro do time com 3 gols (provavelmente de bola parada). Pode ser ameaça em escanteios.\n- André (meio-campo): Nota 6.77, estável. Peça de contenção, mas sem grande impacto ofensivo.\n- Jhon Arias (meia, fora): Não jogou os últimos 5. Provavelmente não é titular. Ausência irrelevante.\n- E. Gonzalez Medina (lesão): Sem impacto.\n- Rodrigo Gomes (atacante): 3 gols, mas 0 nos últimos 5. Baixo volume (0.3 SoT/j). Pouco provável marcar.\n- Tolu Arokodare (atacante): 3 gols, 0 nos últimos 5. 0.5 SoT/j. Ligeiramente mais volume.\n- Hee-chan Hwang (atacante): 2 gols (1 pênalti), 0 nos últimos 5. 0.3 SoT/j. \n- Ladislav Krejci: 2 gols, 0 nos últimos 5. 0.4 SoT/j. Zagueiro? Pode ser ameaça aérea.\n\n**Fulham:**\n- Harry Wilson (meia-atacante): 10 gols, 0 nos últimos 5, mas é o principal artilheiro. Forma ligeiramente abaixo (6.76 vs 7.15). Enfrentou defesas fortes recentemente. Contra defesa frágil do Wolverhampton, deve ter chances.\n- Harrison Reed (meio-campo): Nota alta (7.06), mas só jogou 1 dos últimos 5. Se jogar, não está em ritmo. Provável reserva.\n- Jorge Cuenca (zagueiro): Nota 7.02, mas não jogou últimos 5. Provavelmente fora por lesão ou reserva.\n- Alex Iwobi (meia-atacante): 4 gols, 3 MOTM. Faltou 3/5 jogos recentes. Se disponível, é criativo. Mas forma incerta.\n- Kenny Tete (lateral): Nota 6.91, faltou 5/5. Provavelmente lesionado ou fora.\n- Raúl Jiménez (atacante): 9 gols (4 pênaltis), 0 nos últimos 5. Principal referência ofensiva. Forma ligeiramente abaixo (6.68 vs 6.91). Mas qualidade técnica superior.\n- Ryan Sessegnon (lesão): Desfalque ofensivo, mas era mais reserva? 3 gols na temporada.\n- Joachim Andersen (suspenso): Zagueiro importante, desfalque defensivo.\n\n**Passo 3: Arestas**\nAgora cruzamos conclusões. Preciso de no mínimo 8 arestas, ligando conclusões por ID. Vou criar os IDs: C1 a C26. Vou listar arestas:\n\n**A1 (ataque home × defesa away):** C4 (home_gols baixo volume) + C12 (away_gols sofre mais fora, 1.67) + C19 (Andersen suspenso). O Wolverhampton tem ataque fraco (0.75 xG), mas pega uma defesa do Fulham que sofre gols fora de casa e está desfalcada de seu zagueiro com 13% de interceptações. Isso pode dar ao Wolverhampton um pouco mais de chances do que o normal. Efeito: leve aumento no xG do Wolverhampton (de 0.75 para ~0.85? Mas o Wolverhampton é muito ruim). \n**A2 (ataque away × defesa home):** C12 (Fulham xG 1.17, volume razoável) + C4 (Wolverhampton sofre 1.83, 4.61 SoT/j) + C16 (Fulham enfrentou defesas fortes recentemente, agora pega defesa frágil) + C25 (Wolverhampton desmorona ao sofrer). O Fulham deve ter volume ofensivo elevado contra uma defesa que sofre muitos gols e desmorona. Efeito: aumento significativo no xG do Fulham (de 1.17 para ~1.60?).\n**A3 (intenção × estilo/forma Wolverhampton):** C2 (Wolverhampton rebaixado, sem motivação) + C8 (forma horrível) + C9 (desmorona ao sofrer). Sem objetivo, o Wolverhampton tende a não ter intensidade defensiva total. Se sofrer gol cedo, pode se desmanchar. Efeito: aumenta probabilidade de vitória do Fulham e de over.\n**A4 (intenção × estilo/forma Fulham):** C3 (Fulham precisa vencer) + C13 (estilo equilibrado) + C16 (forma recente ruim mas contra adversários fortes) + C23 (Fulham contra bloco baixo marca 1.27, sofre 0.87). O Fulham precisa do resultado e historicamente vai bem contra times que se defendem (bloco baixo). Efeito: Fulham deve propor o jogo, mas sem se expor muito, pois sofre pouco nesse cenário.\n**A5 (desfalque × volume Fulham ofensivo):** C19 (Sessegnon fora) + C14 (Wilson e Jiménez são os principais). Sessegnon não é o principal atacante, mas participou de 100% dos gols recentes (1 gol). Sua ausência tira profundidade, mas Wilson e Jiménez seguem. Efeito: leve redução no potencial ofensivo do Fulham, mas não significativa.\n**A6 (desfalque defensivo × janela de pressão adversária):** C19 (Andersen suspenso) + C9/C10 (Wolverhampton tem pico em 46-60). A ausência de Andersen pode ser explorada no início do 2ºT, quando o Wolverhampton costuma ter seu melhor momento. Efeito: aumenta chance de gol do Wolverhampton nessa faixa.\n**A7 (forma recente × qualidade adversários):** C16 (Fulham só 1 gol em 5 jogos, mas adversários: Liverpool, Arsenal, Aston Villa, Brentford, Bournemouth – todos top 7) + C8 (Wolverhampton enfrentou times da briga contra Z-3). A má forma do Fulham pode ser inflada pela dificuldade dos jogos; contra um time frágil, deve voltar a marcar. Efeito: regressão positiva para o ataque do Fulham.\n**A8 (momentum home × momentum away):** C9 (Wolverhampton pico 46-60) + C17 (Fulham cresce em 76-90) + C20 (janelas de perigo: Fulham 76-90 é a mais alta 0.78). O Wolverhampton pode ter um bom momento no início do 2ºT, mas se não marcar, o Fulham tende a dominar no final e aproveitar o desgaste. Efeito: gols no 2ºT, possivelmente no final.\n**A9 (fadiga/descanso × intenção):** C1 (descanso igual) + C2/C3. Sem assimetria de descanso, o fator físico não favorece ninguém. A motivação do Fulham pode compensar qualquer cansaço. Efeito: neutro.\n**A10 (qualidade individual × desfalques):** C14 (Wilson e Jiménez principais) + C15 (Iwobi e Reed incertos) + C19 (Sessegnon fora). O ataque do Fulham depende de Wilson e Jiménez; se Iwobi jogar, adiciona criatividade. Do lado Wolverhampton, C6 e C7 mostram falta de qualidade. Nenhum jogador do Wolverhampton capaz de decidir. Efeito: superioridade técnica do Fulham.\n**A11 (intenção × total de gols):** C2 (Wolverhampton sem objetivo pode jogar solto, o que poderia abrir o jogo) vs C3 (Fulham precisa vencer, mas não necessariamente golear). O veredito de intenção é \"jogo tende a travar\", mas aqui temos um lado que precisa (Fulham) e um que não (Wolverhampton). Jogos com times rebaixados tendem a ter mais gols porque a defesa é frágil e o ataque pode ser ineficaz. Mas o Fulham não é um ataque tão forte. Efeito: total de gols pode ficar entre 2 e 3? Vamos ver.\n**A12 (probs_mercado vs roteiro):** C22 (prior under 2.5 70%) vs A2 (Fulham deve marcar gols). O mercado subestima a fragilidade do Wolverhampton? Mas o prior veio de SoT, e o Wolverhampton sofre muitos SoT (4.61). O Fulham tem 3.44 SoT/j fora. O λ_SoT total 7.6 é na média da liga. Para o Fulham, o xG 1.17 pode ser conservador se o Wolverhampton é pior que a média. Efeito: possível over 2.5 com mais probabilidade que 30%? Vamos ver.\n\nAlém disso, preciso garantir que toda conclusão seja usada em arestas ou vá para descartadas. Conclusões que podem não ser usadas: C5 (home_estilo) pode entrar em A1 ou A2. C7 (home_qualidade) entra em A10. C11 (home_desfalques) – já usei? C11 é sobre desfalques irrelevantes, posso usar em A1 para dizer que não há melhora. C13 (away_estilo) usei em A4. C15 (away_qualidade) em A10. C17 (away_momentum) em A8. C18 (away_faixas) pode entrar em A8. C20 (cruzamento_faixa) em A8. C21 (base_rate) é ponto de partida, não precisa aresta, mas posso usar em A12. C22 (probs_mercado) idem. C23, C24, C25, C26 já são cruzamentos computados, que são basicamente arestas prontas. Vou transformá-los em arestas também:\nC23 vira A13: Arquétipo Fulham contra bloco baixo tem bom desempenho (marca 1.27, sofre 0.87) → Fulham favorito e under.\nC24 vira A14: Pênaltis podem ocorrer (1.5x), o que pode elevar gols, mas não é previsível.\nC25 vira A15: Dinâmica pós-gol: ambos desmoronam ao sofrer. Se Fulham marcar primeiro, jogo pode abrir para goleada? Mas Fulham é neutro ao marcar, então talvez não force. \nC26 vira A16: Artilheiros: Wilson e Jiménez são as principais armas.\n\nAgora verifico se alguma conclusão ficou de fora: C1 (contexto) usei em A9. C2 (tabela_motivacao) em A3, A4, A11. C3 em A4, A11. C4 em A1, A2. C5 pode ir para descartada? Não, posso usar em A2 como evidência de que Wolverhampton é pressionado. Vou incluir C5 em A2. C6 e C7 em A10. C8 em A3. C9 em A3, A6, A8. C10 em A6, A8. C11 em A1 (irrelevância de desfalques) ou descartada. Melhor usar em A1 para dizer que não há reforço ou perda. C12 em A1, A2. C13 em A4. C14 e C15 em A10. C16 em A2, A4, A7. C17 em A8. C18 em A8. C19 em A1, A2, A5, A6. C20 em A8. C21 e C22 em A12. C23 em A13. C24 em A14. C25 em A15. C26 em A16.\n\nAgora, conclusões que podem ser descartadas se não forem usadas em arestas: C5 já usei? Sim, em A2. C7 usei em A10. C11 usei em A1. C13 usei em A4. C15 usei em A10. C18 usei em A8. C20 usei em A8. C21 usei em A12. C22 usei em A12. C24? Talvez descartar se não for relevante. Vou manter A14.\n\n**Passo 4: Roteiros**\n2-3 roteiros prováveis.\n\n**Roteiro 1: Fulham controla e vence por 1 ou 2 gols (prob 0.50)**\n- Fulham dita o ritmo, Wolverhampton retrancado. Fulham marca primeiro no 1º tempo (aproveitando fragilidade defensiva). Wolverhampton desmorona levemente, mas Fulham não acelera muito (neutro ao marcar). Placar ao intervalo: 0-1. No 2º tempo, Wolverhampton tenta reagir no início (46-60), mas é ineficaz. Fulham administra e pode fazer o segundo no final (76-90) em contra-ataque. Placar final: 0-2 ou 0-1. \n- Arestas: A2, A3, A4, A8, A13, A15.\n\n**Roteiro 2: Jogo truncado, empate ou vitória magra do Fulham (prob 0.35)**\n- Wolverhampton joga fechado e consegue segurar o 0-0 até o intervalo. Fulham pressiona mas não cria chances claras. No 2º tempo, Wolverhampton pode surpreender em bola parada (A6). Fulham reage e empata ou vira no final. Placar 1-1 ou 0-1.\n- Arestas: A1, A6, A10 (falta de qualidade do Wolverhampton para finalizar), A12 (under 2.5).\n\n**Roteiro 3: Goleada do Fulham (prob 0.15)**\n- Fulham marca cedo (0-15), Wolverhampton desmorona completamente (A3, A15). O jogo abre, Fulham faz 2 ou 3 gols. Placar: 0-3 ou 0-4.\n- Arestas: A2, A3, A15.\n\nProbabilidades: 0.50 + 0.35 + 0.15 = 1.0.\n\n**Passo 4b: Linha do tempo**\nDefino o roteiro mais provável como o 1 (Fulham vence por 1-2 gols). Vou descrever as janelas:\n\n**Tempos: primeiro tempo**\nAnálise: Fulham começa pressionando, mas sem pressa. Wolverhampton retrancado, buscando explorar algum contra-ataque. A defesa do Wolverhampton é frágil, então chances para o Fulham. Gol pode sair entre 31-45 (janela de perigo para Fulham, índice 0.61). Prob_gol 1ºT: Fulham tem xG 1.17 no jogo, 1ºT 43% dos gols? Na verdade, o baseline é 43% no 1ºT. Fulham 1ºT: 16 gols marcados em 36 jogos = 0.44/j, 2ºT 0.78/j. Wolverhampton sofre 0.92 no 1ºT em casa. Então probabilidade de ≥1 gol no 1ºT: Considerando λ Fulham 1.17 * 0.43 ≈ 0.50, mais o Wolverhampton que pode marcar (0.75 * 0.43 ≈ 0.32). Mas na prática, o Fulham deve ter mais volume. Vou estimar prob_gol 1ºT em 0.65 (65% de chance de pelo menos um gol no 1ºT). O gol mais provável é do Fulham.\n\n**Janelas:**\n- 0-15: estudo, poucas chances. Fulham com posse, mas sem furar. Prob gol: 0.15, lado: Fulham (mas baixa).\n- 16-30: Fulham intensifica, Wolverhampton se defende. Prob gol: 0.25, lado: Fulham.\n- 31-45: pressão do Fulham, defesa do Wolverhampton sofre gols nessa faixa (0.39 sofridos/j). Índice cruzado 0.61. Prob gol: 0.40, lado: Fulham (provável gol).\n- 46-60: Wolverhampton volta melhor, tenta pressionar. Defesa do Fulham sofre nessa faixa (0.36/j). Prob gol: 0.30, lado: equilibrado (chance para ambos). Mas o Fulham também marca nessa faixa (0.17).\n- 61-75: jogo mais aberto? Fulham pode controlar. Prob gol: 0.25, lado: Fulham.\n- 76-90: Fulham cresce, Wolverhampton cansado e desmorona. Índice 0.78. Prob gol: 0.45, lado: Fulham.\n\n**Tempos: segundo tempo**\nAnálise: Se o Fulham estiver vencendo por 1-0, o Wolverhampton sai mais no início do 2ºT, mas é frágil defensivamente. O Fulham pode matar o jogo em contra-ataque no final. Prob_gol 2ºT: alta, pois o jogo deve ter gols no 2ºT. Considerando que o 1ºT pode ter 1 gol, o 2ºT pode ter 1 ou 2 gols. Prob_gol 2ºT: 0.70 (70% de chance de ≥1 gol, assumindo que o 1ºT já teve gol? Mas prob_gol em cada tempo deve ser independente da sequência? Vou estimar a probabilidade de ocorrer gol no 2ºT, dado o jogo. Normalmente 57% dos gols no 2ºT. Com xG total 2.10? Vou definir total xG: após ajustes, vejo abaixo.\n\nAntes das janelas, preciso definir o xG do jogo.\n\n**Definição de xG:**\nPartindo da Rota B (total 1.92, sendo 0.75 para Wolverhampton, 1.17 para Fulham). Ajustes:\n- A2: ataque Fulham × defesa Wolverhampton: Fulham deve ter aumento de xG. A defesa do Wolverhampton sofre 1.83/j, mas o Fulham fora marca 0.89. No entanto, o Fulham contra bloco baixo marca 1.27 (C23). Isso é contra times de bloco baixo em geral, não especificamente fora. Então o xG do Fulham pode subir de 1.17 para ~1.40.\n- A1: ataque Wolverhampton × defesa Fulham: Wolverhampton em casa marca 1.0, mas o Fulham fora sofre 1.67. Contra bloco baixo, Fulham sofre 0.87. Então o Wolverhampton pode ter xG reduzido? Mas o Wolverhampton é pior que a média de bloco baixo? O arquétipo Wolverhampton contra equilibrado marca 0.45. Isso é muito baixo. Então o xG do Wolverhampton deve ser menor que 0.75. Talvez 0.50.\n- A3: motivação do Fulham e desmoronamento do Wolverhampton pode aumentar gols do Fulham um pouco mais, talvez 1.60?\n- Mas lembre-se do veredito: jogo tende a travar. No entanto, o Fulham precisa vencer. Então não é um jogo onde ambos administram. O Wolverhampton pode até jogar solto, mas é muito ruim. A defesa do Fulham é decente contra blocos baixos.\n- Ajuste final: xG Wolverhampton: 0.50, xG Fulham: 1.50. Total 2.00. Esse total é próximo do prior B (1.92). Aumentei um pouco para o Fulham e reduzi para o Wolverhampton.\n- Alternativamente, poderia deixar total em 2.10 se achar que o Fulham goleia. Mas vou manter 2.00.\n\nAgora distribuo nos tempos: 43% no 1ºT = 0.86, 57% no 2ºT = 1.14. \nProbabilidades de over 2.5: com λ total 2.00, P(>2.5) no Poisson é cerca de 1 - P(0) - P(1) - P(2) = 1 - 0.135 - 0.271 - 0.271 = 0.323. Ou seja, ~32%. A Rota B dava 30%. Então não mudei muito. \nBTTS: com λ1=0.5, λ2=1.5, P(ambos marcam) = (1 - e^-0.5)*(1 - e^-1.5) = (0.393)*(0.777) = 0.305. A Rota B dava 38%. Então BTTS caiu, porque o Wolverhampton tem dificuldade de marcar.\n\n**Probabilidades 1x2:**\nPara calcular 1x2, preciso simular. Com λ 0.5 e 1.5, a probabilidade de vitória do Fulham é alta. Usando Poisson: \nP(Wolverhampton ganha) = Σ P(W=k) * P(F<k). Com λ pequenos, é raro. Aproximadamente, vitória Fulham ~60%, empate ~28%, vitória Wolverhampton ~12%. Isso difere do prior (22% casa). Justo, porque rebaixamos o Wolverhampton.\n\n**Distribuição dos xG por faixa (bands):**\nBaseado nas faixas do cruzamento e momentum, vou distribuir os xG de cada time.\n\nWolverhampton xG total 0.50:\n- 0-15: 0.03\n- 16-30: 0.05\n- 31-45: 0.12 (pico de gols marcados nessa faixa é 0.19, mas xG é menor, porque conversão pode ser baixa. 0.12 parece razoável)\n- 46-60: 0.15 (pico de momentum)\n- 61-75: 0.05\n- 76-90: 0.10\n\nFulham xG total 1.50:\n- 0-15: 0.15\n- 16-30: 0.15\n- 31-45: 0.30 (índice 0.61)\n- 46-60: 0.15 (eles marcam 0.17, mas sofrem pressão)\n- 61-75: 0.30 (índice 0.64)\n- 76-90: 0.45 (índice 0.78)\n\nSomas: Wolverhampton 0.50, Fulham 1.50. OK.\n\n**Tempos:**\n- 1ºT: xG total = 0.03+0.05+0.12 + 0.15+0.15+0.30 = 0.20 + 0.60 = 0.80. Prob_gol 1ºT: com λ 0.80, P(≥1) = 1 - e^-0.8 = 55%. Mas podemos ter mais de um gol? P(≥1) = 55%, mas o futebol tem correlação. Vou usar 0.55 como prob_gol no 1ºT. No entanto, eu havia estimado 0.65 lá em cima. Vou ajustar para 0.60? Vou manter 0.55, mas como a análise textual dirá que é provável gol, posso ajustar a prob_gol para 0.60. \n- 2ºT: xG total = 0.15+0.05+0.10 + 0.15+0.30+0.45 = 0.30 + 0.90 = 1.20. Prob_gol 2ºT: 1 - e^-1.2 = 0.70. \n\n**Janelas com prob_gol e lado:**\nVou ajustar as probabilidades de gol em cada faixa como a probabilidade de ocorrer pelo menos um gol naquela faixa, usando o xG da faixa como λ (assumindo Poisson). Mas o xG da faixa é a soma dos dois times. Então:\n- 0-15: λ = 0.03+0.15 = 0.18, P(≥1) = 1 - e^-0.18 ≈ 0.165 (16.5%). Lado: Fulham (0.15 vs 0.03). Então prob_gol 0.16, lado 'away'.\n- 16-30: λ = 0.05+0.15 = 0.20, P = 0.18. Lado: Fulham. prob_gol 0.18, lado 'away'.\n- 31-45: λ = 0.12+0.30 = 0.42, P = 0.34. Lado: Fulham. prob_gol 0.34, lado 'away'.\n- 46-60: λ = 0.15+0.15 = 0.30, P = 0.26. Lado: equilibrado mas com leve maioria Wolverhampton? 0.15 vs 0.15, então pode ser 'equilibrado'. prob_gol 0.26, lado 'equilibrado'.\n- 61-75: λ = 0.05+0.30 = 0.35, P = 0.30. Lado: Fulham. prob_gol 0.30, lado 'away'.\n- 76-90: λ = 0.10+0.45 = 0.55, P = 0.42. Lado: Fulham. prob_gol 0.42, lado 'away'.\n\n**Passo 4c: Marcadores**\nWolverhampton: \n- Santiago Bueno: 3 gols, zagueiro artilheiro, chance em bola parada. Prob 0.15.\n- Tolu Arokodare: 3 gols, 0.5 SoT/j, atacante. Prob 0.10.\n- Rodrigo Gomes: 3 gols, mas baixo volume. Prob 0.08.\n\nFulham:\n- Harry Wilson: 10 gols, principal artilheiro, mesmo em má fase recente. Contra defesa frágil. Prob 0.40.\n- Raúl Jiménez: 9 gols, atacante referência. Prob 0.35.\n- Alex Iwobi: se jogar, 4 gols, criativo. Prob 0.20.\n\n**Passo 5: Mercados**\nVou preencher todas as 19 linhas. As probabilidades devem ser consistentes com meus xG e análises.\n\nPrimeiro, defino as probabilidades base:\n\n- xG total 2.00. Uso Poisson para probabilidades exatas e over/under.\nλ_total = 2.00.\nP(0) = 0.135, P(1) = 0.271, P(2) = 0.271, P(3) = 0.180, P(4+) = 0.143.\nOver 1.5: 1 - (0.135+0.271) = 0.594 (59.4%) ~ 59%.\nOver 2.5: 1 - (0.135+0.271+0.271) = 0.323 (32.3%) ~ 32%.\nOver 3.5: P(>3) = 0.143 + 0.180? Na verdade, P(3) + P(4+) = 0.180+0.143=0.323? Não, over 3.5 é >3, então P(4+) = 0.143? Vou calcular: P(>=4) = 1 - P(0)-P(1)-P(2)-P(3) = 1 - 0.135-0.271-0.271-0.180 = 0.143. Mas isso é para inteiros; como λ=2, Poisson dá P(0)=0.1353, P(1)=0.2707, P(2)=0.2707, P(3)=0.1804, P(4)=0.0902, P(5)=0.0361, P(6)=0.0120, etc. Então P(>3) = P(4)+P(5)+... = 0.0902+0.0361+0.0120+0.0034+0.0009 = 0.1426, então over 3.5 = 14.3%.\nBTTS: com λ_casa=0.5, λ_fora=1.5. P(ambos marcam) = (1 - e^-0.5)*(1 - e^-1.5) = (0.3935)*(0.7769) = 0.3057 ~ 30.6%. Uso 31%.\n\nPara 1x2, simulação Poisson com λ 0.5 e 1.5:\n- Casa ganha: Σ_{i>j} P(casa=i)*P(fora=j). Aproximadamente: P(casa=0)*P(fora>0) muito raro. Vou usar a fórmula de probabilidade de vitória do mandante: com λ pequeno, a chance é baixa. Calculando: P(W=0)=0.607, P(W=1)=0.303, P(W=2)=0.076, P(W=3)=0.013.\nP(F=0)=0.223, P(F=1)=0.335, P(F=2)=0.251, P(F=3)=0.126, P(F=4)=0.047, etc.\nVitória W: W>F. Soma P(W=k)*P(F<k). Melhor simular numericamente. Vou aproximar:\nk=1: W=1 (0.303) * F=0 (0.223) = 0.0676\nk=2: W=2 (0.076) * F=0 ou 1 (0.223+0.335=0.558) = 0.0424\nk=3: W=3 (0.013) * F=0,1,2 (0.223+0.335+0.251=0.809) = 0.0105\nk=4: W=4 (0.002) * F<4 (~0.809+0.126=0.935) = 0.0019\nSoma ~0.1224. Então vitória casa ~12.2%.\nEmpate: soma P(W=k)*P(F=k):\nk=0: 0.607*0.223=0.135\nk=1: 0.303*0.335=0.102\nk=2: 0.076*0.251=0.019\nk=3: 0.013*0.126=0.0016\nk=4: 0.002*0.047=0.0001\nSoma ~0.2577. Então empate ~25.8%.\nVitória fora: 1 - 0.122 - 0.258 = 0.620, ou ~62.0%.\nEntão 1x2: casa 12%, empate 26%, fora 62%.\n\nEssas probabilidades são bem diferentes do prior B (22/34/44). Aumentei muito o Fulham e reduzi empate. Isso é consistente com a análise.\n\nDouble chance:\n- 1X (casa ou empate): 12+26 = 38%\n- 12 (casa ou fora): 12+62 = 74%\n- X2 (empate ou fora): 26+62 = 88%\n\nDraw No Bet:\n- Casa: prob casa / (prob casa + prob fora) = 12/(12+62) = 12/74 = 16.2% (usando probabilidades condicionais). Normalmente DNB casa = prob casa + (prob empate)/2? Não, DNB é \"empate anula\", então a aposta é equivalente a prob casa dividida por prob de não empate. No mercado, DNB casa paga se casa ganhar, devolve se empatar. Então a probabilidade de sucesso (lucro) é prob casa. A probabilidade de \"não perder\" (para efeito de odds justas) é prob casa + prob empate? Cuidado: o cálculo de valor esperado é diferente, mas para comparar com mercado, a \"probabilidade implícita\" do DNB é geralmente calculada como prob_casa / (1 - prob_empate). Vou usar essa para manter consistência: DNB casa prob = 0.12 / (1 - 0.26) = 0.12 / 0.74 = 0.162. DNB fora = 0.62 / 0.74 = 0.838.\n\nTeam totals:\n- Casa over 0.5: 1 - e^-0.5 = 39.3% (mas o prior B dava 53%, então está menor). Vou usar 39%.\n- Casa over 1.5: P(casa >=2) = 1 - P(0) - P(1) = 1 - 0.607 - 0.303 = 0.09 (9%).\n- Fora over 0.5: 1 - e^-1.5 = 1 - 0.223 = 0.777 (78%).\n- Fora over 1.5: P(fora >=2) = 1 - 0.223 - 0.335 = 0.442 (44%).\n\nHandicap:\n- Casa -1: apostar que o Wolverhampton vence por 2 gols ou mais. Probabilidade: P(W - F >= 2). Isso é raro. Aproximadamente, soma de W=2 e F=0 (0.076*0.223=0.017), W=3 e F<=1 (0.013*0.558=0.007), etc. Total ~0.025 (2.5%).\n- Fora -1: Fulham vence por 2 gols ou mais. P(F - W >= 2). Mais provável. P(F=2+ e W=0) = P(F>=2)*P(W=0) = (1 - 0.223 - 0.335)*0.607 = 0.442*0.607 = 0.268. P(F=3+ e W<=1) etc. Aproximadamente 30-35%. Vou calcular melhor: P(F-W >= 2) = soma over k P(F = k+2)*P(W=k). Aproximadamente, vou usar 0.35.\n\nOdd/Even: Poisson não é suficiente, mas com λ=2.0, a probabilidade de ímpar é ~0.5? Normalmente é parecido. Uso 48% ímpar, 52% par (baseado no prior que deu 46/54).\n\nAgora, para cada linha, defino variancia, valor e nota.\n\nVariancia: escala 1 a 5. \n- Team totals over 0.5: variancia 1 (se o time é favorito claro).\n- 1x2: variancia 4.\n- Over/Under: variancia 3.\n- BTTS: variancia 4-5.\n- Handicap: variancia 4-5.\n- Dupla chance: variancia 2.\n- DNB: variancia 3.\n\nValor: comparo minha prob com o prior B quando disponível. O prior B é minha referência de mercado. Se minha prob é maior que a do prior, e acho que o mercado está subestimando, pode ter valor.\n- Over 1.5: minha 59%, prior 59% → neutro, valor baixo.\n- Over 2.5: minha 32%, prior 30% → pequeno valor, mas baixo.\n- BTTS: minha 31%, prior 38% → abaixo, então under BTTS talvez valor, mas não temos linha para BTTS no.\n- 1x2 fora: minha 62%, prior 44% → grande diferença! Então 1x2 fora pode ter muito valor.\n- Dupla chance X2: minha 88%, prior 78% → alto valor.\n- DNB fora: minha 84%, prior 67% → alto valor.\n- Team total fora over 0.5: minha 78%, prior 69% → valor.\n- Team total fora over 1.5: minha 44%, prior 33% → valor.\n- Handicap fora -1: minha ~35%, não tenho prior direto, mas provavelmente tem valor.\n\nEscolha do best bet (Passo 6): aplico disciplina de variância. Entre as de alto valor, a de menor variância é team total away over 0.5 (var 1). Depois dupla chance X2 (var 2). Depois DNB away (var 3). 1x2 away é var 4. Prefiro team total away over 0.5? Mas 78% de probabilidade é alta, mas o retorno é baixo (odds curtas). O protocolo diz para cravar a de maior valor × menor variância. Vou considerar que team total over 0.5 com 78% é muito seguro, mas pode não ser a melhor aposta se as odds forem muito baixas. No entanto, não temos odds de mercado, apenas probabilidades. O valor é a diferença entre minha prob e o prior: 78% vs 69% → diferença de 9 pontos percentuais. Para dupla chance X2: 88% vs 78% → diferença de 10pp. Para 1x2 fora: 62% vs 44% → diferença de 18pp. Handicap -1: 35% vs talvez 25%? (se o prior fosse 25%, diferença 10pp). A maior diferença absoluta é 1x2 fora, mas variância alta. O protocolo proíbe cravar 1x2 com prob < 0.45, mas 0.62 > 0.45, então é permitido. Porém, havendo dupla chance com valor similar e menor variância, devo preferir? O protocolo diz: \"PROIBIDO cravar 1x2 com a sua própria prob < 0.45 (e NUNCA o empate como best_bet) enquanto existir dupla chance/DNB/team_total com valor\". Como dupla chance X2 tem valor, devo preferir? A dupla chance X2 inclui o empate, que é um resultado possível. O protocolo diz \"prefira under ou team_total do lado que precisa\" no caso de jogo travado. Mas aqui o Fulham precisa vencer. O veredito era \"jogo tende a travar\", mas eu analisei que o Fulham deve vencer. Então talvez o melhor mercado seja o 1x2 fora, porque se o Fulham vencer, a dupla chance também ganha, mas a odd é menor. Como não temos odds, vamos usar a lógica: a aposta de maior valor esperado seria o 1x2 fora se a diferença for grande. Mas a regra de variância diz para, entre valor parecido, cravar a de menor variância. A diferença de valor entre dupla chance e 1x2 não é tão clara sem odds. Vou assumir que a dupla chance X2 é mais segura e tem valor. Mas o protocolo também diz: \"Em jogo com veredito de intenção ⚠️ (um lado administra), prefira under com margem ou team_total do lado que precisa.\" No nosso caso, o lado que precisa é o Fulham. Team total away over 0.5 é o mais seguro. Over 1.5 também tem valor (44% vs 33%). Então posso escolher team total away over 1.5? Tem variancia 2? Team total over 1.5 é mais arriscado que over 0.5. A escada de variância: team_total over 0.5 é nível 1, over 1.5 é nível 2? O protocolo lista: \"(1) team_total over 0.5 do lado forte → (2) team_total 1.5 / handicap de favorito claro / dupla chance / DNB\". Então team total over 1.5 está no nível 2, junto com dupla chance. Então posso escolher team total away over 1.5 (precisa que o Fulham faça 2 gols), que tem valor e variância aceitável. Mas se o Fulham fizer só 1, perde. A probabilidade é 44%, menor que dupla chance (88%). Então, pela segurança, dupla chance X2 é mais provável de ganhar. Mas o objetivo é achar a melhor aposta, não necessariamente a mais segura. O protocolo diz \"maior valor × menor variância\". Vou calcular um score simples: valor = diferença percentual. Para team_total_away_over_1.5: 44% vs 33% = +11pp, variancia 2. Para dupla chance X2: 88% vs 78% = +10pp, variancia 2. Para 1x2 fora: 62% vs 44% = +18pp, variancia 4. Para DNB fora: 84% vs 67% = +17pp, variancia 3. Para team_total_away_over_0.5: 78% vs 69% = +9pp, variancia 1.\nEu poderia usar um critério de \"value / variance\". Mas o protocolo não especifica. Vou considerar que o melhor equilíbrio é a dupla chance X2, pois tem valor alto, variância moderada e é coerente com o jogo (Fulham não perde). Além disso, em jogo que pode travar, dupla chance cobre o empate.\n\nOutra possibilidade: under 2.5? Minha prob de under 2.5 é 1 - 0.323 = 67.7%. Prior B era 70%? Prior B over 2.5 era 30%, então under 2.5 era 70%. Minha prob de under é 68%, praticamente igual, sem valor. Under 1.5? Minha prob de under 1.5 é 41%, prior 41% (já que over 1.5 59%), sem valor. Então under não tem apelo.\n\nPortanto, foco no Fulham.\n\n**Passo 6: Refutação e confiança**\nCandidata a best bet: Dupla chance X2 (Fulham ou Empate). Ou talvez DNB away? DNB away paga se Fulham ganhar, devolve se empatar. Dupla chance paga se Fulham ganhar ou empatar. DNB tem odd mais alta porque não paga no empate. Em termos de valor esperado, se o empate é provável (26%), DNB pode ser melhor se a odd for justa. Mas sem odds, não sei. O protocolo diz: \"NUNCA cravar o empate como best_bet, mas dupla chance/DNB são permitidos.\" Vou escolher Dupla chance X2, pois cobre o empate e a vitória, com alta probabilidade.\n\nAgora, refutação: crio 2-3 ataques contra essa aposta.\nAtaque 1: Baseado em C23 e C25. O Fulham contra blocos baixos sofre apenas 0.87 gols/jogo, mas o Wolverhampton em casa pode conseguir um gol (média 1.0) em um lampejo. Se o Wolverhampton marcar primeiro, o Fulham desmorona ao sofrer gol (C17, C25). Isso poderia levar a uma vitória do Wolverhampton, derrubando a dupla chance. No entanto, o Wolverhampton é muito fraco (C8). Veredito: enfraquece, mas não derruba, porque é improvável que o Wolverhampton marque primeiro e segure.\nAtaque 2: O Fulham vem de 5 jogos com apenas 1 gol marcado (C16). Apesar de adversários fortes, pode estar em má fase ofensiva. Se não conseguir marcar, o jogo pode terminar 0-0, e a dupla chance ainda ganharia com o empate. Mas se perder por 1-0, a aposta perde. Ataque enfraquece? Na verdade, se o Fulham não marcar, o Wolverhampton pode vencer com um gol. Mas a defesa do Wolverhampton é muito frágil (C4), então o Fulham deve marcar. Veredito: enfraquece, mas não derruba.\nAtaque 3: O veredito de intenção \"jogo tende a travar\" sugere under e poucos gols. Em jogos travados, o azarão pode arrancar um 0-0. Mas o Fulham precisa vencer, então deve se impor. Veredito: enfraquece levemente.\n\nConclusão da refutação: nenhum ataque derruba, então mantenho a aposta. A confiança segue a regra: há pelo menos 3 arestas independentes convergindo? Sim, A2, A4, A13, A15 apontam para superioridade do Fulham e vitória. As rotas A e B? Rota A: 1x2 29/31/40, Rota B 22/34/44. Ambas apontam favoritismo ao Fulham, mas com menor diferença. Minha análise aumentou a diferença. Ataques não foram fortes o suficiente para derrubar. Portanto, confiança = medium (não high, porque as rotas A e B não apontam tão fortemente para o Fulham como minha análise, e há o fator de o Fulham estar em má forma recente). Vou classificar como medium.\n\nRegra de confiança: \"high = ≥3 arestas independentes convergem pra aposta E nenhum ataque ficou em derruba/enfraquece com dado forte E as rotas A e B do base rate apontam na mesma direção.\" Aqui, as rotas A e B apontam na mesma direção? Rota A: fora 40%, casa 29%. Rota B: fora 44%, casa 22%. Ambas favorecem o Fulham, mas a Rota B favorece mais o empate (34%). A direção é a mesma (Fulham favorito), mas a magnitude difere. Então considero que apontam na mesma direção. Ataques não derrubaram. Então poderia ser high? Mas tenho dúvida devido à forma recente do Fulham. Vou manter medium.\n\nConfidence_regra: \"Aplicada regra high: ≥3 arestas convergem (A2, A4, A13) e rotas A/B apontam favoritismo ao Fulham; nenhum ataque derruba. No entanto, forma recente ruim do Fulham e veredito de intenção 'tende a travar' introduzem incerteza, rebaixando para medium.\"\n\nAgora, preencho todos os campos:\n\n**Home:**\n- xg: 0.50\n- xg_1t: 0.20 (soma bands 1ºT)\n- xg_2t: 0.30\n- xg_bands: 0-15: 0.03, 16-30: 0.05, 31-45: 0.12, 46-60: 0.15, 61-75: 0.05, 76-90: 0.10\n- summary: \"Wolverhampton já rebaixado, sem motivação, ataque fraco (0.69 gols/j) e defesa frágil (1.83 sofridos/j). Em casa, marca 1.0 gol/j mas sofre quase 2. Deve ter dificuldades contra o Fulham.\"\n\n**Away:**\n- xg: 1.50\n- xg_1t: 0.60\n- xg_2t: 0.90\n- xg_bands: 0-15: 0.15, 16-30: 0.15, 31-45: 0.30, 46-60: 0.15, 61-75: 0.30, 76-90: 0.45\n- summary: \"Fulham briga por vaga europeia, precisa vencer. Ataque mediano, mas enfrenta defesa frágil. Contra blocos baixos, tem bom desempenho (marca 1.27, sofre 0.87). Deve controlar o jogo e criar chances, especialmente no 2º tempo.\"\n\n**General:**\n- total: 2.00\n- total_1t: 0.80\n- total_2t: 1.20\n- over25_prob: 0.32 (32%)\n- btts_prob: 0.31 (31%)\n- one_x_two: home 0.12, draw 0.26, away 0.62\n- one_x_two_1t: home ? Preciso calcular 1x2 no 1ºT. Com λ 1ºT 0.80 total, sendo casa 0.20, fora 0.60. Então 1x2_1t: similar ao jogo todo, mas com menos gols. Usando mesmas proporções? Vou aproximar: vitória casa no 1ºT: P(casa > fora). Baixíssimo. Empate 1ºT: provável. Vou usar: home 0.10, draw 0.70, away 0.20? Não tenho simulação acurada. O prior de 1x2 por tempo era 20/54/26 para 1ºT. Com meus ajustes, reduzo casa e empate, aumento fora. Então: home 0.10, draw 0.55, away 0.35? Vou usar: home 0.10, draw 0.50, away 0.40. (Apenas estimativa.)\n- one_x_two_2t: home 0.12, draw 0.28, away 0.60? (mais gols no 2ºT favorecem o Fulham). Vou usar: home 0.12, draw 0.28, away 0.60.\n- confidence: medium\n- confidence_regra: \"Aplicada regra high: ≥3 arestas convergem (A2, A4, A13) e rotas A/B apontam favoritismo ao Fulham; nenhum ataque derruba. No entanto, forma recente ruim do Fulham e veredito de intenção 'tende a travar' introduzem incerteza, rebaixando para medium.\"\n- summary: \"Jogo com favoritismo do Fulham, que precisa vencer. Wolverhampton frágil e desmotivado. Tendência de vitória visitante, mas sem goleada. Dupla chance X2 é a aposta de valor com variância controlada.\"\n\n**Conclusoes:**\nListo todas as conclusões com ID, bloco, fato, dado copiado, direção, força. Vou listar as 26 conclusões. Preciso definir força: alta, media, baixa. Baseado na relevância e certeza.\n\nVou escrever uma a uma, mas no JSON final só coloco as principais? O schema requer todas as conclusões do Passo 1. Vou colocar todas.\n\n**Blocos_sem_sinal:**\nAlgum bloco pode não ter gerado conclusão? Todos geraram, mas alguns podem ser sem sinal. Por exemplo, o bloco de contexto: \"Ambos com 8 dias de descanso, sem assimetria\". Isso é um sinal neutro. Eu coloquei C1 como conclusão, mas poderia ir para bloco_sem_sinal se considerarmos que não gera direção. Mas a instrução diz: \"Bloco que não rende sinal entra em blocos_sem_sinal com o motivo\". C1 rendeu sinal? Eu considerei que \"sem assimetria\" é um sinal de que não há impacto, então tem direção neutra. Mas para evitar, posso colocar em blocos_sem_sinal. Melhor: blocos que não têm informação relevante para mover o número. Vou colocar \"contexto\" em blocos_sem_sinal com motivo \"Descanso igual e clima sem correlação com total de gols - sem sinal direcional\". Também \"home_desfalques\" pode ser sem sinal, porque os desfalques são irrelevantes. Motivo: \"Desfalques sem impacto (jogadores sem participação em gols e baixo volume defensivo)\". Também \"away_qualidade\" pode ter conclusões, mas eu usei. Vou manter as conclusões, mas posso colocar alguns blocos sem sinal se realmente não afetam. Por exemplo, \"home_estilo\"? Eu usei, então não. Melhor seguir a lista e decidir:\n- context: sem sinal? Vou considerar que é um sinal neutro, então coloco em sem_sinal.\n- tabela_motivacao: tem sinal forte.\n- home_gols: tem sinal.\n- home_estilo: tem sinal (dominado).\n- home_qualidade: tem sinal (baixa).\n- home_forma: tem sinal.\n- home_momentum: tem sinal.\n- home_faixas: tem sinal.\n- home_desfalques: sem sinal? Eu usei C11, mas poderia dizer que não há impacto. Melhor colocar em sem_sinal com motivo \"Desfalques irrelevantes (Gonzalez Medina sem impacto, Johnstone reserva)\".\n- away_gols: sinal.\n- away_estilo: sinal.\n- away_qualidade: sinal.\n- away_forma: sinal.\n- away_momentum: sinal.\n- away_faixas: sinal.\n- away_desfalques: sinal.\n- cruzamento_faixa: sinal.\n- base_rate: sinal (prior).\n- probs_mercado: sinal (prior).\n- cruzamentos_computados: sinal.\n\nEntão coloco context e home_desfalques como sem_sinal. Talvez away_desfalques também se eu considerar que o impacto é pequeno, mas eu usei em arestas, então tem sinal.\n\n**Descartadas:**\nConclusões não usadas em arestas. Vou verificar: usei quase todas. Talvez C24 (pênaltis) eu não tenha usado fortemente. Mas usei na aresta A14. C26 (artilharia) usei na A16. Então nenhuma descartada? Mas posso descartar algumas se forem redundantes. A regra é: conclusão não usada em aresta = descartada. Então se eu usei todas, OK. Mas pode haver alguma que não liguei: C1 (contexto) usei em A9. C2 usei em A3, A4. C3 usei em A4, A11. C4 usei em A1, A2. C5 usei em A2. C6 usei em A10. C7 usei em A10. C8 usei em A3. C9 usei em A3, A6, A8. C10 usei em A6, A8. C11 usei em A1? Sim, mas se eu mover C11 para sem_sinal, então não precisa de aresta. Vou deixar C11 em sem_sinal, e aí não uso em aresta. C12 usei em A1, A2. C13 usei em A4. C14 usei em A10. C15 usei em A10. C16 usei em A2, A4, A7. C17 usei em A8. C18 usei em A8. C19 usei em A1, A2, A5, A6. C20 usei em A8. C21 usei em A12. C22 usei em A12. C23 usei em A13. C24 usei em A14. C25 usei em A15. C26 usei em A16.\nSe C11 for para sem_sinal, então não está em aresta, e deve ir para descartada? Na verdade, se eu coloco em bloco_sem_sinal, a conclusão não é gerada, então não precisa ir para descartada. O bloco_sem_sinal é para blocos inteiros que não geram conclusão. Então se eu não gero C11, OK. Mas eu já gerei C11 no texto. Vou decidir: no JSON, posso omitir C11 das conclusoes e colocar o bloco home_desfalques em blocos_sem_sinal. Então não terá C11. As outras conclusões serão C1 a C10, C12 a C26, e os IDs serão ajustados. Para evitar confusão, no JSON vou listar as conclusões com IDs sequenciais, mas posso pular o 11 se não existir. Melhor manter a numeração como está, mas se eu não tiver C11, então C12 vira C11? Isso bagunça as referências nas arestas. Como estou escrevendo o JSON manualmente, vou criar um array de conclusões e referenciar pelos IDs que eu definir. Vou manter os IDs C1 a C26, mas se algum for para sem_sinal, eu simplesmente não incluo na lista de conclusoes, e nas arestas eu não uso esse ID. Mas para simplificar, vou incluir todas as conclusões que eu efetivamente usar, e as que eu não usar vou para descartadas. Então C11 (home_desfalques) eu posso manter e usar em A1, mesmo que seja fraca. Para evitar descartadas desnecessárias, vou manter C11.\n\nVou criar a lista de conclusões completa com todas que eu citei. Mas algumas são muito similares? Tudo bem.\n\n**Jogadores:**\nLista dos nomeados, com leitura.\n\n**Arestas:**\nLista das 16 arestas, com IDs ligando conclusões. Vou colocar no JSON.\n\n**Roteiros:**\nTrês roteiros com nome, prob, filme, arestas.\n\n**Janelas:**\n6 faixas, cada uma com leitura, prob_gol, lado.\n\n**Tempos:**\nPrimeiro e segundo com análise e prob_gol.\n\n**Marcadores:**\nHome e away, 2-3 cada.\n\n**Mercados:**\n19 linhas.\n\n**Best_bet:**\nDupla chance X2. Vou detalhar: market \"double_chance\", selection \"draw_away\", team null, line null. Probability: 0.88. Confidence: medium. Evidence_for e against com IDs de conclusões/arestas. Analysis.\n\n**Refutacao:**\nAtaques e conclusão.\n\n**Drivers:**\nTop 3 fatores: motivação (Fulham precisa vencer), fragilidade defensiva do Wolverhampton, forma recente do Fulham (ou o fato de pegar defesa frágil após jogos difíceis).\n\nAgora, monto o JSON.\n\nObservações:\n- Os campos xg_bands devem ser objetos com as faixas. O runtime normaliza a soma, mas eu coloco os valores aproximados.\n- As probabilidades devem ser entre 0 e 1.\n- Usar português do Brasil em todos os textos.\n- Campos de confiança: \"confidence\" é enum \"low\",\"medium\",\"high\". \"confidence_regra\" é string.\n- Em \"mercados\", o campo \"variancia\" é number de 1 a 5. \"valor\" é \"alto\",\"medio\",\"baixo\",\"nenhum\". \"nota\" é string.\n- \"best_bet\" tem \"confidence\" enum também.\n- \"refutacao\" tem \"ataques\" array com \"alvo\", \"argumento\", \"ids\", \"veredito\" enum \"derruba\",\"enfraquece\",\"nao_sustenta\".\n- \"jogadores\" array com \"nome\", \"time\" (\"home\",\"away\"), \"leitura\".\n- \"conclusoes\" array com \"id\", \"bloco\", \"fato\", \"dado\", \"direcao\", \"forca\".\n- \"blocos_sem_sinal\" array com \"bloco\", \"motivo\".\n- \"descartadas\" array com \"id\", \"motivo\". Pode ser vazio.\n\nVou preencher.\n\nComeço pelo JSON. Preciso garantir que todos os campos obrigatórios estão presentes.\n\nVou escrever o JSON completo agora.",
+  "reasoningTokens": 19873,
+  "elapsedMs": 401629,
+  "promptChars": 38515,
+  "error": null
+}

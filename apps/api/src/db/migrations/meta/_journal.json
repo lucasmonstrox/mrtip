@@ -169,6 +169,90 @@
       "when": 1782864452715,
       "tag": "0023_early_chimera",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1782988131610,
+      "tag": "0024_wild_onslaught",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1782988440531,
+      "tag": "0025_flashy_inertia",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1782992117879,
+      "tag": "0026_boring_rattler",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1783010332113,
+      "tag": "0027_quiet_dazzler",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1783032952695,
+      "tag": "0028_worried_moira_mactaggert",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1783033187830,
+      "tag": "0029_sour_zarda",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1783033673963,
+      "tag": "0030_bitter_anthem",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1783033697522,
+      "tag": "0031_plain_blonde_phantom",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1783034607855,
+      "tag": "0032_kind_tarot",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1783035707637,
+      "tag": "0033_orange_beast",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1783041647683,
+      "tag": "0034_mighty_madripoor",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1783042915475,
+      "tag": "0035_cool_captain_britain",
+      "breakpoints": true
     }
   ]
 }

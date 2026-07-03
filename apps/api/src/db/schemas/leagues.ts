@@ -120,6 +120,12 @@ export const match = pgTable("match", {
   htAway: integer("ht_away"),
   // SportMonks match state (state developer_name): "FT", "NS", "POSTP", etc.
   status: text("status"),
+  // Público presente no estádio — fixture metadata type_id 578 (include=metadata). Nullable: só vem
+  // depois do jogo (e nem sempre). Leitura de caldeirão/pressão da torcida.
+  attendance: integer("attendance"),
+  // Escalação CONFIRMADA (true) vs provável — fixture metadata type_id 572. Pra jogo futuro é o gate
+  // "o XI já saiu"; pra jogo encerrado é sempre true. Nullable até re-sync.
+  lineupConfirmed: boolean("lineup_confirmed"),
   // Confronto de copa ainda indefinido (placeholder "Winner Match N") — não exibir os times. @feature CUP-001
   isPlaceholder: boolean("is_placeholder").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -201,7 +207,21 @@ export const player = pgTable("player", {
   weight: integer("weight"), // kg
   imageUrl: text("image_url"),
   nationalityId: integer("nationality_id").references(() => nationality.id),
+  // SportMonks detailed_position_id — the player's PREFERRED role (where he plays most), not the
+  // per-match slot (that's lineup_player.grid; the field was removed from the Lineup entity in the
+  // API). Comes free in the lineups.player include. Names in DETAILED_POSITIONS below.
+  detailedPositionId: integer("detailed_position_id"),
+  // Preferred foot ("left" | "right" | "both") — SportMonks player metadata type_id 229, via the
+  // lineups.player.metadata include. Nullable: players without the metadata entry stay null. @feature W-057
+  preferredFoot: text("preferred_foot"),
 })
+
+// Role name per detailed_position_id (verified via core/types on 2026-07-02).
+export const DETAILED_POSITIONS: Record<number, string> = {
+  24: "Goleiro", 148: "Zagueiro", 149: "Volante", 150: "Meia-atacante", 151: "Centroavante",
+  152: "Ponta-esquerda", 153: "Meia central", 154: "Lateral-direito", 155: "Lateral-esquerdo",
+  156: "Ponta-direita", 157: "Meia pela esquerda", 158: "Meia pela direita", 163: "Segundo atacante",
+}
 
 export type Player = typeof player.$inferSelect
 
@@ -252,11 +272,53 @@ export const lineupPlayer = pgTable(
     position: text("position"), // G/D/M/F
     starter: boolean("starter").notNull(),
     grid: text("grid"), // pitch position, e.g. "1:1"
+    // Papel tático POR JOGO derivado de formation+grid+mando (roleFromGrid) — "lateral-direito",
+    // "ponta-esquerda", "volante"… Cruza com player.detailedPositionId (ofício) pra detectar improviso.
+    role: text("role"),
     // Per-player match stats from SportMonks Match Facts (lineups.details).
     rating: real("rating"), // type 118, e.g. 6.59; null when not rated
     minutesPlayed: integer("minutes_played"), // type 119
     keyPasses: integer("key_passes"), // type 117 — last pass leading to a teammate's shot; null = 0 or didn't play
     shotsOnTarget: integer("shots_on_target"), // type 86 — null = 0 or didn't play; SUM per team = team SoT that match
+    shotsTotal: integer("shots_total"), // type 42 — total de finalizações; denominador da conversão (SoT/total)
+    shotsOffTarget: integer("shots_off_target"), // type 41 — chutes pra fora
+    // type 58 no nível do jogador = chutes DELE que foram bloqueados (verificado: SoT + fora + bloqueados
+    // ≈ shots_total). O "chutes que ele bloqueou" defensivo é o type 97, não ingerido.
+    shotsBlocked: integer("shots_blocked"),
+    duelsLost: integer("duels_lost"), // type 1491 — duelos perdidos (par do duelsWon: dá a taxa de duelo)
+    fouls: integer("fouls"), // type 56 — faltas cometidas (insumo de cartões)
+    foulsDrawn: integer("fouls_drawn"), // type 96 — faltas sofridas (o pênalti "cavado")
+    saves: integer("saves"), // type 57 — defesas (goleiro)
+    savesInsidebox: integer("saves_insidebox"), // type 104 — defesas dentro da área (goleiro)
+    dispossessed: integer("dispossessed"), // type 94 — perdeu a bola pressionado
+    blockedShots: integer("blocked_shots"), // type 97 — chutes que ELE bloqueou (defensivo; par do shots_blocked 58)
+    clearances: integer("clearances"), // type 101 — cortes/afastamentos
+    duelsTotal: integer("duels_total"), // type 105 — duelos totais (denominador do duels_won)
+    aerialsWon: integer("aerials_won"), // type 107 — duelos aéreos ganhos
+    passesAccurate: integer("passes_accurate"), // type 116 — passes certos (numerador do passes)
+    touches: integer("touches"), // type 120 — toques na bola (volume de participação)
+    longBalls: integer("long_balls"), // type 122 — bolas longas
+    longBallsWon: integer("long_balls_won"), // type 123 — bolas longas certas
+    bigChancesCreated: integer("big_chances_created"), // type 580 — grandes chances criadas (por jogador)
+    chancesCreated: integer("chances_created"), // type 9706 — chances criadas (mais amplo que key passes)
+    aerialsTotal: integer("aerials_total"), // type 27274 — duelos aéreos totais
+    aerialsLost: integer("aerials_lost"), // type 27266 — aéreos perdidos
+    aerialsWonPct: real("aerials_won_pct"), // type 27275 — % aéreo no jogo
+    tacklesWon: integer("tackles_won"), // type 27267 — desarmes ganhos
+    tacklesWonPct: real("tackles_won_pct"), // type 27268 — % de desarme no jogo
+    duelsWonPct: real("duels_won_pct"), // type 27276 — % de duelo no jogo
+    passesFinalThird: integer("passes_final_third"), // type 27269 — passes no terço final
+    longBallsWonPct: real("long_balls_won_pct"), // type 27270 — % de bola longa no jogo
+    ballRecoveries: integer("ball_recoveries"), // type 27271 — bolas recuperadas
+    backwardPasses: integer("backward_passes"), // type 27272 — passes pra trás (jogo conservador)
+    possessionLost: integer("possession_lost"), // type 27273 — posses perdidas
+    errorsLeadToShot: integer("errors_lead_to_shot"), // type 48997 — erro que virou finalização (o "frangueiro auditável")
+    lastManTackle: integer("last_man_tackle"), // type 583 — desarme como último homem
+    goodHighClaim: integer("good_high_claim"), // type 584 — saída pelo alto (goleiro)
+    offsides: integer("offsides"), // type 51 — impedimentos do jogador
+    captain: boolean("captain").notNull().default(false), // type 40 — quem tem a braçadeira no jogo
+    crossesSuccessfulPct: real("crosses_successful_pct"), // type 1533 — % de cruzamento certo no jogo
+    passesAccuratePct: real("passes_accurate_pct"), // type 1584 — precisão de passe no jogo (%)
     // Volume defensivo + criação POR JOGADOR (lineups.details; presença confirmada na PL 25/26).
     // Base da tese do desfalque: jogador ausente com muita interceptação/desarme = mais espaço de
     // criação pro adversário. Agregar por time (via lineup) descontando lesionados. null = 0 ou não jogou.
@@ -268,6 +330,7 @@ export const lineupPlayer = pgTable(
     crossesAccurate: integer("crosses_accurate"), // type 99 — cruzamentos certos
     dribbleAttempts: integer("dribble_attempts"), // type 108 — dribles tentados
     dribblesSuccessful: integer("dribbles_successful"), // type 109 — dribles certos
+    dribbledPast: integer("dribbled_past"), // type 110 — dribles sofridos (vezes que FOI driblado)
     bigChancesMissed: integer("big_chances_missed"), // type 581 — grandes chances perdidas
     manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
@@ -275,6 +338,38 @@ export const lineupPlayer = pgTable(
 )
 
 export type LineupPlayer = typeof lineupPlayer.$inferSelect
+
+// TV station / stream que transmite partidas (include=tvStations.tvStation). Catálogo global — o logo
+// vai pro R2. `type` = "channel" (TV) | "stream". @feature W-059
+export const tvStation = pgTable("tv_station", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksTvStationId: integer("sportmonks_tv_station_id").notNull().unique(),
+  name: text("name").notNull(),
+  url: text("url"),
+  imageUrl: text("image_url"),
+  type: text("type"), // "channel" | "stream"
+})
+
+export type TvStation = typeof tvStation.$inferSelect
+
+// Onde assistir: vínculo partida ↔ estação, deduplicado por estação (a SportMonks manda uma linha por
+// estação×país; agregamos os países em `countryIds` pra permitir "onde assistir no Brasil"). @feature W-059
+export const matchTvStation = pgTable(
+  "match_tv_station",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => match.id, { onDelete: "cascade" }),
+    tvStationId: uuid("tv_station_id")
+      .notNull()
+      .references(() => tvStation.id),
+    countryIds: jsonb("country_ids").$type<number[]>().notNull().default([]),
+  },
+  (t) => [unique().on(t.matchId, t.tvStationId)],
+)
+
+export type MatchTvStation = typeof matchTvStation.$inferSelect
 
 // Per-team match statistics from the SportMonks fixture `statistics` include (team-level, one row per
 // team per match). Volume/quality inputs for the prognosis dossier that DON'T exist per-player in our

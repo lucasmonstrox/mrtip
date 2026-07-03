@@ -16,6 +16,7 @@ import { MatchEvents } from "./match-events"
 import { MatchMomentum } from "./match-momentum"
 import { Prognosis } from "./prognosis"
 import { Scorers } from "./scorers"
+import { Statistics } from "./statistics"
 
 // Empty-state for tabs whose data isn't wired up yet (or has no record for this match).
 function TabEmpty({ children }: { children: React.ReactNode }) {
@@ -161,12 +162,17 @@ export function MatchDetail({ slug }: { slug: string }) {
           <TabsTrigger value="noticias">Notícias</TabsTrigger>
           <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
           <TabsTrigger value="momentum">Momentum</TabsTrigger>
+          <TabsTrigger value="estatisticas">Estatísticas</TabsTrigger>
           <TabsTrigger value="eventos">Eventos</TabsTrigger>
           <TabsTrigger value="narracao">Narração</TabsTrigger>
         </TabsList>
 
         <TabsContent value="momentum" className="pt-2">
           <MatchMomentum id={id} home={match.home} away={match.away} />
+        </TabsContent>
+
+        <TabsContent value="estatisticas" className="pt-2">
+          <Statistics id={id} home={match.home} away={match.away} />
         </TabsContent>
 
         <TabsContent value="prognostico" className="pt-2">
@@ -249,6 +255,55 @@ export function MatchDetail({ slug }: { slug: string }) {
               <RestSide name={match.away.name} rest={match.rest?.away ?? null} />
             </div>
           </div>
+
+          {/* Onde assistir: emissoras/streams do jogo (SportMonks tvStations), mais abrangentes primeiro.
+              O total de emissoras também é um proxy de visibilidade da partida. @feature W-059 */}
+          {match.tvStations?.length ? (
+            <div className="rounded-lg border bg-card p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Onde assistir
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {match.tvStations.length} emissoras/streams
+                </span>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {match.tvStations.slice(0, 12).map((tv) => {
+                  const chip = (
+                    <span className="flex items-center gap-1.5 rounded-full border bg-background px-2.5 py-1 text-xs">
+                      {tv.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={tv.imageUrl} alt="" className="size-4 shrink-0 rounded object-contain" />
+                      ) : null}
+                      {tv.name}
+                      {tv.type === "stream" ? (
+                        <span className="text-[10px] uppercase text-muted-foreground">stream</span>
+                      ) : null}
+                    </span>
+                  )
+                  return tv.url ? (
+                    <a
+                      key={tv.name}
+                      href={tv.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-opacity hover:opacity-70"
+                    >
+                      {chip}
+                    </a>
+                  ) : (
+                    <span key={tv.name}>{chip}</span>
+                  )
+                })}
+                {match.tvStations.length > 12 ? (
+                  <span className="self-center text-xs text-muted-foreground">
+                    +{match.tvStations.length - 12} outras
+                  </span>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
         </TabsContent>
 
         <TabsContent value="noticias" className="pt-2">
