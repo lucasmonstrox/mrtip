@@ -241,6 +241,8 @@ type ExpPanel = {
   xi: ExpPlayer[]; lambdaXi: number; cobertura: number; oppFactor: number
   topDown: number; ligaConv: number; ligaSotAvg: number; injured: string[]
   oppBucket: Arquetipo | null; defInjEv: string | null
+  banco: string[] // relevantes FORA do XI-por-minutagem-recente (rotação/banco) — auditoria 2026-07-03
+  candidatos: string[] // lista COMPUTADA de candidatos a marcador (XI por P(marca) + estruturais + banco) — 2ª auditoria
 }
 async function expectativaPanel(
   season: Awaited<ReturnType<typeof loadSeason>>, teamId: string, oppId: string, targetId: string,
@@ -473,9 +475,44 @@ async function expectativaPanel(
   })
   xi.sort((a, b) => b.xG - a.xG)
 
+  // BANCO QUENTE (fix da auditoria 2026-07-03): o XI-por-minutagem-recente derruba quem foi rodado no fim
+  // da season (João Pedro ficou fora e era o artilheiro titular) e ignora o finalizador de banco (Callum
+  // Wilson marcou sem existir no universo do modelo). Quem tem produção relevante na season (4+ gols OU
+  // minutagem de top-11) e NÃO está lesionado continua VIVO — entra como linha de risco, não some.
+  const xiSet = new Set(xiIds.map(([id]) => id))
+  const minCut = [...acc.values()].map((a) => a.min).sort((x, y) => y - x)[10] ?? 0
+  const bancoEntries = [...acc.entries()]
+    .filter(([id, a]) => !xiSet.has(id) && !injuredIds.has(id) && ((golsBy.get(id)?.g ?? 0) >= 4 || (minCut > 0 && a.min >= minCut)))
+    .sort((a, b) => (golsBy.get(b[0])?.g ?? 0) - (golsBy.get(a[0])?.g ?? 0) || b[1].min - a[1].min)
+    .slice(0, 3)
+  const banco = bancoEntries.map(([id, a]) => {
+    const g = golsBy.get(id)?.g ?? 0
+    return `**${a.nome}** (${g} gol${g === 1 ? "" : "s"} na season · ${Math.round(a.min)}min season vs ${Math.round(a.l5min)}min últ.5 — fora do XI por minutagem RECENTE, não por lesão)`
+  })
+
+  // CANDIDATOS A MARCADOR COMPUTADOS (2ª auditoria 2026-07-03): a lista que o Passo 4c do super CONSOME
+  // em vez de montar do zero — o modelo resistia a promover banco (Callum Wilson marcou invisível 2x) e
+  // estrutural (Palhinha lido e descartado pelo xG/chute) por instrução; agora o código entrega pronto.
+  // Composição: top do XI por P(marca) + artilheiro ESTRUTURAL do XI (defesa/meio com 3+ gols — bola
+  // parada/2ª bola que o per-shot esconde) + banco com 4+ gols (P(marca) estimada em ~30min de sub).
+  const structuralSet = new Set(xi.filter((p) => (p.pos === "D" || p.pos === "M") && p.gols >= 3).map((p) => p.nome))
+  const candidatos = xi
+    .slice()
+    .sort((a, b) => b.pMarca - a.pMarca)
+    .filter((p, i) => i < 6 || structuralSet.has(p.nome)) // top-6 + estruturais mesmo fora do top
+    .map((p) => `${p.nome} **${(p.pMarca * 100).toFixed(0)}%**${structuralSet.has(p.nome) ? " ⚑estrutural (defesa/meio com gols — bola parada/2ª bola; NÃO rebaixe pelo xG por chute)" : ""}`)
+  for (const [id, a] of bancoEntries) {
+    const g = golsBy.get(id)?.g ?? 0
+    if (g >= 4 && a.min > 0) {
+      const rate90 = g / (a.min / 90)
+      const p30 = 1 - Math.exp(-rate90 / 3) // ~30min de sub
+      candidatos.push(`${a.nome} **${(p30 * 100).toFixed(0)}%** 🔁banco (~30min de sub · ${g} gols na season — jogo aberto no fim é o cenário dele)`)
+    }
+  }
+
   const topDown = teamGols / ids.length // gols/j do time (mesma amostra season)
   const cobertura = teamGols ? golsXi / teamGols : 0
-  return { xi, lambdaXi, cobertura, oppFactor, topDown, ligaConv, ligaSotAvg, injured, oppBucket, defInjEv }
+  return { xi, lambdaXi, cobertura, oppFactor, topDown, ligaConv, ligaSotAvg, injured, oppBucket, defInjEv, banco, candidatos }
 }
 
 // ---------------------------------------------------------------------------
@@ -799,6 +836,12 @@ export async function evidenceDigestMd(targetId: string): Promise<string> {
     return [
       `- **${teamName}** vs ${oppName} (arquétipo do rival: ${e.oppBucket ?? "?"} · rival cede ${f2(e.oppFactor)}× o SoT da liga${e.defInjEv ? ` · ${e.defInjEv}` : ""}): λ bottom-up do XI **${f2(e.lambdaXi)} xG** vs top-down ${f2(e.topDown)} gols/j (XI cobre ${(e.cobertura * 100).toFixed(0)}% dos gols da season — o resto é banco).${gapTxt}${e.injured.length ? ` Desfalques fora do XI: ${e.injured.join(", ")}.` : ""}`,
       ...top,
+      ...(e.banco.length
+        ? [`  - ⚠️ **VIVOS fora do XI provável** (rotação recente ou banco — risco real de titularidade/entrar e marcar; considere nos marcadores): ${e.banco.join(" · ")}`]
+        : []),
+      ...(e.candidatos.length
+        ? [`  - 🎯 **Candidatos a marcador (COMPUTADO — os \`marcadores\` do Passo 4c PARTEM desta lista; mova só com evidência nomeada)**: ${e.candidatos.join(" · ")}`]
+        : []),
     ].join("\n")
   }
 

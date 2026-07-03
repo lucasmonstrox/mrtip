@@ -133,13 +133,30 @@ for (const r of ratingRows) matchMaxRating.set(r.matchId, Math.max(matchMaxRatin
 // duelos, cruzamentos e minutos — de TODOS os jogadores dos 2 times, pré-cutoff, só jogos que jogou (min>0).
 // É o mesmo dado que o bloco de desfalque usa, mas para os TITULARES — o perfil de criação/finalização/defesa
 // que a nota sozinha não entrega, pra o LLM raciocinar por jogador. @feature MOD-004
+// Lote 1 do inventário (colunas ingeridas 2026-07-03): chutes totais (pontaria), big chances criadas/perdidas,
+// aéreo, faltas sofridas/cometidas, defesas de goleiro, erros→chute, bolas perdidas, toques, terço final,
+// cortes, último homem e braçadeira — a matéria-prima dos blocos Goleiro e Jogo físico. @feature MOD-004
 const playerStatRowsAll = await db
-  .select({ playerId: lineupPlayer.playerId, date: match.date, mins: lineupPlayer.minutesPlayed, sot: lineupPlayer.shotsOnTarget, kp: lineupPlayer.keyPasses, tkl: lineupPlayer.tackles, intc: lineupPlayer.interceptions, duel: lineupPlayer.duelsWon, cross: lineupPlayer.crossesAccurate, drib: lineupPlayer.dribblesSuccessful })
+  .select({
+    playerId: lineupPlayer.playerId, matchId: lineup.matchId, teamId: lineup.teamId, name: player.name, pos: lineupPlayer.position,
+    date: match.date, mins: lineupPlayer.minutesPlayed, sot: lineupPlayer.shotsOnTarget, kp: lineupPlayer.keyPasses,
+    tkl: lineupPlayer.tackles, intc: lineupPlayer.interceptions, duel: lineupPlayer.duelsWon, cross: lineupPlayer.crossesAccurate, drib: lineupPlayer.dribblesSuccessful,
+    st: lineupPlayer.shotsTotal, bcc: lineupPlayer.bigChancesCreated, bcm: lineupPlayer.bigChancesMissed, cc: lineupPlayer.chancesCreated,
+    aerW: lineupPlayer.aerialsWon, aerT: lineupPlayer.aerialsTotal, fls: lineupPlayer.fouls, fd: lineupPlayer.foulsDrawn,
+    sv: lineupPlayer.saves, svIn: lineupPlayer.savesInsidebox, els: lineupPlayer.errorsLeadToShot, disp: lineupPlayer.dispossessed,
+    tou: lineupPlayer.touches, clr: lineupPlayer.clearances, lmt: lineupPlayer.lastManTackle, pf3: lineupPlayer.passesFinalThird, cap: lineupPlayer.captain,
+  })
   .from(lineupPlayer)
   .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
   .innerJoin(match, eq(match.id, lineup.matchId))
+  .innerJoin(player, eq(player.id, lineupPlayer.playerId))
   .where(inArray(lineup.teamId, [home.id, away.id]))
-type PlayerAgg = { g: number; sot: number; kp: number; tkl: number; intc: number; duel: number; cross: number; drib: number; mins: number }
+type PlayerAgg = {
+  g: number; sot: number; kp: number; tkl: number; intc: number; duel: number; cross: number; drib: number; mins: number
+  st: number; bcc: number; bcm: number; cc: number; aerW: number; aerT: number; fls: number; fd: number
+  sv: number; svIn: number; els: number; disp: number; tou: number; clr: number; lmt: number; pf3: number; cap: number
+  teamId: string; name: string; pos: string | null; matchIds: string[]
+}
 const playerAgg = new Map<string, PlayerAgg>()
 // KP/SoT por JOGO (com data) → também o recorte "últimos 5" ao lado do season: mostra se o jogador vem
 // CRIANDO/FINALIZANDO mais ou menos AGORA, não só a média da temporada. @feature MOD-004
@@ -147,11 +164,38 @@ const playerKpSot = new Map<string, { date: string; kp: number; sot: number }[]>
 for (const r of playerStatRowsAll) {
   if (r.date >= CUTOFF || r.date < seasonStart || (r.mins ?? 0) <= 0) continue
   let e = playerAgg.get(r.playerId)
-  if (!e) { e = { g: 0, sot: 0, kp: 0, tkl: 0, intc: 0, duel: 0, cross: 0, drib: 0, mins: 0 }; playerAgg.set(r.playerId, e) }
+  if (!e) {
+    e = {
+      g: 0, sot: 0, kp: 0, tkl: 0, intc: 0, duel: 0, cross: 0, drib: 0, mins: 0,
+      st: 0, bcc: 0, bcm: 0, cc: 0, aerW: 0, aerT: 0, fls: 0, fd: 0,
+      sv: 0, svIn: 0, els: 0, disp: 0, tou: 0, clr: 0, lmt: 0, pf3: 0, cap: 0,
+      teamId: r.teamId, name: r.name, pos: r.pos, matchIds: [],
+    }
+    playerAgg.set(r.playerId, e)
+  }
   e.g += 1
   e.sot += r.sot ?? 0; e.kp += r.kp ?? 0; e.tkl += r.tkl ?? 0; e.intc += r.intc ?? 0
   e.duel += r.duel ?? 0; e.cross += r.cross ?? 0; e.drib += r.drib ?? 0; e.mins += r.mins ?? 0
+  e.st += r.st ?? 0; e.bcc += r.bcc ?? 0; e.bcm += r.bcm ?? 0; e.cc += r.cc ?? 0
+  e.aerW += r.aerW ?? 0; e.aerT += r.aerT ?? 0; e.fls += r.fls ?? 0; e.fd += r.fd ?? 0
+  e.sv += r.sv ?? 0; e.svIn += r.svIn ?? 0; e.els += r.els ?? 0; e.disp += r.disp ?? 0
+  e.tou += r.tou ?? 0; e.clr += r.clr ?? 0; e.lmt += r.lmt ?? 0; e.pf3 += r.pf3 ?? 0
+  if (r.cap) e.cap += 1
+  e.teamId = r.teamId; e.pos = r.pos ?? e.pos
+  e.matchIds.push(r.matchId)
   const kr = playerKpSot.get(r.playerId) ?? []; kr.push({ date: r.date, kp: r.kp ?? 0, sot: r.sot ?? 0 }); playerKpSot.set(r.playerId, kr)
+}
+// Todos os jogos (liga + copa) por id — base pra somar gols sofridos NOS JOGOS de um jogador específico.
+const anyPlayedById = new Map<string, Row>([...played, ...cupPlayed].map((p) => [p.id, p]))
+// Gols que o TIME sofreu somando só os jogos em que o jogador esteve em campo — o denominador do save%
+// do goleiro (defesas / (defesas + gols sofridos com ele no gol)).
+function gkGoalsConceded(matchIds: string[], teamId: string): number {
+  let ga = 0
+  for (const mid of matchIds) {
+    const p = anyPlayedById.get(mid)
+    if (p) ga += goalsAgainst(p, teamId)
+  }
+  return ga
 }
 // Contribuição direta G+A por jogador (gols exceto own + assistências), nos jogos pré-cutoff dos 2 times.
 const gaMatchIds = [...new Set([...teamMatches(home.id), ...teamMatches(away.id), ...cupMatchesOf(home.id), ...cupMatchesOf(away.id)].map((p) => p.id))]
@@ -167,12 +211,26 @@ for (const gg of gaGoalRows) {
   }
   if (gg.assistId) { const e = playerGA.get(gg.assistId) ?? { g: 0, a: 0 }; e.a += 1; playerGA.set(gg.assistId, e) }
 }
-// Linha de perfil estatístico de um jogador (per-jogo) — G+A, criação, finalização, drible, volume defensivo.
+// Linha de perfil estatístico de um jogador (per-jogo) — G+A, criação, finalização (volume+pontaria), big
+// chances, drible, jogo aéreo, faltas dos dois lados, erros e volume defensivo. Goleiro tem linha própria
+// (defesas, % dentro da área, save%) em vez do perfil de linha. @feature MOD-004
 function playerStatLine(playerId: string): string {
   const s = playerAgg.get(playerId)
   const ga = playerGA.get(playerId)
   if (!s || s.g === 0) return ""
   const pg = (v: number) => +(v / s.g).toFixed(2)
+  // GOLEIRO: perfil de goleiro (o que segura o over), não o de linha.
+  if (s.pos === "G" || (s.sv > 0 && s.sv >= s.sot)) {
+    const gaConc = gkGoalsConceded(s.matchIds, s.teamId)
+    const savePct = s.sv + gaConc > 0 ? Math.round((s.sv / (s.sv + gaConc)) * 100) : null
+    const gparts: string[] = [
+      `🧤 **${pg(s.sv)} defesas/j**${s.sv > 0 ? ` (${Math.round((s.svIn / Math.max(1, s.sv)) * 100)}% dentro da área)` : ""}`,
+      savePct != null ? `**save% ${savePct}** (${s.sv} defesas / ${gaConc} gols sofridos nos jogos dele)` : "save% sem amostra",
+    ]
+    if (s.els > 0) gparts.push(`⚠️ **${s.els} erro(s)→chute** na season`)
+    gparts.push(`~${Math.round(s.mins / s.g)} min/j`)
+    return `\n    ↳ ${gparts.join(" · ")}`
+  }
   const parts: string[] = []
   if (ga && ga.g + ga.a > 0) parts.push(`**${ga.g}G+${ga.a}A**`)
   // O QUANDO ele marca: os minutos de cada gol + resumo (2ºT? tardio?) — perfil temporal do artilheiro.
@@ -193,11 +251,28 @@ function playerStatLine(playerId: string): string {
   const recentTag = (recent: number | null, season: number) =>
     recent == null || kr.length < 3 ? "" : ` (últ.5: ${recent}${recent > season * 1.2 ? "↑" : recent < season * 0.8 ? "↓" : "="})`
   const kpS = pg(s.kp), sotS = pg(s.sot)
-  parts.push(`${kpS} KP/j${recentTag(r5((x) => x.kp), kpS)}`, `${sotS} SoT/j${recentTag(r5((x) => x.sot), sotS)}`, `${pg(s.drib)} dribles/j`)
-  parts.push(`def: ${pg(s.tkl)} desarme + ${pg(s.intc)} int + ${pg(s.duel)} duelo/j`)
-  if (s.cross > 0) parts.push(`${pg(s.cross)} cruz/j`)
-  parts.push(`~${Math.round(s.mins / s.g)} min/j`)
-  return `\n    ↳ ${parts.join(" · ")}`
+  // Finalização REAL: volume total + pontaria (SoT/chutes) — separa o finalizador certeiro do chutador de longe.
+  if (s.st > 0) parts.push(`**${pg(s.st)} chutes/j (pontaria ${Math.round((s.sot / s.st) * 100)}%)**`)
+  parts.push(`${sotS} SoT/j${recentTag(r5((x) => x.sot), sotS)}`)
+  // Big chances: o par cria/perde — quem CRIA a chance clara e quem a DESPERDIÇA (o perdulário que infla SoT sem gol).
+  if (s.bcc + s.bcm > 0) parts.push(`big chances: cria ${pg(s.bcc)}/perde ${pg(s.bcm)} por j`)
+  parts.push(`${kpS} KP/j${recentTag(r5((x) => x.kp), kpS)}`)
+  if (s.cc > 0) parts.push(`${pg(s.cc)} chances criadas/j`)
+  parts.push(`${pg(s.drib)} dribles/j`)
+  if (s.pf3 > 0) parts.push(`${pg(s.pf3)} passes no 3º final/j`)
+  const line2: string[] = []
+  // Jogo aéreo: taxa de vitória no alto — a aresta com bola parada/cruzamento do adversário.
+  if (s.aerT > 0) line2.push(`aéreo **${pg(s.aerW)}/${pg(s.aerT)} por j (${Math.round((s.aerW / s.aerT) * 100)}%)**`)
+  // Faltas nos DOIS sentidos: quem cava (pênalti/bola parada a favor) × quem comete (risco de pênalti/cartão contra).
+  if (s.fd + s.fls > 0) line2.push(`faltas: sofre ${pg(s.fd)}/comete ${pg(s.fls)} por j`)
+  line2.push(`def: ${pg(s.tkl)} desarme + ${pg(s.intc)} int + ${pg(s.duel)} duelo/j`)
+  if (s.clr > 0) line2.push(`${pg(s.clr)} cortes/j${s.lmt > 0 ? ` (+${s.lmt} último homem)` : ""}`)
+  if (s.cross > 0) line2.push(`${pg(s.cross)} cruz/j`)
+  if (s.disp > 0) line2.push(`perde ${pg(s.disp)} bolas pressionado/j`)
+  if (s.els > 0) line2.push(`⚠️ **${s.els} erro(s)→chute** na season`)
+  if (s.tou > 0) line2.push(`${Math.round(s.tou / s.g)} toques/j`)
+  line2.push(`~${Math.round(s.mins / s.g)} min/j`)
+  return `\n    ↳ ${parts.join(" · ")}\n    ↳ ${line2.join(" · ")}`
 }
 // Bloco de QUALIDADE INDIVIDUAL: nota média do time + top jogadores por nota da season, cada um com season ×
 // forma (últimos 5, seta ↑/↓ vs season) e "nº MOTM" (maior nota do jogo entre os 22, derivado da nota). Marca ⚠️ quem está
@@ -253,9 +328,65 @@ function ratingsBlock(teamId: string, injured: Set<string>): string {
     const flag = injured.has(p.name) ? "⚠️(fora) " : ""
     const motmStr = p.motm > 0 ? ` · ${p.motm}× MOTM` : ""
     const absStr = p.absent > 0 ? ` · **faltou ${p.absent}/${teamGames.length}**` : ""
-    return `  - ${flag}**${p.name}** nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5 do time: ${p.seqStr} ${p.trend})${absStr}${motmStr} · ${p.n}j${playerStatLine(p.playerId)}`
+    // Braçadeira: o capitão de fato (usou-a na maioria dos jogos) — desfalque dele é perda de liderança, não só de stats.
+    const agg = playerAgg.get(p.playerId)
+    const capStr = agg && agg.cap >= Math.max(2, Math.ceil(agg.g / 2)) ? " 🎖️capitão" : ""
+    return `  - ${flag}**${p.name}**${capStr} nota **${p.season}** (season) · forma ${p.forma}${arrow(p.forma, p.season)} (últ.5 do time: ${p.seqStr} ${p.trend})${absStr}${motmStr} · ${p.n}j${playerStatLine(p.playerId)}`
   })
   return `- **Nota média do time (todas comps): ${teamAvg}**\n${lines.join("\n")}`
+}
+
+// Bloco GOLEIRO (lote 1 do inventário): quem defende o gol e o quanto segura — defesas/j, % dentro da área
+// (chance clara), save% real (defesas ÷ defesas+gols sofridos NOS JOGOS DELE) e erros→chute. É a qualidade
+// que age na CONVERSÃO DEFENSIVA: goleiro em alta segura o over do adversário; reserva/frangueiro solta. @feature MOD-004
+function goalkeeperBlock(teamId: string, injured: Set<string>): string {
+  const gks = [...playerAgg.entries()]
+    .filter(([, s]) => s.teamId === teamId && (s.pos === "G" || (s.sv > 0 && s.sv >= s.sot)) && s.g >= 1)
+    .sort((a, b) => b[1].mins - a[1].mins)
+    .slice(0, 2)
+  if (!gks.length) return "- (sem dado de goleiro na janela)"
+  const lines = gks.map(([, s], i) => {
+    const gaConc = gkGoalsConceded(s.matchIds, teamId)
+    const savePct = s.sv + gaConc > 0 ? Math.round((s.sv / (s.sv + gaConc)) * 100) : null
+    const insidePct = s.sv > 0 ? Math.round((s.svIn / s.sv) * 100) : null
+    const flag = injured.has(s.name.trim()) ? "⚠️(fora) " : ""
+    const role = i === 0 ? "titular" : "reserva"
+    const parts = [
+      `${flag}**${s.name.trim()}** (${role}, ${s.g}j · ~${Math.round(s.mins / s.g)} min/j)`,
+      `**${+(s.sv / s.g).toFixed(2)} defesas/j**${insidePct != null ? ` (${insidePct}% dentro da área — chance clara)` : ""}`,
+      savePct != null ? `**save% ${savePct}** (${s.sv} defesas / ${gaConc} gols sofridos nos jogos dele)` : "save% sem amostra",
+    ]
+    if (s.els > 0) parts.push(`⚠️ **${s.els} erro(s) que viraram finalização**`)
+    return `  - ${parts.join(" · ")}`
+  })
+  return lines.join("\n")
+}
+
+// Bloco JOGO FÍSICO (lote 1 do inventário): aéreo (team + líderes individuais), faltas nos dois sentidos
+// (o cavador de pênalti × o faltoso) e erros que entregaram finalização — as arestas que o gol médio não
+// mostra: bola parada × fraqueza aérea, pênalti provável, chance de graça. @feature MOD-004
+function physicalBlock(teamId: string): string {
+  const rows = teamMatches(teamId)
+  const squad = [...playerAgg.values()].filter((s) => s.teamId === teamId && s.g >= 5)
+  const pg = (s: PlayerAgg, v: number) => +(v / s.g).toFixed(1)
+  const headers = teamStatForAgainst(rows, teamId, "successfulHeaders")
+  const aerial = squad
+    .filter((s) => s.aerT / s.g >= 2)
+    .sort((a, b) => b.aerW / b.g - a.aerW / a.g)
+    .slice(0, 3)
+    .map((s) => `**${s.name.trim()}** ${pg(s, s.aerW)}/${pg(s, s.aerT)} por j (${Math.round((s.aerW / s.aerT) * 100)}%)`)
+  const drawn = squad.filter((s) => s.fd > 0).sort((a, b) => b.fd / b.g - a.fd / a.g).slice(0, 2)
+    .map((s) => `**${s.name.trim()}** ${pg(s, s.fd)}/j`)
+  const committed = squad.filter((s) => s.fls > 0).sort((a, b) => b.fls / b.g - a.fls / a.g).slice(0, 2)
+    .map((s) => `**${s.name.trim()}** ${pg(s, s.fls)}/j`)
+  const errTotal = squad.reduce((t, s) => t + s.els, 0)
+  const errNames = squad.filter((s) => s.els >= 2).sort((a, b) => b.els - a.els).map((s) => `${s.name.trim()} ${s.els}`)
+  return [
+    `- **Cabeceios certos: ${headers?.made ?? "?"} feito / ${headers?.conceded ?? "?"} sofrido por jogo** (domínio do alto — cruze com o % de gols de bola parada acima)`,
+    aerial.length ? `- Aéreo por jogador (líderes, ganhos/disputados): ${aerial.join(" · ")}` : "- Aéreo por jogador: sem amostra",
+    `- Faltas — quem mais SOFRE (cava pênalti/bola parada a favor): ${drawn.length ? drawn.join(" · ") : "sem amostra"} · quem mais COMETE (risco de pênalti/falta perigosa contra): ${committed.length ? committed.join(" · ") : "sem amostra"}`,
+    `- **Erros que viraram finalização: ${errTotal} na season**${errNames.length ? ` — ${errNames.join(" · ")}` : ""} (chance DE GRAÇA pro adversário — não aparece no λ)`,
+  ].join("\n")
 }
 const oppOf = (p: Row, id: string) => (p.homeTeamId === id ? p.awayTeamId : p.homeTeamId)
 const sotFor = (p: Row, id: string) => statByMatchTeam.get(p.id)?.get(id)?.sot ?? 0
@@ -275,7 +406,7 @@ for (const r of teamStatRows) {
   }
   mm.set(r.teamId, r)
 }
-type TeamStatField = "shotsTotal" | "shotsInsidebox" | "shotsOutsidebox" | "shotsOffTarget" | "shotsBlocked" | "bigChancesCreated" | "dangerousAttacks" | "possession" | "tackles" | "interceptions" | "duelsWon" | "crossesAccurate" | "dribblesSuccessful" | "corners"
+type TeamStatField = "shotsTotal" | "shotsInsidebox" | "shotsOutsidebox" | "shotsOffTarget" | "shotsBlocked" | "bigChancesCreated" | "bigChancesMissed" | "dangerousAttacks" | "possession" | "tackles" | "interceptions" | "duelsWon" | "crossesAccurate" | "dribblesSuccessful" | "corners" | "successfulHeaders"
 // Média de um campo de match_team_stats sobre os jogos do time que têm a linha (null-safe).
 function teamStatAvg(rows: Row[], id: string, field: TeamStatField): number | null {
   const vals = rows.map((p) => teamStatsByMatch.get(p.id)?.get(id)?.[field]).filter((v): v is number => v != null)
@@ -469,6 +600,9 @@ type AbsenceLine = {
   // do time que são dele; with/without de interceptações = a defesa piora sem ele?
   pInt: number | null; pTkl: number | null; pDuel: number | null; pCross: number | null; pDrib: number | null; pKp: number | null
   intShare: number | null; withInt: number | null; withoutInt: number | null
+  // Jogo físico do desfalcado (lote 1): aéreos ganhos/j (perde-se o alto — bola parada defensiva/ofensiva)
+  // e faltas sofridas/j (o cavador de pênalti/bola parada que sai do time).
+  pAer: number | null; pFd: number | null
   confound: boolean // sem G+A direta OU amostra pequena → with/without não confiável
 }
 
@@ -499,6 +633,7 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
         matchId: lineup.matchId, sot: lineupPlayer.shotsOnTarget, mins: lineupPlayer.minutesPlayed,
         tkl: lineupPlayer.tackles, intc: lineupPlayer.interceptions, duel: lineupPlayer.duelsWon,
         cross: lineupPlayer.crossesAccurate, drib: lineupPlayer.dribblesSuccessful, kp: lineupPlayer.keyPasses,
+        aerW: lineupPlayer.aerialsWon, fd: lineupPlayer.foulsDrawn,
       })
       .from(lineupPlayer)
       .innerJoin(lineup, eq(lineupPlayer.lineupId, lineup.id))
@@ -509,6 +644,7 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
     const sotPerGame = psPlayed.length ? +(psPlayed.reduce((s, r) => s + (r.sot ?? 0), 0) / psPlayed.length).toFixed(2) : null
     const pInt = ppg((r) => r.intc), pTkl = ppg((r) => r.tkl), pDuel = ppg((r) => r.duel)
     const pCross = ppg((r) => r.cross), pDrib = ppg((r) => r.drib), pKp = ppg((r) => r.kp)
+    const pAer = ppg((r) => r.aerW), pFd = ppg((r) => r.fd)
     const withInt = teamStatAvg(withRows, teamId, "interceptions")
     const withoutInt = teamStatAvg(withoutRows, teamId, "interceptions")
     const intShare = pInt != null && withInt ? Math.round((pInt / withInt) * 100) : null
@@ -531,7 +667,7 @@ async function absences(teamId: string, teamTotalGoals: number): Promise<Absence
       recentN: recentPlayed.length, recentGA, recentTeamGoals, recentPctInvolve,
       withN: w.n, withGf: w.gf, withoutN: wo.n, withoutGf: wo.gf, dropPct,
       sotPerGame, withSot: wS.sf, withoutSot: woS.sf,
-      pInt, pTkl, pDuel, pCross, pDrib, pKp, intShare, withInt, withoutInt,
+      pInt, pTkl, pDuel, pCross, pDrib, pKp, intShare, withInt, withoutInt, pAer, pFd,
       // Confound guard: zero contribuição direta (Traoré) OU amostra "sem" pequena (Stach 8j) → não confiar no with/without.
       // + sinal IMPLAUSÍVEL: o ataque "melhora" >20% SEM o jogador (dropPct < -20) é confound temporal
       // clássico (ele jogou na fase ruim, lesionou na boa) — Hudson-Odoi: 0.93 com ele vs 2.71 sem = −191%.
@@ -1051,6 +1187,8 @@ function absBlock(label: string, list: AbsenceLine[]): string {
     if (a.pCross != null) dp.push(`${a.pCross} cruz. certos/j`)
     if (a.pDrib != null) dp.push(`${a.pDrib} dribles certos/j`)
     if (a.pKp != null) dp.push(`${a.pKp} key passes/j`)
+    if (a.pAer != null && a.pAer > 0) dp.push(`${a.pAer} aéreos ganhos/j`)
+    if (a.pFd != null && a.pFd > 0) dp.push(`${a.pFd} faltas sofridas/j`)
     const def = dp.length ? `\n  - Defesa/criação (volume PRÓPRIO/jogo — o que sai do time com a ausência dele): ${dp.join(" · ")}` : ""
     return `- **${a.name}** (${a.reason ?? "—"}) — ${ga} até a data; ${share}; ${recent}; ${wow}${sot}${flag}${def}`
   })
@@ -1478,6 +1616,8 @@ Não despeje uma lista linear; construa um **grafo de raciocínio**:
 O briefing abaixo é denso DE PROPÓSITO: **cada bloco existe pra ser USADO no raciocínio**, não pra enfeitar nem "viver no prompt". Percorra TODOS e, de cada um, tire uma **conclusão nomeada** (o que ESTE dado diz sobre o jogo?); depois cruze as conclusões entre si. Regra dura: **não cite um número sem dizer o que ele IMPLICA**, e não pule nenhum bloco.
 - **Momentum minuto a minuto (últimos 5):** leia o PADRÃO de cada curva — onde o time pressiona, onde afunda, o que faz depois de MARCAR (administra/mata o jogo?) e depois de SOFRER (desmorona/reage?). Pese **CASA vs FORA** de cada jogo (dominar fluxo em casa vale menos que dominar fora) e ONDE no relógio o surto caiu (largada, pós-‖INTERVALO‖, reta final/acréscimos têm leituras diferentes). Depois **cruze a curva do mandante × a do visitante**: a janela em que um costuma pressionar e o outro costuma afundar é onde o gol tende a sair NESTE jogo.
 - **Estilo feito×sofrido, forma recente (QUALIFICADA pela posição do adversário — vencer/empatar com time da ZONA não é forma real; perder pro líder é desculpável), CONSISTÊNCIA (marca/sofre — frequência, não média), timing de gols por faixa, desfalques, intenção de tabela, clima, descanso/viagem:** cada um vira uma frase de conclusão ligada ao confronto — nunca um dado solto largado. Cruze a forma com a qualidade dos adversários enfrentados e com a consistência de marcar/sofrer.
+- **Goleiro (bloco próprio):** o save% e as defesas/j do goleiro TITULAR são a trava da conversão defensiva — cruze com o VOLUME (SoT) que o adversário cria: muito SoT contra goleiro de save% alto = under disfarçado; goleiro reserva/de save% baixo (ou com erros→chute) solta o over do OUTRO lado. Goleiro desfalcado (⚠️) é o desfalque que mais mexe na conversão — trate à parte dos de linha.
+- **Jogo físico (aéreo, faltas, erros):** três arestas que a média de gols não mostra. (1) **Aéreo × bola parada**: time com % alto de gols de escanteio/falta contra defensores que PERDEM o duelo aéreo = rota de gol concreta (nomeie quem cruza e quem falha no alto). (2) **Faltas**: cavador de faltas (sofre muitas) contra time faltoso = pênalti/bola parada perigosa mais prováveis. (3) **Erros→chute**: defesa/goleiro que entrega finalização de graça sustenta gol do adversário SEM o adversário criar — é gol que o λ não previu.
 - Só NÃO gaste thinking em conta mecânica (conferir se as bands somam o \`xg\`): o runtime normaliza isso. Gaste o raciocínio em ANÁLISE e SÍNTESE — é aí que está o seu edge.
 Suas conclusões precisam APARECER no raciocínio e sustentar o veredito. Se um fator forte do briefing não mexeu em nada, **diga por quê** — senão você o desperdiçou.
 
@@ -1496,6 +1636,14 @@ A estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem r
 - **Cada roteiro AMARRADO a um dado** ("toma 1.8/jogo fora E precisa de pontos → ao sofrer o 1º, se lança → cascata de over / handicap do mandante"). Sem dado que o sustente, é achismo — descarte.
 - **Leia o momentum MINUTO A MINUTO dos últimos 5** (bloco de cada time): a curva net (quem pressiona a cada minuto, do 1º ao último) mostra o jogo INTEIRO — se o time começa forte, afunda no meio, surta no fim, segura vantagem ou desmorona ao sofrer gol. É evidência direta de como ele conduz E SOFRE o game-state (surto sustentado no fim = sustenta roteiro de perseguição; queda longa após marcar = tenta administrar — mas isso EXPÕE a defesa à pressão do outro, não garante que o resultado se segura).
 
+## Verificação encadeada (CoVe) — o rascunho NÃO é o veredito
+Depois de montar o grafo, os roteiros e um RASCUNHO do veredito (xG, mercados, best_bet), você é obrigado a rodar uma **Chain-of-Verification** antes de emitir a saída — é ela que separa "raciocinou" de "confabulou em cima da própria narrativa":
+1. **Rascunhe** o veredito completo e PARE. Trate-o como hipótese, não como resposta.
+2. **Gere 6 a 10 perguntas de verificação** — e componha com DENTE, não com espelho: checar só o que você copiou ("o briefing diz X?") nunca falha e não verifica nada. Obrigatório incluir: **≥2 perguntas ADVERSARIAIS sobre a condição de pagamento da best_bet em frequência recente** ("em quantos dos últimos 5 o time fez o que a aposta precisa — marcou ≥ linha+1 / passou da linha?" — conte nos blocos de forma/consistência); **1 de DIREÇÃO vinculante** ("em quantos dos últ.5 o favorito do meu 1x2 venceu, e neste mando?" — se contrariar, o \`one_x_two\` DESCE junto, não só a aposta); **1 de coerência interna** ("algum número meu contradiz a aposta?" — e se o cenário de falha descrito coincide com um roteiro provável SEU, rebaixe a confiança ou troque pra mercado que sobreviva a ele); **1 de identidade de titular** ("o goleiro/jogador que a aposta pressupõe é o titular REAL? cruze o 'faltou X/5' do perfil"); e o resto sobre drivers, xG (inclusive o TAMANHO do desvio vs prior) e a janela apontada. **TRAVA ANTI-ARREDONDAMENTO**: a prob publicada é a DERIVADA — proibido arredondar pra cruzar limiar e viabilizar aposta (0.48 não vira 0.50; se só existe arredondada, escolha outro mercado).
+3. **Responda cada pergunta RELENDO a Parte 2 do zero**, citando o número/frase literal do bloco — proibido responder "de memória" do rascunho (é exatamente assim que um erro de leitura sobrevive). Marque cada uma: ✓ confirma · ✗ contradiz · ~ parcial.
+4. **Revise**: qualquer ✗ ligado a um driver ou à best_bet OBRIGA revisão NUMÉRICA — re-derive a prob/xG afetado ou troque a aposta; **"mantive porque a perda é qualitativa" é PROIBIDO** sem dado citado que sustente. Um ~ rebaixa a força do fator e, se ele era decisivo, a confiança. **Se TODAS derem ✓ com zero ajuste, desconfie de você mesmo**: refaça as 2 adversariais com mais dente antes de aceitar. Só depois da revisão você emite a saída final — e o \`summary\` geral deve refletir o veredito REVISADO, não o rascunho.
+Armadilhas que a CoVe existe pra pegar: número citado de um bloco errado (season × últimos 5, casa × fora), with/without ⚠️ usado como se fosse confiável, frequência recente contrariando a aposta (time que não faz 2 gols há 5 jogos bancado num team_total 1.5), conclusão que contraria o VEREDITO DE INTENÇÃO, aposta que contradiz o próprio roteiro, e cruzamento "lembrado" que não está em lugar nenhum do briefing.
+
 ## Método numérico
 **PARTA da base rate** abaixo (duas rotas: λ de gols puro E λ_SoT × conversão) e das **probabilidades Poisson já calculadas** — esse é o seu **PRIOR**, não o veredito — e **ATUALIZE** pelo roteiro + cada fator, justificando direção e tamanho com evidência nomeada. Regras:
 - **Poisson é o PRIOR; o roteiro é a ATUALIZAÇÃO.** Seu \`over25_prob\`, \`btts_prob\` e \`one_x_two\` PARTEM da Rota B, mas **MOVA-OS com convicção** quando o roteiro + a assimetria apontam um lado — cego ao placar, o Poisson regride pra média; você não precisa. Desvio grande exige fator nomeado e quantificado; **mas timidez também é erro** — não devolva a média só porque "o total costuma ser baixo". Só fique colado no prior quando NÃO há fator nem roteiro claro.
@@ -1503,6 +1651,8 @@ A estatística te dá a foto (médias). O gol nasce do FILME — e o filme tem r
 - **Cruze feito × sofrido**: ataque de um time × o que o outro CONCEDE (ex.: ataques perigosos/SoT que A cria × que B permite). O confronto manda, não a média solta.
 - O **desconto por desfalque age no VOLUME (SoT/λ_SoT)**, não na conversão. **NÃO double-conte**: desfalque que já estava fora nos últimos jogos já está na média recente. Desfalque **DEFENSIVO** (alto volume PRÓPRIO de interceptações/desarmes e/ou alto **% das interceptações do time** — vide bloco de desfalques) → a defesa do time piora → **+gols do ADVERSÁRIO** (sobe o λ do OUTRO time, não o dele). Use o número **PESSOAL** do jogador; a interceptação AGREGADA do time é ruidosa (sobe quando o time tem menos a bola).
 - O **with/without** é evidência DIRECIONAL; ignore os marcados com ⚠️ e prefira o de **SoT** (mais estável que o de gols).
+- O **goleiro age na CONVERSÃO DEFENSIVA** (o convDef do time), não no volume: save% alto do titular puxa o convDef pra baixo (segura o over do rival); reserva entrando ou save% baixo puxa pra cima. É o espelho do desfalque de linha — um mexe em quanto o rival FINALIZA, o outro em quanto dessas finalizações VIRA gol.
+- **Big chances criadas/perdidas** calibram a conversão fina: time (ou atacante) que cria muita big chance e desperdiça tende a REGREDIR PRA CIMA (os gols vêm); conversão alta com poucas big chances tende a regredir pra baixo (sorte de finalização).
 - Incerteza: NÃO temos xG real — SoT é o melhor proxy de volume/qualidade; chutes totais, posse e clima entram como contexto.
 
 ---
@@ -1536,11 +1686,14 @@ ${h2hBlock()}
 - Total **${homeAll.totalGf} marcados / ${homeAll.totalGa} sofridos** em ${homeAll.n}j · média **${homeAll.gf} marca / ${homeAll.ga} sofre** por jogo
 - **Em casa (${homeHome.n}j): marca ${homeHome.gf} / sofre ${homeHome.ga}** (${homeHome.totalGf} gols) · por tempo: 1ºT ${homeHalf.scored1}/${homeHalf.conceded1} · 2ºT ${homeHalf.scored2}/${homeHalf.conceded2}
 - **Finalização: ${homeSotAll.totalSf} SoT (${homeSotAll.sf}/j · casa ${homeHomeSot.sf}/j) · conv ${homeConv ?? "?"}%** (aberta, −${homePens} pên) · sofre ${homeSotAll.sa} SoT/j (adv ${homeConvDef ?? "?"}%) · ${homeKpPg} KP/j
-- **Volume: ${teamStatAvg(teamMatches(home.id), home.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(home.id), home.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesCreated") ?? "?"} big chances/j** · posse ${teamStatAvg(teamMatches(home.id), home.id, "possession") ?? "?"}%
+- **Volume: ${teamStatAvg(teamMatches(home.id), home.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(home.id), home.id, "shotsInsidebox") ?? "?"} na área) · big chances: cria ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesCreated") ?? "?"}/desperdiça ${teamStatAvg(teamMatches(home.id), home.id, "bigChancesMissed") ?? "?"} por j** · posse ${teamStatAvg(teamMatches(home.id), home.id, "possession") ?? "?"}%
 
 ### Estilo (feito/sofrido por jogo)
 ${styleLine("Temporada", teamMatches(home.id), home.id)}
 ${styleLine("Últimos 5", teamMatches(home.id).slice(-5), home.id)}
+
+### Goleiro (season — a trava da conversão defensiva)
+${goalkeeperBlock(home.id, new Set(homeAbs.map((a) => a.name)))}
 
 ### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)
 ${ratingsBlock(home.id, new Set(homeAbs.map((a) => a.name)))}
@@ -1559,6 +1712,9 @@ ${timingLines(homeTiming)}
 ### Bola parada — origem dos gols (liga, season) e escanteios
 ${setPieceBlock(home.id)}
 
+### Jogo físico — aéreo, faltas e erros (season)
+${physicalBlock(home.id)}
+
 ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 ## ${away.name} (visita) — até ${CUTOFF}
 
@@ -1566,11 +1722,14 @@ ${absBlock(`Desfalques de ${home.name} neste jogo`, homeAbs)}
 - Total **${awayAll.totalGf} marcados / ${awayAll.totalGa} sofridos** em ${awayAll.n}j · média **${awayAll.gf} marca / ${awayAll.ga} sofre** por jogo
 - **Fora (${awayAway.n}j): marca ${awayAway.gf} / sofre ${awayAway.ga}** (${awayAway.totalGf} gols) · por tempo: 1ºT ${awayHalf.scored1}/${awayHalf.conceded1} · 2ºT ${awayHalf.scored2}/${awayHalf.conceded2}
 - **Finalização: ${awaySotAll.totalSf} SoT (${awaySotAll.sf}/j · fora ${awayAwaySot.sf}/j) · conv ${awayConv ?? "?"}%** (aberta, −${awayPens} pên) · sofre ${awaySotAll.sa} SoT/j (adv ${awayConvDef ?? "?"}%) · ${awayKpPg} KP/j
-- **Volume: ${teamStatAvg(teamMatches(away.id), away.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(away.id), away.id, "shotsInsidebox") ?? "?"} na área) · ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesCreated") ?? "?"} big chances/j** · posse ${teamStatAvg(teamMatches(away.id), away.id, "possession") ?? "?"}%
+- **Volume: ${teamStatAvg(teamMatches(away.id), away.id, "shotsTotal") ?? "?"} chutes/j (${teamStatAvg(teamMatches(away.id), away.id, "shotsInsidebox") ?? "?"} na área) · big chances: cria ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesCreated") ?? "?"}/desperdiça ${teamStatAvg(teamMatches(away.id), away.id, "bigChancesMissed") ?? "?"} por j** · posse ${teamStatAvg(teamMatches(away.id), away.id, "possession") ?? "?"}%
 
 ### Estilo (feito/sofrido por jogo)
 ${styleLine("Temporada", teamMatches(away.id), away.id)}
 ${styleLine("Últimos 5", teamMatches(away.id).slice(-5), away.id)}
+
+### Goleiro (season — a trava da conversão defensiva)
+${goalkeeperBlock(away.id, new Set(awayAbs.map((a) => a.name)))}
 
 ### Provável XI & perfil individual (11 mais usados — nota, trajetória, stats, minuto dos gols)
 ${ratingsBlock(away.id, new Set(awayAbs.map((a) => a.name)))}
@@ -1588,6 +1747,9 @@ ${timingLines(awayTiming)}
 
 ### Bola parada — origem dos gols (liga, season) e escanteios
 ${setPieceBlock(away.id)}
+
+### Jogo físico — aéreo, faltas e erros (season)
+${physicalBlock(away.id)}
 
 ${absBlock(`Desfalques de ${away.name} neste jogo`, awayAbs)}
 ## Cruzamento ataque × defesa por faixa de 15 min
