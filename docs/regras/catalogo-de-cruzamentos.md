@@ -50,7 +50,7 @@
 
 | Status | Cadeia | Dado | Leitura |
 |---|---|---|---|
-| ✅ | Garçom → marcador (duplas de gol) | `goal.assist_id` → `player_id`, pares 2+ | desfalque numa ponta SECA a outra — mesmo saudável |
+| ✅ | Garçom → marcador (duplas de gol) | `goal.assist_id` → `player_id`, pares 2+ | desfalque numa ponta SECA a outra — mesmo saudável. 🔶 upgrade W-063: virar **% de dependência na ótica do marcador** ("71% dos gols dele vêm do Y") |
 | ✅ | Candidatos a marcador computados (XI por P(marca) + ⚑estrutural + 🔁banco) | expectativa por jogador + `starter`/minutos | Passo 4c parte daqui |
 | 🔶 | Cavador → cobrador → alvo aéreo (a cadeia da bola parada) | `fouls_drawn` → cobrador (❌ quem cobra: derivável de commentary/gols de falta) → `aerials_won` | gol de falta/escanteio como CORRENTE, não evento |
 | 🔶 | Recuperador → transição → velocista (a cadeia do contra-ataque) | `ball_recoveries`/`interceptions` do volante → gols "counter" do canal | team_total do time que cede posse |

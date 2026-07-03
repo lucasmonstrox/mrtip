@@ -14,7 +14,7 @@
 import { and, eq, inArray, isNotNull, or, sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
-import { commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
+import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
 import { buildMomentum, type MomentumPoint, type TrendInput } from "../src/modules/leagues/get-match-momentum/momentum"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
@@ -98,19 +98,26 @@ const statRows = await db
     teamId: lineup.teamId,
     sot: sql<number>`coalesce(sum(${lineupPlayer.shotsOnTarget}), 0)::int`,
     kp: sql<number>`coalesce(sum(${lineupPlayer.keyPasses}), 0)::int`,
+    // Faltas do TIME no jogo (MOD-008): soma das faltas por jogador — o team-stat 56 não é ingerido.
+    fouls: sql<number>`coalesce(sum(${lineupPlayer.fouls}), 0)::int`,
   })
   .from(lineup)
   .leftJoin(lineupPlayer, eq(lineupPlayer.lineupId, lineup.id))
   .groupBy(lineup.matchId, lineup.teamId)
-const statByMatchTeam = new Map<string, Map<string, { sot: number; kp: number }>>()
+const statByMatchTeam = new Map<string, Map<string, { sot: number; kp: number; fouls: number }>>()
 for (const r of statRows) {
   let mm = statByMatchTeam.get(r.matchId)
   if (!mm) {
     mm = new Map()
     statByMatchTeam.set(r.matchId, mm)
   }
-  mm.set(r.teamId, { sot: r.sot, kp: r.kp })
+  mm.set(r.teamId, { sot: r.sot, kp: r.kp, fouls: r.fouls })
 }
+
+// Cartões por jogo (MOD-008): a tabela `card` (órfã até aqui) vira insumo da dureza — contagem por match.
+const cardRows = await db.select({ matchId: card.matchId }).from(card)
+const cardsByMatch = new Map<string, number>()
+for (const r of cardRows) cardsByMatch.set(r.matchId, (cardsByMatch.get(r.matchId) ?? 0) + 1)
 
 // Notas dos jogadores (rating type 118) dos 2 times, em TODAS as competições (liga + copa) do campeonato
 // atual pré-cutoff — o sinal de QUALIDADE INDIVIDUAL ("a camisa") que a média de gols do time não captura.
@@ -1320,19 +1327,95 @@ const possByHalf = new Map<string, { p1: number | null; p2: number | null }>() /
   }
   for (const [key, a] of acc) possByHalf.set(key, { p1: a.n1 ? Math.round(a.s1 / a.n1) : null, p2: a.n2 ? Math.round(a.s2 / a.n2) : null })
 }
+// A JANELA de forma canônica (últ.5 liga+copa, cronológica) — compartilhada entre contextoUltimos5,
+// densidadeJanela (MOD-009) e durezaUltimos5 (MOD-008), pra nenhuma métrica divergir da lista exibida.
+function janelaUltimos5(teamId: string): { p: Row; cup: boolean }[] {
+  return [...teamMatches(teamId).map((p) => ({ p, cup: false })), ...cupMatchesOf(teamId).map((p) => ({ p, cup: true }))]
+    .sort((a, b) => a.p.date.localeCompare(b.p.date))
+    .slice(-5)
+}
+const diasEntre = (a: string, b: string) => Math.round((Date.parse(b) - Date.parse(a)) / 86_400_000)
+
+// DENSIDADE da janela de forma (MOD-009): quantos jogos por quanto tempo — "5 jogos em 14 dias" ≠ os
+// mesmos 5 espaçados num mês. Span = 1º→último jogo DA JANELA (o gap até o jogo atual é o restDays da
+// linha de Descanso — anti-dupla-contagem por construção). Meio de semana = ter/qua/qui UTC.
+function densidadeJanela(teamId: string): { n: number; spanDias: number; gaps: number[]; resumo: string } {
+  const ms = janelaUltimos5(teamId)
+  if (ms.length < 2) return { n: ms.length, spanDias: 0, gaps: [], resumo: `janela curta (${ms.length} jogo${ms.length === 1 ? "" : "s"}) — sem leitura de densidade` }
+  const gaps: number[] = []
+  for (let i = 1; i < ms.length; i++) gaps.push(diasEntre(ms[i - 1]!.p.date, ms[i]!.p.date))
+  const spanDias = diasEntre(ms[0]!.p.date, ms[ms.length - 1]!.p.date)
+  const copas = ms.filter((x) => x.cup).length
+  const meioSemana = ms.filter((x) => [2, 3, 4].includes(new Date(Date.parse(x.p.date)).getUTCDay())).length
+  const extras = [copas ? `${copas} de copa` : "", meioSemana ? `${meioSemana} no meio de semana` : ""].filter(Boolean)
+  return { n: ms.length, spanDias, gaps, resumo: `**${ms.length} jogos em ${spanDias} dias** (intervalos ${gaps.join("-")}${extras.length ? ` · ${extras.join(" · ")}` : ""})` }
+}
+
+// DUREZA da janela de forma (MOD-008): quão PESADOS foram os últimos 5 — adversário top-6 (tabela as-of,
+// anti-leak), duelos do jogo (ganhos A+B ≈ disputados), faltas do jogo (soma por jogador dos 2 lados) e
+// cartões, cada um vs baseline da liga. Rótulo DURO/NEUTRO/LEVE só com ≥2 componentes concordando (o
+// proxy é grosseiro: faltoso ≠ duro). Saída é TEXTO qualitativo — nunca mexe no λ (trava SIN-008).
+function durezaUltimos5(teamId: string): string {
+  const ms = janelaUltimos5(teamId)
+  if (ms.length < 2) return "janela curta — sem leitura de dureza"
+  // adversários top-6 AO ENTRAR em cada jogo (liga só — adversário de copa não tem posição na tabela)
+  let top6 = 0, comPos = 0
+  for (const { p, cup } of ms) {
+    if (cup) continue
+    const pos = standingsAsOf(p.date).get(oppOf(p, teamId))?.pos
+    if (pos != null) { comPos += 1; if (pos <= 6) top6 += 1 }
+  }
+  const mean = (a: number[]) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : null)
+  const duelsOf = (p: Row): number | null => {
+    const a = teamStatsByMatch.get(p.id)?.get(p.homeTeamId)?.duelsWon
+    const b = teamStatsByMatch.get(p.id)?.get(p.awayTeamId)?.duelsWon
+    return a != null && b != null ? a + b : null
+  }
+  const foulsOf = (p: Row): number | null => {
+    const a = statByMatchTeam.get(p.id)?.get(p.homeTeamId)?.fouls
+    const b = statByMatchTeam.get(p.id)?.get(p.awayTeamId)?.fouls
+    return a != null && b != null && a + b > 0 ? a + b : null // sem lineup ingerido = sem dado, não 0
+  }
+  const jd = ms.map(({ p }) => duelsOf(p)).filter((v): v is number => v != null)
+  const jf = ms.map(({ p }) => foulsOf(p)).filter((v): v is number => v != null)
+  const jc = ms.map(({ p }) => cardsByMatch.get(p.id) ?? 0)
+  const dAvg = mean(jd), fAvg = mean(jf), cAvg = mean(jc)
+  // Baselines da liga (pré-cutoff, anti-leak) — o "normal" contra o qual a janela é julgada.
+  const lgD = mean(played.map(duelsOf).filter((v): v is number => v != null))
+  const lgF = mean(played.map(foulsOf).filter((v): v is number => v != null))
+  const lgC = mean(played.map((p) => cardsByMatch.get(p.id) ?? 0))
+  const pctVs = (v: number | null, lg: number | null) => (v != null && lg ? Math.round(((v - lg) / lg) * 100) : null)
+  const dPct = pctVs(dAvg, lgD), fPct = pctVs(fAvg, lgF), cPct = pctVs(cAvg, lgC)
+  // Votos: DURO quando o componente está claramente acima do normal; LEVE quando claramente abaixo.
+  const duro = [top6 >= 3, dPct != null && dPct >= 5, fPct != null && fPct >= 5, cPct != null && cPct >= 10].filter(Boolean).length
+  const leve = [comPos >= 2 && top6 <= 1, dPct != null && dPct <= -5, fPct != null && fPct <= -5, cPct != null && cPct <= -10].filter(Boolean).length
+  const rotulo = duro >= 2 ? "DURA" : leve >= 2 ? "LEVE" : "NEUTRA"
+  // Motivo lista só os componentes que votaram NA DIREÇÃO do rótulo (misturar direções confunde a leitura).
+  const dir = rotulo === "DURA" ? 1 : rotulo === "LEVE" ? -1 : 0
+  const motivos: string[] = []
+  if (dir === 1 && top6 >= 3) motivos.push(`${top6}/${comPos} vs top-6`)
+  if (dir === -1 && comPos >= 2 && top6 <= 1) motivos.push(`só ${top6}/${comPos} vs top-6`)
+  if (dPct != null && dir !== 0 && dir * dPct >= 5) motivos.push(`duelos ${dPct > 0 ? "+" : ""}${dPct}% vs liga`)
+  if (fPct != null && dir !== 0 && dir * fPct >= 5) motivos.push(`faltas ${fPct > 0 ? "+" : ""}${fPct}%`)
+  if (cPct != null && dir !== 0 && dir * cPct >= 10) motivos.push(`cartões ${cPct > 0 ? "+" : ""}${cPct}%`)
+  const sg = (n: number | null) => (n == null ? "?" : `${n > 0 ? "+" : ""}${n}%`)
+  return `${top6}/${comPos || "?"} vs top-6 · duelos ${dAvg != null ? dAvg.toFixed(0) : "?"}/j (${sg(dPct)}) · faltas ${fAvg != null ? fAvg.toFixed(1) : "?"}/j (${sg(fPct)}) · cartões ${cAvg != null ? cAvg.toFixed(1) : "?"}/j (${sg(cPct)}) → **sequência ${rotulo}**${motivos.length ? ` (${motivos.join(", ")})` : ""}`
+}
+
 // Bloco LIMPO "últimos 5 em contexto": cada resultado JUSTIFICADO numa linha — adversário + status decidido
 // dos dois times (salvo? rebaixado? brigando?) + a média do time no mando daquele jogo. Lê forma sem ser enganado.
 function contextoUltimos5(teamId: string): string {
   // Últimos 5 jogos em QUALQUER competição (liga + copa), cronológico — a forma mostra contra quem foi,
   // casa/fora, e marca 🏆 os que foram de copa (FA Cup/Carabao). Jogo de liga mantém o contexto de tabela.
-  const ms = [...teamMatches(teamId).map((p) => ({ p, cup: false })), ...cupMatchesOf(teamId).map((p) => ({ p, cup: true }))]
-    .sort((a, b) => a.p.date.localeCompare(b.p.date))
-    .slice(-5)
+  const ms = janelaUltimos5(teamId)
   if (!ms.length) return "- (sem jogos)"
   const legend =
     "_Situação de cada time AO ENTRAR no jogo (justifica o resultado): **salvo**=fora do rebaixamento · **salvo/s-alvo**=salvo E sem nada a jogar (tende a afrouxar) · **briga-Z**=lutava p/ não cair (se mata) · **briga-top**/**Eur-gar**=brigava/garantiu Europa · **REBAIX.**=já rebaixado. Sem rótulo = ainda indefinido naquela rodada._"
   const lines = ms
-    .map(({ p, cup }) => {
+    .map(({ p, cup }, i) => {
+      // Data + gap desde o jogo anterior da janela (MOD-009): o LEITOR vê o espaçamento, não só a sequência.
+      const gapStr = i > 0 ? ` (+${diasEntre(ms[i - 1]!.p.date, p.date)}d)` : ""
+      const datePrefix = `${p.date}${gapStr} · `
       const isHome = p.homeTeamId === teamId
       const oppId = isHome ? p.awayTeamId : p.homeTeamId
       const tbl = standingsAsOf(p.date)
@@ -1362,11 +1445,12 @@ function contextoUltimos5(teamId: string): string {
       // Posse por TEMPO daquele jogo (1ºT/2ºT) — domínio estéril (muita posse, pouco SoT)? cresceu/apagou por tempo?
       const ph = possByHalf.get(`${p.id}|${teamId}`)
       const possStr = ph && (ph.p1 != null || ph.p2 != null) ? `posse ${ph.p1 ?? "?"}%/${ph.p2 ?? "?"}% (1ºT/2ºT) · ` : ""
-      if (cup) return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
-      return `- ${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
+      if (cup) return `- ${datePrefix}${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}🏆 ${cupNameByCode.get(p.leagueCode) ?? p.leagueCode}`
+      return `- ${datePrefix}${isHome ? "vs" : "@"} **${nameOf(oppId)}** (${mando} · **${res} ${gf}-${ga}**${htStr})${arc} — ${sotStr}${possStr}adv ${oppPos ?? "?"}º${statusAsOf(oppId, p.date)} · você ${myPos ?? "?"}º${statusAsOf(teamId, p.date)}${splitStr}`
     })
     .join("\n")
-  return `${legend}\n${lines}`
+  // Resumo de densidade da janela (MOD-009) abre o bloco — o "quão amontoados" antes do jogo a jogo.
+  return `${legend}\n- **Densidade da janela:** ${densidadeJanela(teamId).resumo}\n${lines}`
 }
 
 // ---- H2H clube×clube (MOD-006): confronto direto entre os DOIS times do jogo, com o detalhe do último ----
@@ -1664,7 +1748,10 @@ Armadilhas que a CoVe existe pra pegar: número citado de um bloco errado (seaso
 - Local: ${matchVenue ? `${matchVenue.name}${matchVenue.cityName ? `, ${matchVenue.cityName}` : ""}` : "—"}${matchVenue?.surface ? ` (${matchVenue.surface})` : ""}
 - Clima: ${matchWeather ? `${matchWeather.description ?? "?"} · ${w1(matchWeather.tempDay)}°C (sens. ${w1(matchWeather.feelsLikeDay)}°C) · vento ${w1(matchWeather.windSpeed)} m/s · umidade ${matchWeather.humidity ?? "?"} · nuvens ${matchWeather.clouds ?? "?"}` : "—"} (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)
 - Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias${lastMatchNote(home.id)} · ${away.name} ${restDays(away.id) ?? "?"} dias${lastMatchNote(away.id)}${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
+- Densidade da janela de forma: **${home.name}** ${densidadeJanela(home.id).resumo} · **${away.name}** ${densidadeJanela(away.id).resumo}
+- Dureza da janela (últ.5): **${home.name}** ${durezaUltimos5(home.id)} · **${away.name}** ${durezaUltimos5(away.id)}
 - **Descanso / fadiga** (números acima — a nota "(último: …)" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.
+- **Densidade + Dureza da janela** (as 2 linhas acima — MOD-008/MOD-009): leem o que o Descanso sozinho não vê — "5 jogos em 14 dias" ≠ os mesmos 5 num mês, e sequência contra top-6 pesada em duelos desgasta mais que a mesma contagem contra a parte de baixo. Três travas: (1) é **evidência QUALITATIVA** pro seu ajuste de cenário — NUNCA recalcule λ/probabilidades por isso; (2) o sinal é a **ASSIMETRIA** (um lado em maratona dura, o outro em semana cheia leve) — densidade/dureza parecidas dos dois lados ≈ ruído; (3) **não dupla-conte** com o Descanso: o último intervalo já está na linha própria, e densidade BAIXA não é frescor garantido (pausa de calendário ≠ time descansado por mérito). Cruzamento que importa: **densidade/dureza ALTA + este jogo SEM stake real → rodízio provável** — confira o XI provável/minutagem e os "VIVOS fora do XI" antes de confiar no time-base.
 - Média da liga (pré-jogo, ${played.length} jogos): mandante ${leagueHomeAvg} gols/jogo · visitante ${leagueAwayAvg} gols/jogo
 - **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +${+(leagueHomeAvg - leagueAwayAvg).toFixed(2)} gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.
 
