@@ -65,7 +65,7 @@ async function loadSeason(targetId: string) {
   const ids = ms.map((m) => String(m.id))
   const stats = ids.length
     ? rowsOf(await db.execute(sql`
-        select match_id, team_id, possession from match_team_stats
+        select match_id, team_id, possession, shots_on_target from match_team_stats
         where match_id in ${sql.raw(`('${ids.join("','")}')`)}`))
     : []
   const goals = ids.length
@@ -156,6 +156,144 @@ function ligaShare(season: Awaited<ReturnType<typeof loadSeason>>) {
     tot += 1
   }
   return { cnt, tot }
+}
+
+// ---------------------------------------------------------------------------
+// F · Duelos físicos computados (linha 1 da fila do catálogo, 2026-07-03):
+// (1) SoT criado pelo ataque × save% do goleiro que DEFENDE — volume × trava da
+//     conversão defensiva; (2) % de gols de bola parada do ataque × aéreo dos
+//     zagueiros do rival — a rota de gol que a média de gols esconde.
+// Código PAREIA e dá o veredito; a LLM só conclui (quant-first do MOD-004).
+// ---------------------------------------------------------------------------
+async function fisicoDuel(season: Awaited<ReturnType<typeof loadSeason>>, atkId: string, defId: string): Promise<string> {
+  const atkName = season.teams.get(atkId) ?? atkId
+  const defName = season.teams.get(defId) ?? defId
+  // SoT/j criado pelo ataque (season, team stat oficial)
+  const atkSotRows = season.stats.filter((s) => String(s.team_id) === atkId && s.shots_on_target != null)
+  const atkSotAvg = atkSotRows.length
+    ? atkSotRows.reduce((t, s) => t + Number(s.shots_on_target), 0) / atkSotRows.length
+    : null
+  // Baseline da liga: save% implícito = 1 − gols (sem own) / SoT total
+  const ligaSotTot = season.stats.reduce((t, s) => t + Number(s.shots_on_target ?? 0), 0)
+  const ligaGoals = season.goals.filter((g) => String(g.type) !== "own-goal").length
+  const ligaSavePct = ligaSotTot ? Math.round((1 - ligaGoals / ligaSotTot) * 100) : 70
+
+  const defMs = season.ms.filter((m) => String(m.home_team_id) === defId || String(m.away_team_id) === defId)
+  const defIds = defMs.map((m) => String(m.id))
+  const defById = new Map(defMs.map((m) => [String(m.id), m]))
+  if (!defIds.length) return `- **${atkName} atacando × ${defName} defendendo**: sem jogos do defensor na janela.`
+
+  // Goleiro de maior minutagem do DEF: save% = defesas / (defesas + gols sofridos NOS JOGOS DELE)
+  const gkRows = rowsOf(await db.execute(sql`
+    select lp.player_id, p.name, l.match_id, lp.saves, lp.minutes_played
+    from lineup l join lineup_player lp on lp.lineup_id = l.id join player p on p.id = lp.player_id
+    where l.team_id = ${defId} and lp.position = 'G' and coalesce(lp.minutes_played, 0) > 0
+      and l.match_id in ${sql.raw(`('${defIds.join("','")}')`)}`))
+  // TITULAR = quem está jogando AGORA (minutos nos últimos 5 do time), não o líder de minutagem da season —
+  // o bug do Alisson (2250min season, ausente 5/5) escondia o Mamardashvili real e invertia o veredito.
+  const last5Ids = new Set(defMs.slice(-5).map((m) => String(m.id)))
+  const gkAgg = new Map<string, { name: string; saves: number; mins: number; l5mins: number; matchIds: string[] }>()
+  for (const r of gkRows) {
+    const cur = gkAgg.get(String(r.player_id)) ?? { name: String(r.name).trim(), saves: 0, mins: 0, l5mins: 0, matchIds: [] }
+    cur.saves += Number(r.saves ?? 0)
+    cur.mins += Number(r.minutes_played ?? 0)
+    if (last5Ids.has(String(r.match_id))) cur.l5mins += Number(r.minutes_played ?? 0)
+    cur.matchIds.push(String(r.match_id))
+    gkAgg.set(String(r.player_id), cur)
+  }
+  const savePctOf = (g: { saves: number; matchIds: string[] }): number | null => {
+    let ga = 0
+    for (const mid of g.matchIds) {
+      const m = defById.get(mid)
+      if (m) ga += Number(String(m.home_team_id) === defId ? m.ft_away : m.ft_home)
+    }
+    return g.saves + ga > 0 ? Math.round((g.saves / (g.saves + ga)) * 100) : null
+  }
+  const byRecent = [...gkAgg.values()].sort((a, b) => b.l5mins - a.l5mins || b.mins - a.mins)
+  const bySeason = [...gkAgg.values()].sort((a, b) => b.mins - a.mins)
+  const gk = byRecent[0] ?? null
+  const seasonGk = bySeason[0] ?? null
+  let sotLine = `- **${atkName} atacando × ${defName} defendendo** — SoT × goleiro: sem dado de goleiro.`
+  if (gk && atkSotAvg != null) {
+    const gkSavePct = savePctOf(gk)
+    // Titular da season ≠ titular recente → anota a troca (o veredito usa o RECENTE).
+    const swapNote =
+      seasonGk && seasonGk.name !== gk.name
+        ? ` (⚠️ ${seasonGk.name} lidera a season com save% ${savePctOf(seasonGk) ?? "?"}, mas NÃO joga os últimos 5 — veredito usa o titular atual)`
+        : ""
+    const verdict =
+      gkSavePct == null ? "sem amostra de save%"
+      : gkSavePct <= ligaSavePct - 5
+        ? `🔥 **cada SoT rende MAIS gol que a média** — over/team_total do ${atkName} ganham valor`
+      : gkSavePct >= ligaSavePct + 5
+        ? `🧤 **trava** — o goleiro segura o volume; desconte a conversão do ${atkName}`
+      : "neutro — conversão perto da média da liga"
+    sotLine = `- **${atkName} atacando × ${defName} defendendo** — SoT × goleiro: ${atkSotAvg.toFixed(2)} SoT/j criados × ${gk.name} save% **${gkSavePct ?? "?"}** (liga ${ligaSavePct})${swapNote} → ${verdict}`
+  }
+
+  // Bola parada do ataque × aéreo dos ZAGUEIROS do rival
+  const mec = mecanismoPanel(season, atkId)
+  const sp = (mec.gera.get("escanteio") ?? 0) + (mec.gera.get("falta") ?? 0)
+  const spPct = mec.geraTot ? Math.round((sp / mec.geraTot) * 100) : null
+  const liga = ligaShare(season)
+  const spLiga = liga.tot ? Math.round((((liga.cnt.get("escanteio") ?? 0) + (liga.cnt.get("falta") ?? 0)) / liga.tot) * 100) : 0
+  // Baseline da LIGA pro aéreo de ZAGUEIRO (zagueiro ganha a maioria por natureza — corte fixo rotula
+  // todo mundo "blindado"; o sinal é o DESVIO vs a média dos zagueiros da liga).
+  const allIds = season.ms.map((m) => String(m.id))
+  const ligaAer = allIds.length
+    ? rowsOf(await db.execute(sql`
+        select sum(coalesce(lp.aerials_won, 0)) as won, sum(coalesce(lp.aerials_total, 0)) as tot
+        from lineup l join lineup_player lp on lp.lineup_id = l.id
+        where lp.position = 'D' and coalesce(lp.minutes_played, 0) > 0
+          and l.match_id in ${sql.raw(`('${allIds.join("','")}')`)}`))
+    : []
+  const ligaDPct = Number(ligaAer[0]?.tot) > 0 ? Math.round((Number(ligaAer[0]!.won) / Number(ligaAer[0]!.tot)) * 100) : 65
+  const aerRows = rowsOf(await db.execute(sql`
+    select p.name, lp.aerials_won, lp.aerials_total
+    from lineup l join lineup_player lp on lp.lineup_id = l.id join player p on p.id = lp.player_id
+    where l.team_id = ${defId} and lp.position = 'D' and coalesce(lp.minutes_played, 0) > 0
+      and l.match_id in ${sql.raw(`('${defIds.join("','")}')`)}`))
+  const aerAgg = new Map<string, { won: number; tot: number; j: number }>()
+  for (const r of aerRows) {
+    const cur = aerAgg.get(String(r.name)) ?? { won: 0, tot: 0, j: 0 }
+    cur.won += Number(r.aerials_won ?? 0)
+    cur.tot += Number(r.aerials_total ?? 0)
+    cur.j += 1
+    aerAgg.set(String(r.name), cur)
+  }
+  const allDefenders = [...aerAgg.entries()].filter(([, a]) => a.j >= 5 && a.tot / a.j >= 1.5)
+  // Desfalques do DEF neste jogo: a zaga que ESTARÁ em campo é a sem eles. Auditoria 2026-07-03 pegou o
+  // erro de DIREÇÃO: tirar o pior aéreo SOBE a taxa dos que ficam (o que sai é VOLUME) — o modelo lia
+  // "sem o zagueiro = zaga pior no alto" e dobrava o sinal. O código agora separa taxa de volume.
+  const injDefRows = rowsOf(await db.execute(sql`
+    select p.name from injury i join player p on p.id = i.player_id
+    where i.match_id = ${String(season.target.id)} and i.team_id = ${defId}`))
+  const injNames = new Set(injDefRows.map((r) => String(r.name).trim()))
+  const defenders = allDefenders.filter(([name]) => !injNames.has(name.trim()))
+  const outAerial = allDefenders.filter(([name]) => injNames.has(name.trim()))
+  const dWon = defenders.reduce((t, [, a]) => t + a.won, 0)
+  const dTot = defenders.reduce((t, [, a]) => t + a.tot, 0)
+  const dPct = dTot ? Math.round((dWon / dTot) * 100) : null
+  const weakest = defenders
+    .map(([name, a]) => ({ name: name.trim(), pct: Math.round((a.won / a.tot) * 100) }))
+    .sort((a, b) => a.pct - b.pct)
+    .slice(0, 2)
+  const outNote = outAerial.length
+    ? ` · desfalcados fora da conta: ${outAerial.map(([name, a]) => `${name.trim()} (${Math.round((a.won / a.tot) * 100)}% · ${(a.won / a.j).toFixed(1)} ganhos/j de VOLUME que saem)`).join(", ")} — atenção: sem eles a TAXA dos que ficam pode até subir; o que o time perde é volume/altura total, não vira "zaga pior no alto" automaticamente`
+    : ""
+  let spLine = `- Bola parada × aéreo: sem amostra.`
+  if (spPct != null && dPct != null) {
+    const verdict =
+      spPct >= Math.max(25, spLiga) && dPct <= ligaDPct - 4
+        ? `🔥 **rota de gol concreta** — bola parada forte contra zaga (a que estará EM CAMPO) ABAIXO da média no alto (elos fracos: ${weakest.map((w) => `${w.name} ${w.pct}%`).join(", ")})`
+      : dPct >= ligaDPct + 4
+        ? `🚫 rota fechada — zaga do ${defName} ACIMA da média dos zagueiros da liga no alto`
+      : spPct < Math.max(15, spLiga - 10)
+        ? `— ${atkName} pouco depende de bola parada; duelo de baixo impacto`
+      : `neutro (zaga na média da liga)`
+    spLine = `- Bola parada × aéreo: **${spPct}%** dos gols do ${atkName} de escanteio/falta (liga ${spLiga}%) × zaga do ${defName} QUE JOGA (sem desfalcados) ganha **${dPct}%** dos aéreos (média dos zagueiros da liga: ${ligaDPct}%) → ${verdict}${outNote}`
+  }
+  return [sotLine, `  ${spLine}`].join("\n")
 }
 
 // ---------------------------------------------------------------------------
@@ -496,11 +634,20 @@ async function expectativaPanel(
   // Composição: top do XI por P(marca) + artilheiro ESTRUTURAL do XI (defesa/meio com 3+ gols — bola
   // parada/2ª bola que o per-shot esconde) + banco com 4+ gols (P(marca) estimada em ~30min de sub).
   const structuralSet = new Set(xi.filter((p) => (p.pos === "D" || p.pos === "M") && p.gols >= 3).map((p) => p.nome))
+  // top-6 + estruturais + QUALQUER titular com P(marca) ≥5% (o Curtis Jones invisível: 0 gols na season
+  // mas 6% computado — entra com tag ⚪ pra o modelo decidir consciente, não por nunca ter visto).
   const candidatos = xi
     .slice()
     .sort((a, b) => b.pMarca - a.pMarca)
-    .filter((p, i) => i < 6 || structuralSet.has(p.nome)) // top-6 + estruturais mesmo fora do top
-    .map((p) => `${p.nome} **${(p.pMarca * 100).toFixed(0)}%**${structuralSet.has(p.nome) ? " ⚑estrutural (defesa/meio com gols — bola parada/2ª bola; NÃO rebaixe pelo xG por chute)" : ""}`)
+    .filter((p, i) => i < 6 || structuralSet.has(p.nome) || p.pMarca >= 0.05)
+    .map((p, i) => {
+      const tag = structuralSet.has(p.nome)
+        ? " ⚑estrutural (defesa/meio com gols — bola parada/2ª bola; NÃO rebaixe pelo xG por chute; ⚑ empatados em ±2pp passam TODOS, sem cara-ou-coroa)"
+        : p.gols === 0 && i >= 6
+          ? " ⚪ sem gol na season (cauda — descarte consciente, não invisível)"
+          : ""
+      return `${p.nome} **${(p.pMarca * 100).toFixed(0)}%**${tag}`
+    })
   for (const [id, a] of bancoEntries) {
     const g = golsBy.get(id)?.g ?? 0
     if (g >= 4 && a.min > 0) {
@@ -854,6 +1001,10 @@ export async function evidenceDigestMd(targetId: string): Promise<string> {
     ...(matchupLines(mecHome, mecAway, homeName, awayName).length || matchupLines(mecAway, mecHome, awayName, homeName).length
       ? [...matchupLines(mecHome, mecAway, homeName, awayName), ...matchupLines(mecAway, mecHome, awayName, homeName)]
       : ["- nenhum canal com índice ≥1.4× — sem assimetria de mecanismo relevante."]),
+    ``,
+    `### Duelos físicos computados — SoT × goleiro e bola parada × aéreo (pareados pelo código; §1 do catálogo de cruzamentos)`,
+    await fisicoDuel(season, homeId, awayId),
+    await fisicoDuel(season, awayId, homeId),
     ``,
     `### Dinâmica pós-gol — reação MEDIDA a cada gol (Δ do net de momentum nos 10min após o evento)`,
     reacLine(reacH, homeName),
