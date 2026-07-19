@@ -253,6 +253,13 @@
       "when": 1783042915475,
       "tag": "0035_cool_captain_britain",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1784426482132,
+      "tag": "0036_shocking_thunderball",
+      "breakpoints": true
     }
   ]
 }

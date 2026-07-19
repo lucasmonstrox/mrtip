@@ -11,6 +11,8 @@ import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
 import { matchMomentum } from "./get-match-momentum/get-match-momentum.service"
 import { getPrognosis } from "./get-prognosis/get-prognosis.service"
+import { prognosisAuditQuery } from "./get-prognosis-audit/get-prognosis-audit.schema"
+import { getPrognosisAudit } from "./get-prognosis-audit/get-prognosis-audit.service"
 import { matchScorers } from "./get-scorers/get-scorers.service"
 import { matchStatistics } from "./get-statistics/get-statistics.service"
 
@@ -70,6 +72,11 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/prognosis", ({ params }) => getPrognosis(params.id), {
     params: paramId,
     detail: { summary: "Latest LLM xG prognosis (per-team + overall); null when none yet" },
+  })
+  .get("/:id/prognosis/audit", ({ params, query }) => getPrognosisAudit(params.id, query.runId), {
+    params: paramId,
+    query: prognosisAuditQuery,
+    detail: { summary: "Heavy audit dossier of a prognosis run (reasoning, prompt, raw output); null when none" },
   })
   .get("/:id/commentaries", ({ params }) => matchCommentaries(params.id), {
     params: paramId,

@@ -4,6 +4,7 @@ import { db } from "./client"
 import { card, commentary, goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, matchTvStation, nationality, player, tvStation, venue, weather } from "./schema"
 import { slugify } from "./slug"
 import { env } from "../env"
+import { kickoffInTimeZone } from "../lib/kickoff"
 import { uploadImagem } from "../lib/r2"
 import { sm } from "../lib/sportmonks"
 import { extractScore, type SportmonksScore } from "../lib/sportmonks-scores"
@@ -210,6 +211,9 @@ export type IngestOpts = {
   teamIdBySm: Map<number, string>
   seasonId: string
   code: string
+  // IANA timezone da liga: `date`/`time` são gravados na hora de parede local, não no UTC cru da
+  // SportMonks. Vem de `league.timezone`; quem chama tem de concordar com o passo lean. @feature LIG-012
+  timezone: string
   // Colunas do `match` específicas da competição (round/name/slug e, em copa, stage*/leg/winner). O
   // pipeline preenche as comuns (ids/venue/date/score/status). Recebe os teamIds já resolvidos.
   matchFields: (f: SmRichFixture, ctx: { homeTeamId: string; awayTeamId: string; homeSmId: number; awaySmId: number }) => Record<string, unknown>
@@ -218,7 +222,7 @@ export type IngestOpts = {
 // Popula venue + match (comuns + matchFields) + escalação/stats/trends/clima/gols/cartões/desfalques/
 // narração pra CADA fixture. Devolve contagens pra log. Reusado por liga e copa.
 export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, number>> {
-  const { fixtures, teamIdBySm, seasonId, code, matchFields } = opts
+  const { fixtures, teamIdBySm, seasonId, code, timezone, matchFields } = opts
 
   // 1) Venues (estádios) → R2 + upsert por sportmonksVenueId.
   const venuesById = new Map<number, SmVenue>()
@@ -247,8 +251,7 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
     const values = {
       sportmonksFixtureId: f.id,
       leagueCode: code,
-      date: f.starting_at.slice(0, 10),
-      time: f.starting_at.slice(11, 16),
+      ...kickoffInTimeZone(f.starting_at, timezone),
       homeTeamId,
       awayTeamId,
       venueId: f.venue ? venueIdBySm.get(f.venue.id) ?? null : null,

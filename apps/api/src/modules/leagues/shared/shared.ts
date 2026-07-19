@@ -709,14 +709,51 @@ export async function seasonsOf(code: string): Promise<SeasonSummary[]> {
 // All season ids running in the SAME campaign as `anchorSeasonId` — those sharing its `startYear`
 // across EVERY competition (a league season + its concurrent cups, e.g. FA Cup/Carabao). The key of
 // cross-competition form: a team's campaign is league + cup games in the same year. @feature LIG-011
+//
+// O mesmo ano NÃO basta com 2+ países no ar: a Série A 2025 divide `startYear` com a PL 2025/26 e
+// entraria na campanha inglesa. O recorte é `startYear` E MESMO PAÍS da liga — país (e não
+// `leagueCode`) porque cruzar PL + FA Cup + Carabao é exatamente a feature do LIG-011. @feature LIG-012
 export async function concurrentSeasonIds(anchorSeasonId: string): Promise<string[]> {
   const anchor = alias(season, "anchor_season")
+  const anchorLeague = alias(league, "anchor_league")
   const rows = await db
     .select({ id: season.id })
     .from(season)
+    .innerJoin(league, eq(league.code, season.leagueCode))
     .innerJoin(anchor, eq(anchor.startYear, season.startYear))
-    .where(eq(anchor.id, anchorSeasonId))
+    .innerJoin(anchorLeague, eq(anchorLeague.code, anchor.leagueCode))
+    .where(and(eq(anchor.id, anchorSeasonId), eq(league.country, anchorLeague.country)))
   return rows.map((r) => r.id)
+}
+
+// De que liga é este time? Nem `team` nem `player` carregam `leagueCode` — a coluna só existe em
+// `season`/`match`/`standing`. Resolve pela temporada mais recente em que o time tem linha de tabela;
+// copa não gera `standing`, então não precisa filtrar tipo aqui. null = time sem nenhuma campanha. @feature LIG-012
+export async function leagueCodeOfTeam(teamId: string): Promise<string | null> {
+  const [row] = await db
+    .select({ code: season.leagueCode })
+    .from(standing)
+    .innerJoin(season, eq(season.id, standing.seasonId))
+    .where(eq(standing.teamId, teamId))
+    .orderBy(desc(season.startYear))
+    .limit(1)
+  return row?.code ?? null
+}
+
+// De que liga é este jogador? Pela aparição MAIS RECENTE (quem saiu da PL para um clube brasileiro
+// deve abrir na Série A, a liga onde joga hoje). O filtro `league.type = 'league'` é OBRIGATÓRIO: as
+// copas inglesas têm escalação ingerida, e sem ele um jogador do Arsenal resolveria para FAC. @feature LIG-012
+export async function leagueCodeOfPlayer(playerId: string): Promise<string | null> {
+  const [row] = await db
+    .select({ code: match.leagueCode })
+    .from(lineupPlayer)
+    .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+    .innerJoin(match, eq(match.id, lineup.matchId))
+    .innerJoin(league, eq(league.code, match.leagueCode))
+    .where(and(eq(lineupPlayer.playerId, playerId), eq(league.type, "league")))
+    .orderBy(desc(match.date))
+    .limit(1)
+  return row?.code ?? null
 }
 
 // All matches of a league IN ONE SEASON (default: the current one), ordered by round and date —
@@ -795,22 +832,27 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .limit(1)
   if (!p) throw notFound("player_not_found")
 
-  // Season-scoped totals: each aggregate joins `match` to filter by `match.seasonId`. @feature LIG-008
+  // Campaign scope: the anchor league-season PLUS the concurrent cup seasons (same startYear across
+  // every competition), so FA Cup/Carabao games count in the totals, widgets and match log alongside
+  // the league ones — not just `seasonId`'s own matches. @feature LIG-011
+  const seasonIds = await concurrentSeasonIds(seasonId)
+
+  // Campaign-scoped totals: each aggregate joins `match` to filter by `match.seasonId`. @feature LIG-008
   const [g] = await db
     .select({ n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), eq(match.seasonId, seasonId)))
+    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), inArray(match.seasonId, seasonIds)))
   const [a] = await db
     .select({ n: count() })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(goal.assistId, id), eq(match.seasonId, seasonId)))
+    .where(and(eq(goal.assistId, id), inArray(match.seasonId, seasonIds)))
   const [out] = await db
     .select({ n: count() })
     .from(injury)
     .innerJoin(match, eq(match.id, injury.matchId))
-    .where(and(eq(injury.playerId, id), eq(injury.type, "Missing Fixture"), eq(match.seasonId, seasonId)))
+    .where(and(eq(injury.playerId, id), eq(injury.type, "Missing Fixture"), inArray(match.seasonId, seasonIds)))
 
   const goalRows = await db
     .select({
@@ -827,7 +869,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .innerJoin(match, eq(match.id, goal.matchId))
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
-    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), eq(match.seasonId, seasonId)))
+    .where(and(eq(goal.playerId, id), ne(goal.type, "own"), inArray(match.seasonId, seasonIds)))
     .orderBy(asc(match.date))
 
   // Per-match appearances (the player's lineup rows): rating/minutes/role + opponent/score. The spine
@@ -865,7 +907,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .innerJoin(teamHome, eq(teamHome.id, match.homeTeamId))
     .innerJoin(teamAway, eq(teamAway.id, match.awayTeamId))
     .innerJoin(league, eq(league.code, match.leagueCode))
-    .where(and(eq(lineupPlayer.playerId, id), eq(match.seasonId, seasonId)))
+    .where(and(eq(lineupPlayer.playerId, id), inArray(match.seasonId, seasonIds)))
     .orderBy(asc(match.date))
 
   // The player's goals (reusing goalRows: own goals already excluded) + assists + cards, keyed by
@@ -884,7 +926,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .select({ matchId: goal.matchId, minute: goal.minute })
     .from(goal)
     .innerJoin(match, eq(match.id, goal.matchId))
-    .where(and(eq(goal.assistId, id), eq(match.seasonId, seasonId)))
+    .where(and(eq(goal.assistId, id), inArray(match.seasonId, seasonIds)))
   const assistsByMatch = new Map<string, number>()
   for (const r of assistRows) assistsByMatch.set(r.matchId, (assistsByMatch.get(r.matchId) ?? 0) + 1)
 
@@ -892,7 +934,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .select({ matchId: card.matchId, type: card.type, minute: card.minute })
     .from(card)
     .innerJoin(match, eq(match.id, card.matchId))
-    .where(and(eq(card.playerId, id), eq(match.seasonId, seasonId)))
+    .where(and(eq(card.playerId, id), inArray(match.seasonId, seasonIds)))
   const cardsByMatch = new Map<string, { yellow: number; red: number }>()
   for (const r of cardRows) {
     const e = cardsByMatch.get(r.matchId) ?? { yellow: 0, red: 0 }
@@ -959,7 +1001,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     motm: appearances.filter((x) => x.motm).length,
   }
 
-  // Full season stat profile — one aggregate over the player's lineup_player rows of the season.
+  // Full campaign stat profile — one aggregate over the player's lineup_player rows (league + cups).
   // Sums for counts; per-game average for the % stats (the API only ships % per match).
   const [sh] = await db
     .select({
@@ -1012,7 +1054,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     .from(lineupPlayer)
     .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
     .innerJoin(match, eq(match.id, lineup.matchId))
-    .where(and(eq(lineupPlayer.playerId, id), eq(match.seasonId, seasonId)))
+    .where(and(eq(lineupPlayer.playerId, id), inArray(match.seasonId, seasonIds)))
   const n = (v: unknown) => Number(v ?? 0)
   const pct = (v: unknown) => (v != null ? Number(v) : null)
   const stats: PlayerSeasonStats = {
@@ -1080,9 +1122,9 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
   // pulls his played/rating/goals/assists per match itself. Built oldest → newest for the strip.
   const recentTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null)
 
-  // The whole league-season of the club (up to 60 covers any league + postponements) for the rating
-  // strip — played/missed per game, oldest → newest. @feature LIG-001
-  const seasonTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null, { seasonId, limit: 60 })
+  // The whole campaign of the club (league + cups; up to 60 covers 38 league games + cup runs +
+  // postponements) for the rating strip — played/missed per game, oldest → newest. @feature LIG-001
+  const seasonTeamGames = await getRecentTeamGames(id, last?.lineupTeamId ?? null, { seasonIds, limit: 60 })
 
   // Seasons the player has appearances in (for the switcher). @feature LIG-008
   const seasons = await seasonsOfPlayer(id)
@@ -1133,12 +1175,12 @@ const RECENT_TEAM_GAMES = 5
 // left-joined to his lineup row (played + rating) and his absence row (why he sat out). Goals/assists are
 // counted per match here (scoped to these match ids, NOT the season) so a cup goal counts like a league
 // one. Oldest → newest; empty when the club is unknown (player with no appearances this season). @feature CUP-001
-// `opts.seasonId` narrows to one league-season (the rating strip wants the WHOLE season, cups out
-// because a cup match carries its own seasonId); `opts.limit` overrides the recent-window size.
+// `opts.seasonIds` narrows to one campaign (the anchor league-season + its concurrent cup seasons,
+// each cup match carrying its own seasonId); `opts.limit` overrides the recent-window size.
 async function getRecentTeamGames(
   playerId: string,
   teamId: string | null,
-  opts?: { seasonId?: string; limit?: number },
+  opts?: { seasonIds?: string[]; limit?: number },
 ): Promise<RecentTeamGame[]> {
   if (!teamId) return []
 
@@ -1164,7 +1206,7 @@ async function getRecentTeamGames(
       and(
         isNotNull(match.ftHome), // only matches already played
         or(eq(match.homeTeamId, teamId), eq(match.awayTeamId, teamId)),
-        ...(opts?.seasonId ? [eq(match.seasonId, opts.seasonId)] : []),
+        ...(opts?.seasonIds ? [inArray(match.seasonId, opts.seasonIds)] : []),
       ),
     )
     .orderBy(desc(match.date))
@@ -1231,7 +1273,9 @@ async function getRecentTeamGames(
 }
 
 // Seasons a player has appearances (lineup rows) in, most recent first — for the player-page
-// switcher. @feature LIG-008
+// switcher. Only LEAGUE seasons: a cup season is folded into its concurrent league campaign by
+// getPlayerDetail, so listing it here would duplicate the year (and its id 404s in resolveSeason,
+// which anchors on the league). @feature LIG-008
 export async function seasonsOfPlayer(playerId: string): Promise<SeasonSummary[]> {
   return db
     .selectDistinct({
@@ -1241,6 +1285,7 @@ export async function seasonsOfPlayer(playerId: string): Promise<SeasonSummary[]
       isCurrent: season.isCurrent,
     })
     .from(season)
+    .innerJoin(league, and(eq(league.code, season.leagueCode), eq(league.type, "league")))
     .innerJoin(match, eq(match.seasonId, season.id))
     .innerJoin(lineup, eq(lineup.matchId, match.id))
     .innerJoin(lineupPlayer, and(eq(lineupPlayer.lineupId, lineup.id), eq(lineupPlayer.playerId, playerId)))
@@ -1990,11 +2035,42 @@ export function groupByRound(matches: Match[]): Round[] {
 }
 
 /**
- * Standings by the official Premier League rule:
- * points (W=3, D=1, L=0) → goal difference → goals for → name (A→Z).
- * Keyed by team.id (stable); matches without a score are ignored.
+ * Critério de desempate da tabela, do mais forte ao mais fraco. Todos são "quanto maior, melhor",
+ * então a ordenação é sempre decrescente. @feature LIG-012
  */
-export function computeStandings(matches: Match[]): StandingRow[] {
+export type TiebreakCriterion = "points" | "wins" | "goalDifference" | "goalsFor"
+
+// Só os campos que os critérios leem — o sort roda sobre a linha ainda sem position/zone/form.
+type Tiebreakable = { points: number; won: number; goalDifference: number; goalsFor: number }
+
+const TIEBREAK_VALUE: Record<TiebreakCriterion, (r: Tiebreakable) => number> = {
+  points: (r) => r.points,
+  wins: (r) => r.won,
+  goalDifference: (r) => r.goalDifference,
+  goalsFor: (r) => r.goalsFor,
+}
+
+// Regra oficial da Premier League: pontos → saldo → gols pró. Sem vitórias — é o default de qualquer
+// liga não listada, o que preserva a ordenação atual de PL/FA Cup/Carabao.
+const PREMIER_LEAGUE_TIEBREAK: TiebreakCriterion[] = ["points", "goalDifference", "goalsFor"]
+
+// Desempate por liga. A Série A põe VITÓRIAS antes do saldo (REC da CBF, Art. 15) — confronto direto e
+// disciplina, que viriam depois, ficam fora de escopo e caem no nome do clube como hoje. É regra de
+// negócio (entra por deploy), não configuração do dono: por isso mora aqui e não numa coluna de `league`.
+const TIEBREAK_BY_LEAGUE: Record<string, TiebreakCriterion[]> = {
+  BRA: ["points", "wins", "goalDifference", "goalsFor"],
+}
+
+/** Ordem de desempate da liga; liga não listada usa a da Premier League (comportamento atual). @feature LIG-012 */
+export function tiebreakOf(code: string): TiebreakCriterion[] {
+  return TIEBREAK_BY_LEAGUE[code] ?? PREMIER_LEAGUE_TIEBREAK
+}
+
+/**
+ * Standings de UMA liga: pontos (V=3, E=1, D=0) e os critérios de desempate DELA (`tiebreakOf`),
+ * caindo no nome (A→Z) quando tudo empata. Keyed by team.id (stable); matches without a score are ignored.
+ */
+export function computeStandings(matches: Match[], tiebreak: TiebreakCriterion[]): StandingRow[] {
   type Acc = Omit<StandingRow, "position" | "goalDifference" | "form" | "zone">
   const table = new Map<string, Acc>()
 
@@ -2038,13 +2114,14 @@ export function computeStandings(matches: Match[]): StandingRow[] {
 
   return [...table.values()]
     .map((l) => ({ ...l, goalDifference: l.goalsFor - l.goalsAgainst }))
-    .sort(
-      (a, b) =>
-        b.points - a.points ||
-        b.goalDifference - a.goalDifference ||
-        b.goalsFor - a.goalsFor ||
-        a.team.name.localeCompare(b.team.name),
-    )
+    .sort((a, b) => {
+      for (const criterion of tiebreak) {
+        const value = TIEBREAK_VALUE[criterion]
+        const diff = value(b) - value(a)
+        if (diff !== 0) return diff
+      }
+      return a.team.name.localeCompare(b.team.name)
+    })
     // form = team's last 5 WITHIN the received matches (respects the ?upTo cut). No `before`:
     // here it's the "current" form of the table, not anchored to a specific match.
     .map((l, i) => ({ position: i + 1, ...l, zone: null, form: computeForm(matches, l.team).recent }))

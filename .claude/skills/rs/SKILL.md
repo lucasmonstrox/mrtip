@@ -26,7 +26,7 @@ Classifique e **declare o tier + orçamento** na primeira resposta — esforço 
 ## 1. Resolver a feature + memória do que já foi investigado
 
 - ID existente (ex: `FID-001`): leia `docs/features/<modulo>/<ID>-*.md` + TODOS os `docs:` vinculados.
-- Tema sem feature: crie o arquivo a partir de `docs/features/_template.md` no módulo certo (próximo número do prefixo — confira no `docs/features/INDEX.md`), `status: ideia`, ANTES de investigar.
+- Tema sem feature: crie o arquivo a partir de `docs/features/_template.md` no módulo certo (próximo número do prefixo — confira no `docs/features/INDEX.md`), `status: ideia`, ANTES de investigar. **Número livre no INDEX não basta**: um ID pode estar reservado só em prosa (uma feature prometendo `XXX-010` a um trabalho futuro numa seção "Fora de escopo"), e aí o número nasce significando duas coisas. Confira com `grep -rn "<PREFIXO>-0NN" docs/` antes de cravar; se tomar um número reservado, **reponte a reserva** no doc que a fez. Idem pra `W-NNN` novo na wishlist: o próximo livre sai de `grep -o "^### W-[0-9]*" docs/wishlist.md | sed 's/.*W-//' | sort -n | tail -1`, não de olhar o topo do arquivo (que é ordenado por desejo, não por número).
 - `bun run features impact <ID>` + índice de âncoras do INDEX.md → em quem ela encosta; features afetadas são leitura obrigatória.
 - **Investigações prévias são leitura obrigatória, não opcional**: índice doc→features do INDEX.md + `Grep` do tema em `docs/investigacoes/` + memórias recuperadas. **Achado já REFUTADO em investigação anterior entra no diário como REFUTED — proibido re-pesquisar sem evidência nova.** O mesmo vale pra decisões já cravadas do dono (vetos, "tooling = protótipo comparativo").
 
@@ -52,6 +52,8 @@ Classifique e **declare o tier + orçamento** na primeira resposta — esforço 
 - **Escada de fontes** (content farm de "palpite/tips" domina o nicho de apostas BR — escada é defesa, não burocracia): docs oficiais/changelog (de APIs de stats/odds) > blog de engenharia/whitepaper do vendor > acadêmico/relatório setorial (Secretaria de Prêmios e Apostas do MF, IBIA, papers de modelagem esportiva/xG) > trade press séria > listicle SEO e canal de tip (**banidos como evidência única**). Estatística ou odd em agregador → rastreie até a primeira fonte primária e cite ELA.
 - Lib/serviço candidato: docs atuais via context7 (`resolve-library-id` → `query-docs`); issues/discussions abertas (maturidade, pegadinhas); licença e manutenção. Regra do dono: **decisão de tooling = protótipo comparativo** — a investigação recomenda finalistas, não fecha sozinha.
 - Classifique cada capacidade de mercado: **paridade** (todo mundo tem, faltar dói) × **diferencial defensável** (conversa com a tese do mrtip: transparência radical + IA explicável quant/LLM + histórico auditável dos dois lados).
+
+**Antipadrões desta skill:** `premature-editing` (concluir após 1-2 buscas — a maior fatia das falhas) · `grep-silencio-como-prova` (1 busca vazia ≠ "não existe"; ausência exige ≥2 buscas com parâmetros distintos) · `citacao-de-memoria` (parte das URLs citadas por agentes é fabricada) · `single-origin-disfarcado` (20 blogs recitando o mesmo press release ≠ 20 fontes) · `vaporware-as-evidence` (landing page ≠ feature existente) · `feature-parity-trap`/`cargo-cult` ("concorrente tem X" sem dor própria) · `grafico-tesla` (matriz extensa sem decisão que ela muda) · `lost-in-the-codebase` (ler arquivo após arquivo É o mecanismo do context rot).
 
 ## 4. Verificação (onde research agents morrem — 6-22% das citações erram até no estado da arte)
 
@@ -90,6 +92,7 @@ Tier comparação/amplo: 1 subagente **role-locked pra REFUTAR** a recomendaçã
    [ ] Refutado + buscas vazias preenchidas (mesmo que "nenhuma")?
    [ ] Todo achado interno tem âncora (`path:linha` / hash / `tabela.coluna`) na primeira menção — vinda de leitura DESTA sessão?
    [ ] Spot-check interno: reabri 2-3 `path:linha` citados e a linha ainda mostra o que o doc afirma?
+   [ ] `node scripts/verify-citations.mjs docs/investigacoes/<slug>.md --repo .` saiu com exit 0? (checker mecânico: path:linha existe, trecho verbatim casa, URL resolve — auto-conferência não substitui o oráculo)
    [ ] O doc responde cada pergunta do brief do §0?
    ```
    Item falhou → conserte antes de salvar; poucas citações verificadas > link-stuffing.

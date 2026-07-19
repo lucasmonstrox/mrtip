@@ -13,6 +13,9 @@ export const league = pgTable("league", {
   // "league" (tabela/pontos corridos) vs "cup" (mata-mata/bracket) — decide se a aba mostra tabela ou
   // chaveamento. Default "league": só o sync de copa marca "cup". @feature CUP-001
   type: text("type").notNull().default("league"),
+  // IANA timezone da liga ("Europe/London", "America/Sao_Paulo"): `match.date`/`match.time` são gravados
+  // na hora de parede deste fuso, não em UTC. Default cobre as ligas inglesas já ingeridas. @feature LIG-012
+  timezone: text("timezone").notNull().default("Europe/London"),
   // Logo URL in R2 (bucket mrtip); origin is the SportMonks CDN `image_path`.
   logoUrl: text("logo_url"),
 })

@@ -40,10 +40,15 @@ Leia `docs/features/<modulo>/<ID>-*.md` e decida o modo ANTES de tocar em qualqu
 
 - **Antes do primeiro edit**: frontmatter da feature → `status: em-andamento` + `atualizado:` = hoje — sessão interrompida fica retomável pelo estado, não só pelos checkboxes.
 - Fatia fina que compila e roda > camada inteira de uma vez. `bun run typecheck` cedo e frequente, não só no final.
+- **Regra perto da ação (reinjeção obrigatória)**: a LLM não "se lembra" de regra lida 40 turnos atrás — a obediência cai a cada ação, e o texto da regra colado no ponto de ação vale muito mais que um link. Portanto: **antes de escrever o código de CADA passo**, releia e cole no seu raciocínio o texto literal das regras que aquele passo toca — os `Don't:` do passo no Plano, a convenção relevante (`type` nunca `interface`, dinheiro em centavos, fuso pinado, folder-by-feature) e o gotcha da área. E **a cada ~5 passos, releia a seção `## Plano` inteira** — não confie na memória do começo da sessão. Regra citada só por ID/link não conta como reinjetada; o texto vai junto.
 - Regras transversais (SocratiCode antes de explorar, dinheiro via `@workspace/core/money`, datas via `date-fns`/-tz, folder-by-feature, sem import entre features, shadcn add da raiz): **o CLAUDE.md manda** — não re-decida nem relaxe aqui.
-- Lógica pura nova em `packages/core` → **teste primeiro** (o padrão do pacote: todo `*.ts` tem seu `*.test.ts`).
+- Lógica pura nova (odds/EV, calibração, datas) → **teste ao lado**, no app/pacote dono. Não há runner de unidade configurado no repo (só o Playwright do `apps/web`) — então não prometa `bun test` de um runner inexistente: se o diff não criou um, a prova é o script ad-hoc da linha `api`/`dados` do `verificacao.md`.
 - Carimbe `// @feature <ID>` SÓ em pontos de posse única (coluna de schema nova, tool do assistente de IA, topo da pasta da feature) — nunca em código compartilhado.
-- Vá marcando os checkboxes de **Tarefas** no arquivo da feature conforme conclui.
+- Vá marcando os checkboxes de **Tarefas** no arquivo da feature conforme conclui (imediatamente por prova fechada, nunca `checkbox-no-fim-da-sessao`).
+- **Protocolo de falha (o modo de falha dominante é agir cedo e insistir, não alucinar)**:
+  - Teste/typecheck/lint falhou → ao pedir o conserto (a si mesmo ou a subagente), **cole a saída literal do erro e NOMEIE o defeito específico** ("corrija o tipo divergente em `get-player.service.ts:42`: esperado `Cents`, recebido `number`"), nunca "corrija o problema" — nomear o defeito muda a taxa de correção de forma grosseira, e a saída do linter reinjetada derruba muito código ruim.
+  - **Teto de 2 tentativas no mesmo passo**: a 2ª correção também falhou → **HALT com estado gravado** — registre no arquivo da feature/dossiê o passo, as 2 tentativas com a saída de cada uma e a hipótese líder, e reporte ao dono. Refinar sozinho até "passar" sem oráculo produz plausível-mas-errado.
+  - Premissa do Plano caiu → já coberto no §2: PARE e re-planeje, nunca force o passo original.
 
 ## 4. Verificar de verdade (não "deve funcionar")
 

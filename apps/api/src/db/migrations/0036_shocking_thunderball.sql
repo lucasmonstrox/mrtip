@@ -1,0 +1,1 @@
+ALTER TABLE "league" ADD COLUMN "timezone" text DEFAULT 'Europe/London' NOT NULL;

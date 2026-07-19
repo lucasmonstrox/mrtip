@@ -7,6 +7,10 @@ const ZONE: Record<string, { label: string; className: string }> = {
   champions: { label: "Champions League", className: "text-emerald-600" },
   europa: { label: "Europa League", className: "text-blue-600" },
   conference: { label: "Conference League", className: "text-cyan-600" },
+  // Zonas CONMEBOL (Série A). Chave em inglês como vem do dado; só o rótulo é PT. @feature LIG-012
+  libertadores: { label: "Libertadores", className: "text-emerald-600" },
+  "libertadores-qualifiers": { label: "Pré-Libertadores", className: "text-teal-600" },
+  sudamericana: { label: "Sudamericana", className: "text-amber-600" },
   relegation: { label: "Rebaixamento", className: "text-red-600" },
 }
 

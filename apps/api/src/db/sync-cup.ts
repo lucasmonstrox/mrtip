@@ -4,6 +4,7 @@ import { db } from "./client"
 import { league, match, season, team } from "./schema"
 import { matchSlug, slugify } from "./slug"
 import { fetchRichByIds, ingestFixtures } from "./sync-ingest"
+import { kickoffInTimeZone } from "../lib/kickoff"
 import { sm } from "../lib/sportmonks"
 import { extractScore, type SportmonksScore } from "../lib/sportmonks-scores"
 
@@ -24,6 +25,7 @@ const LEAGUE_ID = Number(process.argv[2] ?? 27)
 const SEASON_ID = Number(process.argv[3] ?? 25654)
 const CODE = (process.argv[4] ?? "CARA").toUpperCase()
 const PROPER_ONLY = process.argv[5] === "proper" // só stages type_id=224 (descarta qualifying 225)
+const TIMEZONE = "Europe/London" // FA Cup/Carabao são inglesas; o passo lean e o rico têm de concordar @feature LIG-012
 
 const STAGE_PROPER = 224 // "Round 3", "Quarter-finals"… (onde entram os clubes da liga)
 
@@ -185,8 +187,7 @@ async function main() {
       isPlaceholder: f.placeholder ?? false,
       name: f.name,
       slug,
-      date: f.starting_at.slice(0, 10),
-      time: f.starting_at.slice(11, 16),
+      ...kickoffInTimeZone(f.starting_at, TIMEZONE),
       homeTeamId,
       awayTeamId,
       seasonId,
@@ -209,6 +210,7 @@ async function main() {
     teamIdBySm,
     seasonId,
     code: CODE,
+    timezone: TIMEZONE,
     // Colunas de copa do match. Defensivo: só sobrescreve stage/winner quando o fetch rico trouxe (senão
     // preserva o que o passo lean já gravou — não zera o bracket).
     matchFields: (f, ctx) => {

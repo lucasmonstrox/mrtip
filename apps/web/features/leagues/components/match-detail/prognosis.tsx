@@ -6,6 +6,7 @@ import { cn } from "@workspace/ui/lib/utils"
 import type { TeamRest } from "../../types"
 import { useMatchPrognosisQuery } from "../../hooks/data/queries/use-match-prognosis-query"
 import { AbsenceImpactPanel } from "./absence-impact-panel"
+import { PrognosisAudit } from "./prognosis-audit"
 
 type TeamRef = { name: string; logoUrl: string | null }
 // Days each side rested before this match, as the prognosis prompt itself sees them (fatigue factor).
@@ -279,9 +280,7 @@ export function Prognosis({
             Prognóstico geral
             <span className={cn("rounded-full px-2 py-0.5 text-xs font-medium", conf.cls)}>{conf.label}</span>
           </CardTitle>
-          <CardDescription className="text-xs">
-            Expected goals do jogo · gerado por {data.model}
-          </CardDescription>
+          <CardDescription className="text-xs">Expected goals do jogo</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -322,6 +321,9 @@ export function Prognosis({
         <TeamCard team={home} block={data.home} />
         <TeamCard team={away} block={data.away} />
       </div>
+
+      {/* Auditoria: raciocínio + prompt da run, carregados só ao abrir o painel. @feature MOD-011 */}
+      <PrognosisAudit id={id} />
     </div>
   )
 }

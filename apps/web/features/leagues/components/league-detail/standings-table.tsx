@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import { Card, CardContent } from "@workspace/ui/components/card"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import {
   Table,
@@ -21,6 +21,10 @@ const ZONES: Record<string, { border: string; dot: string; label: string }> = {
   champions: { border: "border-l-blue-600", dot: "bg-blue-600", label: "Champions League" },
   europa: { border: "border-l-orange-500", dot: "bg-orange-500", label: "Europa League" },
   conference: { border: "border-l-green-500", dot: "bg-green-500", label: "Conference League" },
+  // Zonas CONMEBOL (Série A). Chave em inglês como vem do dado; só o rótulo é PT. @feature LIG-012
+  libertadores: { border: "border-l-emerald-600", dot: "bg-emerald-600", label: "Libertadores" },
+  "libertadores-qualifiers": { border: "border-l-teal-500", dot: "bg-teal-500", label: "Pré-Libertadores" },
+  sudamericana: { border: "border-l-amber-500", dot: "bg-amber-500", label: "Sudamericana" },
   relegation: { border: "border-l-red-500", dot: "bg-red-500", label: "Rebaixamento" },
 }
 
@@ -81,11 +85,10 @@ export function StandingsTable({ code }: { code: string }) {
   // Legend with only the zones actually present, in table order.
   const present = [...new Set(table.map((r) => r.zone).filter((z): z is string => !!z && z in ZONES))]
 
+  // Sem CardHeader: a aba já diz "Classificação"; repetir o rótulo dentro do card é ruído. O skeleton
+  // abaixo acompanha — se só um dos dois perdesse o header, a troca geraria salto de layout.
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Classificação</CardTitle>
-      </CardHeader>
+    <Card className="pt-0">
       <CardContent className="p-0">
         <Table className={TABLE_CLASS}>
           <StandingsCols />
@@ -156,11 +159,10 @@ export function StandingsTable({ code }: { code: string }) {
 // form) so the page doesn't jump when the real data arrives. Shares StandingsCols/StandingsHead
 // with the real table, so column geometry is identical → no horizontal shift on load.
 function StandingsSkeleton() {
+  // Sem CardHeader: a aba já diz "Classificação"; repetir o rótulo dentro do card é ruído. O skeleton
+  // abaixo acompanha — se só um dos dois perdesse o header, a troca geraria salto de layout.
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Classificação</CardTitle>
-      </CardHeader>
+    <Card className="pt-0">
       <CardContent className="p-0">
         <Table className={TABLE_CLASS}>
           <StandingsCols />

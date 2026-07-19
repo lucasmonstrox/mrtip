@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm"
 
 import { db } from "../../../db/client"
 import { standing } from "../../../db/schema"
-import { computeStandings, getLeagueOrThrow, loadMatches, resolveSeason } from "../shared/shared"
+import { computeStandings, getLeagueOrThrow, loadMatches, resolveSeason, tiebreakOf } from "../shared/shared"
 import type { StandingsQuery } from "./standings.schema"
 
 // GET /v1/leagues/:code/standings — computed table for ONE season (?season=<sportmonksSeasonId>,
@@ -13,12 +13,17 @@ export async function standings(code: string, query: StandingsQuery) {
   await getLeagueOrThrow(code)
   const seasonId = await resolveSeason(code, query.season)
   const matches = await loadMatches(code, seasonId)
+  // O desempate é da LIGA (a Série A ordena vitórias antes do saldo; a PL não). @feature LIG-012
+  const tiebreak = tiebreakOf(code)
 
   if (query.upTo != null) {
-    return computeStandings(matches.filter((m) => m.round <= query.upTo!))
+    return computeStandings(
+      matches.filter((m) => m.round <= query.upTo!),
+      tiebreak,
+    )
   }
 
-  const table = computeStandings(matches)
+  const table = computeStandings(matches, tiebreak)
   const rows = await db
     .select({ teamId: standing.teamId, zone: standing.zone })
     .from(standing)

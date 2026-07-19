@@ -8,13 +8,16 @@
 import { db } from "../src/db/client"
 import { card, goal, injury, lineup, lineupPlayer, match, nationality, player, season, standing, team, venue } from "../src/db/schema"
 import { env } from "../src/env"
+import { kickoffInTimeZone } from "../src/lib/kickoff"
 import { uploadImagem } from "../src/lib/r2"
 import { sm, smAll } from "../src/lib/sportmonks"
 import { matchSlug, slugify } from "../src/db/slug"
+import { normalizeZone } from "../src/db/zones"
 import { extractScore, type SportmonksScore } from "../src/lib/sportmonks-scores"
 
 const LEAGUE_ID = 8
 const CODE = "PL"
+const TIMEZONE = "Europe/London" // fuso da liga: `date`/`time` gravados na hora de parede local @feature LIG-012
 const SEASON_ID = Number(process.argv[2] ?? 23614) // 2024/2025
 // Date windows covering the 2024/25 PL season (Aug 2024 → Jun 2025); fixtureSeasons filter keeps only it.
 const WINDOWS: [string, string][] = [
@@ -55,14 +58,6 @@ type SmCountry = { id: number; name: string; fifa_name?: string; iso2?: string; 
 
 function detVal(details: SmDetail[], typeId: number): number {
   return details.find((d) => d.type_id === typeId)?.value ?? 0
-}
-function normalizeZone(dev?: string): string | null {
-  if (!dev) return null
-  if (dev.includes("CHAMPIONS")) return "champions"
-  if (dev.includes("EUROPA")) return "europa"
-  if (dev.includes("CONFERENCE")) return "conference"
-  if (dev.includes("RELEGATION")) return "relegation"
-  return null
 }
 function imgKey(folder: string, name: string, imagePath: string, suffix?: number | string): string {
   const ext = imagePath.split("?")[0]!.split(".").pop() ?? "png"
@@ -133,7 +128,8 @@ async function main() {
   for (const row of standings) {
     const t = row.participant
     teamNameBySm.set(t.id, t.name)
-    const logo = await uploadImagem(t.image_path, imgKey("teams", t.name, t.image_path))
+    // Sufixo = id SportMonks do time (paridade com venues/players; namespace R2 é global às ligas). @feature LIG-012
+    const logo = await uploadImagem(t.image_path, imgKey("teams", t.name, t.image_path, t.id))
     const [r] = await db
       .insert(team)
       .values({ sportmonksTeamId: t.id, name: t.name, slug: slugify(t.name), shortCode: t.short_code ?? null, logoUrl: logo })
@@ -200,7 +196,7 @@ async function main() {
     const slug = matchSlug(apiLeague.name, apiSeason.name, teamNameBySm.get(home.id) ?? f.name, teamNameBySm.get(away.id) ?? "")
     const values = {
       sportmonksFixtureId: f.id, leagueCode: CODE, round: Number(f.round?.name ?? 0), name: f.name, slug,
-      date: f.starting_at.slice(0, 10), time: f.starting_at.slice(11, 16), homeTeamId, awayTeamId,
+      ...kickoffInTimeZone(f.starting_at, TIMEZONE), homeTeamId, awayTeamId,
       venueId: f.venue ? venueIdBySm.get(f.venue.id) ?? null : null, seasonId, ...score, status: f.state?.developer_name ?? null,
     }
     const [m] = await db.insert(match).values(values).onConflictDoUpdate({ target: match.sportmonksFixtureId, set: values }).returning({ id: match.id })

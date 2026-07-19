@@ -1,6 +1,19 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
+import {
+  Activity,
+  BarChart3,
+  ClipboardList,
+  Clock,
+  type LucideIcon,
+  Newspaper,
+  Radio,
+  Shirt,
+  Swords,
+  Target,
+  TrendingUp,
+} from "lucide-react"
 import Link from "next/link"
 
 import type { TeamRest, TeamStanding } from "../../types"
@@ -47,11 +60,33 @@ function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
   )
 }
 
+// As abas da partida, na ordem em que aparecem. O ícone de cada uma vem do vernáculo do futebol, não de
+// metáfora genérica de dashboard: camisa pra escalação, espadas pro duelo do H2H, alvo pro xG (qualidade
+// da finalização), relógio pros eventos (que são carimbados no minuto) e rádio pra narração — que no
+// Brasil É narração de rádio. `primary` marca a aba-tese do produto (a aposta com evidência).
+type MatchTab = { value: string; label: string; icon: LucideIcon; primary?: boolean }
+const MATCH_TABS: readonly MatchTab[] = [
+  { value: "fatos", label: "Fatos", icon: ClipboardList },
+  { value: "escalacao", label: "Escalação", icon: Shirt },
+  { value: "h2h", label: "H2H", icon: Swords },
+  { value: "gols", label: "Gols (xG)", icon: Target },
+  { value: "noticias", label: "Notícias", icon: Newspaper },
+  { value: "prognostico", label: "Prognóstico", icon: TrendingUp, primary: true },
+  { value: "momentum", label: "Momentum", icon: Activity },
+  { value: "estatisticas", label: "Estatísticas", icon: BarChart3 },
+  { value: "eventos", label: "Eventos", icon: Clock },
+  { value: "narracao", label: "Narração", icon: Radio },
+] as const
+
 // Qualification/relegation zone → text color for the position number (mirrors team-standing.tsx's ZONE).
 const ZONE_COLOR: Record<string, string> = {
   champions: "text-emerald-600 dark:text-emerald-400",
   europa: "text-blue-600 dark:text-blue-400",
   conference: "text-cyan-600 dark:text-cyan-400",
+  // Zonas CONMEBOL (Série A) — mesma paleta do team-standing.tsx. @feature LIG-012
+  libertadores: "text-emerald-600 dark:text-emerald-400",
+  "libertadores-qualifiers": "text-teal-600 dark:text-teal-400",
+  sudamericana: "text-amber-600 dark:text-amber-400",
   relegation: "text-red-600 dark:text-red-400",
 }
 
@@ -100,18 +135,21 @@ export function MatchDetail({ slug }: { slug: string }) {
 
   return (
     <section className="flex flex-col gap-6">
-      {/* Header: back-link + date + the scoreline itself (no card, compact) */}
-      <header className="flex flex-col gap-3">
-        <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
+      {/* Header: no desktop o back-link e a data FLANQUEIAM o placar (bordas da tela) em vez de ficarem
+          empilhados acima dele; o miolo times+placar segue centralizado. No mobile não cabe flanquear, então
+          os dois voltam pra uma linha própria — `sm:contents` dissolve o wrapper no desktop e joga os dois
+          como filhos diretos do flex, sem duplicar markup. */}
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-start">
+        <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground sm:contents">
           <Link
             href={`/leagues/${match.league.code}`}
-            className="hover:text-foreground"
+            className="shrink-0 hover:text-foreground sm:pt-1"
           >
             ← {match.league.name}
           </Link>
-          <span>{formatDate(match.date, match.time)}</span>
+          <span className="shrink-0 sm:order-last sm:pt-1">{formatDate(match.date, match.time)}</span>
         </div>
-        <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
+        <div className="grid flex-1 grid-cols-[1fr_auto_1fr] items-start gap-3">
           <div className="flex flex-col items-end gap-1.5">
             <Link
               href={`/teams/${match.home.slug}`}
@@ -154,18 +192,27 @@ export function MatchDetail({ slug }: { slug: string }) {
       </header>
 
       <Tabs defaultValue="fatos">
-        <TabsList>
-          <TabsTrigger value="fatos">Fatos</TabsTrigger>
-          <TabsTrigger value="escalacao">Escalação</TabsTrigger>
-          <TabsTrigger value="h2h">H2H</TabsTrigger>
-          <TabsTrigger value="gols">Gols (xG)</TabsTrigger>
-          <TabsTrigger value="noticias">Notícias</TabsTrigger>
-          <TabsTrigger value="prognostico">Prognóstico</TabsTrigger>
-          <TabsTrigger value="momentum">Momentum</TabsTrigger>
-          <TabsTrigger value="estatisticas">Estatísticas</TabsTrigger>
-          <TabsTrigger value="eventos">Eventos</TabsTrigger>
-          <TabsTrigger value="narracao">Narração</TabsTrigger>
-        </TabsList>
+        {/* 10 abas não cabem numa pill preenchida sem virar um paredão cinza: a variante `line` deixa o
+            indicador ser um sublinhado fino e dá ar pros ícones. O wrapper rola na horizontal (barra
+            escondida) em vez de espremer — a página inteira já estoura em viewport estreita e a barra de
+            abas não precisa herdar isso. Máscara nas bordas avisa que há mais aba fora de vista. */}
+        {/* A régua fica no wrapper, não na TabsList (que é `w-fit` e morreria no meio da página): assim
+            ela atravessa a largura do conteúdo e o sublinhado da aba ativa se apoia nela. */}
+        {/* `min-w-0` é o que faz o `overflow-x-auto` engatar: item de flex nasce com `min-width:auto` e
+            cresceria pra caber as 10 abas (990px com ícone) em vez de rolar, empurrando a largura da
+            página inteira. Com ele a barra encolhe e rola sozinha. */}
+        <div className="-mx-1 min-w-0 max-w-[calc(100vw-2rem)] overflow-x-auto border-b px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <TabsList variant="line">
+            {MATCH_TABS.map(({ value, label, icon: Icon, primary }) => (
+              <TabsTrigger key={value} value={value} className="gap-1.5">
+                {/* O Prognóstico não é par dos outros: é a tese do produto (a aposta com evidência).
+                    Ganha o ícone tingido quando inativo pra ser achável de relance, sem virar enfeite. */}
+                <Icon className={primary ? "text-primary" : undefined} aria-hidden />
+                {label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
 
         <TabsContent value="momentum" className="pt-2">
           <MatchMomentum id={id} home={match.home} away={match.away} />

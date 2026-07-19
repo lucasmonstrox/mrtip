@@ -1,11 +1,14 @@
+import { addDays, format, min, parseISO, subDays } from "date-fns"
 import { and, eq, ne } from "drizzle-orm"
 
 import { db } from "./client"
 import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, nationality, player, season, standing, team, venue, weather } from "./schema"
 import { matchSlug, slugify } from "./slug"
+import { normalizeZone } from "./zones"
 import { roleFromGrid } from "./role-from-grid"
 import { fixtureMetaOf, ingestTvStations, preferredFootOf, type SmTvLink } from "./sync-ingest"
 import { env } from "../env"
+import { kickoffInTimeZone } from "../lib/kickoff"
 import { uploadImagem } from "../lib/r2"
 import { sm, smAll } from "../lib/sportmonks"
 import { extractScore, type SportmonksScore } from "../lib/sportmonks-scores"
@@ -17,9 +20,20 @@ import { extractScore, type SportmonksScore } from "../lib/sportmonks-scores"
 // Pipeline: league+logo → standings (teams + logos + official table) → fixtures (results +
 // starting lineup: creates player with nationality/dob/height and writes lineup/lineup_player).
 
-const LEAGUE_ID = 8 // Premier League
-const SEASON_ID = 25583 // 2025/2026 (last completed season)
-const CODE = "PL" // domain key (URL)
+// Configuração da liga/temporada a sincar, por flags NOMEADAS (D7 do LIG-012 — os syncs de copa e de
+// temporada antiga seguem com argv posicional de propósito):
+//   bun run db:sync --league 648 --season 25184 --code BRA --timezone America/Sao_Paulo [--dry-run]
+// Sem flags, o default é a Premier League — é o que mantém `bun run db:sync`/`db:reset` funcionando
+// como antes. O que NÃO tem default é a janela de varredura: ela vem sempre da API (ver seasonWindows).
+function flag(name: string): string | undefined {
+  const i = process.argv.indexOf(`--${name}`)
+  return i >= 0 ? process.argv[i + 1] : undefined
+}
+const LEAGUE_ID = Number(flag("league") ?? 8) // Premier League
+const SEASON_ID = Number(flag("season") ?? 25583) // 2025/2026
+const CODE = (flag("code") ?? "PL").toUpperCase() // domain key (URL)
+const TIMEZONE = flag("timezone") ?? "Europe/London" // fuso da liga: `date`/`time` na hora de parede local
+const DRY_RUN = process.argv.includes("--dry-run") // varre e conta, não escreve no banco nem no R2
 
 // SportMonks lineup type_ids: starter (titular) vs bench (banco).
 const LINEUP_STARTER = 11
@@ -82,7 +96,9 @@ const DET = {
 } as const
 
 type SmLeague = { id: number; name: string; image_path: string; country?: { name: string } }
-type SmSeason = { id: number; name: string }
+// `starting_at`/`ending_at` ("YYYY-MM-DD") delimitam a temporada e são a fonte da janela de varredura —
+// é o que impede o sweep de nascer com o calendário europeu hardcoded. @feature LIG-012
+type SmSeason = { id: number; name: string; starting_at: string; ending_at: string }
 type SmTeam = { id: number; name: string; short_code?: string; image_path: string }
 type SmDetail = { type_id: number; value: number }
 type SmStanding = {
@@ -202,16 +218,6 @@ function detVal(details: SmDetail[], typeId: number): number {
   return details.find((d) => d.type_id === typeId)?.value ?? 0
 }
 
-// SportMonks standing `rule.type.developer_name` → normalized zone (or null for mid-table).
-function normalizeZone(dev?: string): string | null {
-  if (!dev) return null
-  if (dev.includes("CHAMPIONS")) return "champions"
-  if (dev.includes("EUROPA")) return "europa"
-  if (dev.includes("CONFERENCE")) return "conference"
-  if (dev.includes("RELEGATION")) return "relegation"
-  return null
-}
-
 // Builds the "pretty" image key in R2: folder/slug-of-name.ext (e.g. "teams/arsenal.png").
 // `suffix` (optional) disambiguates colliding names — e.g. player "players/harry-kane-12345".
 // The extension comes from the SportMonks image_path itself (usually .png), it isn't guessed.
@@ -264,12 +270,61 @@ async function pool<T, R>(items: T[], n: number, fn: (item: T) => Promise<R>): P
   return out
 }
 
+// A API limita `fixtures/between` a ~100 dias por chamada, então a temporada é varrida em fatias. 90
+// dias dá folga sob o teto; a margem cobre jogo remarcado para fora da janela oficial da temporada.
+const WINDOW_DAYS = 90
+const WINDOW_MARGIN_DAYS = 7
+
+// Fatia a temporada (`starting_at`→`ending_at` da própria API) nas janelas da varredura. É isto que
+// mantém o sweep honesto em qualquer calendário — o europeu (ago→mai) e o brasileiro (mar→dez). Não
+// existe janela hardcoded de fallback: sem as datas da API o sync não teria como varrer. @feature LIG-012
+function seasonWindows(startingAt: string, endingAt: string): [string, string][] {
+  const last = addDays(parseISO(endingAt), WINDOW_MARGIN_DAYS)
+  const windows: [string, string][] = []
+  let from = subDays(parseISO(startingAt), WINDOW_MARGIN_DAYS)
+  while (from <= last) {
+    const to = min([addDays(from, WINDOW_DAYS - 1), last])
+    windows.push([format(from, "yyyy-MM-dd"), format(to, "yyyy-MM-dd")])
+    from = addDays(to, 1)
+  }
+  return windows
+}
+
+// Varre as janelas e devolve as fixtures da temporada, deduplicadas por id (uma partida pode cair em
+// duas janelas na fronteira). O filtro fixtureSeasons garante que só a temporada alvo entra; os
+// includes de lineup/stats/trends vêm na MESMA requisição.
+async function sweepFixtures(windows: [string, string][]): Promise<SmFixture[]> {
+  const byId = new Map<number, SmFixture>()
+  for (const [from, to] of windows) {
+    const window = await smAll<SmFixture>(
+      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
+        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation&per_page=50`,
+    )
+    for (const f of window) byId.set(f.id, f)
+  }
+  return [...byId.values()]
+}
+
 async function main() {
   // 1) League + logo ------------------------------------------------------------
   const apiLeague = await sm<SmLeague>(`/leagues/${LEAGUE_ID}?include=country`)
   const apiSeason = await sm<SmSeason>(`/seasons/${SEASON_ID}`)
+  const WINDOWS = seasonWindows(apiSeason.starting_at, apiSeason.ending_at)
+  console.log(`league: ${apiLeague.name} (${apiSeason.name}) · code=${CODE} · tz=${TIMEZONE}`)
+  console.log(
+    `temporada ${apiSeason.starting_at}→${apiSeason.ending_at} · janelas (${WINDOWS.length}): ${WINDOWS.map(([f, t]) => `${f}→${t}`).join(" · ")}`,
+  )
+
+  // Dry-run: prova a varredura (janelas + contagem de fixtures) SEM escrever no banco nem no R2.
+  // Sai antes do primeiro upload de logo, que é a primeira escrita do pipeline.
+  if (DRY_RUN) {
+    const found = await sweepFixtures(WINDOWS)
+    console.log(`fixtures: ${found.length}`)
+    console.log("(dry-run: nada escrito no banco nem no R2)")
+    return
+  }
+
   const leagueLogo = await uploadImagem(apiLeague.image_path, imgKey("leagues", apiLeague.name, apiLeague.image_path))
-  console.log(`league: ${apiLeague.name} (${apiSeason.name})`)
 
   const leagueValues = {
     code: CODE,
@@ -278,6 +333,7 @@ async function main() {
     name: apiLeague.name,
     country: apiLeague.country?.name ?? "—",
     season: apiSeason.name,
+    timezone: TIMEZONE, // @feature LIG-012
     logoUrl: leagueLogo,
   }
   await db
@@ -317,7 +373,9 @@ async function main() {
   for (const row of standings) {
     const t = row.participant
     teamNameBySm.set(t.id, t.name)
-    const logo = await uploadImagem(t.image_path, imgKey("teams", t.name, t.image_path))
+    // Sufixo = id SportMonks do time, igual venues/players já fazem: o namespace `teams/` no R2 é
+    // global às ligas e dois clubes com nome que normaliza igual sobrescreveriam um ao outro. @feature LIG-012
+    const logo = await uploadImagem(t.image_path, imgKey("teams", t.name, t.image_path, t.id))
     const [r] = await db
       .insert(team)
       .values({
@@ -372,24 +430,7 @@ async function main() {
   console.log(`teams + standings: ${standings.length} rows`)
 
   // 3) Fixtures → results + starting lineup -------------------------------------
-  // fixtures/between is capped at ~100 days per call, so we sweep the season in windows
-  // (Aug/2025 → May/2026); the fixtureSeasons filter keeps only PL 2025/26. Dedup by id.
-  // The lineups.player/lineups.position/formations includes bring the lineup in the SAME request.
-  const WINDOWS: [string, string][] = [
-    ["2025-08-01", "2025-10-31"],
-    ["2025-11-01", "2026-01-31"],
-    ["2026-02-01", "2026-04-30"],
-    ["2026-05-01", "2026-06-01"],
-  ]
-  const byId = new Map<number, SmFixture>()
-  for (const [from, to] of WINDOWS) {
-    const window = await smAll<SmFixture>(
-      `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
-        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation&per_page=50`,
-    )
-    for (const f of window) byId.set(f.id, f)
-  }
-  const fixtures = [...byId.values()]
+  const fixtures = await sweepFixtures(WINDOWS)
 
   // 3a-pre) Venues (estádios): distinct venues across fixtures → photo to R2 (parallel) + upsert by
   // sportmonksVenueId. Must run BEFORE matches so `venueId` exists when the match is inserted.
@@ -448,8 +489,7 @@ async function main() {
       round: Number(f.round?.name ?? 0),
       name: f.name,
       slug,
-      date: f.starting_at.slice(0, 10),
-      time: f.starting_at.slice(11, 16),
+      ...kickoffInTimeZone(f.starting_at, TIMEZONE),
       homeTeamId,
       awayTeamId,
       venueId: f.venue ? venueIdBySm.get(f.venue.id) ?? null : null,

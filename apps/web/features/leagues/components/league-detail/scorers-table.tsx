@@ -1,6 +1,7 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
+// Sem CardHeader: a aba já diz "Marcadores" — mesmo motivo da Classificação.
+import { Card, CardContent } from "@workspace/ui/components/card"
 import Link from "next/link"
 import { useCallback, useState } from "react"
 import { Virtuoso } from "react-virtuoso"
@@ -71,10 +72,7 @@ export function ScorersTable({ code }: { code: string }) {
     scrollParent != null ? { customScrollParent: scrollParent } : { useWindowScroll: true as const }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Marcadores</CardTitle>
-      </CardHeader>
+    <Card className="pt-0">
       <CardContent className="p-0">
         <div ref={setRootRef} className="flex flex-col">
           <div className={`${COLS} h-10 border-b px-4 text-sm font-medium text-foreground`}>

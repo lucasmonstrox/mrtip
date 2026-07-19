@@ -3,6 +3,7 @@
 import { Badge } from "@workspace/ui/components/badge"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
+import { CalendarDays, GitMerge, Goal, ListOrdered } from "lucide-react"
 
 import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
 import { useSeasonsQuery } from "../../hooks/data/queries/use-seasons-query"
@@ -74,9 +75,18 @@ export function LeagueDetail({ code }: { code: string }) {
         // key distinta força remontagem ao trocar liga↔copa (senão o Radix mantém o valor "standings",
         // que não existe em copa, e nenhuma aba ativa → conteúdo em branco). @feature CUP-001
         <Tabs key="cup" defaultValue="bracket">
-          <TabsList>
-            <TabsTrigger value="bracket">Chaveamento</TabsTrigger>
-            <TabsTrigger value="scorers">Marcadores</TabsTrigger>
+          {/* Mesma linguagem de abas da página da partida (variante `line` + ícone), pra liga e partida
+              não parecerem dois produtos. Ícones do vernáculo: o chaveamento é um mata-mata que CONVERGE
+              até um campeão (GitMerge), e marcadores são artilheiros (Goal). */}
+          <TabsList variant="line" className="border-b">
+            <TabsTrigger value="bracket">
+              <GitMerge aria-hidden />
+              Chaveamento
+            </TabsTrigger>
+            <TabsTrigger value="scorers">
+              <Goal aria-hidden />
+              Marcadores
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="bracket" className="pt-2">
             <CupBracket code={code} />
@@ -87,10 +97,21 @@ export function LeagueDetail({ code }: { code: string }) {
         </Tabs>
       ) : (
         <Tabs key="league" defaultValue="standings">
-          <TabsList>
-            <TabsTrigger value="standings">Classificação</TabsTrigger>
-            <TabsTrigger value="rounds">Rounds</TabsTrigger>
-            <TabsTrigger value="scorers">Marcadores</TabsTrigger>
+          {/* Classificação é uma lista ORDENADA por posição (ListOrdered); rodadas são o calendário
+              fatiado por data (CalendarDays); marcadores são os artilheiros (Goal). */}
+          <TabsList variant="line" className="border-b">
+            <TabsTrigger value="standings">
+              <ListOrdered aria-hidden />
+              Classificação
+            </TabsTrigger>
+            <TabsTrigger value="rounds">
+              <CalendarDays aria-hidden />
+              Rodadas
+            </TabsTrigger>
+            <TabsTrigger value="scorers">
+              <Goal aria-hidden />
+              Marcadores
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="standings" className="pt-2">
             <StandingsTable code={code} />

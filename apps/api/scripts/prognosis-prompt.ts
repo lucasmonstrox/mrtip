@@ -955,17 +955,29 @@ const totalTeams = zoneRows.length
 // Conference), o que inflava a contagem. As vagas POR POSIÇÃO são as zonas coladas do topo (Europa) /
 // do fundo (Z) até o primeiro buraco. Ordena por posição e conta até a sequência quebrar.
 const byPos = [...zoneRows].sort((a, b) => a.position - b.position)
-const isEuro = (z: string | null) => z === "champions" || z === "europa" || z === "conference"
+// As duas linhas continentais são POR CONFEDERAÇÃO, não por nome de competição: a de cima é o torneio
+// principal (UEFA Champions / CONMEBOL Libertadores, incluindo a fase pré) e a de baixo é a última vaga
+// continental de qualquer torneio (Europa/Conference / Sudamericana). Sem o ramo CONMEBOL, a contagem
+// dava ZERO no Brasileirão e TODO time fora do Z virava "sem alvo" — foi o que rotulou o Grêmio 11º
+// (dentro da zona de Sudamericana, decidindo vaga na última rodada) como desmotivado.
+const isTopContinental = (z: string | null) => z === "champions" || z === "libertadores" || z === "libertadores-qualifiers"
+const isContinental = (z: string | null) => isTopContinental(z) || z === "europa" || z === "conference" || z === "sudamericana"
 let championsCount = 0
 for (const r of byPos) {
-  if (r.zone === "champions") championsCount += 1
+  if (isTopContinental(r.zone)) championsCount += 1
   else break
 }
 let europeanCount = 0
 for (const r of byPos) {
-  if (isEuro(r.zone)) europeanCount += 1
+  if (isContinental(r.zone)) europeanCount += 1
   else break
 }
+// Vocabulário da liga: o prompt vai pra uma LLM e pro relatório que o João lê — chamar a vaga do
+// Brasileirão de "Champions" polui a leitura. Deriva do que a própria tabela usa como zona.
+const isConmebol = byPos.some((r) => r.zone === "libertadores" || r.zone === "sudamericana" || r.zone === "libertadores-qualifiers")
+const CUP_TOP = isConmebol ? "Libertadores" : "Champions"
+const CUP_ANY = isConmebol ? "vaga na Sudamericana" : "vaga europeia"
+const CUP_ANY_ADJ = isConmebol ? "vaga continental" : "vaga europeia"
 let relegationCount = 0
 for (let i = byPos.length - 1; i >= 0; i--) {
   if (byPos[i]?.zone === "relegation") relegationCount += 1
@@ -1038,10 +1050,23 @@ function contestersFor(teamId: string): string[] {
 // ⇔ guaranteedAbove ≥ K. Daí saem: seguro/ameaçado de rebaixamento, ainda-pode/já-era p/ campeão,
 // Champions e vaga europeia. A `intensity` orienta a direção do xG: "alta" = precisa de pontos (ataca),
 // "baixa" = nada em jogo (afrouxa).
-function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "media" | "baixa"; verdict: string; lines: string[]; pushes: boolean } {
+// `pushes` vai pra cima · `administers` defende algo (trava) · `dead` não tem o que defender (entrega)
+// · `neutral` temporada em aberto. Os três últimos são jeitos DIFERENTES de não atacar — ver intentHeadline.
+type Stakes = {
+  intensity: "alta" | "media" | "baixa"
+  verdict: string
+  lines: string[]
+  pushes: boolean
+  administers: boolean
+  dead: boolean
+  neutral: boolean
+}
+function stakesFor(teamId: string, teamName: string): Stakes {
   const b = boundOf(teamId)
   const pos = posOf(teamId)
-  if (!b || pos == null) return { intensity: "media", verdict: "sem foto de tabela", lines: [], pushes: false } // sem jogos pré-cutoff
+  // sem jogos pré-cutoff: nada a afirmar — `neutral` pra não virar assimetria falsa no veredito do jogo.
+  if (!b || pos == null)
+    return { intensity: "media", verdict: "sem foto de tabela", lines: [], pushes: false, administers: false, dead: false, neutral: true }
   const gr = gamesRemaining(teamId)
   const N = totalTeams, R = relegationCount, C = championsCount, Q = europeanCount
   const above = canFinishAbove(teamId) // podem passar
@@ -1054,14 +1079,41 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   const relegationSafe = R ? above < N - R : true // garante terminar fora do Z
   const relegationDoomed = R ? lost >= N - R : false // já no fundo, matematicamente caído
   const titleClinched = above === 0
-  const titlePossible = !titleClinched && lost === 0
   const championsClinched = C ? above < C : false
-  const canChampions = C ? lost < C : false
   const europeanClinched = Q ? above < Q : false
-  const canEuropean = Q ? lost < Q : false
+
+  // ---- Gate de PLAUSIBILIDADE (o bloco todo só vale se a corrida for real) ----
+  // "Matematicamente possível" é VERDADE VAZIA no meio da temporada: a 20 rodadas do fim sobram 60 pts,
+  // então o lanterna "ainda pode ser campeão" e o vice "ainda pode cair" — os dois saíam como fato no
+  // prompt. Duas travas:
+  // (1) ALCANCE REALISTA: virar 3 pts/jogo (eu ganho tudo E o rival perde tudo) é fantasia. O swing
+  //     plausível é ~metade disso — já um ritmo extremo sustentado por muitas rodadas.
+  // (2) BRIGA = PROXIMIDADE, não alcançabilidade: quem briga contra o Z é quem está NA zona ou colado
+  //     nela, não todo mundo que ainda não é matematicamente seguro. Espelha o critério de posição que
+  //     o `statusAsOf` já usa no log de forma (`pos >= N - RELEG - 2` → briga-Z).
+  const plausibleSwing = 1.5 * gr
+  const NEAR_POS = 3 // posições da linha que ainda contam como "colado nela"
+  const NEAR_PTS = 6 // e no máximo duas vitórias de distância em pontos
+  const ptsAtPos = (p: number) => (p >= 1 && p <= table.length ? (table[p - 1]?.points ?? 0) : 0)
+  const safetyPos = N - R // última posição segura
+  const inDropZone = R > 0 && pos > safetyPos
+  const nearDrop = R > 0 && !inDropZone && pos > safetyPos - NEAR_POS && b.pts - ptsAtPos(safetyPos) <= NEAR_PTS
+  const inDropFight = !relegationDoomed && (inDropZone || nearDrop)
+  const inContZone = Q > 0 && pos <= Q
+  const nearCont = Q > 0 && !inContZone && pos <= Q + NEAR_POS && ptsAtPos(Q) - b.pts <= NEAR_PTS
+  // Alvos só são "vivos" se couberem no swing plausível — mata o "Libertadores possível" pra 20 times.
+  // E quem está na briga de baixo NÃO persegue alvo lá em cima: o lanterna com 9 pts saía como "luta
+  // contra o rebaixamento" E "Libertadores ao alcance" no mesmo bloco. Apaga-se o fogo mais perto.
+  const titlePossible = !inDropFight && !titleClinched && lost === 0 && ptsAtPos(1) - b.pts <= plausibleSwing
+  const canChampions = C && !inDropFight ? lost < C && (pos <= C || ptsAtPos(C) - b.pts <= plausibleSwing) : false
+  const canEuropean = Q && !inDropFight ? lost < Q && (inContZone || nearCont || ptsAtPos(Q) - b.pts <= plausibleSwing) : false
+  // Nada resolvido em NENHUMA ponta: não é briga de Z, não persegue alvo plausível, e ainda não está
+  // matematicamente salvo/garantido. É o estado normal do meio de temporada — e a resposta honesta é
+  // "a tabela não diferencia este jogo", não escolher um dos rótulos extremos.
+  const undecided = !relegationDoomed && !titleClinched && !inDropFight && !titlePossible && !canChampions && !canEuropean
   // Intenção fina ANTI-Z: o que o time precisa NESTE jogo pra travar a permanência? Empate basta
   // (contenta-se) vs só vencendo (precisa ir pra cima). canFinishAboveWith soma os pontos do cenário.
-  const fightingDownNow = R > 0 && !relegationSafe && !relegationDoomed
+  const fightingDownNow = R > 0 && inDropFight
   const drawSecuresStay = fightingDownNow && canFinishAboveWith(teamId, 1) < N - R
   const winSecuresStay = fightingDownNow && !drawSecuresStay && canFinishAboveWith(teamId, 3) < N - R
   // "Empate basta" = o time TRAVA o objetivo dele empatando → tende a ADMINISTRAR, não a se lançar (mata o over).
@@ -1073,17 +1125,31 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   if (relegationDoomed) lines.push("já REBAIXADO matematicamente — sem objetivo de tabela.")
   else if (drawSecuresStay) lines.push("ainda não salvo, mas **um empate NESTE jogo já garante a permanência** — tende a jogar pra não perder, não a se lançar.")
   else if (winSecuresStay) lines.push("AINDA PODE CAIR — e **só uma vitória** garante a permanência neste jogo; precisa ir pra cima.")
-  else if (!relegationSafe) lines.push("AINDA PODE CAIR — luta direta contra o rebaixamento, precisa pontuar.")
-  else lines.push("já SEGURO do rebaixamento.")
+  else if (inDropFight) lines.push("AINDA PODE CAIR — luta direta contra o rebaixamento, precisa pontuar.")
+  else if (relegationSafe) lines.push("já SEGURO do rebaixamento.")
+  else
+    lines.push(
+      `sem risco de queda hoje: ${pos}º, ${b.pts - ptsAtPos(safetyPos)} pts acima da linha de segurança (${gr} jogos, ${3 * gr} pts em disputa) — matematicamente indefinido, mas NÃO é briga dele.`,
+    )
   if (titleClinched) lines.push("título já garantido.")
   else if (titlePossible) lines.push("ainda pode ser CAMPEÃO — precisa vencer.")
-  if (championsClinched) lines.push(`vaga de Champions ${lockWord} garantida.`)
-  else if (canChampions) lines.push("Champions ainda matematicamente possível.")
-  else if (europeanClinched) lines.push(`vaga europeia ${lockWord} garantida.`)
-  else if (canEuropean) lines.push("vaga europeia ainda matematicamente possível.")
+  if (championsClinched) lines.push(`vaga de ${CUP_TOP} ${lockWord} garantida.`)
+  else if (C && pos <= C) lines.push(`está NA zona de ${CUP_TOP} (${pos}º) — defendendo a vaga, ainda não garantida.`)
+  else if (canChampions) lines.push(`${CUP_TOP} ao alcance (${ptsAtPos(C) - b.pts} pts da linha).`)
+  else if (europeanClinched) lines.push(`${CUP_ANY_ADJ} ${lockWord} garantida.`)
+  else if (inContZone) lines.push(`está NA zona de ${CUP_ANY_ADJ} (${pos}º) — defendendo a vaga, ainda não garantida.`)
+  else if (canEuropean) lines.push(`${CUP_ANY} ao alcance (${ptsAtPos(Q) - b.pts} pts da linha).`)
   else if (relegationSafe && !titlePossible) lines.push("sem alvo continental alcançável.")
+  // Estado normal do meio de temporada: nada resolvido em ponta nenhuma. Dizer isso explicitamente é o
+  // que impede o modelo de inventar assimetria de motivação onde não há.
+  if (undecided)
+    lines.push(
+      `**nada decidido na tabela ainda** (${gr} jogos, ${3 * gr} pts em disputa): não briga contra o Z nem persegue alvo ao alcance — a tabela NÃO é fator de motivação neste jogo.`,
+    )
 
-  const fightingDown = !relegationSafe && !relegationDoomed
+  // Briga por baixo = está NA zona ou colado nela (proximidade), não "ainda não é matematicamente
+  // seguro" — que no meio da temporada vale pro vice-líder e transformava ele em candidato à queda.
+  const fightingDown = inDropFight
   const chasingUpRaw = titlePossible || (canChampions && !championsClinched) || (canEuropean && !europeanClinched)
 
   // Distância de SALDO até a linha da zona perseguida. Quando o time só alcança a vaga EMPATANDO em
@@ -1110,6 +1176,7 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
     relegationDoomed ? "baixa"
     : drawSecuresStay ? "media" // contenta-se com empate: 1 ponto trava a permanência
     : fightingDown || chasingUp ? "alta"
+    : undecided ? "media" // nada resolvido: a tabela não empurra nem segura — neutro, não "baixa"
     : relegationSafe || chasingUpRaw ? "baixa"
     : "media"
 
@@ -1117,14 +1184,15 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
   const reason =
     drawSecuresStay ? "contenta-se com o EMPATE — 1 ponto garante a permanência (joga pra não perder)"
     : fightingDown ? "luta contra o rebaixamento"
+    : undecided ? "temporada em aberto — a tabela não diferencia este jogo (leia por forma/qualidade)"
     : chasingUp && titlePossible ? "briga pelo título"
-    : chasingUp && canChampions && !championsClinched ? "briga por vaga de Champions"
-    : chasingUp && canEuropean && !europeanClinched ? "briga por vaga europeia"
+    : chasingUp && canChampions && !championsClinched ? `briga por vaga de ${CUP_TOP}`
+    : chasingUp && canEuropean && !europeanClinched ? `briga por ${CUP_ANY_ADJ}`
     : chasingUpRaw && !chaseViable ? "alvo continental matematicamente vivo mas REMOTO (saldo) — quase nada a jogar"
     : relegationDoomed ? "já rebaixado"
     : titleClinched ? "título já garantido"
-    : championsClinched ? `Champions ${lockWord} garantida`
-    : europeanClinched ? `vaga europeia ${lockWord} garantida`
+    : championsClinched ? `${CUP_TOP} ${lockWord} garantida`
+    : europeanClinched ? `${CUP_ANY_ADJ} ${lockWord} garantida`
     : "já seguro e sem alvo alcançável"
   const verdict =
     intensity === "alta" ? `PRECISA LUTAR — ${reason}`
@@ -1142,14 +1210,25 @@ function stakesFor(teamId: string, teamName: string): { intensity: "alta" | "med
       const lock =
         stillAfterDraw === 0
           ? `pro ${nameOf(teamId)} **um empate basta** (vai a ${drawPts}, fora do alcance) — só perde a vaga se PERDER`
-          : `o ${nameOf(teamId)} **precisa vencer** pra travar (empate ainda deixa ${stillAfterDraw} rival vivo)`
-      lines.push(`disputa pela vaga (${pos}º): ${lock}. Quem ainda ameaça → ${contesters.join("; ")}`)
+          : `o ${nameOf(teamId)} **precisa vencer** pra travar (empate ainda deixa ${stillAfterDraw} ${stillAfterDraw === 1 ? "rival vivo" : "rivais vivos"})`
+      // Teto de 4 nomes: no meio da temporada TODO time abaixo "ainda alcança", e a lista crua despejava
+      // 18 concorrentes (~1500 caracteres de ruído) num prompt onde cada linha deve carregar sinal.
+      const MAX_CONTESTERS = 4
+      const shown = contesters.slice(0, MAX_CONTESTERS)
+      const rest = contesters.length - shown.length
+      const tail = rest > 0 ? `; +${rest} atrás (perseguição remota, ${gr} jogos pra fechar)` : ""
+      lines.push(`disputa pela vaga (${pos}º): ${lock}. Quem ainda ameaça → ${shown.join("; ")}${tail}`)
     }
   }
   // pushes = de fato vai PRA CIMA neste jogo: precisa de pontos (alta) E um empate NÃO trava o objetivo.
   // Time garantido/rebaixado/remoto (baixa/media) ou que "empate basta" (administra) → pushes=false.
   const pushes = intensity === "alta" && !drawSuffices
-  return { intensity, verdict, lines, pushes }
+  // Os três jeitos de NÃO ir pra cima são fisicamente diferentes e o veredito de jogo precisa separá-los:
+  // `administers` DEFENDE algo (arma o ferrolho → trava o jogo), `dead` não tem o que defender (tende a
+  // ENTREGAR quando pressionado, não a travar) e `neutral` é o meio de temporada sem decisão de tabela.
+  const administers = drawSuffices || (intensity !== "alta" && !relegationDoomed && !undecided && (relegationSafe || championsClinched || europeanClinched || titleClinched))
+  const dead = relegationDoomed || (intensity === "baixa" && !administers)
+  return { intensity, verdict, lines, pushes, administers, dead, neutral: undecided }
 }
 
 type Timing = Awaited<ReturnType<typeof timing>>
@@ -1227,9 +1306,23 @@ const awayStakes = stakesFor(away.id, away.name)
 // assimétrica/travada" (≥1 lado administra, está garantido ou rebaixado → quem precisa pode não furar o
 // ferrolho → NÃO favoreça over/goleada por inércia estatística).
 const bothPush = homeStakes.pushes && awayStakes.pushes
-const intentHeadline = bothPush
-  ? "🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui."
-  : "⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado NÃO precisa ir pra cima (já garantido, rebaixado, sem alvo, ou **um empate basta** → ADMINISTRA). O lado que precisa pode NÃO furar o ferrolho, e quem administra segura o jogo. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico."
+// O veredito ERA binário (os dois vão / assimétrico→trava) e isso colapsava dois cenários OPOSTOS num
+// rótulo só. "Um lado ADMINISTRA" (defende vaga/permanência) arma ferrolho e TRAVA o jogo; "um lado está
+// MORTO" (rebaixado, sem nada a defender) não arma nada — quando o outro precisa, ele costuma ENTREGAR.
+// Caso real que expôs isso: Sport (já rebaixado) 0-4 Grêmio, com o prompt mandando preferir under.
+// E no meio da temporada, sem nada decidido, a tabela simplesmente não é fator — nem pra over nem pra under.
+const pushingSide = homeStakes.pushes ? "mandante" : awayStakes.pushes ? "visitante" : null
+const deadSide = homeStakes.dead ? "mandante" : awayStakes.dead ? "visitante" : null
+const oneDeadOnePushing = pushingSide != null && deadSide != null && pushingSide !== deadSide
+const bothNeutral = homeStakes.neutral && awayStakes.neutral
+const intentHeadline =
+  bothPush ?
+    "🔥 **VEREDITO DE INTENÇÃO: OS DOIS PRECISAM IR PRA CIMA** (nenhum se contenta com empate) → o jogo tende a ABRIR. Over / handicap de quem ataca / team_total GANHAM peso — aposta de gol é COERENTE aqui."
+  : oneDeadOnePushing ?
+    `💀 **VEREDITO DE INTENÇÃO: UM LADO MORTO, O OUTRO PRECISA** — o ${deadSide} não tem NADA em jogo (rebaixado / garantido / sem alvo) e o ${pushingSide} precisa de pontos. Isto **NÃO é jogo travado**: quem não tem o que defender não arma ferrolho — costuma ceder cedo e, tomando o primeiro gol, ENTREGAR (o placar abre em vez de fechar). **NÃO** force under por causa da assimetria; o cenário mais provável é vitória e volume do lado motivado. Handicap / team_total do lado que precisa são coerentes; o que NÃO se banca é o lado morto reagir (evite btts e apostas que dependam do desmotivado marcar).`
+  : bothNeutral ?
+    "⚪ **VEREDITO DE INTENÇÃO: NEUTRO** — nada decidido na tabela pros dois lados (temporada em aberto), então a motivação **não diferencia** este jogo: não é argumento nem pra over nem pra under. Decida por forma, qualidade, mando, desfalques e estilo — e **não invente** assimetria de intenção que os dados não mostram."
+  : "⚠️ **VEREDITO DE INTENÇÃO: ASSIMÉTRICA / JOGO TENDE A TRAVAR** — pelo menos um lado ADMINISTRA (defende vaga/permanência, ou **um empate basta**). Quem administra arma o ferrolho e segura o jogo, e o lado que precisa pode NÃO furar. **NÃO** favoreça over / goleada / handicap de mando por inércia estatística — prefira UNDER ou mercado de MENOR variância (team_total over 0.5 do lado que precisa, dupla chance), OU rebaixe a confiança. Foi exatamente neste tipo de jogo que a leitura puramente estatística mais errou no histórico."
 
 // ---- Momentum / fluxo de jogo dos últimos 5 (SIN-021) ----
 // Reusa o buildMomentum canônico (delta+pesos+EMA, period-aware): pra cada jogo PASSADO do time, mede o
@@ -1276,8 +1369,12 @@ const standingsAsOf = (dateStr: string): Map<string, AsOf> => {
 }
 // "Já estava classificado/decidido?" de um time AO ENTRAR num jogo — JUSTIFICA o resultado (quem já está salvo
 // e sem alvo afrouxa; quem briga pra não cair se mata). Condições CONSERVADORAS (só rotula o que é claro).
-// PL: 3 caem, ~7 pegam Europa, 38 rodadas. maxGain = 3 × jogos restantes do time.
-const ROUNDS = 38, RELEG = 3, EUROPE = 7
+// Nº de vagas vem da tabela oficial da PRÓPRIA liga (3 caem na PL, 4 no Brasileirão; 7 pegam Europa lá,
+// 12 pegam Sudamericana aqui) — hardcodar a regra da PL rotulava time brasileiro na briga como decidido.
+// ROUNDS sai do calendário real (jogos por time), não do 38 fixo. maxGain = 3 × jogos restantes do time.
+const ROUNDS = totalTeams ? (totalTeams - 1) * 2 : 38
+const RELEG = relegationCount || 3
+const EUROPE = europeanCount || 7
 const statusAsOf = (id: string, dateStr: string): string => {
   const st = standingsAsOf(dateStr)
   const me = st.get(id)
@@ -1757,7 +1854,7 @@ Armadilhas que a CoVe existe pra pegar: número citado de um bloco errado (seaso
 
 ## Tabela e motivação (pré-jogo — recomputada só com jogos antes de ${CUTOFF})
 - ${home.name}: ${posOf(home.id) ?? "?"}º, ${lineOf(home.id)?.points ?? 0} pts · ${away.name}: ${posOf(away.id) ?? "?"}º, ${lineOf(away.id)?.points ?? 0} pts
-- Linhas: segurança (sair do Z) ${safetyLinePts ?? "?"} pts (${totalTeams - relegationCount}º) · Champions ${championsLinePts ?? "?"} pts (${championsCount}º) · última vaga europeia ${europeanLinePts ?? "?"} pts (${europeanCount}º)
+- Linhas: segurança (sair do Z) ${safetyLinePts ?? "?"} pts (${totalTeams - relegationCount}º) · ${CUP_TOP} ${championsLinePts ?? "?"} pts (${championsCount}º) · última ${CUP_ANY_ADJ} ${europeanLinePts ?? "?"} pts (${europeanCount}º)
 - **Motivação de cada lado** (quem PRECISA vencer tende a atacar → +xG ofensivo / -solidez defensiva; quem não tem nada em jogo tende a baixar a intensidade → -xG do jogo todo). Pondere a direção:
 ${homeStakes.lines.map((s) => `  - ${s}`).join("\n")}
 ${awayStakes.lines.map((s) => `  - ${s}`).join("\n")}

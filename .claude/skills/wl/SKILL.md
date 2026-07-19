@@ -21,7 +21,13 @@ Leia `$ARGUMENTS` e decida o modo. Na dúvida entre "adicionar" e outra coisa, *
 | `drop <W-ID>`, `descarta`, `não quero mais` | **drop** | §3 |
 | `promote <W-ID>`, "vira feature", "bora fazer" | **promote** | §4 |
 
-Sempre comece lendo `docs/wishlist.md` inteiro (é pequeno) — você precisa do estado atual e do maior `W-NNN` usado pra qualquer modo que escreva.
+Sempre comece se situando em `docs/wishlist.md` — você precisa do estado atual pra qualquer modo que escreva. O arquivo aqui já passou de 180KB: **não o leia inteiro por reflexo** (é o mecanismo do context rot). `Grep` o tema pra achar as entradas vizinhas e leia só a faixa relevante; leitura integral só quando o modo exigir o panorama (`list`).
+
+**O maior `W-NNN` sai de comando, nunca de leitura.** O arquivo é ordenado por desejo (🔥→✨→💤), não por número: as entradas novas ficam no topo e os IDs maiores moram no fim. Nada valida unicidade (`bun run features check` só olha `docs/features/`), e ID reusado torna os wikilinks `[[W-NNN]]` ambíguos pra sempre.
+
+```sh
+grep -o "^### W-[0-9]*" docs/wishlist.md | sed 's/.*W-//' | sort -n | tail -1   # próximo = esse + 1
+```
 
 ## 1. Add — capturar e ENRIQUECER (o coração da skill)
 

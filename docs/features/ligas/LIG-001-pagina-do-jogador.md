@@ -14,6 +14,7 @@ testes:
   - "P1 (2026-06-28): assert no banco — getPlayerDetail(James Garner) = 38 appearances, gols dobrados por partida (2) == gols da season (2); E2E Chrome /players/:id renderiza 38 linhas com nota/min/G-A, 0 erro de console"
   - "P7 (2026-07-03): assert no banco — getPlayerDetail(artilheiro PL) devolve minuteEvents por tipo com 0 minutos nulos e avgMinutes preenchido; UI NÃO verificada no Chrome (chrome-devtools travado pelo profile)"
   - "P8 (2026-07-03): assert no banco — seasonTeamGames=38 (36 played + 2 missed), appearances=36 com KP em 17 e SoT em 29 (null SportMonks = 0); UI NÃO verificada no Chrome (chrome-devtools travado pelo profile)"
+  - "P9 (2026-07-03): assert no banco — getPlayerDetail expandido pra campanha via concurrentSeasonIds: jogador com mais lineups de copa devolveu 47 appearances (35 PL + 6 Carabao + 6 FA Cup), seasonTeamGames=50 (12 de copa), switcher só com seasons PL (25583, 23614); UI NÃO verificada no Chrome (chrome-devtools travado pelo profile)"
 depende_de: []
 impacta: [LIG-003]
 ancoras:
@@ -43,6 +44,7 @@ Transformar a página do jogador (hoje stub: nome + gols/assists/jogos-fora + li
 - [ ] P5 ui — strip de forma + consistência **pendentes**; ✅ gráfico de notas (ECharts) + ✅ gráfico de minutos por partida (ECharts) (2026-06-28)
 - [ ] P6 api+ui — disciplina (cartões) + disponibilidade (lesões) + bio do header (idade/altura/nacionalidade/posição) — **bio ✅ (2026-06-28); cartões/lesões pendentes**
 - [x] P7 api+ui (2026-07-03) — relógio 0–90' "Em que minuto ele decide": `minuteEvents` (gol/assist/cartão com minuto exato, oponente via appearance da mesma partida) no `getPlayerDetail` + scatter ECharts (1 ponto por evento no minuto exato, lanes anti-sobreposição, markLine HT, chips de filtro por tipo) em `minute-clock.tsx`; e `season.avgMinutes` (média de minutos por jogo jogado) exibido no card Temporada + header do gráfico de minutos
+- [x] P9 api (2026-07-03) — escopo de campanha: `getPlayerDetail` expande o `seasonId` da liga pra `concurrentSeasonIds` (mesmo startYear, todas as competições) em TODAS as queries (totais, goalRows, appearances, assists, cartões, agregado de stats), `getRecentTeamGames` passou de `{seasonId}` pra `{seasonIds}` (strip da temporada inclui copas) e `seasonsOfPlayer` filtra `league.type = "league"` (season de copa não duplica o ano no switcher nem 404a no resolveSeason)
 - [x] P8 api+ui (2026-07-03) — pacote de widgets de temporada: `PlayerAppearance` ganhou keyPasses/shotsOnTarget/shotsTotal por jogo; `seasonTeamGames` (getRecentTeamGames generalizada com {seasonId, limit}) pro strip; UI: "Temporada em resumo" (tiles com sparkline últimos 10 + per-90, `season-summary.tsx`), "Rating jogo a jogo" (heat-strip com célula não-jogou → link pro jogo, `rating-strip.tsx`), "Curva de forma" (KP/SoT por jogo + média móvel 5 + média season, null SportMonks = 0, `form-curve.tsx`), "G+A acumulados" (step, `cumulative-ga.tsx`), "Casa × fora per-90" (`home-away-split.tsx`) e colunas PC/CG no match-log
 
 ## Plano

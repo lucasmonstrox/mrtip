@@ -28,16 +28,17 @@ Se uma premissa cair durante o /i: PARAR, atualizar este Plano com a divergênci
 
 ### Passos
 
-**P1 [dados+api] esqueleto** — `packages/.../arquivo.ts`, rota/handler backend: <o que muda — intenção (criar/alterar/reusar), não código>. Prova: `<comando literal>` → <saída esperada>.
+**P1 [dados+api] esqueleto** — `apps/api/src/modules/<módulo>/<verbo>-<substantivo>/`, rota registrada em `app.ts`: <o que muda — intenção (criar/alterar/reusar), não código>. Regras: <texto condensado das regras de estrutura do CLAUDE.md que ESTE passo toca — pasta-por-endpoint / routes fino / TypeBox no Elysia / `type` não `interface` / centavos / fuso pinado — colado, não linkado>. Don't: <lista dos erros concretos que a função inserida NÃO deve cometer — efeitos colaterais proibidos, responsabilidades de outros símbolos, atalhos que violam convenção, casos que ela não trata de propósito; texto colado, nunca só link de regra>. Prova: `<comando literal>` → <saída esperada>.
 **P2 [ia] (depende: P1)** — motor quant/LLM do assistente: <...>. Falha provável: <gotcha conhecido da área + correção em 1 linha>. Prova: `<comando>` → <saída>.
 **P3 [ui] [PENDENTE-DONO: <pergunta>]** — `apps/web/...`: <o /i pula este passo até a resposta; os demais seguem>.
 
 ### Verificação final
 
-<Entradas FUTURAS do campo `testes:`, com nomes reais — não categorias:>
-- `bun run typecheck` limpo
-- script/teste nominal (ex: `packages/<pkg>/src/<x>.test.ts`, ou E2E Chrome do golden path) → N/N
-- golden path no Chrome passo a passo: <1. navegar… 2. clicar… 3. observar…>
+<Entradas FUTURAS do campo `testes:`, com nomes reais — não categorias. Cobre TODA faceta tocada nas camadas aplicáveis (ver SKILL §5 "Testes em camadas"):>
+- `bun run typecheck` limpo (raiz)
+- **API/dados** (se tocou `dados`/`api`): script bun ad-hoc / `fetch` contra o dev server em `<path real>` → N/N — casos: <happy, borda, erro>; assert direto no banco quando o efeito não aparece no HTTP. (Não existe runner de unidade no repo — não invente `bun test`.)
+- **Browser real (chrome-devtools MCP)** (se tocou `ui` — teste PRIMÁRIO): roteiro completo no dossiê §Testes (escada: erros/validação → variantes/bordas → golden path por último), cada cenário com passos + assert observável; fechamento com `list_console_messages` sem erro novo e `list_network_requests` sem falha. Referencie: "roteiro: dossiê §Testes, cenários T1..Tn". MCP não atacha → declare, não afirme que funciona.
+- **E2E Playwright complementar** (se tocou `ui` e o fluxo justificar): `cd apps/web && bun run test:e2e` (specs em `apps/web/e2e/`, dev :3211) → N/N — specs: <nomes>; login exige `.env.e2e`, sem as chaves dá skip (declare em vez de contar como verde).
 - re-teste da lista do `features impact` + callers do `codebase_impact`
 - último passo SEMPRE: subagent em contexto fresco revisa o diff contra os critérios A1..An — reporta só gap de requisito/correção (não estilo); diff fora dos paths deste plano = achado
 
