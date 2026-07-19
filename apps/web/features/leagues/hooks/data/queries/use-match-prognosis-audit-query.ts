@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query"
 import { api } from "@/shared/api/eden"
 
 /**
- * Audit dossier of a match's latest prognosis run: the model's reasoning chain, the evidence prompt it
- * received and the raw output. Payload is heavy (~100KB), so `enabled` is tied to the panel being OPEN —
- * it must never fire on a normal visit to the Prognóstico tab. @feature MOD-011
+ * Reasoning chain of a match's latest prognosis run, for auditing why the engine picked that bet. The text
+ * runs 20k-41k chars (~25KB payload), so `enabled` is tied to the panel being OPEN — it must never fire on
+ * a normal visit to the Prognóstico tab. The evidence prompt is NOT part of this payload (D7). @feature MOD-011
  */
 export function useMatchPrognosisAuditQuery(id: string, open: boolean) {
   return useQuery({

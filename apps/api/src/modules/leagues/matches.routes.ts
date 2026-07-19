@@ -76,7 +76,7 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/prognosis/audit", ({ params, query }) => getPrognosisAudit(params.id, query.runId), {
     params: paramId,
     query: prognosisAuditQuery,
-    detail: { summary: "Heavy audit dossier of a prognosis run (reasoning, prompt, raw output); null when none" },
+    detail: { summary: "Reasoning chain of a prognosis run (audit); null when none. Never exposes the prompt" },
   })
   .get("/:id/commentaries", ({ params }) => matchCommentaries(params.id), {
     params: paramId,

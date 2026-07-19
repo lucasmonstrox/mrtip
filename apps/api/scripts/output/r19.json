@@ -1,0 +1,384 @@
+[
+  {
+    "date": "2026-07-21",
+    "time": "19:30",
+    "home": {
+      "name": "Atlético Mineiro",
+      "short": "AMN",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/atletico-mineiro-3427.png"
+    },
+    "away": {
+      "name": "Bahia",
+      "short": "BAH",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/bahia-692.png"
+    },
+    "runs": [
+      {
+        "xgHome": 1.7000000476837158,
+        "xgAway": 1.399999976158142,
+        "total": 3.0999999046325684,
+        "over25": 0.6000000238418579,
+        "btts": 0.6200000047683716,
+        "oneXTwo": {
+          "home": 0.42,
+          "draw": 0.26,
+          "away": 0.32
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Ambos os times precisam vencer, criando um jogo aberto e pressionado por gols.",
+          "Atlético Mineiro teve 51 dias de descanso, enquanto o Bahia jogou há 4 dias e viajou 981 km; frescor físico favorece o mandante no 2º tempo.",
+          "Desfalque de Renan Lodi enfraquece a defesa do Atlético, enquanto o Bahia apresenta consistência de marcar em 17 de 18 jogos na temporada."
+        ],
+        "bet": {
+          "market": "over_under",
+          "selection": "over",
+          "team": null,
+          "line": 2.5,
+          "conf": "medium",
+          "prob": 0.6000000238418579
+        }
+      },
+      {
+        "xgHome": 1.4500000476837158,
+        "xgAway": 1.75,
+        "total": 3.200000047683716,
+        "over25": 0.6499999761581421,
+        "btts": 0.7200000286102295,
+        "oneXTwo": {
+          "home": 0.33,
+          "draw": 0.27,
+          "away": 0.4
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Ambos os times precisam vencer e possuem alta motivação ofensiva, o que deve abrir o jogo.",
+          "O Atlético Mineiro está desfalcado na defesa (Renan Lodi e Iván Román), aumentando as chances de gols do Bahia.",
+          "O Bahia tem consistência altíssima de marcar (94% dos jogos) e sofrer, elevando a probabilidade de BTTS."
+        ],
+        "bet": {
+          "market": "btts",
+          "selection": "yes",
+          "team": null,
+          "line": null,
+          "conf": "medium",
+          "prob": 0.7200000286102295
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-07-22",
+    "time": "19:30",
+    "home": {
+      "name": "Coritiba",
+      "short": null,
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/coritiba-6285.png"
+    },
+    "away": {
+      "name": "Palmeiras",
+      "short": "PAL",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/palmeiras-3422.png"
+    },
+    "runs": [
+      {
+        "xgHome": 0.800000011920929,
+        "xgAway": 1.399999976158142,
+        "total": 2.200000047683716,
+        "over25": 0.4000000059604645,
+        "btts": 0.41999998688697815,
+        "oneXTwo": {
+          "home": 0.2,
+          "draw": 0.28,
+          "away": 0.52
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Desfalques ofensivos de ambos (Pedro Rocha, Allan, Vitor Roque) reduzem o potencial de gols",
+          "Defesa do Palmeiras é a melhor da liga (0.72 gols sofridos/j) e deve neutralizar o ataque do Coritiba",
+          "Palmeiras invicto nos últimos 5 jogos e com campanha fora de casa sólida, não deve perder para um Coritiba enfraquecido"
+        ],
+        "bet": {
+          "market": "double_chance",
+          "selection": "draw_away",
+          "team": null,
+          "line": null,
+          "conf": "medium",
+          "prob": 0.800000011920929
+        }
+      },
+      {
+        "xgHome": 0.949999988079071,
+        "xgAway": 1.9500000476837158,
+        "total": 2.9000000953674316,
+        "over25": 0.5799999833106995,
+        "btts": 0.6000000238418579,
+        "oneXTwo": {
+          "home": 0.22,
+          "draw": 0.25,
+          "away": 0.53
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Ambos os times com motivação máxima (brigam por título e Libertadores) → jogo aberto e propenso a gols.",
+          "Defesa do Coritiba frágil (5.06 SoT sofridos/j, save% 71) contra ataque eficiente do Palmeiras (média de 1.67 gols, 94% de jogos marcando).",
+          "Coritiba com 5/5 overs nos últimos 5 jogos, evidenciando propensão a placares elásticos."
+        ],
+        "bet": {
+          "market": "over_under",
+          "selection": "over",
+          "team": null,
+          "line": 2.5,
+          "conf": "medium",
+          "prob": 0.5799999833106995
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-07-22",
+    "time": "21:30",
+    "home": {
+      "name": "Chapecoense",
+      "short": null,
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/chapecoense-710.png"
+    },
+    "away": {
+      "name": "Flamengo",
+      "short": "FLA",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/flamengo-1024.png"
+    },
+    "runs": [
+      {
+        "xgHome": 0.800000011920929,
+        "xgAway": 2.4000000953674316,
+        "total": 3.200000047683716,
+        "over25": 0.6200000047683716,
+        "btts": 0.47999998927116394,
+        "oneXTwo": {
+          "home": 0.12,
+          "draw": 0.2,
+          "away": 0.68
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Motivação máxima de ambos os times: rebaixamento vs título, jogo tende a ser aberto.",
+          "Defesa do Chapecoense é a pior da liga (2.22 sofridos em casa) e desfalcada, potencializando o ataque do Flamengo.",
+          "Ataque do Flamengo tem média de 1.82 gols/j e enfrenta o lanterna, com Pedro e Samuel Lino em boa forma."
+        ],
+        "bet": {
+          "market": "team_total",
+          "selection": "over",
+          "team": "away",
+          "line": 1.5,
+          "conf": "medium",
+          "prob": 0.699999988079071
+        }
+      },
+      {
+        "xgHome": 0.699999988079071,
+        "xgAway": 2.4000000953674316,
+        "total": 3.0999999046325684,
+        "over25": 0.6000000238418579,
+        "btts": 0.44999998807907104,
+        "oneXTwo": {
+          "home": 0.14,
+          "draw": 0.2,
+          "away": 0.66
+        },
+        "confianca": "high",
+        "drivers": [
+          "Flamengo com 53 dias de descanso contra 5 da Chapecoense: frescor físico decisivo no 2º tempo.",
+          "Desfalques ofensivos da Chapecoense (João Paulo e Carvalheira) reduzem seu já baixo poder de fogo.",
+          "Defesa da Chapecoense frágil em casa (2.22 gols sofridos/j) contra ataque do Flamengo (1.67 gols marcados fora)."
+        ],
+        "bet": {
+          "market": "team_total",
+          "selection": "over",
+          "team": "away",
+          "line": 1.5,
+          "conf": "high",
+          "prob": 0.699999988079071
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-07-22",
+    "time": "21:30",
+    "home": {
+      "name": "Internacional",
+      "short": "INL",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/internacional-2696.png"
+    },
+    "away": {
+      "name": "Cruzeiro",
+      "short": "CRZ",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/cruzeiro-3371.png"
+    },
+    "runs": [
+      {
+        "xgHome": 1.7000000476837158,
+        "xgAway": 1.100000023841858,
+        "total": 2.799999952316284,
+        "over25": 0.5,
+        "btts": 0.550000011920929,
+        "oneXTwo": {
+          "home": 0.45,
+          "draw": 0.28,
+          "away": 0.27
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Desfalques defensivos múltiplos no Cruzeiro (Romero, João Marcelo, William) e goleiro com baixo save% (52%) aumentam expectativa de gols do Internacional.",
+          "Ambos os times em luta contra rebaixamento e precisando de vitória, elevando intensidade e chances de gol.",
+          "Timing de gols: ambos marcam e sofrem mais no 2º tempo, especialmente nos minutos finais, favorecendo over no jogo."
+        ],
+        "bet": {
+          "market": "over_under",
+          "selection": "over",
+          "team": null,
+          "line": 2.5,
+          "conf": "medium",
+          "prob": 0.5
+        }
+      },
+      {
+        "xgHome": 1.600000023841858,
+        "xgAway": 1,
+        "total": 2.5999999046325684,
+        "over25": 0.47999998927116394,
+        "btts": 0.550000011920929,
+        "oneXTwo": {
+          "home": 0.48,
+          "draw": 0.28,
+          "away": 0.24
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Ambos os times possuem alta motivação para vencer (Inter luta contra o rebaixamento, Cruzeiro almeja título e Libertadores), o que deve abrir o jogo e gerar oportunidades.",
+          "Cruzeiro desfalcado na defesa e meio-campo (Romero, William, João Marcelo), enfraquecendo a contenção e aumentando o volume ofensivo do Internacional.",
+          "Internacional em casa tem média elevada de finalizações no alvo (5.89 SoT/j) e conta com jogadores em boa fase ofensiva (Alan Patrick, Bernabei, Carbonero)."
+        ],
+        "bet": {
+          "market": "team_total",
+          "selection": "over",
+          "team": "home",
+          "line": 1.5,
+          "conf": "medium",
+          "prob": 0.4699999988079071
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-07-22",
+    "time": "21:30",
+    "home": {
+      "name": "São Paulo",
+      "short": "SAO",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/sao-paulo-3496.png"
+    },
+    "away": {
+      "name": "Athletico PR",
+      "short": "APR",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/athletico-pr-3432.png"
+    },
+    "runs": [
+      {
+        "xgHome": 1.2999999523162842,
+        "xgAway": 1,
+        "total": 2.299999952316284,
+        "over25": 0.4000000059604645,
+        "btts": 0.5,
+        "oneXTwo": {
+          "home": 0.4,
+          "draw": 0.3,
+          "away": 0.3
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Defesa do Athletico PR em grande fase: sofreu apenas 3 gols nos últimos 5 jogos (0.6 por jogo), com 3 clean sheets.",
+          "Ataque do São Paulo com baixa produção recente: apenas 1.2 gols por jogo nos últimos 5, e sem o goleiro titular Rafael.",
+          "Confronto de estilos: Athletico fora de casa é menos ofensivo (0.88 gols marcados), enquanto o São Paulo em casa tem média de 1.75 gols, mas a forma atual sugere um jogo mais truncado."
+        ],
+        "bet": {
+          "market": "over_under",
+          "selection": "under",
+          "team": null,
+          "line": 2.5,
+          "conf": "medium",
+          "prob": 0.6000000238418579
+        }
+      },
+      {
+        "xgHome": 1.2000000476837158,
+        "xgAway": 1.2999999523162842,
+        "total": 2.5,
+        "over25": 0.5,
+        "btts": 0.550000011920929,
+        "oneXTwo": {
+          "home": 0.33,
+          "draw": 0.35,
+          "away": 0.32
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Desfalques defensivos do São Paulo (goleiro e zagueiro) e do Athletico (lateral) aumentam fragilidade e chances de gols.",
+          "Alta motivação de ambos os times na briga por vaga na Libertadores, favorecendo jogo aberto.",
+          "Momentum de ambos: São Paulo sofre gols no fim, Athletico marca no fim, concentrando gols após 75 minutos."
+        ],
+        "bet": {
+          "market": "over_under",
+          "selection": "over",
+          "team": null,
+          "line": 2.5,
+          "conf": "medium",
+          "prob": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-07-23",
+    "time": "19:30",
+    "home": {
+      "name": "Corinthians",
+      "short": "CTH",
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/corinthians-303.png"
+    },
+    "away": {
+      "name": "Remo",
+      "short": null,
+      "logo": "https://pub-fe48d025c90f48428f377ce1b933d8dc.r2.dev/teams/remo-11550.png"
+    },
+    "runs": [
+      {
+        "xgHome": 1.399999976158142,
+        "xgAway": 1.100000023841858,
+        "total": 2.5,
+        "over25": 0.46000000834465027,
+        "btts": 0.5,
+        "oneXTwo": {
+          "home": 0.43,
+          "draw": 0.28,
+          "away": 0.29
+        },
+        "confianca": "medium",
+        "drivers": [
+          "Desfalque do goleiro titular do Remo (Marcelo Rangel) e entrada de Ivan, com apenas 1 jogo na temporada, fragilizando a defesa visitante.",
+          "Força defensiva do Corinthians em casa (0.89 gols sofridos/j) contra o ataque irregular do Remo fora de casa (4 de 9 jogos sem marcar).",
+          "Motivação máxima de ambos na luta contra o rebaixamento, forçando um jogo aberto, mas com vantagem do mando de campo."
+        ],
+        "bet": {
+          "market": "double_chance",
+          "selection": "home_draw",
+          "team": null,
+          "line": null,
+          "conf": "medium",
+          "prob": 0.7099999785423279
+        }
+      }
+    ]
+  }
+]

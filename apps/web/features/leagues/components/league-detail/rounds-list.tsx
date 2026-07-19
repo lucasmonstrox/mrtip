@@ -15,11 +15,14 @@ import {
   SelectValue,
 } from "@workspace/ui/components/select"
 import { Input } from "@workspace/ui/components/input"
+import { format } from "date-fns"
 import { Search, X } from "lucide-react"
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
 
 import { useLeagueRoundsQuery } from "../../hooks/data/queries/use-league-rounds-query"
+import { useRoundParam } from "../../hooks/ui/use-round-param"
+import { pickCurrentRound } from "../../utils/rounds"
 
 // Dobra acento e caixa para busca tolerante: "sao paulo" casa com "São Paulo",
 // "atletico" com "Atlético". Sem trim — preserva espaços/índices para o realce.
@@ -62,7 +65,9 @@ function highlight(name: string, q: string): ReactNode {
 
 export function RoundsList({ code }: { code: string }) {
   const { data: rounds, isPending, isError } = useLeagueRoundsQuery(code)
-  const [selected, setSelected] = useState<number | null>(null)
+  // The pick lives in `?round=` (not local state): Radix unmounts this tab, so state wouldn't
+  // survive coming back to it — which is the whole complaint this feature fixes.
+  const { round: selected, setRound } = useRoundParam()
   // Busca de time: destaca a linha do time procurado dentro da rodada. Fica fora do
   // estado da rodada de propósito — o realce persiste ao navegar entre rodadas.
   const [query, setQuery] = useState("")
@@ -71,7 +76,14 @@ export function RoundsList({ code }: { code: string }) {
   if (isError || !rounds)
     return <p className="text-sm text-destructive">Não foi possível carregar os rounds.</p>
 
-  const current = rounds.find((r) => r.round === selected) ?? rounds.at(-1)
+  // Default = the round being played now, not the last of the season. "Today" is the browser's
+  // LOCAL day (date-fns, never toISOString — that is UTC and drifts a day at night here), read
+  // after the isPending guard so the server render never sees a clock. A round picked in the URL
+  // that doesn't exist in this season falls back to the current one, not to the last.
+  const today = format(new Date(), "yyyy-MM-dd")
+  const fallback = pickCurrentRound(rounds, today)
+  const current =
+    rounds.find((r) => r.round === selected) ?? rounds.find((r) => r.round === fallback)
   if (!current) return <p className="text-sm text-muted-foreground">Sem rounds disponíveis.</p>
 
   const q = normalize(query)
@@ -108,7 +120,12 @@ export function RoundsList({ code }: { code: string }) {
               </button>
             ) : null}
           </div>
-          <Select value={String(current.round)} onValueChange={(v) => setSelected(Number(v))}>
+          {/* Picking the round that is already the default clears the param instead of writing it,
+              so a plain visit keeps a clean URL — same semantics as `?season=`. */}
+          <Select
+            value={String(current.round)}
+            onValueChange={(v) => setRound(Number(v) === fallback ? undefined : Number(v))}
+          >
             <SelectTrigger className="w-[140px]" size="sm">
               <SelectValue />
             </SelectTrigger>

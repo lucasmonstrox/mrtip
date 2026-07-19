@@ -21,6 +21,10 @@ export function useSeasonParam() {
       const params = new URLSearchParams(searchParams)
       if (next == null) params.delete("season")
       else params.set("season", String(next))
+      // A round number belongs to the season it was picked in, so switching season drops it and
+      // the list reopens on that season's current round. No-op on the team/player pages, which
+      // share this hook but have no `?round=`. @feature LIG-015
+      params.delete("round")
       const qs = params.toString()
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     },

@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-54 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+55 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -30,6 +30,7 @@
 | LIG-012 | Ingestão da Série A (Brasileirão) — segunda liga do produto | ligas | verificado | P1 | dados:verificado api:verificado ui:verificado | sim | LIG-008, LIG-011 |
 | LIG-013 | Série A 2026 ao vivo (sync incremental e resiliente) | ligas | ideia | P2 | dados:ideia | nao | LIG-012 |
 | LIG-014 | Home (hub da rodada) fora do mock e multi-liga | ligas | ideia | P2 | ui:ideia api:ideia | nao | LIG-012 |
+| LIG-015 | Rodada atual por padrão na aba Rodadas (com a escolha do usuário preservada) | ligas | em-andamento | P2 | ui:em-andamento | parcial | — |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -40,7 +41,7 @@
 | MOD-008 | Desgaste por sequência de jogos difíceis — dureza dos últimos 5 como evidência qualitativa no prompt vivo | modelos | em-andamento | P2 | ia:verificado | nao | MOD-004 |
 | MOD-009 | Espaçamento dos jogos na janela de forma — densidade do calendário ("5 jogos em 14 dias") no prognóstico | modelos | em-andamento | P2 | ia:verificado | nao | MOD-004, LIG-005, LIG-011 |
 | MOD-010 | Calibração do motor para a Série A (futebol brasileiro) | modelos | ideia | P2 | ia:ideia | nao | LIG-012 |
-| MOD-011 | Prognóstico completo na página — reasoning, verificação (CoVe) e prompt de evidências auditáveis | modelos | planejado | P1 | api:planejado ui:planejado | nao | MOD-004 |
+| MOD-011 | Raciocínio do prognóstico auditável na página (o prompt de evidências não é exposto — D7) | modelos | feito | P1 | api:feito ui:feito | parcial | MOD-004 |
 | SIN-001 | Sinal — conflitos entre jogadores | sinais | investigado | P3 | dados:investigado ia:investigado | nao | DOS-001 |
 | SIN-002 | Sinal — interesses de patrocinadores do jogador | sinais | investigado | P3 | dados:ideia ia:ideia | nao | DOS-001 |
 | SIN-003 | Sinal — mood / estado emocional do jogador | sinais | investigado | P3 | dados:ideia ia:ideia | nao | DOS-001 |
@@ -177,6 +178,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `/matches/:id/absence-impact` → LIG-007
 - `/matches/:id/commentaries` → LIG-010
 - `/matches/:id/prognosis` → MOD-004, MOD-011 ⚠️ compartilhada
+- `/matches/:id/prognosis/audit` → MOD-011
 - `/players/:id` → LIG-001
 - `/sign-in` → CORE-003
 - `/sign-up` → CORE-003
@@ -245,6 +247,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/planos/LIG-010-commentaries.md](../../docs/planos/LIG-010-commentaries.md) → LIG-010
 - [docs/planos/LIG-011-forma-cross-competition.md](../../docs/planos/LIG-011-forma-cross-competition.md) → LIG-011
 - [docs/planos/LIG-012-ingestao-serie-a-brasileirao.md](../../docs/planos/LIG-012-ingestao-serie-a-brasileirao.md) → LIG-012
+- [docs/planos/LIG-015-rodada-atual-por-padrao.md](../../docs/planos/LIG-015-rodada-atual-por-padrao.md) → LIG-015
 - [docs/planos/MOD-004-mercados-e-motor-prompt-vivo.md](../../docs/planos/MOD-004-mercados-e-motor-prompt-vivo.md) → MOD-004
 - [docs/planos/MOD-008-desgaste-sequencia-jogos-dificeis.md](../../docs/planos/MOD-008-desgaste-sequencia-jogos-dificeis.md) → MOD-008
 - [docs/planos/MOD-009-densidade-do-calendario-na-forma.md](../../docs/planos/MOD-009-densidade-do-calendario-na-forma.md) → MOD-009

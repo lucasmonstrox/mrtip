@@ -9,7 +9,9 @@ Base: commit `840566f` (2026-07-03) — todo file:line deste doc vale neste comm
 
 ## TL;DR
 
-Expor, sob demanda, o dossiê completo de uma run do motor de prognóstico na aba Prognóstico da página da partida: raciocínio do modelo, prompt de evidências que ele recebeu e saída crua. **Nada de schema novo** — `match_prognosis` já persiste `reasoning`, `prompt_text` e `raw_output` a cada run. A decisão central é de **arquitetura de payload**: o dossiê pesa ~100KB por run e por isso NÃO pode entrar no `/matches/:id/prognosis` (que a aba carrega em toda visita) — nasce como rota irmã dedicada, consumida só quando o usuário abre o painel.
+Expor, sob demanda, a **cadeia de raciocínio** de uma run do motor de prognóstico na aba Prognóstico da página da partida. **Nada de schema novo** — `match_prognosis` já persiste `reasoning` a cada run. A decisão central é de **arquitetura de payload**: o texto pesa 20k-41k caracteres e por isso NÃO pode entrar no `/matches/:id/prognosis` (que a aba carrega em toda visita) — nasce como rota irmã dedicada, consumida só quando o usuário abre o painel.
+
+> **Escopo revisado 2026-07-19 (D7/D8).** O plano original também expunha o `prompt_text` (~75KB) e o `raw_output`; o dono cortou os dois durante o `/i` — o prompt é o IP do motor. Ver §Decisões do dono. O texto abaixo que fala em "~100KB" e "dossiê completo" reflete o dimensionamento ORIGINAL e segue válido como registro do que motivou a rota separada.
 
 ## Briefing — o que já foi falado e decidido
 
@@ -83,9 +85,11 @@ As três viraram decisões registradas no `## Plano` da feature (D4/D5/D6). Resu
 `GET /v1/matches/:id/prognosis/audit` (uuid no param, mesmo `paramId` já usado nas sub-rotas). Sem `runId` → run mais recente (mesmo critério do `getPrognosis`: `orderBy(desc(runAt)).limit(1)`). Com `?runId=<uuid>` → aquela run.
 
 ```
-{ runId, model, reasoningEffort, runAt, reasoning, promptText, rawOutput,
+{ runId, model, reasoningEffort, runAt, reasoning,
   reasoningTokens, totalTokens, latencyMs }
 ```
+
+> **Revisado 2026-07-19 durante o `/i` (D7).** O shape original incluía `promptText` e `rawOutput`; o dono cortou os dois (*"é só pra retornar o reasoning, o prompt nunca, isso vale ouro"*). A proteção é a **coluna ausente do `select`** no service — não um filtro de UI, que vazaria pelo DevTools. Payload medido caiu de **106,9KB → 25,6KB**.
 
 `null` quando não há nenhuma run; 404 quando o match não existe (mesma semântica do irmão). Campos em inglês (regra do repo). Elysia no Workers: TypeBox (`t.Object`), **sem response schema**, `aot: false` — response schema aqui estoura 1101 no Workers.
 
