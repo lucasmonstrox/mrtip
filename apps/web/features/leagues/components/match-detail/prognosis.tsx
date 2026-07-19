@@ -270,8 +270,12 @@ export function Prognosis({
   const conf = CONF[data.confidence] ?? CONF.medium!
   return (
     <div className="flex flex-col gap-6">
-      {/* Aposta recomendada (leitura de sharp) — o destaque, no topo da aba */}
-      {data.bestBet ? <BestBetCard bet={data.bestBet} home={home} away={away} /> : null}
+      {/* Aposta recomendada (leitura de sharp) — o destaque, no topo da aba. O botão de auditoria mora
+          colado nela: o raciocínio é justamente o que sustenta essa aposta. @feature MOD-011 */}
+      <div className="flex flex-col gap-3">
+        {data.bestBet ? <BestBetCard bet={data.bestBet} home={home} away={away} /> : null}
+        <PrognosisAudit id={id} />
+      </div>
 
       {/* Geral */}
       <Card>
@@ -321,9 +325,6 @@ export function Prognosis({
         <TeamCard team={home} block={data.home} />
         <TeamCard team={away} block={data.away} />
       </div>
-
-      {/* Auditoria: raciocínio + prompt da run, carregados só ao abrir o painel. @feature MOD-011 */}
-      <PrognosisAudit id={id} />
     </div>
   )
 }
