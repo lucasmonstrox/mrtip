@@ -30,7 +30,7 @@
 | LIG-012 | Ingestão da Série A (Brasileirão) — segunda liga do produto | ligas | verificado | P1 | dados:verificado api:verificado ui:verificado | sim | LIG-008, LIG-011 |
 | LIG-013 | Série A 2026 ao vivo (sync incremental e resiliente) | ligas | ideia | P2 | dados:ideia | nao | LIG-012 |
 | LIG-014 | Home (hub da rodada) fora do mock e multi-liga | ligas | ideia | P2 | ui:ideia api:ideia | nao | LIG-012 |
-| LIG-015 | Rodada atual por padrão na aba Rodadas (com a escolha do usuário preservada) | ligas | em-andamento | P2 | ui:em-andamento | parcial | — |
+| LIG-015 | Rodada atual por padrão na aba Rodadas (com a escolha do usuário preservada) | ligas | feito | P2 | ui:feito | sim | — |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
