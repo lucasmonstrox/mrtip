@@ -1,4 +1,4 @@
-import { migrate } from "drizzle-orm/bun-sql/migrator"
+import { migrate } from "drizzle-orm/node-postgres/migrator"
 
 import { db } from "./client"
 import { env } from "../env"

@@ -1,5 +1,6 @@
 import { openapi } from "@elysiajs/openapi"
 import { Elysia } from "elysia"
+import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker"
 
 import { authGuard } from "./auth/guard"
 import { AppError } from "./lib/errors"
@@ -18,7 +19,12 @@ import { corsPlugin } from "./shared/plugins/cors"
  * valid Clerk session. The global onError translates AppError into the contract
  * { error: code } (a domain error never becomes a 500).
  */
-export const app = new Elysia()
+// No workerd o Elysia precisa do adapter próprio + `aot: false`: a compilação AOT gera handlers via
+// `new Function()`, e o workerd proíbe codegen a partir de string (EvalError em toda request).
+// Sob Bun (dev/testes) fica o padrão, que é mais rápido. Mesma detecção do db/client.
+const isWorkerd = typeof navigator !== "undefined" && navigator.userAgent === "Cloudflare-Workers"
+
+export const app = new Elysia(isWorkerd ? { adapter: CloudflareAdapter, aot: false } : {})
   .use(corsPlugin)
   .use(openapi())
   .use(authGuard)

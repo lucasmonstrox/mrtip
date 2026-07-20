@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-55 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+56 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -14,6 +14,7 @@
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
 | CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | dados:feito api:feito ui:feito | sim | — |
 | CORE-003 | Autenticação com Clerk (web + API) | core | em-andamento | P1 | ui:em-andamento api:em-andamento dados:ideia | parcial | — |
+| CORE-004 | Neon serverless na API (destrava o deploy no Workers) | core | em-andamento | P1 | api:em-andamento dados:ideia | parcial | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | DOS-002 | Estatísticas de partida por time (fixture statistics) | dossie | feito | P2 | dados:feito ia:feito | sim | DOS-001 |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
@@ -74,8 +75,10 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `clerk_jwt_key` → CORE-003
 - `clerk_publishable_key` → CORE-003
 - `clerk_secret_key` → CORE-003
+- `database_url` → CORE-004
 - `jogo_responsavel` → COMP-001
 - `limites_prudenciais` → COMP-001
+- `neondb_connection_string` → CORE-004
 
 ### tabelas
 
@@ -126,6 +129,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `concurrentSeasonIds` → LIG-012
 - `contextoUltimos5` → MOD-006, MOD-008, MOD-009 ⚠️ compartilhada
 - `currentSeasonId` → LIG-008
+- `db` → CORE-004
 - `densidadeJanela (proposta)` → MOD-009
 - `durezaUltimos5 (proposta)` → MOD-008
 - `evidenceDigestMd` → MOD-004, MOD-007 ⚠️ compartilhada
@@ -151,6 +155,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `loadTeamStanding` → LIG-006, LIG-008 ⚠️ compartilhada
 - `marketProbs` → MOD-004, MOD-005 ⚠️ compartilhada
 - `matchSlug` → LIG-009, LIG-012 ⚠️ compartilhada
+- `migrate` → CORE-004
 - `normalizeZone` → LIG-012
 - `reaisParaCents` → CORE-001
 - `resolveSeason` → LIG-008, LIG-012 ⚠️ compartilhada
@@ -196,6 +201,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `GET /v1/matches/:id` → LIG-006
 - `GET /v1/matches/:id/momentum (proposta)` → SIN-021
 - `proxy.ts` → CORE-003
+- `worker.ts` → CORE-004
 
 ## Índice doc → features
 
@@ -217,6 +223,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/leitura-de-jogo-profundidade-dominio.md](../../docs/investigacoes/leitura-de-jogo-profundidade-dominio.md) → AGT-001
 - [docs/investigacoes/mando-de-campo.md](../../docs/investigacoes/mando-de-campo.md) → SIN-016
 - [docs/investigacoes/mercados-e-motor-prompt-prognostico.md](../../docs/investigacoes/mercados-e-motor-prompt-prognostico.md) → MOD-004, MOD-005
+- [docs/investigacoes/neon-serverless-api.md](../../docs/investigacoes/neon-serverless-api.md) → CORE-004
 - [docs/investigacoes/pagina-do-jogador.md](../../docs/investigacoes/pagina-do-jogador.md) → LIG-001, LIG-003
 - [docs/investigacoes/pagina-do-time.md](../../docs/investigacoes/pagina-do-time.md) → LIG-002
 - [docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md](../../docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md) → CORE-001
