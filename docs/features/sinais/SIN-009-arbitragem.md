@@ -2,7 +2,7 @@
 id: SIN-009
 titulo: Sinal de arbitragem (árbitro escalado)
 modulo: sinais
-status: feito
+status: verificado
 prioridade: P1
 facetas:
   dados: feito # tabela referee + match.refereeId; 6 seasons backfilled — provado por script no banco
@@ -19,7 +19,7 @@ testes:
   - "PROD (2026-07-20): migração 0037 aplicada no Neon (tabela referee + match.referee_id); backfill-referees.ts escreveu 1590 designações, catálogo 152 — números idênticos aos de dev"
   - "_check-referee.ts 6/6 contra o BANCO DE PROD (2026-07-20), mesma cobertura 100% em BRA/CARA/FAC/PL"
   - "deploy: mrtip-api version bfbbc350 · mrtip-web version b08dea53; ambos no ar e fail-closed sem token (api 401 no_token, web 307 pro sign-in)"
-  - "PENDENTE: golden path da UI EM PRODUÇÃO não verificado por mim — a página exige sessão Clerk e eu não tenho login do dono. Falta o João abrir uma partida em prod e confirmar o card."
+  - "golden path da UI EM PRODUÇÃO confirmado pelo DONO (2026-07-20): card apareceu na partida em prod. O agente não conseguiu verificar sozinho — a página exige sessão Clerk."
   - "revisor em contexto fresco: nenhum gap em A2/A3/A4; 3 achados de doc desatualizado (A1 sem a exclusão, dossiê citando tabelas revertidas, C3 apontando tabela dropada) — todos corrigidos"
 depende_de: []
 impacta: [DOS-001, MOD-001]
@@ -30,7 +30,7 @@ ancoras:
   funcoes: [getMatch, loadMatchReferee]
   rotas: ["GET /v1/matches/:key"]
 docs: [docs/regras/arbitragem.md, docs/investigacoes/sportmonks-inventario-completo.md, docs/planos/SIN-009-arbitragem.md]
-verificado_em: null # pendente: dono validar em prod após o deploy
+verificado_em: 2026-07-20 # dono confirmou o card em produção
 atualizado: 2026-07-20
 ---
 
