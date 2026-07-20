@@ -1,7 +1,6 @@
 "use client"
 
 import { BellIcon, InboxIcon } from "lucide-react"
-import Link from "next/link"
 
 import { Button } from "@workspace/ui/components/button"
 import {
@@ -12,7 +11,7 @@ import {
 
 /**
  * Sino de notificações no footer da sidebar: popover com o que já disparou.
- * Voa pra direita porque o gatilho fica no canto inferior esquerdo, dentro do rail.
+ * Voa pra direita porque o gatilho fica no rail esquerdo, colado na borda.
  */
 // TODO(notificações): sem backend ainda — a lista é o empty state fixo. Quando existir
 // a rota, trocar por um hook de query aqui e ligar o contador de não lidas no sino.
@@ -34,12 +33,6 @@ export function NotificationsBell() {
           <p className="text-muted-foreground text-xs">
             Nenhuma notificação por aqui.
           </p>
-        </div>
-
-        <div className="border-t p-1.5">
-          <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
-            <Link href="/alertas">Configurar alertas</Link>
-          </Button>
         </div>
       </PopoverContent>
     </Popover>
