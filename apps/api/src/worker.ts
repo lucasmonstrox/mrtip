@@ -2,8 +2,9 @@
  * Entry de Cloudflare Workers. O Elysia expõe um handler `fetch` compatível com o workerd —
  * este arquivo é só o adaptador. O servidor Bun vive em index.ts; este nunca roda sob Bun.
  *
- * ⚠️ DEPLOY PARADO: o app passou a usar Postgres via Bun.SQL (db/client), que NÃO roda na edge
- * do workerd. Reativar `wrangler deploy` exige migrar o acesso a dados pra D1/Hyperdrive antes.
+ * O acesso a dados sai pelo @neondatabase/serverless (db/client detecta o workerd e troca de
+ * driver) — o DATABASE_URL vem de `wrangler secret put DATABASE_URL` e aponta pro Neon, no
+ * endpoint POOLER. O endpoint direto fica pros scripts de sync e migrações, que rodam sob Bun.
  */
 
 /** Env do workerd: vars (strings) definidas no wrangler.jsonc. */

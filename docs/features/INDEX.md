@@ -14,7 +14,7 @@
 | CORE-001 | Porta de dinheiro (@workspace/core/money) | core | investigado | P2 | dados:investigado | nao | — |
 | CORE-002 | Busca global (command palette ⌘K) | core | verificado | P2 | dados:feito api:feito ui:feito | sim | — |
 | CORE-003 | Autenticação com Clerk (web + API) | core | em-andamento | P1 | ui:em-andamento api:em-andamento dados:ideia | parcial | — |
-| CORE-004 | Neon serverless na API (destrava o deploy no Workers) | core | em-andamento | P1 | api:em-andamento dados:ideia | parcial | — |
+| CORE-004 | Neon serverless na API (destrava o deploy no Workers) | core | em-andamento | P1 | api:feito dados:feito | parcial | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | DOS-002 | Estatísticas de partida por time (fixture statistics) | dossie | feito | P2 | dados:feito ia:feito | sim | DOS-001 |
 | LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |

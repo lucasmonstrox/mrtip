@@ -304,8 +304,42 @@ Este é o teste que importa, e ele **achou um blocker que nada no ramo Bun pegar
    Postgres local. Ou seja: a pilha inteira funciona até exatamente o ponto onde um endpoint Neon
    real é necessário.
 
-**O que segue sem prova**: uma query devolvendo linhas pelo driver Neon. Isso exige provisionar o
-Neon — é o único passo que falta, e é infraestrutura, não código.
+**Como foi provado — parte 3: contra o Neon real** (projeto provisionado pelo dono, 2026-07-20).
+
+- **Alvo inspecionado antes de escrever**: `neondb`/`neondb_owner`, **0 tabelas**, 7.5 MB — banco novo
+  e vazio, confirmadamente não o do CRM.
+- **37 migrações** aplicadas pelo endpoint **direto** (sem `-pooler`) → 21 tabelas, extensões
+  `pg_trgm` + `unaccent` e a função `immutable_unaccent` presentes. Confirma o claim de extensões.
+- **Carga**: `pg_dump --data-only` do local (126 MB de SQL, 16 s) → `psql --single-transaction` no
+  Neon em **31 s**, exit 0.
+- **Paridade**: **21/21 tabelas com contagem idêntica**, incluindo `match_trend` 379.561,
+  `commentary` 115.890, `lineup_player` 64.266, `goal` 4.274.
+- **E2E workerd → Neon**: `/v1/leagues` 188 ms, `/PL/standings` 373 ms, `/PL/scorers` 226 ms,
+  `/v1/search?q=haaland` 194 ms — todas **200 com dados reais**. O `/v1/search` prova `pg_trgm` +
+  `immutable_unaccent` funcionando no Neon.
+
+### Latência: o número que muda a decisão de região
+
+O projeto foi criado em **`eu-central-1` (Frankfurt)**, não em `sa-east-1`. Medição desta sessão
+(`psql -c "\timing on"`, 3 queries):
+
+| Alvo | Latência por query |
+|---|---|
+| Neon Frankfurt | **~40 ms** |
+| Postgres local (docker) | ~0.9 ms |
+
+Os 40 ms fazem sentido porque a máquina do dono está na **Europa** (commits do repo saem com fuso
+`+0100`). **Mas o Worker não roda na máquina do dono**: Cloudflare Workers não têm região — executam
+na edge mais próxima de cada visitante. Para o público-alvo do produto (apostador **brasileiro** —
+Lei 14.790, pt-BR, `America/Sao_Paulo`), o Worker sobe numa edge no Brasil e cada query cruza o
+Atlântico até Frankfurt. O agravante é o padrão de acesso: `/PL/standings` levou 373 ms já daqui
+porque dispara **várias queries em sequência**, e cada uma paga o RTT inteiro (`poolQueryViaFetch`
+manda uma request HTTP por query).
+
+**Não medi da edge brasileira** — seria inferência afirmar o número. O que é verificável: o RTT
+Brasil↔Europa é de ordem de grandeza maior que Brasil↔São Paulo, e ele multiplica pelo número de
+queries por rota. **Recomendação**: se o público é BR, recriar o projeto em `sa-east-1` (recriar é
+barato agora — a carga inteira levou 31 s) ou medir de verdade após o deploy antes de decidir.
 
 ### Achado inesperado: o bun-sql estava corrompendo `numeric(9,6)`
 

@@ -5,8 +5,8 @@ modulo: core
 status: em-andamento
 prioridade: P1
 facetas:
-  api: em-andamento # dual-driver + aot:false ok; Worker builda e /health 200 no workerd. Falta query real no Neon
-  dados: ideia # falta provisionar Neon, aplicar as 37 migrações e carregar os 191 MB
+  api: feito # dual-driver + aot:false; workerd real consultando Neon devolve dados em 4 rotas
+  dados: feito # Neon provisionado (eu-central-1), 37 migrações aplicadas, 21/21 tabelas com contagem idêntica ao local
 docs: [docs/investigacoes/neon-serverless-api.md]
 testada: parcial
 testes:
@@ -17,7 +17,11 @@ testes:
     "Tipos no JSON: scorers.goals/assists = number; perfil de jogador com 45 stats e 0 strings (2026-07-20)",
     "workerd real (wrangler dev): /health 200 em 33ms — prova que o bundle builda e sobe com pg + @neondatabase/serverless (2026-07-20)",
     "workerd real: /v1/leagues chega a compor o SQL e despacha pelo driver Neon; falha só na rede (DATABASE_URL local não fala o proxy do Neon) (2026-07-20)",
-    "PENDENTE: query devolvendo linhas pelo driver Neon — depende de provisionar o Neon",
+    "Neon provisionado: 37 migrações aplicadas pelo endpoint direto; 21 tabelas + pg_trgm/unaccent + immutable_unaccent presentes (2026-07-20)",
+    "Carga: pg_dump --data-only do local (126MB) → psql --single-transaction no Neon em 31s, exit 0 (2026-07-20)",
+    "Paridade de dados: 21/21 tabelas com contagem idêntica local×Neon, incl. match_trend 379.561 e commentary 115.890 (2026-07-20)",
+    "E2E workerd→Neon: /v1/leagues, /PL/standings, /PL/scorers, /v1/search → 200 com dados reais (188-373ms) (2026-07-20)",
+    "PENDENTE: wrangler deploy (API + web juntos — ver riscos)",
   ]
 depende_de: []
 impacta: [CORE-003]
