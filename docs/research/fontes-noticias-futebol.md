@@ -20,21 +20,24 @@ Este é um **delta**, não um catálogo do zero. O repo já tinha [`sites-futebo
 
 A partição é o que dá valor ao fan-out: 56 agentes com o mesmo prompt convergiriam para o mesmo top-20. Com células disjuntas, a sobreposição interna ficou em **~15%** (596 brutos → 508 únicos na varredura), contra os 70–80% esperados de um fan-out não particionado.
 
-**Verificação:** cada site precisou aparecer num resultado de busca ao vivo (`WebSearch`), e o agente registrou a query que o trouxe. `WebFetch` foi testado e **recusado** por vários domínios grandes (`ge.globo.com` bloqueou), então não houve HEAD-check de URL — a busca ao vivo é a única trava contra domínio alucinado. **As URLs não foram validadas por requisição HTTP.**
+**Verificação — leia com atenção antes de confiar nos domínios.** Os agentes foram *instruídos* a só reportar site visto em resultado de busca ao vivo (`WebSearch`) e a registrar a query que o trouxe. Essa instrução **não foi auditada por item, e a auditoria posterior mostrou que ela não se sustenta de forma uniforme**: em 156 dos 393 registros (**39%**), a query registrada não menciona o site nem o domínio. Parte disso é legítima — uma busca genérica como `"site notícias Vitória Esporte Clube"` pode ter trazido `arenarubronegra.com` sem nomeá-lo — mas o efeito prático é que **o campo de evidência não prova, item a item, que o site apareceu numa busca real**.
+
+`WebFetch` foi testado e **recusado** por vários domínios grandes (`ge.globo.com` bloqueou), então também não houve HEAD-check de URL. **Nenhuma URL aqui foi validada por requisição HTTP.** Trate esta lista como candidatos a verificar, não como domínios confirmados.
 
 ## Limitações conhecidas
 
 Reportadas explicitamente para não superestimar a cobertura:
 
-- **Alemanha praticamente ausente (3 sites).** As células `ger-mainstream` e `ger-analise-club` voltaram quase vazias, e o agente de preenchimento `alemanha-bundesliga` também falhou. Kicker, Bild Sport, Sport1 e Sportschau **não** foram capturados. É buraco real e precisa de rodada manual.
-- **Itália (9) e Portugal (6) subcobertos** para o peso das suas ligas.
+- **Alemanha praticamente ausente — 1 fonte nova** (`sid.de`), 3 no total coletado. As células `ger-mainstream` e `ger-analise-club` voltaram quase vazias, e o agente de preenchimento `alemanha-bundesliga` também falhou. Kicker, Bild Sport, Sport1 e Sportschau **não** foram capturados. É buraco real e precisa de rodada manual.
+- **Itália e Portugal subcobertos** (9 e 6 no total coletado) para o peso das suas ligas.
+- **A contagem é por domínio, não por veículo.** O mesmo grupo de mídia pode aparecer em linhas separadas (`ge.globo.com` e `globoesporte.com` são duas entradas). Os 393 não são 393 redações distintas.
 - **26 dos 82 agentes retornaram resultado vazio.** Não houve erro de execução (0 falhas), mas ~32% do fan-out não produziu dado — o custo real por site útil é maior que o nominal.
 - O campo `has_rss` ficou majoritariamente `desconhecido`: os agentes não testaram feeds. **Nenhuma conclusão sobre ingestibilidade** pode ser tirada daqui.
 - Sem verificação de paywall, `robots.txt` ou viabilidade de scraping. Este é um mapa de *existência*, não de *acesso*.
 
 ## Leitura dos dados
 
-Dos 393 novos, **185 são do Brasil** — quase dois terços. A baseline de 852 tinha ~41 entradas brasileiras contra ~62 inglesas e 154 globais: o buraco não era o tamanho do catálogo, era a profundidade no mercado de casa.
+Dos 393 novos, **185 são do Brasil** — 47%, quase metade. A baseline de 852 tinha ~41 entradas brasileiras contra ~62 inglesas e 154 globais: o buraco não era o tamanho do catálogo, era a profundidade no mercado de casa.
 
 | Categoria | Novos |
 |---|---|
