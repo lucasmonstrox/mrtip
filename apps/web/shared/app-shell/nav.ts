@@ -1,8 +1,8 @@
 import {
-  BellIcon,
   FileSearchIcon,
   LineChartIcon,
   type LucideIcon,
+  RadarIcon,
   TrophyIcon,
 } from "lucide-react"
 
@@ -42,7 +42,8 @@ export const NAV_SECTIONS: NavSection[] = [
   },
   {
     label: "Sistema",
-    items: [{ title: "Alertas", href: "/alertas", icon: BellIcon }],
+    // Sino ficou pro sino de notificações no footer; radar cabe melhor em "gatilhos monitorados".
+    items: [{ title: "Alertas", href: "/alertas", icon: RadarIcon }],
   },
   // TODO(admin): shell separado — operadores licenciados, conformidade, ingestão.
   // TODO(fase 2/3): perfil público de tipster, feed/seguir, marketplace, alertas.

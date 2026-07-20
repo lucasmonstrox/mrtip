@@ -19,6 +19,7 @@ import {
 } from "@workspace/ui/components/sidebar"
 
 import { Logo } from "@/shared/ui/logo"
+import { NotificationsBell } from "@/shared/ui/notifications-bell"
 import { ThemeToggle } from "@/shared/ui/theme-toggle"
 import { NAV_SECTIONS } from "./nav"
 import { SidebarExpander } from "./sidebar-expander"
@@ -83,7 +84,9 @@ export function AppSidebar() {
         </SidebarContent>
 
         <SidebarFooter>
-          <div className="flex items-center justify-end px-1">
+          {/* Colapsado, o rail tem ~3rem: os dois ícones empilham em vez de estourar a largura. */}
+          <div className="flex items-center justify-end gap-1 px-1 group-data-[collapsible=icon]:flex-col">
+            <NotificationsBell />
             <ThemeToggle />
           </div>
           <UserMenu />
