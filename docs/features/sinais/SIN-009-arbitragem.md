@@ -16,6 +16,10 @@ testes:
   - "Chrome real via chrome-devtools MCP (2026-07-20): T8 jogo futuro → 'Árbitro ainda não designado' · T9 Série A → 'Rodrigo José Pereira de Lima · Árbitro principal · Brazil' (acento e país ok) · T10 PL → 'Craig Pawson' com foto, 4 cards antigos da aba Fatos intactos"
   - "console sem erro novo (só o warn pré-existente de dev keys do Clerk); network 5/5 em 200"
   - "typecheck 3/3 verde (o web re-infere o tipo da API via Eden — é o teste de contrato); lint 0 errors"
+  - "PROD (2026-07-20): migração 0037 aplicada no Neon (tabela referee + match.referee_id); backfill-referees.ts escreveu 1590 designações, catálogo 152 — números idênticos aos de dev"
+  - "_check-referee.ts 6/6 contra o BANCO DE PROD (2026-07-20), mesma cobertura 100% em BRA/CARA/FAC/PL"
+  - "deploy: mrtip-api version bfbbc350 · mrtip-web version b08dea53; ambos no ar e fail-closed sem token (api 401 no_token, web 307 pro sign-in)"
+  - "PENDENTE: golden path da UI EM PRODUÇÃO não verificado por mim — a página exige sessão Clerk e eu não tenho login do dono. Falta o João abrir uma partida em prod e confirmar o card."
   - "revisor em contexto fresco: nenhum gap em A2/A3/A4; 3 achados de doc desatualizado (A1 sem a exclusão, dossiê citando tabelas revertidas, C3 apontando tabela dropada) — todos corrigidos"
 depende_de: []
 impacta: [DOS-001, MOD-001]
@@ -40,10 +44,10 @@ O árbitro escalado é o maior driver isolado do mercado de cartões (~2× entre
 
 - [x] P1 dados — tabela `referee` + coluna `match.refereeId` (D8) + `;referees.referee` no `richInclude` + `ingestReferees` ligado aos 2 sítios de sync
 - [ ] ~~P2 dados — perfil por temporada~~ **CORTADO pelo dono (2026-07-20): "eu só quero o referee"**. Ver D7
-- [ ] P3 dados — backfill das 6 seasons já ingeridas (2.484 jogos)
+- [x] P3 dados — backfill das 6 seasons (dev e prod); `backfill-referees.ts` pega 54 jogos a mais que o sync (classificatória de copa tem árbitro sem precisar do include rico)
 - [x] P4 api — `loadMatchReferee` + campo `referee` no `getMatch`
 - [x] P5 ui — card de arbitragem na aba Fatos, com estado vazio de "ainda não designado" como caso primário
-- [ ] P6 deploy — migrar a prod (Neon) e re-sincronizar os dados lá
+- [x] P6 deploy — migração 0037 no Neon de prod + backfill (1590 jogos) + deploy api/web; falta só o dono confirmar a UI logada em prod
 - [ ] ia — injeção no prompt: **deferida** por decisão do dono (2026-07-20); design pronto no dossiê §Quant
 
 ## Plano (2026-07-20)
