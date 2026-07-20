@@ -7,6 +7,7 @@ import {
   loadMatchCards,
   loadMatchGoals,
   loadMatches,
+  loadMatchReferee,
   loadMatchTvStations,
   loadTeamStanding,
   serializeMatch,
@@ -39,6 +40,8 @@ export async function getMatch(key: string) {
   const cards = await loadMatchCards(id)
   // Onde assistir (W-059): emissoras/streams do jogo, mais abrangentes primeiro.
   const tvStations = await loadMatchTvStations(id)
+  // Quem apita (SIN-009): árbitro principal. `null` até a designação sair — normal em jogo futuro.
+  const referee = await loadMatchReferee(id)
   // Descanso cruza liga + copa, mas bounded ao campeonato: seasonStart = 1º jogo de liga da season (as
   // copas caem depois disso). Sem esse bound o "último jogo" de uma estreia de season puxaria a temporada
   // passada. Standing continua scopado à season (LIG-008/LIG-006).
@@ -63,5 +66,6 @@ export async function getMatch(key: string) {
     rest,
     standings: { home: homeStanding, away: awayStanding },
     tvStations,
+    referee,
   }
 }

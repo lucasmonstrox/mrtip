@@ -31,6 +31,15 @@ export function age(dob: string | Date | null): number | null {
   return differenceInYears(new Date(), parse(day, "yyyy-MM-dd", new Date()))
 }
 
+/** Iniciais (primeiro + último nome) pro fallback do avatar quando a pessoa não tem foto — usado
+ * pelo artilheiro na tabela de gols e pelo árbitro no card da partida. */
+export function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  const first = parts[0]?.[0] ?? ""
+  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : ""
+  return (first + last).toUpperCase() || "?"
+}
+
 /** Rating (0-10) → Tailwind text color: green good, neutral average, red poor. Shared by the match
  * lineup and the player page so the colour scale reads the same everywhere. */
 export function ratingColor(r: number): string {

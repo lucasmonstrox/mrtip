@@ -12,9 +12,11 @@ import {
   lineup,
   lineupPlayer,
   match,
+
   matchTvStation,
   nationality,
   player,
+  referee,
   tvStation,
   season,
   standing,
@@ -794,6 +796,27 @@ export async function getLeagueOrThrow(code: string): Promise<League> {
 // Uma emissora/stream que transmite a partida (join match_tv_station ⋈ tv_station). `countries` é o
 // nº de países onde ela passa o jogo — proxy de alcance, usado pra ordenar. @feature W-059
 export type TvStationItem = { name: string; url: string | null; imageUrl: string | null; type: string | null; countries: number }
+
+// O árbitro principal de uma partida (quem apita). `null` enquanto a designação não sai — o caso
+// comum em jogo futuro, não um erro. @feature SIN-009
+export type MatchRefereeItem = { name: string; commonName: string | null; imageUrl: string | null; countryName: string | null }
+
+// Quem apita o jogo: lê `match.refereeId` (o principal). `null` enquanto a designação não sai.
+export async function loadMatchReferee(matchId: string): Promise<MatchRefereeItem | null> {
+  const [row] = await db
+    .select({
+      name: referee.name,
+      commonName: referee.commonName,
+      imageUrl: referee.imageUrl,
+      countryName: nationality.name,
+    })
+    .from(match)
+    .innerJoin(referee, eq(referee.id, match.refereeId))
+    .leftJoin(nationality, eq(nationality.id, referee.countryId))
+    .where(eq(match.id, matchId))
+    .limit(1)
+  return row ?? null
+}
 
 // Onde assistir: emissoras/streams do jogo, mais abrangentes primeiro (mais países → maior alcance).
 export async function loadMatchTvStations(matchId: string): Promise<TvStationItem[]> {

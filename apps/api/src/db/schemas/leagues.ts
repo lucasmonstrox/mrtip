@@ -114,6 +114,10 @@ export const match = pgTable("match", {
     .references(() => team.id),
   // Actual venue of this match (FK → venue.id); nullable until re-synced. @feature LIG-004
   venueId: uuid("venue_id").references(() => venue.id),
+  // Main referee appointed to this match (FK → referee.id). Nullable and usually EMPTY for upcoming
+  // fixtures: the appointment only lands days before kickoff. SportMonks also sends assistants and the
+  // fourth official; we keep just the one that decides the game. @feature SIN-009
+  refereeId: uuid("referee_id").references(() => referee.id),
   // Season this match belongs to (FK → season.id); nullable until backfilled. Reads scope by it so
   // multiple seasons of the same league don't mix. @feature LIG-008
   seasonId: uuid("season_id").references(() => season.id),
@@ -373,6 +377,23 @@ export const matchTvStation = pgTable(
 )
 
 export type MatchTvStation = typeof matchTvStation.$inferSelect
+
+// Referee (match official) — own entity, deduped by `sportmonksRefereeId`. The referee appointed to a
+// match is the single biggest driver of the CARDS market (strict vs lenient officials differ ~2x in
+// yellows per game), so this is the identity half of that signal. `imageUrl` is the photo in R2. @feature SIN-009
+export const referee = pgTable("referee", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sportmonksRefereeId: integer("sportmonks_referee_id").notNull().unique(),
+  name: text("name").notNull(),
+  commonName: text("common_name"),
+  slug: text("slug").notNull().unique(),
+  countryId: integer("country_id").references(() => nationality.id),
+  imageUrl: text("image_url"),
+  dateOfBirth: date("date_of_birth", { mode: "string" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
+export type Referee = typeof referee.$inferSelect
 
 // Per-team match statistics from the SportMonks fixture `statistics` include (team-level, one row per
 // team per match). Volume/quality inputs for the prognosis dossier that DON'T exist per-player in our

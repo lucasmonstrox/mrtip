@@ -6,7 +6,7 @@ import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, ma
 import { matchSlug, slugify } from "./slug"
 import { normalizeZone } from "./zones"
 import { roleFromGrid } from "./role-from-grid"
-import { fixtureMetaOf, ingestTvStations, preferredFootOf, type SmTvLink } from "./sync-ingest"
+import { fixtureMetaOf, ingestReferees, ingestTvStations, preferredFootOf, type SmRefereeLink, type SmTvLink } from "./sync-ingest"
 import { env } from "../env"
 import { kickoffInTimeZone } from "../lib/kickoff"
 import { uploadImagem } from "../lib/r2"
@@ -171,6 +171,7 @@ type SmFixture = {
   weatherreport?: SmWeather | null // chave LOWERCASE no JSON (include=weatherReport, como `relatedplayer`)
   metadata?: { type_id: number; values?: unknown }[] // 578 attendance, 572 lineup confirmed (fixtureMetaOf)
   tvstations?: SmTvLink[] // chave LOWERCASE no JSON (include=tvStations.tvStation) @feature W-059
+  referees?: SmRefereeLink[] // include=referees; jogo futuro sem designação vem vazio
 }
 // SportMonks weather report (include=weatherReport): a chave no JSON vem como `weatherreport` (minúscula).
 // temperature/feels_like/wind são objetos; usamos o período "day" (~horário do jogo). `description` = condição.
@@ -298,7 +299,7 @@ async function sweepFixtures(windows: [string, string][]): Promise<SmFixture[]> 
   for (const [from, to] of windows) {
     const window = await smAll<SmFixture>(
       `/fixtures/between/${from}/${to}?filters=fixtureSeasons:${SEASON_ID};fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}` +
-        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation&per_page=50`,
+        `&include=participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation;referees.referee&per_page=50`,
     )
     for (const f of window) byId.set(f.id, f)
   }
@@ -510,6 +511,11 @@ async function main() {
   // Onde assistir (W-059): catálogo de estações + vínculos por partida, logos no R2.
   const nTv = await ingestTvStations(fixtures, matchIdByFixture)
   console.log(`tv links: ${nTv}`)
+
+  // Quem apita (SIN-009): catálogo de árbitros + vínculo por partida com o papel. Jogo futuro sem
+  // designação simplesmente não traz o include — não é erro.
+  const refs = await ingestReferees(fixtures, matchIdByFixture)
+  console.log(`referees: ${refs.people} people, ${refs.appointed} matches appointed`)
 
   // 3b) Collect distinct players and nationalities from the lineups: starters (type_id 11) AND
   // bench (type_id 12). `starter` is later set from the type.

@@ -19,7 +19,7 @@ import Link from "next/link"
 import type { TeamRest, TeamStanding } from "../../types"
 import { useMatchFormQuery } from "../../hooks/data/queries/use-match-form-query"
 import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
-import { formatDate } from "../../utils/format"
+import { formatDate, initials } from "../../utils/format"
 import { Absences } from "./absences"
 import { Commentary } from "./commentary"
 import { FormChips } from "./form-guide"
@@ -301,6 +301,40 @@ export function MatchDetail({ slug }: { slug: string }) {
               <RestSide name={match.home.name} rest={match.rest?.home ?? null} />
               <RestSide name={match.away.name} rest={match.rest?.away ?? null} />
             </div>
+          </div>
+
+          {/* Quem apita: árbitro principal da partida. O card renderiza SEMPRE — em jogo futuro a
+              designação normalmente ainda não saiu, e "ainda não designado" é o estado mais comum
+              da página, não uma borda. @feature SIN-009 */}
+          <div className="rounded-lg border bg-card p-4">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Arbitragem</span>
+            {match.referee ? (
+              <div className="mt-3 flex items-center gap-3">
+                {match.referee.imageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={match.referee.imageUrl}
+                    alt=""
+                    className="size-10 shrink-0 rounded-full border object-cover"
+                  />
+                ) : (
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border bg-background text-xs text-muted-foreground">
+                    {initials(match.referee.name)}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <div className="truncate text-sm font-medium">{match.referee.name}</div>
+                  <div className="text-xs text-muted-foreground">
+                    Árbitro principal
+                    {match.referee.countryName ? ` · ${match.referee.countryName}` : ""}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="mt-3 text-sm text-muted-foreground">
+                Árbitro ainda não designado para esta partida.
+              </p>
+            )}
           </div>
 
           {/* Onde assistir: emissoras/streams do jogo (SportMonks tvStations), mais abrangentes primeiro.

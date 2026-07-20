@@ -1,7 +1,7 @@
-import { sql } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 
 import { db } from "./client"
-import { card, commentary, goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, matchTvStation, nationality, player, tvStation, venue, weather } from "./schema"
+import { card, commentary, goal, injury, lineup, lineupPlayer, match, matchTeamStats, matchTrend, matchTvStation, nationality, player, referee, tvStation, venue, weather } from "./schema"
 import { slugify } from "./slug"
 import { env } from "../env"
 import { kickoffInTimeZone } from "../lib/kickoff"
@@ -35,7 +35,7 @@ const TREND_TYPE_SET = new Set<number>(TREND_TYPES)
 export function richInclude(withStage: boolean): string {
   return (
     "participants;scores;round;state;lineups.player.metadata;lineups.position;lineups.details;formations;" +
-    "events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation" +
+    "events.type;sidelined.player;sidelined.type;venue;statistics;trends;weatherReport;metadata;tvStations.tvStation;referees.referee" +
     (withStage ? ";stage" : "")
   )
 }
@@ -101,6 +101,7 @@ export type SmRichFixture = {
   weatherreport?: SmWeather | null
   metadata?: SmFixtureMetadata[]
   tvstations?: SmTvLink[] // chave LOWERCASE no JSON (include=tvStations.tvStation)
+  referees?: SmRefereeLink[] // include=referees; 4 por jogo (6 principal, 7/8 assistentes, 9 quarto)
 }
 
 // Fixture metadata (include=metadata): 578 = attendance ({attendance: n}), 572 = lineup confirmed
@@ -163,6 +164,62 @@ export async function ingestTvStations(
     }
   }
   return nLinks
+}
+
+// Árbitro escalado de um fixture (include=referees). O `referee` aninhado só vem quando a designação
+// já saiu — jogo futuro costuma trazer o array vazio. @feature SIN-009
+export const REFEREE_TYPE_MAIN = 6 // 7/8 = assistentes, 9 = quarto árbitro (não ingeridos)
+export type SmRefereeLink = {
+  referee_id: number
+  type_id: number
+  referee?: { id: number; name?: string; common_name?: string | null; country_id?: number | null; image_path?: string | null; date_of_birth?: string | null } | null
+}
+
+// Quem apita: upserta o catálogo de árbitros (foto → R2) e grava o PRINCIPAL (type_id 6) em
+// `match.refereeId`. Assistentes e quarto árbitro são descartados — ninguém lê, e guardá-los seria
+// 3 linhas mortas por jogo. @feature SIN-009
+export async function ingestReferees(
+  fixtures: { id: number; referees?: SmRefereeLink[] }[],
+  matchIdByFixture: Map<number, string>,
+): Promise<{ appointed: number; people: number }> {
+  const mainOf = (f: { referees?: SmRefereeLink[] }) => f.referees?.find((l) => l.type_id === REFEREE_TYPE_MAIN)
+  const people = new Map<number, NonNullable<SmRefereeLink["referee"]>>()
+  for (const f of fixtures) {
+    const main = mainOf(f)
+    if (main?.referee && !people.has(main.referee.id)) people.set(main.referee.id, main.referee)
+  }
+  const photoBySm = new Map<number, string | null>()
+  await pool([...people.values()], 8, async (rf) => {
+    photoBySm.set(rf.id, rf.image_path ? await uploadImagem(rf.image_path, imgKey("referees", rf.name ?? String(rf.id), rf.image_path, rf.id)) : null)
+  })
+  // As nationalities vêm de outro canal do sync; country_id órfão viraria FK quebrada. Só liga quando existe.
+  const knownCountries = new Set((await db.select({ id: nationality.id }).from(nationality)).map((n) => n.id))
+  const refereeIdBySm = new Map<number, string>()
+  for (const rf of people.values()) {
+    const name = rf.name ?? `referee ${rf.id}`
+    const v = {
+      sportmonksRefereeId: rf.id,
+      name,
+      commonName: rf.common_name ?? null,
+      slug: `${slugify(name)}-${rf.id}`,
+      countryId: rf.country_id && knownCountries.has(rf.country_id) ? rf.country_id : null,
+      imageUrl: photoBySm.get(rf.id) ?? null,
+      dateOfBirth: rf.date_of_birth ?? null,
+    }
+    const [r] = await db.insert(referee).values(v).onConflictDoUpdate({ target: referee.sportmonksRefereeId, set: v }).returning({ id: referee.id })
+    refereeIdBySm.set(rf.id, r!.id)
+  }
+  let appointed = 0
+  for (const f of fixtures) {
+    const matchId = matchIdByFixture.get(f.id)
+    const main = mainOf(f)
+    if (!matchId || !main) continue // jogo futuro sem designação: segue sem árbitro, não é erro
+    const refereeId = refereeIdBySm.get(main.referee_id)
+    if (!refereeId) continue
+    await db.update(match).set({ refereeId }).where(eq(match.id, matchId))
+    appointed += 1
+  }
+  return { appointed, people: people.size }
 }
 
 function imgKey(folder: string, name: string, imagePath: string, suffix?: number | string): string {
@@ -438,8 +495,9 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
   }
 
   const nTv = await ingestTvStations(fixtures, matchIdByFixture)
+  const refs = await ingestReferees(fixtures, matchIdByFixture)
 
-  return { tvLinks: nTv, venues: venues.length, matches: matchIdByFixture.size, players: players.length, lineups: nLineups, lineupPlayers: nPlayers, teamStats: nTeamStats, trends: nTrends, weather: nWeather, goals: nGoals, cards: nCards, injuries: nInjuries, commentaries: nCommentaries }
+  return { tvLinks: nTv, refereesAppointed: refs.appointed, referees: refs.people, venues: venues.length, matches: matchIdByFixture.size, players: players.length, lineups: nLineups, lineupPlayers: nPlayers, teamStats: nTeamStats, trends: nTrends, weather: nWeather, goals: nGoals, cards: nCards, injuries: nInjuries, commentaries: nCommentaries }
 }
 
 // Busca fixtures ricas por LISTA de ids (copa: só os "proper"), em lotes. include=stage traz a stage.

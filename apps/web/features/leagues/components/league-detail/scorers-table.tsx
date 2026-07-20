@@ -7,6 +7,7 @@ import { useCallback, useState } from "react"
 import { Virtuoso } from "react-virtuoso"
 
 import { useScorersQuery } from "../../hooks/data/queries/use-scorers-query"
+import { initials } from "../../utils/format"
 import { PlayerHoverCard } from "../player-hover-card/player-hover-card"
 
 // Reveal 20 scorers at a time; each time the user scrolls to the bottom, 20 more are shown.
@@ -17,14 +18,6 @@ const PAGE = 20
 // o escudo do time como badge no canto — não numa coluna própria. A track do rank (2rem) tem a mesma
 // largura do avatar, então o avatar cai no mesmo x da coluna "Time" da Classificação — sem drift.
 const COLS = "grid grid-cols-[2rem_1fr_3.5rem_3.5rem] items-center gap-2"
-
-// Iniciais (primeiro + último nome) pro fallback do avatar quando o marcador não tem foto.
-function initials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  const first = parts[0]?.[0] ?? ""
-  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : ""
-  return (first + last).toUpperCase() || "?"
-}
 
 // Module-level (stable identity) footer so Virtuoso doesn't remount it on every render; reads
 // `hasMore` from the list context to show the loading hint until the whole ranking is revealed.
