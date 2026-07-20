@@ -5,7 +5,7 @@ import { signIn, testCreds } from "./support/clerk-auth"
 /**
  * Aba Rodadas: a rodada escolhida mora em `?round=` e por isso sobrevive à troca de aba e ao
  * refresh (LIG-015, cenários T2 e T3 do dossiê). Toda rota fora de /sign-in|/sign-up é protegida
- * pelo proxy.ts, então estes testes PRECISAM das chaves Clerk + usuário de teste no .env.e2e —
+ * pelo middleware.ts, então estes testes PRECISAM das chaves Clerk + usuário de teste no .env.e2e —
  * sem elas dão skip, igual ao auth.spec.
  */
 

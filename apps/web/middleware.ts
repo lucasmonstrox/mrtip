@@ -5,19 +5,21 @@ import { NextResponse } from "next/server"
 const isPublic = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"])
 
 /**
- * Proxy (convenção Next 16, substitui `middleware.ts`) — gate de rota por sessão
- * Clerk. Defesa server-side antes de qualquer página montar:
+ * Gate de rota por sessão Clerk — defesa server-side antes de qualquer página montar:
  *
  *   • já autenticado tentando ver /sign-in|/sign-up → app ("/");
  *   • rota pública (telas de auth) → passa sem exigir sessão;
  *   • resto sem sessão → /sign-in.
  *
- * `clerkMiddleware` devolve um NextMiddleware; o Next 16 aceita exportá-lo como
- * `proxy` (named export). Retornar nada (undefined) deixa o Clerk seguir o fluxo
- * normal preservando os headers de auth dele — por isso só devolvemos Response nos
- * desvios (redirects).
+ * USA `middleware.ts` (runtime Edge) em vez do `proxy.ts` do Next 16: o `proxy` roda SEMPRE em
+ * Node.js ("Proxy always runs on Node.js runtime" — e ele recusa `runtime: "edge"` no config),
+ * e o OpenNext/Cloudflare não suporta Node middleware (patcha o `loadNodeMiddleware` do Next pra
+ * não carregar). O clerkMiddleware roda em Edge sem problema. Mesmo padrão do grupoceralis/apps/crm.
+ *
+ * Retornar nada (undefined) deixa o Clerk seguir o fluxo normal preservando os headers de auth
+ * dele — por isso só devolvemos Response nos desvios (redirects).
  */
-export const proxy = clerkMiddleware(async (auth, request) => {
+export default clerkMiddleware(async (auth, request) => {
   const { userId } = await auth()
   const { pathname } = request.nextUrl
 

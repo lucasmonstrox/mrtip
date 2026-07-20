@@ -4,7 +4,7 @@ import { signIn, testCreds } from "./support/clerk-auth"
 
 /**
  * Gate de autenticação. O primeiro teste roda sem credenciais (só exercita o
- * proxy.ts); o segundo precisa das chaves Clerk + usuário de teste no .env.e2e e
+ * middleware.ts); o segundo precisa das chaves Clerk + usuário de teste no .env.e2e e
  * dá skip quando ausentes.
  */
 test.describe("auth gate", () => {

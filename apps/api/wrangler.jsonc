@@ -12,6 +12,12 @@
   "observability": {
     "enabled": true
   },
+  // Origem do front liberada no CORS (shared/plugins/cors.ts). SEM isto o plugin cai no regex de
+  // localhost e barra o site em produção — é var, não secret, porque é URL pública.
+  // Trocar junto com o domínio quando sair do *.workers.dev.
+  "vars": {
+    "WEB_ORIGIN": "https://mrtip-web.joao-galiano-silva.workers.dev"
+  },
   "dev": {
     "port": 8787
   }
