@@ -1,0 +1,1 @@
+ALTER TABLE "season" ADD COLUMN "sportmonks_tie_breaker_rule_id" integer;

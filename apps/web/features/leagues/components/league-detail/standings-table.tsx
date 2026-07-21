@@ -13,7 +13,9 @@ import {
 
 import Link from "next/link"
 
+import { useLeagueQuery } from "../../hooks/data/queries/use-league-query"
 import { useStandingsQuery } from "../../hooks/data/queries/use-standings-query"
+import { formatTiebreakLine } from "../../utils/tiebreak"
 import { FormChips } from "../match-detail/form-guide"
 
 // Qualification/relegation zones → border color + PT label (UI copy stays Portuguese).
@@ -77,6 +79,10 @@ const TABLE_CLASS =
 
 export function StandingsTable({ code }: { code: string }) {
   const { data: table, isPending, isError } = useStandingsQuery(code)
+  // Mesma query que o `league-detail` já faz (mesma `useSeasonParam`) — sem request novo, e rótulo e
+  // ordem saem da MESMA temporada. Copa não tem tabela, logo não tem o que desempatar. @feature LIG-017
+  const { data: league } = useLeagueQuery(code)
+  const tiebreakLine = league?.type === "cup" ? null : formatTiebreakLine(league?.tiebreak)
 
   if (isPending) return <StandingsSkeleton />
   if (isError || !table)
@@ -140,14 +146,21 @@ export function StandingsTable({ code }: { code: string }) {
           </TableBody>
         </Table>
 
-        {present.length ? (
-          <div className="flex flex-wrap gap-x-4 gap-y-1 border-t px-4 py-3 text-xs text-muted-foreground">
-            {present.map((z) => (
-              <span key={z} className="flex items-center gap-1.5">
-                <span className={`size-2 rounded-full ${ZONES[z]!.dot}`} />
-                {ZONES[z]!.label}
-              </span>
-            ))}
+        {/* A faixa aparece se houver zonas OU critério de desempate: pendurar a linha de desempate na
+            condição das zonas a faria sumir justamente nas ligas sem zona alguma. @feature LIG-017 */}
+        {present.length || tiebreakLine ? (
+          <div className="flex flex-col gap-1.5 border-t px-4 py-3 text-xs text-muted-foreground">
+            {present.length ? (
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
+                {present.map((z) => (
+                  <span key={z} className="flex items-center gap-1.5">
+                    <span className={`size-2 rounded-full ${ZONES[z]!.dot}`} />
+                    {ZONES[z]!.label}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {tiebreakLine ? <p>{tiebreakLine}</p> : null}
           </div>
         ) : null}
       </CardContent>

@@ -239,12 +239,19 @@ async function fisicoDuel(season: Awaited<ReturnType<typeof loadSeason>>, atkId:
   const spLiga = liga.tot ? Math.round((((liga.cnt.get("escanteio") ?? 0) + (liga.cnt.get("falta") ?? 0)) / liga.tot) * 100) : 0
   // Baseline da LIGA pro aéreo de ZAGUEIRO (zagueiro ganha a maioria por natureza — corte fixo rotula
   // todo mundo "blindado"; o sinal é o DESVIO vs a média dos zagueiros da liga).
+  // ATENÇÃO — bug corrigido em 2026-07-20: isto usava `coalesce(aerials_total, 0)` no denominador. Como
+  // `aerials_won` tem ~22k linhas preenchidas e `aerials_total` só ~13k, as 3.410 linhas com ganho e SEM
+  // total somavam no numerador e zero no denominador — o baseline saía 81,6% em vez de 57,7% (24 p.p. de
+  // inflação), e as taxas por jogador vinham infladas por fator variável (depende do padrão de nulls de
+  // cada um). Efeito real medido em Mirassol×Grêmio: virou "zaga abaixo da média" → 🔥 rota de gol, que
+  // foi o 2º driver de uma aposta perdida. Filtrar os dois campos é obrigatório. @feature MOD-004
   const allIds = season.ms.map((m) => String(m.id))
   const ligaAer = allIds.length
     ? rowsOf(await db.execute(sql`
-        select sum(coalesce(lp.aerials_won, 0)) as won, sum(coalesce(lp.aerials_total, 0)) as tot
+        select sum(lp.aerials_won) as won, sum(lp.aerials_total) as tot
         from lineup l join lineup_player lp on lp.lineup_id = l.id
         where lp.position = 'D' and coalesce(lp.minutes_played, 0) > 0
+          and lp.aerials_won is not null and lp.aerials_total is not null
           and l.match_id in ${sql.raw(`('${allIds.join("','")}')`)}`))
     : []
   const ligaDPct = Number(ligaAer[0]?.tot) > 0 ? Math.round((Number(ligaAer[0]!.won) / Number(ligaAer[0]!.tot)) * 100) : 65
@@ -255,9 +262,12 @@ async function fisicoDuel(season: Awaited<ReturnType<typeof loadSeason>>, atkId:
       and l.match_id in ${sql.raw(`('${defIds.join("','")}')`)}`))
   const aerAgg = new Map<string, { won: number; tot: number; j: number }>()
   for (const r of aerRows) {
+    // Mesma correção do baseline: linha com ganho e sem total inflava a taxa do jogador (numerador real,
+    // denominador zerado pelo `?? 0`). Jogo sem `aerials_total` não conta como jogo de aéreo. @feature MOD-004
+    if (r.aerials_won == null || r.aerials_total == null) continue
     const cur = aerAgg.get(String(r.name)) ?? { won: 0, tot: 0, j: 0 }
-    cur.won += Number(r.aerials_won ?? 0)
-    cur.tot += Number(r.aerials_total ?? 0)
+    cur.won += Number(r.aerials_won)
+    cur.tot += Number(r.aerials_total)
     cur.j += 1
     aerAgg.set(String(r.name), cur)
   }

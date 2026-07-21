@@ -35,6 +35,10 @@ export const season = pgTable("season", {
   name: text("name").notNull(),
   startYear: integer("start_year").notNull(),
   isCurrent: boolean("is_current").notNull().default(false),
+  // Regra de desempate que a SportMonks declara pra esta temporada (`season.tie_breaker_rule_id`). É o
+  // SELETOR da regra, não a regra: a semântica de cada id mora em TIEBREAK_BY_RULE_ID (shared.ts). Nullable
+  // porque a ponte local `backfill-season.ts` não fala com a API. @feature LIG-017
+  sportmonksTieBreakerRuleId: integer("sportmonks_tie_breaker_rule_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -51,6 +55,11 @@ export const team = pgTable("team", {
   shortCode: text("short_code"),
   // Logo URL in R2 (bucket mrtip); origin is the SportMonks CDN `image_path`.
   logoUrl: text("logo_url"),
+  // Handle do X/Twitter da conta institucional principal do clube, sem "@" e sem URL (ex.: "Flamengo").
+  // É a porta pra ler notícia de vestiário/desfalque na fonte do próprio clube. Nullable: SportMonks não
+  // entrega social, o preenchimento é pesquisado à mão e nem todo clube tem conta confirmada.
+  // @feature SIN-022
+  twitterUsername: text("twitter_username"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -339,6 +348,15 @@ export const lineupPlayer = pgTable(
     dribblesSuccessful: integer("dribbles_successful"), // type 109 — dribles certos
     dribbledPast: integer("dribbled_past"), // type 110 — dribles sofridos (vezes que FOI driblado)
     bigChancesMissed: integer("big_chances_missed"), // type 581 — grandes chances perdidas
+    // Erro individual e evento raro decisivo por jogador (lineups.details; cobertura medida na PL 25/26:
+    // 200 jogos). São os lances que decidem placar sem aparecer em volume — corrigem o "placar enganoso"
+    // que faz o mercado precificar errado uma defesa que foi salva pela sorte. null = 0 ou não jogou.
+    errorLeadToGoal: integer("error_lead_to_goal"), // type 571 — erro dele que virou GOL (o par sério do errors_lead_to_shot)
+    penaltiesCommitted: integer("penalties_committed"), // type 114 — pênalti cometido por ele; 0,24/jogo na PL
+    penaltiesWon: integer("penalties_won"), // type 115 — pênalti que ele ganhou (sofreu a falta na área)
+    offsidesProvoked: integer("offsides_provoked"), // type 95 — impedimentos provocados: o zagueiro que ARMA a linha alta
+    turnovers: integer("turnovers"), // type 121 — entregou a bola ao adversário (erro ativo; ≠ dispossessed 94, que é sofrido)
+    clearanceOffline: integer("clearance_offline"), // type 582 — corte em cima da linha do gol: gol evitado, contabilizado
     manOfMatch: boolean("man_of_match").notNull().default(false), // type 1490
   },
   (t) => [unique().on(t.lineupId, t.playerId)],

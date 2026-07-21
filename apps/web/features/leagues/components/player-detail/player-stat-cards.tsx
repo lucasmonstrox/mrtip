@@ -197,6 +197,7 @@ export function PlayerStatCards({ player }: { player: PlayerDetail }) {
           ) : null}
           <div className="grid grid-cols-3 gap-x-4 gap-y-3">
             <Num value={s.dispossessed} label="desarmado c/ bola" />
+            <Num value={s.turnovers} label="bolas entregues" />
             <Num value={s.backwardPasses} label="passes pra trás" />
           </div>
         </StatCard>
@@ -219,7 +220,10 @@ export function PlayerStatCards({ player }: { player: PlayerDetail }) {
             <Num value={s.blockedShots} label="chutes bloqueados" />
             <Num value={s.dribbledPast} label="driblado" />
             <Num value={s.lastManTackle} label="desarme último homem" />
+            <Num value={s.offsidesProvoked} label="impedimentos provocados" />
             <Num value={s.errorsLeadToShot} label="erros que viraram chute" />
+            <Num value={s.errorLeadToGoal} label="erros que viraram gol" />
+            <Num value={s.clearanceOffline} label="cortes em cima da linha" />
           </div>
         </StatCard>
       ) : null}
@@ -257,6 +261,8 @@ export function PlayerStatCards({ player }: { player: PlayerDetail }) {
           <div className="grid grid-cols-3 gap-x-4 gap-y-3">
             <Num value={s.fouls} label="faltas cometidas" />
             <Num value={s.foulsDrawn} label="faltas sofridas" />
+            <Num value={s.penaltiesCommitted} label="pênaltis cometidos" />
+            <Num value={s.penaltiesWon} label="pênaltis ganhos" />
             <div className="flex flex-col">
               <span className="flex items-center gap-2 text-xl font-bold tabular-nums">
                 <span className="inline-block h-4 w-3 rounded-[2px] bg-amber-400" aria-hidden />

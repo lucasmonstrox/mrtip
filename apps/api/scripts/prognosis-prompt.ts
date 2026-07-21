@@ -16,6 +16,8 @@ import { and, eq, inArray, isNotNull, or, sql } from "drizzle-orm"
 import { db } from "../src/db/client"
 import { card, commentary, goal, injury, league, lineup, lineupPlayer, match, matchTeamStats, matchTrend, player, standing, team, venue, weather } from "../src/db/schema"
 import { buildMomentum, type MomentumPoint, type TrendInput } from "../src/modules/leagues/get-match-momentum/momentum"
+import { tiebreakComparator, tiebreakOfSeason } from "../src/modules/leagues/shared/shared"
+import { cenarioUltrapassagem as cenarioPuro, type TeamLine } from "./lib/ultrapassagem"
 
 const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
 
@@ -41,6 +43,11 @@ const CUTOFF = m.date // tudo estritamente antes disto entra no modelo
 // `played` (ou das queries de zona/fixtures), então scopar por seasonId aqui conserta a cadeia inteira.
 const seasonId = m.seasonId
 if (!seasonId) throw new Error(`match ${MATCH_ID} sem seasonId — rode o backfill de season (LIG-008) antes`)
+
+// Desempate da temporada DESTE jogo, lido UMA vez (o script é escopado a uma partida). Antes daqui as
+// duas tabelas recomputadas ordenavam com a regra da PL hardcoded, o que mis-ordenava o Brasileirão no
+// prompt que alimenta a LLM. @feature LIG-017
+const TIEBREAK = (await tiebreakOfSeason(m.leagueCode, seasonId)).criteria
 
 const [home] = await db.select().from(team).where(eq(team.id, m.homeTeamId))
 const [away] = await db.select().from(team).where(eq(team.id, m.awayTeamId))
@@ -907,13 +914,15 @@ if (matchVenue?.latitude && matchVenue.longitude) {
 // classificação só com `played` (jogos estritamente antes da data) = a foto real pré-jogo. Da tabela
 // oficial leio SÓ o nº de vagas de cada zona (regra da competição, estável o ano todo) pra saber ONDE
 // ficam as linhas de rebaixamento/Champions — nunca a posição real de ninguém, então não há vazamento.
-type Line = { teamId: string; points: number; gd: number; gf: number }
+// `won` existe para o critério "vitórias" (Brasileirão) ser aplicável: sem ele o comparador não teria
+// de onde ler e o desempate da Série A seria silenciosamente ignorado. @feature LIG-017
+type Line = { teamId: string; points: number; won: number; gd: number; gf: number }
 function preMatchTable(): Line[] {
   const acc = new Map<string, Line>()
   const at = (id: string) => {
     let l = acc.get(id)
     if (!l) {
-      l = { teamId: id, points: 0, gd: 0, gf: 0 }
+      l = { teamId: id, points: 0, won: 0, gd: 0, gf: 0 }
       acc.set(id, l)
     }
     return l
@@ -927,15 +936,26 @@ function preMatchTable(): Line[] {
     a.gf += ag
     h.gd += hg - ag
     a.gd += ag - hg
-    if (hg > ag) h.points += 3
-    else if (hg < ag) a.points += 3
-    else {
+    if (hg > ag) {
+      h.points += 3
+      h.won++
+    } else if (hg < ag) {
+      a.points += 3
+      a.won++
+    } else {
       h.points++
       a.points++
     }
   }
-  // Desempate PL: pontos → saldo → gols pró (nome omitido — não muda a linha de zona na prática).
-  return [...acc.values()].sort((x, y) => y.points - x.points || y.gd - x.gd || y.gf - x.gf)
+  // Desempate da TEMPORADA (a Série A põe vitórias antes do saldo; a PL não). @feature LIG-017
+  return [...acc.values()].sort(
+    tiebreakComparator<Line>(TIEBREAK, {
+      points: (l) => l.points,
+      wins: (l) => l.won,
+      goalDifference: (l) => l.gd,
+      goalsFor: (l) => l.gf,
+    }),
+  )
 }
 const table = preMatchTable()
 const posOf = (id: string) => {
@@ -1022,29 +1042,64 @@ const guaranteedAbove = (id: string) => {
 // pontos, ou (quando só EMPATA em pontos) virar o saldo, que é o cenário "você perde por muito + ele
 // vence por muito". É o anti-binário do "já garantida": a vaga pode estar 99% travada, mas o prompt
 // nomeia o concorrente real (ex.: Bournemouth) e o tamanho exato do milagre que ele precisa.
+// Reescrito em 2026-07-20: a versão anterior pulava o critério VITÓRIAS (indo de pontos direto pra saldo),
+// o que no Brasileirão é errado — a Série A desempata por pontos → vitórias → saldo → gols pró (LIG-017).
+// E ela invertia o texto quando o perseguidor já estava À FRENTE no saldo: dizia "só passa se você perder
+// por muito e ele vencer por muito" para um Ceará que, empatando em pontos, passava com um 1-0 qualquer.
+// Agora percorre a cadeia real de desempate da temporada e diz, para CADA perseguidor, o cenário mínimo.
+// Cenário de ultrapassagem de UM PAR (o `chaser` tenta passar o `alvo`), percorrendo a cadeia de desempate
+// da temporada. Genérica de propósito: serve pras DUAS direções. A versão anterior só olhava pra baixo e
+// respondia metade da pergunta — um time que PERSEGUE uma vaga acima tem tanta motivação (e tanto efeito
+// sobre o jogo) quanto um que defende a dele. Retorna null quando é matematicamente impossível.
+// @feature MOD-004
+// `fichaDe` escolhe QUEM ganha o cartão de números na saída: olhando pra baixo interessa a ficha do
+// perseguidor (é ele o desconhecido); olhando pra cima o perseguidor é sempre o próprio time, e repetir a
+// ficha dele em toda linha vira ruído — ali interessa a ficha do alvo.
+// Adapter: a lógica vive em ./lib/ultrapassagem.ts (função pura e testável). Aqui só monta as TeamLine
+// a partir do escopo da partida. Extraído em 2026-07-21 pra que o relatório de validação exercite
+// EXATAMENTE este código, e não uma cópia que pode divergir em silêncio. @feature MOD-004
+const asTeamLine = (id: string): TeamLine | null => {
+  const l = lineOf(id)
+  const p = posOf(id)
+  if (!l || p == null) return null
+  return { teamId: id, name: nameOf(id), pos: p, points: l.points, won: l.won, gd: l.gd, gf: l.gf, gamesRemaining: gamesRemaining(id) }
+}
+function cenarioUltrapassagem(chaserId: string, alvoId: string, fichaDe: "chaser" | "alvo" = "chaser"): string | null {
+  const c = asTeamLine(chaserId)
+  const t = asTeamLine(alvoId)
+  if (!c || !t) return null
+  return cenarioPuro(c, t, TIEBREAK, fichaDe)?.texto ?? null
+}
+
+// Quem, ABAIXO, ainda pode roubar a posição do time (lado defensivo).
 function contestersFor(teamId: string): string[] {
   const myPos = posOf(teamId)
-  const myLine = lineOf(teamId)
-  if (myPos == null || !myLine) return []
-  const sg = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
+  if (myPos == null) return []
   const out: string[] = []
   for (let i = myPos; i < table.length; i++) {
-    const r = table[i] // posição (i+1) — estritamente abaixo do time
+    const r = table[i]
     if (!r) continue
-    const rb = boundOf(r.teamId)
-    if (!rb || rb.maxPts < myLine.points) continue // nem empatando alcança → não é ameaça
-    const head = `${nameOf(r.teamId)} (${i + 1}º, ${r.points} pts, máx ${rb.maxPts})`
-    if (rb.maxPts > myLine.points)
-      out.push(`${head} pode **passar em pontos** — vencendo, se o ${nameOf(teamId)} tropeçar`)
-    else {
-      const swing = myLine.gd - r.gd // lead de saldo do time sobre o rival (≥1 ⇒ rival precisa virar)
-      out.push(
-        `${head} empata em pontos mas está **${sg(-swing)} de saldo** (${sg(r.gd)} vs ${sg(myLine.gd)}) — só passa se o ${nameOf(teamId)} perder por muito E ele vencer por muito (virar ${swing})`,
-      )
-    }
+    const s = cenarioUltrapassagem(r.teamId, teamId)
+    if (s) out.push(s)
   }
   return out
 }
+
+// Quem, ACIMA, o time ainda pode alcançar (lado ofensivo — o que faltava). É isto que diz se ele tem o que
+// GANHAR neste jogo, e não só o que perder: time que ainda encosta numa vaga melhor ataca.
+function alvosFor(teamId: string): string[] {
+  const myPos = posOf(teamId)
+  if (myPos == null) return []
+  const out: string[] = []
+  for (let i = myPos - 2; i >= 0; i--) {
+    const r = table[i] // posição (i+1) — estritamente acima do time
+    if (!r) continue
+    const s = cenarioUltrapassagem(teamId, r.teamId, "alvo")
+    if (s) out.push(s)
+  }
+  return out
+}
+
 
 // Motivação de tabela com ALCANCE MATEMÁTICO. Garantido top-K ⇔ canFinishAbove < K; eliminado do top-K
 // ⇔ guaranteedAbove ≥ K. Daí saem: seguro/ameaçado de rebaixamento, ainda-pode/já-era p/ campeão,
@@ -1211,15 +1266,43 @@ function stakesFor(teamId: string, teamName: string): Stakes {
         stillAfterDraw === 0
           ? `pro ${nameOf(teamId)} **um empate basta** (vai a ${drawPts}, fora do alcance) — só perde a vaga se PERDER`
           : `o ${nameOf(teamId)} **precisa vencer** pra travar (empate ainda deixa ${stillAfterDraw} ${stillAfterDraw === 1 ? "rival vivo" : "rivais vivos"})`
-      // Teto de 4 nomes: no meio da temporada TODO time abaixo "ainda alcança", e a lista crua despejava
+      // Teto de nomes: no meio da temporada TODO time abaixo "ainda alcança", e a lista crua despejava
       // 18 concorrentes (~1500 caracteres de ruído) num prompt onde cada linha deve carregar sinal.
-      const MAX_CONTESTERS = 4
+      // MAS na reta final (≤2 jogos) a lista é curta e cada nome é uma ameaça concreta com cenário
+      // calculado — cortar ali escondia justamente os casos de desempate, que são os mais informativos
+      // (o Ceará que passa com um 1-0 qualquer some, e sobra "+2 atrás"). Então o teto é condicional.
+      const MAX_CONTESTERS = gr <= 2 ? contesters.length : 4
       const shown = contesters.slice(0, MAX_CONTESTERS)
       const rest = contesters.length - shown.length
-      const tail = rest > 0 ? `; +${rest} atrás (perseguição remota, ${gr} jogos pra fechar)` : ""
-      lines.push(`disputa pela vaga (${pos}º): ${lock}. Quem ainda ameaça → ${shown.join("; ")}${tail}`)
+      const tail = rest > 0 ? `\n    - +${rest} atrás (perseguição remota, ${gr} jogos pra fechar)` : ""
+      // Uma linha por perseguidor: o cenário de cada um tem 2-3 orações, e tudo junto com ";" vira um
+      // parágrafo ilegível onde o modelo perde o fio de qual condição é de quem.
+      lines.push(
+        `disputa pela vaga (${pos}º): ${lock}. **${contesters.length} time(s) pode(m) ultrapassar** — desempate desta temporada: **${TIEBREAK.join(" → ")}**:\n    - ${shown.join("\n    - ")}${tail}`,
+      )
     }
   }
+  // Lado OFENSIVO: quem o time ainda alcança ACIMA. Sem isto o bloco só dizia o que ele tem a PERDER, e
+  // um time que ainda encosta numa vaga melhor ataca tanto quanto um que defende a sua — é metade da
+  // motivação que ficava invisível. Mesmo teto condicional do lado defensivo, pelo mesmo motivo (no meio
+  // da temporada quase todo mundo acima "ainda é alcançável" e a lista vira ruído). @feature MOD-004
+  const alvos = alvosFor(teamId)
+  if (alvos.length) {
+    const MAX_ALVOS = gr <= 2 ? alvos.length : 3
+    const mostra = alvos.slice(0, MAX_ALVOS)
+    const sobra = alvos.length - mostra.length
+    lines.push(
+      `alcance pra CIMA (${pos}º): **${alvos.length} time(s) ainda ao alcance** — o que o ${nameOf(teamId)} tem a GANHAR, não só a perder:\n    - ${mostra.join("\n    - ")}${sobra > 0 ? `\n    - +${sobra} mais acima (alcance remoto)` : ""}`,
+    )
+  }
+  // A cauda do desempate NÃO está modelada e o prompt precisa dizer isso, senão o modelo lê "decide gols
+  // pró" como fim da linha e crava uma conclusão que a regra real não sustenta. A SportMonks entrega só o
+  // rótulo da regra (um nome, ex. "Points Wins Balance Scored") — não há campo com a cascata completa,
+  // então os critérios abaixo do último listado são desconhecidos AQUI, por limite de fonte. @feature LIG-017
+  if (contesters.length || alvos.length)
+    lines.push(
+      `⚠️ desempate modelado até **${TIEBREAK[TIEBREAK.length - 1]}** (é o que a fonte entrega: a SportMonks dá só o rótulo da regra, sem a cascata). Se dois times empatarem ATÉ esse critério, o desfecho é **indefinido para nós** — regulamentos costumam seguir com confronto direto/cartões/sorteio, que NÃO estão calculados. Nesse caso diga "indefinido", não invente o desempate.`,
+    )
   // pushes = de fato vai PRA CIMA neste jogo: precisa de pontos (alta) E um empate NÃO trava o objetivo.
   // Time garantido/rebaixado/remoto (baixa/media) ou que "empate basta" (administra) → pushes=false.
   const pushes = intensity === "alta" && !drawSuffices
@@ -1356,15 +1439,25 @@ for (const g of momGoalRows) {
 // jogos disputados de cada time. Base pra qualificar a forma e o stake de cada partida passada.
 type AsOf = { pos: number; pts: number; played: number }
 const standingsAsOf = (dateStr: string): Map<string, AsOf> => {
-  const tbl = new Map<string, { pts: number; gd: number; gf: number; pl: number }>()
-  const g = (id: string) => { let v = tbl.get(id); if (!v) tbl.set(id, (v = { pts: 0, gd: 0, gf: 0, pl: 0 })); return v }
+  // `won` acompanha o acumulador do `preMatchTable` — sem ele o critério "vitórias" da Série A não teria
+  // campo de onde ler e seria descartado sem aviso. @feature LIG-017
+  type AsOfAcc = { pts: number; won: number; gd: number; gf: number; pl: number }
+  const tbl = new Map<string, AsOfAcc>()
+  const g = (id: string) => { let v = tbl.get(id); if (!v) tbl.set(id, (v = { pts: 0, won: 0, gd: 0, gf: 0, pl: 0 })); return v }
   for (const p of played.filter((r) => r.date < dateStr)) {
     const hs = p.ftHome ?? 0, as = p.ftAway ?? 0
     const h = g(p.homeTeamId), a = g(p.awayTeamId)
     h.gf += hs; h.gd += hs - as; h.pl++; a.gf += as; a.gd += as - hs; a.pl++
-    if (hs > as) h.pts += 3; else if (hs < as) a.pts += 3; else { h.pts++; a.pts++ }
+    if (hs > as) { h.pts += 3; h.won++ } else if (hs < as) { a.pts += 3; a.won++ } else { h.pts++; a.pts++ }
   }
-  const ranked = [...tbl.entries()].sort((p, q) => q[1].pts - p[1].pts || q[1].gd - p[1].gd || q[1].gf - p[1].gf)
+  // Mesma regra da temporada usada no `preMatchTable` — as duas tabelas do prompt têm de concordar. @feature LIG-017
+  const cmp = tiebreakComparator<AsOfAcc>(TIEBREAK, {
+    points: (v) => v.pts,
+    wins: (v) => v.won,
+    goalDifference: (v) => v.gd,
+    goalsFor: (v) => v.gf,
+  })
+  const ranked = [...tbl.entries()].sort((p, q) => cmp(p[1], q[1]))
   return new Map(ranked.map(([id, v], i) => [id, { pos: i + 1, pts: v.pts, played: v.pl }]))
 }
 // "Já estava classificado/decidido?" de um time AO ENTRAR num jogo — JUSTIFICA o resultado (quem já está salvo
@@ -1957,7 +2050,9 @@ ${momentumCrossBlock()}
 - ${away.name}: λ_SoT ${lambdaSotAway} × conv ${awayConv ?? "?"}% → **${xgViaSotAway ?? "?"} gols**
 - total via SoT = ${xgViaSotHome != null && xgViaSotAway != null ? +(xgViaSotHome + xgViaSotAway).toFixed(2) : "?"}
 - **Índice de volume do jogo**: λ_SoT total ${+(lambdaSotHome + lambdaSotAway).toFixed(1)} vs média da liga ${+(leagueHomeSotAvg + leagueAwaySotAvg).toFixed(1)} SoT → ${lambdaSotHome + lambdaSotAway > (leagueHomeSotAvg + leagueAwaySotAvg) * 1.1 ? "**ACIMA** (jogo de volume → pressão de OVER)" : lambdaSotHome + lambdaSotAway < (leagueHomeSotAvg + leagueAwaySotAvg) * 0.9 ? "**ABAIXO** (jogo travado → pressão de UNDER)" : "na média"}
-- **Se A e B divergirem**, prefira B (volume é mais estável); a diferença é sorte de finalização e tende a regredir.
+- **Se A e B divergirem, prefira A.** Isto inverte a regra anterior ("prefira B, volume é mais estável"), que foi **medida e reprovada**: em 56 jogos já disputados (PL 42 + BRA 14, auditoria de 2026-07-20, \`scripts/_audit-total-bias.ts\`), a Rota A errou **-0,32** gol por jogo e a Rota B **-0,56** — preferir B custava 0,24 gol de viés adicional, e o total final colava na Rota B (delta +0,04), ou seja, a instrução estava de fato mandando no resultado.
+- **AS DUAS ROTAS SUBESTIMAM EM RODADA FINAL — e provavelmente só ali (a amostra não permite afirmar mais).** Na mesma auditoria o real médio foi **3,02** contra 2,50 projetados, com **64% dos jogos acima do previsto**; e a subestimação cresce quanto MENOR o prior (prior ~1,95 → real 2,93; prior ~3,23 → real 3,12, correto). **Limitação que impede generalizar: 50 dos 56 jogos auditados são de rodada ≥35**, e rodada final tem mais gol por natureza (PL +0,14 · Brasileirão +0,48 vs o resto da temporada, medido nas 380 partidas de cada). O grupo de controle tem n=6 — não dá pra separar viés do modelo de composição da amostra. **Uso correto desta nota:** em **rodada final ou jogo sem nada em jogo pra um dos lados**, desconfie de prior baixo — "time sem objetivo" costuma abrir o jogo, não travá-lo, e é aí que o quant mais erra. **Fora desse contexto, não aplique o ajuste** — não há evidência de viés medida em rodada de meio de temporada.
+- **Não aplique fator de correção fixo.** Multiplicar o prior por uma constante (testado: ×1,12) zera o viés médio mas estraga os extremos (passa a superestimar +0,49 nos jogos de prior alto). O ajuste correto é qualitativo e assimétrico: subir a desconfiança no prior baixo, não empurrar tudo pra cima.
 
 ## Probabilidades de mercado (Poisson corrigido por **Dixon-Coles** sobre os λ — seu PRIOR: parta daqui e ATUALIZE pelo roteiro; não invente do zero, mas não congele na média)
 | Mercado | Rota A (gols) | Rota B (SoT×conv) |

@@ -535,6 +535,7 @@ export type PlayerSeasonStats = {
   ballRecoveries: number
   possessionLost: number
   dispossessed: number
+  turnovers: number // gave the ball away (active error; dispossessed is the passive one)
   dribbleAttempts: number
   dribblesSuccessful: number
   // defesa
@@ -545,6 +546,10 @@ export type PlayerSeasonStats = {
   blockedShots: number // shots HE blocked
   lastManTackle: number
   errorsLeadToShot: number
+  errorLeadToGoal: number // error that led to a GOAL, not just a shot
+  clearanceOffline: number // cleared off the goal line — a goal prevented
+  offsidesProvoked: number // offsides he caused — who holds the defensive line
+  penaltiesCommitted: number
   dribbledPast: number
   // duelos
   duelsTotal: number
@@ -556,6 +561,7 @@ export type PlayerSeasonStats = {
   // disciplina
   fouls: number
   foulsDrawn: number
+  penaltiesWon: number // penalty he won (fouled inside the box)
   offsides: number
   // goleiro
   saves: number
@@ -692,6 +698,47 @@ export async function resolveSeason(code: string, sportmonksSeasonId?: number): 
     .limit(1)
   if (!row) throw notFound("season_not_found")
   return row.id
+}
+
+/**
+ * Comparador de desempate sobre um acumulador QUALQUER, amarrando cada critério ao campo equivalente
+ * daquela estrutura. Existe porque os scripts de prognóstico recomputam a tabela com formatos próprios
+ * (`{points,gd,gf}`, `{pts,gd,gf,pl}`) em vez de `StandingRow`.
+ *
+ * ESTOURA em critério sem campo mapeado de propósito: `scripts/` fica fora do typecheck, e um campo
+ * ausente viraria `NaN` — como `NaN !== 0`, o sort ignoraria o critério EM SILÊNCIO e a tabela ficaria
+ * errada com cara de corrigida. @feature LIG-017
+ */
+export function tiebreakComparator<T>(
+  criteria: TiebreakCriterion[],
+  field: Partial<Record<TiebreakCriterion, (r: T) => number>>,
+): (x: T, y: T) => number {
+  const getters = criteria.map((c) => {
+    const g = field[c]
+    if (!g) throw new Error(`tiebreakComparator: critério "${c}" sem campo mapeado no acumulador local`)
+    return g
+  })
+  return (x, y) => {
+    for (const get of getters) {
+      const diff = get(y) - get(x)
+      if (diff !== 0) return diff
+    }
+    return 0
+  }
+}
+
+/**
+ * Desempate da temporada JÁ RESOLVIDA: lê a regra declarada pela fonte por `season.id` (nunca por
+ * `leagueCode` — a mesma liga muda de regra entre temporadas, PL 24/25=171 vs 25/26=1526) e delega a
+ * semântica a `tiebreakOf`. Quem chama já resolveu a season; não resolva de novo. @feature LIG-017
+ */
+export async function tiebreakOfSeason(code: string, seasonId: string): Promise<Tiebreak> {
+  const [row] = await db
+    .select({ sportmonksTieBreakerRuleId: season.sportmonksTieBreakerRuleId })
+    .from(season)
+    .where(eq(season.id, seasonId))
+    .limit(1)
+  return tiebreakOf({ code, sportmonksTieBreakerRuleId: row?.sportmonksTieBreakerRuleId ?? null })
 }
 
 // All seasons of a league for the switcher, most recent first. @feature LIG-008
@@ -1059,6 +1106,12 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
       blockedShots: sum(lineupPlayer.blockedShots),
       lastManTackle: sum(lineupPlayer.lastManTackle),
       errorsLeadToShot: sum(lineupPlayer.errorsLeadToShot),
+      errorLeadToGoal: sum(lineupPlayer.errorLeadToGoal),
+      clearanceOffline: sum(lineupPlayer.clearanceOffline),
+      offsidesProvoked: sum(lineupPlayer.offsidesProvoked),
+      penaltiesCommitted: sum(lineupPlayer.penaltiesCommitted),
+      penaltiesWon: sum(lineupPlayer.penaltiesWon),
+      turnovers: sum(lineupPlayer.turnovers),
       dribbledPast: sum(lineupPlayer.dribbledPast),
       duelsTotal: sum(lineupPlayer.duelsTotal),
       duelsWon: sum(lineupPlayer.duelsWon),
@@ -1092,7 +1145,10 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     dispossessed: n(sh?.dispossessed), dribbleAttempts: n(sh?.dribbleAttempts), dribblesSuccessful: n(sh?.dribblesSuccessful),
     tackles: n(sh?.tackles), tacklesWon: n(sh?.tacklesWon), interceptions: n(sh?.interceptions),
     clearances: n(sh?.clearances), blockedShots: n(sh?.blockedShots), lastManTackle: n(sh?.lastManTackle),
-    errorsLeadToShot: n(sh?.errorsLeadToShot), dribbledPast: n(sh?.dribbledPast),
+    errorsLeadToShot: n(sh?.errorsLeadToShot), errorLeadToGoal: n(sh?.errorLeadToGoal),
+    clearanceOffline: n(sh?.clearanceOffline), offsidesProvoked: n(sh?.offsidesProvoked),
+    penaltiesCommitted: n(sh?.penaltiesCommitted), penaltiesWon: n(sh?.penaltiesWon),
+    turnovers: n(sh?.turnovers), dribbledPast: n(sh?.dribbledPast),
     duelsTotal: n(sh?.duelsTotal), duelsWon: n(sh?.duelsWon), duelsLost: n(sh?.duelsLost),
     aerialsTotal: n(sh?.aerialsTotal), aerialsWon: n(sh?.aerialsWon), aerialsLost: n(sh?.aerialsLost),
     fouls: n(sh?.fouls), foulsDrawn: n(sh?.foulsDrawn), offsides: n(sh?.offsides),
@@ -1315,8 +1371,11 @@ export async function seasonsOfPlayer(playerId: string): Promise<SeasonSummary[]
     .orderBy(desc(season.startYear))
 }
 
-// Team by SLUG (key of the /teams/:slug URLs) or domain 404.
-export async function getTeamBySlug(slug: string): Promise<TeamRef & { shortCode: string | null }> {
+// Team by SLUG (key of the /teams/:slug URLs) or domain 404. `twitterUsername` sai cru (sem "@",
+// sem URL) — quem exibe monta o link. @feature SIN-022
+export async function getTeamBySlug(
+  slug: string,
+): Promise<TeamRef & { shortCode: string | null; twitterUsername: string | null }> {
   const [row] = await db
     .select({
       id: team.id,
@@ -1324,6 +1383,7 @@ export async function getTeamBySlug(slug: string): Promise<TeamRef & { shortCode
       slug: team.slug,
       logoUrl: team.logoUrl,
       shortCode: team.shortCode,
+      twitterUsername: team.twitterUsername,
     })
     .from(team)
     .where(eq(team.slug, slug))
@@ -2077,16 +2137,51 @@ const TIEBREAK_VALUE: Record<TiebreakCriterion, (r: Tiebreakable) => number> = {
 // liga não listada, o que preserva a ordenação atual de PL/FA Cup/Carabao.
 const PREMIER_LEAGUE_TIEBREAK: TiebreakCriterion[] = ["points", "goalDifference", "goalsFor"]
 
-// Desempate por liga. A Série A põe VITÓRIAS antes do saldo (REC da CBF, Art. 15) — confronto direto e
-// disciplina, que viriam depois, ficam fora de escopo e caem no nome do clube como hoje. É regra de
-// negócio (entra por deploy), não configuração do dono: por isso mora aqui e não numa coluna de `league`.
-const TIEBREAK_BY_LEAGUE: Record<string, TiebreakCriterion[]> = {
-  BRA: ["points", "wins", "goalDifference", "goalsFor"],
+/**
+ * Desempate aplicado a UMA temporada: a lista de critérios (nunca vazia), de onde ela veio e o rótulo
+ * curado do regulamento que manda. `label` é PROCEDÊNCIA, não a lista — a linha exibida sob a tabela é
+ * montada a partir de `criteria`; `null` quando não há regulamento que se possa nomear. @feature LIG-017
+ */
+export type Tiebreak = {
+  criteria: TiebreakCriterion[]
+  source: "sportmonks" | "league-override" | "default"
+  label: string | null
 }
 
-/** Ordem de desempate da liga; liga não listada usa a da Premier League (comportamento atual). @feature LIG-012 */
-export function tiebreakOf(code: string): TiebreakCriterion[] {
-  return TIEBREAK_BY_LEAGUE[code] ?? PREMIER_LEAGUE_TIEBREAK
+// Semântica curada de cada `tie_breaker_rule_id` da SportMonks, escrita contra o REGULAMENTO e nunca
+// derivada do `name` do tipo — o tipo 171 se chama "Goal Difference, Matches Played, Goals Scored" e a
+// Premier League não desempata por partidas jogadas. @feature LIG-017
+const TIEBREAK_BY_RULE_ID: Record<number, { criteria: TiebreakCriterion[]; label: string | null }> = {
+  // PL 24/25 e FA Cup: pontos → saldo → gols pró (sem "matches played", que só existe no nome do tipo).
+  171: { criteria: PREMIER_LEAGUE_TIEBREAK, label: "Regulamento da Premier League" },
+  1526: { criteria: PREMIER_LEAGUE_TIEBREAK, label: "Regulamento da Premier League" },
+  // Série A: VITÓRIAS antes do saldo (REC da CBF, Art. 15).
+  577: { criteria: ["points", "wins", "goalDifference", "goalsFor"], label: "Regulamento da CBF" },
+  // "None" (copas, ex. Carabao): a fonte declara que não há regra. Cai no default inglês — NUNCA lista
+  // vazia, que degradaria pra ordem alfabética ignorando pontos. `label` null: não há regulamento a nomear.
+  573: { criteria: PREMIER_LEAGUE_TIEBREAK, label: null },
+}
+
+// Override por liga, mantido como rede de segurança pro caso do id vir null (a ponte local
+// `backfill-season.ts` não fala com a API): sem ele o Brasileirão cairia no default inglês e ordenaria
+// errado EM SILÊNCIO. Aponta pro mapa por regra pra carregar também o rótulo, sem duplicar a lista.
+const TIEBREAK_BY_LEAGUE: Record<string, { criteria: TiebreakCriterion[]; label: string | null }> = {
+  BRA: TIEBREAK_BY_RULE_ID[577]!,
+}
+
+/**
+ * Desempate da TEMPORADA: resolve pelo `tie_breaker_rule_id` que a SportMonks declara, caindo no override
+ * por liga e depois no default da Premier League. Pura de propósito — recebe objeto literal e não toca o
+ * banco, pra continuar utilizável com dado sintético no arnês de prova. @feature LIG-017
+ */
+export function tiebreakOf(season: { code: string; sportmonksTieBreakerRuleId: number | null }): Tiebreak {
+  const byRule = season.sportmonksTieBreakerRuleId != null ? TIEBREAK_BY_RULE_ID[season.sportmonksTieBreakerRuleId] : undefined
+  if (byRule) return { criteria: byRule.criteria, source: "sportmonks", label: byRule.label }
+
+  const override = TIEBREAK_BY_LEAGUE[season.code]
+  if (override) return { criteria: override.criteria, source: "league-override", label: override.label }
+
+  return { criteria: PREMIER_LEAGUE_TIEBREAK, source: "default", label: null }
 }
 
 /**
@@ -2094,6 +2189,10 @@ export function tiebreakOf(code: string): TiebreakCriterion[] {
  * caindo no nome (A→Z) quando tudo empata. Keyed by team.id (stable); matches without a score are ignored.
  */
 export function computeStandings(matches: Match[], tiebreak: TiebreakCriterion[]): StandingRow[] {
+  // Lista vazia não "ordena por nada": ela cai direto no fallback alfabético lá embaixo, produzindo uma
+  // tabela que IGNORA pontos — falha silenciosa e plausível. Melhor estourar aqui. @feature LIG-017
+  if (tiebreak.length === 0) throw new Error("computeStandings: lista de critérios de desempate vazia")
+
   type Acc = Omit<StandingRow, "position" | "goalDifference" | "form" | "zone">
   const table = new Map<string, Acc>()
 

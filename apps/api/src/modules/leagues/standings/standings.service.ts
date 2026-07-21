@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm"
 
 import { db } from "../../../db/client"
 import { standing } from "../../../db/schema"
-import { computeStandings, getLeagueOrThrow, loadMatches, resolveSeason, tiebreakOf } from "../shared/shared"
+import { computeStandings, getLeagueOrThrow, loadMatches, resolveSeason, tiebreakOfSeason } from "../shared/shared"
 import type { StandingsQuery } from "./standings.schema"
 
 // GET /v1/leagues/:code/standings — computed table for ONE season (?season=<sportmonksSeasonId>,
@@ -13,17 +13,18 @@ export async function standings(code: string, query: StandingsQuery) {
   await getLeagueOrThrow(code)
   const seasonId = await resolveSeason(code, query.season)
   const matches = await loadMatches(code, seasonId)
-  // O desempate é da LIGA (a Série A ordena vitórias antes do saldo; a PL não). @feature LIG-012
-  const tiebreak = tiebreakOf(code)
+  // O desempate é da TEMPORADA, não da liga: a regra vem do que a fonte declara pra `seasonId` (a Série A
+  // ordena vitórias antes do saldo; a PL não). Reusa a season já resolvida acima. @feature LIG-017
+  const tiebreak = await tiebreakOfSeason(code, seasonId)
 
   if (query.upTo != null) {
     return computeStandings(
       matches.filter((m) => m.round <= query.upTo!),
-      tiebreak,
+      tiebreak.criteria,
     )
   }
 
-  const table = computeStandings(matches, tiebreak)
+  const table = computeStandings(matches, tiebreak.criteria)
   const rows = await db
     .select({ teamId: standing.teamId, zone: standing.zone })
     .from(standing)

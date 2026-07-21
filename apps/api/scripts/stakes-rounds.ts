@@ -10,12 +10,17 @@ import { and, eq } from "drizzle-orm"
 
 import { db } from "../src/db/client"
 import { match, season, standing, team } from "../src/db/schemas/leagues"
+import { tiebreakComparator, tiebreakOfSeason } from "../src/modules/leagues/shared/shared"
 
 const rounds = process.argv.slice(2).map(Number).filter(Boolean)
 const ROUNDS = rounds.length ? rounds : [35, 36, 37, 38]
 
 const [ssn] = await db.select({ id: season.id, leagueCode: season.leagueCode }).from(season).where(eq(season.sportmonksSeasonId, 25583))
 if (!ssn) throw new Error("season 25583 não encontrada")
+
+// Desempate da temporada, lido UMA vez (o script inteiro roda sobre uma season só). Antes daqui a tabela
+// pré-rodada ordenava com a regra da PL hardcoded. @feature LIG-017
+const TIEBREAK = (await tiebreakOfSeason(ssn.leagueCode, ssn.id)).criteria
 
 const teams = await db.select({ id: team.id, name: team.name }).from(team)
 const nameOf = (id: string) => teams.find((t) => t.id === id)?.name ?? id
@@ -40,7 +45,9 @@ for (const r of byPos) { if (isEuro(r.zone)) Q += 1; else break }
 let R = 0
 for (let i = byPos.length - 1; i >= 0; i--) { if (byPos[i]?.zone === "relegation") R += 1; else break }
 
-type Line = { teamId: string; points: number; gd: number; gf: number }
+// `won` existe para o critério "vitórias" ser aplicável — sem ele o desempate da Série A seria
+// silenciosamente ignorado neste sort. @feature LIG-017
+type Line = { teamId: string; points: number; won: number; gd: number; gf: number }
 
 for (const round of ROUNDS) {
   const roundGames = fixtures.filter((f) => f.round === round).sort((a, b) => a.date.localeCompare(b.date))
@@ -50,14 +57,22 @@ for (const round of ROUNDS) {
   // Tabela pré-rodada: só jogos FT estritamente antes do 1º jogo da rodada
   const played = fixtures.filter((f) => f.date < cutoff && f.ftH != null && f.ftA != null)
   const acc = new Map<string, Line>()
-  const at = (id: string) => { let l = acc.get(id); if (!l) acc.set(id, (l = { teamId: id, points: 0, gd: 0, gf: 0 })); return l }
+  const at = (id: string) => { let l = acc.get(id); if (!l) acc.set(id, (l = { teamId: id, points: 0, won: 0, gd: 0, gf: 0 })); return l }
   for (const p of played) {
     const h = at(p.h), a = at(p.a)
     const hg = p.ftH!, ag = p.ftA!
     h.gf += hg; a.gf += ag; h.gd += hg - ag; a.gd += ag - hg
-    if (hg > ag) h.points += 3; else if (hg < ag) a.points += 3; else { h.points++; a.points++ }
+    if (hg > ag) { h.points += 3; h.won++ } else if (hg < ag) { a.points += 3; a.won++ } else { h.points++; a.points++ }
   }
-  const table = [...acc.values()].sort((x, y) => y.points - x.points || y.gd - x.gd || y.gf - x.gf)
+  // Desempate da TEMPORADA (a Série A põe vitórias antes do saldo; a PL não). @feature LIG-017
+  const table = [...acc.values()].sort(
+    tiebreakComparator<Line>(TIEBREAK, {
+      points: (l) => l.points,
+      wins: (l) => l.won,
+      goalDifference: (l) => l.gd,
+      goalsFor: (l) => l.gf,
+    }),
+  )
   const posOf = (id: string) => table.findIndex((l) => l.teamId === id) + 1
   const lineOf = (id: string) => table.find((l) => l.teamId === id)!
 

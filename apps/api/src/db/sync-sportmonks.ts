@@ -45,7 +45,10 @@ const LINEUP_BENCH = 12
 // Volume defensivo + criação por jogador (LIG-003 / tese do desfalque): tackles/interceptions/duels/
 // crosses/dribbles/big-chances-missed/passes — todos confirmados no lineups.details da PL 25/26.
 const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86, shotsTotal: 42, shotsOffTarget: 41, shotsBlocked: 58, duelsLost: 1491, crossesSuccessfulPct: 1533, passesAccuratePct: 1584, fouls: 56, foulsDrawn: 96, saves: 57, savesInsidebox: 104, dispossessed: 94, blockedShots: 97, clearances: 101, duelsTotal: 105, aerialsWon: 107, passesAccurate: 116, touches: 120, longBalls: 122, longBallsWon: 123, bigChancesCreated: 580, chancesCreated: 9706, aerialsTotal: 27274, aerialsLost: 27266, aerialsWonPct: 27275, tacklesWon: 27267, tacklesWonPct: 27268, duelsWonPct: 27276, passesFinalThird: 27269, longBallsWonPct: 27270, ballRecoveries: 27271, backwardPasses: 27272, possessionLost: 27273, errorsLeadToShot: 48997, lastManTackle: 583, goodHighClaim: 584, offsides: 51, captain: 40,
-  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581 } as const
+  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581,
+  // Erro individual e evento raro decisivo (LIG-003). ESPARSOS: só vêm quando o lance aconteceu —
+  // pênalti cometido aparece em 22% dos jogos, corte na linha em 20%. Cobertura medida em 200 jogos da PL.
+  errorLeadToGoal: 571, penaltiesCommitted: 114, penaltiesWon: 115, offsidesProvoked: 95, turnovers: 121, clearanceOffline: 582 } as const
 // SportMonks fixture-statistics type_ids ingeridos por time por partida (include=statistics). @feature DOS-002
 // Bloco 2 (defesa + construção): só os que o probe confirmou virem no nível-partida da PL 25/26.
 const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, shotsOffTarget: 41, shotsBlocked: 58, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34, freeKicks: 55,
@@ -98,7 +101,7 @@ const DET = {
 type SmLeague = { id: number; name: string; image_path: string; country?: { name: string } }
 // `starting_at`/`ending_at` ("YYYY-MM-DD") delimitam a temporada e são a fonte da janela de varredura —
 // é o que impede o sweep de nascer com o calendário europeu hardcoded. @feature LIG-012
-type SmSeason = { id: number; name: string; starting_at: string; ending_at: string }
+type SmSeason = { id: number; name: string; starting_at: string; ending_at: string; tie_breaker_rule_id: number | null }
 type SmTeam = { id: number; name: string; short_code?: string; image_path: string }
 type SmDetail = { type_id: number; value: number }
 type SmStanding = {
@@ -350,6 +353,8 @@ async function main() {
     name: apiSeason.name,
     startYear: Number(apiSeason.name.slice(0, 4)),
     isCurrent: true,
+    // Seletor da regra de desempate declarada pela fonte; a semântica mora em TIEBREAK_BY_RULE_ID. @feature LIG-017
+    sportmonksTieBreakerRuleId: apiSeason.tie_breaker_rule_id ?? null,
   }
   const [seasonRow] = await db
     .insert(season)
@@ -643,6 +648,12 @@ async function main() {
           dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null,
           dribbledPast: stat(STAT.dribbledPast) ?? null,
           bigChancesMissed: stat(STAT.bigChancesMissed) ?? null,
+          errorLeadToGoal: stat(STAT.errorLeadToGoal) ?? null,
+          penaltiesCommitted: stat(STAT.penaltiesCommitted) ?? null,
+          penaltiesWon: stat(STAT.penaltiesWon) ?? null,
+          offsidesProvoked: stat(STAT.offsidesProvoked) ?? null,
+          turnovers: stat(STAT.turnovers) ?? null,
+          clearanceOffline: stat(STAT.clearanceOffline) ?? null,
           manOfMatch: stat(STAT.motm) === 1,
         }
         await db

@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-56 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+60 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -32,6 +32,8 @@
 | LIG-013 | Série A 2026 ao vivo (sync incremental e resiliente) | ligas | ideia | P2 | dados:ideia | nao | LIG-012 |
 | LIG-014 | Home (hub da rodada) fora do mock e multi-liga | ligas | ideia | P2 | ui:ideia api:ideia | nao | LIG-012 |
 | LIG-015 | Rodada atual por padrão na aba Rodadas (com a escolha do usuário preservada) | ligas | feito | P2 | ui:feito | sim | — |
+| LIG-017 | Critério de desempate por temporada (ingerido e exibido) | ligas | verificado | P2 | dados:feito api:feito ia:feito ui:feito | sim | LIG-012, LIG-008 |
+| LIG-018 | Desempate por confronto direto (comparação pareada) | ligas | ideia | P3 | api:ideia | nao | LIG-017 |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -43,6 +45,7 @@
 | MOD-009 | Espaçamento dos jogos na janela de forma — densidade do calendário ("5 jogos em 14 dias") no prognóstico | modelos | em-andamento | P2 | ia:verificado | nao | MOD-004, LIG-005, LIG-011 |
 | MOD-010 | Calibração do motor para a Série A (futebol brasileiro) | modelos | ideia | P2 | ia:ideia | nao | LIG-012 |
 | MOD-011 | Raciocínio do prognóstico auditável na página (o prompt de evidências não é exposto — D7) | modelos | feito | P1 | api:feito ui:feito | parcial | MOD-004 |
+| MOD-014 | Prognóstico V2 tático experimental e isolado | modelos | em-andamento | P1 | ia:em-andamento | parcial | MOD-004, DOS-002, SIN-021 |
 | SIN-001 | Sinal — conflitos entre jogadores | sinais | investigado | P3 | dados:investigado ia:investigado | nao | DOS-001 |
 | SIN-002 | Sinal — interesses de patrocinadores do jogador | sinais | investigado | P3 | dados:ideia ia:ideia | nao | DOS-001 |
 | SIN-003 | Sinal — mood / estado emocional do jogador | sinais | investigado | P3 | dados:ideia ia:ideia | nao | DOS-001 |
@@ -51,7 +54,7 @@
 | SIN-006 | Sinal de clima (condições de campo) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | — |
 | SIN-007 | Sinal de rivalidade (clássicos, torcida, ex-clube) | sinais | investigado | P2 | dados:investigado ia:investigado | nao | — |
 | SIN-008 | Sinal de calendário e fadiga (ressaca de meio de semana + altitude) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | — |
-| SIN-009 | Sinal de arbitragem (árbitro escalado) | sinais | investigado | P1 | dados:investigado ia:investigado | nao | — |
+| SIN-009 | Sinal de arbitragem (árbitro escalado) | sinais | verificado | P1 | dados:feito api:feito ui:feito ia:investigado | sim | — |
 | SIN-010 | Sinal de motivação e peso do jogo (stakes) | sinais | investigado | P2 | dados:investigado ia:investigado | nao | — |
 | SIN-011 | Sinal de lesões e desfalques | sinais | em-andamento | P2 | dados:feito ia:investigado | parcial | — |
 | SIN-012 | Camada de mercado e movimento de odds (validação de valor) | sinais | investigado | P1 | dados:investigado ia:investigado | nao | — |
@@ -64,6 +67,7 @@
 | SIN-019 | Sinal — steam moves e origem da linha (sharp vs square) | sinais | investigado | P2 | dados:investigado ia:investigado | nao | SIN-012, DOS-001 |
 | SIN-020 | Sinal — janelas sazonais de fadiga (festas, pré-temporada, reta final, parões) | sinais | investigado | P3 | dados:investigado ia:investigado | nao | — |
 | SIN-021 | Sinal — attack momentum / pressão da partida | sinais | verificado | P2 | dados:feito api:feito ui:feito ia:ideia | sim | — |
+| SIN-022 | Feed oficial do clube (X/Twitter) como fonte de notícia | sinais | em-andamento | P2 | dados:feito api:feito ia:ideia ui:feito | sim | — |
 
 ## Índice de âncoras
 
@@ -82,7 +86,6 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 
 ### tabelas
 
-- `arbitros` → SIN-009
 - `backtest_clv` → MOD-001
 - `card` → LIG-001, LIG-002, MOD-004, MOD-008 ⚠️ compartilhada
 - `coach` → CORE-002, LIG-002 ⚠️ compartilhada
@@ -90,18 +93,18 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `dossier_snapshot` → DOS-001, MOD-002 ⚠️ compartilhada
 - `entity_xref` → DOS-001
 - `estadios` → SIN-006, SIN-007, SIN-008, SIN-016 ⚠️ compartilhada
-- `goal` → LIG-001, LIG-002, LIG-007, MOD-006 ⚠️ compartilhada
-- `injury` → LIG-001, LIG-002, LIG-007, SIN-011, SIN-020 ⚠️ compartilhada
+- `goal` → LIG-001, LIG-002, LIG-007, MOD-006, MOD-014 ⚠️ compartilhada
+- `injury` → LIG-001, LIG-002, LIG-007, MOD-014, SIN-011, SIN-020 ⚠️ compartilhada
 - `league` → CORE-002, LIG-001, LIG-008, LIG-011, LIG-012, LIG-014 ⚠️ compartilhada
-- `lineup` → LIG-002
-- `lineup_player` → LIG-001, LIG-003, LIG-007, MOD-004, MOD-007, MOD-008, SIN-020 ⚠️ compartilhada
-- `match` → CORE-002, DOS-001, DOS-002, LIG-001, LIG-002, LIG-004, LIG-005, LIG-008, LIG-009, LIG-010, LIG-011, LIG-012, LIG-013, LIG-014, MOD-001, MOD-006, MOD-009, MOD-010, SIN-007, SIN-020 ⚠️ compartilhada
+- `lineup` → LIG-002, MOD-014 ⚠️ compartilhada
+- `lineup_player` → LIG-001, LIG-003, LIG-007, MOD-004, MOD-007, MOD-008, MOD-014, SIN-020 ⚠️ compartilhada
+- `match` → CORE-002, DOS-001, DOS-002, LIG-001, LIG-002, LIG-004, LIG-005, LIG-008, LIG-009, LIG-010, LIG-011, LIG-012, LIG-013, LIG-014, LIG-018, MOD-001, MOD-006, MOD-009, MOD-010, MOD-014, SIN-007, SIN-009, SIN-020 ⚠️ compartilhada
 - `match_event` → SIN-017
 - `match_features` → MOD-001, MOD-002, SIN-016 ⚠️ compartilhada
 - `match_odds` → DOS-001, SIN-012, SIN-018, SIN-019 ⚠️ compartilhada
-- `match_prognosis` → MOD-004, MOD-006, MOD-010, MOD-011 ⚠️ compartilhada
-- `match_team_stats` → DOS-002, MOD-004, MOD-005, MOD-008 ⚠️ compartilhada
-- `match_trend` → MOD-004
+- `match_prognosis` → MOD-004, MOD-006, MOD-010, MOD-011, MOD-014 ⚠️ compartilhada
+- `match_team_stats` → DOS-002, MOD-004, MOD-005, MOD-008, MOD-014 ⚠️ compartilhada
+- `match_trend` → MOD-004, MOD-014 ⚠️ compartilhada
 - `match_trend (proposta)` → SIN-021
 - `model_predictions` → MOD-001
 - `observation` → DOS-001
@@ -109,9 +112,10 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `operadores_licenciados` → COMP-001
 - `pick` → DOS-001
 - `player` → CORE-002, LIG-001, LIG-010, LIG-012 ⚠️ compartilhada
-- `season` → LIG-008, LIG-011, LIG-012, LIG-013, LIG-014 ⚠️ compartilhada
-- `standing` → LIG-002, LIG-006, LIG-008, LIG-012, LIG-013 ⚠️ compartilhada
-- `team` → CORE-002, LIG-002, LIG-012 ⚠️ compartilhada
+- `referee` → SIN-009
+- `season` → LIG-008, LIG-011, LIG-012, LIG-013, LIG-014, LIG-017, LIG-018 ⚠️ compartilhada
+- `standing` → LIG-002, LIG-006, LIG-008, LIG-012, LIG-013, LIG-017 ⚠️ compartilhada
+- `team` → CORE-002, LIG-002, LIG-012, SIN-022 ⚠️ compartilhada
 - `team_ratings` → MOD-001, MOD-003, SIN-016 ⚠️ compartilhada
 - `venue` → LIG-004, LIG-012 ⚠️ compartilhada
 
@@ -120,12 +124,14 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `absences` → MOD-004
 - `authGuard` → CORE-003
 - `buildDossierSnapshot` → DOS-001
+- `buildPrognosisV2Prompt` → MOD-014
 - `buildPrompt` → MOD-004, MOD-006, MOD-009 ⚠️ compartilhada
 - `buildSuperPrompt` → MOD-004
+- `buildTacticalDossier` → MOD-014
 - `centsParaReais` → CORE-001
 - `centsParaReaisStr` → CORE-001
 - `computeForm` → LIG-002
-- `computeStandings` → LIG-002, LIG-012 ⚠️ compartilhada
+- `computeStandings` → LIG-002, LIG-012, LIG-017, LIG-018 ⚠️ compartilhada
 - `concurrentSeasonIds` → LIG-012
 - `contextoUltimos5` → MOD-006, MOD-008, MOD-009 ⚠️ compartilhada
 - `currentSeasonId` → LIG-008
@@ -137,12 +143,12 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `formatBRL` → CORE-001
 - `getAbsenceImpact` → LIG-007
 - `getCoachDetail` → LIG-009
-- `getMatch` → LIG-005, LIG-006 ⚠️ compartilhada
+- `getMatch` → LIG-005, LIG-006, SIN-009 ⚠️ compartilhada
 - `getMatchRow` → LIG-009
 - `getMatchRowBySlug` → LIG-009
 - `getPlayerDetail` → LIG-001
 - `getTeam` → LIG-002
-- `getTeamBySlug` → LIG-002
+- `getTeamBySlug` → LIG-002, SIN-022 ⚠️ compartilhada
 - `kickoffInTimeZone` → LIG-012
 - `lastMatchBefore` → LIG-005
 - `leagueCodeOfPlayer` → LIG-012
@@ -151,6 +157,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `loadGoalTiming` → LIG-008
 - `loadMatchCommentaries` → LIG-010
 - `loadMatches` → LIG-008
+- `loadMatchReferee` → SIN-009
 - `loadTeamMatches` → LIG-002, LIG-008, LIG-009 ⚠️ compartilhada
 - `loadTeamStanding` → LIG-006, LIG-008 ⚠️ compartilhada
 - `marketProbs` → MOD-004, MOD-005 ⚠️ compartilhada
@@ -169,11 +176,13 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `SidebarSearch` → CORE-002
 - `slugify` → LIG-009
 - `stakesFor` → MOD-004
+- `standings` → LIG-017
 - `sync-sportmonks` → DOS-002
 - `teamMatches` → MOD-006
-- `tiebreakOf` → LIG-012
+- `tiebreakOf` → LIG-012, LIG-017, LIG-018 ⚠️ compartilhada
 - `timing` → MOD-004
 - `useSearch` → CORE-002
+- `validatePrognosisV2` → MOD-014
 - `verifier` → CORE-003
 
 ### rotas
@@ -187,7 +196,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `/players/:id` → LIG-001
 - `/sign-in` → CORE-003
 - `/sign-up` → CORE-003
-- `/teams/:slug` → LIG-002
+- `/teams/:slug` → LIG-002, SIN-022 ⚠️ compartilhada
 - `/v1/leagues/:code` → LIG-008
 - `/v1/leagues/:code/rounds` → LIG-008
 - `/v1/leagues/:code/scorers` → LIG-008
@@ -198,8 +207,10 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `/v1/players/:id` → LIG-008, LIG-012 ⚠️ compartilhada
 - `/v1/search` → CORE-002
 - `/v1/teams/:slug` → LIG-008, LIG-011, LIG-012 ⚠️ compartilhada
+- `GET /v1/leagues/:code/standings` → LIG-017, LIG-018 ⚠️ compartilhada
 - `GET /v1/matches/:id` → LIG-006
 - `GET /v1/matches/:id/momentum (proposta)` → SIN-021
+- `GET /v1/matches/:key` → SIN-009
 - `proxy.ts` → CORE-003
 - `worker.ts` → CORE-004
 
@@ -212,6 +223,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/analise-prompt-prognostico.md](../../docs/investigacoes/analise-prompt-prognostico.md) → MOD-004
 - [docs/investigacoes/attack-momentum-pressao-da-partida.md](../../docs/investigacoes/attack-momentum-pressao-da-partida.md) → SIN-021
 - [docs/investigacoes/autenticacao-clerk.md](../../docs/investigacoes/autenticacao-clerk.md) → CORE-003
+- [docs/investigacoes/criterio-de-desempate-por-temporada.md](../../docs/investigacoes/criterio-de-desempate-por-temporada.md) → LIG-017, LIG-018
 - [docs/investigacoes/derby-por-formato-de-competicao.md](../../docs/investigacoes/derby-por-formato-de-competicao.md) → SIN-007
 - [docs/investigacoes/desfalques-sportmonks-estudo.md](../../docs/investigacoes/desfalques-sportmonks-estudo.md) → SIN-011
 - [docs/investigacoes/dossie-por-partida-fontes-de-dados.md](../../docs/investigacoes/dossie-por-partida-fontes-de-dados.md) → DOS-001
@@ -228,6 +240,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/pagina-do-time.md](../../docs/investigacoes/pagina-do-time.md) → LIG-002
 - [docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md](../../docs/investigacoes/porta-de-dinheiro-odds-e-arredondamento.md) → CORE-001
 - [docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md](../../docs/investigacoes/predicao-futebol-ia-ml-estado-da-arte.md) → MOD-001
+- [docs/investigacoes/prognostico-v2-tatica-setores-janelas.md](../../docs/investigacoes/prognostico-v2-tatica-setores-janelas.md) → MOD-014
 - [docs/investigacoes/regulacao-br-apostas-produto.md](../../docs/investigacoes/regulacao-br-apostas-produto.md) → COMP-001
 - [docs/investigacoes/rest-days-descanso-na-partida.md](../../docs/investigacoes/rest-days-descanso-na-partida.md) → LIG-005
 - [docs/investigacoes/serie-a-brasileirao-migracao-sportmonks.md](../../docs/investigacoes/serie-a-brasileirao-migracao-sportmonks.md) → LIG-012, LIG-013, MOD-010
@@ -239,6 +252,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/sinal-ocasioes-especiais-jogador.md](../../docs/investigacoes/sinal-ocasioes-especiais-jogador.md) → SIN-005
 - [docs/investigacoes/sinal-perfil-tatico-transicoes.md](../../docs/investigacoes/sinal-perfil-tatico-transicoes.md) → SIN-015
 - [docs/investigacoes/sinal-relacao-jogador-treinador.md](../../docs/investigacoes/sinal-relacao-jogador-treinador.md) → SIN-004
+- [docs/investigacoes/sportmonks-inventario-completo.md](../../docs/investigacoes/sportmonks-inventario-completo.md) → SIN-009
 - [docs/investigacoes/steam-moves-sharp-vs-square.md](../../docs/investigacoes/steam-moves-sharp-vs-square.md) → SIN-019
 - [docs/investigacoes/venue-estadio-geo.md](../../docs/investigacoes/venue-estadio-geo.md) → LIG-004
 - [docs/investigacoes/vies-favorito-azarao.md](../../docs/investigacoes/vies-favorito-azarao.md) → SIN-018
@@ -255,10 +269,12 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/planos/LIG-011-forma-cross-competition.md](../../docs/planos/LIG-011-forma-cross-competition.md) → LIG-011
 - [docs/planos/LIG-012-ingestao-serie-a-brasileirao.md](../../docs/planos/LIG-012-ingestao-serie-a-brasileirao.md) → LIG-012
 - [docs/planos/LIG-015-rodada-atual-por-padrao.md](../../docs/planos/LIG-015-rodada-atual-por-padrao.md) → LIG-015
+- [docs/planos/LIG-017-criterio-de-desempate-por-temporada.md](../../docs/planos/LIG-017-criterio-de-desempate-por-temporada.md) → LIG-017
 - [docs/planos/MOD-004-mercados-e-motor-prompt-vivo.md](../../docs/planos/MOD-004-mercados-e-motor-prompt-vivo.md) → MOD-004
 - [docs/planos/MOD-008-desgaste-sequencia-jogos-dificeis.md](../../docs/planos/MOD-008-desgaste-sequencia-jogos-dificeis.md) → MOD-008
 - [docs/planos/MOD-009-densidade-do-calendario-na-forma.md](../../docs/planos/MOD-009-densidade-do-calendario-na-forma.md) → MOD-009
 - [docs/planos/MOD-011-prognostico-completo-auditavel.md](../../docs/planos/MOD-011-prognostico-completo-auditavel.md) → MOD-011
+- [docs/planos/SIN-009-arbitragem.md](../../docs/planos/SIN-009-arbitragem.md) → SIN-009
 - [docs/planos/SIN-011-lesoes.md](../../docs/planos/SIN-011-lesoes.md) → SIN-011
 - [docs/planos/SIN-021-attack-momentum-pressao-da-partida.md](../../docs/planos/SIN-021-attack-momentum-pressao-da-partida.md) → SIN-021
 - [docs/regras/arbitragem.md](../../docs/regras/arbitragem.md) → SIN-009

@@ -19,6 +19,16 @@ const RESULT_COLOR: Record<"W" | "D" | "L", string> = {
 }
 const RESULT_LABEL: Record<"W" | "D" | "L", string> = { W: "V", D: "E", L: "D" }
 
+// Logo do X desenhado à mão: o lucide tirou os ícones de marca, então depender dele quebraria no
+// próximo bump. 24x24 no viewBox oficial, herda a cor do texto via currentColor.
+function XLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" className={className}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  )
+}
+
 export function TeamDetail({ slug }: { slug: string }) {
   const { data: team, isPending, isError } = useTeamQuery(slug)
 
@@ -37,11 +47,25 @@ export function TeamDetail({ slug }: { slug: string }) {
           )}
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-semibold tracking-tight">{team.name}</h1>
-            {team.shortCode && (
-              <span className="font-mono text-xs tracking-wider text-muted-foreground">
-                {team.shortCode}
-              </span>
-            )}
+            <div className="flex items-center gap-3">
+              {team.shortCode && (
+                <span className="font-mono text-xs tracking-wider text-muted-foreground">
+                  {team.shortCode}
+                </span>
+              )}
+              {team.twitterUsername && (
+                <a
+                  href={`https://x.com/${team.twitterUsername}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  title={`Abrir @${team.twitterUsername} no X`}
+                >
+                  <XLogo className="size-3" />
+                  <span className="font-mono">@{team.twitterUsername}</span>
+                </a>
+              )}
+            </div>
           </div>
           <div className="ml-auto">
             <SeasonSwitcher seasons={team.seasons} />

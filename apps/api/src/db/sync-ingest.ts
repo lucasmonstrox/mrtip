@@ -21,7 +21,8 @@ export const LINEUP_BENCH = 12
 
 // lineups.details stat type_ids (Match Facts) — por jogador por partida.
 export const STAT = { rating: 118, minutes: 119, motm: 1490, keyPasses: 117, shotsOnTarget: 86, shotsTotal: 42, shotsOffTarget: 41, shotsBlocked: 58, duelsLost: 1491, crossesSuccessfulPct: 1533, passesAccuratePct: 1584, fouls: 56, foulsDrawn: 96, saves: 57, savesInsidebox: 104, dispossessed: 94, blockedShots: 97, clearances: 101, duelsTotal: 105, aerialsWon: 107, passesAccurate: 116, touches: 120, longBalls: 122, longBallsWon: 123, bigChancesCreated: 580, chancesCreated: 9706, aerialsTotal: 27274, aerialsLost: 27266, aerialsWonPct: 27275, tacklesWon: 27267, tacklesWonPct: 27268, duelsWonPct: 27276, passesFinalThird: 27269, longBallsWonPct: 27270, ballRecoveries: 27271, backwardPasses: 27272, possessionLost: 27273, errorsLeadToShot: 48997, lastManTackle: 583, goodHighClaim: 584, offsides: 51, captain: 40,
-  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581 } as const
+  tackles: 78, interceptions: 100, duelsWon: 106, passes: 80, crossesTotal: 98, crossesAccurate: 99, dribbleAttempts: 108, dribblesSuccessful: 109, dribbledPast: 110, bigChancesMissed: 581,
+  errorLeadToGoal: 571, penaltiesCommitted: 114, penaltiesWon: 115, offsidesProvoked: 95, turnovers: 121, clearanceOffline: 582 } as const
 export const STAT_IDS = Object.values(STAT).join(",")
 // fixture-statistics type_ids por time por partida (include=statistics).
 export const TEAM_STAT = { possession: 45, shotsTotal: 42, shotsInsidebox: 49, shotsOutsidebox: 50, shotsOnTarget: 86, shotsOffTarget: 41, shotsBlocked: 58, bigChancesCreated: 580, dangerousAttacks: 44, corners: 34, freeKicks: 55,
@@ -40,8 +41,9 @@ export function richInclude(withStage: boolean): string {
   )
 }
 // Filtros de tipos (pra limitar o volume dos includes de detalhe). lineupDetailTypes foi REMOVIDO:
-// ingerimos 50+ types por jogador e a API limita cada filtro a 50 ids — sem filtro vêm todos (57)
-// e o mapeamento do STAT escolhe o que gravar.
+// ingerimos 50+ types por jogador e a API limita cada filtro a 50 ids — sem filtro vêm todos (74,
+// medidos em 200 jogos) e o mapeamento do STAT escolhe o que gravar. NÃO reintroduza o filtro: o
+// STAT já passa de 50 ids, e a API trunca em silêncio.
 export const richFilterTypes = `fixtureStatisticTypes:${TEAM_STAT_IDS};trendTypes:${TREND_TYPES.join(",")}`
 
 const GOAL_TYPE: Record<string, "normal" | "penalty" | "own"> = { GOAL: "normal", PENALTY: "penalty", OWNGOAL: "own" }

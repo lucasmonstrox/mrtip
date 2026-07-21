@@ -1,8 +1,12 @@
 /**
  * EXPERIMENTO MOD-004 — "super prompt" V1: mesma chamada única do run-deepseek, mas com protocolo de
  * cobertura total (conclusão obrigatória por bloco + jogador a jogador + arestas com IDs + board completo
- * de mercados + refutação embutida + confiança por regra). NÃO toca no prompt vivo: reusa a PARTE 2 (dados)
- * do último prompt persistido em match_prognosis e troca só o método (Parte 1) e o schema de saída (Parte 3).
+ * de mercados + refutação embutida + confiança por regra). NÃO toca no prompt vivo: RODA o
+ * `prognosis-prompt.ts` como processo, fatia a PARTE 2 (dados) do .md gerado e troca só o método (Parte 1)
+ * e o schema de saída (Parte 3) — gerar fresco (em vez de reusar o `prompt_text` persistido) é o que
+ * impede herdar a tabela mis-ordenada de um prompt antigo. @feature LIG-017
+ * Além da PARTE 2 fatiada, o super compõe DOIS blocos próprios que o vivo não tem: os cruzamentos
+ * pré-computados (`evidence-crossings`) e o bloco de disciplina/linha (LIG-003, abaixo).
  * Não persiste no banco — grava dumps + um report.html consolidado comparando real × prompt atual × super.
  *
  * Run:  bun run scripts/super-prognosis.ts [matchId ...]   (default: os 3 da rodada 38)
@@ -14,17 +18,19 @@ import { sql } from "drizzle-orm"
 
 import { db } from "../src/db/client"
 import { evidenceDigestMd } from "./evidence-crossings"
+import { analisarCenarios, type EstadoTime, type Jogo } from "./lib/cenarios"
+import { ordenar } from "./lib/ultrapassagem"
+import { tiebreakOfSeason } from "../src/modules/leagues/shared/shared"
 
 const MODEL = "deepseek-v4-pro"
 const EFFORT = "xhigh"
 const BANDS = ["0-15", "16-30", "31-45", "46-60", "61-75", "76-90"] as const
 
-const DEFAULT_MATCHES = [
-  "77a4255a-3e44-4fd9-a133-b13ca0898a91", // West Ham x Leeds
-  "60a3d183-588a-47b8-985c-322ce5436927", // Sunderland x Chelsea
-  "f0c7743f-3eaf-42ed-805b-d745dc4c4fb9", // Tottenham x Everton
-]
-const MATCH_IDS = process.argv.slice(2).length ? process.argv.slice(2) : DEFAULT_MATCHES
+// Sem default de liga: os 3 jogos da PL que ficavam aqui faziam o script parecer PL-only e escondiam
+// que ele serve qualquer liga. Passe os matchIds explicitamente. @feature LIG-017
+const DRY_RUN = process.argv.includes("--dry-run") // monta e grava o prompt, NÃO chama o modelo
+const MATCH_IDS = process.argv.slice(2).filter((a) => !a.startsWith("--"))
+if (!MATCH_IDS.length) throw new Error("uso: bun run scripts/super-prognosis.ts <matchId ...> [--dry-run]")
 
 const apiKey = process.env.DEEPSEEP_API_KEY ?? process.env.DEEPSEEK_API_KEY
 if (!apiKey) throw new Error("DEEPSEEP_API_KEY ausente em apps/api/.env")
@@ -34,11 +40,14 @@ const providerOptions = { deepseek: { thinking: { type: "enabled" }, reasoningEf
 // ---------------------------------------------------------------------------
 // Tipos da saída "super"
 // ---------------------------------------------------------------------------
+// `h2h` e `*_bola_parada` existiam no briefing (o vivo emite as duas seções) mas NÃO tinham chave aqui —
+// e `coverage()` só cobra o que está nesta lista, então as duas saíam do prompt sem nenhuma conclusão e o
+// report ainda assim marcava cobertura cheia. `*_disciplina` é o bloco novo do LIG-003. @feature MOD-004
 const BLOCOS = [
-  "contexto", "tabela_motivacao",
-  "home_gols", "home_estilo", "home_goleiro", "home_qualidade", "home_forma", "home_momentum", "home_faixas", "home_fisico", "home_desfalques",
-  "away_gols", "away_estilo", "away_goleiro", "away_qualidade", "away_forma", "away_momentum", "away_faixas", "away_fisico", "away_desfalques",
-  "cruzamento_faixa", "base_rate", "probs_mercado", "cruzamentos_computados",
+  "contexto", "tabela_motivacao", "h2h",
+  "home_gols", "home_estilo", "home_goleiro", "home_qualidade", "home_forma", "home_momentum", "home_faixas", "home_bola_parada", "home_fisico", "home_disciplina", "home_desfalques",
+  "away_gols", "away_estilo", "away_goleiro", "away_qualidade", "away_forma", "away_momentum", "away_faixas", "away_bola_parada", "away_fisico", "away_disciplina", "away_desfalques",
+  "cruzamento_faixa", "duelo_aereo", "cenarios_tabela", "base_rate", "probs_mercado", "cruzamentos_computados",
 ] as const
 type Bloco = (typeof BLOCOS)[number]
 
@@ -57,6 +66,23 @@ type MercadoRow = {
   variancia: number // 1 (mais segura) .. 5 (mais arriscada)
   valor: "alto" | "medio" | "baixo" | "nenhum"
   nota: string
+}
+// LEITURA — a chamada mais interessante do jogo, SEM piso de probabilidade. Existe porque o piso de 0.55
+// da best_bet é assimétrico: sobre mercado de dois lados ele só reprova o lado menos provável, então
+// `over`/`btts` ficam estruturalmente proibidos sempre que o λ é baixo (medido: 3 de 4 picks do V2 foram
+// under). Sem odds não dá pra afrouxar o piso com honestidade — então a criatividade sai por um campo
+// separado, que NÃO é recomendação de aposta e não toca no dinheiro. Tem a mesma forma de mercado da
+// best_bet de propósito: assim o `settle()` liquida as duas e, com o tempo, dá pra MEDIR se a leitura
+// solta acerta mais que a bet travada — que é a única evidência que justificaria mexer no piso. @feature MOD-004
+type Leitura = {
+  market: MercadoRow["market"]
+  selection: MercadoRow["selection"]
+  team: "home" | "away" | null
+  line: number | null
+  prob: number
+  divergencia_pp: number
+  chamada: string
+  por_que_nao_e_a_bet: string
 }
 type Ataque = { alvo: string; argumento: string; ids: string[]; veredito: "derruba" | "enfraquece" | "nao_sustenta" }
 // CoVe (Chain-of-Verification): pergunta FECHADA sobre uma afirmação que carrega o veredito, respondida
@@ -106,6 +132,7 @@ type SuperPrognosis = {
     evidence_for: string[]; evidence_against: string[]
     analysis: string
   }
+  leitura: Leitura
   refutacao: { ataques: Ataque[]; conclusao: string }
   verificacao: { checks: Verificacao[]; revisoes: string }
   drivers: string[]
@@ -237,6 +264,15 @@ const superSchema = jsonSchema<SuperPrognosis>({
       required: ["market", "selection", "team", "line", "confidence", "probability", "evidence_for", "evidence_against", "analysis"],
       additionalProperties: false,
     },
+    leitura: {
+      type: "object",
+      properties: {
+        market: marketEnum, selection: selectionEnum, team: teamNull, line: lineNull,
+        prob: num, divergencia_pp: num, chamada: str, por_que_nao_e_a_bet: str,
+      },
+      required: ["market", "selection", "team", "line", "prob", "divergencia_pp", "chamada", "por_que_nao_e_a_bet"],
+      additionalProperties: false,
+    },
     refutacao: {
       type: "object",
       properties: {
@@ -269,14 +305,14 @@ const superSchema = jsonSchema<SuperPrognosis>({
     },
     drivers: strArr,
   },
-  required: ["home", "away", "general", "conclusoes", "blocos_sem_sinal", "descartadas", "jogadores", "arestas", "roteiros", "janelas", "tempos", "previsoes_jogadores", "marcadores", "mercados", "best_bet", "refutacao", "verificacao", "drivers"],
+  required: ["home", "away", "general", "conclusoes", "blocos_sem_sinal", "descartadas", "jogadores", "arestas", "roteiros", "janelas", "tempos", "previsoes_jogadores", "marcadores", "mercados", "best_bet", "leitura", "refutacao", "verificacao", "drivers"],
   additionalProperties: false,
 })
 
 // ---------------------------------------------------------------------------
 // Super prompt — Parte 1 (método) e Parte 3 (saída); a Parte 2 (dados) vem do banco
 // ---------------------------------------------------------------------------
-function buildSuperPrompt(homeName: string, awayName: string, dataSection: string, digest: string): string {
+function buildSuperPrompt(homeName: string, awayName: string, dataSection: string, digest: string, disciplina: string, aereo: string, cenarios: string): string {
   return `# Prognóstico TOTAL — ${homeName} x ${awayName}
 
 **IMPORTANTE: raciocine E responda inteiramente EM PORTUGUÊS do Brasil**, desde a primeira palavra do seu raciocínio interno (thinking).
@@ -292,7 +328,7 @@ O **melhor apostador de futebol do mundo** — um **sharp**, não um palpiteiro.
 
 ### Passo 1 — VARREDURA: conclusões por bloco (nada fica sem ler)
 O briefing da Parte 2 se divide nos blocos listados abaixo. De CADA bloco extraia **1 a 3 conclusões** — cada uma com **ID sequencial** ("C1", "C2", …), o **dado copiado do briefing** (número/frase literal) e a **direção** (o que implica pra ESTE jogo). Bloco que não rende sinal entra em \`blocos_sem_sinal\` com o motivo — nenhum bloco pode simplesmente sumir da análise.
-Chaves de bloco (use exatamente estas no campo \`bloco\`): **contexto** (data/local/clima/descanso/viagem) · **tabela_motivacao** (posições, linhas, intenção, veredito de intenção) · **home_gols** / **away_gols** (gols & finalização season+mando) · **home_estilo** / **away_estilo** (feito×sofrido: ataques perigosos, chutes fora, bloqueados) · **home_goleiro** / **away_goleiro** (seção "Goleiro": defesas/j, % dentro da área, save%, erros→chute — a trava da conversão defensiva: cruze o save% do titular com o VOLUME de SoT do adversário) · **home_qualidade** / **away_qualidade** (notas, MOTM, forma individual, perfil por jogador: pontaria, big chances cria/perde, aéreo, faltas, erros) · **home_forma** / **away_forma** (últimos 5 qualificados + consistência) · **home_momentum** / **away_momentum** (curvas minuto a minuto: padrão de pressão, reação a gol feito/sofrido, casa vs fora) · **home_faixas** / **away_faixas** (distribuição de gols por faixa de 15min) · **home_fisico** / **away_fisico** (seção "Jogo físico": cabeceios feito/sofrido, líderes de aéreo, quem cava/comete faltas, erros→chute do time — cruze aéreo × bola parada do rival e cavador × faltoso) · **home_desfalques** / **away_desfalques** · **cruzamento_faixa** (tabelas ataque×defesa por faixa) · **base_rate** (rotas A e B) · **probs_mercado** (priors Poisson) · **cruzamentos_computados** (o bloco final da Parte 2: arquétipo/mecanismo/dinâmica/duelos físicos JÁ cruzados pelo código — os sinais mais fortes do briefing; trate cada linha como uma conclusão pronta e CRUZE-A com a intenção da tabela: o arquétipo diz o cenário técnico, a tabela diz se o time vai honrá-lo). **Regra dura dos vereditos computados (🔥/🧤/🚫/neutro dos Duelos físicos): TODOS viram conclusão — inclusive os que jogam CONTRA a sua tese** (o 🚫 pró-under descartado é sinal perdido); e **número computado não se reescreve** (se o painel diz save% 67 neutro, você não o relê como "65, inseguro" — pode DISCORDAR do veredito com evidência nomeada, ex.: goleiro trocado/desfalque não refletido, mas aí a conclusão cita a divergência explicitamente). Se o briefing não tiver uma seção (prompt gerado antes dela existir), declare o bloco em \`blocos_sem_sinal\` com motivo "seção ausente no briefing".
+Chaves de bloco (use exatamente estas no campo \`bloco\`): **contexto** (data/local/clima/descanso/viagem) · **tabela_motivacao** (posições, linhas, intenção, veredito de intenção) · **h2h** (seção "H2H — confronto direto": os encontros anteriores entre os DOIS clubes, liga + copas, com o detalhe do último — leia placar, mando e recorrência de padrão; amostra pequena é a regra, então trate como textura, e diga na conclusão se o H2H CONFIRMA ou CONTRARIA o que a forma atual sugere) · **home_gols** / **away_gols** (gols & finalização season+mando) · **home_estilo** / **away_estilo** (feito×sofrido: ataques perigosos, chutes fora, bloqueados) · **home_goleiro** / **away_goleiro** (seção "Goleiro": defesas/j, % dentro da área, save%, erros→chute — a trava da conversão defensiva: cruze o save% do titular com o VOLUME de SoT do adversário) · **home_qualidade** / **away_qualidade** (notas, MOTM, forma individual, perfil por jogador: pontaria, big chances cria/perde, aéreo, faltas, erros) · **home_forma** / **away_forma** (últimos 5 qualificados + consistência) · **home_momentum** / **away_momentum** (curvas minuto a minuto: padrão de pressão, reação a gol feito/sofrido, casa vs fora) · **home_faixas** / **away_faixas** (distribuição de gols por faixa de 15min) · **home_bola_parada** / **away_bola_parada** (seção "Bola parada — origem dos gols e escanteios": QUANTO do ataque/defesa do time nasce de escanteio/falta/pênalti/contra-ataque vs jogo corrido, + escanteios — é o bloco que diz POR ONDE o gol sai; cruze a rota de bola parada de um com o duelo aéreo do outro) · **home_disciplina** / **away_disciplina** (seção "Disciplina e linha defensiva", LIG-003: impedimentos provocados = altura da linha · perdas de bola = transição · pênalti cavado/cometido · erro→gol. **Regra dura anti-dupla-contagem: pênalti cavado SUBSTITUI o "quem cava faltas" do bloco físico e erro→gol SUBSTITUI o "erros→chute" — são o mesmo sinal com outro corte, nunca dois.** Linha "sem dado coletado" vai pra \`blocos_sem_sinal\`, jamais vira "o time não faz isso"; linha ⚠️ é de temporada anterior e vale como tendência de clube, não fato da corrente) · **home_fisico** / **away_fisico** (seção "Jogo físico": cabeceios feito/sofrido, líderes de aéreo, quem cava/comete faltas, erros→chute do time — cruze aéreo × bola parada do rival e cavador × faltoso) · **home_desfalques** / **away_desfalques** · **cruzamento_faixa** (tabelas ataque×defesa por faixa) · **cenarios_tabela** (seção "Cenários de tabela": o que a rodada faz com a posição de cada um — piso/teto por resultado, matriz de dependência dos outros jogos, rivais que se enfrentam entre si, e a situação TRAVADO/SÓ-GANHA/SÓ-PERDE/DOIS-LADOS. **Regra dura: TRAVADO não é o mesmo que ADMINISTRA** — time travado não tem o que defender e NÃO arma ferrolho; tratá-lo como cauteloso é o erro que já inverteu leitura de under aqui. Cruze este bloco com o veredito de intenção: se divergirem, o cenário manda, porque ele é calculado e o veredito é heurístico) · **duelo_aereo** (seção "Duelo aéreo por setor": ameaça aérea de um × defesa aérea do outro, em DESVIO do baseline do papel e já encolhido por amostra — a taxa crua não é comparável entre setores porque zagueiro ganha ~60% e centroavante ~45% por natureza da posição. Use o **líquido** do cruzamento, não as taxas soltas; é agregado de SETOR, então **não nomeie jogador** a partir dele; e é EXPLICAR — redistribui tipo de gol/marcadores/rota, **não move o xG**, e só rende se o bloco de bola parada confirmar que o time GERA o volume) · **base_rate** (rotas A e B) · **probs_mercado** (priors Poisson) · **cruzamentos_computados** (o bloco final da Parte 2: arquétipo/mecanismo/dinâmica/duelos físicos JÁ cruzados pelo código — os sinais mais fortes do briefing; trate cada linha como uma conclusão pronta e CRUZE-A com a intenção da tabela: o arquétipo diz o cenário técnico, a tabela diz se o time vai honrá-lo). **Regra dura dos vereditos computados (🔥/🧤/🚫/neutro dos Duelos físicos): TODOS viram conclusão — inclusive os que jogam CONTRA a sua tese** (o 🚫 pró-under descartado é sinal perdido); e **número computado não se reescreve** (se o painel diz save% 67 neutro, você não o relê como "65, inseguro" — pode DISCORDAR do veredito com evidência nomeada, ex.: goleiro trocado/desfalque não refletido, mas aí a conclusão cita a divergência explicitamente). Se o briefing não tiver uma seção (prompt gerado antes dela existir), declare o bloco em \`blocos_sem_sinal\` com motivo "seção ausente no briefing".
 
 ### Passo 2 — JOGADOR POR JOGADOR (ninguém passa em branco)
 TODO jogador NOMEADO no briefing (blocos de qualidade individual E de desfalques, dos DOIS times) recebe uma leitura de 1 frase no campo \`jogadores\`: o que a forma/presença/ausência DELE muda **neste confronto específico** — estrela em queda, lateral em alta, zagueiro-pilar fora, desfalque que já estava precificado na média. Leitura genérica ("é um bom jogador") não vale; irrelevância declarada ("0% dos gols, sem volume — irrelevante") vale.
@@ -352,6 +388,23 @@ Para cada linha: \`variancia\` de 1 (mais segura) a 5 (mais arriscada), \`valor\
 
 ### Passo 6 — REFUTAÇÃO (advogado do diabo) e confiança por REGRA
 **DISCIPLINA DE VARIÂNCIA (aplique ANTES de escolher a candidata — valor NÃO desempata sozinho):** entre apostas de valor parecido, crave SEMPRE a de MENOR variância. Escada, da mais segura à mais arriscada: **(1)** team_total over 0.5 do lado forte → **(2)** team_total 1.5 / handicap de favorito claro / dupla chance / DNB → **(3)** over_under (a LINHA é a alavanca: escolha linha com margem ≥0.3 do SEU total; linha colada no xG é cara-ou-coroa — afaste a linha ou troque de mercado. Linhas INTEIRAS também valem na best_bet — under/over 2, 3 ou 4 — e têm PUSH de proteção quando o total cai exato: under 3.0 num jogo que você lê como "2 gols, risco de 3" domina o under 2.5, porque o cenário-limite devolve a aposta em vez de perder) → **(4)** 1x2 → **(5)** btts. **PROIBIDO** cravar 1x2 com a sua própria prob < 0.45 (e NUNCA o empate como best_bet) enquanto existir dupla chance/DNB/team_total com valor: prob baixa + "valor" é ticket de longshot, não leitura sharp. **PISO UNIVERSAL DE PROBABILIDADE (regra dura — 2 apostas reais morreram nisso): a best_bet exige a SUA prob ≥ 0.55 em QUALQUER mercado.** Sem odds de mercado ingeridas, "valor" = distância do prior NÃO paga risco: apostar num evento que você mesmo dá 45% (ou 41%!) é apostar que a SUA leitura está errada. Se o veto de frequência/CoVe derrubar a prob da candidata pra baixo de 0.55, a consequência é TROCAR de mercado (sempre existe degrau com prob alta — team_total 0.5 do lado forte, dupla chance, under com margem), nunca publicar a aposta rebaixada. Em jogo com veredito de intenção ⚠️ (um lado administra), prefira under com margem ou team_total do lado que precisa. A anti-timidez vale pro TAMANHO do xG, não pra escolher mercado arriscado: convicção no número, disciplina no mercado.
+
+**PISO DE CONTEÚDO (novo — o piso de probabilidade não basta):** o piso de 0.55 impede aposta suicida, mas sozinho ele empurra a escolha pro degrau 1 sempre, e \`team_total over 0.5\` do lado forte a ~85% **não é uma leitura, é uma constante** — acerta quase sempre e não diz nada sobre ESTE jogo. Então a best_bet tem de passar em DOIS testes, não um: **(a)** a sua prob ≥ 0.55 (piso de risco, inalterado) **E (b)** a sua prob tem de DIVERGIR do prior Poisson do bloco \`probs_mercado\` em **≥ 5 pontos percentuais**. O teste (b) é o que separa leitura de constante: se você dá 86% pra "casa marca 1+" e o prior já dava 85%, você não analisou o jogo, você repetiu a base rate — essa aposta está **PROIBIDA** como best_bet. Se você dá 62% pro under 2.5 e o prior dava 54%, isso é uma leitura de verdade e vale, mesmo sendo mais arriscada que o over 0.5.
+**Como resolver o conflito entre (a) e (b):** primeiro filtre o board pelos que passam nos dois; entre os sobreviventes, aí sim aplique a escada de variância normalmente (o mais seguro vence). Se NENHUM mercado passar nos dois, **não relaxe o piso de 0.55** — escolha o de maior divergência entre os que têm prob ≥ 0.55, e declare em \`analysis\` que o jogo não ofereceu leitura destacável (isso é informação honesta, não fracasso). Registre a divergência em pontos percentuais no \`analysis\` da best_bet, sempre: "minha prob X% vs prior Y% → +Z p.p.".
+
+### Passo 5b — A LEITURA (\`leitura\`): a chamada que a disciplina te proibiu de apostar
+O piso de 0.55 é **assimétrico por construção**: sobre um mercado de dois lados ele só reprova o lado menos provável, então \`over\`, \`btts\` e placar aberto ficam banidos SEMPRE que o seu λ é baixo — não porque a leitura seja ruim, mas porque a regra é de dinheiro, não de futebol. Isso te faz calar justamente sobre o cenário mais interessante do jogo. O campo \`leitura\` existe pra você dizer **essa** coisa.
+
+**O que é:** a chamada mais interessante e menos óbvia que você enxerga NESTE jogo — o cenário que te tira o sono, o que o número não captura, o desfecho que faria o analista dizer "esse cara viu o jogo". Tipicamente é o mercado que você acha genuinamente subestimado mas que **não passou** na disciplina: over com linha alta, btts, placar aberto, o azarão vencendo.
+
+**Regras:**
+- **SEM piso de probabilidade.** Pode ter prob 0.30. Se o cenário é interessante e você tem argumento, ele entra.
+- **NÃO é recomendação de aposta** e não substitui a \`best_bet\` — as duas convivem, e podem apontar pra lados OPOSTOS (isso é esperado, não contradição: uma é o número, a outra é o roteiro).
+- **Tem que ser um mercado liquidável** (mesma forma da best_bet: market/selection/team/line) — não vale prosa vaga. "Jogo vai ser aberto" não serve; \`over_under/over 3.5\` serve.
+- \`divergencia_pp\` = a sua prob menos o prior Poisson do bloco \`probs_mercado\`, em pontos percentuais (pode ser negativa).
+- \`chamada\` = 2-4 frases contando o CENÁRIO em linguagem de quem viu o jogo, amarrado a dado do briefing. É aqui que mora a criatividade — mas criatividade é ver o que os outros não viram no MESMO dado, nunca inventar dado.
+- \`por_que_nao_e_a_bet\` = por que a disciplina barrou ("prob 0.43 abaixo do piso", "variância 4 com dupla chance disponível"). Se por acaso a leitura COINCIDIR com a best_bet, diga isso e explique por que nada mais interessante apareceu.
+- **Proibido escolher a leitura só pra ser contrário.** Ela precisa do mesmo rigor de evidência das conclusões: cite os IDs mentalmente e amarre a dado. Ousadia sem lastro é palpite, e palpite é o que este protocolo inteiro existe pra eliminar.
 **A escada NÃO é lexicográfica (fix da auditoria 2026-07-03):** o degrau só desempata entre apostas de valor PARECIDO. Se no seu próprio board um mercado de variância ≤3 tem \`valor\` estritamente MAIOR que o do degrau abaixo (ex.: dupla chance "alto" vs team_total 0.5 "medio"), **o valor vence o degrau** — escolher o piso de retorno com o seu board gritando valor um degrau acima é jogar fora o edge que você mesmo mediu. Só desça ao degrau mais conservador quando o valor empata ou o roteiro é frágil (confidence low).
 Escolha a aposta candidata (maior valor × menor variância compatível com o roteiro). ANTES de cravar, **ataque-a**: 2-3 ataques em \`refutacao.ataques\`, cada um citando os IDs (conclusão/aresta) que jogam CONTRA, com veredito: **derruba** / **enfraquece** / **nao_sustenta**. Se um ataque DERRUBA, troque de aposta e refaça este passo. Então aplique a **REGRA DE CONFIANÇA** (não é feeling — escreva a regra aplicada em \`confidence_regra\`):
 - **high** = ≥3 arestas independentes convergem pra aposta E nenhum ataque ficou em "derruba"/"enfraquece" com dado forte E as rotas A e B do base rate apontam na mesma direção.
@@ -395,6 +448,22 @@ ${dataSection}
 ## Cruzamentos pré-computados (bloco \`cruzamentos_computados\` — o código JÁ cruzou; são os sinais mais fortes do briefing)
 ${digest}
 
+## Disciplina e linha defensiva (blocos \`home_disciplina\` / \`away_disciplina\` — LIG-003, só existe neste briefing)
+> Métricas ESPARSAS por natureza (só chegam quando o evento ocorre). "sem dado coletado" ≠ zero: é ausência de coleta, e vira \`blocos_sem_sinal\`, nunca conclusão de que o time não faz aquilo. Linha marcada com ⚠️ é de temporada ANTERIOR — pode ter mudado elenco/treinador, então vale como tendência de clube, não como fato da temporada corrente.
+${disciplina}
+
+## Cenários de tabela (bloco \`cenarios_tabela\` — o que ESTA rodada pode fazer com a posição de cada um)
+> **Como ler:** o bloco de motivação acima diz *se* o time precisa de pontos; este diz **quanto vale em posição** e **sob quais combinações**. Vem de enumeração de resultados, não de dedução rival-a-rival — três coisas que só aparecem assim: (a) rivais que **jogam entre si** não podem os dois ultrapassar; (b) o rival que é o **adversário deste jogo** tem o resultado amarrado ao do time (se o time vence, ele está eliminado — certeza, não probabilidade); (c) **TRAVADO ≠ ADMINISTRA** — travado é não ter o que ganhar NEM perder (joga solto, sem ferrolho); administra é ter o que defender (trava o jogo). Confundir os dois inverte a leitura de over/under.
+> **Faixa "Xº-Yº (depende do saldo)"** = o cenário determinou até onde a regra da liga permite e o resto sai no gol. Não invente o desempate: se a célula é faixa, o desfecho é indefinido.
+> Isto é EXPLICAR — calibra intenção e roteiro, **não move o λ** por si só.
+${cenarios}
+
+## Duelo aéreo por setor (bloco \`duelo_aereo\` — ameaça de um × defesa do outro)
+> **Como ler (a régua não é a taxa crua):** na liga o zagueiro ganha ~60% dos aéreos e o centroavante ~45% — a posição dita o tipo de disputa, então comparar taxas cruas entre setores é erro. Cada setor aparece como **desvio do baseline dos papéis que o compõem**, já encolhido por amostra (k=15 pseudo-disputas). O **líquido** do cruzamento é ameaça-de-um menos defesa-do-outro: positivo = o ataque supera aquela defesa acima do que os papéis explicam.
+> **Isto é agregado de SETOR, nunca de jogador** — no nível individual a amostra é de um dígito e vira ruído. Não nomeie um zagueiro específico como "fraco no alto" a partir daqui.
+> **Camada EXPLICAR:** serve pra dizer POR ONDE o gol sai (bola parada, cruzamento, escanteio) e pra redistribuir tipo de gol/marcadores. **NÃO move o xG** — rota aérea favorecida não é evidência de que MAIS gols saem, só de por onde sairiam SE saírem, e só rende se o time GERAR as bolas paradas (cheque volume de escanteio/cruzamento no bloco de bola parada antes de usar).
+${aereo}
+
 ---
 
 **PARTE 3 · SUA SAÍDA** (objeto tipado, validado pelo runtime — campos em inglês/português conforme o schema; TODOS os textos em PT-BR)
@@ -413,6 +482,7 @@ ${digest}
 - \`marcadores\`: \`home\` e \`away\` com 2-3 prováveis marcadores cada (nome, prob, motivo) — Passo 4c.
 - \`mercados\`: o board COMPLETO do Passo 5 (as 19 linhas).
 - \`best_bet\`: a decisão — market/selection/team/line/confidence/probability + \`evidence_for\` e \`evidence_against\` (IDs de conclusões/arestas) + \`analysis\` (análise completa: roteiro esperado, o que sustenta, o risco). NUNCA "passar".
+- \`leitura\`: o Passo 5b — market/selection/team/line + \`prob\` (sem piso) + \`divergencia_pp\` + \`chamada\` + \`por_que_nao_e_a_bet\`. A chamada interessante que a disciplina barrou; pode contrariar a best_bet.
 - \`refutacao\`: os ataques do Passo 6 e a conclusão (o que sobreviveu e por quê).
 - \`verificacao\`: os checks CoVe do Passo 7 (id, alvo, pergunta, resposta_do_dado com citação literal, veredito, ajuste) + \`revisoes\` (o que mudou do rascunho pra saída final).
 - \`drivers\`: os 3 fatores que mais moveram o número.
@@ -426,9 +496,257 @@ ${digest}
 type Row = Record<string, unknown>
 const rowsOf = (r: unknown): Row[] => ((r as { rows?: Row[] })?.rows ?? (r as Row[])) as Row[]
 
+// Bloco `*_disciplina` — as 6 colunas defensivas do LIG-003 que NENHUM dos pipelines lia (nem o prompt
+// vivo, nem o evidence-crossings). Mede linha alta (impedimentos provocados), pênalti cavado/cometido,
+// perda de bola e erro que virou GOL — sinais de por-onde-sai-o-gol, camada EXPLICAR, não movem o λ.
+//
+// Estas colunas são ESPARSAS e a cobertura VARIA POR TEMPORADA: em BRA 2026 `offsides_provoked` e
+// `turnovers` vêm zerados enquanto BRA 2025 tem 836/5365. Por isso o bloco lê temporada a temporada e,
+// quando a corrente não tem a métrica, cai pra anterior SEMPRE rotulando — sinal antigo etiquetado é
+// melhor que silêncio, mas sinal antigo disfarçado de atual é pior que os dois. @feature LIG-003
+type DiscSeason = { season: string; jogos: number; off_prov: number; turnovers: number; pen_won: number; pen_com: number; err_gol: number }
+
+type DiscPen = { pen_won: number; pen_com: number; jogos: number }
+
+// Pênalti é MECANISMO DE DOIS LADOS: "o rival comete muito" só vira rota se ESTE time cavar. Na 1ª rodada
+// com o bloco solto o modelo leu "Mirassol cometeu 5 pênaltis" e projetou rota de pênalti do Grêmio —
+// que tinha cavado ZERO em 18 jogos, número que estava no mesmo briefing. Cruzar o par no próprio texto
+// tira do modelo a chance de usar metade da evidência. @feature MOD-004
+function penaltyCross(atkName: string, atk: DiscPen, defName: string, def: DiscPen): string {
+  const atkRate = atk.jogos ? atk.pen_won / atk.jogos : 0
+  const defRate = def.jogos ? def.pen_com / def.jogos : 0
+  const veredito =
+    atk.pen_won === 0
+      ? `🚫 **rota de pênalti NÃO se sustenta** — ${atkName} não cavou NENHUM pênalti em ${atk.jogos} jogos; o que ${defName} concede não vira ameaça sem quem cave`
+      : atkRate >= 0.2 && defRate >= 0.2
+        ? `🔥 rota de pênalti FAVORECIDA — os dois lados do mecanismo presentes`
+        : `neutro — um dos lados é fraco demais pra sustentar a rota`
+  return `- **Pênalti ${atkName} (ataca) × ${defName} (defende)**: ${atkName} cavou **${atk.pen_won}** em ${atk.jogos}j (${atkRate.toFixed(2)}/j) · ${defName} cometeu **${def.pen_com}** em ${def.jogos}j (${defRate.toFixed(2)}/j) → ${veredito}`
+}
+
+async function disciplinaPen(teamId: string, cutoff: string): Promise<DiscPen> {
+  const [r] = rowsOf(await db.execute(sql`
+    select count(distinct mm.id)::int as jogos,
+           coalesce(sum(lp.penalties_won), 0)::int as pen_won,
+           coalesce(sum(lp.penalties_committed), 0)::int as pen_com
+    from lineup_player lp
+    join lineup li on li.id = lp.lineup_id
+    join match mm on mm.id = li.match_id
+    left join season s on s.id = mm.season_id
+    where li.team_id = ${teamId} and mm.date < ${cutoff}
+      and s.id = (select season_id from match where id = (
+        select mm2.id from match mm2 join lineup li2 on li2.match_id = mm2.id
+        where li2.team_id = ${teamId} and mm2.date < ${cutoff} order by mm2.date desc limit 1))`))
+  return { jogos: Number(r?.jogos ?? 0), pen_won: Number(r?.pen_won ?? 0), pen_com: Number(r?.pen_com ?? 0) }
+}
+
+async function disciplinaBlock(teamId: string, cutoff: string): Promise<string> {
+  const rows = rowsOf(await db.execute(sql`
+    select coalesce(s.name, '?') as season,
+           count(distinct mm.id)::int as jogos,
+           coalesce(sum(lp.offsides_provoked), 0)::int as off_prov,
+           coalesce(sum(lp.turnovers), 0)::int as turnovers,
+           coalesce(sum(lp.penalties_won), 0)::int as pen_won,
+           coalesce(sum(lp.penalties_committed), 0)::int as pen_com,
+           coalesce(sum(lp.error_lead_to_goal), 0)::int as err_gol
+    from lineup_player lp
+    join lineup li on li.id = lp.lineup_id
+    join match mm on mm.id = li.match_id
+    left join season s on s.id = mm.season_id
+    where li.team_id = ${teamId} and mm.date < ${cutoff}
+    group by 1
+    order by max(mm.date) desc`)) as unknown as DiscSeason[]
+  if (!rows.length) return "- sem amostra (nenhum jogo anterior com escalação ingerida)"
+
+  const cur = rows[0]!
+  const per = (v: number, j: number) => (j > 0 ? (v / j).toFixed(1) : "—")
+  // Métrica zerada na temporada corrente = ausência de coleta, não time que nunca fez. Procura a
+  // temporada anterior mais recente que tenha o dado; sem ela, declara ausência em vez de imprimir 0.
+  const fallback = (pick: (d: DiscSeason) => number) => {
+    if (pick(cur) > 0) return { d: cur, stale: false }
+    const prev = rows.slice(1).find((r) => pick(r) > 0)
+    return prev ? { d: prev, stale: true } : null
+  }
+  const line = (label: string, pick: (d: DiscSeason) => number, sufixo: string) => {
+    const f = fallback(pick)
+    if (!f) return `- ${label}: **sem dado coletado** (a fonte não entrega esta métrica nesta temporada — NÃO leia como zero)`
+    const tag = f.stale ? ` — ⚠️ **temporada ${f.d.season}, ANTERIOR** (a corrente não tem esta métrica; elenco/treinador podem ter mudado)` : ` (${f.d.season})`
+    return `- ${label}: **${pick(f.d)}** em ${f.d.jogos} jogos = ${per(pick(f.d), f.d.jogos)}/j${sufixo}${tag}`
+  }
+  return [
+    line("**Linha alta** — impedimentos provocados", (d) => d.off_prov, " (quanto mais alto, mais a defesa adianta a linha: comprime o jogo mas cede as costas)"),
+    line("Perdas de bola (turnovers)", (d) => d.turnovers, " (insumo de transição: perda em zona ruim vira contra-ataque do rival)"),
+    `- Pênalti — **cavou ${cur.pen_won} · cometeu ${cur.pen_com}** em ${cur.jogos} jogos (${cur.season}) — medida DIRETA; **substitui** o proxy "quem cava faltas" do bloco físico, não soma com ele`,
+    `- **Erros que viraram GOL: ${cur.err_gol}** (${cur.season}) — versão "gol" do erro→chute do bloco físico; é o MESMO sinal com outro corte, não some os dois`,
+  ].join("\n")
+}
+
+// Bloco `duelo_aereo` — ameaça aérea de um time × defesa aérea do outro, por SETOR (pool de papéis),
+// nunca por jogador. Motivo: no nível individual a amostra é de um dígito (zagueiro com 1/3 no alto vira
+// "fraco no alto" e é ruído puro); juntando o setor a amostra sai de ~3 pra ~150 disputas.
+//
+// Taxa crua NÃO é comparável entre papéis — na liga o zagueiro ganha 59,5% dos aéreos e o centroavante
+// 44,8%, porque a posição dita o tipo de disputa. Então cada setor é medido como DESVIO do baseline
+// esperado dos papéis que o compõem, e o desvio é encolhido (shrinkage) pra matar amostra pequena.
+// Camada EXPLICAR: diz por onde o gol sai, não move o λ. @feature MOD-004
+const AERIAL_ATK = ["centroavante", "atacante", "meia-atacante", "ponta-direita", "ponta-esquerda"]
+const AERIAL_DEF = ["zagueiro", "lateral-direito", "lateral-esquerdo", "volante"]
+// Pseudo-disputas do shrinkage: com k=15 um setor precisa de ~15 duelos pra própria taxa pesar tanto
+// quanto o baseline do papel. Setor típico tem 80-150, então o encolhimento morde pouco onde há amostra
+// e muito onde não há — que é exatamente o desejado.
+const AERIAL_K = 15
+
+type AerialSector = { pct: number; base: number; desvio: number; duelos: number; altura: number | null }
+
+async function aerialSector(teamId: string, roles: string[], cutoff: string, baseByRole: Map<string, number>): Promise<AerialSector | null> {
+  const rows = rowsOf(await db.execute(sql`
+    select lp.role,
+           sum(lp.aerials_won)::int as aw,
+           sum(lp.aerials_total)::int as at,
+           avg(p.height)::float as alt
+    from lineup_player lp
+    join lineup li on li.id = lp.lineup_id
+    join match mm on mm.id = li.match_id
+    join player p on p.id = lp.player_id
+    where li.team_id = ${teamId} and mm.date < ${cutoff}
+      and lp.role in (${sql.join(roles.map((r) => sql`${r}`), sql`, `)})
+      and lp.aerials_won is not null and lp.aerials_total is not null
+    group by 1`)) as unknown as { role: string; aw: number; at: number; alt: number | null }[]
+  const duelos = rows.reduce((s, r) => s + r.at, 0)
+  if (!duelos) return null
+  const won = rows.reduce((s, r) => s + r.aw, 0)
+  // Baseline esperado DESTE setor = média dos baselines dos papéis, ponderada pelas disputas que cada
+  // papel realmente teve aqui. Um setor com muito zagueiro tem baseline mais alto — e tem de ter.
+  const base = rows.reduce((s, r) => s + r.at * (baseByRole.get(r.role) ?? 0.5), 0) / duelos
+  const pct = (won + AERIAL_K * base) / (duelos + AERIAL_K)
+  const alturas = rows.filter((r) => r.alt != null)
+  const altura = alturas.length ? alturas.reduce((s, r) => s + r.at * (r.alt as number), 0) / alturas.reduce((s, r) => s + r.at, 0) : null
+  return { pct, base, desvio: pct - base, duelos, altura }
+}
+
+async function aerialBlock(homeId: string, homeName: string, awayId: string, awayName: string, cutoff: string): Promise<string> {
+  // Baseline por papel na LIGA — também cortado no cutoff, senão o prompt pré-jogo herdaria uma régua
+  // calibrada com jogos que ainda não aconteceram.
+  const baseRows = rowsOf(await db.execute(sql`
+    select lp.role, sum(lp.aerials_won)::int as aw, sum(lp.aerials_total)::int as at
+    from lineup_player lp
+    join lineup li on li.id = lp.lineup_id
+    join match mm on mm.id = li.match_id
+    where mm.date < ${cutoff} and lp.role is not null
+      and lp.aerials_won is not null and lp.aerials_total is not null
+    group by 1 having sum(lp.aerials_total) > 100`)) as unknown as { role: string; aw: number; at: number }[]
+  const baseByRole = new Map(baseRows.map((r) => [r.role, r.aw / r.at]))
+  if (!baseByRole.size) return "- sem amostra de duelo aéreo antes desta data — bloco sem sinal"
+
+  const [atkH, defH, atkA, defA] = await Promise.all([
+    aerialSector(homeId, AERIAL_ATK, cutoff, baseByRole),
+    aerialSector(homeId, AERIAL_DEF, cutoff, baseByRole),
+    aerialSector(awayId, AERIAL_ATK, cutoff, baseByRole),
+    aerialSector(awayId, AERIAL_DEF, cutoff, baseByRole),
+  ])
+  const pp = (x: number) => `${x >= 0 ? "+" : ""}${(x * 100).toFixed(1)} p.p.`
+  const desc = (label: string, s: AerialSector | null) =>
+    s == null
+      ? `- ${label}: **sem amostra**`
+      : `- ${label}: **${(s.pct * 100).toFixed(0)}%** em ${s.duelos} disputas · baseline dos papéis ${(s.base * 100).toFixed(0)}% → **${pp(s.desvio)}**${s.altura ? ` · altura média ${s.altura.toFixed(0)}cm` : ""}`
+  // O confronto é ataque-de-um contra defesa-do-outro, cada um já em desvio do próprio baseline. Somar os
+  // dois desvios dá a vantagem líquida: atacante acima da média encontrando defesa abaixo da média.
+  const duelo = (atkLabel: string, atk: AerialSector | null, defLabel: string, def: AerialSector | null) => {
+    if (!atk || !def) return `- **${atkLabel} × ${defLabel}**: sem amostra de um dos lados — não conclua`
+    const net = atk.desvio - def.desvio
+    const v = net > 0.05 ? "🔥 rota aérea FAVORECIDA" : net < -0.05 ? "🚫 rota aérea TRAVADA" : "neutro"
+    return `- **${atkLabel} × ${defLabel}**: ${pp(atk.desvio)} contra ${pp(def.desvio)} → líquido **${pp(net)}** — ${v}`
+  }
+  return [
+    `**${homeName}**`,
+    desc("ameaça aérea (ataca a área)", atkH),
+    desc("defesa aérea (defende a área)", defH),
+    ``,
+    `**${awayName}**`,
+    desc("ameaça aérea (ataca a área)", atkA),
+    desc("defesa aérea (defende a área)", defA),
+    ``,
+    `**Cruzamento**`,
+    duelo(`ameaça de ${homeName}`, atkH, `defesa de ${awayName}`, defA),
+    duelo(`ameaça de ${awayName}`, atkA, `defesa de ${homeName}`, defH),
+  ].join("\n")
+}
+
+// Bloco `cenarios_tabela` — o que a rodada pode fazer com a posição de cada time, vindo do motor de
+// cenários (`lib/cenarios.ts`, validado 20/20 contra a classificação oficial da SportMonks).
+//
+// O que ele acrescenta ao bloco de motivação que já existe: aquele diz "precisa vencer / empate basta";
+// este diz QUANTO isso vale em posição, e SOB QUAIS COMBINAÇÕES. Três coisas que raciocínio par-a-par
+// não produz: (1) rivais que jogam ENTRE SI não podem os dois te passar; (2) o rival que é o seu próprio
+// adversário tem o resultado amarrado ao seu; (3) a diferença entre TRAVADO (nada em jogo) e ADMINISTRA
+// (tem o que perder) — dois estados que o prompt tratava igual e que produzem jogos opostos. @feature MOD-004
+async function cenariosBlock(leagueCode: string, homeId: string, awayId: string, cutoff: string, seasonId: string): Promise<string> {
+  const jogos = rowsOf(await db.execute(sql`
+    select m.home_team_id h, m.away_team_id a, m.ft_home fh, m.ft_away fa, m.date, th.name hn, ta.name an
+    from match m join team th on th.id = m.home_team_id join team ta on ta.id = m.away_team_id
+    where m.season_id = ${seasonId} and m.ft_home is not null order by m.date`))
+  if (!jogos.length) return "- temporada sem jogos ingeridos — bloco sem sinal"
+
+  const acc = new Map<string, EstadoTime>()
+  const pega = (id: string, nome: string) => {
+    let v = acc.get(id)
+    if (!v) acc.set(id, (v = { teamId: id, name: nome, points: 0, won: 0, gd: 0, gf: 0 }))
+    return v
+  }
+  const restantes: Jogo[] = []
+  for (const j of jogos) {
+    const h = pega(String(j.h), String(j.hn))
+    const a = pega(String(j.a), String(j.an))
+    if (String(j.date) >= cutoff) { restantes.push({ homeId: String(j.h), awayId: String(j.a) }); continue }
+    const fh = Number(j.fh), fa = Number(j.fa)
+    h.gf += fh; h.gd += fh - fa; a.gf += fa; a.gd += fa - fh
+    if (fh > fa) { h.points += 3; h.won++ } else if (fa > fh) { a.points += 3; a.won++ } else { h.points++; a.points++ }
+  }
+  if (!restantes.length) return "- nenhum jogo restante na temporada — posições já definidas"
+
+  const times = [...acc.values()]
+  const tiebreak = (await tiebreakOfSeason(leagueCode, seasonId)).criteria
+  const ordem = ordenar(times, tiebreak) as EstadoTime[]
+  const posDe = new Map(ordem.map((t, i) => [t.teamId, i + 1]))
+  const SIT: Record<string, string> = {
+    travado: "**POSIÇÃO TRAVADA** — não sobe nem cai faça o que fizer: NADA em jogo na tabela (≠ administrar; aqui não há o que defender)",
+    so_defende: "**SÓ TEM A PERDER** — não alcança ninguém acima, só pode cair: administra de verdade",
+    so_ataca: "**SÓ TEM A GANHAR** — ninguém abaixo o alcança, só pode subir: joga sem risco de tabela",
+    dois_lados: "**DOIS LADOS** — pode subir e pode cair nesta rodada",
+  }
+
+  const porTime = [homeId, awayId].map((tid) => {
+    const an = analisarCenarios({ times, jogos: restantes, tiebreak, alvoId: tid })
+    const nome = acc.get(tid)!.name
+    const L: string[] = [`### ${nome} (${posDe.get(tid)}º) — ${SIT[an.situacao]}`]
+    for (const d of an.desfechos)
+      L.push(`- se **${d.resultado === "vitoria" ? "VENCER" : d.resultado === "empate" ? "EMPATAR" : "PERDER"}**: ${d.piso === d.teto ? `termina em **${d.teto}º** (definido)` : `garante **${d.piso}º**, pode chegar a **${d.teto}º**`}`)
+    const cat = (k: string, rot: string) => {
+      const l = an.rivais.filter((r) => r.relacao === k)
+      if (!l.length) return
+      L.push(`- **${rot}**: ${l.map((r) => `${r.name}${r.confrontoDireto ? " ⚔️(é o adversário DESTE jogo)" : ""}${r.dependeDeGol ? " [empata no que o cenário decide → resolve no gol]" : ""}`).join(" · ")}`)
+      for (const r of l.filter((x) => x.ramos))
+        for (const b of r.ramos!)
+          L.push(`  - ${r.name} — se ${nome} ${b.resultado === "vitoria" ? "vence" : b.resultado === "empate" ? "empata" : "perde"}: ${nome} ${b.alvoPts} × ${r.name} ${b.rivalPts} → ele fica **${b.fica}**`)
+    }
+    cat("abaixo", "ABAIXO, podem passá-lo")
+    cat("empatado", "EMPATADOS, vão pros dois lados")
+    cat("acima", "ACIMA, ele pode passar")
+    for (const c of an.entreRivais) L.push(`- ⚡ **${c.aNome} × ${c.bNome}** se enfrentam: ${c.efeito}`)
+    if (an.matriz.length && an.jogosRelevantes.length) {
+      L.push(`- **Matriz de dependência** (posição final de ${nome}) — colunas: ${an.jogosRelevantes.join(" / ")}:`)
+      for (const c of an.matriz)
+        L.push(`  - ${nome} ${c.meuResultado === "vitoria" ? "vence" : c.meuResultado === "empate" ? "empata" : "perde"} + ${c.outros.map((o) => `${o.jogo}: ${o.resultado}`).join(", ")} → **${c.posMin === c.posMax ? `${c.posMin}º` : `${c.posMin}º-${c.posMax}º (depende do saldo)`}**`)
+    }
+    if (!an.exata) L.push(`- ⚠️ enumeração PARCIAL (${an.jogosEnumerados} jogos): as ameaças acima são LIMITE, podem estar subestimadas.`)
+    return L.join("\n")
+  })
+  return porTime.join("\n\n")
+}
+
 async function loadMatch(matchId: string) {
   const [m] = rowsOf(await db.execute(sql`
-    select m.id, m.home_team_id, m.away_team_id, m.ft_home, m.ft_away, m.ht_home, m.ht_away, th.name as home_name, ta.name as away_name
+    select m.id, m.date, m.league_code, m.season_id, m.home_team_id, m.away_team_id, m.ft_home, m.ft_away, m.ht_home, m.ht_away, th.name as home_name, ta.name as away_name
     from match m join team th on th.id = m.home_team_id join team ta on ta.id = m.away_team_id
     where m.id = ${matchId}`))
   if (!m) throw new Error(`match ${matchId} não encontrado`)
@@ -436,11 +754,19 @@ async function loadMatch(matchId: string) {
     select prompt_text, xg_home, xg_away, total, over25_prob, btts_prob, one_x_two, confianca,
            best_bet_market, best_bet_selection, best_bet_team, best_bet_line, best_bet_confidence, best_bet_probability, reasoning_tokens
     from match_prognosis where match_id = ${matchId} order by run_at desc limit 1`))
-  if (!prog?.prompt_text) throw new Error(`match ${matchId} sem prompt_text em match_prognosis — rode o pipeline atual antes`)
-  const txt = String(prog.prompt_text)
+  // A Parte 2 (dados) é gerada FRESCA a cada run, não mais fatiada do `prompt_text` persistido.
+  // Motivo: o prompt salvo é uma FOTO de quando foi gerado — a tabela dele nasceu com o desempate da PL
+  // hardcoded, então em liga cujo critério difere (Série A: vitórias antes do saldo) o super herdava uma
+  // classificação mis-ordenada e comparava métodos em cima de entrada viciada. Gerando na hora, a tabela
+  // vem do `tiebreakOf` por temporada. De quebra, deixa de exigir que o pipeline já tenha rodado — antes
+  // isto estourava pra qualquer jogo sem prognóstico prévio. @feature LIG-017
+  // `prognosis-prompt.ts` termina em `process.exit(0)`, então não é importável: roda como processo.
+  const gen = Bun.spawnSync(["bun", "run", "scripts/prognosis-prompt.ts", matchId], { cwd: process.cwd(), stderr: "pipe" })
+  if (gen.exitCode !== 0) throw new Error(`match ${matchId}: prognosis-prompt.ts falhou — ${gen.stderr.toString().slice(-400)}`)
+  const txt = await Bun.file(new URL(`./output/prognosis-${matchId}.md`, import.meta.url)).text()
   const start = txt.indexOf("## Contexto")
   const end = txt.indexOf("**PARTE 3")
-  if (start < 0 || end < 0) throw new Error(`match ${matchId}: não achei os marcadores da PARTE 2 no prompt_text`)
+  if (start < 0 || end < 0) throw new Error(`match ${matchId}: não achei os marcadores da PARTE 2 no prompt gerado`)
   const dataSection = txt.slice(start, end).replace(/---\s*$/, "").trim()
   // Gols reais (minuto + autor) — SÓ pro report validar janelas/marcadores; nunca entra no prompt.
   const gs = rowsOf(await db.execute(sql`
@@ -549,7 +875,9 @@ type RunResult = {
   actual: string
   ftH: number | null
   ftA: number | null
-  current: Row
+  // Prognóstico do prompt VIVO, pra coluna de comparação do report. Opcional: jogo que nunca passou
+  // pelo pipeline não tem linha em `match_prognosis` — e isso deixou de ser motivo pra abortar. @feature LIG-017
+  current: Row | undefined
   digest: string
   realGoals: RealGoal[]
   output: SuperPrognosis | null
@@ -570,7 +898,36 @@ async function runOne(matchId: string): Promise<RunResult> {
   const actual = ftH != null ? `${homeName} ${ftH}-${ftA} ${awayName} (HT ${m.ht_home ?? "?"}-${m.ht_away ?? "?"})` : "não disputado"
   console.error(`[super] ${homeName} x ${awayName} — computando cruzamentos (estágio 0)…`)
   const digest = await evidenceDigestMd(matchId)
-  const prompt = buildSuperPrompt(homeName, awayName, dataSection, digest)
+  // CUTOFF = a data da própria partida; o `<` na query exclui o jogo-alvo. Sem isso o super leria o
+  // resultado que ele deveria prever — e o report compara justamente contra esse placar. @feature LIG-003
+  const cutoff = String(m.date)
+  const [discHome, discAway] = await Promise.all([
+    disciplinaBlock(String(m.home_team_id), cutoff),
+    disciplinaBlock(String(m.away_team_id), cutoff),
+  ])
+  const [penH, penA] = await Promise.all([
+    disciplinaPen(String(m.home_team_id), cutoff),
+    disciplinaPen(String(m.away_team_id), cutoff),
+  ])
+  const disciplina = [
+    `### ${homeName} (manda)`, discHome, ``,
+    `### ${awayName} (visita)`, discAway, ``,
+    `### Cruzamento de pênalti (os dois lados do mecanismo — NÃO use metade)`,
+    penaltyCross(homeName, penH, awayName, penA),
+    penaltyCross(awayName, penA, homeName, penH),
+  ].join("\n")
+  const aereo = await aerialBlock(String(m.home_team_id), homeName, String(m.away_team_id), awayName, cutoff)
+  const cenarios = m.season_id ? await cenariosBlock(String(m.league_code), String(m.home_team_id), String(m.away_team_id), cutoff, String(m.season_id)) : "- temporada não identificada — bloco sem sinal"
+  const prompt = buildSuperPrompt(homeName, awayName, dataSection, digest, disciplina, aereo, cenarios)
+
+  // --dry-run: grava o prompt montado e PARA antes da chamada ao modelo — serve pra revisar o dossiê
+  // (inclusive a ordem da tabela) sem gastar API. @feature LIG-017
+  if (DRY_RUN) {
+    const out = new URL(`./output/super-prompt-${matchId}.md`, import.meta.url)
+    await Bun.write(out, prompt)
+    console.error(`[super] ${homeName} x ${awayName} — DRY RUN: prompt (${prompt.length} chars) em scripts/output/super-prompt-${matchId}.md — modelo NÃO chamado`)
+    process.exit(0)
+  }
 
   console.error(`[super] ${homeName} x ${awayName} — chamando ${MODEL} (${EFFORT}, ${prompt.length} chars)…`)
   const started = Date.now()
@@ -648,7 +1005,8 @@ function gameSection(r: RunResult): string {
   }
   const o = r.output
   const cov = r.cov!
-  const cur = r.current
+  // Sem prognóstico do prompt vivo, as colunas de comparação saem vazias em vez de derrubar o report.
+  const cur: Row = r.current ?? {}
   const settled = r.ftH != null
   const sBet = settled ? settle(o.best_bet, r.ftH!, r.ftA!) : null
   const curBet = cur.best_bet_market
@@ -833,6 +1191,15 @@ function gameSection(r: RunResult): string {
     <p class="mut"><b>Drivers:</b></p><ul>${o.drivers.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
     <p class="mut"><b>Resumo:</b> ${esc(o.general.summary)}</p>
   </div></details>
+${
+  o.leitura
+    ? `  <details open><summary>🎲 A leitura <span class="hint">sem piso de probabilidade — NÃO é recomendação de aposta</span></summary><div class="body">
+    <p><b>${esc(o.leitura.market)}/${esc(o.leitura.selection)}${o.leitura.line != null ? " " + esc(o.leitura.line) : ""}${o.leitura.team ? ` (${esc(o.leitura.team)})` : ""}</b> — prob ${esc(o.leitura.prob)} · divergência ${o.leitura.divergencia_pp >= 0 ? "+" : ""}${esc(o.leitura.divergencia_pp)} p.p.${settled ? ` · <b>${esc(settle(o.leitura, r.ftH!, r.ftA!) ?? "?")}</b>` : ""}</p>
+    <p>${esc(o.leitura.chamada)}</p>
+    <p class="mut"><b>Por que não é a aposta:</b> ${esc(o.leitura.por_que_nao_e_a_bet)}</p>
+  </div></details>`
+    : ""
+}
 
   <details><summary>🧠 Reasoning <span class="hint">${esc(r.reasoningTokens ?? "?")} tokens</span></summary><div class="body"><div class="reasoning-md">${reasoningHtml}</div></div></details>
 </section>`
@@ -961,6 +1328,13 @@ for (const r of results) {
   if (!r.output) { console.log(`  ✗ ${r.homeName} x ${r.awayName}: ${r.error}`); continue }
   const s = r.ftH != null ? settle(r.output.best_bet, r.ftH, r.ftA!) : null
   console.log(`  ✓ ${r.homeName} x ${r.awayName} — bet: ${r.output.best_bet.market}/${r.output.best_bet.selection}${r.output.best_bet.line != null ? " " + r.output.best_bet.line : ""} (${r.output.best_bet.confidence}) → ${s ?? "?"} · cobertura ${r.cov!.blocosCobertos + r.cov!.blocosSemSinal}/${BLOCOS.length} blocos, ${r.cov!.arestas} arestas, ${r.cov!.jogadores} jogadores, ${r.cov!.verificacoes} checks CoVe (${r.cov!.contradicoes} ✗/~)`)
+  // A leitura é liquidada lado a lado com a bet — é o par que, acumulado, responde se soltar o piso
+  // teria valido a pena. Sem imprimir as duas juntas, ninguém compara. @feature MOD-004
+  const lt = r.output.leitura
+  if (lt) {
+    const sl = r.ftH != null ? settle(lt, r.ftH, r.ftA!) : null
+    console.log(`    leitura: ${lt.market}/${lt.selection}${lt.line != null ? " " + lt.line : ""} p=${lt.prob} (${lt.divergencia_pp >= 0 ? "+" : ""}${lt.divergencia_pp} p.p.) → ${sl ?? "?"}${sl && s && sl !== s ? `  ⟵ DIVERGIU da bet (${s})` : ""}`)
+  }
 }
 console.log(`\n[report] ${Bun.fileURLToPath(htmlPath)}`)
 process.exit(0)

@@ -39,7 +39,7 @@ const DET = {
 } as const
 
 type SmLeague = { id: number; name: string; image_path: string; country?: { name: string } }
-type SmSeason = { id: number; name: string }
+type SmSeason = { id: number; name: string; tie_breaker_rule_id: number | null }
 type SmTeam = { id: number; name: string; short_code?: string; image_path: string }
 type SmDetail = { type_id: number; value: number }
 type SmStanding = { position: number; points: number; participant: SmTeam; details: SmDetail[]; rule?: { type?: { developer_name?: string } } }
@@ -113,6 +113,9 @@ async function main() {
     name: apiSeason.name,
     startYear: Number(apiSeason.name.slice(0, 4)),
     isCurrent: false,
+    // Seletor da regra de desempate da temporada ANTIGA — varia dentro da mesma liga (PL 24/25=171,
+    // 25/26=1526), que é justamente o motivo da coluna ser por season. @feature LIG-017
+    sportmonksTieBreakerRuleId: apiSeason.tie_breaker_rule_id ?? null,
   }
   const [seasonRow] = await db
     .insert(season)

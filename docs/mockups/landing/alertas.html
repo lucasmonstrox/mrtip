@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Alertas configuráveis de escalação, odds, notícias e jogadores no mrtip."
+    />
+    <title>Alertas — mr·tip</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav-in">
+        <a class="brand" href="index.html" aria-label="mrtip, início"
+          >mr<span class="brand-dot"></span>tip</a
+        >
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="produto.html">Produto</a
+          ><a class="active" aria-current="page" href="alertas.html">Alertas</a>
+          <a href="auditoria.html">Auditoria</a
+          ><a href="tipsters.html">Para tipsters</a
+          ><a href="precos.html">Planos</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="nav-login" href="precos.html">Entrar</a
+          ><a class="btn btn-primary btn-small" href="precos.html"
+            >Pedir acesso</a
+          >
+        </div>
+        <button
+          class="menu-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="wrap page-hero-grid">
+          <div data-reveal>
+            <span class="eyebrow">Monitor de mudanças</span>
+            <h1>Avise quando a tese mudar.</h1>
+            <p>
+              Crie regras por time, liga, jogador ou mercado. O alerta chega com
+              evidência e contexto — nunca com urgência fabricada.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#tipos"
+                >Explorar alertas <span class="arrow">↓</span></a
+              >
+              <a class="btn btn-secondary" href="precos.html"
+                >Entrar na lista</a
+              >
+            </div>
+          </div>
+          <div class="alert-builder" data-reveal>
+            <div class="window-bar" style="margin: -18px -18px 18px">
+              novo monitor · linguagem natural
+            </div>
+            <div class="builder-input">
+              <span>Quero saber quando…</span><br />
+              um dos <b>3 maiores marcadores</b> enfrentar um time com o
+              <b>zagueiro titular fora</b>.
+            </div>
+            <div class="builder-arrow"></div>
+            <div class="criteria">
+              <span class="tag blue">ranking · gols · top 3</span>
+              <span class="tag blue">oponente · ausência</span>
+              <span class="tag blue">posição · zagueiro</span>
+              <span class="tag blue">status · confirmado</span>
+            </div>
+            <div class="builder-footer">
+              <span>12 jogadores monitorados · 2 partidas encontradas</span>
+              <a class="btn btn-primary btn-small" href="#tipos"
+                >Criar monitor</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="tipos">
+        <div class="wrap alert-grid">
+          <div class="alert-types" data-reveal>
+            <article class="alert-type">
+              <span class="icon-box">XI</span>
+              <div>
+                <strong>Escalação e desfalque</strong>
+                <p>
+                  Titular fora, retorno de lesão, suspensão e lineup confirmada.
+                </p>
+              </div>
+            </article>
+            <article class="alert-type">
+              <span class="icon-box">ODD</span>
+              <div>
+                <strong>Movimento de mercado</strong>
+                <p>A linha cruza o preço mínimo ou comprime o edge.</p>
+              </div>
+            </article>
+            <article class="alert-type">
+              <span class="icon-box">PLY</span>
+              <div>
+                <strong>Produção de jogador</strong>
+                <p>Gols, assistências, xG, SoT ou key passes em uma janela.</p>
+              </div>
+            </article>
+            <article class="alert-type">
+              <span class="icon-box">TXT</span>
+              <div>
+                <strong>Evidência em notícia</strong>
+                <p>
+                  Fonte fala de lesão, rotação, prioridade ou mudança tática.
+                </p>
+              </div>
+            </article>
+            <article class="alert-type">
+              <span class="icon-box">TAB</span>
+              <div>
+                <strong>Peso da partida</strong>
+                <p>Jogo vira must-win, time garante vaga ou perde objetivo.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="alert-feed" data-reveal>
+            <div class="feed-head">
+              Feed de evidências <span>3 NOVOS · 7 LIDOS</span>
+            </div>
+            <article class="alert-item">
+              <div class="alert-meta">
+                <span class="tag amber">escalação</span
+                ><span>Palmeiras × Corinthians</span><time>há 8 min</time>
+              </div>
+              <h3>
+                Volante titular está fora da lista; substituto tem média maior
+                de faltas.
+              </h3>
+              <p>
+                O impacto é relevante para cartões, mas a escalação oficial
+                ainda não foi publicada.
+              </p>
+              <div class="alert-evidence">
+                <span class="tag">fonte oficial</span
+                ><span class="tag">7 jogos de amostra</span
+                ><span class="tag amber">aguardar lineup</span>
+              </div>
+            </article>
+            <article class="alert-item">
+              <div class="alert-meta">
+                <span class="tag green">mercado</span
+                ><span>Mais de 4,5 cartões</span><time>há 24 min</time>
+              </div>
+              <h3>
+                Odd chegou a 1,70 e cruzou o limiar mínimo configurado em 1,68.
+              </h3>
+              <p>
+                O edge estimado é fino. Abaixo de 1,68, o monitor encerra a
+                leitura automaticamente.
+              </p>
+              <div class="alert-evidence">
+                <span class="tag">abertura 1,76</span
+                ><span class="tag">agora 1,70</span
+                ><span class="tag">EV +3,7%</span>
+              </div>
+            </article>
+            <article class="alert-item">
+              <div class="alert-meta">
+                <span class="tag blue">jogador</span><span>Série A</span
+                ><time>ontem · 21:14</time>
+              </div>
+              <h3>
+                Atacante entrou no top 5% da posição em chutes no alvo por 90.
+              </h3>
+              <p>
+                Janela de 6 partidas, 512 minutos. O alerta é de triagem, não
+                uma indicação de aposta.
+              </p>
+              <div class="alert-evidence">
+                <span class="tag">SoT/90 1,84</span
+                ><span class="tag">percentil 96</span
+                ><span class="tag">n = 6</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="wrap">
+          <div class="section-head center" data-reveal>
+            <span class="eyebrow">Você escolhe a superfície</span>
+            <h2 style="margin-top: 20px">No app, no grupo ou no bolso.</h2>
+            <p>
+              Os mesmos filtros acompanham você sem transformar todo evento em
+              notificação.
+            </p>
+          </div>
+          <div class="channel-row">
+            <article class="channel-card" data-reveal>
+              <span class="tag green">primeiro</span>
+              <h3>Central no app</h3>
+              <p>
+                Feed pesquisável, lidos/não lidos, filtros salvos e o dossiê a
+                um clique.
+              </p>
+            </article>
+            <article class="channel-card" data-reveal>
+              <span class="tag blue">roadmap</span>
+              <h3>Telegram</h3>
+              <p>
+                Um grupo por estratégia, liga ou time, com resumo e links de
+                evidência.
+              </p>
+            </article>
+            <article class="channel-card" data-reveal>
+              <span class="tag blue">roadmap</span>
+              <h3>WhatsApp</h3>
+              <p>
+                Resumo configurável e silencioso; sem contagem regressiva ou
+                chamada de urgência.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap manifesto" data-reveal>
+          <div class="manifesto-copy">
+            <span class="eyebrow">Guardrail de produto</span>
+            <h2>Alerta informa. Não empurra.</h2>
+            <p>
+              “Jogador em sequência” é triagem, não prova de que marcará de
+              novo. Cada alerta mostra amostra, fonte, horário e o que ainda não
+              sabemos.
+            </p>
+          </div>
+          <div class="no-value">
+            <div class="no-value-card">
+              <div class="status-line">Monitor encerrado</div>
+              <h3>A linha saiu do preço.</h3>
+              <p>
+                A odd caiu para 1,61. O limiar mínimo era 1,68; a leitura deixa
+                de ter valor nas condições configuradas.
+              </p>
+              <div class="checked">
+                <span class="tag">sem push extra</span
+                ><span class="tag">regra respeitada</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="wrap">
+          <div class="cta-box" data-reveal>
+            <div>
+              <span class="eyebrow">Acesso antecipado</span>
+              <h2 style="margin-top: 20px">
+                Diga o que importa. O mrtip monitora o resto.
+              </h2>
+              <p>
+                Entre na lista para testar os primeiros monitores configuráveis.
+              </p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="precos.html"
+                >Pedir acesso <span class="arrow">→</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              >mr<span class="brand-dot"></span>tip</a
+            >
+            <p>
+              Probabilidades explicadas, decisões auditáveis e jogo responsável
+              desde o primeiro pixel.
+            </p>
+          </div>
+          <div class="footer-links">
+            <div class="footer-col">
+              <strong>Produto</strong><a href="produto.html">Visão geral</a
+              ><a href="alertas.html">Alertas</a
+              ><a href="auditoria.html">Auditoria</a>
+            </div>
+            <div class="footer-col">
+              <strong>Públicos</strong><a href="produto.html">Apostadores</a
+              ><a href="tipsters.html">Tipsters</a
+              ><a href="precos.html">Planos</a>
+            </div>
+            <div class="footer-col">
+              <strong>Princípios</strong
+              ><a href="auditoria.html">Transparência</a
+              ><a href="auditoria.html">Metodologia</a
+              ><a href="precos.html#responsavel">Jogo responsável</a>
+            </div>
+            <div class="footer-col">
+              <strong>Legal</strong><a href="#">Privacidade</a
+              ><a href="#">Termos</a><a href="#">Contato</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 mrtip · mock conceitual</span
+          ><span>+18 · jogue com responsabilidade · aposta envolve risco</span>
+        </div>
+      </div>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query"
 import { api } from "@/shared/api/eden"
 import { useSeasonParam } from "../../ui/use-season-param"
 
-/** Computed standings of a league (official PL rule), scoped to the selected season. */
+/** Computed standings of a league, scoped to the selected season — including the tiebreak rule that
+ *  season declares (Série A puts wins before goal difference; the PL doesn't). @feature LIG-017 */
 export function useStandingsQuery(code: string) {
   const { season } = useSeasonParam()
   return useQuery({

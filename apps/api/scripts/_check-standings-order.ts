@@ -56,8 +56,9 @@ const synthetic: Match[] = [
 ]
 
 const posOf = (rows: { team: TeamRef }[], id: string): number => rows.findIndex((r) => r.team.id === id)
-const braTable = computeStandings(synthetic, tiebreakOf("BRA"))
-const plTable = computeStandings(synthetic, tiebreakOf("PL"))
+// A regra agora vem da TEMPORADA (LIG-017): 577 = Série A (vitórias antes do saldo), 1526 = PL.
+const braTable = computeStandings(synthetic, tiebreakOf({ code: "BRA", sportmonksTieBreakerRuleId: 577 }).criteria)
+const plTable = computeStandings(synthetic, tiebreakOf({ code: "PL", sportmonksTieBreakerRuleId: 1526 }).criteria)
 const braA = posOf(braTable, "A")
 const braB = posOf(braTable, "B")
 const plA = posOf(plTable, "A")
@@ -164,6 +165,33 @@ const plPairs = pl.flatMap((a, i) =>
   pl.slice(i + 1).filter((b) => b.points === a.points && b.gd === a.gd && b.won !== a.won).map((b) => [a, b] as const),
 )
 console.log(`(PL: ${plPairs.length} par(es) com mesmos pontos+saldo e vitórias diferentes — se >0, a ordem acima já provou que vitórias NÃO foram usadas)`)
+
+// --- LIG-017: resolução da regra (acréscimos a este arnês; os 11 checks acima são os do LIG-012) -----
+// D5 — se o id vier null (ponte local `backfill-season.ts` não fala com a API), o Brasileirão TEM de
+// cair no override e continuar ordenando por vitórias, COM procedência. Sem isso a regressão é muda.
+const braNull = tiebreakOf({ code: "BRA", sportmonksTieBreakerRuleId: null })
+check(
+  braNull.criteria.includes("wins") && braNull.source === "league-override" && braNull.label === "Regulamento da CBF",
+  "D5 — BRA com id null cai no override, com vitórias e procedência",
+  `criteria=[${braNull.criteria.join(", ")}] source=${braNull.source} label=${braNull.label}`,
+)
+
+// D4 — regra desconhecida nunca degrada pra lista vazia (que ordenaria alfabeticamente ignorando pontos).
+const desconhecida = tiebreakOf({ code: "XXX", sportmonksTieBreakerRuleId: 999999 })
+check(
+  desconhecida.criteria.length > 0 && desconhecida.source === "default" && desconhecida.label === null,
+  "D4 — regra desconhecida cai no default explícito, nunca em lista vazia",
+  `criteria=[${desconhecida.criteria.join(", ")}] source=${desconhecida.source} label=${desconhecida.label}`,
+)
+
+// E a invariante que protege o caso acima se alguém quebrar o mapa no futuro.
+let estourou = false
+try {
+  computeStandings(synthetic, [])
+} catch {
+  estourou = true
+}
+check(estourou, "D4 — computeStandings rejeita lista de critérios vazia", `throw=${estourou}`)
 
 console.log(`\n${ok}/${total}`)
 process.exit(ok === total ? 0 : 1)

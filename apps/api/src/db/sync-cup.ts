@@ -30,7 +30,7 @@ const TIMEZONE = "Europe/London" // FA Cup/Carabao são inglesas; o passo lean e
 const STAGE_PROPER = 224 // "Round 3", "Quarter-finals"… (onde entram os clubes da liga)
 
 type SmLeague = { id: number; name: string; image_path: string; country?: { name: string } }
-type SmSeason = { id: number; name: string }
+type SmSeason = { id: number; name: string; tie_breaker_rule_id: number | null }
 type SmParticipant = {
   id: number
   name: string
@@ -84,6 +84,8 @@ async function main() {
     name: apiSeason.name,
     startYear: Number(apiSeason.name.slice(0, 4)),
     isCurrent: true,
+    // Seletor da regra de desempate declarada pela fonte; copa costuma vir 573 ("None"). @feature LIG-017
+    sportmonksTieBreakerRuleId: apiSeason.tie_breaker_rule_id ?? null,
   }
   const [seasonRow] = await db
     .insert(season)
