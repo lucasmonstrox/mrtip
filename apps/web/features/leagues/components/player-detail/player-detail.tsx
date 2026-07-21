@@ -9,6 +9,7 @@ import { useState } from "react"
 import { usePlayerQuery } from "../../hooks/data/queries/use-player-query"
 import { age, formatDate, ratingColor } from "../../utils/format"
 import { SeasonSwitcher } from "../season-switcher/season-switcher"
+import { CareerSeasons } from "./career-seasons"
 import { CumulativeGa } from "./cumulative-ga"
 import { FormCurve } from "./form-curve"
 import { HomeAwaySplit } from "./home-away-split"
@@ -212,6 +213,8 @@ export function PlayerDetail({ id }: { id: string }) {
 
         <PlayerStatCards player={player} />
       </div>
+
+      {player.careerSeasons.length ? <CareerSeasons seasons={player.careerSeasons} /> : null}
 
       {player.appearances.some((a) => a.rating != null) ? (
         <Card>

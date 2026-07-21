@@ -17,7 +17,7 @@
 | CORE-004 | Neon serverless na API (destrava o deploy no Workers) | core | em-andamento | P1 | api:feito dados:feito | parcial | — |
 | DOS-001 | Dossiê por partida | dossie | planejado | P1 | dados:planejado api:planejado ia:ideia | nao | — |
 | DOS-002 | Estatísticas de partida por time (fixture statistics) | dossie | feito | P2 | dados:feito ia:feito | sim | DOS-001 |
-| LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:planejado ia:ideia ui:planejado | parcial | — |
+| LIG-001 | Página do jogador (perfil de performance) | ligas | em-andamento | P2 | dados:investigado api:feito ia:ideia ui:feito | parcial | — |
 | LIG-002 | Página do time (perfil de performance) | ligas | verificado | P2 | dados:verificado api:verificado ia:ideia ui:verificado | sim | — |
 | LIG-003 | Stats de volume por partida (chutes, passes, desarmes, faltas) | ligas | em-andamento | P2 | dados:feito api:ideia ui:ideia | sim | LIG-001 |
 | LIG-004 | Estádio (venue) com geo na página da partida | ligas | verificado | P2 | dados:verificado api:verificado ui:verificado | sim | — |
@@ -113,7 +113,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `pick` → DOS-001
 - `player` → CORE-002, LIG-001, LIG-010, LIG-012 ⚠️ compartilhada
 - `referee` → SIN-009
-- `season` → LIG-008, LIG-011, LIG-012, LIG-013, LIG-014, LIG-017, LIG-018 ⚠️ compartilhada
+- `season` → LIG-001, LIG-008, LIG-011, LIG-012, LIG-013, LIG-014, LIG-017, LIG-018 ⚠️ compartilhada
 - `standing` → LIG-002, LIG-006, LIG-008, LIG-012, LIG-013, LIG-017 ⚠️ compartilhada
 - `team` → CORE-002, LIG-002, LIG-012, SIN-022 ⚠️ compartilhada
 - `team_ratings` → MOD-001, MOD-003, SIN-016 ⚠️ compartilhada
@@ -128,11 +128,12 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `buildPrompt` → MOD-004, MOD-006, MOD-009 ⚠️ compartilhada
 - `buildSuperPrompt` → MOD-004
 - `buildTacticalDossier` → MOD-014
+- `careerSeasonsOfPlayer` → LIG-001
 - `centsParaReais` → CORE-001
 - `centsParaReaisStr` → CORE-001
 - `computeForm` → LIG-002
 - `computeStandings` → LIG-002, LIG-012, LIG-017, LIG-018 ⚠️ compartilhada
-- `concurrentSeasonIds` → LIG-012
+- `concurrentSeasonIds` → LIG-001, LIG-012 ⚠️ compartilhada
 - `contextoUltimos5` → MOD-006, MOD-008, MOD-009 ⚠️ compartilhada
 - `currentSeasonId` → LIG-008
 - `db` → CORE-004
@@ -169,6 +170,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `restDays` → MOD-009
 - `search` → CORE-002
 - `seasonsOf` → LIG-008
+- `seasonsOfPlayer` → LIG-001
 - `seasonWindows` → LIG-012
 - `serializeMatch` → LIG-004, LIG-009 ⚠️ compartilhada
 - `setApiAuthTokenGetter` → CORE-003
@@ -232,6 +234,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/game-state-timing-de-gols.md](../../docs/investigacoes/game-state-timing-de-gols.md) → SIN-017
 - [docs/investigacoes/h2h-clube-prognostico.md](../../docs/investigacoes/h2h-clube-prognostico.md) → MOD-006
 - [docs/investigacoes/janelas-sazonais-fadiga.md](../../docs/investigacoes/janelas-sazonais-fadiga.md) → SIN-020
+- [docs/investigacoes/jogador-apps-minutos-por-season.md](../../docs/investigacoes/jogador-apps-minutos-por-season.md) → LIG-001
 - [docs/investigacoes/leitura-de-jogo-profundidade-dominio.md](../../docs/investigacoes/leitura-de-jogo-profundidade-dominio.md) → AGT-001
 - [docs/investigacoes/mando-de-campo.md](../../docs/investigacoes/mando-de-campo.md) → SIN-016
 - [docs/investigacoes/mercados-e-motor-prompt-prognostico.md](../../docs/investigacoes/mercados-e-motor-prompt-prognostico.md) → MOD-004, MOD-005
@@ -259,6 +262,7 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - [docs/investigacoes/xg-qualidade-de-chute.md](../../docs/investigacoes/xg-qualidade-de-chute.md) → MOD-002
 - [docs/planos/DOS-001-dossie-por-partida.md](../../docs/planos/DOS-001-dossie-por-partida.md) → DOS-001
 - [docs/planos/DOS-002-estatisticas-partida-time.md](../../docs/planos/DOS-002-estatisticas-partida-time.md) → DOS-002
+- [docs/planos/LIG-001-apps-minutos-por-season.md](../../docs/planos/LIG-001-apps-minutos-por-season.md) → LIG-001
 - [docs/planos/LIG-001-pagina-do-jogador.md](../../docs/planos/LIG-001-pagina-do-jogador.md) → LIG-001
 - [docs/planos/LIG-002-pagina-do-time.md](../../docs/planos/LIG-002-pagina-do-time.md) → LIG-002
 - [docs/planos/LIG-004-venue-estadio-geo.md](../../docs/planos/LIG-004-venue-estadio-geo.md) → LIG-004

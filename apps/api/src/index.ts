@@ -53,6 +53,7 @@ export type {
   TeamTrends,
   TeamTrendSplit,
   VenueRecord,
+  CareerSeason,
 } from "./modules/leagues/shared/shared"
 
 // Search contract (global fuzzy search). @feature CORE-002

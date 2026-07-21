@@ -29,28 +29,6 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **Sinergia forte com `SIN-007`** — o mesmo unlock de dados serve pro sinal de rivalidade E pra esse histórico de UI; vale planejar junto. **RESPONDIDO (2026-06-28, `/rs` LIG-001):** a **SportMonks ENTREGA** sim — `transfers` include (`/transfers/players/{id}`: from/to_team, date, type_id transfer/loan/free, fee) + Team Squad endpoints (spells por season com start/end de contrato, jersey). Evita trazer transfermarkt. Ressalva: cobertura retroativa incompleta, e **valor de mercado contínuo NÃO existe** na SportMonks (só fee de transferência) — se quiser o gráfico de valor-no-tempo estilo Transfermarkt, aí sim precisa fonte externa. Faceta `dados` é fase 2 (multi-season), detalhado em `docs/investigacoes/pagina-do-jogador.md`.
 
-### W-003 · Jogos disputados por season na página do jogador · 🔥 · esforço M · `dados` `ui`
-<adicionada: 2026-06-28 · status: ideia>
-
-**O quê:** na página do jogador, mostrar quantos jogos (appearances) ele disputou em cada season — uma quebra por temporada, não só o agregado da season atual.
-
-**Por quê:** medida básica de presença/regularidade do jogador, e base pra contextualizar gols/assists (taxa por jogo). Paridade de qualquer perfil de jogador; complementa o histórico de clubes (W-002).
-
-**Depende de / esbarra em:** página do jogador já existe (`getPlayerDetail`, `apps/api/src/modules/leagues/shared/shared.ts:264`). **CORREÇÃO (2026-06-28, `/rs` LIG-001):** appearances da season corrente são **deriváveis HOJE** — basta contar as linhas de `lineup_player` do jogador (cada partida que ele entrou na escalação). Não precisa de tabela nova. Só a quebra **multi-season** depende de ingestão futura (hoje só PL 25/26 ingerida).
-
-**Notas:** **Coberta pela investigação LIG-001** — appearances vira parte da seção "minutos/titularidade". A premissa antiga ("não há contagem no schema") está **refutada**: o granular por partida basta pra season corrente; multi-season é roadmap, não bloqueio.
-
-### W-004 · Minutos jogados por season na página do jogador · 🔥 · esforço M · `dados` `ui`
-<adicionada: 2026-06-28 · status: ideia>
-
-**O quê:** na página do jogador, mostrar quantos minutos ele jogou em cada season — quebra por temporada, par natural da contagem de jogos (W-003).
-
-**Por quê:** minutos é a medida fina de uso real (titular x reserva x entrou no fim), melhor que só "jogos". Base pra normalizar stats por 90min (gols/90, etc.) e contextualizar forma/carga. Paridade de perfil de jogador.
-
-**Depende de / esbarra em:** página do jogador existe (`getPlayerDetail`, `apps/api/src/modules/leagues/shared/shared.ts:264`). **CORREÇÃO (2026-06-28, `/rs` LIG-001):** minutos por partida **JÁ ESTÃO INGERIDOS** — `lineup_player.minutesPlayed` (type 119) em `apps/api/src/db/schemas/leagues.ts:172`. Somar por season é agregação pura. A premissa antiga ("não há minutos no schema") está **refutada**; só a quebra multi-season depende de ingestão futura.
-
-**Notas:** **Coberta pela investigação LIG-001** — minutos é a base da seção "minutos/titularidade" E o denominador do per-90. O `/rs` confirmou: a soma de `minutesPlayed` (não o nº de jogos) é o denominador correto, com **piso de ~450-600 min** antes de exibir per-90 (amostra pequena). Entregável hoje.
-
 ### W-005 · Split de gols casa/fora do jogador · 🔥 · esforço P · `api` `ui`
 <adicionada: 2026-06-28 · status: ideia>
 
@@ -165,6 +143,19 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 ## ✨ Seria legal
 
+### W-077 · Filtrar notícias por veículo (Globo, UOL, X, conta oficial do clube) — na aba da liga e na da partida · ✨ · esforço M · `dados` `api` `ui`
+<adicionada: 2026-07-21 · status: ideia>
+
+**O quê:** o feed de notícias ganha **filtro por veículo/origem** — o usuário escolhe ver só Globo, só UOL, só o que saiu no X, só a conta oficial do clube, ou uma combinação. Vale nas **duas superfícies**: a aba Notícias da **liga** (a que a [[W-071]] desenha) e uma aba equivalente na **partida** (que ainda não tem entrada própria — nasce aqui). Implica tratar o **veículo como entidade de primeira classe**, não string solta no registro da notícia.
+
+**Por quê:** feed sem filtro de fonte vira ruído — a própria [[W-071]] já registra o problema (dos 393 domínios novos do catálogo, a maioria é `clube-torcida`/`nicho`, e ela prevê "whitelist de credibilidade antes de exibir"). O filtro é a **versão do usuário** dessa mesma whitelist: em vez de o app decidir sozinho o que é crível, ele mostra a procedência e deixa filtrar. Casa com a tese ([[projeto-aposta-precisa-de-evidencia]]): evidência com fonte visível é o produto; "notícia anônima" não vale nada pra quem vai apostar.
+
+**Inspiração:** pedido do João em 2026-07-21 — *"poder filtrar as notícias por provider, tipo twitter, globo, uol… tanto na tab de news das ligas que vai ter como da partida"*.
+
+**Depende de / esbarra em:** **[[W-071]] é pré-requisito** (sem feed ingerido não há o que filtrar) e **[[W-018]]** é a irmã por baixo (mesmo ingestor). O catálogo de fontes já existe: `docs/research/fontes-noticias-futebol.md` (1.245 domínios, com classificação tipo `clube-torcida`/`nicho`) — é o ponto de partida da taxonomia de veículo, com a ressalva que a própria W-071 faz: o catálogo é mapa de **existência**, não de **acesso** (nenhuma URL testada por HTTP). **A aba na PARTIDA é mais cara que a da liga** e isso não é óbvio: o feed da liga funciona com notícia crua (basta a competição), mas "notícias desta partida" exige saber de **quem/do quê** a matéria fala — ou seja, depende do **entity linking** (a perna (b) da W-071) mais uma janela de tempo em torno do jogo. Ordem correta: feed da liga → entity linking → aba da partida → filtro por cima das duas.
+
+**Notas:** **o ponto de desenho que decide a feature: `provider` tem que ser entidade normalizada, não texto livre.** Sem isso, "Globo", "globo.com", "ge.globo" e "GE" viram quatro veículos e o filtro nasce quebrado. Provável tabela `news_provider` (nome canônico, domínio(s), logo→R2 como já se faz com escudo/estádio, e um `tier` de credibilidade) + FK na notícia. O `tier` é o que permite o default sensato ("só imprensa estabelecida") sem tirar do usuário a opção de ver tudo. **Category error a evitar:** **X/Twitter não é um veículo no mesmo sentido que Globo e UOL** — é uma *plataforma*, e o veículo real é a **conta** (@ge, @Flamengo, jornalista X). Jogar "Twitter" num filtro ao lado de "Globo" mistura dois níveis; o modelo honesto é **(plataforma, conta)**, com a conta oficial do clube — que a [[W-076]]/`SIN-022` já está cadastrando — como um provider de pleno direito, e provavelmente o mais confiável de todos pra desfalque/escalação. **Gotchas pro `/pl`:** (1) **atribuição é obrigação legal, não enfeite** — a W-071 já crava o padrão de agregador (título + link + resumo curto **com atribuição**); o filtro reforça isso, mas nenhum modo de exibição pode esconder o veículo; (2) **rumor x confirmado é eixo ORTOGONAL ao veículo** — veículo grande também publica rumor; não colapsar os dois num "filtro de confiança" só, senão vira censura implícita de fonte pequena que acertou; a `severidade` do molde da [[W-018]] continua sendo campo próprio; (3) **filtro vazio** — combinação que não retorna nada é o estado mais comum em feed escasso; desenhar o empty state junto, não depois; (4) enums/campos em inglês, strings de UI em português. **Assumi ✨** por consistência com a família de notícia (toda ✨) — me fala se sobe.
+
 ### W-076 · Redes sociais oficiais do clube (Instagram, Facebook, TikTok): colunas irmãs do handle do X que a SIN-022 já criou · ✨ · esforço P · `dados` `ui`
 <adicionada: 2026-07-21 · status: ideia · atualizada: 2026-07-21 (Facebook e TikTok somados ao escopo; entrada generalizada de "Instagram" para "redes oficiais" — mesma unidade de trabalho, não vale uma entrada por plataforma)>
 
@@ -215,7 +206,7 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Depende de / esbarra em:** **irmã da [[W-018]]** (pipeline notícia→evidência) — mesma matéria-prima, propósitos diferentes: a W-018 **extrai** evidência estruturada pra disparar alerta; esta **exibe** a notícia pra leitura humana. Fazer as duas com um ingestor só é o desenho certo. Três frentes de custo: (1) **ingestão** — infra nova (RSS/API/scraping); o catálogo existe mas **não está validado**: o próprio doc avisa que nenhuma URL foi testada por HTTP e que `has_rss` ficou majoritariamente `desconhecido`, então "1.245 domínios" é mapa de *existência*, não de *acesso*. (2) **Entity linking** (`ia`) — NER + resolução pros nossos IDs: `player`, `team` e `league` já existem no schema; **árbitro acabou de entrar** (`SIN-009`, commit `dc90bc6` — árbitro da partida no banco e na aba Fatos); **parceiro de TV/emissora não tem tabela** — é a única das cinco entidades sem casa, e precisa de fonte (a SportMonks tem `tvstations`, confirmar no `/rs`). (3) **UI** — mais uma aba no `Tabs` de `league-detail.tsx:99` (vira a 5ª junto da [[W-070]]; hora de pensar overflow de abas).
 
-**Notas:** **fatiamento natural:** (a) ingestão + aba na liga (feed cru já tem valor); (b) entity linking; (c) espalhar "Notícias sobre X" nas páginas de jogador/time/árbitro — a perna (c) é onde o tagueamento se paga. **Gotchas grandes pro `/rs`:** (1) **desambiguação de nome** é o problema central do NER esportivo — dois "Silva" no mesmo elenco, jogador homônimo de clube, "Liverpool" cidade × clube; sem resolução confiável o link erra e o feed perde credibilidade. (2) **Copyright/ToS** — o padrão defensável de agregador é título + link + resumo curto **com atribuição ao veículo**; republicar texto integral não. (3) **Qualidade de fonte** — dos 393 novos do catálogo, a maioria é `clube-torcida`/`nicho` e 47% é Brasil; feed de liga inglesa precisa de **whitelist de credibilidade** antes de exibir, senão vira agregador de blog de torcida. (4) **Muro do `SIN-003`** (mood, `docs/investigacoes/sinal-mood-jogador.md`) vale aqui de novo: exibir a matéria com fonte+data é ok e auditável; virar score de sentimento, não. (5) Família narrativa com [[W-017]] · [[W-018]] · [[W-036]] · [[W-037]] · [[W-038]] · [[W-061]] — todas puxam texto de fora; esta é a **primeira que dá superfície de leitura** pro que as outras só consomem por baixo. **Assumi ✨** por consistência com a família toda (que veio ✨ e G) — me fala se o feed é 🔥 pra você, porque ele é o único item da família com valor visível ao usuário sem depender de `ia`.
+**Notas:** **fatiamento natural:** (a) ingestão + aba na liga (feed cru já tem valor); (b) entity linking; (c) espalhar "Notícias sobre X" nas páginas de jogador/time/árbitro — a perna (c) é onde o tagueamento se paga. **Somado em 2026-07-21 ([[W-077]]):** a **aba de notícias da PARTIDA** é uma quarta superfície (d), pedida pelo João junto do filtro por veículo — e ela cai **depois da perna (b)**, porque "notícias deste jogo" exige entity linking + janela de tempo, ao contrário do feed da liga, que funciona com notícia crua. O filtro por veículo da W-077 assenta por cima de todas as superfícies e exige `provider` como entidade normalizada, não string. **Gotchas grandes pro `/rs`:** (1) **desambiguação de nome** é o problema central do NER esportivo — dois "Silva" no mesmo elenco, jogador homônimo de clube, "Liverpool" cidade × clube; sem resolução confiável o link erra e o feed perde credibilidade. (2) **Copyright/ToS** — o padrão defensável de agregador é título + link + resumo curto **com atribuição ao veículo**; republicar texto integral não. (3) **Qualidade de fonte** — dos 393 novos do catálogo, a maioria é `clube-torcida`/`nicho` e 47% é Brasil; feed de liga inglesa precisa de **whitelist de credibilidade** antes de exibir, senão vira agregador de blog de torcida. (4) **Muro do `SIN-003`** (mood, `docs/investigacoes/sinal-mood-jogador.md`) vale aqui de novo: exibir a matéria com fonte+data é ok e auditável; virar score de sentimento, não. (5) Família narrativa com [[W-017]] · [[W-018]] · [[W-036]] · [[W-037]] · [[W-038]] · [[W-061]] — todas puxam texto de fora; esta é a **primeira que dá superfície de leitura** pro que as outras só consomem por baixo. **Assumi ✨** por consistência com a família toda (que veio ✨ e G) — me fala se o feed é 🔥 pra você, porque ele é o único item da família com valor visível ao usuário sem depender de `ia`.
 
 ### W-070 · Aba "Jogador da Temporada" na página da liga: pódio de quem lidera a corrida agora (estilo Sofascore) · ✨ · esforço P · `api` `ui`
 <adicionada: 2026-07-20 · status: ideia>
@@ -266,6 +257,12 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 **Notas:** **fronteira pra não duplicar:** [[W-037]] = feed do atleta; [[W-038]] = feed institucional do clube; **W-061 = busca aberta por partida/personagem** — mecanismo de *descoberta*, não de *monitoramento*. **Gotchas pro `/rs`:** (1) **ruído brutal** — busca aberta por hashtag traz meme, bot e fan account em massa; precisa de filtro de credibilidade da fonte (verificado? jornalista conhecido?) antes de virar evidência; (2) **hashtag do confronto não é padronizada** — gerar candidatos (#ARSMCI, nomes dos clubes, apelidos) por jogo; (3) **janela temporal** — o valor é o pré-jogo (24-48h antes do kickoff), varredura contínua é caro e inútil; (4) rumor achado ≠ fato — severidade `rumor` até segunda fonte. **Assumi ✨** pelo tom ("interessante") e por ser da família G das irmãs — me fala se é 🔥.
 
 **Atualização 2026-07-03 (perna 2 — João complementou):** não parar no post achado — **extrair o conteúdo dos comentários e entender o que as pessoas estão falando** sobre a partida/personagem. A busca (perna 1) acha o fio; a perna 2 desce na thread e sintetiza o falatório ("torcida cobrando o técnico", "todo mundo comentando que o zagueiro treinou separado", "revolta com a escalação do árbitro"). **Cuidado dobrado com o muro do `SIN-003`:** "entender o que as pessoas estão falando" é exatamente o *fan sentiment* que a investigação marcou como redundante com forma/notícia/lesão — o reenquadre honesto (mesmo da [[W-038]] perna c) é **síntese temática auditável** ("N comentários citam X, exemplos com link"), nunca score de sentimento armazenado. Comentário de anônimo vale ainda menos que post: o filtro de credibilidade da perna 1 vira **agregação por volume/tema** aqui (1 comentário = ruído; 200 dizendo o mesmo = sinal de ambiente). Custo de API sobe outra ordem de grandeza (buscar posts é 1 chamada; puxar threads de comentários é N por post).
+
+**Atualização 2026-07-21 (João repetiu o pedido — "buscar tweets, posts instagram, tiktok sobre uma partida"; nada de novo no escopo, mas três coisas mudaram em volta):**
+
+1. **Ganhou o argumento metodológico mais forte que esta entrada já teve.** Levantamento desta sessão: o ganho de calibração de um pipeline multi-agente vem de **particionar informação** (InfoDelphi, arXiv 2607.01661: +12-18% Brier), não de mais opiniões sobre o mesmo dado; e agentes olhando a mesma fonte têm erro correlacionado (arXiv 2606.26583: 10 agentes piores que 1). Consequência direta: **todo o resto do pipeline deriva do mesmo banco SportMonks** — forma, momentum, setores, cenários são recortes da mesma matéria-prima. Busca social é uma das **pouquíssimas fontes de informação genuinamente nova** disponíveis. Isso não muda os muros abaixo, mas muda o *porquê*: não é "mais um sinal", é a partição que o resto não tem. Ver [[multi-agente-so-ajuda-com-particao-de-informacao]].
+2. **O gotcha (1) "ruído brutal / precisa de filtro de credibilidade" ganhou ponto de partida concreto.** A `SIN-022` criou `team.twitter_username` e backfillou 24 clubes (migração `0040`), e a [[W-076]] estende pra IG/FB/TikTok — ou seja, existe agora um **seed de contas confiáveis** pra ancorar o filtro (conta oficial do clube é o provider mais confiável que existe pra desfalque/escalação). E a [[W-077]] propõe `provider` como **entidade normalizada com `tier` de credibilidade** — o filtro desta entrada deve **reusar essa taxonomia**, não inventar outra.
+3. **TikTok é o pior custo-benefício dos quatro, e vale registrar antes de alguém tentar.** Busca no TikTok devolve **vídeo**: extrair exige ASR + visão (ordem de grandeza acima de ler texto), e leitura de expressão facial é cientificamente refutada + alto risco no EU AI Act (`SIN-003` já cravou). Ordem sensata de ataque: **X → Instagram (legenda/texto) → TikTok**, e o TikTok provavelmente só pela legenda, nunca pelo vídeo.
 
 ### W-059 · Onde assistir: emissoras/streams do jogo (tvStations) na página da partida · ✨ · esforço P/M · `dados` `api` `ui`
 <adicionada: 2026-07-03 · status: ideia>
@@ -763,6 +760,20 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 ---
 
 ## 🗄️ Arquivadas (promovidas ou descartadas)
+
+### W-003 · Jogos disputados por season na página do jogador · 🔥 · esforço M · `dados` `ui`
+<adicionada: 2026-06-28 · status: promovido · promovido: 2026-07-21 → LIG-001 P10>
+
+**O quê:** quebra de appearances **por temporada** no perfil do jogador (não só o total da season selecionada).
+
+**Notas:** promovido junto com W-004 como P10 de LIG-001 (`careerSeasons`). Investigação: `docs/investigacoes/jogador-apps-minutos-por-season.md`.
+
+### W-004 · Minutos jogados por season na página do jogador · 🔥 · esforço M · `dados` `ui`
+<adicionada: 2026-06-28 · status: promovido · promovido: 2026-07-21 → LIG-001 P10>
+
+**O quê:** quebra de minutos **por temporada** no perfil (par do W-003).
+
+**Notas:** mesmo P10 / mesma investigação que W-003.
 
 ### W-066 · Ver o prognóstico COMPLETO na UI: reasoning, perguntas de verificação (CoVe) e o prompt de evidências que gerou a aposta · ✨ · esforço M · `ui` `api`
 <adicionada: 2026-07-19 · status: promovido · promovido: 2026-07-19 → MOD-011>

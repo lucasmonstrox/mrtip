@@ -47,6 +47,19 @@ export type SeasonSummary = {
   isCurrent: boolean
 }
 
+// One league-season of a player's career: apps + minutes over the campaign (league + concurrent cups).
+// `selectable` is false when this season's league ≠ the GET's resolved league (resolveSeason would 404).
+// @feature LIG-001
+export type CareerSeason = {
+  sportmonksSeasonId: number
+  name: string
+  startYear: number
+  isCurrent: boolean
+  appearances: number
+  minutes: number
+  selectable: boolean
+}
+
 // Reference to a team: stable id + name + slug (the latter for /teams/:slug URLs) + logo.
 export type TeamRef = {
   id: string
@@ -505,6 +518,8 @@ export type PlayerDetail = {
   seasonTeamGames: RecentTeamGame[]
   // Seasons the player has data in (for the page's season switcher). @feature LIG-008
   seasons: SeasonSummary[]
+  // Career break: apps + minutes per league-season (campaign totals). Same order as `seasons`. @feature LIG-001
+  careerSeasons: CareerSeason[]
 }
 
 // Season aggregate of every per-match player stat ingested from lineups.details, grouped by theme for
@@ -1207,6 +1222,8 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
 
   // Seasons the player has appearances in (for the switcher). @feature LIG-008
   const seasons = await seasonsOfPlayer(id)
+  // Career apps/minutes per league-season (campaign), same order as `seasons`. @feature LIG-001
+  const careerSeasons = await careerSeasonsOfPlayer(id, seasonId)
 
   return {
     id: p.id,
@@ -1240,6 +1257,7 @@ export async function getPlayerDetail(id: string, seasonId: string): Promise<Pla
     recentTeamGames,
     seasonTeamGames,
     seasons,
+    careerSeasons,
   }
 }
 
@@ -1369,6 +1387,53 @@ export async function seasonsOfPlayer(playerId: string): Promise<SeasonSummary[]
     .innerJoin(lineup, eq(lineup.matchId, match.id))
     .innerJoin(lineupPlayer, and(eq(lineupPlayer.lineupId, lineup.id), eq(lineupPlayer.playerId, playerId)))
     .orderBy(desc(season.startYear))
+}
+
+// Apps + minutes per league-season of a player's career, campaign-scoped (liga + cups via
+// concurrentSeasonIds). Same order as seasonsOfPlayer; lookup by sportmonksSeasonId (unique), never
+// resolveSeason(leagueCodeOfPlayer, smId). selectable=false when the row's league ≠ the GET anchor.
+// @feature LIG-001
+export async function careerSeasonsOfPlayer(
+  playerId: string,
+  anchorSeasonId: string,
+): Promise<CareerSeason[]> {
+  const leagueSeasons = await seasonsOfPlayer(playerId)
+  const [anchor] = await db
+    .select({ leagueCode: season.leagueCode })
+    .from(season)
+    .where(eq(season.id, anchorSeasonId))
+    .limit(1)
+  const anchorLeague = anchor?.leagueCode ?? null
+
+  const out: CareerSeason[] = []
+  for (const s of leagueSeasons) {
+    const [uuidRow] = await db
+      .select({ id: season.id, leagueCode: season.leagueCode })
+      .from(season)
+      .where(eq(season.sportmonksSeasonId, s.sportmonksSeasonId))
+      .limit(1)
+    if (!uuidRow) continue
+    const ids = await concurrentSeasonIds(uuidRow.id)
+    const [agg] = await db
+      .select({
+        appearances: count(),
+        minutes: sql<number>`coalesce(sum(coalesce(${lineupPlayer.minutesPlayed}, 0)), 0)`.mapWith(Number),
+      })
+      .from(lineupPlayer)
+      .innerJoin(lineup, eq(lineup.id, lineupPlayer.lineupId))
+      .innerJoin(match, eq(match.id, lineup.matchId))
+      .where(and(eq(lineupPlayer.playerId, playerId), inArray(match.seasonId, ids)))
+    out.push({
+      sportmonksSeasonId: s.sportmonksSeasonId,
+      name: s.name,
+      startYear: s.startYear,
+      isCurrent: s.isCurrent,
+      appearances: Number(agg?.appearances ?? 0),
+      minutes: agg?.minutes ?? 0,
+      selectable: anchorLeague != null && uuidRow.leagueCode === anchorLeague,
+    })
+  }
+  return out
 }
 
 // Team by SLUG (key of the /teams/:slug URLs) or domain 404. `twitterUsername` sai cru (sem "@",
