@@ -15,6 +15,8 @@ testes:
   - "cd apps/api && bun run scripts/_check-rivals.ts → 11/11 (T1–T9 + T3b/T5b)"
   - "cd apps/api && bun run scripts/sync-rivals.ts → 51 edges · errors=0"
   - "Chrome (agent-browser + sessão Clerk): Fla-Flu mostra card Rivalidade + copy assimétrica; Newcastle-Fulham sem card; console sem error novo (só warn Clerk dev keys)"
+  - "PROD (2026-07-23): migração 0041_lonely_bromley no Neon (team_rival + CHECKs); sync-rivals → 51 edges · 1 stub · errors=0; golden Flu→Fla / Inter→Grêmio / Arsenal→Spurs"
+  - "deploy: mrtip-api 8717e9ea · mrtip-web 29ffae43"
 verificado_em: 2026-07-23
 atualizado: 2026-07-23
 depende_de: []
