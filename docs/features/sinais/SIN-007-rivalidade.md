@@ -17,7 +17,7 @@ testes:
   - "Chrome (agent-browser + sessão Clerk): Fla-Flu mostra card Rivalidade + copy assimétrica; Newcastle-Fulham sem card; console sem error novo (só warn Clerk dev keys)"
   - "PROD (2026-07-23): migração 0041_lonely_bromley no Neon (team_rival + CHECKs); sync-rivals → 51 edges · 1 stub · errors=0; golden Flu→Fla / Inter→Grêmio / Arsenal→Spurs"
   - "deploy: mrtip-api 8717e9ea · mrtip-web 29ffae43"
-  - "fix UI (2026-07-23): lista = outbound∪inbound (Grêmio passa a mostrar Inter); seed manual BRA 12 arestas (Botafogo×Fla/Flu/Vasco, espelhos Fla/Timão/Grêmio) em dev+prod; redeploy api 8b7faa16 · web"
+  - "fix UI (2026-07-23): lista = outbound∪inbound (Grêmio passa a mostrar Inter); seed manual BRA 12 arestas (Botafogo×Fla/Flu/Vasco, espelhos Fla/Timão/Grêmio) em dev+prod; redeploy api 8b7faa16 · web 27c683d4"
 verificado_em: 2026-07-23
 atualizado: 2026-07-23
 depende_de: []
