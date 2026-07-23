@@ -3,7 +3,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card"
@@ -75,7 +74,6 @@ export function Statistics({ id, home, away }: { id: string; home: TeamRef; away
     <Card>
       <CardHeader>
         <CardTitle className="text-base">Estatísticas</CardTitle>
-        <CardDescription className="text-xs">Dados da partida por time.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         {hasStats ? (
