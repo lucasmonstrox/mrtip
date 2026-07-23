@@ -7,6 +7,7 @@ import { matchSlug, slugify } from "./slug"
 import { normalizeZone } from "./zones"
 import { roleFromGrid } from "./role-from-grid"
 import { fixtureMetaOf, ingestReferees, ingestTvStations, preferredFootOf, type SmRefereeLink, type SmTvLink } from "./sync-ingest"
+import { ingestTeamRivals } from "./sync-rivals"
 import { env } from "../env"
 import { kickoffInTimeZone } from "../lib/kickoff"
 import { uploadImagem } from "../lib/r2"
@@ -34,6 +35,9 @@ const SEASON_ID = Number(flag("season") ?? 25583) // 2025/2026
 const CODE = (flag("code") ?? "PL").toUpperCase() // domain key (URL)
 const TIMEZONE = flag("timezone") ?? "Europe/London" // fuso da liga: `date`/`time` na hora de parede local
 const DRY_RUN = process.argv.includes("--dry-run") // varre e conta, não escreve no banco nem no R2
+// Nome de exibição por código — SportMonks manda "Serie A"; no produto BR é "Brasileirão".
+// Slugs de partida continuam com `apiLeague.name` pra não quebrar URLs `serie-a-…`.
+const LEAGUE_DISPLAY_NAME: Record<string, string> = { BRA: "Brasileirão" }
 
 // SportMonks lineup type_ids: starter (titular) vs bench (banco).
 const LINEUP_STARTER = 11
@@ -334,7 +338,7 @@ async function main() {
     code: CODE,
     sportmonksLeagueId: apiLeague.id,
     sportmonksSeasonId: SEASON_ID,
-    name: apiLeague.name,
+    name: LEAGUE_DISPLAY_NAME[CODE] ?? apiLeague.name,
     country: apiLeague.country?.name ?? "—",
     season: apiSeason.name,
     timezone: TIMEZONE, // @feature LIG-012
@@ -398,6 +402,10 @@ async function main() {
       .returning({ id: team.id })
     teamIdBySm.set(t.id, r!.id)
   }
+
+  // Rivais clube×clube (SIN-007): pós-mapa de times, 1 req/time. Dry-run já saiu acima.
+  const rivals = await ingestTeamRivals(teamIdBySm)
+  console.log(`rivals: ${rivals.edges} edges (${rivals.stubs} stubs) · errors=${rivals.errors}`)
 
   for (const row of standings) {
     const teamId = teamIdBySm.get(row.participant.id)!

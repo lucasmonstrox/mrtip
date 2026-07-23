@@ -1,8 +1,8 @@
-import { asc, desc, eq, inArray, sql, type AnyColumn, type SQL } from "drizzle-orm"
+import { and, asc, desc, eq, inArray, sql, type AnyColumn, type SQL } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 
 import { db } from "../../../db/client"
-import { coach, league, lineup, lineupPlayer, match, player, team } from "../../../db/schema"
+import { coach, league, lineup, lineupPlayer, match, player, standing, team } from "../../../db/schema"
 
 /* ---------- Domain contract (what /v1/search exposes; reused by apps/web via Eden) ---------- */
 
@@ -83,10 +83,17 @@ async function searchLeagues(needle: SQL, limit: number): Promise<SearchLeague[]
 }
 
 async function searchTeams(needle: SQL, limit: number): Promise<SearchTeamRef[]> {
+  // Só times com ≥1 standing (campanha real). Stubs criados só como rival SportMonks
+  // (SIN-007, slug `-{smId}`) ficam fora da busca. Don't filtrar por logoUrl.
   return db
     .select({ id: team.id, name: team.name, slug: team.slug, logoUrl: team.logoUrl })
     .from(team)
-    .where(nameMatches(team.name, needle))
+    .where(
+      and(
+        nameMatches(team.name, needle),
+        sql`exists (select 1 from ${standing} s where s.team_id = ${team.id})`,
+      ),
+    )
     .orderBy(...nameOrder(team.name, needle))
     .limit(limit)
 }

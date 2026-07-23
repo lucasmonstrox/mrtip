@@ -8,6 +8,7 @@ import {
   loadMatchGoals,
   loadMatches,
   loadMatchReferee,
+  loadMatchRivalry,
   loadMatchTvStations,
   loadTeamStanding,
   serializeMatch,
@@ -42,6 +43,9 @@ export async function getMatch(key: string) {
   const tvStations = await loadMatchTvStations(id)
   // Quem apita (SIN-009): árbitro principal. `null` até a designação sair — normal em jogo futuro.
   const referee = await loadMatchReferee(id)
+  // Rivalidade whitelist SportMonks (SIN-007): presença de aresta dirigida em qualquer sentido.
+  // isRivalry ≠ Índice 0–1 — não alimentar λ/prompt nesta fatia.
+  const rivalry = await loadMatchRivalry(row.m.homeTeamId, row.m.awayTeamId)
   // Descanso cruza liga + copa, mas bounded ao campeonato: seasonStart = 1º jogo de liga da season (as
   // copas caem depois disso). Sem esse bound o "último jogo" de uma estreia de season puxaria a temporada
   // passada. Standing continua scopado à season (LIG-008/LIG-006).
@@ -67,5 +71,6 @@ export async function getMatch(key: string) {
     standings: { home: homeStanding, away: awayStanding },
     tvStations,
     referee,
+    rivalry,
   }
 }

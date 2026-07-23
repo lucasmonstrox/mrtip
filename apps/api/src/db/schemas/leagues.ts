@@ -65,6 +65,30 @@ export const team = pgTable("team", {
 
 export type Team = typeof team.$inferSelect
 
+// Directed club→rival edge from SportMonks `/rivals` (or a future manual seed). Assimetria é
+// feature (Difference Score): Flu→Fla pode existir sem Fla→Flu. `source` is constrained in the
+// migration SQL to sportmonks|manual; CHECK also forbids self-edges. No score/intensity here —
+// isRivalry downstream is whitelist presence (OR), not the calibrated Índice 0–1.
+// @feature SIN-007
+export const teamRival = pgTable(
+  "team_rival",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    teamId: uuid("team_id")
+      .notNull()
+      .references(() => team.id),
+    rivalTeamId: uuid("rival_team_id")
+      .notNull()
+      .references(() => team.id),
+    // only: sportmonks | manual — enforced by CHECK in migration SQL
+    source: text("source").notNull().default("sportmonks"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [unique().on(t.teamId, t.rivalTeamId)],
+)
+
+export type TeamRival = typeof teamRival.$inferSelect
+
 // Venue (stadium) — own entity, deduped by `sportmonksVenueId`. The match's actual venue (handles
 // neutral grounds). `latitude`/`longitude` come from SportMonks as strings (numeric here; Number()
 // at the edge) and feed the travel/fatigue signal (SIN-008) + territorial proximity (SIN-007) —

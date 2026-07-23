@@ -21,6 +21,7 @@ import {
   season,
   standing,
   team,
+  teamRival,
   venue,
   type Match as MatchRow,
 } from "../../../db/schema"
@@ -878,6 +879,55 @@ export async function loadMatchReferee(matchId: string): Promise<MatchRefereeIte
     .where(eq(match.id, matchId))
     .limit(1)
   return row ?? null
+}
+
+// Directed rival edge between the two sides of a match (whitelist SportMonks / manual).
+export type RivalryEdge = { fromTeamId: string; toTeamId: string; source: string }
+// Presence of any directed edge in either sense — NOT the calibrated Índice 0–1.
+// `home`/`away` = rivais que cada lado lista (arestas outbound), mesmo quando o confronto
+// atual não é clássico — é o que a aba Fatos mostra por time. @feature SIN-007
+export type RivalryInfo = {
+  isRivalry: boolean
+  edges: RivalryEdge[]
+  home: TeamRef[]
+  away: TeamRef[]
+}
+
+async function loadTeamOutboundRivals(teamId: string): Promise<TeamRef[]> {
+  const rival = alias(team, "rival_team")
+  return db
+    .select({
+      id: rival.id,
+      name: rival.name,
+      slug: rival.slug,
+      logoUrl: rival.logoUrl,
+    })
+    .from(teamRival)
+    .innerJoin(rival, eq(rival.id, teamRival.rivalTeamId))
+    .where(eq(teamRival.teamId, teamId))
+    .orderBy(asc(rival.name))
+}
+
+// whitelist SportMonks via OR; NÃO alimentar λ/prompt/Índice nesta fatia — representável ≠ identificável.
+export async function loadMatchRivalry(homeTeamId: string, awayTeamId: string): Promise<RivalryInfo> {
+  const [edges, home, away] = await Promise.all([
+    db
+      .select({
+        fromTeamId: teamRival.teamId,
+        toTeamId: teamRival.rivalTeamId,
+        source: teamRival.source,
+      })
+      .from(teamRival)
+      .where(
+        or(
+          and(eq(teamRival.teamId, homeTeamId), eq(teamRival.rivalTeamId, awayTeamId)),
+          and(eq(teamRival.teamId, awayTeamId), eq(teamRival.rivalTeamId, homeTeamId)),
+        ),
+      ),
+    loadTeamOutboundRivals(homeTeamId),
+    loadTeamOutboundRivals(awayTeamId),
+  ])
+  return { isRivalry: edges.length > 0, edges, home, away }
 }
 
 // Onde assistir: emissoras/streams do jogo, mais abrangentes primeiro (mais países → maior alcance).

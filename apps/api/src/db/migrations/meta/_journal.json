@@ -288,6 +288,13 @@
       "when": 1784601667127,
       "tag": "0040_glorious_ink",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1784793521949,
+      "tag": "0041_lonely_bromley",
+      "breakpoints": true
     }
   ]
 }

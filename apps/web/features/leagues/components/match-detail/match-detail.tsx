@@ -16,7 +16,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-import type { TeamRest, TeamStanding } from "../../types"
+import type { TeamRef, TeamRest, TeamStanding } from "../../types"
 import { useMatchFormQuery } from "../../hooks/data/queries/use-match-form-query"
 import { useMatchQuery } from "../../hooks/data/queries/use-match-query"
 import { formatDate, initials } from "../../utils/format"
@@ -27,6 +27,7 @@ import { GoalTiming } from "./goal-timing"
 import { Lineup } from "./lineup"
 import { MatchEvents } from "./match-events"
 import { MatchMomentum } from "./match-momentum"
+import { MatchNews } from "./match-news"
 import { Prognosis } from "./prognosis"
 import { Scorers } from "./scorers"
 import { Statistics } from "./statistics"
@@ -55,6 +56,35 @@ function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
         </span>
       ) : (
         <span className="text-sm text-muted-foreground">estreia</span>
+      )}
+    </div>
+  )
+}
+
+// Rivais outbound de um lado (whitelist SportMonks). Vazio = a fonte não lista ninguém pra esse clube.
+function RivalSide({ name, rivals }: { name: string; rivals: TeamRef[] }) {
+  return (
+    <div className="flex min-w-0 flex-col gap-1.5">
+      <span className="truncate text-sm font-medium">{name}</span>
+      {rivals.length === 0 ? (
+        <span className="text-xs text-muted-foreground">Nenhum rival listado</span>
+      ) : (
+        <ul className="flex flex-col gap-1.5">
+          {rivals.map((r) => (
+            <li key={r.id}>
+              <Link
+                href={`/teams/${r.slug}`}
+                className="flex items-center gap-2 text-sm hover:underline"
+              >
+                {r.logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={r.logoUrl} alt="" className="size-5 shrink-0 object-contain" />
+                ) : null}
+                <span className="truncate">{r.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )
@@ -303,6 +333,32 @@ export function MatchDetail({ slug }: { slug: string }) {
             </div>
           </div>
 
+          {/* Rivalidade whitelist SportMonks: lista outbound de cada lado (sempre), e destaca
+              quando o confronto atual também é clássico (isRivalry). @feature SIN-007 */}
+          <div className="rounded-lg border bg-card p-4">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">Rivalidade</span>
+              <span
+                className="cursor-help text-xs text-muted-foreground underline decoration-dotted"
+                title="Rivais que cada clube lista na SportMonks (aresta dirigida). Não é o Índice 0–1 calibrado — não mexe em cartões/mando/probabilidade sozinho."
+              >
+                whitelist
+              </span>
+            </div>
+            {match.rivalry?.isRivalry ? (
+              <p className="mt-2 text-xs text-muted-foreground">
+                Este confronto está marcado como clássico/rivalidade
+                {(match.rivalry.edges?.length ?? 0) === 1
+                  ? " (só um lado lista o outro)."
+                  : "."}
+              </p>
+            ) : null}
+            <div className="mt-3 grid grid-cols-2 gap-4">
+              <RivalSide name={match.home.name} rivals={match.rivalry?.home ?? []} />
+              <RivalSide name={match.away.name} rivals={match.rivalry?.away ?? []} />
+            </div>
+          </div>
+
           {/* Quem apita: árbitro principal da partida. O card renderiza SEMPRE — em jogo futuro a
               designação normalmente ainda não saiu, e "ainda não designado" é o estado mais comum
               da página, não uma borda. @feature SIN-009 */}
@@ -388,7 +444,7 @@ export function MatchDetail({ slug }: { slug: string }) {
         </TabsContent>
 
         <TabsContent value="noticias" className="pt-2">
-          <TabEmpty>Sem notícias para esta partida.</TabEmpty>
+          <MatchNews id={id} />
         </TabsContent>
 
         <TabsContent value="narracao" className="pt-2">
