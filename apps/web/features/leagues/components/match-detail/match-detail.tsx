@@ -1,19 +1,6 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
-import {
-  Activity,
-  BarChart3,
-  ClipboardList,
-  Clock,
-  type LucideIcon,
-  Newspaper,
-  Radio,
-  Shirt,
-  Swords,
-  Target,
-  TrendingUp,
-} from "lucide-react"
 import Link from "next/link"
 
 import type { TeamRef, TeamRest, TeamStanding } from "../../types"
@@ -28,6 +15,7 @@ import { Lineup } from "./lineup"
 import { MatchEvents } from "./match-events"
 import { MatchMomentum } from "./match-momentum"
 import { MatchNews } from "./match-news"
+import { MATCH_TABS, type MatchTabValue } from "./match-tabs"
 import { Prognosis } from "./prognosis"
 import { Scorers } from "./scorers"
 import { Statistics } from "./statistics"
@@ -90,24 +78,6 @@ function RivalSide({ name, rivals }: { name: string; rivals: TeamRef[] }) {
   )
 }
 
-// As abas da partida, na ordem em que aparecem. O ícone de cada uma vem do vernáculo do futebol, não de
-// metáfora genérica de dashboard: camisa pra escalação, espadas pro duelo do H2H, alvo pro xG (qualidade
-// da finalização), relógio pros eventos (que são carimbados no minuto) e rádio pra narração — que no
-// Brasil É narração de rádio. `primary` marca a aba-tese do produto (a aposta com evidência).
-type MatchTab = { value: string; label: string; icon: LucideIcon; primary?: boolean }
-const MATCH_TABS: readonly MatchTab[] = [
-  { value: "fatos", label: "Fatos", icon: ClipboardList },
-  { value: "escalacao", label: "Escalação", icon: Shirt },
-  { value: "h2h", label: "H2H", icon: Swords },
-  { value: "gols", label: "Gols (xG)", icon: Target },
-  { value: "noticias", label: "Notícias", icon: Newspaper },
-  { value: "prognostico", label: "Prognóstico", icon: TrendingUp, primary: true },
-  { value: "momentum", label: "Momentum", icon: Activity },
-  { value: "estatisticas", label: "Estatísticas", icon: BarChart3 },
-  { value: "eventos", label: "Eventos", icon: Clock },
-  { value: "narracao", label: "Narração", icon: Radio },
-] as const
-
 // Qualification/relegation zone → text color for the position number (mirrors team-standing.tsx's ZONE).
 const ZONE_COLOR: Record<string, string> = {
   champions: "text-emerald-600 dark:text-emerald-400",
@@ -143,7 +113,7 @@ function StandingSide({ name, standing: s }: { name: string; standing: TeamStand
   )
 }
 
-export function MatchDetail({ slug }: { slug: string }) {
+export function MatchDetail({ slug, tab }: { slug: string; tab: MatchTabValue }) {
   const { data: match, isPending, isError } = useMatchQuery(slug)
   // Sub-resources (form/lineup/scorers/goal-timing/…) are keyed by the match UUID, not the slug —
   // so they wait for the detail to resolve the id from the pretty URL. @feature LIG-009
@@ -221,7 +191,8 @@ export function MatchDetail({ slug }: { slug: string }) {
         </div>
       </header>
 
-      <Tabs defaultValue="fatos">
+      {/* Aba controlada pela URL (`/matches/[slug]/[tab]`): refresh e deep-link abrem a aba certa. @feature LIG-024 */}
+      <Tabs value={tab}>
         {/* 10 abas não cabem numa pill preenchida sem virar um paredão cinza: a variante `line` deixa o
             indicador ser um sublinhado fino e dá ar pros ícones. O wrapper rola na horizontal (barra
             escondida) em vez de espremer — a página inteira já estoura em viewport estreita e a barra de
@@ -234,11 +205,13 @@ export function MatchDetail({ slug }: { slug: string }) {
         <div className="-mx-1 min-w-0 max-w-[calc(100vw-2rem)] overflow-x-auto border-b px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <TabsList variant="line">
             {MATCH_TABS.map(({ value, label, icon: Icon, primary }) => (
-              <TabsTrigger key={value} value={value} className="gap-1.5">
-                {/* O Prognóstico não é par dos outros: é a tese do produto (a aposta com evidência).
-                    Ganha o ícone tingido quando inativo pra ser achável de relance, sem virar enfeite. */}
-                <Icon className={primary ? "text-primary" : undefined} aria-hidden />
-                {label}
+              <TabsTrigger key={value} value={value} asChild>
+                <Link href={`/matches/${slug}/${value}`} className="gap-1.5">
+                  {/* O Prognóstico não é par dos outros: é a tese do produto (a aposta com evidência).
+                      Ganha o ícone tingido quando inativo pra ser achável de relance, sem virar enfeite. */}
+                  <Icon className={primary ? "text-primary" : undefined} aria-hidden />
+                  {label}
+                </Link>
               </TabsTrigger>
             ))}
           </TabsList>
