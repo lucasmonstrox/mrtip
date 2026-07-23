@@ -91,8 +91,9 @@ export type TeamRival = typeof teamRival.$inferSelect
 
 // Venue (stadium) — own entity, deduped by `sportmonksVenueId`. The match's actual venue (handles
 // neutral grounds). `latitude`/`longitude` come from SportMonks as strings (numeric here; Number()
-// at the edge) and feed the travel/fatigue signal (SIN-008) + territorial proximity (SIN-007) —
-// they are NOT displayed. `cityName` denormalized for display; `imageUrl` is the photo in R2.
+// at the edge) and feed geographic travel in the dossier/prompt (SIN-023) + territorial proximity
+// (SIN-007); calendar fatigue/altitude stay SIN-008 — they are NOT displayed. `cityName`
+// denormalized for display; `imageUrl` is the photo in R2.
 // @feature LIG-004
 export const venue = pgTable("venue", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -470,6 +471,8 @@ export const matchTeamStats = pgTable(
     // succ-interceptions(66), shots(1677) — ficam de fora (0/380); cross-% deriva de acc/total na leitura.
     tackles: integer("tackles"), // type 78 — desarmes
     interceptions: integer("interceptions"), // type 100 — interceptações
+    // @feature LIG-023 — type 101 Cortes; DERIVADO de SUM(lineup_player.clearances) — NÃO vem no include statistics de time
+    clearances: integer("clearances"),
     duelsWon: integer("duels_won"), // type 106 — duelos ganhos
     successfulHeaders: integer("successful_headers"), // type 65 — cabeçadas certas (70 "headers" não vem)
     attacks: integer("attacks"), // type 43 — ataques (dangerous_attacks 44 é separado)

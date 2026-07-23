@@ -601,6 +601,9 @@ async function main() {
   console.log(`players: ${players.length}`)
 
   // 3e) Lineup: one lineup per (match, team) with formation; starters + bench in lineup_player.
+  // LIG-023: accumulate SUM(clearances) per (matchId, teamId) for derived match_team_stats.clearances
+  // (type 101 is NOT in TEAM_STAT / fixture statistics — only per-player).
+  const clearancesByMatchTeam = new Map<string, number>()
   let nLineups = 0
   let nPlayers = 0
   for (const f of fixtures) {
@@ -666,6 +669,10 @@ async function main() {
           clearanceOffline: stat(STAT.clearanceOffline) ?? null,
           manOfMatch: stat(STAT.motm) === 1,
         }
+        if (lp.clearances != null) {
+          const k = `${matchId}:${teamId}`
+          clearancesByMatchTeam.set(k, (clearancesByMatchTeam.get(k) ?? 0) + lp.clearances)
+        }
         await db
           .insert(lineupPlayer)
           .values(lp)
@@ -714,6 +721,8 @@ async function main() {
         freeKicks: g(TEAM_STAT.freeKicks),
         tackles: g(TEAM_STAT.tackles),
         interceptions: g(TEAM_STAT.interceptions),
+        // LIG-023 — derived SUM(lineup_player.clearances); NOT g(101) / TEAM_STAT
+        clearances: clearancesByMatchTeam.get(`${matchId}:${teamId}`) ?? null,
         duelsWon: g(TEAM_STAT.duelsWon),
         successfulHeaders: g(TEAM_STAT.successfulHeaders),
         attacks: g(TEAM_STAT.attacks),

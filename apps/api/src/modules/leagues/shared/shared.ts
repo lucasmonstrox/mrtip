@@ -385,12 +385,19 @@ export type TeamScorers = {
 // Both sides of the match. Payload of GET /:id/scorers.
 export type MatchScorers = { home: TeamScorers; away: TeamScorers }
 
-// One team's match-level statistics for the "Estatísticas" tab: today just ball possession (posse de
-// bola, %) read from match_team_stats (SportMonks fixture statistics, DOS-002). Shape kept extensible
-// so shots/corners/big-chances slot in later; null when the stat is missing for this fixture.
+// One team's match-level statistics for the "Estatísticas" tab: ball possession + shots inside/outside
+// the box from match_team_stats (SportMonks fixture statistics, DOS-002), clearances derived from
+// SUM(lineup_player) (LIG-023), plus yellow/red card counts from the `card` table (not match_team_stats).
+// Shape kept extensible so corners/big-chances slot in later; null when a match_team_stats field is
+// missing for this fixture.
 export type TeamMatchStats = {
   team: TeamRef
   possession: number | null // % de posse de bola (0–100), type 45 BALL_POSSESSION
+  shotsInsidebox: number | null // chutes / remates dentro da área, type 49 (LIG-019)
+  shotsOutsidebox: number | null // remates fora da área, type 50 (LIG-020)
+  clearances: number | null // type 101 Cortes — DERIVADO SUM(lineup_player.clearances); não vem no statistics de time (LIG-023)
+  yellowCards: number // COUNT from card — yellow + yellowred (FIFA súmula); 0 when none
+  redCards: number // COUNT from card — red + yellowred (FIFA súmula); 0 when none
 }
 
 // Both sides of the match. Payload of GET /:id/statistics.

@@ -12,6 +12,10 @@ node_modules
 
 # testing
 coverage
+apps/web/test-results/
+
+# scripts de probe/UI (screenshots, dumps, baselines)
+apps/api/scripts/output/
 
 # next.js
 .next/

@@ -5,44 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Estrutura conceitual de planos do mrtip."
+      content="Estrutura conceitual de planos do mrtip — preços ainda não cravados."
     />
     <title>Planos — mr·tip</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="nav">
-      <div class="wrap nav-in">
-        <a class="brand" href="index.html" aria-label="mrtip, início"
-          >mr<span class="brand-dot"></span>tip</a
-        >
-        <nav class="nav-links" aria-label="Navegação principal">
-          <a href="produto.html">Produto</a><a href="alertas.html">Alertas</a
-          ><a href="auditoria.html">Auditoria</a>
-          <a href="tipsters.html">Para tipsters</a
-          ><a class="active" aria-current="page" href="precos.html">Planos</a>
-        </nav>
-        <div class="nav-actions">
-          <a class="nav-login" href="#lista">Entrar</a
-          ><a class="btn btn-primary btn-small" href="#lista">Pedir acesso</a>
-        </div>
-        <button
-          class="menu-toggle"
-          aria-label="Abrir menu"
-          aria-expanded="false"
-        >
-          <span></span>
-        </button>
-      </div>
-    </header>
+  <body data-page="precos">
+    <header data-chrome-nav></header>
 
     <main>
       <section class="page-hero">
         <div class="wrap">
           <div class="section-head center" style="margin-bottom: 0" data-reveal>
             <span class="eyebrow">Acesso antecipado</span>
-            <h1 style="margin-top: 22px">Comece pela transparência.</h1>
-            <p>
+            <h1 style="margin-top: 18px; font-size: clamp(2.2rem, 4.5vw, 3.4rem)">
+              Comece pela transparência.
+            </h1>
+            <p class="lead" style="margin-top: 16px">
               A estrutura abaixo é um mock de produto. Preços e limites finais
               ainda serão definidos com os primeiros usuários — sem fingir que
               uma decisão aberta já está fechada.
@@ -51,11 +30,10 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" style="padding-top: 28px">
         <div class="wrap">
           <div class="pricing-note" data-reveal>
-            Este protótipo valida arquitetura e posicionamento. Valores
-            comerciais não foram cravados na visão do produto.
+            Protótipo de posicionamento · valores comerciais não cravados
           </div>
           <div class="pricing-grid">
             <article class="price-card" data-reveal>
@@ -75,163 +53,116 @@
               <a class="btn btn-secondary" href="#lista">Entrar na lista</a>
             </article>
 
-            <article class="price-card featured" data-reveal>
+            <article class="price-card featured" data-reveal data-reveal-delay="1">
               <span class="tag blue">mais interesse</span>
               <h3>Decidir</h3>
               <p class="for">
-                Para quem acompanha rodadas e quer usar todo o fluxo de análise.
+                Para quem quer assistente, value e monitores na rotina da
+                rodada.
               </p>
-              <div class="price">Em definição</div>
+              <div class="price">R$ — <small>/ mês</small></div>
               <ul class="price-features">
-                <li>Todos os dossiês cobertos</li>
-                <li>Value radar por mercado</li>
-                <li>Assistente com fontes</li>
-                <li>Monitores e alertas personalizados</li>
-                <li>Matchups por jogador</li>
-                <li>Histórico e CLV completos</li>
+                <li>Assistente com limites amplos</li>
+                <li>Dossiês da liga coberta</li>
+                <li>Value bets + “passar”</li>
+                <li>Alertas por perfil e mercado</li>
+                <li>Ledger pessoal auditável</li>
               </ul>
-              <a class="btn btn-primary" href="#lista"
-                >Pedir acesso antecipado</a
-              >
+              <a class="btn btn-primary" href="#lista">Pedir acesso</a>
             </article>
 
-            <article class="price-card" data-reveal>
-              <span class="tag green">criadores</span>
-              <h3>Publicar</h3>
+            <article class="price-card" data-reveal data-reveal-delay="2">
+              <span class="tag">criar</span>
+              <h3>Tipster</h3>
               <p class="for">
-                Para tipsters que querem produzir, gravar e provar o próprio
-                método.
+                Para quem publica e quer histórico verificável (fase 2).
               </p>
-              <div class="price">Em definição</div>
+              <div class="price">R$ — <small>/ mês</small></div>
               <ul class="price-features">
                 <li>Tudo do plano Decidir</li>
-                <li>Rascunho assistido por IA</li>
-                <li>Publicação com hash e timestamp</li>
-                <li>Perfil público verificável</li>
-                <li>Métricas por especialidade</li>
-                <li>Canal pago no roadmap</li>
+                <li>Publicação com carimbo</li>
+                <li>Perfil com CLV aberto</li>
+                <li>Ferramentas de análise</li>
+                <li>Lista prioritária de criadores</li>
               </ul>
               <a class="btn btn-secondary" href="#lista">Lista de criadores</a>
             </article>
           </div>
-        </div>
-      </section>
 
-      <section class="section alt" id="responsavel">
-        <div class="wrap evidence-grid">
-          <div class="evidence-copy" data-reveal>
-            <span class="eyebrow">Jogo responsável é produto</span>
-            <h2>Mais controle não pode significar mais impulso.</h2>
-            <p>
-              O mrtip evita streaks celebratórias, pressão de tempo e mensagens
-              de recuperação. Limites e pausas têm o mesmo peso visual que
-              qualquer ferramenta de análise.
-            </p>
-          </div>
-          <div class="pipeline" data-reveal>
-            <div class="window-bar">controles da conta</div>
-            <div class="pipeline-row">
-              <span class="pipeline-icon">18+</span>
-              <div>
-                <strong>Verificação de idade</strong>
-                <p>Acesso restrito a maiores de 18 anos.</p>
-              </div>
-              <span class="pipeline-weight"><b>obrigatório</b>conta</span>
+          <div class="faq" id="lista" data-reveal>
+            <div class="section-head center" style="margin-bottom: 8px">
+              <span class="eyebrow">FAQ</span>
+              <h2 style="margin-top: 14px; font-size: 1.6rem">
+                Perguntas honestas.
+              </h2>
             </div>
-            <div class="pipeline-row">
-              <span class="pipeline-icon">LIM</span>
-              <div>
-                <strong>Limites prudenciais</strong>
-                <p>Defina teto de tempo e exposição.</p>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                Por que o preço ainda não está definido?
+              </button>
+              <div class="faq-a">
+                <p>
+                  A visão do produto marca faixas como decisão em aberto. Este
+                  mock valida arquitetura e posicionamento — não inventa um
+                  número para parecer pronto.
+                </p>
               </div>
-              <span class="pipeline-weight"><b>sempre visível</b>controle</span>
             </div>
-            <div class="pipeline-row">
-              <span class="pipeline-icon">PAU</span>
-              <div>
-                <strong>Pausa e autoexclusão</strong>
-                <p>Interrompa notificações e acesso sem fricção.</p>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                Vocês prometem lucro?
+              </button>
+              <div class="faq-a">
+                <p>
+                  Não. O mrtip fala probabilidade calibrada e risco. Aposta
+                  envolve perda. Veja
+                  <a href="jogo-responsavel.html" style="color: var(--cyan)"
+                    >jogo responsável</a
+                  >.
+                </p>
               </div>
-              <span class="pipeline-weight"><b>1 clique</b>segurança</span>
             </div>
-            <div class="pipeline-row">
-              <span class="pipeline-icon">RSC</span>
-              <div>
-                <strong>Risco no enquadramento</strong>
-                <p>Nunca mostramos upside sem downside.</p>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                O que entra no acesso antecipado?
+              </button>
+              <div class="faq-a">
+                <p>
+                  Prioridade na lista, feedback direto no produto e acesso às
+                  superfícies que forem liberando (assistente, dossiê, alertas,
+                  auditoria).
+                </p>
               </div>
-              <span class="pipeline-weight"><b>nativo</b>linguagem</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="wrap">
-          <div class="section-head center" data-reveal>
-            <span class="eyebrow">Perguntas frequentes</span>
-            <h2 style="margin-top: 20px">Sem letra miúda no que importa.</h2>
-          </div>
-          <div class="faq" data-reveal>
-            <details open>
-              <summary>O mrtip garante que vou ganhar?</summary>
-              <p>
-                Não. Aposta envolve risco e nenhum modelo elimina a variância. O
-                produto estima probabilidades, explica sinais e mede o próprio
-                histórico; não promete resultado.
-              </p>
-            </details>
-            <details>
-              <summary>Por que os planos pagos ainda não têm preço?</summary>
-              <p>
-                Porque a visão do produto ainda marca tiers e valores como
-                decisão aberta. Este mock testa a separação de valor entre
-                explorar, decidir e publicar antes de cravar preço.
-              </p>
-            </details>
-            <details>
-              <summary>O assistente decide por mim?</summary>
-              <p>
-                Não. Ele organiza evidências e responde perguntas. O motor
-                quantitativo estima, a IA explica, e a decisão continua sendo
-                sua.
-              </p>
-            </details>
-            <details>
-              <summary>Quais ligas e mercados entram primeiro?</summary>
-              <p>
-                O foco estratégico é Brasil e mercados de nicho como cartões,
-                escanteios e team totals. A cobertura final depende da qualidade
-                e do custo das fontes de dados e odds.
-              </p>
-            </details>
-            <details>
-              <summary>Tipsters poderão cobrar por um canal?</summary>
-              <p>
-                Está no roadmap. A monetização só entra depois do histórico
-                verificável, para evitar que marketing venha antes da prova.
-              </p>
-            </details>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                Preciso ter +18?
+              </button>
+              <div class="faq-a">
+                <p>
+                  Sim. O produto é exclusivo para maiores de 18 anos, em linha
+                  com a regulação brasileira de apostas.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="cta-section" id="lista">
+      <section class="cta-band">
         <div class="wrap">
           <div class="cta-box" data-reveal>
-            <div>
-              <span class="eyebrow">Lista de espera</span>
-              <h2 style="margin-top: 20px">
-                Ajude a definir o que merece ser pago.
-              </h2>
-              <p>
-                Escolha o perfil de acesso e participe da validação das
-                primeiras rodadas.
-              </p>
-            </div>
-            <div class="cta-actions">
-              <a class="btn btn-primary" href="mailto:acesso@mrtip.com.br"
-                >Pedir acesso <span class="arrow">→</span></a
+            <h2>Entre na lista.</h2>
+            <p>
+              Sem cartão neste mock. Quando os planos fecharem, avisamos quem
+              pediu acesso.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="index.html"
+                >Voltar ao início <span class="arrow">→</span></a
+              >
+              <a class="btn btn-secondary" href="jogo-responsavel.html"
+                >Jogo responsável</a
               >
             </div>
           </div>
@@ -239,47 +170,8 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="wrap">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <a class="brand" href="index.html"
-              >mr<span class="brand-dot"></span>tip</a
-            >
-            <p>
-              Probabilidades explicadas, decisões auditáveis e jogo responsável
-              desde o primeiro pixel.
-            </p>
-          </div>
-          <div class="footer-links">
-            <div class="footer-col">
-              <strong>Produto</strong><a href="produto.html">Visão geral</a
-              ><a href="alertas.html">Alertas</a
-              ><a href="auditoria.html">Auditoria</a>
-            </div>
-            <div class="footer-col">
-              <strong>Públicos</strong><a href="produto.html">Apostadores</a
-              ><a href="tipsters.html">Tipsters</a
-              ><a href="precos.html">Planos</a>
-            </div>
-            <div class="footer-col">
-              <strong>Princípios</strong
-              ><a href="auditoria.html">Transparência</a
-              ><a href="auditoria.html">Metodologia</a
-              ><a href="#responsavel">Jogo responsável</a>
-            </div>
-            <div class="footer-col">
-              <strong>Legal</strong><a href="#">Privacidade</a
-              ><a href="#">Termos</a><a href="#">Contato</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <span>© 2026 mrtip · mock conceitual</span
-          ><span>+18 · jogue com responsabilidade · aposta envolve risco</span>
-        </div>
-      </div>
-    </footer>
+    <footer data-chrome-footer></footer>
+    <script src="chrome.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

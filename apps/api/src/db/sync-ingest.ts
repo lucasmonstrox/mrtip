@@ -351,6 +351,9 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
   }
 
   // 4) Escalação: 1 por (match, team) com formação; titulares + banco + stats por jogador.
+  // LIG-023: accumulate SUM(clearances) per (matchId, teamId) for derived match_team_stats.clearances
+  // (type 101 is NOT in TEAM_STAT / fixture statistics — only per-player).
+  const clearancesByMatchTeam = new Map<string, number>()
   let nLineups = 0, nPlayers = 0
   for (const f of fixtures) {
     const entries = lineupOf(f)
@@ -376,6 +379,10 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
           crossesTotal: stat(STAT.crossesTotal) ?? null, crossesAccurate: stat(STAT.crossesAccurate) ?? null, dribbleAttempts: stat(STAT.dribbleAttempts) ?? null, dribblesSuccessful: stat(STAT.dribblesSuccessful) ?? null, dribbledPast: stat(STAT.dribbledPast) ?? null,
           bigChancesMissed: stat(STAT.bigChancesMissed) ?? null, manOfMatch: stat(STAT.motm) === 1,
         }
+        if (lp.clearances != null) {
+          const k = `${matchId}:${teamId}`
+          clearancesByMatchTeam.set(k, (clearancesByMatchTeam.get(k) ?? 0) + lp.clearances)
+        }
         await db.insert(lineupPlayer).values(lp).onConflictDoUpdate({ target: [lineupPlayer.lineupId, lineupPlayer.playerId], set: lp })
         nPlayers += 1
       }
@@ -395,7 +402,10 @@ export async function ingestFixtures(opts: IngestOpts): Promise<Record<string, n
       const g = (id: number) => vals.get(id) ?? null
       const ts = { matchId, teamId,
         possession: g(TEAM_STAT.possession), shotsTotal: g(TEAM_STAT.shotsTotal), shotsInsidebox: g(TEAM_STAT.shotsInsidebox), shotsOutsidebox: g(TEAM_STAT.shotsOutsidebox), shotsOnTarget: g(TEAM_STAT.shotsOnTarget), shotsOffTarget: g(TEAM_STAT.shotsOffTarget), shotsBlocked: g(TEAM_STAT.shotsBlocked), bigChancesCreated: g(TEAM_STAT.bigChancesCreated), dangerousAttacks: g(TEAM_STAT.dangerousAttacks), corners: g(TEAM_STAT.corners), freeKicks: g(TEAM_STAT.freeKicks),
-        tackles: g(TEAM_STAT.tackles), interceptions: g(TEAM_STAT.interceptions), duelsWon: g(TEAM_STAT.duelsWon), successfulHeaders: g(TEAM_STAT.successfulHeaders), attacks: g(TEAM_STAT.attacks), passes: g(TEAM_STAT.passes), passesAccurate: g(TEAM_STAT.passesAccurate), passAccuracy: g(TEAM_STAT.passAccuracy), longPasses: g(TEAM_STAT.longPasses), crossesTotal: g(TEAM_STAT.crossesTotal), crossesAccurate: g(TEAM_STAT.crossesAccurate), dribbleAttempts: g(TEAM_STAT.dribbleAttempts), dribblesSuccessful: g(TEAM_STAT.dribblesSuccessful), dribbleSuccess: g(TEAM_STAT.dribbleSuccess), bigChancesMissed: g(TEAM_STAT.bigChancesMissed), hitWoodwork: g(TEAM_STAT.hitWoodwork), goalAttempts: g(TEAM_STAT.goalAttempts) }
+        tackles: g(TEAM_STAT.tackles), interceptions: g(TEAM_STAT.interceptions),
+        // LIG-023 — derived SUM(lineup_player.clearances); NOT g(101) / TEAM_STAT
+        clearances: clearancesByMatchTeam.get(`${matchId}:${teamId}`) ?? null,
+        duelsWon: g(TEAM_STAT.duelsWon), successfulHeaders: g(TEAM_STAT.successfulHeaders), attacks: g(TEAM_STAT.attacks), passes: g(TEAM_STAT.passes), passesAccurate: g(TEAM_STAT.passesAccurate), passAccuracy: g(TEAM_STAT.passAccuracy), longPasses: g(TEAM_STAT.longPasses), crossesTotal: g(TEAM_STAT.crossesTotal), crossesAccurate: g(TEAM_STAT.crossesAccurate), dribbleAttempts: g(TEAM_STAT.dribbleAttempts), dribblesSuccessful: g(TEAM_STAT.dribblesSuccessful), dribbleSuccess: g(TEAM_STAT.dribbleSuccess), bigChancesMissed: g(TEAM_STAT.bigChancesMissed), hitWoodwork: g(TEAM_STAT.hitWoodwork), goalAttempts: g(TEAM_STAT.goalAttempts) }
       await db.insert(matchTeamStats).values(ts).onConflictDoUpdate({ target: [matchTeamStats.matchId, matchTeamStats.teamId], set: ts })
       nTeamStats += 1
     }

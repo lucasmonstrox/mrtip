@@ -1,0 +1,1 @@
+ALTER TABLE "match_team_stats" ADD COLUMN "clearances" integer;

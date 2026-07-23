@@ -18,6 +18,118 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 ## 🔥 Quero muito
 
+### W-082 · SoT (chutes a gol) na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **SoT (shots on target / chutes a gol)** dos dois times — hoje a aba só renderiza posse de bola, embora o número oficial de time já esteja no banco.
+
+**Por quê:** posse sozinha é o pior proxy de ameaça; SoT é a métrica de finalização que o produto já usa no prognóstico (conversão, forma, momentum) e que o apostador espera ver no dossiê do jogo. Paridade mínima com FotMob/SofaScore e leitura imediata de "quem atirou de verdade".
+
+**Depende de / esbarra em:** **zero ingestão nova — o dado já está em `match_team_stats.shots_on_target`** (SportMonks type 86, `DOS-002` feito). O buraco é só a superfície: `TeamMatchStats` / `matchStatistics` (`get-statistics.service.ts`) selecionam **só `possession`**; o comentário no tipo já diz "shots/corners/big-chances slot in later". UI: `statistics.tsx` (linha de comparação casa×fora). Irmã natural: expor o resto do pacote já ingerido (chutes totais, na área, big chances, corners) na mesma aba — mas o pedido desta entrada é **SoT primeiro**.
+
+**Notas:** **Assumi 🔥** pelo "implementar". Quick win clássico: estender o select + o tipo + uma `StatRow` "Chutes a gol". Preferir o SoT **oficial de time** (coluna `shotsOnTarget` do `match_team_stats`), não a soma de `lineup_player` — decisão já registrada no dossiê do `DOS-002` (C3). Null quando a linha/stat faltar (mesmo padrão da posse). Se no `/pl` quiserem empilhar chutes totais / off-target / blocked na mesma passada, o esforço continua P — o custo marginal é quase zero.
+
+### W-083 · Passes totais, certos e errados na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar o pacote de construção com bola: **passes totais**, **passes certos (completos)** e **passes errados** — casa×fora, no mesmo padrão de barras da posse.
+
+**Por quê:** volume e precisão de passe leem o *como* o time construiu (circulação vs chute-e-esperança) e conversam com under/over e estilo. Paridade de dossiê com sites de stats; hoje a aba só tem posse.
+
+**Depende de / esbarra em:** **zero ingestão nova — já está em `match_team_stats`** (`DOS-002` expansão defesa+construção): `passes` (type 80), `passesAccurate` (type 81), `passAccuracy` (type 82 %). **Errados = `passes − passesAccurate`** (derivado na API ou na UI; não há coluna própria). Mesmo buraco de superfície da [[W-082]]: `matchStatistics` / `TeamMatchStats` só expõem `possession`; `statistics.tsx` já tem `StatRow` reaproveitável. **≠ `LIG-003`** (stats de volume *por jogador* em `lineup_player`) — aqui é agregado oficial de *time* na partida.
+
+**Notas:** **Assumi 🔥** pelo "implementar". UI sugerida: 3 linhas ("Passes", "Passes certos", "Passes errados") e/ou total + % (`passAccuracy`) como sufixo — evitar redundância de mostrar totais *e* % *e* errados se ficar barulhento; no `/pl` decidir se errados é linha própria ou só implícito (total − certos). Null-safe igual posse. Família da aba: [[W-082]] SoT + esta; natural empilhar no mesmo PR/passada.
+
+### W-084 · Grandes oportunidades (big chances) na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **grandes oportunidades (big chances)** dos dois times — o quão perto cada um chegou do gol, além de posse/chutes.
+
+**Por quê:** big chance é o melhor proxy de "deveria ter saído gol" sem xG pago; lê qualidade de chance, não só volume. Paridade com FotMob/SofaScore e leitura direta pra over/under e conversão.
+
+**Depende de / esbarra em:** **zero ingestão nova — já está em `match_team_stats`** (`DOS-002`): `bigChancesCreated` (type 580) e `bigChancesMissed` (type 581). Mesmo buraco de superfície da [[W-082]]/[[W-083]]: endpoint/UI só expõem posse. Preferir o agregado oficial de *time* (não soma de `lineup_player.bigChances*`).
+
+**Notas:** **Assumi 🔥** (mesmo lote da aba Estatísticas). UI: pelo menos 1 `StatRow` "Grandes oportunidades" (= criadas); opcional segunda linha "desperdicadas" / conversão implícita (criadas − missed ≈ convertidas, com cuidado se a SportMonks não garantir a aritmética). Família pra um PR só: [[W-082]] SoT · [[W-083]] passes · esta.
+
+### W-085 · Defesas do guarda-redes na aba Estatísticas da partida · 🔥 · esforço P · `dados` `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **defesas do guarda-redes (saves)** dos dois times — quanto cada goleiro segurou no jogo.
+
+**Por quê:** defesas leem o "over que o goleiro matou" e o volume de SoT sofrido que virou chance real; sem isso a aba só conta pressão ofensiva. Paridade com SofaScore/FotMob e leitura clássica pra under/over e clean sheet.
+
+**Depende de / esbarra em:** **no nível TIME ainda NÃO está em `match_team_stats`** — inventário marca type **57 Saves** como ❌ (quick win: já vem no include `statistics` e é descartado; 1 linha no `TEAM_STAT` + coluna + re-sync, custo zero de request — `docs/investigacoes/sportmonks-inventario-completo.md`). **Atalho sem migração:** `lineup_player.saves` (type 57) e `savesInsidebox` (104) **já estão ingeridos** por jogador (LIG-003) → somar as defesas do(s) G do time na partida. Preferível no médio prazo o total oficial de time (57 no `match_team_stats`), alinhado ao padrão SoT do `DOS-002` C3. Superfície: mesma da [[W-082]]/[[W-083]]/[[W-084]] (`matchStatistics` + `StatRow`).
+
+**Notas:** **Assumi 🔥** (lote da aba). UI: 1 linha "Defesas"; opcional "dentro da área" se usar o atalho per-player. Gotcha: se houver troca de goleiro, a soma per-player é a certa; o type 57 de time deve ser o total do jogo. Família: [[W-082]]–[[W-084]] + esta — esta é a única do lote com possível perna `dados` curta.
+
+### W-086 · Cantos (escanteios) na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **cantos / escanteios** dos dois times — volume de corners casa×fora no jogo.
+
+**Por quê:** corners é mercado próprio (over/under de escanteios) e proxy de pressão no terço final; a aba sem cantos fica incompleta pro apostador que olha o dossiê do jogo. Paridade básica com sites de stats.
+
+**Depende de / esbarra em:** **zero ingestão nova — já está em `match_team_stats.corners`** (SportMonks type 34, `DOS-002`). Mesmo buraco de superfície da [[W-082]]–[[W-085]]: endpoint/UI só expõem posse. **≠ `SIN-013` / `MOD-005`** (sinal/mercado de escanteios no *prognóstico*) — aqui é só exibir o total do jogo na aba; aquelas features usam o mesmo dado pra edge/previsão.
+
+**Notas:** **Assumi 🔥** (lote da aba). Uma `StatRow` "Cantos" / "Escanteios". Família natural pro mesmo PR: [[W-082]] SoT · [[W-083]] passes · [[W-084]] big chances · [[W-085]] defesas · esta.
+
+### W-087 · Faltas na aba Estatísticas da partida · 🔥 · esforço P · `dados` `api` `ui`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-022>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **faltas cometidas** dos dois times — volume de fouls casa×fora no jogo (insumo clássico de cartões e jogo truncado).
+
+**Por quê:** faltas leem dureza/interrupção do jogo e alimentam mercados de cartões; sem elas a aba não fecha o bloco físico. Paridade com SofaScore/FotMob.
+
+**Depende de / esbarra em:** **no nível TIME, type 56 Fouls ainda NÃO está em `match_team_stats`** (inventário ❌ — quick win junto com saves(57)/offsides(51): já vem no include `statistics`, só falta coluna + `TEAM_STAT`). **Não confundir com `freeKicks` (type 55)** — essa coluna *já existe* no `match_team_stats` e é **faltas a favor / cobranças concedidas**, não faltas cometidas. **Atalho sem migração:** somar `lineup_player.fouls` (type 56, LIG-003 `dados:feito`) por time na partida; opcional `foulsDrawn` (96) como "faltas sofridas". Superfície: mesma da [[W-082]]–[[W-086]].
+
+**Notas:** promovido via `/pl` → `LIG-022` (dossiê completo: coluna `match_team_stats.fouls` type 56 + sync `TEAM_STAT` + API + `StatRow` "Faltas"). Dono (2026-07-23) rejeitou atalho `SUM(lineup_player.fouls)` como caminho principal. `foulsDrawn`/96 e saves(W-085) ficaram fora. ≠ `freeKicks`/55.
+
+### W-091 · Remates bloqueados na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **remates / chutes bloqueados** dos dois times — quantos chutes de cada lado a defesa adversária cortou.
+
+**Por quê:** fecha o breakdown de finalização (total = SoT + fora + bloqueados) e lê pressão que *quase* virou chute a gol; útil pra over/under e pra entender por que um time atirou muito sem SoT. Paridade com SofaScore/FotMob.
+
+**Depende de / esbarra em:** **zero ingestão nova — `match_team_stats.shotsBlocked`** (SportMonks type 58, `DOS-002`). Mesmo buraco de superfície da [[W-082]]: endpoint/UI só expõem posse. **Não confundir com `lineup_player.blockedShots` (type 97)** — esse é o lado *defensivo* por jogador ("chutes que ELE bloqueou"); no nível time a coluna oficial é `shotsBlocked` = chutes *do time* que a defesa rival bloqueou.
+
+**Notas:** **Assumi 🔥** (lote da aba). Uma `StatRow` "Remates bloqueados" / "Chutes bloqueados". Casa natural com [[W-082]] SoT (e chutes totais/fora se entrarem no mesmo PR). Família: [[W-082]]–[[W-091]]; cartões = [[W-089]]/[[W-090]] → `LIG-021`.
+
+### W-094 · Remates não enquadrados (pra fora) na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **remates não enquadrados / chutes pra fora** dos dois times — shots off target (não confundir com chute *fora da área*).
+
+**Por quê:** completa o breakdown de finalização (SoT + fora + bloqueados ≈ total) e mostra desperdício de volume; lê conversão junto com [[W-082]] SoT e [[W-091]] bloqueados. Paridade com SofaScore/FotMob.
+
+**Depende de / esbarra em:** **zero ingestão nova — `match_team_stats.shotsOffTarget`** (SportMonks type 41, `DOS-002`). Mesmo buraco de superfície da [[W-082]]. **≠ [[W-093]]** (fora da *área* = type 50 location); este é fora do *gol* (off target).
+
+**Notas:** **Assumi 🔥** (lote da aba). Rótulo UI claro: "Remates pra fora" / "Não enquadrados" — evitar "fora" sozinho (colide com W-093). Família: [[W-082]]–[[W-093]].
+
+### W-095 · Pontapés de baliza (tiros de meta) na aba Estatísticas da partida · 🔥 · esforço P · `dados` `api` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **pontapés de baliza / tiros de meta (goal kicks)** dos dois times — volume de recomeços pela baliza.
+
+**Por quê:** tiro de meta é proxy clássico de **pressão sofrida** (time que tira muito da baliza = vive no próprio terço) e conversa com under/over e com o bloco defensivo (cortes, defesas). Paridade com sites de stats.
+
+**Depende de / esbarra em:** **ainda NÃO ingerido no nível time** — inventário marca type **53 Goal Kicks** como ❌ em `match_team_stats` (quick win do inventário: já vem no include `statistics`, só falta coluna + `TEAM_STAT` + re-sync; custo zero de request). Não há coluna equivalente em `lineup_player` pra somar como atalho. Mesma família de ampliação `TEAM_STAT` que [[W-085]] (saves 57) e [[W-087]] (fouls 56).
+
+**Notas:** **Assumi 🔥** (lote da aba). Rótulo PT: "Pontapés de baliza" / "Tiros de meta". Empacotar a perna `dados` (53+56+57…) numa migração só. Família: [[W-082]]–[[W-094]].
+
+### W-079 · Pênalti perdido que teria virado vitória ou empate (contrafactual do placar) · 🔥 · esforço M · `dados` `ia` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** saber, no dossiê/prognóstico do próximo jogo, se algum jogador **errou um pênalti no jogo anterior (ou recentes)** cujo gol **teria mudado o resultado** — de derrota→empate ou empate→vitória (e o simétrico: empate→vitória se o time ficou 0 pontos a mais). Lê como "⚠️ X errou o pênalti aos 78' com 0-0; o time empatou e saiu com 1 pt em vez de 3". É um **evento objetivo + regra determinística de placar**, não mood.
+
+**Por quê:** pênalti perdido *cru* é frequente e muitas vezes irrelevante (já ganhando 3-0); o que puxa moral e narrativa de aposta é o **quase-ponto / quase-vitória**. Props do cobrador, postura do time e over/under do jogo seguinte ganham uma evidência mastigada ("perdeu 2 pts no pé dele"). Escape defensável do muro do `SIN-003`: fato + contrafactual do placar, sem score emocional.
+
+**Inspiração:** conversa 2026-07-23 sobre pipeline de contexto/narrativa do prognóstico ("o que puxa o jogador pra baixo").
+
+**Depende de / esbarra em:** **mesmo unlock de dado da [[W-045]]** — pênalti *perdido* ainda **não está ingerido** (hoje só `goal.type = "penalty"` = convertido; sync trata `goal`/`card`/`injury`, ver [[W-012]] / DOS-002). Precisa do event type SportMonks de miss (nos 90' e, se cobrir disputa, shootout). Com o evento + `goal`/`match` do placar final + minuto, o filtro "teria virado V ou E" é **código puro** (replay do placar as-of do minuto da cobrança +1). Superfície: evidência no `prognosis-prompt.ts` / super-prompt + possível flag na UI do jogador/partida. Irmã da família [[W-018]] (notícia→evidência tipada).
+
+**Notas:** **≠ [[W-045]]** — lá o gate é **mata-mata + eliminação** (trauma de copa); aqui o gate é **contrafactual de V/E em qualquer competição** (liga inclusa, bem mais frequente). Compartilham ingestão; o produto é outro. **Regra do contrafactual (rascunho):** no instante do miss, placar do time do cobrador era `(gf, gs)`; se `gf+1 > gs` → teria sido vitória; se `gf+1 == gs` → teria sido empate; se já `gf > gs` → miss "de folga", severidade baixa/ignorar. Cuidado com gols *depois* do miss (o time pode ter virado sem o pênalti — o flag é "na hora, mudaria", não "no fim das contas"). **Gotchas pro `/rs`:** (1) **miss ≠ saved ≠ woodwork** — SportMonks pode separar; confirmar type_ids; (2) **pênalti marcado e anulado/VAR** não é miss do cobrador; (3) **efeito bidirecional** igual W-045 (abate vs revanche) — flagar evidência, não cravar λ; (4) **janela** — default "último jogo do atleta" ou últimos 3–5; miss antigo dilui. **Assumi 🔥** pelo "quero saber" + encaixe direto no pipeline de evidência que estávamos desenhando — me fala se é ✨.
+
 ### W-002 · Histórico de clubes por season na página do jogador · 🔥 · esforço M · `dados` `ui`
 <adicionada: 2026-06-28 · status: ideia>
 
@@ -142,6 +254,43 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 **Notas:** veio da sessão 2026-07-03, na sequência da implementação do lote 1 + CoVe ("seria mto legal se o prognóstico fizesse uma leitura profunda de cada jogador"). O João detalhou o mecanismo na mesma sessão: **"tem q cruzar com o adversário, saber QUEM PEGA QUEM — se tem um lateral que tá fraco e um extremo que tá forte, o extremo pode jogar muito"** — ou seja, o output não é o perfil de cada um, é o DUELO resolvido: pra cada canal (e pro miolo zagueiro×centroavante), parear o jogador de A com o marcador direto de B via `role`/grid, cruzar forma ATUAL dos dois (nota últ.5 ↑/↓, dribles × driblado, aéreo × aéreo, erros→chute do defensor) e emitir a conclusão pronta ("extremo em alta × lateral em queda = canal quente; o gol/assistência tende a nascer ali"). Fraco×forte é o sinal; forte×forte anula; a vaga aberta por desfalque re-pareia o duelo. Fatiamento natural: (a) matchup por canal computado no `evidence-crossings.ts` e injetado no super; (b) leitura tática por jogador como campo de saída; (c) portar o resumo pro prompt vivo. **Assumi 🔥** pelo "poderia ajudar bastante" + família do prognóstico vindo 🔥 — me fala se prefere ✨.
 
 ## ✨ Seria legal
+
+### W-081 · O que a rapaziada dos grupos de Facebook está apostando (e o que os comentários dizem) · ✨ · esforço G · `dados` `ia`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** entrar nos **grupos de aposta do Facebook** (a "rapaziada" — tipsters amadores, bilhete do dia, grupos de over/under/cartões) e, pra um jogo concreto, **entender no que a galera está entrando** (mercado, seleção, linha, odd citada) e **ler os comentários** da postagem pra sintetizar discordância, confirmação ou rumor ("todo mundo no under", "comentário falando que o goleiro tá lesionado"). É inteligência de **consenso de grupo**, não de perfil individual.
+
+**Por quê:** no BR o habitat nativo de tip amador ainda é muito Facebook (grupo fechado/público) — diferente do X, onde tipster costuma ser conta pessoal. O consenso da rapaziada é outra partição de informação fora do SportMonks (mesmo argumento da [[W-061]]/[[W-080]]): se o grupo inteiro tá no over e nosso `best_bet` no under, isso é evidência de divergência pra auditar — não pra copiar. Alimenta o posicionamento anti-afiliado: mostrar **o que o ruído está dizendo**, com fonte, sem virar o afiliado.
+
+**Inspiração:** pedido do João em 2026-07-23 — *"entender o que a rapaziada dos grupos do facebook está apostando, ler comentários também"*, na sequência da [[W-080]].
+
+**Depende de / esbarra em:** **irmã da [[W-080]]**, fronteira explícita:
+- [[W-080]] = **perfis** de tipster (handle conhecido, X/FB)
+- [[W-061]] = **busca aberta** por hashtag (autor desconhecido, multi-plataforma)
+- **W-081 = grupos do Facebook** (comunidade, posts + thread)
+
+Herda em triplo o muro Meta: grupos costumam ser **fechados**, a Graph API quase não entrega feed de grupo pra apps de terceiros, e scraping viola ToS — viabilidade é a pergunta #1 do `/rs`, não detalhe. Mesmo muro do `SIN-003` nos comentários (síntese temática auditável, nunca score). Extração de pick reusa o schema de mercado da W-080 / prognóstico (`market`/`selection`/`line`). Cadastro = lista curada de **grupos** (id/URL + nome + foco de mercado), não de tipsters.
+
+**Notas:** **≠ W-080** de propósito — fundir as duas vira "ler Facebook" genérico e esconde que o mecanismo (perfil vs grupo), o ToS e o sinal (autoridade individual vs consenso de massa) são outros. Podem compartilhar o extrator de pick e o sintetizador de comentário. **Gotchas pro `/rs`:** (1) **acesso** — grupo fechado exige membership; automatizar entrada/leitura é o bloqueio real, pior que a W-080; (2) **ruído e golpe** — grupo de tip no FB é habitat clássico de afiliado/ROI inventado; sem filtro o consenso vira armadilha; (3) **agregar, não citar anônimo** — 1 comentário = zero; N posts no mesmo mercado = sinal de ambiente (mesmo reenquadre da W-061 perna 2); (4) **compliance** — vitrine "a rapaziada tá no over, entra junto" é exatamente o que `conformidade-jogo-responsavel.md` §6 proíbe; o defensável é divergência/consenso como **evidência do dossiê**, não CTA. **Assumi ✨** na mesma altura da W-080 — me fala se sobe ou se prefere fundir as duas.
+
+### W-080 · Ler dicas de tipsters/apostadores no X, Instagram e Facebook pra um jogo (e os comentários da thread) · ✨ · esforço G · `dados` `ia` `ui`
+<adicionada: 2026-07-23 · status: ideia · atualizada: 2026-07-23 (irmã [[W-081]] — grupos FB; Instagram somado às plataformas de perfil)>
+
+**O quê:** cadastrar e acompanhar **perfis de tipsters/apostadores** no Twitter/X, Instagram e Facebook — e, pra uma partida concreta, **extrair quais dicas** eles estão dando (mercado, seleção, linha, stake/confiança se houver) e **descer nos comentários** da thread/post pra sintetizar o que a audiência está falando daquela pick. Lê como "3 tipsters monitorados cravaram under 2.5 neste jogo; nos comentários, muita gente citando desfalque do 9". É inteligência de **oferta externa de tips**, não feed do clube nem busca aberta por hashtag.
+
+**Por quê:** tipster social é o *habitat* da Persona B (`docs/visao-geral.md`) e, do lado da demanda, o que o mercado já consome no X/IG/FB/Telegram. No BR o Instagram é canal forte de tipster (Stories com bilhete, Reels, carrossel de picks do dia) — deixar só X/FB furaria o habitat real. Pra nosso motor, dicas externas são uma das **poucas fontes genuinamente fora do banco SportMonks** — partição de informação (mesmo argumento metodológico da [[W-061]]): consenso/divergência entre tipsters monitorados vs nosso `best_bet` vira evidência auditável ("eles estão no over, nós no under — por quê?"). Também alimenta o posicionamento anti-afiliado: mostrar a tip **com fonte + histórico**, não hype.
+
+**Inspiração:** pedidos do João em 2026-07-23 — *"ver perfis de apostadores no twitter, facebook…"* e, na sequência, *"anota ai tambem para o instagram, seguir apostadores"*.
+
+**Depende de / esbarra em:** **quarto membro da família redes sociais**, com fronteira clara:
+- [[W-037]] = feed do **jogador**
+- [[W-038]] = feed **oficial do clube**
+- [[W-061]] = **busca aberta** por hashtag/termo da partida (autor desconhecido)
+- **W-080 = monitoramento de handles de tipster** (autor conhecido, conteúdo = *pick*)
+
+Herda os muros de ToS/custo de API (X pago; Instagram/Facebook Meta quase fechados pra leitura de terceiros — mesma família da [[W-076]]) e o muro do `SIN-003` nos comentários (síntese temática com exemplos+link, **nunca** score de sentimento). O cadastro de handles reusa o padrão `team.twitter_username` da `SIN-022` / [[W-076]], mas em entidade própria (`tipster`/`source` com plataforma + handle + tier; um tipster pode ter @ em mais de uma rede). Extração da dica casa com o pipeline notícia→evidência da [[W-018]] (fonte+data+severidade) e com o schema de mercado do prognóstico (`best_bet.market`/`selection`/`line`). **≠ [[W-067]]** — lá o mrtip *publica* pra tipster/grupo; aqui o mrtip *lê* tipsters de fora.
+
+**Notas:** **irmã [[W-081]]** (grupos do Facebook / consenso da rapaziada) — mesma família, unidade diferente; extrator de pick e sintetizador de comentário provavelmente compartilhados. **produto bifurca em duas leituras — não misturar no `/rs`:** (a) **insumo do prognóstico** (consenso/diverge vs nosso `best_bet`, injetado no dossiê); (b) **superfície pro usuário** (card "o que os tipsters estão dizendo" na partida). (a) paga sozinho; (b) tem guardrail de compliance (`conformidade-jogo-responsavel.md` §6 — não virar vitrine de "aposte porque fulano disse"). **Gotchas pro `/rs`:** (1) **extrair pick estruturado de texto solto** é o núcleo `ia` — "over 2.5 @1.85" vs "gosto do under hoje" vs print de bilhete; precisa schema fechado + confiança baixa quando ambíguo; (2) **curadoria do roster** — quem entra na lista? sem filtro vira afiliado de ROI inventado; provável seed manual + tier (verificado? histórico próprio?); (3) **janela pré-kickoff** — tip velha não vale; (4) comentário = ruído individual, sinal só por **tema agregado** (mesmo reenquadre da W-061 perna 2); (5) **ordem de ataque por plataforma** — **X primeiro** (texto, API paga mas legível); **Instagram** em seguida no valor de produto (habitat BR de tipster), mas Stories somem em 24h e Reels/print de bilhete exigem OCR/visão — mais caro que legenda de feed; **Facebook perfil** por último ou nunca (pior ROI Meta). **Assumi ✨** pelo tom de captura e por ser da família G das irmãs sociais — me fala se é 🔥.
 
 ### W-077 · Filtrar notícias por veículo (Globo, UOL, X, conta oficial do clube) — na aba da liga e na da partida · ✨ · esforço M · `dados` `api` `ui`
 <adicionada: 2026-07-21 · status: ideia>
@@ -297,16 +446,16 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Notas:** **fronteira com a família corrida:** [[W-028]] = peso do jogo AGORA (prospectivo); [[W-042]]/[[W-051]] = must-win/resignação prospectivos; **W-058 = o retrovisor** — o histórico de falhas em oportunidades de definição, que alimenta as outras como evidência de temperamento. **Gotchas pro `/rs`/`/pl`:** (1) definir "oportunidade" com rigor — clinch incondicional (vencer garante, independente dos rivais) vs clinch condicional (garante SE o rival tropeçar); o primeiro é honesto e barato, o segundo explode em combinatória; (2) "falhou" ≠ só derrota — a unidade é "resultado que garantia" vs "resultado obtido" (empate que crava conta como sucesso); (3) zonas/cutoffs por-competição ([[standings-desempate-pl-especifico]]); (4) amostra pequena: exibir a contagem com o contexto (n de oportunidades), nunca % solta. **Assumi ✨** pelo "seria interessante" — me fala se é 🔥.
 
-### W-053 · H2H treinador × treinador no prognóstico e na UI (assinatura tática que persiste entre clubes) · ✨ · esforço M · `ia` `api` `ui`
-<adicionada: 2026-07-01 · status: ideia>
+### W-053 · H2H treinador × treinador no prognóstico e na UI (assinatura tática que persiste entre clubes) · ✨ · esforço M · `ia` `api` `ui` `dados`
+<adicionada: 2026-07-01 · status: ideia · relembrada: 2026-07-23>
 
 **O quê:** histórico de **confronto direto entre os dois TÉCNICOS** (não entre os clubes) — quantas vezes o treinador A enfrentou o B, o retrospecto (V/E/D do ponto de vista de cada um), gols/over-under médio desses duelos e o padrão tático que costuma emergir (um "freguês" do outro, ou um par que sempre trava o jogo → under). Aparece nos **dois lugares**: como **evidência mastigada no `prognosis-prompt.ts`** (o modelo lê "o técnico X perdeu os últimos 3 contra o Y, jogos de média 1.7 gol → duelo tático que fecha") e como **bloco na UI da página da partida** (match-detail).
 
 **Por quê:** o técnico carrega uma **assinatura tática que persiste mesmo mudando de clube** — H2H de *clube* mistura elencos e comissões que já trocaram, enquanto H2H de *treinador* isola o duelo de ideias, que é mais estável no tempo. Alguns técnicos são pesadelo de outros (perde sempre, independente do time que dirige); certos pares produzem jogos travados (dois defensivos → under) ou abertos. É evidência auditável e conversa com a tese ([[projeto-aposta-precisa-de-evidencia]]): o over/under e o 1X2 ganham a narrativa do duelo de bancos.
 
-**Depende de / esbarra em:** **o substrato mínimo existe** — `lineup.coachId`/`coachName` (`apps/api/src/db/schemas/leagues.ts:233`) guarda o técnico de cada time em cada partida, então o confronto treinador×treinador sai de achar as partidas passadas onde os dois `coachId` se cruzaram (mesma tabela `coach`, `leagues.ts:210`). **Mas a cobertura é rala:** só **PL 25/26 + copas domésticas** ingeridas → dentro dessa janela dois técnicos específicos se enfrentaram pouquíssimas vezes (talvez 0-2 jogos) — um H2H de treinador **de verdade** (carreira inteira, multi-clube, multi-season) precisa de histórico multi-season, mesma barreira das [[W-002]] e cia. **1º passo do `/rs`:** confirmar se a SportMonks expõe histórico de coach cross-season (coach fixtures / coach career) ou se fica preso à janela ingerida. Perna `ia` é família [[W-034]]/[[W-035]] (enriquece o `prognosis-prompt.ts`); perna `ui` na página da partida, irmã da [[W-027]]/[[W-021]].
+**Depende de / esbarra em:** **schema existe, dado NÃO** — `lineup.coachId`/`coachName` (`apps/api/src/db/schemas/leagues.ts:233`) e tabela `coach` (`leagues.ts:210`) estão modelados, mas em 2026-07-23 a medição no banco é **`coach` = 0 linhas · `lineup.coach_id`/`coach_name` = 0/3072**. Sem ingestão de técnico por partida, o H2H treinador×treinador é **código morto**. Faceta `dados` virou pré-requisito duro (sync SportMonks do coach no fixture/lineup). Mesmo com ingestão, a janela atual (PL + BRA) só dá confrontos **dentro das seasons ingeridas** — H2H de carreira cross-club/multi-season precisa de histórico de coach (mesmo unlock das [[W-002]]). Irmã do **[[MOD-006]]** (H2H clube×clube, já no prompt via [[W-055]]); perna `ia` família [[W-034]]/[[W-035]]; perna `ui` irmã da [[W-027]]. **1º passo do `/rs`:** (a) qual include SportMonks preenche `coach` no lineup; (b) se há endpoint de career/fixtures do coach pra sair da janela ingerida.
 
-**Notas:** **distinção pra não duplicar:** H2H de **clubes** (que discutimos em conversa como fonte de edge estilístico, ainda **sem entrada** na wishlist) é OUTRA coisa — clube troca elenco/técnico; **W-053 = técnico × técnico**, o duelo de ideias isolado do elenco. Vale registrar o H2H de clube à parte se o João quiser. **Gotchas pro `/rs`/`/pl`:** (1) **amostra minúscula hoje** — com 1 season ingerida o H2H de treinador fica quase vazio; só vira evidência forte com histórico de carreira → provável exibir "sem confrontos suficientes" na maioria dos jogos até destravar multi-season; (2) o valor está justamente no **cross-club** (o técnico enfrentou o outro dirigindo outro time) — mas é exatamente isso que exige o histórico de carreira, não só a season atual; (3) **mando e recência pesam** — duelo de 6 anos atrás com outros elencos vale menos; (4) `note`/rótulos em PT, campos/enums em inglês (regra do schema do prognóstico). **Veio da sessão 2026-07-01** ("anota ai um h2h entre treinadores no prompt e na UI também"). **Assumi ✨** pelo tom ("pode ser interessante") — mas é da família prognóstico/narrativa que tem vindo 🔥; me fala se quer subir.
+**Notas:** **distinção load-bearing:** H2H de **clubes** = [[MOD-006]] / [[W-055]] (feito na `ia`); **W-053 = técnico × técnico**, o duelo de ideias isolado do elenco. **Atualização 2026-07-23:** pedido relembrado (`/wl h2h de treinador`) — não criou duplicata; nota de cobertura reescrita (antes dizia "substrato mínimo existe" e esquecia que o fill é zero). **Gotchas pro `/rs`/`/pl`:** (1) **gate de dado primeiro** — sem `coach_id` no lineup, zero produto; (2) amostra minúscula mesmo pós-ingestão na janela atual → UI/prompt precisam degradar honesto ("sem confrontos suficientes"); (3) valor real é **cross-club** (técnico A no clube X vs técnico B no clube Y) — exige career, não só a season; (4) mando e recência pesam — duelo antigo com outros elencos vale menos; (5) camada EXPLICAR — textura do duelo de bancos, não mover λ sem backtest. **Assumi ✨** na captura original — me fala se quer subir pra 🔥.
 
 ### W-052 · Autor do gol/assist na forma recente do prognóstico (quem está carregando o time) · ✨ · esforço P · `ia`
 <adicionada: 2026-07-01 · status: ideia>
@@ -374,7 +523,7 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 **Depende de / esbarra em:** **é o núcleo DURO e defensável do `SIN-003` (mood/estado emocional — *investigado*, P3, `docs/investigacoes/sinal-mood-jogador.md`)** — a investigação enterrou "mood via NLP/rede social/vídeo" como redundante/arriscado, mas ISTO escapa do muro por ser **evento objetivo**, não inferência de estado interno: o pênalti errado é fato, a eliminação é fato. **Dois unlocks de dado, nenhum trivial hoje:** (1) **pênalti perdido não está ingerido** — o sync só trata `goal`/`card`/`injury` (`apps/api/src/db/sync-sportmonks.ts`, ver [[W-012]]); errar a cobrança (nos 90min e, pior, na **disputa de pênaltis**) é outro tipo de evento no feed da fixture → precisa de ramo novo no sync; (2) **competição europeia não está ingerida** (só PL + copas domésticas FA Cup/Carabao, ver [[cup-ingestion-e-bracket]]) — o eixo "mata-mata europeu" hoje não tem substrato; o disponível é o **mata-mata de copa doméstica** (onde já há bracket/eliminação). A perna de `ia` (o respingo no próximo jogo) é da família de prognóstico ([[W-034]] postura, [[W-035]] MOTM), como evidência estruturada com `fonte`/`data`/`evento`, no molde da [[W-018]].
 
-**Notas:** **primo emocional da [[W-044]]** (fome de troféu na copa) — lá é o *desejo* coletivo do clube pela taça, aqui é o *trauma* individual da cobrança perdida; ambos são drama de mata-mata, um por-clube, outro por-pessoa. **Distinção pra não duplicar:** ≠ `SIN-003` genérico (mood difuso, descartado) — este é **1 evento-gatilho concreto**, o pedaço que sobrevive à investigação. **Gotchas pro `/rs`:** (1) **efeito bidirecional** — errar pode abater OU gerar revanche/superação; não cravar "errou = under", flagar a evidência e ler com cuidado (mesma disciplina da [[W-034]]: necessitado trava *ou* se atira); (2) **"próximo jogo" atravessa competição** — quem cai na copa volta pra liga; o carry é pra próxima partida do atleta, seja qual for o torneio; (3) **cobrança nos 90 x na disputa** — a SportMonks codifica os dois diferente (evento de partida vs penalty shootout); confirmar os event types; (4) **amostra rala hoje** — só PL + copas domésticas, sem Europa; pênalti-que-elimina é evento raro → começa como alerta pontual, não estatística. **Assumi ✨** pelo tom ("é legal anotar") — me fala se puxa pra 🔥 (a família de prognóstico/narrativa tem vindo 🔥).
+**Notas:** **primo emocional da [[W-044]]** (fome de troféu na copa) — lá é o *desejo* coletivo do clube pela taça, aqui é o *trauma* individual da cobrança perdida; ambos são drama de mata-mata, um por-clube, outro por-pessoa. **Distinção pra não duplicar:** ≠ `SIN-003` genérico (mood difuso, descartado) — este é **1 evento-gatilho concreto**, o pedaço que sobrevive à investigação. **≠ [[W-079]]** (adicionada 2026-07-23) — irmã do mesmo unlock de *pênalti perdido*, mas com gate de **contrafactual V/E** (liga inclusa), sem exigir eliminação. **Gotchas pro `/rs`:** (1) **efeito bidirecional** — errar pode abater OU gerar revanche/superação; não cravar "errou = under", flagar a evidência e ler com cuidado (mesma disciplina da [[W-034]]: necessitado trava *ou* se atira); (2) **"próximo jogo" atravessa competição** — quem cai na copa volta pra liga; o carry é pra próxima partida do atleta, seja qual for o torneio; (3) **cobrança nos 90 x na disputa** — a SportMonks codifica os dois diferente (evento de partida vs penalty shootout); confirmar os event types; (4) **amostra rala hoje** — só PL + copas domésticas, sem Europa; pênalti-que-elimina é evento raro → começa como alerta pontual, não estatística. **Assumi ✨** pelo tom ("é legal anotar") — me fala se puxa pra 🔥 (a família de prognóstico/narrativa tem vindo 🔥).
 
 ### W-046 · Força do adversário na leitura da forma (strength of schedule): 3 vitórias contra a parte de baixo ≠ contra o top-6 · ✨ · esforço M · `api` `ia` `ui`
 <adicionada: 2026-07-01 · status: ideia>
@@ -687,6 +836,19 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 
 ## 💤 Anotando
 
+### W-078 · Aniversário de título: o dia do jogo cai na mesma data (mês/dia) de uma conquista importante do clube · 💤 · esforço M · `dados` `ia` `ui`
+<adicionada: 2026-07-23 · status: ideia>
+
+**O quê:** detectar quando a **data do kickoff** (mês/dia, ignorando o ano) coincide com a data em que o clube **levantou um título importante** no passado — Brasileirão, Libertadores, Premier League, FA Cup, etc. Lê como "⚠️ 7/dez: aniversário do título brasileiro de 1979 do Internacional" / "esta rodada cai no dia em que o clube ergueu a Champions X anos atrás". Serve de **contexto de ambiente/identidade** na partida (UI + dossiê/prompt), não de motor de λ.
+
+**Por quê:** datas simbólicas de conquista são o tipo de efeméride que a imprensa e a torcida citam — textura de clube que o app hoje não tem. É parente da família "fora do jogo" (homenagem, aniversário, rivalidade) levantada na sessão do grafo, mas com âncora **objetiva** (honours com data), não subjetiva como "ídolo".
+
+**Inspiração:** pedido do João em 2026-07-23 — *"o dia atual pode ser a mesma data de um título importante anteriormente"*.
+
+**Depende de / esbarra em:** **mesmo unlock duro da [[W-044]]** — histórico de conquistas (**honours**) com **data da final/decisão**, que **não existe no schema**. Sem roll de troféus datados, a feature não computa. Distinto de: [[SIN-005]] (aniversário do *jogador* — descartado como sinal); [[W-075]] (presença de ídolo / aniversário do *clube* como instituição); [[W-044]] (fome de troféu *ainda não ganho* / jejum — motivação prospectiva na copa). Aqui o eixo é **efeméride de conquista já realizada** (calendário retrospectivo).
+
+**Notas:** **herda o ceticismo do SIN-005:** "aniversário é folclore" — não vender como ESTIMAR/edge de over-under ou 1X2. Valor honesto = (a) chip/contexto na UI da partida e (b) uma linha no dossiê/prompt como textura, se um dia a camada narrativa quiser. **Gotchas pro `/rs`:** (1) honours precisa de **data completa** (não só ano) — muitas fontes só têm season/ano → sem mês/dia o match calendar falha; (2) o que conta como "título importante"? (só 1ª divisão / continental, ou estadual também?); (3) coincidência é frequente em calendário de 365 dias × N títulos × 20 clubes — sem filtro de magnitude vira spam; (4) ano do título no rótulo é obrigatório ("50 anos do título de 1975"), senão a efeméride fica vazia. **Assumi 💤** pelo tom de captura + sinal-pai descartado — me fala se sobe pra ✨ (UI) ou 🔥.
+
 ### W-074 · Cadastro de ídolos por clube: quem são as lendas de cada time (+ redes sociais do ídolo) · 💤 · esforço M · `dados` `ui`
 <adicionada: 2026-07-21 · status: ideia · atualizada: 2026-07-21 (redes sociais do ídolo somadas ao escopo — ver §Redes do ídolo)>
 
@@ -760,6 +922,41 @@ Caderno de ideias **antes** de virarem feature rastreada. É o inbox cru: jogue 
 ---
 
 ## 🗄️ Arquivadas (promovidas ou descartadas)
+
+### W-088 · Cortes (clearances) na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui` `dados`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-023>
+
+**O quê:** cortes/afastamentos (clearances, type 101) na aba Estatísticas — coluna oficial em `match_team_stats` + superfície api/ui.
+
+**Notas:** promovido via `/pl` → `LIG-023` (LIG-021 já era cartões W-089/W-090; LIG-022 faltas W-087). Dono corrigiu o MVP da wishlist (só soma per-player) para **também** persistir coluna em `match_team_stats`; type 101 não vem no `statistics` de time → sync deriva `SUM(lineup_player.clearances)`. Label UI: "Cortes" ≠ desarmes (78) ≠ interceptações (100).
+
+### W-090 · Cartões vermelhos na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-021>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **cartões vermelhos** dos dois times — expulsões casa×fora (direto + segundo amarelo).
+
+**Notas:** promovido via `/pl` junto com [[W-089]] → `LIG-021` (plano-mini: agregar `card` em `yellowCards`/`redCards` no `GET /statistics` + 2 `StatRow`; `yellowred` conta nas duas linhas).
+
+### W-089 · Cartões amarelos na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-021>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **cartões amarelos** dos dois times — yellows casa×fora no jogo.
+
+**Notas:** promovido via `/pl` junto com [[W-090]] → `LIG-021` (mesma query; gotcha `yellowred` = amarelo + vermelho).
+
+### W-093 · Remates fora da área na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-020>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **remates / chutes fora da área** dos dois times — volume de finalização de longe (shots outside box).
+
+**Notas:** promovido via `/pl` como plano-mini (`LIG-020`). Par [[W-092]] → `LIG-019`; ≠ [[W-094]] (`shotsOffTarget`). Dado já em `match_team_stats.shotsOutsidebox` (type 50, DOS-002). ID LIG-020 porque LIG-019 foi tomado em paralelo pela W-092.
+
+### W-092 · Remates dentro da área na aba Estatísticas da partida · 🔥 · esforço P · `api` `ui`
+<adicionada: 2026-07-23 · status: promovido · promovido: 2026-07-23 → LIG-019>
+
+**O quê:** na aba **Estatísticas** do `match-detail`, mostrar **remates / chutes dentro da área** dos dois times — volume de finalização de perto (shots inside box).
+
+**Notas:** promovido para `LIG-019` (plano-mini: expor `match_team_stats.shotsInsidebox` no `GET /statistics` + `StatRow` "Chutes na área"). Par = LIG-020 (W-093).
 
 ### W-003 · Jogos disputados por season na página do jogador · 🔥 · esforço M · `dados` `ui`
 <adicionada: 2026-06-28 · status: promovido · promovido: 2026-07-21 → LIG-001 P10>

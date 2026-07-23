@@ -5,305 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Ferramentas de análise, publicação e histórico verificável para tipsters."
+      content="Ferramentas e histórico verificável para tipsters no mrtip."
     />
     <title>Para tipsters — mr·tip</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="nav">
-      <div class="wrap nav-in">
-        <a class="brand" href="index.html" aria-label="mrtip, início"
-          >mr<span class="brand-dot"></span>tip</a
-        >
-        <nav class="nav-links" aria-label="Navegação principal">
-          <a href="produto.html">Produto</a><a href="alertas.html">Alertas</a
-          ><a href="auditoria.html">Auditoria</a>
-          <a class="active" aria-current="page" href="tipsters.html"
-            >Para tipsters</a
-          ><a href="precos.html">Planos</a>
-        </nav>
-        <div class="nav-actions">
-          <a class="nav-login" href="precos.html">Entrar</a
-          ><a class="btn btn-primary btn-small" href="precos.html"
-            >Pedir acesso</a
-          >
-        </div>
-        <button
-          class="menu-toggle"
-          aria-label="Abrir menu"
-          aria-expanded="false"
-        >
-          <span></span>
-        </button>
-      </div>
-    </header>
+  <body data-page="tipsters">
+    <header data-chrome-nav></header>
 
     <main>
       <section class="page-hero">
         <div class="wrap page-hero-grid">
           <div data-reveal>
-            <span class="eyebrow">Ferramentas para tipsters</span>
+            <span class="eyebrow">Lado da oferta · fase 2</span>
             <h1>Seu método vira reputação.</h1>
-            <p>
+            <p class="lead">
               Produza análises com apoio de IA, publique com o preço congelado e
               construa um histórico que não depende de print ou promessa.
             </p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#fluxo-tipster"
+              <a class="btn btn-primary" href="#fluxo"
                 >Ver o fluxo <span class="arrow">↓</span></a
               >
               <a class="btn btn-secondary" href="precos.html"
-                >Entrar na lista de criadores</a
+                >Lista de criadores</a
               >
             </div>
           </div>
-          <div class="profile-card" data-reveal>
+          <div class="glass profile-card" data-reveal data-reveal-delay="2">
             <div class="profile-cover"></div>
-            <div class="profile-head">
-              <span class="avatar">AR</span>
-              <div class="profile-name">
-                <strong>Ana Ribeiro</strong
-                ><span>@anaribeiro · cartões & série a</span>
-              </div>
-              <span class="tag green">histórico verificado</span>
-            </div>
-            <div class="profile-stats">
-              <div class="profile-stat">
-                <strong>+2,4%</strong><span>CLV médio</span>
-              </div>
-              <div class="profile-stat">
-                <strong>5,8%</strong><span>yield 12m</span>
-              </div>
-              <div class="profile-stat">
-                <strong>312</strong><span>picks</span>
-              </div>
-              <div class="profile-stat">
-                <strong>4,1%</strong><span>drawdown</span>
-              </div>
-            </div>
-            <div class="profile-picks">
-              <div class="profile-pick">
-                <div>
-                  Palmeiras × Corinthians<br /><span
-                    >Over 4,5 cartões · 1,70</span
-                  >
+            <div class="profile-body">
+              <div class="profile-head">
+                <span class="avatar">AR</span>
+                <div class="profile-name" style="flex: 1">
+                  <strong>Ana Ribeiro</strong>
+                  <span>@anaribeiro · cartões &amp; série a</span>
                 </div>
-                <b class="good">GREEN</b>
+                <span class="tag green">verificado</span>
               </div>
-              <div class="profile-pick">
-                <div>
-                  Bahia × Fluminense<br /><span
-                    >Bahia +4,5 escanteios · 1,86</span
-                  >
+              <div class="profile-stats">
+                <div class="profile-stat">
+                  <strong style="color: var(--green)">+2,4%</strong>
+                  <span>CLV 12m</span>
                 </div>
-                <b class="bad">RED</b>
-              </div>
-              <div class="profile-pick">
-                <div>
-                  Cruzeiro × Vasco<br /><span>Over 10,5 escanteios · 1,92</span>
+                <div class="profile-stat">
+                  <strong>5,8%</strong>
+                  <span>yield</span>
                 </div>
-                <b class="bad">RED</b>
+                <div class="profile-stat">
+                  <strong>312</strong>
+                  <span>picks</span>
+                </div>
               </div>
-            </div>
-            <div class="audit-strip">
-              <span class="hash">perfil: 82af...19e3</span
-              ><span class="locked">sem picks apagados</span>
+              <div class="mini-chart" data-mini-chart aria-hidden="true"></div>
+              <div class="timeline">
+                <div class="timeline-item win">
+                  <div class="rail"><i></i></div>
+                  <div>
+                    <h4>Over 4.5 cartões · PAL × COR</h4>
+                    <p>odd 1,70 · gravado 15:42 · CLV +2,1%</p>
+                  </div>
+                </div>
+                <div class="timeline-item loss">
+                  <div class="rail"><i></i></div>
+                  <div>
+                    <h4>Team total BAH under</h4>
+                    <p>odd 1,95 · perda registrada · CLV −0,8%</p>
+                  </div>
+                </div>
+                <div class="timeline-item win">
+                  <div class="rail"><i></i></div>
+                  <div>
+                    <h4>Escanteios over · FLA × GRE</h4>
+                    <p>odd 1,88 · análise com dossiê anexado</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="fluxo-tipster">
+      <section class="section" id="fluxo">
         <div class="wrap">
           <div class="section-head center" data-reveal>
-            <span class="eyebrow">Da pesquisa à prova</span>
-            <h2 style="margin-top: 20px">
-              A IA acelera o trabalho. Você assina a decisão.
-            </h2>
-            <p>
-              O mrtip organiza as evidências, mas nunca publica sozinho nem
-              esconde o risco.
-            </p>
+            <span class="eyebrow">Fluxo do tipster</span>
+            <h2 style="margin-top: 16px">Da análise ao histórico público.</h2>
           </div>
-          <div class="tipster-flow">
-            <article class="flow-card" data-reveal>
-              <span class="tag blue">01 · analisar</span>
-              <h3>Abra o dossiê.</h3>
-              <p>
-                Dados, sinais e perguntas adversariais já chegam organizados
-                para você validar.
-              </p>
-            </article>
-            <article class="flow-card" data-reveal>
-              <span class="tag blue">02 · escrever</span>
-              <h3>Edite o rascunho.</h3>
-              <p>
-                A IA sugere estrutura, fontes e contrapontos. A leitura final
-                continua sendo sua.
-              </p>
-            </article>
-            <article class="flow-card" data-reveal>
-              <span class="tag green">03 · gravar</span>
-              <h3>Publique sem volta silenciosa.</h3>
-              <p>
-                Odd, probabilidade, horário e texto recebem hash antes de o jogo
-                começar.
-              </p>
-            </article>
+          <div class="steps" style="max-width: 640px; margin: 0 auto">
+            <div class="step" data-reveal>
+              <span class="step-num">1</span>
+              <div>
+                <h3>Gere com o dossiê</h3>
+                <p>
+                  Use o mesmo motor do apostador — aceleração, não caixa-preta.
+                </p>
+              </div>
+            </div>
+            <div class="step" data-reveal data-reveal-delay="1">
+              <span class="step-num">2</span>
+              <div>
+                <h3>Publique com carimbo</h3>
+                <p>Odd e horário congelados. Sem edição pós-jogo.</p>
+              </div>
+            </div>
+            <div class="step" data-reveal data-reveal-delay="2">
+              <span class="step-num">3</span>
+              <div>
+                <h3>Prove no perfil</h3>
+                <p>
+                  CLV, yield e amostra abertos. Perda incluída — reputação de
+                  verdade.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="section alt">
         <div class="wrap">
-          <div class="section-head" data-reveal>
+          <div class="manifesto" data-reveal>
             <div>
-              <span class="eyebrow">Mesa de publicação</span>
-              <h2 style="margin-top: 20px">
-                Mais tempo pensando. Menos tempo montando post.
-              </h2>
-            </div>
-            <p>
-              O rascunho nasce das evidências selecionadas e já carrega o
-              cenário contrário à sua tese.
-            </p>
-          </div>
-          <div class="creator-tools">
-            <div class="draft-card" data-reveal>
-              <div class="window-bar" style="margin: -25px -25px 24px">
-                rascunho · análise pré-jogo
-                <span class="window-status">fontes ligadas</span>
-              </div>
-              <span class="tag blue">cartões · série a</span>
-              <h3 style="margin-top: 18px; font-size: 20px">
-                Palmeiras × Corinthians · mais de 4,5 cartões
-              </h3>
-              <div class="draft-line" style="margin-top: 24px"></div>
-              <div class="draft-line"></div>
-              <div class="draft-line short"></div>
-              <div class="draft-evidence">
-                <span>árbitro<br />6,2/j</span><span>odd<br />1,70</span
-                ><span>risco<br />linha cai</span>
-              </div>
-              <div class="draft-line" style="margin-top: 23px"></div>
-              <div class="draft-line short"></div>
-            </div>
-            <div class="publish-card" data-reveal>
-              <span class="tag green">pronto para revisão</span>
-              <h3>Antes de publicar, ataque sua própria tese.</h3>
+              <span class="eyebrow">Marketplace · fase 3</span>
+              <h2>Monetize com prova, não com hype.</h2>
               <p>
-                A verificação adversarial pergunta o que derruba a leitura,
-                quais fontes faltam e onde a amostra é fraca.
+                No longo prazo, tipsters podem monetizar canais na plataforma —
+                com a mesma auditoria que o apostador já vê.
               </p>
-              <div class="proof-list">
-                <div class="proof-item">
-                  <i>?</i><span>O árbitro muda o padrão em clássicos?</span>
-                </div>
-                <div class="proof-item">
-                  <i>?</i><span>A linha já absorveu a escalação?</span>
-                </div>
-                <div class="proof-item">
-                  <i>?</i><span>Qual preço torna o EV negativo?</span>
-                </div>
-              </div>
-              <a
-                class="btn btn-primary"
-                style="margin-top: 24px"
-                href="auditoria.html"
-                >Revisar e gravar</a
+            </div>
+            <div class="manifesto-aside">
+              <strong>Roadmap</strong>
+              <span
+                >Ferramentas de tipster na fase 2; monetização na fase 3. Este
+                mock mostra a direção.</span
               >
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="wrap">
-          <div class="section-head" data-reveal>
-            <div>
-              <span class="eyebrow">Perfil público</span>
-              <h2 style="margin-top: 20px">Sem “confia em mim”.</h2>
-            </div>
-            <p>
-              Seguidores veem desempenho por mercado, período e faixa de odd,
-              sempre com amostra e perdas incluídas.
-            </p>
-          </div>
-          <div class="audit-principles">
-            <article class="principle" data-reveal>
-              <h3>Proofing automático</h3>
-              <p>
-                O resultado é resolvido a partir do evento oficial. O tipster
-                não escolhe o que virou green.
-              </p>
-            </article>
-            <article class="principle" data-reveal>
-              <h3>CLV por especialidade</h3>
-              <p>
-                Separe cartões, escanteios e team totals para descobrir onde o
-                processo realmente encontra preço.
-              </p>
-            </article>
-            <article class="principle" data-reveal>
-              <h3>Reputação sem maquiagem</h3>
-              <p>
-                Períodos negativos e drawdown ficam tão visíveis quanto yield e
-                taxa de acerto.
-              </p>
-            </article>
-            <article class="principle" data-reveal>
-              <h3>Canal futuro</h3>
-              <p>
-                Assinatura e feed entram depois da prova. A monetização cresce
-                sobre histórico, não sobre promessa.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section alt">
-        <div class="wrap manifesto" data-reveal>
-          <div class="manifesto-copy">
-            <span class="eyebrow">Rede em duas fases</span>
-            <h2>Primeiro prove. Depois monetize.</h2>
-            <p>
-              Marketplace sem proofing vira vitrine de marketing. O mrtip
-              inverte a ordem: histórico confiável primeiro, assinatura de canal
-              depois.
-            </p>
-          </div>
-          <div class="no-value">
-            <div class="no-value-card">
-              <div class="status-line">Critério de elegibilidade</div>
-              <h3>Perfil ainda sem amostra suficiente.</h3>
-              <p>
-                Faltam 28 picks resolvidos para liberar comparações públicas por
-                mercado.
-              </p>
-              <div class="checked">
-                <span class="tag">72 / 100 picks</span
-                ><span class="tag">mínimo 90 dias</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta-section">
+      <section class="cta-band">
         <div class="wrap">
           <div class="cta-box" data-reveal>
-            <div>
-              <span class="eyebrow">Programa de criadores</span>
-              <h2 style="margin-top: 20px">
-                Construa um histórico que fala antes de você.
-              </h2>
-              <p>Cadastre-se para testar o fluxo de publicação e proofing.</p>
-            </div>
-            <div class="cta-actions">
+            <h2>Quer construir reputação auditável?</h2>
+            <p>Entre na lista de criadores. +18 · sem promessa de renda.</p>
+            <div class="hero-actions">
               <a class="btn btn-primary" href="precos.html"
-                >Entrar na lista <span class="arrow">→</span></a
+                >Lista de criadores <span class="arrow">→</span></a
+              >
+              <a class="btn btn-secondary" href="auditoria.html"
+                >Ver auditoria</a
               >
             </div>
           </div>
@@ -311,47 +163,8 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="wrap">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <a class="brand" href="index.html"
-              >mr<span class="brand-dot"></span>tip</a
-            >
-            <p>
-              Probabilidades explicadas, decisões auditáveis e jogo responsável
-              desde o primeiro pixel.
-            </p>
-          </div>
-          <div class="footer-links">
-            <div class="footer-col">
-              <strong>Produto</strong><a href="produto.html">Visão geral</a
-              ><a href="alertas.html">Alertas</a
-              ><a href="auditoria.html">Auditoria</a>
-            </div>
-            <div class="footer-col">
-              <strong>Públicos</strong><a href="produto.html">Apostadores</a
-              ><a href="tipsters.html">Tipsters</a
-              ><a href="precos.html">Planos</a>
-            </div>
-            <div class="footer-col">
-              <strong>Princípios</strong
-              ><a href="auditoria.html">Transparência</a
-              ><a href="auditoria.html">Metodologia</a
-              ><a href="precos.html#responsavel">Jogo responsável</a>
-            </div>
-            <div class="footer-col">
-              <strong>Legal</strong><a href="#">Privacidade</a
-              ><a href="#">Termos</a><a href="#">Contato</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <span>© 2026 mrtip · mock conceitual</span
-          ><span>+18 · jogue com responsabilidade · aposta envolve risco</span>
-        </div>
-      </div>
-    </footer>
+    <footer data-chrome-footer></footer>
+    <script src="chrome.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

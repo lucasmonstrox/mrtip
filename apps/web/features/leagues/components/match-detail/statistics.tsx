@@ -62,14 +62,23 @@ function Legend({ home, away }: { home: TeamRef; away: TeamRef }) {
   )
 }
 
-// Aba "Estatísticas" da página de partida: dados da partida por time vindos de match_team_stats
-// (fixture statistics da SportMonks). Por ora só a posse de bola (%); a estrutura de linhas comporta
-// mais métricas depois. Esconde-se quando a partida não tem nenhuma estatística registrada.
+// Aba "Estatísticas" da página de partida: dados da partida por time — posse + chutes na área +
+// remates fora + cortes/clearances (match_team_stats, LIG-023) e cartões amarelos/vermelhos
+// (tabela card, LIG-021). Esconde-se quando a partida não tem nenhuma estatística de match_team_stats
+// (cartões 0/0 sozinhos não abrem).
 export function Statistics({ id, home, away }: { id: string; home: TeamRef; away: TeamRef }) {
   const { data, isPending } = useMatchStatisticsQuery(id)
   if (isPending) return <p className="text-sm text-muted-foreground">Carregando estatísticas…</p>
   if (!data) return null
-  const hasStats = data.home.possession != null || data.away.possession != null
+  // Don't OR yellowCards/redCards != null — always number (COUNT default 0) and would open NS.
+  // Optional defensive: cards alone can open if match_team_stats missing (today cards_no_stats=0).
+  const hasStats =
+    data.home.possession != null || data.away.possession != null ||
+    data.home.shotsInsidebox != null || data.away.shotsInsidebox != null ||
+    data.home.shotsOutsidebox != null || data.away.shotsOutsidebox != null ||
+    data.home.clearances != null || data.away.clearances != null ||
+    data.home.yellowCards + data.home.redCards > 0 ||
+    data.away.yellowCards + data.away.redCards > 0
   return (
     <Card>
       <CardHeader>
@@ -84,6 +93,31 @@ export function Statistics({ id, home, away }: { id: string; home: TeamRef; away
               home={data.home.possession}
               away={data.away.possession}
               suffix="%"
+            />
+            <StatRow
+              label="Chutes na área"
+              home={data.home.shotsInsidebox}
+              away={data.away.shotsInsidebox}
+            />
+            <StatRow
+              label="Remates fora da área"
+              home={data.home.shotsOutsidebox}
+              away={data.away.shotsOutsidebox}
+            />
+            <StatRow
+              label="Cortes"
+              home={data.home.clearances}
+              away={data.away.clearances}
+            />
+            <StatRow
+              label="Cartões amarelos"
+              home={data.home.yellowCards}
+              away={data.away.yellowCards}
+            />
+            <StatRow
+              label="Cartões vermelhos"
+              home={data.home.redCards}
+              away={data.away.redCards}
             />
           </>
         ) : (

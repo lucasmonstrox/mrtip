@@ -54,7 +54,7 @@ export function UserMenu() {
               <ChevronsUpDownIcon className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="top" align="start" className="w-56">
+          <DropdownMenuContent side="right" align="end" className="w-56">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col">
                 <span className="font-medium">{nome}</span>
@@ -68,7 +68,11 @@ export function UserMenu() {
               <UserIcon />
               Conta
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => void signOut({ redirectUrl: "/sign-in" })}>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              variant="destructive"
+              onSelect={() => void signOut({ redirectUrl: "/sign-in" })}
+            >
               <LogOutIcon />
               Sair
             </DropdownMenuItem>

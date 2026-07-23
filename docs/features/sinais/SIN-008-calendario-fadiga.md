@@ -10,7 +10,7 @@ facetas:
 testada: nao
 testes: []
 depende_de: []
-impacta: [DOS-001, MOD-001]
+impacta: [DOS-001, MOD-001, SIN-023] # SIN-023 (km geográfico) herda as travas anti-dupla-contagem desta regra
 ancoras:
   settings: []
   tabelas: [estadios]

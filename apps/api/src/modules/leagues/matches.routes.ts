@@ -10,6 +10,7 @@ import { matchInjuries } from "./get-injuries/get-injuries.service"
 import { matchLineup } from "./get-lineup/get-lineup.service"
 import { getMatch } from "./get-match/get-match.service"
 import { matchMomentum } from "./get-match-momentum/get-match-momentum.service"
+import { matchNews } from "./get-match-news/get-match-news.service"
 import { getPrognosis } from "./get-prognosis/get-prognosis.service"
 import { prognosisAuditQuery } from "./get-prognosis-audit/get-prognosis-audit.schema"
 import { getPrognosisAudit } from "./get-prognosis-audit/get-prognosis-audit.service"
@@ -63,7 +64,10 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   })
   .get("/:id/statistics", ({ params }) => matchStatistics(params.id), {
     params: paramId,
-    detail: { summary: "Team-level match statistics of both teams (ball possession today; more to come)" },
+    detail: {
+      summary:
+        "Team-level match statistics of both teams (ball possession, shots inside/outside box, clearances, yellow/red cards)",
+    },
   })
   .get("/:id/momentum", ({ params }) => matchMomentum(params.id), {
     params: paramId,
@@ -81,4 +85,10 @@ export const matchesRoutes = new Elysia({ prefix: "/v1/matches" })
   .get("/:id/commentaries", ({ params }) => matchCommentaries(params.id), {
     params: paramId,
     detail: { summary: "Full play-by-play commentary of the match, chronological (empty when none)" },
+  })
+  .get("/:id/news", ({ params }) => matchNews(params.id), {
+    params: paramId,
+    detail: {
+      summary: "News articles linked to the match (canonical URL + normalized provider); empty when none",
+    },
   })

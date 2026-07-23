@@ -16,7 +16,7 @@ testes:
   - "P4 E2E Chrome — aba Fatos render OK em 2 venues (Stadium of Light/Sunderland/48.707; Anfield/Liverpool/61.276), foto R2 carrega, sem lat/long, console limpo (2026-06-29)"
   - "typecheck 3/3 + lint match-detail 0 erros (2026-06-29)"
 depende_de: []
-impacta: [SIN-006, SIN-007, SIN-008, SIN-016] # consomem a tabela de estádio/coordenadas
+impacta: [SIN-006, SIN-007, SIN-008, SIN-016, SIN-023] # consomem a tabela de estádio/coordenadas
 ancoras:
   settings: []
   tabelas: [venue, match] # cria venue (= âncora "estadios" do INDEX, em inglês); FK em match

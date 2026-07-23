@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Assistente conversacional do mrtip — pergunta em português, recebe evidência."
+    />
+    <title>Assistente — mr·tip</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="assistente">
+    <header data-chrome-nav></header>
+
+    <main>
+      <section class="page-hero">
+        <div class="wrap page-hero-grid">
+          <div data-reveal>
+            <span class="eyebrow">A cara do produto</span>
+            <h1>Pergunte. Receba o porquê.</h1>
+            <p class="lead">
+              O assistente é a porta de entrada: lê o dossiê, compara o mercado e
+              responde com probabilidade, risco e fontes — sem inventar o
+              número.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#demo"
+                >Ver a conversa <span class="arrow">↓</span></a
+              >
+              <a class="btn btn-secondary" href="produto.html">Ver o dossiê</a>
+            </div>
+          </div>
+          <div class="glass" data-reveal data-reveal-delay="2" id="demo">
+            <div class="window-bar">
+              <span class="window-dots"><i></i><i></i><i></i></span>
+              assistente · série a
+              <span class="window-status">online</span>
+            </div>
+            <div class="chat-demo" data-chat-demo>
+              <div class="chat-msg in" data-delay="400">
+                Oi. Posso ajudar com a rodada, um jogo específico ou um mercado.
+                O que você quer olhar?
+                <div class="meta">
+                  <span class="tag cyan">contexto</span>
+                  <span class="time">20:11</span>
+                </div>
+              </div>
+              <div class="chat-msg out" data-delay="500">
+                Palmeiras × Corinthians — tem valor em cartões?
+              </div>
+              <div class="chat-msg in" data-delay="700">
+                Há leitura com valor em <b>mais de 4,5 cartões</b>. Árbitro acima
+                da mediana e clássico de fricção sustentam; o movimento da linha
+                já comeu parte do edge.
+                <div class="inline-pick">
+                  <strong>Mais de 4,5 · EV +3,7%</strong>
+                  <span>Prob. 61% · odd 1,70 · válido acima de 1,68</span>
+                </div>
+                <div class="meta">
+                  <span class="tag green">estimativa</span>
+                  <span class="tag">3 fontes</span>
+                  <span class="time">20:12</span>
+                </div>
+              </div>
+              <div class="chat-msg out" data-delay="450">
+                E se a odd cair mais?
+              </div>
+              <div class="chat-msg in" data-delay="600">
+                Aí a recomendação vira <b>passar</b>. Edge comprimido demais não
+                vira pick forçado — e o histórico registra a decisão de não
+                entrar.
+                <div class="meta">
+                  <span class="tag amber">sem valor</span>
+                  <span class="time">20:12</span>
+                </div>
+              </div>
+            </div>
+            <div class="chat-compose" data-chat-compose>
+              <input
+                type="text"
+                placeholder="Ex.: e o over 2.5 desse jogo?"
+                aria-label="Mensagem"
+              />
+              <button class="btn btn-primary btn-small" type="button">
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head center" data-reveal>
+            <span class="eyebrow">O que ele faz</span>
+            <h2 style="margin-top: 16px">Não é um bot de palpite.</h2>
+          </div>
+          <div class="pillar-grid">
+            <article class="pillar" data-reveal>
+              <div class="icon">◈</div>
+              <h3>Puxa o dossiê</h3>
+              <p>
+                Forma, árbitro, desfalques, peso na tabela e matchup — mastigados
+                antes de responder.
+              </p>
+            </article>
+            <article class="pillar" data-reveal data-reveal-delay="1">
+              <div class="icon">◎</div>
+              <h3>Separa quant e texto</h3>
+              <p>
+                A probabilidade vem do modelo. A IA só explica e aponta risco —
+                sem reescrever o número.
+              </p>
+            </article>
+            <article class="pillar" data-reveal data-reveal-delay="2">
+              <div class="icon">◇</div>
+              <h3>Abre alertas e auditoria</h3>
+              <p>
+                Da conversa você cria um monitor ou vê o histórico do mesmo
+                mercado — um fluxo só.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="wrap split">
+          <div data-reveal>
+            <span class="eyebrow">Disciplina</span>
+            <h2 style="margin-top: 16px; font-size: clamp(1.7rem, 3vw, 2.4rem)">
+              Também sabe dizer “não sei” e “não aposte”.
+            </h2>
+            <p class="lead" style="margin-top: 14px">
+              Quando a amostra é curta, a linha é eficiente ou a evidência é só
+              rumor, a resposta honesta é a que o mercado menos vende.
+            </p>
+          </div>
+          <div class="steps" data-reveal data-reveal-delay="2">
+            <div class="step">
+              <span class="step-num">1</span>
+              <div>
+                <h3>Pergunta em linguagem natural</h3>
+                <p>Jogo, mercado, jogador ou “o que merece atenção hoje”.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-num">2</span>
+              <div>
+                <h3>Cruzamento com o dossiê</h3>
+                <p>Sinais com peso vs narrativa — sempre rotulados.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-num">3</span>
+              <div>
+                <h3>Resposta com rastro</h3>
+                <p>Prob., odd, EV (ou passar) + fontes e disclaimer.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="wrap">
+          <div class="cta-box" data-reveal>
+            <h2>Quer o assistente na sua rotina?</h2>
+            <p>Entre na lista de acesso antecipado. +18 · sem garantia de ganho.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="precos.html"
+                >Pedir acesso <span class="arrow">→</span></a
+              >
+              <a class="btn btn-secondary" href="alertas.html">Ver alertas</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer data-chrome-footer></footer>
+    <script src="chrome.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

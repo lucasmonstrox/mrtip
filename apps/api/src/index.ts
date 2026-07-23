@@ -56,6 +56,13 @@ export type {
   CareerSeason,
 } from "./modules/leagues/shared/shared"
 
+export type {
+  MatchNews,
+  MatchNewsArticle,
+  MatchNewsProvider,
+  MatchNewsTeam,
+} from "./modules/leagues/get-match-news/get-match-news.service"
+
 // Search contract (global fuzzy search). @feature CORE-002
 export type {
   SearchCoach,

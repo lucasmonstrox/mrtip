@@ -1,11 +1,10 @@
-import { MatchDetail } from "@/features/leagues"
-import { PageContainer } from "@/shared/ui/page-container"
+import { redirect } from "next/navigation"
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+import { DEFAULT_MATCH_TAB } from "@/features/leagues/components/match-detail/match-tabs"
+
+// Entrada sem aba → Fatos (default histórico). Links legados `/matches/:slug` continuam válidos.
+// @feature LIG-024
+export default async function MatchPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  return (
-    <PageContainer>
-      <MatchDetail slug={slug} />
-    </PageContainer>
-  )
+  redirect(`/matches/${slug}/${DEFAULT_MATCH_TAB}`)
 }

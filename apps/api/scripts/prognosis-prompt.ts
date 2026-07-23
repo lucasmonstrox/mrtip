@@ -24,7 +24,8 @@ const MATCH_ID = process.argv[2] ?? "77a4255a-3e44-4fd9-a133-b13ca0898a91"
 // Abaixo de tantos jogos "com ele"/"sem ele" a taxa de gols do with/without é ruído — gols/jogo só
 // estabiliza com ~12+ jogos de cada lado (6 era variância demais). Abaixo disto: flagged, not trusted.
 const LOW_SAMPLE = 12
-// Haversine distance (km) between two lat/long — feeds the travel/fatigue note when both venues are known.
+// Great-circle distance (km) between two lat/long — feeds SIN-023 away inbound travel in the prompt
+// (geographic km only; calendar fatigue/altitude stay SIN-008).
 function haversineKm(aLat: number, aLng: number, bLat: number, bLng: number): number {
   const R = 6371
   const dLat = ((bLat - aLat) * Math.PI) / 180
@@ -898,16 +899,48 @@ const probs2t = marketProbs(lamH * (1 - hShare1), lamA * (1 - aShare1), 0)
 const homeTiming = await timing(home.id)
 const awayTiming = await timing(away.id)
 
-// Distância de viagem do visitante (se ambos os estádios têm geo) — proxy de fadiga.
-let travelKm: number | null = null
+// @feature SIN-023 — inbound travel of the away team for the prompt dossier (great-circle; no modal).
+type AwayTravel = {
+  km: number
+  method: "last_leg" | "home_proxy"
+}
+// Proxy p50/p90 (as-of /rs 2026-07-23) — league “size” context, not an edge bin.
+const TRAVEL_SCALE_BY_LEAGUE: Record<string, { p50: number; p90: number }> = {
+  PL: { p50: 180, p90: 357 },
+  BRA: { p50: 722, p90: 2314 },
+}
+let awayTravel: AwayTravel | null = null
 if (matchVenue?.latitude && matchVenue.longitude) {
-  const awayHomeMatch = teamMatches(away.id).filter((p) => p.homeTeamId === away.id).at(-1)
-  if (awayHomeMatch?.venueId) {
-    const [av] = await db.select().from(venue).where(eq(venue.id, awayHomeMatch.venueId))
-    if (av?.latitude && av.longitude)
-      travelKm = haversineKm(+matchVenue.latitude, +matchVenue.longitude, +av.latitude, +av.longitude)
+  const destLat = +matchVenue.latitude
+  const destLng = +matchVenue.longitude
+  // Primary: last-leg inbound = venue of away's previous match (any comp) → this match venue.
+  const prev = lastMatchAnyComp(away.id)
+  if (prev?.venueId) {
+    const [prevVenue] = await db.select().from(venue).where(eq(venue.id, prev.venueId))
+    if (prevVenue?.latitude && prevVenue.longitude) {
+      awayTravel = {
+        km: haversineKm(destLat, destLng, +prevVenue.latitude, +prevVenue.longitude),
+        method: "last_leg",
+      }
+    }
+  }
+  // Fallback: home stadium → match venue when previous venue lacks geo.
+  if (!awayTravel) {
+    const awayHomeMatch = teamMatches(away.id).filter((p) => p.homeTeamId === away.id).at(-1)
+    if (awayHomeMatch?.venueId) {
+      const [av] = await db.select().from(venue).where(eq(venue.id, awayHomeMatch.venueId))
+      if (av?.latitude && av.longitude) {
+        awayTravel = {
+          km: haversineKm(destLat, destLng, +av.latitude, +av.longitude),
+          method: "home_proxy",
+        }
+      }
+    }
   }
 }
+const travelScale = TRAVEL_SCALE_BY_LEAGUE[m.leagueCode] ?? null
+const travelMethodLabel = (method: AwayTravel["method"]) =>
+  method === "last_leg" ? "last-leg" : "home-proxy"
 
 // ---- Tabela pré-jogo + motivação de zona (anti-vazamento) ----
 // A tabela oficial `standing` é a foto FINAL da season → usá-la aqui vazaria o futuro. Recomputo a
@@ -1937,13 +1970,14 @@ Armadilhas que a CoVe existe pra pegar: número citado de um bloco errado (seaso
 - Data: ${m.date} ${m.time ?? ""} · Rodada ${m.round} · Liga ${m.leagueCode}
 - Local: ${matchVenue ? `${matchVenue.name}${matchVenue.cityName ? `, ${matchVenue.cityName}` : ""}` : "—"}${matchVenue?.surface ? ` (${matchVenue.surface})` : ""}
 - Clima: ${matchWeather ? `${matchWeather.description ?? "?"} · ${w1(matchWeather.tempDay)}°C (sens. ${w1(matchWeather.feelsLikeDay)}°C) · vento ${w1(matchWeather.windSpeed)} m/s · umidade ${matchWeather.humidity ?? "?"} · nuvens ${matchWeather.clouds ?? "?"}` : "—"} (contexto — NÃO assuma que chuva/vento reduzem gols; nesta liga o tempo ruim NÃO teve correlação com o total: jogos de chuva severa/vento forte deram 2.9 gols/j vs 2.84 da liga)
-- Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias${lastMatchNote(home.id)} · ${away.name} ${restDays(away.id) ?? "?"} dias${lastMatchNote(away.id)}${travelKm != null ? `\n- Viagem do visitante: ~${travelKm} km` : ""}
+- Descanso: ${home.name} ${restDays(home.id) ?? "?"} dias${lastMatchNote(home.id)} · ${away.name} ${restDays(away.id) ?? "?"} dias${lastMatchNote(away.id)}${awayTravel != null ? `\n- Viagem do visitante: ~${awayTravel.km} km (great-circle venue→venue; ${travelMethodLabel(awayTravel.method)}; modal desconhecido)` : ""}${awayTravel != null && travelScale ? `\n- Escala nesta liga (visitante, amostra finished): p50 ≈ ${travelScale.p50} · p90 ≈ ${travelScale.p90} km — contexto de tamanho, NÃO edge` : ""}
 - Densidade da janela de forma: **${home.name}** ${densidadeJanela(home.id).resumo} · **${away.name}** ${densidadeJanela(away.id).resumo}
 - Dureza da janela (últ.5): **${home.name}** ${durezaUltimos5(home.id)} · **${away.name}** ${durezaUltimos5(away.id)}
 - **Descanso / fadiga** (números acima — a nota "(último: …)" diz de ONDE vem, e COPA no meio de semana pesa mais): poucos dias de folga puxam **rotação, menos intensidade e queda na reta final** (−xG no fim, defesa mais exposta tarde). O sinal é a **ASSIMETRIA**: um lado bem mais descansado que o outro favorece o mais FRESCO, sobretudo no 2º tempo. Cruze com a intenção — cansado que PRECISA vencer ainda se lança (efeito menor); cansado SEM stake real administra/poupa (efeito maior). Só mexa no número com folga REAL de dias; diferença de 1-2 dias é ruído.
 - **Densidade + Dureza da janela** (as 2 linhas acima — MOD-008/MOD-009): leem o que o Descanso sozinho não vê — "5 jogos em 14 dias" ≠ os mesmos 5 num mês, e sequência contra top-6 pesada em duelos desgasta mais que a mesma contagem contra a parte de baixo. Três travas: (1) é **evidência QUALITATIVA** pro seu ajuste de cenário — NUNCA recalcule λ/probabilidades por isso; (2) o sinal é a **ASSIMETRIA** (um lado em maratona dura, o outro em semana cheia leve) — densidade/dureza parecidas dos dois lados ≈ ruído; (3) **não dupla-conte** com o Descanso: o último intervalo já está na linha própria, e densidade BAIXA não é frescor garantido (pausa de calendário ≠ time descansado por mérito). Cruzamento que importa: **densidade/dureza ALTA + este jogo SEM stake real → rodízio provável** — confira o XI provável/minutagem e os "VIVOS fora do XI" antes de confiar no time-base.
 - Média da liga (pré-jogo, ${played.length} jogos): mandante ${leagueHomeAvg} gols/jogo · visitante ${leagueAwayAvg} gols/jogo
 - **Vantagem de casa** (já embutida nos λ — NÃO some de novo): mandantes desta liga marcam +${+(leagueHomeAvg - leagueAwayAvg).toFixed(2)} gol/jogo a mais que visitantes. Torcida/pressão pesam no **resultado (1x2)** mais que no total: **não** dê o visitante como favorito sem qualidade nitidamente superior E mando fraco do mandante. Em jogo de stake alto, o fator casa aperta mais.
+- **Viagem do visitante** (km acima — SIN-023): camada **EXPLAIN** / evidência qualitativa — **NUNCA** recalcule λ/probabilidades por km. Distância do visitante é **componente do mando** já embutido nos λ (linha acima) — **não dupla-conte**. Sinal fraco/agudo: distância sozinha não é edge (SIN-008 / calendário-fadiga). Modal desconhecido — sem inferir ônibus/avião e sem “viagem longa → under”. Assimetria de **Descanso** continua na linha própria — viagem não substitui dias de folga.
 
 ## Tabela e motivação (pré-jogo — recomputada só com jogos antes de ${CUTOFF})
 - ${home.name}: ${posOf(home.id) ?? "?"}º, ${lineOf(home.id)?.points ?? 0} pts · ${away.name}: ${posOf(away.id) ?? "?"}º, ${lineOf(away.id)?.points ?? 0} pts

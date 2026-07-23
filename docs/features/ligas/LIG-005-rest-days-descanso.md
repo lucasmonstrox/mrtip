@@ -16,7 +16,7 @@ testes:
   - "revisor (contexto fresco) A1–A6 PASS; 1 hardening aplicado (optional-chaining em match.rest contra payload stale) (2026-06-29)"
   - "ui Prognóstico — card 'Descanso (na liga)' dedicado na aba Prognóstico (tiles grandes + frase de assimetria 'X chega com N dias a mais'); reusa match.rest, sem rede nova; bun typecheck (apps/web) exit 0; PROVA VISUAL CHROME PENDENTE (chrome-devtools bloqueado c/ Chrome do João aberto) (2026-06-29)"
 depende_de: []
-impacta: [SIN-008] # o sinal de calendário/fadiga consome o mesmo cálculo de descanso
+impacta: [SIN-008, SIN-023] # descanso (lastMatchAnyComp) alimenta fadiga e a perna inbound de viagem
 ancoras:
   settings: []
   tabelas: [match] # só LEITURA (match.date); nenhuma coluna nova

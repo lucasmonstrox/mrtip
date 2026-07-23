@@ -15,7 +15,7 @@ testes:
   - "expansão defesa+construção (migração 0018): +17 colunas em match_team_stats; backfill 760 linhas; tackles/interceptions/duels/passes(+%)/crosses/dribbles(+%)/long-passes/attacks/big-chances-missed/hit-woodwork/goal-attempts (2026-06-30)"
   - "probe season inteira (380 fixtures): headers(70)/challenges(77)/through-balls(124,125)/counter-attacks(1527)/cross-%(1533)/succ-interceptions(66)/shots(1677) NÃO vêm no nível-partida — ficaram de fora (2026-06-30)"
 depende_de: [DOS-001]
-impacta: [MOD-001, MOD-002]
+impacta: [MOD-001, MOD-002, LIG-019, LIG-020, LIG-022, LIG-023]
 ancoras:
   tabelas: [match_team_stats, match]
   funcoes: [sync-sportmonks]
