@@ -61,7 +61,7 @@ function RestSide({ name, rest }: { name: string; rest: TeamRest }) {
   )
 }
 
-// Rivais outbound de um lado (whitelist SportMonks). Vazio = a fonte não lista ninguém pra esse clube.
+// Rivais de um lado (união outbound+inbound da whitelist). Vazio = fonte não liga ninguém.
 function RivalSide({ name, rivals }: { name: string; rivals: TeamRef[] }) {
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
@@ -340,7 +340,7 @@ export function MatchDetail({ slug }: { slug: string }) {
               <span className="text-xs uppercase tracking-wide text-muted-foreground">Rivalidade</span>
               <span
                 className="cursor-help text-xs text-muted-foreground underline decoration-dotted"
-                title="Rivais que cada clube lista na SportMonks (aresta dirigida). Não é o Índice 0–1 calibrado — não mexe em cartões/mando/probabilidade sozinho."
+                title="Rivais ligados ao clube na whitelist (SportMonks ou seed manual), nos dois sentidos. A fonte é assimétrica — por isso unimos quem o clube lista e quem o lista. Não é o Índice 0–1 calibrado."
               >
                 whitelist
               </span>

@@ -884,8 +884,9 @@ export async function loadMatchReferee(matchId: string): Promise<MatchRefereeIte
 // Directed rival edge between the two sides of a match (whitelist SportMonks / manual).
 export type RivalryEdge = { fromTeamId: string; toTeamId: string; source: string }
 // Presence of any directed edge in either sense — NOT the calibrated Índice 0–1.
-// `home`/`away` = rivais que cada lado lista (arestas outbound), mesmo quando o confronto
-// atual não é clássico — é o que a aba Fatos mostra por time. @feature SIN-007
+// `home`/`away` = rivais de cada lado (união outbound+inbound da whitelist SM/manual),
+// mesmo quando o confronto atual não é clássico — é o que a aba Fatos mostra por time.
+// @feature SIN-007
 export type RivalryInfo = {
   isRivalry: boolean
   edges: RivalryEdge[]
@@ -893,19 +894,30 @@ export type RivalryInfo = {
   away: TeamRef[]
 }
 
-async function loadTeamOutboundRivals(teamId: string): Promise<TeamRef[]> {
-  const rival = alias(team, "rival_team")
-  return db
-    .select({
-      id: rival.id,
-      name: rival.name,
-      slug: rival.slug,
-      logoUrl: rival.logoUrl,
-    })
-    .from(teamRival)
-    .innerJoin(rival, eq(rival.id, teamRival.rivalTeamId))
-    .where(eq(teamRival.teamId, teamId))
-    .orderBy(asc(rival.name))
+// Rivais de um clube: quem ele lista (outbound) ∪ quem o lista (inbound). A SportMonks é
+// assimétrica (Difference Score) — só outbound escondia Grêmio/Flamengo/Corinthians.
+async function loadTeamRivals(teamId: string): Promise<TeamRef[]> {
+  const other = alias(team, "rival_other")
+  const [outbound, inbound] = await Promise.all([
+    db
+      .select({ id: other.id, name: other.name, slug: other.slug, logoUrl: other.logoUrl })
+      .from(teamRival)
+      .innerJoin(other, eq(other.id, teamRival.rivalTeamId))
+      .where(eq(teamRival.teamId, teamId)),
+    db
+      .select({ id: other.id, name: other.name, slug: other.slug, logoUrl: other.logoUrl })
+      .from(teamRival)
+      .innerJoin(other, eq(other.id, teamRival.teamId))
+      .where(eq(teamRival.rivalTeamId, teamId)),
+  ])
+  const seen = new Set<string>()
+  const out: TeamRef[] = []
+  for (const r of [...outbound, ...inbound].sort((a, b) => a.name.localeCompare(b.name, "pt"))) {
+    if (seen.has(r.id)) continue
+    seen.add(r.id)
+    out.push(r)
+  }
+  return out
 }
 
 // whitelist SportMonks via OR; NÃO alimentar λ/prompt/Índice nesta fatia — representável ≠ identificável.
@@ -924,8 +936,8 @@ export async function loadMatchRivalry(homeTeamId: string, awayTeamId: string): 
           and(eq(teamRival.teamId, awayTeamId), eq(teamRival.rivalTeamId, homeTeamId)),
         ),
       ),
-    loadTeamOutboundRivals(homeTeamId),
-    loadTeamOutboundRivals(awayTeamId),
+    loadTeamRivals(homeTeamId),
+    loadTeamRivals(awayTeamId),
   ])
   return { isRivalry: edges.length > 0, edges, home, away }
 }
