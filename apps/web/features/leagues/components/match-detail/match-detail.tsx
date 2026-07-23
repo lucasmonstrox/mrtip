@@ -1,6 +1,15 @@
 "use client"
 
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@workspace/ui/components/empty"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
+import type { LucideIcon } from "lucide-react"
+import { Swords } from "lucide-react"
 import Link from "next/link"
 
 import type { TeamRef, TeamRest, TeamStanding } from "../../types"
@@ -26,6 +35,29 @@ function TabEmpty({ children }: { children: React.ReactNode }) {
     <div className="rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">
       {children}
     </div>
+  )
+}
+
+// Empty state with icon + title + description (shadcn Empty), used on tabs like H2H.
+function TabEmptyRich({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: LucideIcon
+  title: string
+  description: string
+}) {
+  return (
+    <Empty className="border border-dashed">
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <Icon />
+        </EmptyMedia>
+        <EmptyTitle>{title}</EmptyTitle>
+        <EmptyDescription>{description}</EmptyDescription>
+      </EmptyHeader>
+    </Empty>
   )
 }
 
@@ -205,8 +237,8 @@ export function MatchDetail({ slug, tab }: { slug: string; tab: MatchTabValue })
         <div className="-mx-1 min-w-0 max-w-[calc(100vw-2rem)] overflow-x-auto border-b px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <TabsList variant="line">
             {MATCH_TABS.map(({ value, label, icon: Icon, primary }) => (
-              <TabsTrigger key={value} value={value} asChild>
-                <Link href={`/matches/${slug}/${value}`} className="gap-1.5">
+              <TabsTrigger key={value} value={value} asChild className="gap-1.5">
+                <Link href={`/matches/${slug}/${value}`}>
                   {/* O Prognóstico não é par dos outros: é a tese do produto (a aposta com evidência).
                       Ganha o ícone tingido quando inativo pra ser achável de relance, sem virar enfeite. */}
                   <Icon className={primary ? "text-primary" : undefined} aria-hidden />
@@ -217,42 +249,61 @@ export function MatchDetail({ slug, tab }: { slug: string; tab: MatchTabValue })
           </TabsList>
         </div>
 
-        <TabsContent value="momentum" className="pt-2">
-          <MatchMomentum id={id} home={match.home} away={match.away} />
-        </TabsContent>
+        {/* Só o painel da aba ativa monta — evita 10 fetches escondidos. @feature LIG-024 */}
+        {tab === "momentum" ? (
+          <TabsContent value="momentum" className="pt-2" forceMount>
+            <MatchMomentum id={id} home={match.home} away={match.away} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="estatisticas" className="pt-2">
-          <Statistics id={id} home={match.home} away={match.away} />
-        </TabsContent>
+        {tab === "estatisticas" ? (
+          <TabsContent value="estatisticas" className="pt-2" forceMount>
+            <Statistics id={id} home={match.home} away={match.away} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="prognostico" className="pt-2">
-          <Prognosis id={id} home={match.home} away={match.away} rest={match.rest} />
-        </TabsContent>
+        {tab === "prognostico" ? (
+          <TabsContent value="prognostico" className="pt-2" forceMount>
+            <Prognosis id={id} home={match.home} away={match.away} rest={match.rest} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="eventos" className="pt-2">
-          {match.goals.length || match.cards.length ? (
-            <MatchEvents goals={match.goals} cards={match.cards} homeTeamId={match.home.id} />
-          ) : (
-            <TabEmpty>Sem eventos registrados.</TabEmpty>
-          )}
-        </TabsContent>
+        {tab === "eventos" ? (
+          <TabsContent value="eventos" className="pt-2" forceMount>
+            {match.goals.length || match.cards.length ? (
+              <MatchEvents goals={match.goals} cards={match.cards} homeTeamId={match.home.id} />
+            ) : (
+              <TabEmpty>Sem eventos registrados.</TabEmpty>
+            )}
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="escalacao" className="flex flex-col gap-6 pt-2">
-          {/* Lineups + absences (each hidden when there's no record for this match) */}
-          <Lineup id={id} />
-          <Absences id={id} />
-        </TabsContent>
+        {tab === "escalacao" ? (
+          <TabsContent value="escalacao" className="flex flex-col gap-6 pt-2" forceMount>
+            <Lineup id={id} />
+            <Absences id={id} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="h2h" className="pt-2">
-          <TabEmpty>Confrontos diretos em breve.</TabEmpty>
-        </TabsContent>
+        {tab === "h2h" ? (
+          <TabsContent value="h2h" className="pt-2" forceMount>
+            <TabEmptyRich
+              icon={Swords}
+              title="Confrontos diretos"
+              description="O histórico de confrontos entre estes times chega em breve."
+            />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="gols" className="flex flex-col gap-6 pt-2">
-          <Scorers id={id} />
-          <GoalTiming id={id} />
-        </TabsContent>
+        {tab === "gols" ? (
+          <TabsContent value="gols" className="flex flex-col gap-6 pt-2" forceMount>
+            <Scorers id={id} />
+            <GoalTiming id={id} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="fatos" className="flex flex-col gap-4 pt-2">
+        {tab === "fatos" ? (
+          <TabsContent value="fatos" className="flex flex-col gap-4 pt-2" forceMount>
           {/* Standings snapshot: each team's official current-season position/points/W-D-L/goal
               difference, position tinted by zone. Hidden when the API hasn't sent standings yet
               (stale pre-LIG-006 payload — `?.` guards the runtime). @feature LIG-006 */}
@@ -413,16 +464,21 @@ export function MatchDetail({ slug, tab }: { slug: string; tab: MatchTabValue })
                 ) : null}
               </div>
             </div>
-          ) : null}
-        </TabsContent>
+            ) : null}
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="noticias" className="pt-2">
-          <MatchNews id={id} />
-        </TabsContent>
+        {tab === "noticias" ? (
+          <TabsContent value="noticias" className="pt-2" forceMount>
+            <MatchNews id={id} />
+          </TabsContent>
+        ) : null}
 
-        <TabsContent value="narracao" className="pt-2">
-          <Commentary id={id} />
-        </TabsContent>
+        {tab === "narracao" ? (
+          <TabsContent value="narracao" className="pt-2" forceMount>
+            <Commentary id={id} />
+          </TabsContent>
+        ) : null}
       </Tabs>
     </section>
   )

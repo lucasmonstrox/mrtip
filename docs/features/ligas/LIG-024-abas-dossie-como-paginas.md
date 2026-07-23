@@ -2,12 +2,17 @@
 id: LIG-024
 titulo: Abas do dossiê da partida como páginas (URL por aba)
 modulo: ligas
-status: em-andamento
+status: verificado
 prioridade: P2
 facetas:
-  ui: em-andamento # /matches/[slug]/[tab]; nav por Link; redirect sem aba → /fatos
-testada: nao
-testes: []
+  ui: verificado # /matches/[slug]/[tab]; nav por Link; redirect sem aba → /fatos
+testada: sim
+testes:
+  - "T1 redirect: /matches/<slug> → /fatos; aba Fatos selected (agent-browser 2026-07-23)"
+  - "T2 click Prognóstico → URL /prognostico + tabpanel Prognóstico (agent-browser 2026-07-23)"
+  - "T3 reload mantém /prognostico (agent-browser 2026-07-23)"
+  - "T4 aba inválida → 404 (agent-browser 2026-07-23)"
+  - "typecheck apps/web limpo (2026-07-23)"
 depende_de: [LIG-009]
 impacta: []
 ancoras:
@@ -17,7 +22,7 @@ ancoras:
   funcoes: [MATCH_TABS, isMatchTabValue, MatchDetail]
   rotas: []
 docs: []
-verificado_em: null
+verificado_em: 2026-07-23
 atualizado: 2026-07-23
 ---
 
@@ -33,7 +38,7 @@ As 10 abas do dossiê (Fatos, Escalação, H2H, Gols, Notícias, Prognóstico, M
 - [x] ui — redirect `/matches/[slug]` → `/matches/[slug]/fatos`
 - [x] ui — page `/matches/[slug]/[tab]` com `notFound` pra aba inválida
 - [x] ui — `MatchDetail` controlado por `tab` + Links na barra
-- [ ] ui — prova browser (deep-link, refresh, redirect, 404)
+- [x] ui — prova browser (deep-link, refresh, redirect, 404)
 
 ## Pronto quando
 

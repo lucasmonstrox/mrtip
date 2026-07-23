@@ -1,7 +1,14 @@
 "use client"
 
 import { Badge } from "@workspace/ui/components/badge"
-import { ExternalLink } from "lucide-react"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@workspace/ui/components/empty"
+import { ExternalLink, Newspaper } from "lucide-react"
 import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
@@ -73,7 +80,19 @@ export function MatchNews({ id }: { id: string }) {
   if (isPending) return <p className="text-sm text-muted-foreground">Carregando notícias…</p>
   if (isError) return <p className="text-sm text-destructive">Não foi possível carregar as notícias.</p>
   if (!data?.articles.length) {
-    return <p className="text-sm text-muted-foreground">Sem notícias para esta partida.</p>
+    return (
+      <Empty className="border border-dashed">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Newspaper />
+          </EmptyMedia>
+          <EmptyTitle>Sem notícias</EmptyTitle>
+          <EmptyDescription>
+            Ainda não há matérias vinculadas a esta partida.
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    )
   }
 
   return (

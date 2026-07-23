@@ -2,7 +2,7 @@
 
 # INDEX de features
 
-67 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
+68 feature(s). Fonte: arquivos em `docs/features/`. Convenções: [README.md](README.md).
 
 ## Features
 
@@ -39,7 +39,8 @@
 | LIG-021 | Cartões amarelos e vermelhos na aba Estatísticas da partida | ligas | verificado | P2 | api:feito ui:feito | sim | — |
 | LIG-022 | Faltas na aba Estatísticas da partida | ligas | planejado | P2 | dados:planejado api:planejado ui:planejado | nao | DOS-002 |
 | LIG-023 | Cortes (clearances) na aba Estatísticas da partida | ligas | verificado | P2 | dados:verificado api:verificado ui:verificado | sim | DOS-002 |
-| LIG-024 | Abas do dossiê da partida como páginas (URL por aba) | ligas | em-andamento | P2 | ui:em-andamento | nao | LIG-009 |
+| LIG-024 | Abas do dossiê da partida como páginas (URL por aba) | ligas | verificado | P2 | ui:verificado | sim | LIG-009 |
+| LIG-025 | Abas da página da liga como páginas (URL por aba) | ligas | verificado | P2 | ui:verificado | sim | LIG-024 |
 | MOD-001 | Motor de prognóstico (modelo quantitativo) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-002 | xG / qualidade de chute (feature central do quant) | modelos | investigado | P1 | dados:investigado ia:investigado | nao | DOS-001 |
 | MOD-003 | Força relativa entre ligas e times promovidos | modelos | investigado | P2 | dados:investigado ia:investigado | nao | MOD-001 |
@@ -161,12 +162,15 @@ _Pontos compartilhados; ⚠️ = tocado por 2+ features (mudar exige re-testar t
 - `getTeamBySlug` → LIG-002, SIN-022 ⚠️ compartilhada
 - `haversineKm` → SIN-023
 - `ingestTeamRivals` → SIN-007
+- `isLeaguePageTabValue` → LIG-025
 - `isMatchTabValue` → LIG-024
 - `kickoffInTimeZone` → LIG-012
 - `lastMatchAnyComp` → SIN-023
 - `lastMatchBefore` → LIG-005
+- `LEAGUE_PAGE_TAB_VALUES` → LIG-025
 - `leagueCodeOfPlayer` → LIG-012
 - `leagueCodeOfTeam` → LIG-012
+- `LeagueDetail` → LIG-025
 - `loadAbsenceImpact` → LIG-007, LIG-008 ⚠️ compartilhada
 - `loadGoalTiming` → LIG-008
 - `loadMatchCommentaries` → LIG-010

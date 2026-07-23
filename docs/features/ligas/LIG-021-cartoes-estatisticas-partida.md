@@ -109,7 +109,7 @@ Aceite:
 - [código] `apps/web/features/leagues/components/match-detail/statistics.tsx` — StatRows cartões após LIG-019/020; `hasStats` sem `!= null` em cartões (opcional `sum>0`)
 - [banco] 2026-07-23 — amostra `3dc11ca2-…` = 2Y/0R × 2Y/0R; `8aeca44f-…` yellowred dual (home 4Y/2R)
 - [wishlist] W-089 + W-090 (2026-07-23) — brief + gotcha yellowred + empacotar no mesmo PR
-- [ui] dumps agent-browser em `apps/api/scripts/output/lig021-ui/` (snapshots/eval/network)
+- [ui] dumps agent-browser em `apps/api/scripts/output/lig021-ui/` (snapshots/eval/network; screenshots só válidos se sessão Clerk ativa)
 
 ## Verificação
 
