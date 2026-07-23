@@ -96,7 +96,7 @@ check(
 // --- LIG-009: slug da partida nasce bem-formado e único na Série A ----------------------------
 const [slugs] = await q<{ n: number; distinct: number; bad: number }>(sql`
   select count(*)::int as n, count(distinct m.slug)::int as distinct,
-         count(*) filter (where m.slug is null or m.slug !~ '^serie-a-2025-')::int as bad
+         count(*) filter (where m.slug is null or m.slug !~ '^brasileirao-2025-')::int as bad
   from match m join season se on se.id = m.season_id
   where m.league_code = 'BRA' and se.sportmonks_season_id = ${SEASON_2025}`)
 check(

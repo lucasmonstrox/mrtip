@@ -36,7 +36,7 @@ const CODE = (flag("code") ?? "PL").toUpperCase() // domain key (URL)
 const TIMEZONE = flag("timezone") ?? "Europe/London" // fuso da liga: `date`/`time` na hora de parede local
 const DRY_RUN = process.argv.includes("--dry-run") // varre e conta, não escreve no banco nem no R2
 // Nome de exibição por código — SportMonks manda "Serie A"; no produto BR é "Brasileirão".
-// Slugs de partida continuam com `apiLeague.name` pra não quebrar URLs `serie-a-…`.
+// O mesmo nome alimenta o prefixo do match.slug (`brasileirao-…`, não `serie-a-…`).
 const LEAGUE_DISPLAY_NAME: Record<string, string> = { BRA: "Brasileirão" }
 
 // SportMonks lineup type_ids: starter (titular) vs bench (banco).
@@ -496,7 +496,9 @@ async function main() {
     const score = extractScore(f.scores)
     // Pretty URL key: league-season-home-vs-away, from the same team names that feed team.slug. The
     // away fixture gets the reversed slug, so the pair is unique within the season. @feature LIG-009
-    const slug = matchSlug(apiLeague.name, apiSeason.name, teamNameBySm.get(home.id) ?? f.name, teamNameBySm.get(away.id) ?? "")
+    // Prefixo da liga = nome de produto (LEAGUE_DISPLAY_NAME), não o rótulo cru da SportMonks.
+    const leagueNameForSlug = LEAGUE_DISPLAY_NAME[CODE] ?? apiLeague.name
+    const slug = matchSlug(leagueNameForSlug, apiSeason.name, teamNameBySm.get(home.id) ?? f.name, teamNameBySm.get(away.id) ?? "")
     const values = {
       sportmonksFixtureId: f.id,
       leagueCode: CODE,
